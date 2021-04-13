@@ -28,9 +28,10 @@ public class UpdateEntityTagsAction implements ProjectAction<UpdateEntityTagsRes
 
     private Set<TagId> toTagIds;
 
-    public UpdateEntityTagsAction(@Nonnull ProjectId projectId,
-                                  OWLEntity entity, @Nonnull Set<TagId> fromTagIds,
-                                  @Nonnull Set<TagId> toTagIds) {
+    private UpdateEntityTagsAction(@Nonnull ProjectId projectId,
+                                   OWLEntity entity,
+                                   @Nonnull Set<TagId> fromTagIds,
+                                   @Nonnull Set<TagId> toTagIds) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
         this.fromTagIds = ImmutableSet.copyOf(fromTagIds);
@@ -39,6 +40,13 @@ public class UpdateEntityTagsAction implements ProjectAction<UpdateEntityTagsRes
 
     @GwtSerializationConstructor
     private UpdateEntityTagsAction() {
+    }
+
+    public static UpdateEntityTagsAction create(@Nonnull ProjectId projectId,
+                                                OWLEntity entity,
+                                                @Nonnull Set<TagId> fromTagIds,
+                                                @Nonnull Set<TagId> toTagIds) {
+        return new UpdateEntityTagsAction(projectId, entity, fromTagIds, toTagIds);
     }
 
     @Nonnull

@@ -1,14 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.IsSerializable;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -30,7 +30,8 @@ public abstract class HierarchyId implements IsSerializable {
     public abstract String getId();
 
     @Nonnull
-    public static HierarchyId get(@Nonnull String id) {
+    @JsonCreator
+    public static HierarchyId get(@JsonProperty("id") @Nonnull String id) {
         return new AutoValue_HierarchyId(checkNotNull(id));
     }
 }

@@ -1,8 +1,11 @@
 package edu.stanford.bmir.protege.web.shared.lang;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableSet;
+import jsinterop.annotations.JsIgnore;
 
 import javax.annotation.Nonnull;
 
@@ -15,12 +18,16 @@ import javax.annotation.Nonnull;
 @GwtCompatible(serializable = true)
 public abstract class LangTagFilter {
 
+    public static final String FILTERED_LANG_TAGS = "filteredLangTags";
+
+    @JsonCreator
     @Nonnull
-    public static LangTagFilter get(@Nonnull ImmutableSet<LangTag> filteredLangTags) {
+    public static LangTagFilter get(@JsonProperty(FILTERED_LANG_TAGS) @Nonnull ImmutableSet<LangTag> filteredLangTags) {
         return new AutoValue_LangTagFilter(filteredLangTags);
     }
 
     @Nonnull
+    @JsonProperty(FILTERED_LANG_TAGS)
     public abstract ImmutableSet<LangTag> getFilteringTags();
 
     public boolean isAnyLangTagIncluded() {

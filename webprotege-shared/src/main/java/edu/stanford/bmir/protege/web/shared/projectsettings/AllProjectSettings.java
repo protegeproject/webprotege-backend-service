@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.projectsettings;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;

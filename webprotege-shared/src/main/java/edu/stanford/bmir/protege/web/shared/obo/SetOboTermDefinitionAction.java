@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.obo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -17,15 +18,17 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class SetOboTermDefinitionAction implements ProjectAction<SetOboTermDefinitionResult> {
 
+    public static final String TERM = "term";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
 
     private OBOTermDefinition def;
 
-    public SetOboTermDefinitionAction(@Nonnull ProjectId projectId,
-                                      @Nonnull OWLEntity entity,
-                                      @Nonnull OBOTermDefinition def) {
+    private SetOboTermDefinitionAction(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                       @JsonProperty(TERM) @Nonnull OWLEntity entity,
+                                       @JsonProperty("definition") @Nonnull OBOTermDefinition def) {
         this.projectId = projectId;
         this.entity = entity;
         this.def = def;
@@ -35,11 +38,18 @@ public class SetOboTermDefinitionAction implements ProjectAction<SetOboTermDefin
     private SetOboTermDefinitionAction() {
     }
 
+    public static SetOboTermDefinitionAction create(@Nonnull ProjectId projectId,
+                                                    @Nonnull OWLEntity entity,
+                                                    @Nonnull OBOTermDefinition def) {
+        return new SetOboTermDefinitionAction(projectId, entity, def);
+    }
+
     @Nonnull
     public ProjectId getProjectId() {
         return projectId;
     }
 
+    @JsonProperty(TERM)
     @Nonnull
     public OWLEntity getEntity() {
         return entity;

@@ -25,13 +25,13 @@ public class GetProjectSettingsAction_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        action = new GetProjectSettingsAction(projectId);
+        action = GetProjectSettingsAction.create(projectId);
     }
 
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_ProjectSettings_IsNull() {
-        GetProjectSettingsResult.get(null);
+        GetProjectSettingsResult.create(null);
     }
 
     @Test
@@ -51,13 +51,13 @@ public class GetProjectSettingsAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        GetProjectSettingsAction other = new GetProjectSettingsAction(projectId);
+        GetProjectSettingsAction other = GetProjectSettingsAction.create(projectId);
         assertThat(action, is(equalTo(other)));
     }
 
     @Test
     public void shouldHaveSameHashCode() {
-        GetProjectSettingsAction other = new GetProjectSettingsAction(projectId);
+        GetProjectSettingsAction other = GetProjectSettingsAction.create(projectId);
         assertThat(action.hashCode(), is(other.hashCode()));
     }
 }

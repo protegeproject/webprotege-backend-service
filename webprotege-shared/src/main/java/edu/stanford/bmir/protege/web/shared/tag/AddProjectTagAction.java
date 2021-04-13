@@ -1,10 +1,15 @@
 package edu.stanford.bmir.protege.web.shared.tag;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.color.Color;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.color.Color;
 
 import javax.annotation.Nonnull;
 
@@ -16,33 +21,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 18 Mar 2018
  */
-public class AddProjectTagAction implements ProjectAction<AddProjectTagResult> {
-
-    private ProjectId projectId;
-
-    private String label;
-
-    private String description;
-
-    private Color color;
-
-    private Color backgroundColor;
-
-    public AddProjectTagAction(@Nonnull ProjectId projectId,
-                               @Nonnull String label,
-                               @Nonnull String description,
-                               @Nonnull Color color,
-                               @Nonnull Color backgroundColor) {
-        this.projectId = checkNotNull(projectId);
-        this.label = checkNotNull(label);
-        this.description = checkNotNull(description);
-        this.color = checkNotNull(color);
-        this.backgroundColor = checkNotNull(backgroundColor);
-    }
-
-    @GwtSerializationConstructor
-    private AddProjectTagAction() {
-    }
+@JsonTypeName("AddProjectTag")
+@AutoValue
+@GwtCompatible(serializable = true)
+public abstract class AddProjectTagAction implements ProjectAction<AddProjectTagResult> {
 
     /**
      * Creates an {@link AddProjectTagAction}.
@@ -52,13 +34,14 @@ public class AddProjectTagAction implements ProjectAction<AddProjectTagResult> {
      * @param color The color for the tag (foreground).
      * @param backgroundColor The background-color for the tag
      */
+    @JsonCreator
     @Nonnull
-    public static AddProjectTagAction addProjectTag(@Nonnull ProjectId projectId,
-                                                    @Nonnull String label,
-                                                    @Nonnull String description,
-                                                    @Nonnull Color color,
-                                                    @Nonnull Color backgroundColor) {
-        return new AddProjectTagAction(projectId,
+    public static AddProjectTagAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                    @JsonProperty("label") @Nonnull String label,
+                                                    @JsonProperty("description") @Nonnull String description,
+                                                    @JsonProperty("color") @Nonnull Color color,
+                                                    @JsonProperty("backgroundColor") @Nonnull Color backgroundColor) {
+        return new AutoValue_AddProjectTagAction(projectId,
                                                  label,
                                                  description,
                                        color, backgroundColor);
@@ -66,60 +49,17 @@ public class AddProjectTagAction implements ProjectAction<AddProjectTagResult> {
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public String getLabel() {
-        return label;
-    }
+    public abstract String getLabel();
 
     @Nonnull
-    public String getDescription() {
-        return description;
-    }
+    public abstract String getDescription();
 
     @Nonnull
-    public Color getColor() {
-        return color;
-    }
+    public abstract Color getColor();
 
     @Nonnull
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(projectId, label, description, color, backgroundColor);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof AddProjectTagAction)) {
-            return false;
-        }
-        AddProjectTagAction other = (AddProjectTagAction) obj;
-        return this.projectId.equals(other.projectId)
-                && this.label.equals(other.label)
-                && this.description.equals(other.description)
-                && this.color.equals(other.color)
-                && this.backgroundColor.equals(other.backgroundColor);
-    }
-
-
-    @Override
-    public String toString() {
-        return toStringHelper("AddProjectTagAction")
-                .addValue(projectId)
-                .add("label", label)
-                .add("description", description)
-                .add("color", color)
-                .add("backgroundColor", backgroundColor)
-                .toString();
-    }
+    public abstract Color getBackgroundColor();
 }

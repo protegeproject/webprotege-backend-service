@@ -7,7 +7,6 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageData;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

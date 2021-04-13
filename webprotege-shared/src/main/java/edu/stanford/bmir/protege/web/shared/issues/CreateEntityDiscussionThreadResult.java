@@ -1,11 +1,16 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
 
 import javax.annotation.Nonnull;
 
@@ -16,28 +21,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 6 Oct 2016
  */
-public class CreateEntityDiscussionThreadResult implements Result, HasEventList<ProjectEvent<?>> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CreateEntityDiscussionThread")
+public abstract class CreateEntityDiscussionThreadResult implements Result, HasEventList<ProjectEvent<?>> {
 
-    private ImmutableList<EntityDiscussionThread> threads;
-
-    private EventList<ProjectEvent<?>> eventList;
-
-    public CreateEntityDiscussionThreadResult(@Nonnull ImmutableList<EntityDiscussionThread> threads,
-                                              @Nonnull EventList<ProjectEvent<?>> eventList) {
-        this.threads = checkNotNull(threads);
-        this.eventList = checkNotNull(eventList);
+    @JsonCreator
+    public static CreateEntityDiscussionThreadResult create(@JsonProperty("threads") @Nonnull ImmutableList<EntityDiscussionThread> threads,
+                                              @JsonProperty("eventList") @Nonnull EventList<ProjectEvent<?>> eventList) {
+        return new AutoValue_CreateEntityDiscussionThreadResult(threads, eventList);
     }
 
-    @GwtSerializationConstructor
-    private CreateEntityDiscussionThreadResult() {
-    }
-
-    public ImmutableList<EntityDiscussionThread> getThreads() {
-        return threads;
-    }
+    public abstract ImmutableList<EntityDiscussionThread> getThreads();
 
     @Override
-    public EventList<ProjectEvent<?>> getEventList() {
-        return eventList;
-    }
+    public abstract EventList<ProjectEvent<?>> getEventList();
 }

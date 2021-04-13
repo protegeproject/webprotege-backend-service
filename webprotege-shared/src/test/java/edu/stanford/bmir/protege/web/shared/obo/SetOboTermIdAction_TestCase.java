@@ -26,13 +26,13 @@ public class SetOboTermIdAction_TestCase {
 
     @Before
     public void setUp() {
-        setOboTermIdAction = new SetOboTermIdAction(projectId, entity, oboTermId);
+        setOboTermIdAction = SetOboTermIdAction.create(projectId, entity, oboTermId);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new SetOboTermIdAction(null, entity, oboTermId);
+        SetOboTermIdAction.create(null, entity, oboTermId);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class SetOboTermIdAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_entity_IsNull() {
-        new SetOboTermIdAction(projectId, null, oboTermId);
+        SetOboTermIdAction.create(projectId, null, oboTermId);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class SetOboTermIdAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_oboTermId_IsNull() {
-        new SetOboTermIdAction(projectId, entity, null);
+        SetOboTermIdAction.create(projectId, entity, null);
     }
 
     @Test
@@ -75,27 +75,27 @@ public class SetOboTermIdAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(setOboTermIdAction, is(new SetOboTermIdAction(projectId, entity, oboTermId)));
+        assertThat(setOboTermIdAction, is(SetOboTermIdAction.create(projectId, entity, oboTermId)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(setOboTermIdAction, is(not(new SetOboTermIdAction(mock(ProjectId.class), entity, oboTermId))));
+        assertThat(setOboTermIdAction, is(not(SetOboTermIdAction.create(mock(ProjectId.class), entity, oboTermId))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_entity() {
-        assertThat(setOboTermIdAction, is(not(new SetOboTermIdAction(projectId, mock(OWLEntity.class), oboTermId))));
+        assertThat(setOboTermIdAction, is(not(SetOboTermIdAction.create(projectId, mock(OWLEntity.class), oboTermId))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_oboTermId() {
-        assertThat(setOboTermIdAction, is(not(new SetOboTermIdAction(projectId, entity, mock(OBOTermId.class)))));
+        assertThat(setOboTermIdAction, is(not(SetOboTermIdAction.create(projectId, entity, mock(OBOTermId.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(setOboTermIdAction.hashCode(), is(new SetOboTermIdAction(projectId, entity, oboTermId).hashCode()));
+        assertThat(setOboTermIdAction.hashCode(), is(SetOboTermIdAction.create(projectId, entity, oboTermId).hashCode()));
     }
 
     @Test

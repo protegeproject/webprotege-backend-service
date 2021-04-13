@@ -1,6 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
@@ -16,6 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 14/02/15
  */
+@JsonTypeName("GetChapSession")
 public class GetChapSessionResult implements Result {
 
     @Nullable
@@ -25,7 +29,8 @@ public class GetChapSessionResult implements Result {
     private GetChapSessionResult() {
     }
 
-    public GetChapSessionResult(Optional<ChapSession> chapSession) {
+    @JsonCreator
+    public GetChapSessionResult(@JsonProperty("chapSession") Optional<ChapSession> chapSession) {
         this.chapSession = checkNotNull(chapSession).orElse(null);
     }
 

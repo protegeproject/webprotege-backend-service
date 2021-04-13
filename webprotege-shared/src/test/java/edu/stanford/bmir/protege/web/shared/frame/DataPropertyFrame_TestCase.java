@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLDataPropertyData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLDatatypeData;
@@ -10,8 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;

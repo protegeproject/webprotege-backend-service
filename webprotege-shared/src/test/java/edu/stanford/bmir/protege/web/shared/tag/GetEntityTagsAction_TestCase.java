@@ -2,20 +2,15 @@
 package edu.stanford.bmir.protege.web.shared.tag;
 
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,13 +26,13 @@ public class GetEntityTagsAction_TestCase {
 
     @Before
     public void setUp() {
-        action = new GetEntityTagsAction(projectId, entity);
+        action = GetEntityTagsAction.create(projectId, entity);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetEntityTagsAction(null, entity);
+        GetEntityTagsAction.create(null, entity);
     }
 
     @Test
@@ -48,7 +43,7 @@ public class GetEntityTagsAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_entity_IsNull() {
-        new GetEntityTagsAction(projectId, null);
+        GetEntityTagsAction.create(projectId, null);
     }
 
     @Test
@@ -69,22 +64,22 @@ public class GetEntityTagsAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(action, is(new GetEntityTagsAction(projectId, entity)));
+        assertThat(action, is(GetEntityTagsAction.create(projectId, entity)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(new GetEntityTagsAction(mock(ProjectId.class), entity))));
+        assertThat(action, is(not(GetEntityTagsAction.create(mock(ProjectId.class), entity))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_entity() {
-        assertThat(action, is(not(new GetEntityTagsAction(projectId, mock(OWLEntity.class)))));
+        assertThat(action, is(not(GetEntityTagsAction.create(projectId, mock(OWLEntity.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(action.hashCode(), is(new GetEntityTagsAction(projectId, entity).hashCode()));
+        assertThat(action.hashCode(), is(GetEntityTagsAction.create(projectId, entity).hashCode()));
     }
 
     @Test

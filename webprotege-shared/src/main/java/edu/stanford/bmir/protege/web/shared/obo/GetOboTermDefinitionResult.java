@@ -21,8 +21,12 @@ public class GetOboTermDefinitionResult implements Result {
     private GetOboTermDefinitionResult() {
     }
 
-    public GetOboTermDefinitionResult(@Nonnull OBOTermDefinition definition) {
+    private GetOboTermDefinitionResult(@Nonnull OBOTermDefinition definition) {
         this.definition = checkNotNull(definition);
+    }
+
+    public static GetOboTermDefinitionResult create(@Nonnull OBOTermDefinition definition) {
+        return new GetOboTermDefinitionResult(definition);
     }
 
     public OBOTermDefinition getDefinition() {

@@ -1,5 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -7,10 +11,8 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLDataPropertyData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLDatatypeData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 
 import javax.annotation.Nonnull;
-import java.io.DataOutput;
 import java.io.Serializable;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
@@ -23,14 +25,16 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("DataPropertyFrame")
 public abstract class DataPropertyFrame implements EntityFrame<OWLDataPropertyData>, Serializable, HasPropertyValueList, HasPropertyValues, HasAnnotationPropertyValues, HasLogicalPropertyValues {
 
+    @JsonCreator
     @Nonnull
-    public static DataPropertyFrame get(@Nonnull OWLDataPropertyData subject,
-                                        @Nonnull ImmutableSet<PropertyValue> propertyValues,
-                                        @Nonnull ImmutableSet<OWLClassData> domains,
-                                        @Nonnull ImmutableSet<OWLDatatypeData> ranges,
-                                        boolean functional) {
+    public static DataPropertyFrame get(@JsonProperty("subject") @Nonnull OWLDataPropertyData subject,
+                                        @JsonProperty("propertyValues") @Nonnull ImmutableSet<PropertyValue> propertyValues,
+                                        @JsonProperty("domains") @Nonnull ImmutableSet<OWLClassData> domains,
+                                        @JsonProperty("ranges") @Nonnull ImmutableSet<OWLDatatypeData> ranges,
+                                        @JsonProperty("functional") boolean functional) {
         return new AutoValue_DataPropertyFrame(subject,
                                                propertyValues,
                                                domains,
@@ -61,16 +65,19 @@ public abstract class DataPropertyFrame implements EntityFrame<OWLDataPropertyDa
 
     public abstract boolean isFunctional();
 
+    @JsonIgnore
     @Override
     public PropertyValueList getPropertyValueList() {
         return new PropertyValueList(getPropertyValues());
     }
 
+    @JsonIgnore
     @Override
     public ImmutableSet<PropertyAnnotationValue> getAnnotationPropertyValues() {
         return getPropertyValueList().getAnnotationPropertyValues();
     }
 
+    @JsonIgnore
     @Override
     public ImmutableList<PropertyValue> getLogicalPropertyValues() {
         return getPropertyValueList().getLogicalPropertyValues();

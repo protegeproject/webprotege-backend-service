@@ -7,7 +7,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nonnull;
-import java.util.regex.Pattern;
 
 /**
  * Matthew Horridge

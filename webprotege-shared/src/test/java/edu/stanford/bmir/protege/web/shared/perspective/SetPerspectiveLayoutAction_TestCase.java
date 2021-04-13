@@ -29,12 +29,12 @@ public class SetPerspectiveLayoutAction_TestCase {
     public void setUp()
         throws Exception
     {
-        setPerspectiveLayoutAction = new SetPerspectiveLayoutAction(projectId, userId, layout);
+        setPerspectiveLayoutAction = SetPerspectiveLayoutAction.create(projectId, userId, layout);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new SetPerspectiveLayoutAction(null, userId, layout);
+        SetPerspectiveLayoutAction.create(null, userId, layout);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class SetPerspectiveLayoutAction_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
-        new SetPerspectiveLayoutAction(projectId, null, layout);
+        SetPerspectiveLayoutAction.create(projectId, null, layout);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class SetPerspectiveLayoutAction_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_layout_IsNull() {
-        new SetPerspectiveLayoutAction(projectId, userId, null);
+        SetPerspectiveLayoutAction.create(projectId, userId, null);
     }
 
     @Test
@@ -74,27 +74,28 @@ public class SetPerspectiveLayoutAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(setPerspectiveLayoutAction, is(new SetPerspectiveLayoutAction(projectId, userId, layout)));
+        assertThat(setPerspectiveLayoutAction, is(SetPerspectiveLayoutAction.create(projectId, userId, layout)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(setPerspectiveLayoutAction, is(Matchers.not(new SetPerspectiveLayoutAction(mock(ProjectId.class), userId, layout))));
+        assertThat(setPerspectiveLayoutAction, is(Matchers.not(SetPerspectiveLayoutAction.create(mock(ProjectId.class), userId, layout))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(setPerspectiveLayoutAction, is(Matchers.not(new SetPerspectiveLayoutAction(projectId, mock(UserId.class), layout))));
+        assertThat(setPerspectiveLayoutAction, is(Matchers.not(SetPerspectiveLayoutAction.create(projectId, mock(UserId.class), layout))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_layout() {
-        assertThat(setPerspectiveLayoutAction, is(Matchers.not(new SetPerspectiveLayoutAction(projectId, userId, mock(PerspectiveLayout.class)))));
+        assertThat(setPerspectiveLayoutAction, is(Matchers.not(SetPerspectiveLayoutAction.create(projectId, userId, mock(PerspectiveLayout.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(setPerspectiveLayoutAction.hashCode(), is(new SetPerspectiveLayoutAction(projectId, userId, layout).hashCode()));
+        assertThat(setPerspectiveLayoutAction.hashCode(), is(SetPerspectiveLayoutAction.create(projectId, userId, layout)
+                                                                                       .hashCode()));
     }
 
     @Test

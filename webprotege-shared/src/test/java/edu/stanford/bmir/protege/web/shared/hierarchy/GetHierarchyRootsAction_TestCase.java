@@ -2,19 +2,14 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,13 +23,13 @@ public class GetHierarchyRootsAction_TestCase {
 
     @Before
     public void setUp() {
-        action = new GetHierarchyRootsAction(projectId, hierarchyId);
+        action = GetHierarchyRootsAction.create(projectId, hierarchyId);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetHierarchyRootsAction(null, hierarchyId);
+        GetHierarchyRootsAction.create(null, hierarchyId);
     }
 
     @Test
@@ -45,7 +40,7 @@ public class GetHierarchyRootsAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_hierarchyId_IsNull() {
-        new GetHierarchyRootsAction(projectId, null);
+        GetHierarchyRootsAction.create(projectId, null);
     }
 
     @Test
@@ -66,22 +61,22 @@ public class GetHierarchyRootsAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(action, is(new GetHierarchyRootsAction(projectId, hierarchyId)));
+        assertThat(action, is(GetHierarchyRootsAction.create(projectId, hierarchyId)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(new GetHierarchyRootsAction(mock(ProjectId.class), hierarchyId))));
+        assertThat(action, is(not(GetHierarchyRootsAction.create(mock(ProjectId.class), hierarchyId))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_hierarchyId() {
-        assertThat(action, is(not(new GetHierarchyRootsAction(projectId, mock(HierarchyId.class)))));
+        assertThat(action, is(not(GetHierarchyRootsAction.create(projectId, mock(HierarchyId.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(action.hashCode(), is(new GetHierarchyRootsAction(projectId, hierarchyId).hashCode()));
+        assertThat(action.hashCode(), is(GetHierarchyRootsAction.create(projectId, hierarchyId).hashCode()));
     }
 
     @Test

@@ -31,13 +31,13 @@ public class GetHeadRevisionNumberResult_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        result = new GetHeadRevisionNumberResult(revisionNumber);
-        otherResult = new GetHeadRevisionNumberResult(revisionNumber);
+        result = GetHeadRevisionNumberResult.create(revisionNumber);
+        otherResult = GetHeadRevisionNumberResult.create(revisionNumber);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new GetHeadRevisionNumberResult(null);
+        GetHeadRevisionNumberResult.create(null);
     }
 
     @Test

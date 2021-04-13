@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.Objects;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -18,10 +20,12 @@ public class ChapSessionId implements IsSerializable {
     private ChapSessionId() {
     }
 
+    @JsonCreator
     public ChapSessionId(String id) {
         this.id = checkNotNull(id);
     }
 
+    @JsonValue
     public String getId() {
         return id;
     }

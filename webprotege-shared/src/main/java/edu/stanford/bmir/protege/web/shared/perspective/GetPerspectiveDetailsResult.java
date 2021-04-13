@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.perspective;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -14,10 +17,12 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetPerspectiveDetails")
 public abstract class GetPerspectiveDetailsResult implements Result {
 
+    @JsonCreator
     @Nonnull
-    public static GetPerspectiveDetailsResult get(@Nonnull ImmutableList<PerspectiveDetails> perspectiveDetails) {
+    public static GetPerspectiveDetailsResult create(@JsonProperty("perspectiveDetails") @Nonnull ImmutableList<PerspectiveDetails> perspectiveDetails) {
         return new AutoValue_GetPerspectiveDetailsResult(perspectiveDetails);
     }
 

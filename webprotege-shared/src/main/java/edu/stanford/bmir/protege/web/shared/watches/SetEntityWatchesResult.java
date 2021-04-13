@@ -1,28 +1,30 @@
 package edu.stanford.bmir.protege.web.shared.watches;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 29/02/16
  */
-public class SetEntityWatchesResult implements Result, HasEventList<ProjectEvent<?>> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("SetEntityWatches")
+public abstract class SetEntityWatchesResult implements Result, HasEventList<ProjectEvent<?>> {
 
-    private EventList<ProjectEvent<?>> eventList;
-
-    private SetEntityWatchesResult() {
-    }
-
-    public SetEntityWatchesResult(EventList<ProjectEvent<?>> eventList) {
-        this.eventList = eventList;
+    @JsonCreator
+    public static SetEntityWatchesResult create(@JsonProperty("eventList") EventList<ProjectEvent<?>> eventList) {
+        return new AutoValue_SetEntityWatchesResult(eventList);
     }
 
     @Override
-    public EventList<ProjectEvent<?>> getEventList() {
-        return eventList;
-    }
+    public abstract EventList<ProjectEvent<?>> getEventList();
 }

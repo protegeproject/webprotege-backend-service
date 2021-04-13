@@ -1,8 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.perspective;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 /**
@@ -12,9 +13,11 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("ResetPerspectives")
 public abstract class ResetPerspectivesResult implements Result {
 
-    public static ResetPerspectivesResult get() {
+    @JsonCreator
+    public static ResetPerspectivesResult create() {
         return new AutoValue_ResetPerspectivesResult();
     }
 }

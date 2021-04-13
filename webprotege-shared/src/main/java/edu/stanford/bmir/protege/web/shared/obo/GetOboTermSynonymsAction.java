@@ -22,8 +22,7 @@ public class GetOboTermSynonymsAction implements ProjectAction<GetOboTermSynonym
 
     private OWLEntity entity;
 
-    public GetOboTermSynonymsAction(@Nonnull ProjectId projectId,
-                                    @Nonnull OWLEntity entity) {
+    private GetOboTermSynonymsAction(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
 
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
@@ -31,6 +30,10 @@ public class GetOboTermSynonymsAction implements ProjectAction<GetOboTermSynonym
 
     @GwtSerializationConstructor
     private GetOboTermSynonymsAction() {
+    }
+
+    public static GetOboTermSynonymsAction create(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
+        return new GetOboTermSynonymsAction(projectId, entity);
     }
 
     @Override

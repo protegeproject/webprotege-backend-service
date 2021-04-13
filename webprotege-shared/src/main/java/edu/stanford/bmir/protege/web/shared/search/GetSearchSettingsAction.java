@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.search;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -13,21 +18,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-08-17
  */
-public class GetSearchSettingsAction implements ProjectAction<GetSearchSettingsResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetSearchSettings")
+public abstract class GetSearchSettingsAction implements ProjectAction<GetSearchSettingsResult> {
 
-    private ProjectId projectId;
-
-    public GetSearchSettingsAction(ProjectId projectId) {
-        this.projectId = checkNotNull(projectId);
-    }
-
-    @GwtSerializationConstructor
-    private GetSearchSettingsAction() {
+    @JsonCreator
+    public static GetSearchSettingsAction create(@JsonProperty("projectId") ProjectId projectId) {
+        return new AutoValue_GetSearchSettingsAction(projectId);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 }

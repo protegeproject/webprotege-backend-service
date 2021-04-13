@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
@@ -13,20 +18,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-14
  */
-public class GetAvailableProjectsWithPermissionResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName(value = "GetAvailableProjectsWithPermission")
+public abstract class GetAvailableProjectsWithPermissionResult implements Result {
 
-    private ImmutableList<ProjectDetails> projects;
-
-    public GetAvailableProjectsWithPermissionResult(@Nonnull ImmutableList<ProjectDetails> projects) {
-        this.projects = checkNotNull(projects);
-    }
-
-    @GwtSerializationConstructor
-    private GetAvailableProjectsWithPermissionResult() {
+    @JsonCreator
+    public static GetAvailableProjectsWithPermissionResult create(@JsonProperty("projects") @Nonnull ImmutableList<ProjectDetails> projects) {
+        return new AutoValue_GetAvailableProjectsWithPermissionResult(projects);
     }
 
     @Nonnull
-    public ImmutableList<ProjectDetails> getProjects() {
-        return projects;
-    }
+    public abstract ImmutableList<ProjectDetails> getProjects();
 }

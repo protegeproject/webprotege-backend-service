@@ -1,22 +1,18 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.HasSignature;
 import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
-import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import static com.google.common.collect.ImmutableList.toImmutableList;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
 /**
@@ -30,13 +26,15 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("ClassFrame")
 public abstract class ClassFrame implements EntityFrame<OWLClassData>, Serializable, HasPropertyValueList, HasPropertyValues, HasAnnotationPropertyValues, HasLogicalPropertyValues {
 
 
+    @JsonCreator
     @Nonnull
-    public static ClassFrame get(@Nonnull OWLClassData subject,
-                                 @Nonnull ImmutableSet<OWLClassData> classEntries,
-                                 @Nonnull ImmutableSet<PropertyValue> propertyValues) {
+    public static ClassFrame get(@JsonProperty("subject") @Nonnull OWLClassData subject,
+                                 @JsonProperty("classes") @Nonnull ImmutableSet<OWLClassData> classEntries,
+                                 @JsonProperty("propertyValues") @Nonnull ImmutableSet<PropertyValue> propertyValues) {
 
         return new AutoValue_ClassFrame(subject,
                                         classEntries,
@@ -52,9 +50,11 @@ public abstract class ClassFrame implements EntityFrame<OWLClassData>, Serializa
      *
      * @return The subject.  Not {@code null}.
      */
+    @JsonProperty("subject")
     @Nonnull
     public abstract OWLClassData getSubject();
 
+    @JsonProperty("classes")
     @Nonnull
     public abstract ImmutableSet<OWLClassData> getClassEntries();
 
@@ -63,21 +63,25 @@ public abstract class ClassFrame implements EntityFrame<OWLClassData>, Serializa
      *
      * @return The (possibly empty) set of property values in this frame. Not {@code null}.  The returned set is unmodifiable.
      */
+    @JsonProperty("propertyValues")
     @Nonnull
     public abstract ImmutableSet<PropertyValue> getPropertyValues();
 
 
+    @JsonIgnore
     @Nonnull
     @Override
     public PropertyValueList getPropertyValueList() {
         return new PropertyValueList(getPropertyValues());
     }
 
+    @JsonIgnore
     @Nonnull
     public ImmutableSet<PropertyAnnotationValue> getAnnotationPropertyValues() {
         return getPropertyValueList().getAnnotationPropertyValues();
     }
 
+    @JsonIgnore
     @Nonnull
     public ImmutableList<PropertyValue> getLogicalPropertyValues() {
         return getPropertyValueList().getLogicalPropertyValues();

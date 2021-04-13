@@ -21,8 +21,12 @@ public class SetProjectSettingsResult implements Result {
 
     }
 
-    public SetProjectSettingsResult(@Nonnull ProjectSettings projectSettings) {
+    private SetProjectSettingsResult(@Nonnull ProjectSettings projectSettings) {
         this.projectSettings = checkNotNull(projectSettings);
+    }
+
+    public static SetProjectSettingsResult create(@Nonnull ProjectSettings projectSettings) {
+        return new SetProjectSettingsResult(projectSettings);
     }
 
     public ProjectSettings getProjectSettings() {

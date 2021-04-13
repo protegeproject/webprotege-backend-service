@@ -2,13 +2,9 @@ package edu.stanford.bmir.protege.web.shared.project;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

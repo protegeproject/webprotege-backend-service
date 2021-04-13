@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.dispatch;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.permissions.PermissionDeniedException;
@@ -13,25 +18,15 @@ import java.util.Optional;
  * Stanford Center for Biomedical Informatics Research
  * 28 Oct 2018
  */
-public class ActionExecutionResult implements IsSerializable {
+@GwtCompatible(serializable = true)
+@AutoValue
+public abstract class ActionExecutionResult implements IsSerializable {
 
-    @Nullable
-    private DispatchServiceResultContainer result;
-
-    @Nullable
-    private PermissionDeniedException permissionDeniedException;
-
-    @Nullable
-    private ActionExecutionException actionExecutionException;
-
-    @GwtSerializationConstructor
-    private ActionExecutionResult() {
-    }
-
-    private ActionExecutionResult(DispatchServiceResultContainer result, PermissionDeniedException permissionDeniedException, ActionExecutionException actionExecutionException) {
-        this.result = result;
-        this.permissionDeniedException = permissionDeniedException;
-        this.actionExecutionException = actionExecutionException;
+    @JsonCreator
+    private static ActionExecutionResult create(@Nullable @JsonProperty("result") DispatchServiceResultContainer result,
+                                    @Nullable @JsonProperty("permissionDeniedException") PermissionDeniedException permissionDeniedException,
+                                    @Nullable @JsonProperty("actionExecutionException") ActionExecutionException actionExecutionException) {
+        return new AutoValue_ActionExecutionResult(result, permissionDeniedException, actionExecutionException);
     }
 
     /**
@@ -39,7 +34,7 @@ public class ActionExecutionResult implements IsSerializable {
      * wrapped in a {@link DispatchServiceResultContainer}.
      */
     public static ActionExecutionResult get(DispatchServiceResultContainer result) {
-        return new ActionExecutionResult(result, null, null);
+        return create(result, null, null);
     }
 
     /**
@@ -47,28 +42,39 @@ public class ActionExecutionResult implements IsSerializable {
      * @param permissionDeniedException The exception.
      */
     public static ActionExecutionResult get(PermissionDeniedException permissionDeniedException) {
-        return new ActionExecutionResult(null, permissionDeniedException, null);
+        return create(null, permissionDeniedException, null);
     }
 
     /**
      * Get an {@link ActionExecutionResult} for an {@link ActionExecutionException}.
      */
     public static ActionExecutionResult get(ActionExecutionException actionExecutionException) {
-        return new ActionExecutionResult(null, null, actionExecutionException);
+        return create(null, null, actionExecutionException);
     }
 
     @Nonnull
     public Optional<DispatchServiceResultContainer> getResult() {
-        return Optional.ofNullable(result);
+        return Optional.ofNullable(getResultInternal());
     }
+
+    @Nullable
+    @JsonIgnore
+    protected abstract DispatchServiceResultContainer getResultInternal();
 
     @Nonnull
     public Optional<PermissionDeniedException> getPermissionDeniedException() {
-        return Optional.ofNullable(permissionDeniedException);
+        return Optional.ofNullable(getPermissionDeniedExceptionInternal());
     }
 
+    @Nullable
+    public abstract PermissionDeniedException getPermissionDeniedExceptionInternal();
+
     @Nonnull
+    @JsonIgnore
     public Optional<ActionExecutionException> getActionExecutionException() {
-        return Optional.ofNullable(actionExecutionException);
+        return Optional.ofNullable(getActionExecutionExceptionInternal());
     }
+
+    @Nullable
+    public abstract ActionExecutionException getActionExecutionExceptionInternal();
 }

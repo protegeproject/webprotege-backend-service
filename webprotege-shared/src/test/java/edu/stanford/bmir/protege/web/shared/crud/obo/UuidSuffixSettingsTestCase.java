@@ -1,11 +1,12 @@
 package edu.stanford.bmir.protege.web.shared.crud.obo;
 
+import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidFormat;
 import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixKit;
 import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidFormat;
 import org.junit.Test;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertSame;
 
 /**
  * Author: Matthew Horridge<br>

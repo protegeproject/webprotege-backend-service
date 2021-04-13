@@ -1,10 +1,15 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
+import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
 
@@ -14,16 +19,15 @@ import org.semanticweb.owlapi.model.OWLClass;
  * Bio-Medical Informatics Research Group<br>
  * Date: 22/02/2013
  */
-@SuppressWarnings("GwtInconsistentSerializableClass" )
-public class CreateClassesResult extends CreateEntitiesInHierarchyResult<OWLClass> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CreateClasses")
+public abstract class CreateClassesResult implements CreateEntitiesInHierarchyResult<OWLClass> {
 
-    @GwtSerializationConstructor
-    private CreateClassesResult() {
-    }
-
-    public CreateClassesResult(ProjectId projectId,
-                               ImmutableSet<EntityNode> classes,
-                               EventList<ProjectEvent<?>> eventList) {
-        super(projectId, classes, eventList);
+    @JsonCreator
+    public static CreateClassesResult create(@JsonProperty("projectId") ProjectId projectId,
+                               @JsonProperty("entities") ImmutableSet<EntityNode> classes,
+                               @JsonProperty("eventList") EventList<ProjectEvent<?>> eventList) {
+        return new AutoValue_CreateClassesResult(projectId, eventList, classes);
     }
 }

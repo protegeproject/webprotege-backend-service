@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.user;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.auth.Salt;
 import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
@@ -13,6 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 19/02/15
  */
+@JsonTypeName("CreateUserAccount")
 public class CreateUserAccountAction implements Action<CreateUserAccountResult> {
 
     private UserId userId;
@@ -29,7 +33,11 @@ public class CreateUserAccountAction implements Action<CreateUserAccountResult> 
     private CreateUserAccountAction() {
     }
 
-    public CreateUserAccountAction(UserId userId, EmailAddress emailAddress, SaltedPasswordDigest passwordDigest, Salt salt) {
+    @JsonCreator
+    public CreateUserAccountAction(@JsonProperty("userId") UserId userId,
+                                   @JsonProperty("emailAddress") EmailAddress emailAddress,
+                                   @JsonProperty("passwordDigest") SaltedPasswordDigest passwordDigest,
+                                   @JsonProperty("salt") Salt salt) {
         this.userId = checkNotNull(userId);
         this.emailAddress = checkNotNull(emailAddress);
         this.passwordDigest = checkNotNull(passwordDigest);

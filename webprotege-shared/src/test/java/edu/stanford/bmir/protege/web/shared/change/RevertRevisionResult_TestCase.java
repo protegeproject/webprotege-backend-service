@@ -1,8 +1,8 @@
 
 package edu.stanford.bmir.protege.web.shared.change;
 
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
+import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
 import org.hamcrest.MatcherAssert;
@@ -29,12 +29,12 @@ public class RevertRevisionResult_TestCase {
 
     @Before
     public void setUp() {
-        revertRevisionResult = RevertRevisionResult.get(projectId, revisionNumber, eventList);
+        revertRevisionResult = RevertRevisionResult.create(projectId, revisionNumber, eventList);
     }
 
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        RevertRevisionResult.get(null, revisionNumber, eventList);
+        RevertRevisionResult.create(null, revisionNumber, eventList);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class RevertRevisionResult_TestCase {
 
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_eventList_IsNull() {
-        RevertRevisionResult.get(projectId, revisionNumber, null);
+        RevertRevisionResult.create(projectId, revisionNumber, null);
     }
 
     @Test
@@ -64,22 +64,22 @@ public class RevertRevisionResult_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(RevertRevisionResult.get(projectId, revisionNumber, eventList)));
+        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(RevertRevisionResult.create(projectId, revisionNumber, eventList)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(Matchers.not(RevertRevisionResult.get(Mockito.mock(ProjectId.class),revisionNumber, eventList))));
+        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(Matchers.not(RevertRevisionResult.create(Mockito.mock(ProjectId.class), revisionNumber, eventList))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_eventList() {
-        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(Matchers.not(RevertRevisionResult.get(projectId,revisionNumber, Mockito.mock(EventList.class)))));
+        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(Matchers.not(RevertRevisionResult.create(projectId, revisionNumber, Mockito.mock(EventList.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        MatcherAssert.assertThat(revertRevisionResult.hashCode(), Matchers.is(RevertRevisionResult.get(projectId, revisionNumber, eventList).hashCode()));
+        MatcherAssert.assertThat(revertRevisionResult.hashCode(), Matchers.is(RevertRevisionResult.create(projectId, revisionNumber, eventList).hashCode()));
     }
 
     @Test

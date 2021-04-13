@@ -26,12 +26,12 @@ public class RevertRevisionAction_TestCase {
     public void setUp()
         throws Exception
     {
-        revertRevisionAction = new RevertRevisionAction(projectId, revisionNumber);
+        revertRevisionAction = RevertRevisionAction.create(projectId, revisionNumber);
     }
 
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new RevertRevisionAction(null, revisionNumber);
+        RevertRevisionAction.create(null, revisionNumber);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class RevertRevisionAction_TestCase {
 
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_revisionNumber_IsNull() {
-        new RevertRevisionAction(projectId, null);
+        RevertRevisionAction.create(projectId, null);
     }
 
     @Test
@@ -61,22 +61,23 @@ public class RevertRevisionAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        MatcherAssert.assertThat(revertRevisionAction, Matchers.is(new RevertRevisionAction(projectId, revisionNumber)));
+        MatcherAssert.assertThat(revertRevisionAction, Matchers.is(RevertRevisionAction.create(projectId, revisionNumber)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        MatcherAssert.assertThat(revertRevisionAction, Matchers.is(Matchers.not(new RevertRevisionAction(Mockito.mock(ProjectId.class), revisionNumber))));
+        MatcherAssert.assertThat(revertRevisionAction, Matchers.is(Matchers.not(RevertRevisionAction.create(Mockito.mock(ProjectId.class), revisionNumber))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_revisionNumber() {
-        MatcherAssert.assertThat(revertRevisionAction, Matchers.is(Matchers.not(new RevertRevisionAction(projectId, Mockito.mock(RevisionNumber.class)))));
+        MatcherAssert.assertThat(revertRevisionAction, Matchers.is(Matchers.not(RevertRevisionAction.create(projectId, Mockito.mock(RevisionNumber.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        MatcherAssert.assertThat(revertRevisionAction.hashCode(), Matchers.is(new RevertRevisionAction(projectId, revisionNumber).hashCode()));
+        MatcherAssert.assertThat(revertRevisionAction.hashCode(), Matchers.is(RevertRevisionAction.create(projectId, revisionNumber)
+                                                                                                  .hashCode()));
     }
 
     @Test

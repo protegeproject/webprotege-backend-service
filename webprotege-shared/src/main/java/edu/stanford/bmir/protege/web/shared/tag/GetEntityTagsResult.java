@@ -23,14 +23,18 @@ public class GetEntityTagsResult implements Result {
 
     private List<Tag> projectTags;
 
-    public GetEntityTagsResult(@Nonnull Collection<Tag> entityTags,
-                               @Nonnull Collection<Tag> projectTags) {
+    private GetEntityTagsResult(@Nonnull Collection<Tag> entityTags, @Nonnull Collection<Tag> projectTags) {
         this.entityTags = new ArrayList<>(checkNotNull(entityTags));
         this.projectTags = new ArrayList<>(checkNotNull(projectTags));
     }
 
     @GwtSerializationConstructor
     private GetEntityTagsResult() {
+    }
+
+    public static GetEntityTagsResult create(@Nonnull Collection<Tag> entityTags,
+                                             @Nonnull Collection<Tag> projectTags) {
+        return new GetEntityTagsResult(entityTags, projectTags);
     }
 
     /**

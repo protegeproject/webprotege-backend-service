@@ -4,11 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
-import org.semanticweb.owlapi.model.OWLClass;
-
+import edu.stanford.bmir.protege.web.shared.match.criteria.CompositeHierarchyPositionCriteria;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

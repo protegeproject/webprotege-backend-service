@@ -22,14 +22,19 @@ public class SetProjectPrefixDeclarationsAction implements ProjectAction<SetProj
 
     private List<PrefixDeclaration> prefixDeclarations;
 
-    public SetProjectPrefixDeclarationsAction(@Nonnull ProjectId projectId,
-                                              @Nonnull List<PrefixDeclaration> prefixDeclarations) {
+    private SetProjectPrefixDeclarationsAction(@Nonnull ProjectId projectId,
+                                               @Nonnull List<PrefixDeclaration> prefixDeclarations) {
         this.projectId = checkNotNull(projectId);
         this.prefixDeclarations = new ArrayList<>(checkNotNull(prefixDeclarations));
     }
 
     @GwtSerializationConstructor
     private SetProjectPrefixDeclarationsAction() {
+    }
+
+    public static SetProjectPrefixDeclarationsAction create(@Nonnull ProjectId projectId,
+                                                            @Nonnull List<PrefixDeclaration> prefixDeclarations) {
+        return new SetProjectPrefixDeclarationsAction(projectId, prefixDeclarations);
     }
 
     @Nonnull

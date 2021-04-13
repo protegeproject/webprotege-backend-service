@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.search;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -14,10 +17,12 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetSearchSettings")
 public abstract class GetSearchSettingsResult implements Result {
 
+    @JsonCreator
     @Nonnull
-    public static GetSearchSettingsResult get(@Nonnull ImmutableList<EntitySearchFilter> filters) {
+    public static GetSearchSettingsResult create(@JsonProperty("filters") @Nonnull ImmutableList<EntitySearchFilter> filters) {
         return new AutoValue_GetSearchSettingsResult(filters);
     }
 

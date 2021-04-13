@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
@@ -12,18 +15,26 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetManchesterSyntaxFrame")
 public abstract class GetManchesterSyntaxFrameResult implements Result {
 
+    private static final String SUBJECT = "subject";
+
+    private static final String RENDERING = "rendering";
+
+    @JsonCreator
     @Nonnull
-    public static GetManchesterSyntaxFrameResult get(@Nonnull OWLEntityData frameSubject,
-                                                     @Nonnull String frameRendering) {
+    public static GetManchesterSyntaxFrameResult create(@JsonProperty(SUBJECT) @Nonnull OWLEntityData frameSubject,
+                                                        @JsonProperty(RENDERING) @Nonnull String frameRendering) {
         return new AutoValue_GetManchesterSyntaxFrameResult(frameSubject,
                                                             frameRendering);
     }
 
+    @JsonProperty(SUBJECT)
     @Nonnull
     public abstract OWLEntityData getFrameSubject();
 
+    @JsonProperty(RENDERING)
     @Nonnull
     public abstract String getFrameManchesterSyntax();
 }

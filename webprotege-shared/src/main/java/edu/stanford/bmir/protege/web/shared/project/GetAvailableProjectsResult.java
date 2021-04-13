@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
@@ -13,20 +18,16 @@ import java.util.List;
  * Bio-Medical Informatics Research Group<br>
  * Date: 01/04/2013
  */
-public class GetAvailableProjectsResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetAvailableProjects")
+public abstract class GetAvailableProjectsResult implements Result {
 
-    private List<AvailableProject> details;
-
-    @GwtSerializationConstructor
-    private GetAvailableProjectsResult() {
+    @JsonCreator
+    public static GetAvailableProjectsResult create(@JsonProperty("availableProjects") List<AvailableProject> availableProjects) {
+        return new AutoValue_GetAvailableProjectsResult(availableProjects);
     }
 
-    public GetAvailableProjectsResult(List<AvailableProject> details) {
-        this.details = new ArrayList<>(details);
-    }
 
-
-    public List<AvailableProject> getDetails() {
-        return Collections.unmodifiableList(details);
-    }
+    public abstract List<AvailableProject> getAvailableProjects();
 }

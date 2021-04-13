@@ -4,7 +4,6 @@ package edu.stanford.bmir.protege.web.shared.projectsettings;
 import edu.stanford.bmir.protege.web.shared.lang.DisplayNameSettings;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

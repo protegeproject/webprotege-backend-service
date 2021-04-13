@@ -22,14 +22,17 @@ public class GetOboTermRelationshipsAction implements ProjectAction<GetOboTermRe
 
     private OWLClass entity;
 
-    public GetOboTermRelationshipsAction(@Nonnull ProjectId projectId,
-                                         @Nonnull OWLClass entity) {
+    private GetOboTermRelationshipsAction(@Nonnull ProjectId projectId, @Nonnull OWLClass entity) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
     }
 
     @GwtSerializationConstructor
     private GetOboTermRelationshipsAction() {
+    }
+
+    public static GetOboTermRelationshipsAction create(@Nonnull ProjectId projectId, @Nonnull OWLClass entity) {
+        return new GetOboTermRelationshipsAction(projectId, entity);
     }
 
     @Override

@@ -23,13 +23,13 @@ public class GetOboTermIdAction_TestCase {
 
     @Before
     public void setUp() {
-        getOboTermIdAction = new GetOboTermIdAction(projectId, term);
+        getOboTermIdAction = GetOboTermIdAction.create(projectId, term);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetOboTermIdAction(null, term);
+        GetOboTermIdAction.create(null, term);
     }
 
     @Test
@@ -40,7 +40,7 @@ public class GetOboTermIdAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_term_IsNull() {
-        new GetOboTermIdAction(projectId, null);
+        GetOboTermIdAction.create(projectId, null);
     }
 
     @Test
@@ -61,22 +61,22 @@ public class GetOboTermIdAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboTermIdAction, is(new GetOboTermIdAction(projectId, term)));
+        assertThat(getOboTermIdAction, is(GetOboTermIdAction.create(projectId, term)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboTermIdAction, is(not(new GetOboTermIdAction(mock(ProjectId.class), term))));
+        assertThat(getOboTermIdAction, is(not(GetOboTermIdAction.create(mock(ProjectId.class), term))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_term() {
-        assertThat(getOboTermIdAction, is(not(new GetOboTermIdAction(projectId, mock(OWLEntity.class)))));
+        assertThat(getOboTermIdAction, is(not(GetOboTermIdAction.create(projectId, mock(OWLEntity.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboTermIdAction.hashCode(), is(new GetOboTermIdAction(projectId, term).hashCode()));
+        assertThat(getOboTermIdAction.hashCode(), is(GetOboTermIdAction.create(projectId, term).hashCode()));
     }
 
     @Test

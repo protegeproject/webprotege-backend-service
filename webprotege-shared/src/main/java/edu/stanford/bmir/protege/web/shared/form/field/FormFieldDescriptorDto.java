@@ -8,13 +8,10 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.form.ExpansionState;
 import edu.stanford.bmir.protege.web.shared.form.HasFormFieldId;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import org.semanticweb.owlapi.model.OWLProperty;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
-
-import static edu.stanford.bmir.protege.web.shared.form.field.FormFieldDescriptor.INITIAL_EXPANSIONS_STATE;
 
 @GwtCompatible(serializable = true)
 @AutoValue

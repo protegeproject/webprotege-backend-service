@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
-import edu.stanford.bmir.protege.web.shared.form.data.*;
+import edu.stanford.bmir.protege.web.shared.form.data.EntityFormControlData;
+import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlData;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

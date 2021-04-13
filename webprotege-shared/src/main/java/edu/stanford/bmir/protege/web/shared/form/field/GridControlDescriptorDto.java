@@ -9,7 +9,6 @@ import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Optional;
 import java.util.stream.Stream;
 

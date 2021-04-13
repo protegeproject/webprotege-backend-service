@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.crud;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import java.util.ArrayList;
@@ -13,25 +18,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 8/19/13
  */
-public class GetEntityCrudKitsResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityCrudKits")
+public abstract class GetEntityCrudKitsResult implements Result {
 
-    private List<EntityCrudKit<?>> kits = new ArrayList<>();
 
-    private EntityCrudKitSettings<?> currentSettings;
-
-    private GetEntityCrudKitsResult() {
+    @JsonCreator
+    public static GetEntityCrudKitsResult create(@JsonProperty("kits") List<EntityCrudKit<?>> kits,
+                                                 @JsonProperty("currentSettings") EntityCrudKitSettings<?> currentSettings) {
+        return new AutoValue_GetEntityCrudKitsResult(kits, currentSettings);
     }
 
-    public GetEntityCrudKitsResult(List<EntityCrudKit<?>> kits, EntityCrudKitSettings<?> currentSettings) {
-        this.kits = checkNotNull(kits);
-        this.currentSettings = checkNotNull(currentSettings);
-    }
+    public abstract List<EntityCrudKit<?>> getKits();
 
-    public List<EntityCrudKit<?>> getKits() {
-        return new ArrayList<EntityCrudKit<?>>(kits);
-    }
-
-    public EntityCrudKitSettings<?> getCurrentSettings() {
-        return currentSettings;
-    }
+    public abstract EntityCrudKitSettings<?> getCurrentSettings();
 }

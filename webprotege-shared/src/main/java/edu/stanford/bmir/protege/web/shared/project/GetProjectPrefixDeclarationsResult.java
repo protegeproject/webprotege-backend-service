@@ -22,13 +22,18 @@ public class GetProjectPrefixDeclarationsResult implements Result {
 
     private List<PrefixDeclaration> prefixDeclarations;
 
-    public GetProjectPrefixDeclarationsResult(ProjectId projectId, List<PrefixDeclaration> prefixDeclarations) {
+    private GetProjectPrefixDeclarationsResult(ProjectId projectId, List<PrefixDeclaration> prefixDeclarations) {
         this.projectId = checkNotNull(projectId);
         this.prefixDeclarations = new ArrayList<>(checkNotNull(prefixDeclarations));
     }
 
     @GwtSerializationConstructor
     private GetProjectPrefixDeclarationsResult() {
+    }
+
+    public static GetProjectPrefixDeclarationsResult create(ProjectId projectId,
+                                                            List<PrefixDeclaration> prefixDeclarations) {
+        return new GetProjectPrefixDeclarationsResult(projectId, prefixDeclarations);
     }
 
     @Nonnull

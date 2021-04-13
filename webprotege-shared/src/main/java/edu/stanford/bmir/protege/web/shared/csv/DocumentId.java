@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.csv;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.io.Serializable;
 
 /**
@@ -23,6 +26,7 @@ public class DocumentId implements Serializable {
      * not reveal location specific information.  Not <code>null</code>.
      * @throws NullPointerException is documentId is <code>null</code>.
      */
+    @JsonCreator
     public DocumentId(String documentId) {
         if(documentId == null) {
             throw new NullPointerException("documentId must not be null");
@@ -41,6 +45,7 @@ public class DocumentId implements Serializable {
      * @return A string that identifies the document.  This string just acts as a "handle" to a document - it does
      * not reveal location specific information (assuming the document actually exists as a file on the server).
      */
+    @JsonValue
     public String getDocumentId() {
         return documentId;
     }

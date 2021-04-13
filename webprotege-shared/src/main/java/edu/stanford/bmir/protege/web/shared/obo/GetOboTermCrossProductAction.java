@@ -22,14 +22,17 @@ public class GetOboTermCrossProductAction implements ProjectAction<GetOboTermCro
 
     private OWLClass entity;
 
-    public GetOboTermCrossProductAction(@Nonnull ProjectId projectId,
-                                        @Nonnull OWLClass entity) {
+    private GetOboTermCrossProductAction(@Nonnull ProjectId projectId, @Nonnull OWLClass entity) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
     }
 
     @GwtSerializationConstructor
     private GetOboTermCrossProductAction() {
+    }
+
+    public static GetOboTermCrossProductAction create(@Nonnull ProjectId projectId, @Nonnull OWLClass entity) {
+        return new GetOboTermCrossProductAction(projectId, entity);
     }
 
     @Override

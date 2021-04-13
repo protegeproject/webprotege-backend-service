@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.watches;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import java.util.Collections;
@@ -12,21 +17,15 @@ import java.util.Set;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/03/2013
  */
-public class GetWatchesResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetWatches")
+public abstract class GetWatchesResult implements Result {
 
-    private Set<Watch> watches;
-
-    /**
-     * For serialization purposes only
-     */
-    private GetWatchesResult() {
+    @JsonCreator
+    public static GetWatchesResult create(@JsonProperty("watches") Set<Watch> watches) {
+        return new AutoValue_GetWatchesResult(watches);
     }
 
-    public GetWatchesResult(Set<Watch> watches) {
-        this.watches = new HashSet<>(watches);
-    }
-
-    public Set<Watch> getWatches() {
-        return Collections.unmodifiableSet(watches);
-    }
+    public abstract Set<Watch> getWatches();
 }

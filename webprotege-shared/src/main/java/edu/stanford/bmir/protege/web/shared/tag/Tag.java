@@ -2,8 +2,6 @@ package edu.stanford.bmir.protege.web.shared.tag;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -15,9 +13,7 @@ import edu.stanford.bmir.protege.web.shared.project.WithProjectId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
-import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static edu.stanford.bmir.protege.web.shared.DeserializationUtil.nonNull;

@@ -1,11 +1,15 @@
 package edu.stanford.bmir.protege.web.shared.search;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.lang.LangTagFilter;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
+import edu.stanford.bmir.protege.web.shared.lang.LangTagFilter;
 import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.EntityType;
 
@@ -20,65 +24,42 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 21 Apr 2017
  */
-public class PerformEntitySearchAction implements ProjectAction<PerformEntitySearchResult>, HasProjectId {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("PerformEntitySearch")
+public abstract class PerformEntitySearchAction implements ProjectAction<PerformEntitySearchResult>, HasProjectId {
 
-    private ProjectId projectId;
-
-    private String searchString;
-
-    private Set<EntityType<?>> entityTypes;
-
-    private LangTagFilter langTagFilter;
-
-    private ImmutableList<EntitySearchFilter> searchFilters;
-
-    private PageRequest pageRequest;
-
-    private PerformEntitySearchAction() {
-    }
-
-    public PerformEntitySearchAction(@Nonnull ProjectId projectId,
-                                     @Nonnull String searchString,
-                                     @Nonnull Set<EntityType<?>> entityTypes,
-                                     @Nonnull LangTagFilter langTagFilter,
-                                     @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
-                                     @Nonnull PageRequest pageRequest) {
-        this.projectId = checkNotNull(projectId);
-        this.searchString = checkNotNull(searchString);
-        this.entityTypes = checkNotNull(entityTypes);
-        this.langTagFilter = checkNotNull(langTagFilter);
-        this.searchFilters = checkNotNull(searchFilters);
-        this.pageRequest = checkNotNull(pageRequest);
+    @JsonCreator
+    public static PerformEntitySearchAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                   @JsonProperty("searchString") @Nonnull String searchString,
+                                                   @JsonProperty("entityTypes") @Nonnull Set<EntityType<?>> entityTypes,
+                                                   @JsonProperty("langTagFilter") @Nonnull LangTagFilter langTagFilter,
+                                                   @JsonProperty("searchFilters") @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
+                                                   @JsonProperty("pageRequest") @Nonnull PageRequest pageRequest) {
+        return new AutoValue_PerformEntitySearchAction(projectId,
+                                             entityTypes,
+                                                       searchString,
+                                                       langTagFilter,
+                                             searchFilters,
+                                             pageRequest);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public Set<EntityType<?>> getEntityTypes() {
-        return new HashSet<>(entityTypes);
-    }
+    public abstract Set<EntityType<?>> getEntityTypes();
 
     @Nonnull
-    public String getSearchString() {
-        return searchString;
-    }
+    public abstract String getSearchString();
 
     @Nonnull
-    public LangTagFilter getLangTagFilter() {
-        return langTagFilter;
-    }
+    public abstract LangTagFilter getLangTagFilter();
 
     @Nonnull
-    public ImmutableList<EntitySearchFilter> getSearchFilters() {
-        return searchFilters;
-    }
+    public abstract ImmutableList<EntitySearchFilter> getSearchFilters();
 
     @Nonnull
-    public PageRequest getPageRequest() {
-        return pageRequest;
-    }
+    public abstract PageRequest getPageRequest();
 }

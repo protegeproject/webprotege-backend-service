@@ -20,13 +20,13 @@ public class GetOboTermDefinitionResult_TestCase {
 
     @Before
     public void setUp() {
-        getOboTermDefinitionResult = new GetOboTermDefinitionResult(definition);
+        getOboTermDefinitionResult = GetOboTermDefinitionResult.create(definition);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_definition_IsNull() {
-        new GetOboTermDefinitionResult(null);
+        GetOboTermDefinitionResult.create(null);
     }
 
     @Test
@@ -47,17 +47,17 @@ public class GetOboTermDefinitionResult_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboTermDefinitionResult, is(new GetOboTermDefinitionResult(definition)));
+        assertThat(getOboTermDefinitionResult, is(GetOboTermDefinitionResult.create(definition)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_definition() {
-        assertThat(getOboTermDefinitionResult, is(not(new GetOboTermDefinitionResult(Mockito.mock(OBOTermDefinition.class)))));
+        assertThat(getOboTermDefinitionResult, is(not(GetOboTermDefinitionResult.create(Mockito.mock(OBOTermDefinition.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboTermDefinitionResult.hashCode(), is(new GetOboTermDefinitionResult(definition).hashCode()));
+        assertThat(getOboTermDefinitionResult.hashCode(), is(GetOboTermDefinitionResult.create(definition).hashCode()));
     }
 
     @Test

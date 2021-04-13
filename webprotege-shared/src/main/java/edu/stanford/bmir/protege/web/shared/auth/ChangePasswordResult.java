@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -9,6 +10,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 19/02/15
  */
+@JsonTypeName("ChangePassword")
 public class ChangePasswordResult extends AbstractAuthenticationResult {
 
     /**

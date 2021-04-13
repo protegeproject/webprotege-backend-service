@@ -1,13 +1,18 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.DataFactory;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageData;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import edu.stanford.bmir.protege.web.shared.tag.Tag;
 import edu.stanford.bmir.protege.web.shared.watches.Watch;
 import edu.stanford.protege.gwt.graphtree.shared.tree.HasTextRendering;
@@ -16,6 +21,10 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.*;
+
+import static com.google.common.collect.ImmutableMap.toImmutableMap;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
@@ -49,10 +58,33 @@ public abstract class EntityNode implements IsSerializable, Serializable, Compar
                                         shortForms);
     }
 
+    @JsonCreator
+    @Nonnull
+    public static EntityNode get(@JsonProperty("entity") @Nonnull OWLEntity entity,
+                                 @JsonProperty("browserText") @Nonnull String browserText,
+                                 @JsonProperty("shortForms") @Nonnull ImmutableList<ShortForm> shortForms,
+                                 @JsonProperty("deprecated") boolean deprecated,
+                                 @JsonProperty("watches") @Nonnull Set<Watch> watches,
+                                 @JsonProperty("openCommentCount") int openCommentCount,
+                                 @JsonProperty("tags") Collection<Tag> tags) {
+        ImmutableMap<DictionaryLanguage, String> map = shortForms.stream()
+                                                        .collect(toImmutableMap(ShortForm::getDictionaryLanguage,
+                                                                                ShortForm::getShortForm));
+
+        return get(entity,
+                   browserText,
+                   map,
+                   deprecated,
+                   ImmutableSet.copyOf(watches),
+                   openCommentCount,
+                   ImmutableSet.copyOf(tags));
+    }
+
     /**
      * Gets a basic {@link EntityNode} for the specified {@link OWLEntityData}.  The
      * node will be rendered without any indications of deprecation status,
      * watches, open comments count, and entity tags
+     *
      * @param entityData The entity data
      * @return A basic rendering of the specified entity data
      */
@@ -60,7 +92,11 @@ public abstract class EntityNode implements IsSerializable, Serializable, Compar
     public static EntityNode getFromEntityData(@Nonnull OWLEntityData entityData) {
         return get(entityData.getEntity(),
                    entityData.getBrowserText(),
-                   entityData.getShortForms(), NOT_DEPRECATED, NO_WATCHES, NO_OPEN_COMMENTS, NO_ENTITY_TAGS);
+                   entityData.getShortForms(),
+                   NOT_DEPRECATED,
+                   NO_WATCHES,
+                   NO_OPEN_COMMENTS,
+                   NO_ENTITY_TAGS);
     }
 
     @Nonnull
@@ -69,6 +105,7 @@ public abstract class EntityNode implements IsSerializable, Serializable, Compar
     @Nonnull
     public abstract String getBrowserText();
 
+    @JsonIgnore
     @Nonnull
     @Override
     public String getText() {
@@ -87,10 +124,9 @@ public abstract class EntityNode implements IsSerializable, Serializable, Compar
                        .orElse(defaultText);
     }
 
+    @JsonIgnore
     public OWLEntityData getEntityData() {
-        return DataFactory.getOWLEntityData(getEntity(),
-                                            getShortForms(),
-                                            isDeprecated());
+        return DataFactory.getOWLEntityData(getEntity(), getShortForms(), isDeprecated());
     }
 
     public abstract ImmutableSet<Tag> getTags();
@@ -101,8 +137,17 @@ public abstract class EntityNode implements IsSerializable, Serializable, Compar
 
     public abstract int getOpenCommentCount();
 
+    @JsonIgnore
     @Nonnull
     public abstract ImmutableMap<DictionaryLanguage, String> getShortForms();
+
+    @JsonProperty("shortForms")
+    public ImmutableList<ShortForm> getShortFormsList() {
+        return getShortForms().entrySet()
+                       .stream()
+                       .map(entry -> ShortForm.get(entry.getKey(), entry.getValue()))
+                       .collect(ImmutableList.toImmutableList());
+    }
 
     @Override
     public int compareTo(EntityNode o) {

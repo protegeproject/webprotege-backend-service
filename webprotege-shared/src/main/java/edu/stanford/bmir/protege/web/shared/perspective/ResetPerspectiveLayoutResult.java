@@ -22,8 +22,12 @@ public class ResetPerspectiveLayoutResult implements Result {
     private ResetPerspectiveLayoutResult() {
     }
 
-    public ResetPerspectiveLayoutResult(@Nonnull PerspectiveLayout resetLayout) {
+    private ResetPerspectiveLayoutResult(@Nonnull PerspectiveLayout resetLayout) {
         this.resetLayout = checkNotNull(resetLayout);
+    }
+
+    public static ResetPerspectiveLayoutResult create(@Nonnull PerspectiveLayout resetLayout) {
+        return new ResetPerspectiveLayoutResult(resetLayout);
     }
 
     @Nonnull

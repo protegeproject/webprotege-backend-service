@@ -3,7 +3,6 @@ package edu.stanford.bmir.protege.web.shared.webhook;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import org.mongodb.morphia.annotations.*;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -17,10 +16,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 19 May 2017
  */
-@Entity(noClassnameStored = true)
-@Indexes({
-                 @Index(fields = {@Field(value = ProjectWebhook.PROJECT_ID), @Field(ProjectWebhook.SUBSCRIBED_TO_EVENTS)}, options = @IndexOptions(unique = true))
-         })
 public class ProjectWebhook implements Webhook, HasProjectId {
 
     public static final String PROJECT_ID = "projectId";

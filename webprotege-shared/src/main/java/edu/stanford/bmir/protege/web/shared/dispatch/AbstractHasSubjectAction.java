@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.dispatch;
 
 import edu.stanford.bmir.protege.web.shared.HasSubject;
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 /**

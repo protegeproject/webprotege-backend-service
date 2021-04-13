@@ -1,11 +1,16 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
@@ -18,55 +23,34 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 7 Oct 2016
  */
-public class AddEntityCommentResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>> {
-
-    private ProjectId projectId;
-
-    private ThreadId threadId;
-
-    private Comment comment;
-
-    private String commentRendering;
-
-    private EventList<ProjectEvent<?>> eventList;
-
-    @Inject
-    public AddEntityCommentResult(@Nonnull ProjectId projectId,
-                                  @Nonnull ThreadId threadId,
-                                  @Nonnull Comment comment,
-                                  @Nonnull String commentRendering,
-                                  @Nonnull EventList<ProjectEvent<?>> eventList) {
-        this.projectId = checkNotNull(projectId);
-        this.threadId = checkNotNull(threadId);
-        this.comment = checkNotNull(comment);
-        this.commentRendering = checkNotNull(commentRendering);
-        this.eventList = checkNotNull(eventList);
-    }
-
-    @GwtSerializationConstructor
-    private AddEntityCommentResult() {
-    }
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("AddEntityComment")
+public abstract class AddEntityCommentResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>> {
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
-    public ThreadId getThreadId() {
-        return threadId;
-    }
+    public abstract ThreadId getThreadId();
 
-    public Comment getComment() {
-        return comment;
-    }
+    public abstract Comment getComment();
 
-    public String getCommentRendering() {
-        return commentRendering;
-    }
+    public abstract String getCommentRendering();
 
     @Override
-    public EventList<ProjectEvent<?>> getEventList() {
-        return eventList;
+    public abstract EventList<ProjectEvent<?>> getEventList();
+
+    @JsonCreator
+    public static AddEntityCommentResult create(@JsonProperty("projectId") ProjectId newProjectId,
+                                                @JsonProperty("threadId") ThreadId newThreadId,
+                                                @JsonProperty("comment") Comment newComment,
+                                                @JsonProperty("commentRendering") String newCommentRendering,
+                                                @JsonProperty("eventList") EventList<ProjectEvent<?>> newEventList) {
+        return new AutoValue_AddEntityCommentResult(newProjectId,
+                                                    newThreadId,
+                                                    newComment,
+                                                    newCommentRendering,
+                                                    newEventList);
     }
 }

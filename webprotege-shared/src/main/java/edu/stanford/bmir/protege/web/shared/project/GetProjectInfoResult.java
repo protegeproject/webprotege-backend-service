@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -16,16 +19,18 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetProjectInfo")
 public abstract class GetProjectInfoResult implements Result {
 
-    public static GetProjectInfoResult get(@Nonnull ProjectSettings projectSettings,
-                                           @Nonnull ImmutableList<DictionaryLanguageUsage> languageUsage) {
+    @JsonCreator
+    public static GetProjectInfoResult create(@JsonProperty("projectSettings") @Nonnull ProjectSettings projectSettings,
+                                              @JsonProperty("projectLanguages") @Nonnull ImmutableList<DictionaryLanguageUsage> languageUsage) {
         return new AutoValue_GetProjectInfoResult(projectSettings,
                                                   languageUsage);
     }
 
     @Nonnull
-    public abstract ProjectSettings getProjectDetails();
+    public abstract ProjectSettings getProjectSettings();
 
     @Nonnull
     public abstract ImmutableList<DictionaryLanguageUsage> getProjectLanguages();

@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
@@ -14,58 +19,33 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
  */
-public class MoveHierarchyNodeAction implements ProjectAction<MoveHierarchyNodeResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("MoveHierarchyNode")
+public abstract class MoveHierarchyNodeAction implements ProjectAction<MoveHierarchyNodeResult> {
 
-    private ProjectId projectId;
-
-    private HierarchyId hierarchyId;
-
-    private Path<EntityNode> fromNodePath;
-
-    private Path<EntityNode> toNodeParentPath;
-
-    private DropType dropType;
-
-
-    public MoveHierarchyNodeAction(@Nonnull ProjectId projectId,
-                                   @Nonnull HierarchyId hierarchyId,
-                                   @Nonnull Path<EntityNode> fromNodePath,
-                                   @Nonnull Path<EntityNode> toNodeParentPath,
-                                   @Nonnull DropType dropType) {
-        this.projectId = checkNotNull(projectId);
-        this.hierarchyId = checkNotNull(hierarchyId);
-        this.fromNodePath = checkNotNull(fromNodePath);
-        this.toNodeParentPath = checkNotNull(toNodeParentPath);
-        this.dropType = checkNotNull(dropType);
-    }
-
-    @GwtSerializationConstructor
-    private MoveHierarchyNodeAction() {
+    @JsonCreator
+    public static MoveHierarchyNodeAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                 @JsonProperty("hierarchyId") @Nonnull HierarchyId hierarchyId,
+                                                 @JsonProperty("fromNodePath") @Nonnull Path<EntityNode> fromNodePath,
+                                                 @JsonProperty("toNodeParentPath") @Nonnull Path<EntityNode> toNodeParentPath,
+                                                 @JsonProperty("dropType") @Nonnull DropType dropType) {
+        return new AutoValue_MoveHierarchyNodeAction(projectId, hierarchyId, fromNodePath, toNodeParentPath, dropType);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public HierarchyId getHierarchyId() {
-        return hierarchyId;
-    }
+    public abstract HierarchyId getHierarchyId();
 
     @Nonnull
-    public Path<EntityNode> getFromNodePath() {
-        return fromNodePath;
-    }
+    public abstract Path<EntityNode> getFromNodePath();
 
     @Nonnull
-    public Path<EntityNode> getToNodeParentPath() {
-        return toNodeParentPath;
-    }
+    public abstract Path<EntityNode> getToNodeParentPath();
 
     @Nonnull
-    public DropType getDropType() {
-        return dropType;
-    }
+    public abstract DropType getDropType();
 }

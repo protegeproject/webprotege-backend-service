@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLNamedIndividualData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLObjectPropertyData;
 
 /**

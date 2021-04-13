@@ -8,7 +8,6 @@ import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.stream.DoubleStream;
 import java.util.stream.Stream;
 
 @GwtCompatible(serializable = true)

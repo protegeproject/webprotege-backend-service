@@ -1,17 +1,23 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
 
 import javax.annotation.Nonnull;
+import java.util.stream.Collectors;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
+import static dagger.internal.codegen.DaggerStreams.toImmutableList;
 
 /**
  * Author: Matthew Horridge<br>
@@ -21,30 +27,39 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("OWLClassData")
 public abstract class OWLClassData extends OWLEntityData {
 
 
 
     public static OWLClassData get(@Nonnull OWLClass cls,
                                    @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
-        return new AutoValue_OWLClassData(shortForms, false, cls);
+        return get(cls, shortForms, false);
     }
 
     public static OWLClassData get(@Nonnull OWLClass cls,
                                    @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
                                    boolean deprecated) {
-        return new AutoValue_OWLClassData(shortForms, deprecated, cls);
+        return get(cls, toShortFormList(shortForms), deprecated);
     }
 
-    @Nonnull
-    @Override
-    public abstract OWLClass getObject();
+    @JsonCreator
+    public static OWLClassData get(@JsonProperty("entity") @Nonnull OWLClass cls,
+                                   @JsonProperty("shortForms") @Nonnull ImmutableList<ShortForm> shortForms,
+                                   @JsonProperty("deprecated") boolean deprecated) {
+        return new AutoValue_OWLClassData(shortForms, deprecated, cls);
+    }
 
     @Override
     public OWLClass getEntity() {
         return getObject();
     }
 
+    @Nonnull
+    @Override
+    public abstract OWLClass getObject();
+
+    @JsonIgnore
     @Override
     public PrimitiveType getType() {
         return PrimitiveType.CLASS;

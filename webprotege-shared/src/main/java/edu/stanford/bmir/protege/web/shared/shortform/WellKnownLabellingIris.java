@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.shortform;
 
 import com.google.common.collect.ImmutableMap;
-import com.mongodb.BasicDBObject;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.vocab.DublinCoreVocabulary;
 import org.semanticweb.owlapi.vocab.Namespaces;

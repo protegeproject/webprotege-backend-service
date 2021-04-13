@@ -1,8 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
-import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.form.FormRegionPageRequest;
-
 import javax.annotation.Nonnull;
 
 /**

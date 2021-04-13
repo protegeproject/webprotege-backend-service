@@ -23,11 +23,15 @@ public class GetOboNamespacesAction implements ProjectAction<GetOboNamespacesRes
     private GetOboNamespacesAction() {
     }
 
-    public GetOboNamespacesAction(@Nonnull ProjectId projectId) {
+    private GetOboNamespacesAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
     }
 
     public static GetOboNamespacesAction getOboNamespaces(ProjectId projectId) {
+        return create(projectId);
+    }
+
+    public static GetOboNamespacesAction create(@Nonnull ProjectId projectId) {
         return new GetOboNamespacesAction(projectId);
     }
 

@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -13,52 +18,26 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 8 Oct 2016
  */
-public class EditCommentAction implements ProjectAction<EditCommentResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("EditComment")
+public abstract class EditCommentAction implements ProjectAction<EditCommentResult> {
 
-    private ProjectId projectId;
-
-    private ThreadId threadId;
-
-    private CommentId commentId;
-
-    private String body;
-
-    public static EditCommentAction editComment(@Nonnull ProjectId projectId,
-                                                @Nonnull ThreadId threadId,
-                                                @Nonnull CommentId commentId,
-                                                @Nonnull String body) {
-        return new EditCommentAction(projectId, threadId, commentId, body);
-    }
-
-    public EditCommentAction(@Nonnull ProjectId projectId,
-                             @Nonnull ThreadId threadId,
-                             @Nonnull CommentId commentId,
-                             @Nonnull String body) {
-        this.projectId = checkNotNull(projectId);
-        this.threadId = checkNotNull(threadId);
-        this.commentId = checkNotNull(commentId);
-        this.body = checkNotNull(body);
-    }
-
-    @GwtSerializationConstructor
-    private EditCommentAction() {
+    @JsonCreator
+    public static EditCommentAction editComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                @JsonProperty("threadId") @Nonnull ThreadId threadId,
+                                                @JsonProperty("commentId") @Nonnull CommentId commentId,
+                                                @JsonProperty("body") @Nonnull String body) {
+        return new AutoValue_EditCommentAction(projectId, threadId, commentId, body);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
-    public ThreadId getThreadId() {
-        return threadId;
-    }
+    public abstract ThreadId getThreadId();
 
-    public CommentId getCommentId() {
-        return commentId;
-    }
+    public abstract CommentId getCommentId();
 
-    public String getBody() {
-        return body;
-    }
+    public abstract String getBody();
 }

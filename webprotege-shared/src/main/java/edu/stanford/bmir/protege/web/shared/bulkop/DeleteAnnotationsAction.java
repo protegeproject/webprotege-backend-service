@@ -15,6 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 26 Sep 2018
  */
+@Deprecated
 public class DeleteAnnotationsAction implements ProjectAction<DeleteAnnotationsResult> {
 
     private ProjectId projectId;

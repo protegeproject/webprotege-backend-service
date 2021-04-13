@@ -3,8 +3,6 @@ package edu.stanford.bmir.protege.web.shared.form.data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import edu.stanford.bmir.protege.web.shared.match.criteria.LangTagCriteria;
-import edu.stanford.bmir.protege.web.shared.match.criteria.LexicalValueCriteria;
 import edu.stanford.bmir.protege.web.shared.match.criteria.LiteralCriteria;
 
 import javax.annotation.Nonnull;

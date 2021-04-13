@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.mail;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.user.EmailAddress;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
@@ -18,37 +23,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     The result from a {@link GetEmailAddressAction}.
  * </p>
  */
-public class GetEmailAddressResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEmailAddress")
+public abstract class GetEmailAddressResult implements Result {
 
-    private UserId userId;
-
-    @Nullable
-    private EmailAddress emailAddress;
-
-    /**
-     * For serialization purposes only
-     */
-    private GetEmailAddressResult() {
-    }
-
-    /**
-     * Constructs a {@link GetEmailAddressResult} object.
-     * @param userId The {@link UserId} of the user that the email address belongs to.  Not {@code null}.
-     * @param emailAddress The email address of the user identified by the specified {@link UserId}.  Not {@code null}.
-     * @throws NullPointerException if any parameter is {@code null}.
-     */
-    public GetEmailAddressResult(UserId userId, Optional<EmailAddress> emailAddress) {
-        this.userId = checkNotNull(userId);
-        this.emailAddress = checkNotNull(emailAddress).orElse(null);
+    @JsonCreator
+    public static GetEmailAddressResult create(@JsonProperty("userId") UserId userId,
+                                               @JsonProperty("emailAddress") @Nullable EmailAddress emailAddress) {
+        return new AutoValue_GetEmailAddressResult(userId, emailAddress);
     }
 
     /**
      * Gets the {@link UserId}.
      * @return The {@link UserId}. Not {@code null}.
      */
-    public UserId getUserId() {
-        return userId;
-    }
+    public abstract UserId getUserId();
+
+    @Nullable
+    protected abstract EmailAddress getEmailAddressInternal();
 
     /**
      * Gets the {@link EmailAddress}.
@@ -56,7 +49,7 @@ public class GetEmailAddressResult implements Result {
      * does not exist.  Not {@code null}.
      */
     public Optional<EmailAddress> getEmailAddress() {
-        return Optional.ofNullable(emailAddress);
+        return Optional.ofNullable(getEmailAddressInternal());
     }
 
 

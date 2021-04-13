@@ -1,9 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-
-import java.util.Set;
 
 /**
  * Author: Matthew Horridge<br>

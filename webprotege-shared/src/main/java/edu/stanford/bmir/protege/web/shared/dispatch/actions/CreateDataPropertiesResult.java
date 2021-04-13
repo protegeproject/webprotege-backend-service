@@ -1,9 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
+import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 
@@ -15,14 +20,15 @@ import javax.annotation.Nonnull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 25/03/2013
  */
-public class CreateDataPropertiesResult extends CreateEntitiesInHierarchyResult<OWLDataProperty> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CreateDataProperties")
+public abstract class CreateDataPropertiesResult implements CreateEntitiesInHierarchyResult<OWLDataProperty> {
 
-    public CreateDataPropertiesResult(@Nonnull ProjectId projectId,
-                                      @Nonnull ImmutableSet<EntityNode> parent,
-                                      @Nonnull EventList<ProjectEvent<?>> eventList) {
-        super(projectId, parent, eventList);
-    }
-
-    private CreateDataPropertiesResult() {
+    @JsonCreator
+    public static CreateDataPropertiesResult create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                      @JsonProperty("entities") @Nonnull ImmutableSet<EntityNode> entities,
+                                      @JsonProperty("eventList") @Nonnull EventList<ProjectEvent<?>> eventList) {
+        return new AutoValue_CreateDataPropertiesResult(projectId, eventList, entities);
     }
 }

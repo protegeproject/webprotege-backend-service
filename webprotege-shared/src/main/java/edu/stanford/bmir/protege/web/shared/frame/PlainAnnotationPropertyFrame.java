@@ -10,7 +10,6 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 
 import javax.annotation.Nonnull;
-
 import java.util.Comparator;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;

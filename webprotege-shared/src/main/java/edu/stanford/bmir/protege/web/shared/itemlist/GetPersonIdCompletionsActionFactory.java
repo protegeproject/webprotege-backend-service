@@ -10,6 +10,6 @@ import edu.stanford.bmir.protege.web.shared.sharing.PersonId;
 public class GetPersonIdCompletionsActionFactory implements GetPossibleItemCompletionsActionFactory<PersonId> {
     @Override
     public GetPossibleItemCompletionsAction<PersonId> createGetPossibleItemCompletionsAction(String currentItemName) {
-        return new GetPersonIdCompletionsAction(currentItemName);
+        return GetPersonIdCompletionsAction.create(currentItemName);
     }
 }

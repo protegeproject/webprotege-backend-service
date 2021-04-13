@@ -1,18 +1,12 @@
 package edu.stanford.bmir.protege.web.shared.shortform;
 
 import com.fasterxml.jackson.annotation.*;
-import com.google.auto.value.AutoValue;
-import com.google.auto.value.extension.memoized.Memoized;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.obo.OboId;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.vocab.SKOSVocabulary;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
 import static edu.stanford.bmir.protege.web.shared.shortform.AnnotationAssertionDictionaryLanguage.LANG;
 import static edu.stanford.bmir.protege.web.shared.shortform.AnnotationAssertionDictionaryLanguage.PROPERTY_IRI;
 import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_LABEL;

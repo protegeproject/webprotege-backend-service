@@ -29,12 +29,12 @@ public class GetUserIdCompletionsResult_TestCase {
         throws Exception
     {
         possibleItemCompletions = Arrays.asList(userId);
-        result = new GetUserIdCompletionsResult(possibleItemCompletions);
+        result = GetUserIdCompletionsResult.create(possibleItemCompletions);
     }
 
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_possibleItemCompletions_IsNull() {
-        new GetUserIdCompletionsResult(null);
+        GetUserIdCompletionsResult.create(null);
     }
 
     @Test
@@ -49,17 +49,18 @@ public class GetUserIdCompletionsResult_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        MatcherAssert.assertThat(result, Matchers.is(new GetUserIdCompletionsResult(possibleItemCompletions)));
+        MatcherAssert.assertThat(result, Matchers.is(GetUserIdCompletionsResult.create(possibleItemCompletions)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_possibleItemCompletions() {
-        MatcherAssert.assertThat(result, Matchers.is(Matchers.not(new GetUserIdCompletionsResult(Arrays.asList(mock(UserId.class))))));
+        MatcherAssert.assertThat(result, Matchers.is(Matchers.not(GetUserIdCompletionsResult.create(Arrays.asList(mock(UserId.class))))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        MatcherAssert.assertThat(result.hashCode(), Matchers.is(new GetUserIdCompletionsResult(possibleItemCompletions).hashCode()));
+        MatcherAssert.assertThat(result.hashCode(), Matchers.is(GetUserIdCompletionsResult.create(possibleItemCompletions)
+                                                                                          .hashCode()));
     }
 
     @Test

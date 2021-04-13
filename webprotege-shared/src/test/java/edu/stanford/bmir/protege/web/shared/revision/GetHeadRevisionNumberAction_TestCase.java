@@ -32,13 +32,13 @@ public class GetHeadRevisionNumberAction_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        action = new GetHeadRevisionNumberAction(projectId);
-        otherAction = new GetHeadRevisionNumberAction(projectId);
+        action = GetHeadRevisionNumberAction.create(projectId);
+        otherAction = GetHeadRevisionNumberAction.create(projectId);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new GetHeadRevisionNumberAction(null);
+        GetHeadRevisionNumberAction.create(null);
     }
 
     @Test

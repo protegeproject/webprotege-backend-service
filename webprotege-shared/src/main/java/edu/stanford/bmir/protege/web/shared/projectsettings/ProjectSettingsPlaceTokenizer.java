@@ -3,8 +3,8 @@ package edu.stanford.bmir.protege.web.shared.projectsettings;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
-import edu.stanford.bmir.protege.web.shared.place.WebProtegePlaceTokenizer;
 import edu.stanford.bmir.protege.web.shared.place.ProjectSettingsPlace;
+import edu.stanford.bmir.protege.web.shared.place.WebProtegePlaceTokenizer;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import static java.util.Optional.empty;

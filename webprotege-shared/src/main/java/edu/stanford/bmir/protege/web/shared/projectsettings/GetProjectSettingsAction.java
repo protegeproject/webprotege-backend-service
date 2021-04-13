@@ -19,8 +19,12 @@ public class GetProjectSettingsAction extends AbstractHasProjectAction<GetProjec
     public GetProjectSettingsAction() {
     }
 
-    public GetProjectSettingsAction(ProjectId projectId) {
+    private GetProjectSettingsAction(ProjectId projectId) {
         super(projectId);
+    }
+
+    public static GetProjectSettingsAction create(ProjectId projectId) {
+        return new GetProjectSettingsAction(projectId);
     }
 
     @Override

@@ -11,6 +11,6 @@ public class PerformLoginActionFactory implements AuthenticationActionFactory<Pe
 
     @Override
     public PerformLoginAction createAction(ChapSessionId sessionId, UserId userId, ChapResponse chapResponse) {
-        return new PerformLoginAction(userId, sessionId, chapResponse);
+        return PerformLoginAction.create(userId, sessionId, chapResponse);
     }
 }

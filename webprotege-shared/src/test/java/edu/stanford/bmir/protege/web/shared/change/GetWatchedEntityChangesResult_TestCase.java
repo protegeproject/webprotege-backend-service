@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.change;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,13 +32,13 @@ public class GetWatchedEntityChangesResult_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        result = new GetWatchedEntityChangesResult(changes);
-        otherResult = new GetWatchedEntityChangesResult(changes);
+        result = GetWatchedEntityChangesResult.create(changes);
+        otherResult = GetWatchedEntityChangesResult.create(changes);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new GetWatchedEntityChangesResult(null);
+        GetWatchedEntityChangesResult.create(null);
     }
 
     @Test

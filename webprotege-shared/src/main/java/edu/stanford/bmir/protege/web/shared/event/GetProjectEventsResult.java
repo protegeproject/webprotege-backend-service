@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 /**
@@ -8,21 +13,16 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/03/2013
  */
-public class GetProjectEventsResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetProjectEvents")
+public abstract class GetProjectEventsResult implements Result {
 
-    private ProjectEventList events;
-
-    /**
-     * For serialization purposes only
-     */
-    private GetProjectEventsResult() {
+    @JsonCreator
+    public static GetProjectEventsResult create(@JsonProperty("events") EventList<?> events) {
+        return new AutoValue_GetProjectEventsResult(events);
     }
 
-    public GetProjectEventsResult(ProjectEventList events) {
-        this.events = events;
-    }
+    public abstract EventList<?> getEvents();
 
-    public ProjectEventList getEvents() {
-        return events;
-    }
 }

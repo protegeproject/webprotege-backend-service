@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.lang;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.MoreObjects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -14,16 +15,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-26
  */
+@JsonTypeName("GetProjectLangTags")
 public class GetProjectLangTagsAction implements ProjectAction<GetProjectLangTagsResult> {
 
     private ProjectId projectId;
 
-    public GetProjectLangTagsAction(@Nonnull ProjectId projectId) {
+    private GetProjectLangTagsAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
     }
 
     @GwtSerializationConstructor
     private GetProjectLangTagsAction() {
+    }
+
+    public static GetProjectLangTagsAction create(@Nonnull ProjectId projectId) {
+        return new GetProjectLangTagsAction(projectId);
     }
 
     @Nonnull

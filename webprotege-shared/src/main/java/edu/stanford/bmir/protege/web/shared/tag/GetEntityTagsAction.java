@@ -22,8 +22,7 @@ public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
 
     private OWLEntity entity;
 
-    public GetEntityTagsAction(@Nonnull ProjectId projectId,
-                               @Nonnull OWLEntity entity) {
+    private GetEntityTagsAction(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
     }
@@ -40,6 +39,10 @@ public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
     @Nonnull
     public static GetEntityTagsAction getEntityTags(@Nonnull ProjectId projectId,
                                                     @Nonnull OWLEntity entity) {
+        return create(projectId, entity);
+    }
+
+    public static GetEntityTagsAction create(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
         return new GetEntityTagsAction(projectId, entity);
     }
 

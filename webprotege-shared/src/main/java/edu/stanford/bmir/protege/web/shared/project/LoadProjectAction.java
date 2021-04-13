@@ -1,7 +1,11 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
+import jsinterop.annotations.JsProperty;
 
 import javax.annotation.Nonnull;
 
@@ -14,6 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 05/04/2013
  */
+@JsonTypeName("LoadProject")
 public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectId {
 
     private ProjectId projectId;
@@ -25,7 +30,8 @@ public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectI
 
     }
 
-    public LoadProjectAction(ProjectId projectId) {
+    @JsonCreator
+    public LoadProjectAction(@JsonProperty("projectId") ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
     }
 

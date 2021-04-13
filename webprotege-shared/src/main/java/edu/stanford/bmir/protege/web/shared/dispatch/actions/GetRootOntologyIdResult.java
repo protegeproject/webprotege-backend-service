@@ -1,7 +1,12 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -13,21 +18,15 @@ import javax.annotation.Nonnull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/02/2013
  */
-public class GetRootOntologyIdResult implements Result, HasProjectId {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetRootOntologyId")
+public abstract class GetRootOntologyIdResult implements Result, HasProjectId {
 
-    private ProjectId projectId;
-
-    private OWLOntologyID ontologyID;
-
-    /**
-     * For serialization only
-     */
-    private GetRootOntologyIdResult() {
-    }
-
-    public GetRootOntologyIdResult(ProjectId projectId, OWLOntologyID owlOntologyID) {
-        this.projectId = projectId;
-        this.ontologyID = owlOntologyID;
+    @JsonCreator
+    public static GetRootOntologyIdResult create(@JsonProperty("projectId") ProjectId projectId,
+                                                 @JsonProperty("ontologyId") OWLOntologyID owlOntologyID) {
+        return new AutoValue_GetRootOntologyIdResult(projectId, owlOntologyID);
     }
 
     /**
@@ -37,11 +36,7 @@ public class GetRootOntologyIdResult implements Result, HasProjectId {
      */
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
-    public OWLOntologyID getObject() {
-        return ontologyID;
-    }
+    public abstract OWLOntologyID getOntologyId();
 }

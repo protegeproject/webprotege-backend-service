@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.obo;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -22,9 +22,13 @@ public class GetOboTermDefinitionAction extends AbstractHasProjectAction<GetOboT
     private GetOboTermDefinitionAction() {
     }
 
-    public GetOboTermDefinitionAction(ProjectId projectId, OWLEntity term) {
+    private GetOboTermDefinitionAction(ProjectId projectId, OWLEntity term) {
         super(projectId);
         this.term = checkNotNull(term);
+    }
+
+    public static GetOboTermDefinitionAction create(ProjectId projectId, OWLEntity term) {
+        return new GetOboTermDefinitionAction(projectId, term);
     }
 
     public OWLEntity getTerm() {

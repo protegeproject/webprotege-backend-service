@@ -1,8 +1,13 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -15,73 +20,33 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
  */
-public class GetHierarchyChildrenAction extends AbstractHasProjectAction<GetHierarchyChildrenResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetHierarchyChildren")
+public abstract class GetHierarchyChildrenAction extends AbstractHasProjectAction<GetHierarchyChildrenResult> {
 
-    private OWLEntity entity;
-
-    private HierarchyId hierarchyId;
-
-    private PageRequest pageRequest;
-
-    public GetHierarchyChildrenAction(@Nonnull ProjectId projectId,
-                                      @Nonnull OWLEntity entity,
-                                      @Nonnull HierarchyId hierarchyId,
-                                      @Nonnull PageRequest pageRequest) {
-        super(projectId);
-        this.entity = checkNotNull(entity);
-        this.hierarchyId = checkNotNull(hierarchyId);
-        this.pageRequest = checkNotNull(pageRequest);
+    @JsonCreator
+    public static GetHierarchyChildrenAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                    @JsonProperty("entity") @Nonnull OWLEntity entity,
+                                                    @JsonProperty("hierarchyId") @Nonnull HierarchyId hierarchyId,
+                                                    @JsonProperty("pageRequest") @Nonnull PageRequest pageRequest) {
+        return new AutoValue_GetHierarchyChildrenAction(projectId, entity, hierarchyId, pageRequest);
     }
 
-    public GetHierarchyChildrenAction(@Nonnull ProjectId projectId,
-                                      @Nonnull OWLEntity entity,
-                                      @Nonnull HierarchyId hierarchyId) {
-        this(projectId, entity, hierarchyId, PageRequest.requestSinglePage());
-    }
-
-    @GwtSerializationConstructor
-    private GetHierarchyChildrenAction() {
+    public static GetHierarchyChildrenAction create(@Nonnull ProjectId projectId,
+                                                    @Nonnull OWLEntity entity,
+                                                    @Nonnull HierarchyId hierarchyId) {
+        return create(projectId, entity, hierarchyId, PageRequest.requestFirstPage());
     }
 
     @Nonnull
-    public PageRequest getPageRequest() {
-        return pageRequest;
-    }
-
-    public OWLEntity getEntity() {
-        return entity;
-    }
-
-    public HierarchyId getHierarchyId() {
-        return hierarchyId;
-    }
-
     @Override
-    public int hashCode() {
-        return Objects.hashCode(entity, hierarchyId);
-    }
+    public abstract ProjectId getProjectId();
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof GetHierarchyChildrenAction)) {
-            return false;
-        }
-        GetHierarchyChildrenAction other = (GetHierarchyChildrenAction) obj;
-        return this.entity.equals(other.entity)
-                && this.hierarchyId.equals(other.hierarchyId)
-                && this.getProjectId().equals(other.getProjectId());
-    }
+    public abstract OWLEntity getEntity();
 
+    public abstract HierarchyId getHierarchyId();
 
-    @Override
-    public String toString() {
-        return toStringHelper("GetHierarchyChildrenAction")
-                .addValue(getProjectId())
-                .addValue(hierarchyId)
-                .addValue(entity)
-                .toString();
-    }
+    @Nonnull
+    public abstract PageRequest getPageRequest();
 }

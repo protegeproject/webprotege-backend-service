@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.MoreObjects;
 import edu.stanford.bmir.protege.web.shared.access.ActionId;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
@@ -14,45 +19,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-14
  */
-public class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetAvailableProjectsWithPermission")
+public abstract class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult> {
 
-    private ActionId permission;
-
-    public GetAvailableProjectsWithPermissionAction(@Nonnull ActionId permission) {
-        this.permission = checkNotNull(permission);
-    }
-
-    @GwtSerializationConstructor
-    private GetAvailableProjectsWithPermissionAction() {
+    @JsonCreator
+    public static GetAvailableProjectsWithPermissionAction create(@JsonProperty("permission") @Nonnull ActionId permission) {
+        return new AutoValue_GetAvailableProjectsWithPermissionAction(permission);
     }
 
     @Nonnull
-    public ActionId getPermission() {
-        return permission;
-    }
-
-    @Override
-    public int hashCode() {
-        return permission.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this) {
-            return true;
-        }
-        if(!(obj instanceof GetAvailableProjectsWithPermissionAction)) {
-            return false;
-        }
-        GetAvailableProjectsWithPermissionAction other = (GetAvailableProjectsWithPermissionAction) obj;
-        return this.permission.equals(other.permission);
-    }
-
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper("GetAvailableProjectsWithPermissionAction")
-                          .addValue(permission)
-                          .toString();
-    }
+    public abstract ActionId getPermission();
 }

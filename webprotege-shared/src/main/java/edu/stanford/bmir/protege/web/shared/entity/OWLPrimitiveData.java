@@ -1,15 +1,19 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
-import com.google.auto.value.extension.memoized.Memoized;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
 /**
  * Author: Matthew Horridge<br>
@@ -23,27 +27,42 @@ import java.util.function.Supplier;
  */
 public abstract class OWLPrimitiveData extends ObjectData implements Comparable<OWLPrimitiveData> {
 
+
+    protected static ImmutableList<ShortForm> toShortFormList(@Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
+        return shortForms.entrySet().stream().map(e -> ShortForm.get(e.getKey(), e.getValue())).collect(
+                toImmutableList());
+    }
+
     public Optional<IRI> asIRI() {
         return Optional.empty();
     }
 
     @Nonnull
     @Override
+    @JsonIgnore
     public abstract OWLPrimitive getObject();
 
-    public abstract ImmutableMap<DictionaryLanguage, String> getShortForms();
+    @JsonIgnore
+    public ImmutableMap<DictionaryLanguage, String> getShortFormsMap() {
+        return getShortForms()
+                .stream()
+                .collect(toImmutableMap(ShortForm::getDictionaryLanguage, ShortForm::getShortForm));
+    }
+
+    public abstract ImmutableList<ShortForm> getShortForms();
 
     /**
      * A convenience method that gets the first short form for this object
      */
+    @JsonIgnore
     @Override
     public abstract String getBrowserText();
 
     protected String getFirstShortForm(Supplier<String> defaultValue) {
         return getShortForms()
-                .values()
                 .stream()
                 .findFirst()
+                .map(ShortForm::getShortForm)
                 .orElseGet(defaultValue);
     }
 
@@ -51,16 +70,20 @@ public abstract class OWLPrimitiveData extends ObjectData implements Comparable<
 
     public abstract <R> R accept(OWLEntityVisitorEx<R> visitor, R defaultValue);
 
+    @JsonIgnore
     public abstract PrimitiveType getType();
 
+    @JsonIgnore
     public boolean isOWLEntity() {
         return getObject() instanceof OWLEntity;
     }
 
+    @JsonIgnore
     public boolean isIRI() {
         return getObject() instanceof IRI;
     }
 
+    @JsonIgnore
     public boolean isOWLLiteral() {
         return getObject() instanceof OWLLiteral;
     }

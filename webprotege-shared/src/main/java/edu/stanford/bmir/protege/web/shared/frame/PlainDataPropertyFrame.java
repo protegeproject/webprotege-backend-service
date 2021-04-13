@@ -11,7 +11,6 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDatatype;
 
 import javax.annotation.Nonnull;
-
 import java.util.Comparator;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;

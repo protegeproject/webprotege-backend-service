@@ -24,8 +24,12 @@ public class GetRevisionSummariesAction implements ProjectAction<GetRevisionSumm
     private GetRevisionSummariesAction() {
     }
 
-    public GetRevisionSummariesAction(ProjectId projectId) {
+    private GetRevisionSummariesAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    public static GetRevisionSummariesAction create(ProjectId projectId) {
+        return new GetRevisionSummariesAction(projectId);
     }
 
     @Nonnull

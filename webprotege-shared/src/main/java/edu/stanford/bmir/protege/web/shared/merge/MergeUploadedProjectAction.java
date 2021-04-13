@@ -1,34 +1,38 @@
 package edu.stanford.bmir.protege.web.shared.merge;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.csv.DocumentId;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+
+import javax.annotation.Nonnull;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 26/01/15
  */
-public class MergeUploadedProjectAction extends AbstractHasProjectAction<MergeUploadedProjectResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("MergeUploadedProject")
+public abstract class MergeUploadedProjectAction extends AbstractHasProjectAction<MergeUploadedProjectResult> {
 
-    private DocumentId uploadedDocumentId;
-
-    private String commitMessage;
-
-    private MergeUploadedProjectAction() {
+    @JsonCreator
+    public static MergeUploadedProjectAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                    @JsonProperty("documentId") DocumentId uploadedDocumentId,
+                                                    @JsonProperty("commitMessage") String commitMessage) {
+        return new AutoValue_MergeUploadedProjectAction(projectId, uploadedDocumentId, commitMessage);
     }
 
-    public MergeUploadedProjectAction(ProjectId projectId, DocumentId uploadedDocumentId, String commitMessage) {
-        super(projectId);
-        this.uploadedDocumentId = uploadedDocumentId;
-        this.commitMessage = commitMessage;
-    }
+    @Nonnull
+    @Override
+    public abstract ProjectId getProjectId();
 
-    public DocumentId getUploadedDocumentId() {
-        return uploadedDocumentId;
-    }
+    public abstract DocumentId getDocumentId();
 
-    public String getCommitMessage() {
-        return commitMessage;
-    }
+    public abstract String getCommitMessage();
 }

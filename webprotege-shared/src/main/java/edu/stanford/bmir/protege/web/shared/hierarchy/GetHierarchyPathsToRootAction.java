@@ -1,8 +1,13 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -14,60 +19,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
  */
-public class GetHierarchyPathsToRootAction extends AbstractHasProjectAction<GetHierarchyPathsToRootResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetHierarchyPathsToRoot")
+public abstract class GetHierarchyPathsToRootAction extends AbstractHasProjectAction<GetHierarchyPathsToRootResult> {
 
-    private OWLEntity entity;
-
-    private HierarchyId hierarchyId;
-
-    public GetHierarchyPathsToRootAction(@Nonnull ProjectId projectId,
-                                         @Nonnull OWLEntity entity,
-                                         @Nonnull HierarchyId hierarchyId) {
-        super(projectId);
-        this.entity = checkNotNull(entity);
-        this.hierarchyId = checkNotNull(hierarchyId);
-    }
-
-    @GwtSerializationConstructor
-    private GetHierarchyPathsToRootAction() {
+    @JsonCreator
+    public static GetHierarchyPathsToRootAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                       @JsonProperty("entity") @Nonnull OWLEntity entity,
+                                                       @JsonProperty("hierarchyId") @Nonnull HierarchyId hierarchyId) {
+        return new AutoValue_GetHierarchyPathsToRootAction(projectId, entity, hierarchyId);
     }
 
     @Nonnull
-    public OWLEntity getEntity() {
-        return entity;
-    }
+    @Override
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public HierarchyId getHierarchyId() {
-        return hierarchyId;
-    }
+    public abstract OWLEntity getEntity();
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(entity, hierarchyId, getProjectId());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof GetHierarchyPathsToRootAction)) {
-            return false;
-        }
-        GetHierarchyPathsToRootAction other = (GetHierarchyPathsToRootAction) obj;
-        return this.entity.equals(other.entity)
-                && this.hierarchyId.equals(other.hierarchyId)
-                && this.getProjectId().equals(other.getProjectId());
-    }
-
-
-    @Override
-    public String toString() {
-        return toStringHelper("GetHierarchyPathsToRootAction")
-                          .addValue(getProjectId())
-                          .addValue(hierarchyId)
-                          .addValue(entity)
-                          .toString();
-    }
+    @Nonnull
+    public abstract HierarchyId getHierarchyId();
 }

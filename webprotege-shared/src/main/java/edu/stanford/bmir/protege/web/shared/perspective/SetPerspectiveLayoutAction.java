@@ -29,10 +29,14 @@ public class SetPerspectiveLayoutAction implements ProjectAction<SetPerspectiveL
     private SetPerspectiveLayoutAction() {
     }
 
-    public SetPerspectiveLayoutAction(ProjectId projectId, UserId userId, PerspectiveLayout layout) {
+    private SetPerspectiveLayoutAction(ProjectId projectId, UserId userId, PerspectiveLayout layout) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.layout = checkNotNull(layout);
+    }
+
+    public static SetPerspectiveLayoutAction create(ProjectId projectId, UserId userId, PerspectiveLayout layout) {
+        return new SetPerspectiveLayoutAction(projectId, userId, layout);
     }
 
     @Nonnull

@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 import javax.annotation.concurrent.Immutable;
@@ -28,6 +30,7 @@ public class EventTag implements Serializable, IsSerializable, Comparable<EventT
 
     }
 
+    @JsonCreator
     private EventTag(int ordinal) {
         this.ordinal = ordinal;
     }
@@ -52,6 +55,7 @@ public class EventTag implements Serializable, IsSerializable, Comparable<EventT
      * Gets the ordinal of this {@link EventTag}.
      * @return An int representing the ordinal of this {@link EventTag}.
      */
+    @JsonValue
     public int getOrdinal() {
         return ordinal;
     }

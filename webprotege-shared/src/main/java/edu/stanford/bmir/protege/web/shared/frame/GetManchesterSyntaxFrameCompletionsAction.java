@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.Sets;
 import edu.stanford.bmir.gwtcodemirror.client.EditorPosition;
 import edu.stanford.bmir.protege.web.shared.HasSubject;
@@ -14,63 +19,42 @@ import java.util.Set;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 20/03/2014
  */
-public class GetManchesterSyntaxFrameCompletionsAction implements ProjectAction<GetManchesterSyntaxFrameCompletionsResult>, HasSubject<OWLEntity>, HasFreshEntities {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetManchesterSyntaxFrameCompletions")
+public abstract class GetManchesterSyntaxFrameCompletionsAction implements ProjectAction<GetManchesterSyntaxFrameCompletionsResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
-    private ProjectId projectId;
-
-    private OWLEntity subject;
-
-    private String syntax;
-
-    private EditorPosition fromPos;
-
-    private int from;
-
-    private Set<OWLEntityData> freshEntities;
-
-    private int entityTypeSuggestLimit;
-
-    private GetManchesterSyntaxFrameCompletionsAction() {
-    }
-
-    public GetManchesterSyntaxFrameCompletionsAction(ProjectId projectId, OWLEntity subject, EditorPosition fromPos, String syntax, int from, Set<OWLEntityData> freshEntities, int entityTypeSuggestLimit) {
-        this.projectId = projectId;
-        this.subject = subject;
-        this.syntax = syntax;
-        this.from = from;
-        this.fromPos = fromPos;
-        this.freshEntities = Sets.newHashSet(freshEntities);
-        this.entityTypeSuggestLimit = entityTypeSuggestLimit;
+    @JsonCreator
+    public static GetManchesterSyntaxFrameCompletionsAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                                   @JsonProperty("subject") OWLEntity subject,
+                                                                   @JsonProperty("syntax") String syntax,
+                                                                   @JsonProperty("fromPos") EditorPosition fromPos,
+                                                                   @JsonProperty("from") int from,
+                                                                   @JsonProperty("freshEntities") Set<OWLEntityData> freshEntities,
+                                                                   @JsonProperty("entityTypeSuggestionLimit") int entityTypeSuggestLimit) {
+        return new AutoValue_GetManchesterSyntaxFrameCompletionsAction(projectId,
+                                                             subject,
+                                                             syntax,
+                                                                       fromPos,
+                                                             from,
+                                                             freshEntities,
+                                                             entityTypeSuggestLimit);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Override
-    public OWLEntity getSubject() {
-        return subject;
-    }
+    public abstract OWLEntity getSubject();
 
-    public String getSyntax() {
-        return syntax;
-    }
+    public abstract String getSyntax();
 
-    public int getFrom() {
-        return from;
-    }
+    public abstract EditorPosition getFromPos();
 
-    public EditorPosition getFromPos() {
-        return fromPos;
-    }
+    public abstract int getFrom();
 
-    public int getEntityTypeSuggestLimit() {
-        return entityTypeSuggestLimit;
-    }
+    public abstract Set<OWLEntityData> getFreshEntities();
 
-    public Set<OWLEntityData> getFreshEntities() {
-        return Sets.newHashSet(freshEntities);
-    }
+    public abstract int getEntityTypeSuggestLimit();
 }

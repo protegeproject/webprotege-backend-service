@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.bulkop;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -17,58 +22,35 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 24 Sep 2018
  */
-public class SetAnnotationValueAction implements ProjectAction<SetAnnotationValueResult>, HasCommitMessage {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("SetAnnotationValue")
+public abstract class SetAnnotationValueAction implements ProjectAction<SetAnnotationValueResult>, HasCommitMessage {
 
-    private ProjectId projectId;
 
-    private ImmutableSet<OWLEntity> entities;
-
-    private OWLAnnotationProperty property;
-
-    private OWLAnnotationValue value;
-
-    private String commitMessage;
-
-    public SetAnnotationValueAction(@Nonnull ProjectId projectId,
-                                    @Nonnull ImmutableSet<OWLEntity> entities,
-                                    @Nonnull OWLAnnotationProperty property,
-                                    @Nonnull OWLAnnotationValue value,
-                                    @Nonnull String commitMessage) {
-        this.projectId = checkNotNull(projectId);
-        this.entities = checkNotNull(entities);
-        this.property = checkNotNull(property);
-        this.value = checkNotNull(value);
-        this.commitMessage = checkNotNull(commitMessage);
-    }
-
-    @GwtSerializationConstructor
-    private SetAnnotationValueAction() {
+    @JsonCreator
+    public static SetAnnotationValueAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                  @JsonProperty("entities") @Nonnull ImmutableSet<OWLEntity> entities,
+                                                  @JsonProperty("property") @Nonnull OWLAnnotationProperty property,
+                                                  @JsonProperty("value") @Nonnull OWLAnnotationValue value,
+                                                  @JsonProperty("commitMessage") @Nonnull String commitMessage) {
+        return new AutoValue_SetAnnotationValueAction(projectId, entities, property, value, commitMessage);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public ImmutableSet<OWLEntity> getEntities() {
-        return entities;
-    }
+    public abstract ImmutableSet<OWLEntity> getEntities();
 
     @Nonnull
-    public OWLAnnotationProperty getProperty() {
-        return property;
-    }
+    public abstract OWLAnnotationProperty getProperty();
 
     @Nonnull
-    public OWLAnnotationValue getValue() {
-        return value;
-    }
+    public abstract OWLAnnotationValue getValue();
 
     @Nonnull
     @Override
-    public String getCommitMessage() {
-        return commitMessage;
-    }
+    public abstract String getCommitMessage();
 }

@@ -1,7 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
-import com.google.common.collect.ImmutableMultimap;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
@@ -11,43 +14,38 @@ import edu.stanford.protege.gwt.graphtree.shared.graph.SuccessorMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import java.io.Serializable;
-import java.util.Optional;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
  */
-public class GetHierarchyChildrenResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetHierarchyChildren")
+public abstract class GetHierarchyChildrenResult implements Result {
+
+    public static GetHierarchyChildrenResult create() {
+        return create(null, Page.emptyPage());
+    }
+
+    @JsonCreator
+    public static GetHierarchyChildrenResult create(@JsonProperty("parent") @Nullable GraphNode<EntityNode> parent,
+                                                    @JsonProperty("children") @Nonnull Page<GraphNode<EntityNode>> children) {
+        return new AutoValue_GetHierarchyChildrenResult(parent, children);
+    }
 
     @Nullable
-    private GraphNode<EntityNode> parent;
-
-    private Page<GraphNode<EntityNode>> children;
-
-    public GetHierarchyChildrenResult(@Nonnull GraphNode<EntityNode> parent,
-                                      @Nonnull Page<GraphNode<EntityNode>> children) {
-        this.parent = checkNotNull(parent);
-        this.children = checkNotNull(children);
-    }
-
-    public GetHierarchyChildrenResult() {
-        parent = null;
-        children = Page.emptyPage();
-    }
+    public abstract GraphNode<EntityNode> getParent();
 
     @Nonnull
-    public Page<GraphNode<EntityNode>> getChildren() {
-        return children;
-    }
+    public abstract Page<GraphNode<EntityNode>> getChildren();
 
     public SuccessorMap<EntityNode> getSuccessorMap() {
-        if(parent == null) {
+        if(getParent() == null) {
             return SuccessorMap.<EntityNode>builder().build();
         }
         SuccessorMap.Builder<EntityNode> builder = SuccessorMap.builder();
-        children.getPageElements().forEach(child -> builder.add(parent, child));
+        getChildren().getPageElements().forEach(child -> builder.add(getParent(), child));
         return builder.build();
     }
 }

@@ -4,18 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.gwt.user.client.rpc.IsSerializable;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  * Matthew Horridge

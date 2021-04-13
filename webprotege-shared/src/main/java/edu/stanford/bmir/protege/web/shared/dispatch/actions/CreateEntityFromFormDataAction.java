@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.entity.FreshEntityIri;
@@ -14,45 +19,26 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-09-30
  */
-public class CreateEntityFromFormDataAction implements ProjectAction<CreateEntityFromFormDataResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CreateEntityFromFormData")
+public abstract class CreateEntityFromFormDataAction implements ProjectAction<CreateEntityFromFormDataResult> {
 
-    private ProjectId projectId;
-
-    private EntityType<?> entityType;
-
-    private FreshEntityIri freshEntityIri;
-
-    private FormData formData;
-
-    public CreateEntityFromFormDataAction(@Nonnull ProjectId projectId,
-                                          @Nonnull EntityType<?> entityType,
-                                          @Nonnull FreshEntityIri freshEntityIri,
-                                          @Nonnull FormData formData) {
-        this.projectId = projectId;
-        this.entityType = entityType;
-        this.freshEntityIri = freshEntityIri;
-        this.formData = formData;
-    }
-
-    @GwtSerializationConstructor
-    private CreateEntityFromFormDataAction() {
+    @JsonCreator
+    public static CreateEntityFromFormDataAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                          @JsonProperty("entityType") @Nonnull EntityType<?> entityType,
+                                          @JsonProperty("freshEntitIri") @Nonnull FreshEntityIri freshEntityIri,
+                                          @JsonProperty("formData") @Nonnull FormData formData) {
+        return new AutoValue_CreateEntityFromFormDataAction(projectId, entityType, freshEntityIri, formData);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
-    public EntityType<?> getEntityType() {
-        return entityType;
-    }
+    public abstract EntityType<?> getEntityType();
 
-    public FreshEntityIri getFreshEntityIri() {
-        return freshEntityIri;
-    }
+    public abstract FreshEntityIri getFreshEntityIri();
 
-    public FormData getFormData() {
-        return formData;
-    }
+    public abstract FormData getFormData();
 }

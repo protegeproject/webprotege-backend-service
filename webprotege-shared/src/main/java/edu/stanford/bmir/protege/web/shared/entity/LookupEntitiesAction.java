@@ -30,9 +30,13 @@ public class LookupEntitiesAction implements ProjectAction<LookupEntitiesResult>
      * @param entityLookupRequest The lookup request. Not {@code null}.
      * @throws  NullPointerException if any parameters are {@code null}.
      */
-    public LookupEntitiesAction(ProjectId projectId, EntityLookupRequest entityLookupRequest) {
+    private LookupEntitiesAction(ProjectId projectId, EntityLookupRequest entityLookupRequest) {
         this.projectId = checkNotNull(projectId);
         this.entityLookupRequest = checkNotNull(entityLookupRequest);
+    }
+
+    public static LookupEntitiesAction create(ProjectId projectId, EntityLookupRequest entityLookupRequest) {
+        return new LookupEntitiesAction(projectId, entityLookupRequest);
     }
 
     /**

@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
@@ -12,6 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 14/02/15
  */
+@JsonTypeName("GetChapSession")
 public class GetChapSessionAction implements Action<GetChapSessionResult> {
 
     private UserId userId;
@@ -22,7 +26,8 @@ public class GetChapSessionAction implements Action<GetChapSessionResult> {
     private GetChapSessionAction() {
     }
 
-    public GetChapSessionAction(UserId userId) {
+    @JsonCreator
+    public GetChapSessionAction(@JsonProperty("userId") UserId userId) {
         this.userId = checkNotNull(userId);
     }
 

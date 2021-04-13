@@ -20,8 +20,12 @@ public class GetUserIdCompletionsResult extends GetPossibleItemCompletionsResult
     private GetUserIdCompletionsResult() {
     }
 
-    public GetUserIdCompletionsResult(List<UserId> possibleItemCompletions) {
+    private GetUserIdCompletionsResult(List<UserId> possibleItemCompletions) {
         super(possibleItemCompletions);
+    }
+
+    public static GetUserIdCompletionsResult create(List<UserId> possibleItemCompletions) {
+        return new GetUserIdCompletionsResult(possibleItemCompletions);
     }
 
     @Override

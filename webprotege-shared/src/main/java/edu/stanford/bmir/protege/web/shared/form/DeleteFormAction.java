@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -13,31 +18,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-15
  */
-public class DeleteFormAction implements ProjectAction<DeleteFormResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("DeleteForm")
+public abstract class DeleteFormAction implements ProjectAction<DeleteFormResult> {
 
-    private ProjectId projectId;
-
-    private FormId formId;
-
-
-    public DeleteFormAction(@Nonnull ProjectId projectId,
-                            @Nonnull FormId formId) {
-        this.projectId = checkNotNull(projectId);
-        this.formId = checkNotNull(formId);
-    }
-
-    @GwtSerializationConstructor
-    private DeleteFormAction() {
+    @JsonCreator
+    public static DeleteFormAction get(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                            @JsonProperty("formId") @Nonnull FormId formId) {
+        return new AutoValue_DeleteFormAction(projectId, formId);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public FormId getFormId() {
-        return formId;
-    }
+    public abstract FormId getFormId();
 }

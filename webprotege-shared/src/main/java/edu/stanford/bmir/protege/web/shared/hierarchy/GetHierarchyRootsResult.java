@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -16,16 +19,18 @@ import java.util.List;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetHierarchyRoots")
 public abstract class GetHierarchyRootsResult implements Result {
 
     @NotNull
-    public static GetHierarchyRootsResult get(@Nonnull List<GraphNode<EntityNode>> rootNodes) {
+    @JsonCreator
+    public static GetHierarchyRootsResult create(@JsonProperty("rootNodes") @Nonnull List<GraphNode<EntityNode>> rootNodes) {
         return new AutoValue_GetHierarchyRootsResult(ImmutableList.copyOf(rootNodes));
     }
 
     @NotNull
     public static GetHierarchyRootsResult empty() {
-        return get(ImmutableList.of());
+        return create(ImmutableList.of());
     }
 
     @Nonnull

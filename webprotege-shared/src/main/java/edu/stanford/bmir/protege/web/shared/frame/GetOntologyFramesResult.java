@@ -19,8 +19,12 @@ public class GetOntologyFramesResult implements Result {
     private GetOntologyFramesResult() {
     }
 
-    public GetOntologyFramesResult(ImmutableList<OntologyFrame> ontologyFrames) {
+    private GetOntologyFramesResult(ImmutableList<OntologyFrame> ontologyFrames) {
         this.ontologyFrames = checkNotNull(ontologyFrames);
+    }
+
+    public static GetOntologyFramesResult create(ImmutableList<OntologyFrame> ontologyFrames) {
+        return new GetOntologyFramesResult(ontologyFrames);
     }
 
     public ImmutableList<OntologyFrame> getOntologyFrames() {

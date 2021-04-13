@@ -1,5 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.obo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 /**
@@ -7,8 +11,13 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * Stanford Center for Biomedical Informatics Research
  * 22 Jun 2017
  */
-public class SetOboTermCrossProductResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("SetOboTermCrossProduct")
+public abstract class SetOboTermCrossProductResult implements Result {
 
-    public SetOboTermCrossProductResult() {
+    @JsonCreator
+    public static SetOboTermCrossProductResult create() {
+        return new AutoValue_SetOboTermCrossProductResult();
     }
 }

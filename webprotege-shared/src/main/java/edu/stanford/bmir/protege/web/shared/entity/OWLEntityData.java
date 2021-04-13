@@ -1,14 +1,15 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
-import edu.stanford.bmir.protege.web.shared.DataFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.util.Optional;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 
 /**
@@ -17,12 +18,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 28/11/2012
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @Type(OWLClassData.class),
+        @Type(OWLObjectPropertyData.class),
+        @Type(OWLDataPropertyData.class),
+        @Type(OWLAnnotationPropertyData.class),
+        @Type(OWLNamedIndividualData.class),
+        @Type(OWLDatatypeData.class)
+})
 public abstract class OWLEntityData extends OWLPrimitiveData {
 
     public OWLEntity getEntity() {
         return (OWLEntity) getObject();
     }
 
+    @JsonIgnore
     public boolean isIRIEmpty() {
         return getEntity().getIRI().length() == 0;
     }
@@ -52,10 +63,12 @@ public abstract class OWLEntityData extends OWLPrimitiveData {
         return getBrowserText().compareToIgnoreCase(other.getBrowserText());
     }
 
+    @JsonIgnore
     public int getPrefixSeparatorIndex() {
         return getBrowserText().indexOf(':');
     }
 
+    @JsonIgnore
     @Override
     public String getUnquotedBrowserText() {
         String browserText = getBrowserText();

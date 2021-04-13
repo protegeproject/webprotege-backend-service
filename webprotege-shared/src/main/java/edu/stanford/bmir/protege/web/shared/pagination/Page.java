@@ -1,16 +1,17 @@
 package edu.stanford.bmir.protege.web.shared.pagination;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
-import edu.stanford.bmir.protege.web.shared.form.data.FormControlData;
 import edu.stanford.bmir.protege.web.shared.form.data.FormControlDataDto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -23,62 +24,48 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  * Bio-Medical Informatics Research Group<br>
  * Date: 13/09/2013
  */
-public class Page<T> implements Serializable, Iterable<T>, IsSerializable {
-
-    private int pageNumber;
-
-    private int pageCount;
-
-    private List<T> pageElements;
-
-    private long totalElements;
-
-    @GwtSerializationConstructor
-    private Page() {
-    }
-
-    public Page(int pageNumber, int pageCount, List<T> pageElements, long totalElements) {
-        checkArgument(pageNumber > 0, "pageNumber must be greater than 0");
-        this.pageNumber = pageNumber;
-        checkArgument(pageCount > 0, "pageCount must be greater than 0");
-        this.pageCount = pageCount;
-        checkArgument(!(pageNumber > pageCount));
-        this.pageElements = ImmutableList.copyOf(checkNotNull(pageElements));
-        checkArgument(totalElements > -1);
-        this.totalElements = totalElements;
-    }
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("Page")
+public abstract class Page<T> implements Serializable, Iterable<T>, IsSerializable {
 
     public static <T> Page<T> emptyPage() {
-        return new Page<>(1, 1, Collections.emptyList(), 0);
+        return create(1, 1, Collections.emptyList(), 0);
     }
 
     public static Page<FormControlDataDto> of(FormControlDataDto firstValue) {
-        return new Page<>(1, 1, ImmutableList.of(firstValue), 1);
+        return create(1, 1, ImmutableList.of(firstValue), 1);
     }
 
     public static <T> Page<T> of(ImmutableList<T> values) {
-        return new Page<T>(1, 1, values, values.size());
+        return create(1, 1, values, values.size());
     }
 
-    public List<T> getPageElements() {
-        return new ArrayList<T>(pageElements);
+    @JsonCreator
+    public static <T> Page<T> create(@JsonProperty("pageNumber") int pageNumber,
+                                     @JsonProperty("pageCount") int pageCount,
+                                     @JsonProperty("pageElements") List<T> pageElements,
+                                     @JsonProperty("totalElements") long totalElements) {
+        checkArgument(pageNumber > 0, "pageNumber must be greater than 0");
+        checkArgument(pageCount > 0, "pageCount must be greater than 0");
+        checkArgument(!(pageNumber > pageCount));
+        checkArgument(totalElements > -1);
+        return new AutoValue_Page<T>(ImmutableList.copyOf(pageElements),
+                                     pageElements.size(),
+                                     totalElements,
+                                     pageNumber,
+                                     pageCount);
     }
 
-    public int getPageSize() {
-        return pageElements.size();
-    }
+    public abstract ImmutableList<T> getPageElements();
 
-    public long getTotalElements() {
-        return totalElements;
-    }
+    public abstract int getPageSize();
 
-    public int getPageNumber() {
-        return pageNumber;
-    }
+    public abstract long getTotalElements();
 
-    public int getPageCount() {
-        return pageCount;
-    }
+    public abstract int getPageNumber();
+
+    public abstract int getPageCount();
 
     @Override
     public Iterator<T> iterator() {
@@ -86,11 +73,12 @@ public class Page<T> implements Serializable, Iterable<T>, IsSerializable {
     }
 
     public <E> Page<E> transform(Function<T, E> function) {
-        return new Page<>(pageNumber,
-                          pageCount,
-                          pageElements.stream()
+        return create(getPageNumber(),
+                      getPageCount(),
+                      getPageElements().stream()
                                       .map(function)
                                       .collect(toImmutableList()),
-                          totalElements);
+                      getTotalElements());
     }
+
 }

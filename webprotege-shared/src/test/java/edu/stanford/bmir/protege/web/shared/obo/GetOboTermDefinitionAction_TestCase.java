@@ -24,13 +24,13 @@ public class GetOboTermDefinitionAction_TestCase {
 
     @Before
     public void setUp() {
-        getOboTermDefinitionAction = new GetOboTermDefinitionAction(projectId, term);
+        getOboTermDefinitionAction = GetOboTermDefinitionAction.create(projectId, term);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetOboTermDefinitionAction(null, term);
+        GetOboTermDefinitionAction.create(null, term);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class GetOboTermDefinitionAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_term_IsNull() {
-        new GetOboTermDefinitionAction(projectId, null);
+        GetOboTermDefinitionAction.create(projectId, null);
     }
 
     @Test
@@ -62,22 +62,22 @@ public class GetOboTermDefinitionAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboTermDefinitionAction, is(new GetOboTermDefinitionAction(projectId, term)));
+        assertThat(getOboTermDefinitionAction, is(GetOboTermDefinitionAction.create(projectId, term)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboTermDefinitionAction, is(not(new GetOboTermDefinitionAction(mock(ProjectId.class), term))));
+        assertThat(getOboTermDefinitionAction, is(not(GetOboTermDefinitionAction.create(mock(ProjectId.class), term))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_term() {
-        assertThat(getOboTermDefinitionAction, is(not(new GetOboTermDefinitionAction(projectId, mock(OWLEntity.class)))));
+        assertThat(getOboTermDefinitionAction, is(not(GetOboTermDefinitionAction.create(projectId, mock(OWLEntity.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboTermDefinitionAction.hashCode(), is(new GetOboTermDefinitionAction(projectId, term).hashCode()));
+        assertThat(getOboTermDefinitionAction.hashCode(), is(GetOboTermDefinitionAction.create(projectId, term).hashCode()));
     }
 
     @Test

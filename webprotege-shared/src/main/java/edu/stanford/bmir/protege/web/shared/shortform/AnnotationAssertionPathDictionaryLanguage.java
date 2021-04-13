@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.shortform;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
@@ -10,11 +9,6 @@ import com.google.common.collect.ImmutableList;
 import org.semanticweb.owlapi.model.IRI;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import static edu.stanford.bmir.protege.web.shared.shortform.AnnotationAssertionDictionaryLanguage.LANG;
-import static edu.stanford.bmir.protege.web.shared.shortform.AnnotationAssertionDictionaryLanguage.PROPERTY_IRI;
-import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_LABEL;
 
 /**
  * Matthew Horridge

@@ -21,8 +21,12 @@ public class GetProjectInfoAction implements ProjectAction<GetProjectInfoResult>
     private GetProjectInfoAction() {
     }
 
-    public GetProjectInfoAction(@Nonnull ProjectId projectId) {
+    private GetProjectInfoAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    public static GetProjectInfoAction create(@Nonnull ProjectId projectId) {
+        return new GetProjectInfoAction(projectId);
     }
 
     @Nonnull

@@ -1,13 +1,18 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import org.semanticweb.owlapi.model.OWLEntity;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import javax.annotation.Nonnull;
 
@@ -19,18 +24,27 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("OWLNamedIndividualData")
 public abstract class OWLNamedIndividualData extends OWLEntityData {
 
 
     public static OWLNamedIndividualData get(@Nonnull OWLNamedIndividual individual,
-                                             @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
-        return new AutoValue_OWLNamedIndividualData(shortForms, false, individual);
+                                            @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
+        return get(individual, shortForms, false);
     }
 
+
     public static OWLNamedIndividualData get(@Nonnull OWLNamedIndividual individual,
-                                             @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
-                                             boolean depreacted) {
-        return new AutoValue_OWLNamedIndividualData(shortForms, depreacted, individual);
+                                            @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
+                                            boolean deprecated) {
+        return get(individual, toShortFormList(shortForms), deprecated);
+    }
+
+    @JsonCreator
+    public static OWLNamedIndividualData get(@JsonProperty("entity") OWLNamedIndividual individual,
+                                            @JsonProperty("shortForms") ImmutableList<ShortForm> shortForms,
+                                            @JsonProperty("deprecated") boolean deprecated) {
+        return new AutoValue_OWLNamedIndividualData(shortForms, deprecated, individual);
     }
 
     @Nonnull

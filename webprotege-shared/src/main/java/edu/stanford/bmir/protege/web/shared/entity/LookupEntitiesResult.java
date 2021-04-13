@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import java.util.ArrayList;
@@ -14,30 +19,24 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 12/11/2013
  */
-public class LookupEntitiesResult implements Result {
-
-    private ArrayList<EntityLookupResult> entityLookupResult;
-
-    /**
-     * Default constructor for serialization purposes onlu
-     */
-    private LookupEntitiesResult() {
-    }
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("LookupEntities")
+public abstract class LookupEntitiesResult implements Result {
 
     /**
      * Creates a LookupEntitiesResult.
      * @param entityLookupResult The match result.  Not {@code null}.
      * @throws NullPointerException if {@code entityLookupResult} is {@code null}.
      */
-    public LookupEntitiesResult(Collection<EntityLookupResult> entityLookupResult) {
-        this.entityLookupResult = new ArrayList<EntityLookupResult>(checkNotNull(entityLookupResult));
+    @JsonCreator
+    public static LookupEntitiesResult create(@JsonProperty("entityLookupResults") List<EntityLookupResult> entityLookupResult) {
+        return new AutoValue_LookupEntitiesResult(entityLookupResult);
     }
 
     /**
      * Gets the entity matches.
      * @return The EntityLookupResult that describes the matched entities.  Not {@code null}.
      */
-    public List<EntityLookupResult> getEntityLookupResults() {
-        return new ArrayList<EntityLookupResult>(entityLookupResult);
-    }
+    public abstract List<EntityLookupResult> getEntityLookupResults();
 }

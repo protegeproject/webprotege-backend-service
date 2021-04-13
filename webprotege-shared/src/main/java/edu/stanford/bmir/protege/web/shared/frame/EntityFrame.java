@@ -1,6 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import com.google.common.collect.ImmutableSet;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 
 /**
@@ -12,6 +14,14 @@ import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
  *     A marker interface for entity frames.
  * </p>
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property="type")
+@JsonSubTypes({
+        @Type(ClassFrame.class),
+        @Type(ObjectPropertyFrame.class),
+        @Type(DataPropertyFrame.class),
+        @Type(AnnotationPropertyFrame.class),
+        @Type(NamedIndividualFrame.class),
+})
 public interface EntityFrame<E extends OWLEntityData> extends Frame<E> {
 
 }

@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.common.collect.Maps;
-import edu.stanford.bmir.protege.web.shared.place.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 

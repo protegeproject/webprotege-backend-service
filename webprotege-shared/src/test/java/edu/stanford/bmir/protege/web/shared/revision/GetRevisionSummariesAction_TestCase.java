@@ -32,13 +32,13 @@ public class GetRevisionSummariesAction_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        action = new GetRevisionSummariesAction(projectId);
-        otherAction = new GetRevisionSummariesAction(projectId);
+        action = GetRevisionSummariesAction.create(projectId);
+        otherAction = GetRevisionSummariesAction.create(projectId);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new GetRevisionSummariesAction(null);
+        GetRevisionSummariesAction.create(null);
     }
 
     @Test

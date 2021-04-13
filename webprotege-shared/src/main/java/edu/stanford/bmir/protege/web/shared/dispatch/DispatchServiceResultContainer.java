@@ -1,5 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.dispatch;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 
@@ -9,18 +13,14 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Bio-Medical Informatics Research Group<br>
  * Date: 24/03/2013
  */
-public class DispatchServiceResultContainer implements IsSerializable {
+@AutoValue
+@GwtCompatible(serializable = true)
+public abstract class DispatchServiceResultContainer implements IsSerializable {
 
-    private Result result;
-
-    private DispatchServiceResultContainer() {
+    @JsonCreator
+    public static DispatchServiceResultContainer create(@JsonProperty("result") Result result) {
+        return new AutoValue_DispatchServiceResultContainer(result);
     }
 
-    public DispatchServiceResultContainer(Result result) {
-        this.result = result;
-    }
-
-    public Result getResult() {
-        return result;
-    }
+    public abstract Result getResult();
 }

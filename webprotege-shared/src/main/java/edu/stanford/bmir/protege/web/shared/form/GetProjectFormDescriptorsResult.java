@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -16,12 +19,14 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetProjectFormDescriptors")
 public abstract class GetProjectFormDescriptorsResult implements Result, HasProjectId {
 
+    @JsonCreator
     @Nonnull
-    public static GetProjectFormDescriptorsResult get(@Nonnull ProjectId projectId,
-                                                      @Nonnull ImmutableList<FormDescriptor> formDescriptors,
-                                                      @Nonnull ImmutableList<EntityFormSelector> selectionCriteria) {
+    public static GetProjectFormDescriptorsResult create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                         @JsonProperty("formDescriptors") @Nonnull ImmutableList<FormDescriptor> formDescriptors,
+                                                         @JsonProperty("formSelectors") @Nonnull ImmutableList<EntityFormSelector> selectionCriteria) {
         return new AutoValue_GetProjectFormDescriptorsResult(projectId, formDescriptors, selectionCriteria);
     }
 

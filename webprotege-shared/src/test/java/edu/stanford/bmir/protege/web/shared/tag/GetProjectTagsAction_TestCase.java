@@ -2,19 +2,14 @@
 package edu.stanford.bmir.protege.web.shared.tag;
 
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -27,13 +22,13 @@ public class GetProjectTagsAction_TestCase {
 
     @Before
     public void setUp() {
-        action = new GetProjectTagsAction(projectId);
+        action = GetProjectTagsAction.create(projectId);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetProjectTagsAction(null);
+        GetProjectTagsAction.create(null);
     }
 
     @Test
@@ -54,17 +49,17 @@ public class GetProjectTagsAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(action, is(new GetProjectTagsAction(projectId)));
+        assertThat(action, is(GetProjectTagsAction.create(projectId)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(new GetProjectTagsAction(mock(ProjectId.class)))));
+        assertThat(action, is(not(GetProjectTagsAction.create(mock(ProjectId.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(action.hashCode(), is(new GetProjectTagsAction(projectId).hashCode()));
+        assertThat(action.hashCode(), is(GetProjectTagsAction.create(projectId).hashCode()));
     }
 
     @Test

@@ -4,11 +4,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nonnull;
-import java.io.Serializable;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Author: Matthew Horridge<br>

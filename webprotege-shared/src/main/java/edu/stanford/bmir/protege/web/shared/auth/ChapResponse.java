@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.io.BaseEncoding;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
@@ -20,10 +22,12 @@ public class ChapResponse implements IsSerializable {
     private ChapResponse() {
     }
 
+    @JsonCreator
     public ChapResponse(byte[] bytes) {
         this.bytes = Arrays.copyOf(checkNotNull(bytes), bytes.length);
     }
 
+    @JsonValue
     public byte[] getBytes() {
         return Arrays.copyOf(bytes, bytes.length);
     }

@@ -22,14 +22,19 @@ public class SetProjectPrefixDeclarationsResult implements Result {
 
     private List<PrefixDeclaration> prefixDeclarations;
 
-    public SetProjectPrefixDeclarationsResult(@Nonnull ProjectId projectId,
-                                              @Nonnull List<PrefixDeclaration> prefixDeclarations) {
+    private SetProjectPrefixDeclarationsResult(@Nonnull ProjectId projectId,
+                                               @Nonnull List<PrefixDeclaration> prefixDeclarations) {
         this.projectId = checkNotNull(projectId);
         this.prefixDeclarations = new ArrayList<>(checkNotNull(prefixDeclarations));
     }
 
     @GwtSerializationConstructor
     private SetProjectPrefixDeclarationsResult() {
+    }
+
+    public static SetProjectPrefixDeclarationsResult create(@Nonnull ProjectId projectId,
+                                                            @Nonnull List<PrefixDeclaration> prefixDeclarations) {
+        return new SetProjectPrefixDeclarationsResult(projectId, prefixDeclarations);
     }
 
     @Nonnull

@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -11,6 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 19/02/15
  */
+@JsonTypeName("ChangePassword")
 public class ChangePasswordAction extends AbstractAuthenticationAction<ChangePasswordResult> {
 
     private SaltedPasswordDigest newPassword;
@@ -23,7 +27,12 @@ public class ChangePasswordAction extends AbstractAuthenticationAction<ChangePas
     private ChangePasswordAction() {
     }
 
-    public ChangePasswordAction(UserId userId, ChapSessionId chapSessionId, ChapResponse chapResponse, SaltedPasswordDigest newPassword, Salt newSalt) {
+    @JsonCreator
+    public ChangePasswordAction(@JsonProperty("userId") UserId userId,
+                                @JsonProperty("chapSessionId") ChapSessionId chapSessionId,
+                                @JsonProperty("chapResponse") ChapResponse chapResponse,
+                                @JsonProperty("newPassword") SaltedPasswordDigest newPassword,
+                                @JsonProperty("newSalt") Salt newSalt) {
         super(userId, chapSessionId, chapResponse);
         this.newPassword = checkNotNull(newPassword);
         this.salt = checkNotNull(newSalt);

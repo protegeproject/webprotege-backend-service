@@ -21,14 +21,17 @@ public class GetProjectTagsResult implements Result {
 
     private Map<TagId, Integer> tagUsage;
 
-    public GetProjectTagsResult(@Nonnull Collection<Tag> tags,
-                                @Nonnull Map<TagId, Integer> tagUsage) {
+    private GetProjectTagsResult(@Nonnull Collection<Tag> tags, @Nonnull Map<TagId, Integer> tagUsage) {
         this.tags = new ArrayList<>(checkNotNull(tags));
         this.tagUsage = new HashMap<>(tagUsage);
     }
 
     @GwtSerializationConstructor
     private GetProjectTagsResult() {
+    }
+
+    public static GetProjectTagsResult create(@Nonnull Collection<Tag> tags, @Nonnull Map<TagId, Integer> tagUsage) {
+        return new GetProjectTagsResult(tags, tagUsage);
     }
 
     @Nonnull

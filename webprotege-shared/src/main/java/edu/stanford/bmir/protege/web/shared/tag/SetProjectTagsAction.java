@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.tag;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -17,62 +22,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 24 Mar 2018
  */
-public class SetProjectTagsAction implements ProjectAction<SetProjectTagsResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("SetProjectTags")
+public abstract class SetProjectTagsAction implements ProjectAction<SetProjectTagsResult> {
 
-    private ProjectId projectId;
-
-    private List<TagData> tagData;
-
-    public SetProjectTagsAction(@Nonnull ProjectId projectId,
-                                @Nonnull List<TagData> tagData) {
-        this.projectId = checkNotNull(projectId);
-        this.tagData = new ArrayList<>(checkNotNull(tagData));
-    }
-
-    @GwtSerializationConstructor
-    private SetProjectTagsAction() {
-    }
-
-    public static SetProjectTagsAction setProjectTags(@Nonnull ProjectId projectId,
-                                                      @Nonnull List<TagData> tagData) {
-        return new SetProjectTagsAction(projectId, tagData);
+    @JsonCreator
+    public static SetProjectTagsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                              @JsonProperty("tagData") @Nonnull List<TagData> tagData) {
+        return new AutoValue_SetProjectTagsAction(projectId, tagData);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public List<TagData> getTagData() {
-        return new ArrayList<>(tagData);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(projectId, tagData);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof SetProjectTagsAction)) {
-            return false;
-        }
-        SetProjectTagsAction other = (SetProjectTagsAction) obj;
-        return this.projectId.equals(other.projectId)
-                && this.tagData.equals(other.tagData);
-    }
-
-
-    @Override
-    public String toString() {
-        return toStringHelper("SetProjectTagsAction")
-                .addValue(projectId)
-                .addValue(tagData)
-                .toString();
-    }
+    public abstract List<TagData> getTagData();
 }

@@ -18,12 +18,12 @@ public class GetPersonIdCompletionsAction_TestCase {
     public void setUp()
         throws Exception
     {
-        action = new GetPersonIdCompletionsAction(completionText);
+        action = GetPersonIdCompletionsAction.create(completionText);
     }
 
     @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_completionText_IsNull() {
-        new GetPersonIdCompletionsAction(null);
+        GetPersonIdCompletionsAction.create(null);
     }
 
     @Test
@@ -38,17 +38,17 @@ public class GetPersonIdCompletionsAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        MatcherAssert.assertThat(action, Matchers.is(new GetPersonIdCompletionsAction(completionText)));
+        MatcherAssert.assertThat(action, Matchers.is(GetPersonIdCompletionsAction.create(completionText)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_completionText() {
-        MatcherAssert.assertThat(action, Matchers.is(Matchers.not(new GetPersonIdCompletionsAction("String-969b88c9-a6bc-4a84-ba12-81dab308731f"))));
+        MatcherAssert.assertThat(action, Matchers.is(Matchers.not(GetPersonIdCompletionsAction.create("String-969b88c9-a6bc-4a84-ba12-81dab308731f"))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        MatcherAssert.assertThat(action.hashCode(), Matchers.is(new GetPersonIdCompletionsAction(completionText).hashCode()));
+        MatcherAssert.assertThat(action.hashCode(), Matchers.is(GetPersonIdCompletionsAction.create(completionText).hashCode()));
     }
 
     @Test

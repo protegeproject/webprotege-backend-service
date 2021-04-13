@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.search;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -14,39 +19,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-08-17
  */
-public class SetSearchSettingsAction implements ProjectAction<SetSearchSettingsResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("SetSearchSettings")
+public abstract class SetSearchSettingsAction implements ProjectAction<SetSearchSettingsResult> {
 
-    private ProjectId projectId;
-
-    private ImmutableList<EntitySearchFilter> from;
-
-    private ImmutableList<EntitySearchFilter> to;
-
-    public SetSearchSettingsAction(@Nonnull ProjectId projectId,
-                                   @Nonnull ImmutableList<EntitySearchFilter> from,
-                                   @Nonnull ImmutableList<EntitySearchFilter> to) {
-        this.projectId = checkNotNull(projectId);
-        this.from = checkNotNull(from);
-        this.to = checkNotNull(to);
-    }
-
-    @GwtSerializationConstructor
-    private SetSearchSettingsAction() {
+    @JsonCreator
+    public static SetSearchSettingsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                 @JsonProperty("from") @Nonnull ImmutableList<EntitySearchFilter> from,
+                                                 @JsonProperty("to") @Nonnull ImmutableList<EntitySearchFilter> to) {
+        return new AutoValue_SetSearchSettingsAction(projectId, from, to);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public ImmutableList<EntitySearchFilter> getFrom() {
-        return from;
-    }
+    public abstract ImmutableList<EntitySearchFilter> getFrom();
 
     @Nonnull
-    public ImmutableList<EntitySearchFilter> getTo() {
-        return to;
-    }
+    public abstract ImmutableList<EntitySearchFilter> getTo();
 }

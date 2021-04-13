@@ -1,5 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 /**
@@ -7,8 +11,13 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-15
  */
-public class DeleteFormResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("DeleteForm")
+public abstract class DeleteFormResult implements Result {
 
-    public DeleteFormResult() {
+    @JsonCreator
+    public static DeleteFormResult create() {
+        return new AutoValue_DeleteFormResult();
     }
 }

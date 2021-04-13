@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.viz;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
@@ -14,12 +17,14 @@ import java.util.Optional;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("Relationship")
 public abstract class RelationshipEdge implements Edge {
 
+    @JsonCreator
     @Nonnull
-    public static RelationshipEdge get(@Nonnull OWLEntityData tail,
-                                       @Nonnull OWLEntityData head,
-                                       @Nonnull OWLEntityData relationship) {
+    public static RelationshipEdge get(@JsonProperty("tail") @Nonnull OWLEntityData tail,
+                                       @JsonProperty("head") @Nonnull OWLEntityData head,
+                                       @JsonProperty("relationship") @Nonnull OWLEntityData relationship) {
         return new AutoValue_RelationshipEdge(head, tail, relationship);
     }
 

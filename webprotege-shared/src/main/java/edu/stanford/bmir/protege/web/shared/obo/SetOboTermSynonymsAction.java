@@ -25,9 +25,9 @@ public class SetOboTermSynonymsAction implements ProjectAction<SetOboTermSynonym
 
     private ImmutableList<OBOTermSynonym> synonyms;
 
-    public SetOboTermSynonymsAction(@Nonnull ProjectId projectId,
-                                    @Nonnull OWLEntity entity,
-                                    @Nonnull List<OBOTermSynonym> synonyms) {
+    private SetOboTermSynonymsAction(@Nonnull ProjectId projectId,
+                                     @Nonnull OWLEntity entity,
+                                     @Nonnull List<OBOTermSynonym> synonyms) {
         this.projectId = projectId;
         this.entity = entity;
         this.synonyms = ImmutableList.copyOf(synonyms);
@@ -35,6 +35,12 @@ public class SetOboTermSynonymsAction implements ProjectAction<SetOboTermSynonym
 
     @GwtSerializationConstructor
     private SetOboTermSynonymsAction() {
+    }
+
+    public static SetOboTermSynonymsAction create(@Nonnull ProjectId projectId,
+                                                  @Nonnull OWLEntity entity,
+                                                  @Nonnull List<OBOTermSynonym> synonyms) {
+        return new SetOboTermSynonymsAction(projectId, entity, synonyms);
     }
 
     @Nonnull

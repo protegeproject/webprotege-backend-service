@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gwt.core.shared.GwtIncompatible;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
@@ -19,6 +21,7 @@ public class ThreadId implements IsSerializable {
 
     private String id;
 
+    @JsonCreator
     public ThreadId(@Nonnull String id) {
         this.id = checkNotNull(id);
     }
@@ -33,6 +36,7 @@ public class ThreadId implements IsSerializable {
     private ThreadId() {
     }
 
+    @JsonValue
     public String getId() {
         return id;
     }

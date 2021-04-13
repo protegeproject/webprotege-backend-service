@@ -1,5 +1,13 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
+import com.google.web.bindery.event.shared.Event;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,60 +25,31 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     Represents a list of {@link edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent}s between to points denoted by {@link EventTag}s.
  * </p>
  */
-public class EventList<E extends WebProtegeEvent<?>> implements Serializable {
-
-    private EventTag startTag;
-
-    private EventTag endTag;
-
-    private List<E> events;
+@AutoValue
+@GwtCompatible(serializable = true)
+public abstract class EventList<E extends WebProtegeEvent<?>> implements Serializable {
 
 
-    /**
-     * For serialization only
-     */
-    protected EventList() {
+    @JsonCreator
+    public static <E extends WebProtegeEvent<?>> EventList<E> create(@JsonProperty("startTag") EventTag startTag,
+                                                        @JsonProperty("events") ImmutableList<E> events,
+                                                        @JsonProperty("endTag") EventTag endTag) {
+        return new AutoValue_EventList<>(startTag, events, endTag);
     }
 
-    public EventList(EventTag startTag, EventTag endTag) {
-        this.startTag = checkNotNull(startTag);
-        this.endTag = checkNotNull(endTag);
-        this.events = null;
-    }
-
-    public EventList(EventTag startTag, Collection<E> events, EventTag endTag) {
-        this.startTag = checkNotNull(startTag);
-        this.endTag = checkNotNull(endTag);
-        this.events = new ArrayList<E>(checkNotNull(events));
-    }
-
+    @JsonIgnore
     public int size() {
-        if(events == null) {
-            return 0;
-        }
-        else {
-            return events.size();
-        }
+        return getEvents().size();
     }
 
+    @JsonIgnore
     public boolean isEmpty() {
-        return events == null || events.size() == 0;
+        return getEvents().size() == 0;
     }
 
-    public EventTag getStartTag() {
-        return startTag;
-    }
+    public abstract EventTag getStartTag();
 
-    public EventTag getEndTag() {
-        return endTag;
-    }
+    public abstract ImmutableList<E> getEvents();
 
-    public List<E> getEvents() {
-        if (events == null) {
-            return Collections.emptyList();
-        }
-        else {
-            return Collections.unmodifiableList(events);
-        }
-    }
+    public abstract EventTag getEndTag();
 }

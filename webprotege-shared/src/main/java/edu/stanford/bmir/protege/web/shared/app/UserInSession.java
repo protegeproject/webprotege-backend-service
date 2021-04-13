@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.app;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -33,8 +35,9 @@ public class UserInSession implements IsSerializable {
     private UserInSession() {
     }
 
-    public UserInSession(@Nonnull UserDetails userDetails,
-                         @Nonnull Set<ActionId> allowedApplicationActions) {
+    @JsonCreator
+    public UserInSession(@JsonProperty("userDetails") @Nonnull UserDetails userDetails,
+                         @JsonProperty("allowedApplicationActions") @Nonnull Set<ActionId> allowedApplicationActions) {
         this.userDetails = checkNotNull(userDetails);
         this.allowedApplicationActions = ImmutableSet.copyOf(checkNotNull(allowedApplicationActions));
     }

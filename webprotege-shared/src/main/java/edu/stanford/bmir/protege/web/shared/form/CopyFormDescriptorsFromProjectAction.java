@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -14,39 +19,29 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-14
  */
-public class CopyFormDescriptorsFromProjectAction implements ProjectAction<CopyFormDescriptorsFromProjectResult> {
-
-    private ProjectId projectId;
-
-    private ProjectId projectIdToCopyFrom;
-
-    private ImmutableList<FormId> formIdsToCopy;
-
-    public CopyFormDescriptorsFromProjectAction(ProjectId projectId,
-                                                ProjectId projectIdToCopyFrom,
-                                                ImmutableList<FormId> formIdsToCopy) {
-        this.projectId = checkNotNull(projectId);
-        this.projectIdToCopyFrom = checkNotNull(projectIdToCopyFrom);
-        this.formIdsToCopy = checkNotNull(formIdsToCopy);
-    }
-
-    @GwtSerializationConstructor
-    private CopyFormDescriptorsFromProjectAction() {
-    }
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CopyFormDescriptorsFromProject")
+public abstract class CopyFormDescriptorsFromProjectAction implements ProjectAction<CopyFormDescriptorsFromProjectResult> {
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public ProjectId getProjectIdToCopyFrom() {
-        return projectIdToCopyFrom;
-    }
+    public abstract ProjectId getProjectIdToCopyFrom();
 
     @Nonnull
-    public ImmutableList<FormId> getFormIdsToCopy() {
-        return formIdsToCopy;
+    public abstract ImmutableList<FormId> getFormIdsToCopy();
+
+    @JsonCreator
+    public static CopyFormDescriptorsFromProjectAction create(@JsonProperty("projectId") ProjectId newProjectId,
+                                                              @JsonProperty("projectIdToCopyFrom") ProjectId newProjectIdToCopyFrom,
+                                                              @JsonProperty("formIdsToCopy") ImmutableList<FormId> newFormIdsToCopy) {
+        return new AutoValue_CopyFormDescriptorsFromProjectAction(newProjectId,
+                                                                  newProjectIdToCopyFrom,
+                                                                  newFormIdsToCopy);
     }
+
+
 }

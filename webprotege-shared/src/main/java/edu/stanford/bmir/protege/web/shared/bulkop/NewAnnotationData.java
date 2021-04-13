@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.bulkop;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -17,9 +19,10 @@ import java.util.Optional;
 @GwtCompatible(serializable = true)
 public abstract class NewAnnotationData {
 
-    public static NewAnnotationData get(@Nonnull Optional<OWLAnnotationProperty> property,
-                                        @Nonnull Optional<String> value,
-                                        @Nonnull Optional<String> languageTag) {
+    @JsonCreator
+    public static NewAnnotationData get(@JsonProperty("property") @Nonnull Optional<OWLAnnotationProperty> property,
+                                        @JsonProperty("value") @Nonnull Optional<String> value,
+                                        @JsonProperty("languageTag") @Nonnull Optional<String> languageTag) {
         return new AutoValue_NewAnnotationData(property.orElse(null),
                                            value.orElse(null),
                                            languageTag.orElse(null));

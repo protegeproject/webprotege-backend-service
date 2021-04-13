@@ -35,13 +35,32 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
     private SetManchesterSyntaxFrameAction() {
     }
 
-    public SetManchesterSyntaxFrameAction(ProjectId projectId, OWLEntity subject, String fromRendering, String toRendering, Set<OWLEntityData> freshEntities, Optional<String> commitMessage) {
+    private SetManchesterSyntaxFrameAction(ProjectId projectId,
+                                           OWLEntity subject,
+                                           String fromRendering,
+                                           String toRendering,
+                                           Set<OWLEntityData> freshEntities,
+                                           Optional<String> commitMessage) {
         this.projectId = checkNotNull(projectId);
         this.subject = checkNotNull(subject);
         this.fromRendering = checkNotNull(fromRendering);
         this.toRendering = checkNotNull(toRendering);
         this.freshEntities = new HashSet<>(freshEntities);
         this.commitMessage = checkNotNull(commitMessage).orElse(null);
+    }
+
+    public static SetManchesterSyntaxFrameAction create(ProjectId projectId,
+                                                        OWLEntity subject,
+                                                        String fromRendering,
+                                                        String toRendering,
+                                                        Set<OWLEntityData> freshEntities,
+                                                        Optional<String> commitMessage) {
+        return new SetManchesterSyntaxFrameAction(projectId,
+                                                  subject,
+                                                  fromRendering,
+                                                  toRendering,
+                                                  freshEntities,
+                                                  commitMessage);
     }
 
     @Nonnull

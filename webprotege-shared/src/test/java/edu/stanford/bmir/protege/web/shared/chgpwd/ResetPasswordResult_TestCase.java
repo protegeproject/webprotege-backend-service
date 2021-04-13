@@ -21,17 +21,17 @@ public class ResetPasswordResult_TestCase {
     @Before
     public void setUp() throws Exception {
         code = ResetPasswordResultCode.SUCCESS;
-        result = new ResetPasswordResult(code);
+        result = ResetPasswordResult.create(code);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new ResetPasswordResult(null);
+        ResetPasswordResult.create(null);
     }
 
     @Test
     public void shouldBeEqualToOther() {
-        ResetPasswordResult other = new ResetPasswordResult(code);
+        ResetPasswordResult other = ResetPasswordResult.create(code);
         assertThat(result.equals(other), is(true));
     }
 
@@ -47,7 +47,7 @@ public class ResetPasswordResult_TestCase {
 
     @Test
     public void shouldHaveEqualHashCodes() {
-        ResetPasswordResult other = new ResetPasswordResult(code);
+        ResetPasswordResult other = ResetPasswordResult.create(code);
         assertThat(result.hashCode(), is(other.hashCode()));
     }
 

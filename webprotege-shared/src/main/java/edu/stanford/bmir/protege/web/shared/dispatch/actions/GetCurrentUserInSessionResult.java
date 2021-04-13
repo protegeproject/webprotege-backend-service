@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.app.UserInSession;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
@@ -11,22 +16,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 04/04/2013
  */
-public class GetCurrentUserInSessionResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetCurrentUserInSession")
+public abstract class GetCurrentUserInSessionResult implements Result {
 
-    private UserInSession userInSession;
+    public abstract UserInSession getUserInSession();
 
-    /**
-     * For serialization only
-     */
-    private GetCurrentUserInSessionResult() {
-    }
-
-    public GetCurrentUserInSessionResult(UserInSession userInSession) {
-        this.userInSession = checkNotNull(userInSession);
-    }
-
-    public UserInSession getUserInSession() {
-        return userInSession;
+    @JsonCreator
+    public static GetCurrentUserInSessionResult create(@JsonProperty("userInSession") UserInSession userInSession) {
+        return new AutoValue_GetCurrentUserInSessionResult(userInSession);
     }
 
 }

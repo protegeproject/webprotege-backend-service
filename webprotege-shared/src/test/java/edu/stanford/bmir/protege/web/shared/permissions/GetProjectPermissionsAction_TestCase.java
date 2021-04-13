@@ -36,19 +36,19 @@ public class GetProjectPermissionsAction_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        action = new GetProjectPermissionsAction(projectId, userId);
-        otherAction = new GetProjectPermissionsAction(projectId, userId);
+        action = GetProjectPermissionsAction.create(projectId, userId);
+        otherAction = GetProjectPermissionsAction.create(projectId, userId);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_ProjectId_IsNull() {
-        new GetProjectPermissionsAction(null, userId);
+        GetProjectPermissionsAction.create(null, userId);
     }
 
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_UserId_IsNull() {
-        new GetProjectPermissionsAction(projectId, null);
+        GetProjectPermissionsAction.create(projectId, null);
     }
 
     @Test

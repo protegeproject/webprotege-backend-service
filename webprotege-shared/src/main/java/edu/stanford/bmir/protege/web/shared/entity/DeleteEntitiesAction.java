@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -18,6 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 9 May 2017
  */
+@JsonTypeName("DeleteEntities")
 public class DeleteEntitiesAction implements ProjectAction<DeleteEntitiesResult> {
 
     private ProjectId projectId;
@@ -28,8 +34,9 @@ public class DeleteEntitiesAction implements ProjectAction<DeleteEntitiesResult>
     private DeleteEntitiesAction() {
     }
 
-    public DeleteEntitiesAction(@Nonnull ProjectId projectId,
-                                @Nonnull Set<OWLEntity> entities) {
+    @JsonCreator
+    public DeleteEntitiesAction(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                @JsonProperty("entities") @Nonnull Set<OWLEntity> entities) {
         this.entities = new HashSet<>(entities);
         this.projectId = checkNotNull(projectId);
     }

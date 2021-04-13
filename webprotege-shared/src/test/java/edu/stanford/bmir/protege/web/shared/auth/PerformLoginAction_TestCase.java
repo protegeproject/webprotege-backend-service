@@ -37,23 +37,23 @@ public class PerformLoginAction_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        action = new PerformLoginAction(userId, chapSessionId, chapResponse);
-        otherAction = new PerformLoginAction(userId, chapSessionId, chapResponse);
+        action = PerformLoginAction.create(userId, chapSessionId, chapResponse);
+        otherAction = PerformLoginAction.create(userId, chapSessionId, chapResponse);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_UserId_IsNull() {
-        new PerformLoginAction(null, chapSessionId, chapResponse);
+        PerformLoginAction.create(null, chapSessionId, chapResponse);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_ChapSessionId_IsNull() {
-        new PerformLoginAction(userId, null, chapResponse);
+        PerformLoginAction.create(userId, null, chapResponse);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_ChapResponse_IsNull() {
-        new PerformLoginAction(userId, chapSessionId, null);
+        PerformLoginAction.create(userId, chapSessionId, null);
     }
 
     @Test

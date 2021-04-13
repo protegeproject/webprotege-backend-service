@@ -27,8 +27,8 @@ public class GetEntityDiscussionThreadsAction implements ProjectAction<GetEntity
         this.entity = checkNotNull(entity);
     }
 
-    public static GetEntityDiscussionThreadsAction getDiscussionThreads(@Nonnull ProjectId projectId,
-                                                                        @Nonnull OWLEntity entity) {
+    public static GetEntityDiscussionThreadsAction create(@Nonnull ProjectId projectId,
+                                                          @Nonnull OWLEntity entity) {
         return new GetEntityDiscussionThreadsAction(projectId, entity);
     }
 

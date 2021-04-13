@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.viz;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -14,30 +19,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-14
  */
-public class SetEntityGraphActiveFiltersAction implements ProjectAction<SetEntityGraphActiveFiltersResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("SetEntityGraphActiveFilters")
+public abstract class SetEntityGraphActiveFiltersAction implements ProjectAction<SetEntityGraphActiveFiltersResult> {
 
-    private ProjectId projectId;
 
-    private ImmutableList<FilterName> activeFilters;
-
-    public SetEntityGraphActiveFiltersAction(@Nonnull ProjectId projectId,
-                                             @Nonnull ImmutableList<FilterName> activeFilters) {
-        this.projectId = checkNotNull(projectId);
-        this.activeFilters = checkNotNull(activeFilters);
-    }
-
-    @GwtSerializationConstructor
-    private SetEntityGraphActiveFiltersAction() {
+    @JsonCreator
+    public static SetEntityGraphActiveFiltersAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                           @JsonProperty("activeFilters") @Nonnull ImmutableList<FilterName> activeFilters) {
+        return new AutoValue_SetEntityGraphActiveFiltersAction(projectId, activeFilters);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public ImmutableList<FilterName> getActiveFilters() {
-        return activeFilters;
-    }
+    public abstract ImmutableList<FilterName> getActiveFilters();
 }

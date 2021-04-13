@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -19,85 +24,33 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 7 Mar 2017
  */
-public class GetCommentedEntitiesAction implements ProjectAction<GetCommentedEntitiesResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetCommentedEntities")
+public abstract class GetCommentedEntitiesAction implements ProjectAction<GetCommentedEntitiesResult> {
 
-    private ProjectId projectId;
-
-    private PageRequest pageRequest;
-
-    private String userIdFilter;
-
-    private SortingKey sortingKey;
-
-    private Set<Status> statusFilter;
-
-    @GwtSerializationConstructor
-    private GetCommentedEntitiesAction() {
-    }
-
-    public GetCommentedEntitiesAction(@Nonnull ProjectId projectId,
-                                      @Nonnull String userIdFilter,
-                                      @Nonnull Set<Status> statusFilter,
-                                      @Nonnull SortingKey sortingKey,
-                                      @Nonnull PageRequest pageRequest) {
-        this.projectId = projectId;
-        this.userIdFilter = checkNotNull(userIdFilter);
-        this.statusFilter = new HashSet<>(checkNotNull(statusFilter));
-        this.sortingKey = checkNotNull(sortingKey);
-        this.pageRequest = pageRequest;
+    @JsonCreator
+    public static GetCommentedEntitiesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                      @JsonProperty("userIdFilter") @Nonnull String userIdFilter,
+                                      @JsonProperty("statusFilter") @Nonnull Set<Status> statusFilter,
+                                      @JsonProperty("sortingKey") @Nonnull SortingKey sortingKey,
+                                      @JsonProperty("pageRequest") @Nonnull PageRequest pageRequest) {
+        return new AutoValue_GetCommentedEntitiesAction(projectId, sortingKey, pageRequest, userIdFilter, statusFilter);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public SortingKey getSortingKey() {
-        return sortingKey;
-    }
+    public abstract SortingKey getSortingKey();
 
     @Nonnull
-    public PageRequest getPageRequest() {
-        return pageRequest;
-    }
+    public abstract PageRequest getPageRequest();
 
     @Nonnull
-    public String getUserIdFilter() {
-        return userIdFilter;
-    }
+    public abstract String getUserIdFilter();
 
     @Nonnull
-    public Set<Status> getStatusFilter() {
-        return statusFilter;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(projectId, pageRequest);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof GetCommentedEntitiesAction)) {
-            return false;
-        }
-        GetCommentedEntitiesAction other = (GetCommentedEntitiesAction) obj;
-        return this.projectId.equals(other.projectId)
-                && this.pageRequest.equals(other.pageRequest);
-    }
-
-
-    @Override
-    public String toString() {
-        return toStringHelper("GetCommentedEntitiesAction")
-                .addValue(projectId)
-                .addValue(sortingKey)
-                .addValue(pageRequest)
-                .toString();
-    }
+    public abstract Set<Status> getStatusFilter();
 }

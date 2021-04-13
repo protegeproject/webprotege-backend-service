@@ -4,16 +4,13 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.match.criteria.CompositeRootCriteria;
-import edu.stanford.bmir.protege.web.shared.match.criteria.EntityMatchCriteria;
 import edu.stanford.bmir.protege.web.shared.search.SearchType;
 import org.semanticweb.owlapi.model.EntityType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 

@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.match;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**

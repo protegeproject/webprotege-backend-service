@@ -11,6 +11,6 @@ public class GetUserIdCompletionsActionFactory implements GetPossibleItemComplet
 
     @Override
     public GetPossibleItemCompletionsAction<UserId> createGetPossibleItemCompletionsAction(String currentItemName) {
-        return new GetUserIdCompletionsAction(currentItemName);
+        return GetUserIdCompletionsAction.create(currentItemName);
     }
 }

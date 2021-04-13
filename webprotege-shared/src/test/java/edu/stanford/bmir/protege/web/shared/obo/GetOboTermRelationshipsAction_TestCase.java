@@ -24,13 +24,13 @@ public class GetOboTermRelationshipsAction_TestCase {
 
     @Before
     public void setUp() {
-        getOboTermRelationshipsAction = new GetOboTermRelationshipsAction(projectId, entity);
+        getOboTermRelationshipsAction = GetOboTermRelationshipsAction.create(projectId, entity);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetOboTermRelationshipsAction(null, entity);
+        GetOboTermRelationshipsAction.create(null, entity);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class GetOboTermRelationshipsAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_entity_IsNull() {
-        new GetOboTermRelationshipsAction(projectId, null);
+        GetOboTermRelationshipsAction.create(projectId, null);
     }
 
     @Test
@@ -62,22 +62,22 @@ public class GetOboTermRelationshipsAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboTermRelationshipsAction, is(new GetOboTermRelationshipsAction(projectId, entity)));
+        assertThat(getOboTermRelationshipsAction, is(GetOboTermRelationshipsAction.create(projectId, entity)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboTermRelationshipsAction, is(not(new GetOboTermRelationshipsAction(Mockito.mock(ProjectId.class), entity))));
+        assertThat(getOboTermRelationshipsAction, is(not(GetOboTermRelationshipsAction.create(Mockito.mock(ProjectId.class), entity))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_entity() {
-        assertThat(getOboTermRelationshipsAction, is(not(new GetOboTermRelationshipsAction(projectId, Mockito.mock(OWLClass.class)))));
+        assertThat(getOboTermRelationshipsAction, is(not(GetOboTermRelationshipsAction.create(projectId, Mockito.mock(OWLClass.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboTermRelationshipsAction.hashCode(), is(new GetOboTermRelationshipsAction(projectId, entity).hashCode()));
+        assertThat(getOboTermRelationshipsAction.hashCode(), is(GetOboTermRelationshipsAction.create(projectId, entity).hashCode()));
     }
 
     @Test

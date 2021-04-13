@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -16,40 +21,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-09-28
  */
-public class GetEntityCreationFormsAction implements ProjectAction<GetEntityCreationFormsResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityCreationForms")
+public abstract class GetEntityCreationFormsAction implements ProjectAction<GetEntityCreationFormsResult> {
 
-    private ProjectId projectId;
-
-    @Nullable
-    private OWLEntity parentEntity;
-
-    private EntityType<?> entityType;
-
-    public GetEntityCreationFormsAction(@Nonnull ProjectId projectId,
-                                        @Nonnull OWLEntity parentEntity,
-                                        @Nonnull EntityType<?> entityType) {
-        this.projectId = checkNotNull(projectId);
-        this.parentEntity = checkNotNull(parentEntity);
-        this.entityType = checkNotNull(entityType);
-    }
-
-    @GwtSerializationConstructor
-    private GetEntityCreationFormsAction() {
+    @JsonCreator
+    public static GetEntityCreationFormsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                      @JsonProperty("parentEntity") @Nonnull OWLEntity parentEntity,
+                                                      @JsonProperty("entityType") @Nonnull EntityType<?> entityType) {
+        return new AutoValue_GetEntityCreationFormsAction(projectId, entityType, parentEntity);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public EntityType<?> getEntityType() {
-        return entityType;
-    }
+    public abstract EntityType<?> getEntityType();
 
     @Nonnull
-    public OWLEntity getParentEntity() {
-        return parentEntity;
-    }
+    public abstract OWLEntity getParentEntity();
 }

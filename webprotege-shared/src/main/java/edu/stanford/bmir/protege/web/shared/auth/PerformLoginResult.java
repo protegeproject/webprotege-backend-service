@@ -6,7 +6,6 @@ import edu.stanford.bmir.protege.web.shared.app.UserInSession;
 import edu.stanford.bmir.protege.web.shared.user.UserDetails;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -20,14 +19,18 @@ public class PerformLoginResult extends AbstractAuthenticationResult {
 
     private UserInSession userInSession;
 
-    public PerformLoginResult(@Nonnull AuthenticationResponse result,
-                              @Nonnull UserInSession userInSession) {
+    private PerformLoginResult(@Nonnull AuthenticationResponse result, @Nonnull UserInSession userInSession) {
         super(result);
         this.userInSession = checkNotNull(userInSession);
     }
 
     @GwtSerializationConstructor
     private PerformLoginResult() {
+    }
+
+    public static PerformLoginResult create(@Nonnull AuthenticationResponse result,
+                                            @Nonnull UserInSession userInSession) {
+        return new PerformLoginResult(result, userInSession);
     }
 
     /**

@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -14,14 +17,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 9 Oct 2016
  */
+@JsonTypeName("DeleteEntityComment")
 public class DeleteEntityCommentAction implements ProjectAction<DeleteEntityCommentResult> {
 
     private ProjectId projectId;
 
     private CommentId commentId;
 
-    public static DeleteEntityCommentAction deleteComment(@Nonnull ProjectId projectId,
-                                                          @Nonnull CommentId commentId) {
+    @JsonCreator
+    public static DeleteEntityCommentAction deleteComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                          @JsonProperty("commentId") @Nonnull CommentId commentId) {
         return new DeleteEntityCommentAction(projectId, commentId);
     }
 

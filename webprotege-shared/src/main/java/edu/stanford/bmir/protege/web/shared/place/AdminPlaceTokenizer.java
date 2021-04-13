@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.gwt.place.shared.Place;
-import edu.stanford.bmir.protege.web.shared.place.ApplicationSettingsPlace;
-import edu.stanford.bmir.protege.web.shared.place.WebProtegePlaceTokenizer;
 
 /**
  * Matthew Horridge

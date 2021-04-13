@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -14,10 +17,12 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityCreationForms")
 public abstract class GetEntityCreationFormsResult implements Result {
 
+    @JsonCreator
     @Nonnull
-    public static GetEntityCreationFormsResult get(@Nonnull ImmutableList<FormDescriptorDto> formDtos) {
+    public static GetEntityCreationFormsResult get(@JsonProperty("formDescriptors") @Nonnull ImmutableList<FormDescriptorDto> formDtos) {
         return new AutoValue_GetEntityCreationFormsResult(formDtos);
     }
 

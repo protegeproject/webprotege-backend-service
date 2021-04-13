@@ -9,8 +9,6 @@ import edu.stanford.bmir.protege.web.shared.match.criteria.MultiMatchType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.validation.constraints.Null;
-import java.util.Optional;
 
 import static edu.stanford.bmir.protege.web.shared.DeserializationUtil.nonNull;
 

@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
@@ -15,44 +20,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-01
  */
-public class GetEntityFormsResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityForms")
+public abstract class GetEntityFormsResult implements Result {
 
-    private OWLEntityData entityData;
-
-    private ImmutableList<FormId> filteredFormIds;
-
-    private ImmutableList<FormDataDto> formData;
-
-    public GetEntityFormsResult(@Nonnull OWLEntityData entityData,
-                                @Nonnull ImmutableList<FormId> filteredFormIds,
-                                @Nonnull ImmutableList<FormDataDto> formData) {
-        this.entityData = checkNotNull(entityData);
-        this.filteredFormIds = checkNotNull(filteredFormIds);
-        this.formData = checkNotNull(formData);
+    @JsonCreator
+    public static GetEntityFormsResult create(@JsonProperty("entity") @Nonnull OWLEntityData entityData,
+                                              @JsonProperty("filteredFormIds") @Nonnull ImmutableList<FormId> filteredFormIds,
+                                              @JsonProperty("formData") @Nonnull ImmutableList<FormDataDto> formData) {
+        return new AutoValue_GetEntityFormsResult(entityData, filteredFormIds, formData);
     }
 
-    private GetEntityFormsResult() {
-    }
+    @JsonProperty("entity")
+    @Nonnull
+    public abstract OWLEntityData getEntityData();
 
     @Nonnull
-    public ImmutableList<FormId> getFilteredFormIds() {
-        return filteredFormIds;
-    }
+    public abstract ImmutableList<FormId> getFilteredFormIds();
 
     @Nonnull
-    public ImmutableList<FormDataDto> getFormData() {
-        return formData;
-    }
-
-    @Nonnull
-    public OWLEntityData getEntityData() {
-        return entityData;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper("GetEntityFormsResult")
-                .addValue(formData)
-                .toString();
-    }
+    public abstract ImmutableList<FormDataDto> getFormData();
 }

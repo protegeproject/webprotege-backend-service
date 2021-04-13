@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.lang;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 
@@ -14,8 +16,9 @@ import javax.annotation.Nonnull;
 @GwtCompatible(serializable = true)
 public abstract class LangTag {
 
+    @JsonCreator
     @Nonnull
-    public static LangTag get(@Nonnull String langTag) {
+    public static LangTag get(@JsonProperty("languageCode") @Nonnull String langTag) {
         return new AutoValue_LangTag(langTag.trim().toLowerCase());
     }
 

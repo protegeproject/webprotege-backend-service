@@ -5,7 +5,6 @@ import edu.stanford.bmir.protege.web.shared.entity.OWLPropertyData;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
-import java.util.Comparator;
 
 /**
  * Author: Matthew Horridge<br>

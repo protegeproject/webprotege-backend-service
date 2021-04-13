@@ -32,6 +32,8 @@ public abstract class NewProjectSettings implements IsSerializable {
 
     private static final String DESCRIPTION = "description";
 
+    private static final String SOURCE_DOCUMENT_ID = "sourceDocumentId";
+
     /**
      * Creates a NewProjectSettings object that describes the basic settings for a new project and also specifies a
      * set of source documents (via a set of {@link DocumentId} objects) from which to create the project.
@@ -44,11 +46,12 @@ public abstract class NewProjectSettings implements IsSerializable {
      * @throws NullPointerException if either projectOwner, displayName, projectDescription or sourceDocumentId are
      *                              null.
      */
-    public static NewProjectSettings get(@Nonnull UserId projectOwner,
-                                         @Nonnull String displayName,
-                                         @Nonnull String langTag,
-                                         @Nonnull String projectDescription,
-                                         @Nonnull DocumentId sourceDocumentId) {
+    @JsonCreator
+    public static NewProjectSettings get(@JsonProperty(PROJECT_OWNER) @Nonnull UserId projectOwner,
+                                         @JsonProperty(DISPLAY_NAME) @Nonnull String displayName,
+                                         @JsonProperty(LANG_TAG) @Nonnull String langTag,
+                                         @JsonProperty(DESCRIPTION) @Nonnull String projectDescription,
+                                         @JsonProperty(SOURCE_DOCUMENT_ID) @Nonnull DocumentId sourceDocumentId) {
         return new AutoValue_NewProjectSettings(projectOwner,
                                                 displayName,
                                                 langTag,
@@ -65,7 +68,6 @@ public abstract class NewProjectSettings implements IsSerializable {
      * @param projectDescription The desired project description for the new project.  Not {@code null}.
      * @throws NullPointerException if either projectOwner, displayName or projectDescription are null.
      */
-    @JsonCreator
     public static NewProjectSettings get(@JsonProperty(PROJECT_OWNER) UserId projectOwner,
                                          @JsonProperty(DISPLAY_NAME) String displayName,
                                          @JsonProperty(LANG_TAG) String langTag,

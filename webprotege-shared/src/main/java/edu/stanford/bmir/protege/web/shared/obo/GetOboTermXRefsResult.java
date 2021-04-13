@@ -18,12 +18,16 @@ public class GetOboTermXRefsResult implements Result {
 
     private ImmutableList<OBOXRef> xRefs;
 
-    public GetOboTermXRefsResult(@Nonnull List<OBOXRef> xRefs) {
+    private GetOboTermXRefsResult(@Nonnull List<OBOXRef> xRefs) {
         this.xRefs = ImmutableList.copyOf(xRefs);
     }
 
     @GwtSerializationConstructor
     private GetOboTermXRefsResult() {
+    }
+
+    public static GetOboTermXRefsResult create(@Nonnull List<OBOXRef> xRefs) {
+        return new GetOboTermXRefsResult(xRefs);
     }
 
     @Nonnull

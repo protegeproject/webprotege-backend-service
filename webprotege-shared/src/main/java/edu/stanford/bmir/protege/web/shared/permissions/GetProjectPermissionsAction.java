@@ -1,10 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.permissions;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.HasUserId;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -28,10 +28,13 @@ public class GetProjectPermissionsAction implements Action<GetProjectPermissions
     private GetProjectPermissionsAction() {
     }
 
-    public GetProjectPermissionsAction(@Nonnull ProjectId projectId,
-                                       @Nonnull UserId userId) {
+    private GetProjectPermissionsAction(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
+    }
+
+    public static GetProjectPermissionsAction create(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
+        return new GetProjectPermissionsAction(projectId, userId);
     }
 
     @Nonnull

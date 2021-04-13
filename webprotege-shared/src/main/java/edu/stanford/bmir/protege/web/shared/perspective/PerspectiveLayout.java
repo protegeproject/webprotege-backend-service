@@ -3,12 +3,8 @@ package edu.stanford.bmir.protege.web.shared.perspective;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.project.WithProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
 import edu.stanford.protege.widgetmap.shared.node.Node;
 
 import javax.annotation.Nonnull;

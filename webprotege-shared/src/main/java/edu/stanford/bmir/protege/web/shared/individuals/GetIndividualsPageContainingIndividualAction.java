@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.individuals;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -8,7 +13,6 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -18,49 +22,30 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 19 Sep 2018
  */
-public class GetIndividualsPageContainingIndividualAction implements ProjectAction<GetIndividualsPageContainingIndividualResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetIndividualsPageContainingIndividual")
+public abstract class GetIndividualsPageContainingIndividualAction implements ProjectAction<GetIndividualsPageContainingIndividualResult> {
 
-    private ProjectId projectId;
 
-    private OWLNamedIndividual individual;
-
-    @Nullable
-    private OWLClass preferredType;
-
-    private InstanceRetrievalMode preferredMode;
-
-    public GetIndividualsPageContainingIndividualAction(@Nonnull ProjectId projectId,
-                                                        @Nonnull OWLNamedIndividual individual,
-                                                        @Nonnull Optional<OWLClass> preferredType,
-                                                        @Nullable InstanceRetrievalMode preferredMode) {
-        this.projectId = checkNotNull(projectId);
-        this.individual = checkNotNull(individual);
-        this.preferredType = checkNotNull(preferredType).orElse(null);
-        this.preferredMode = checkNotNull(preferredMode);
-    }
-
-    @GwtSerializationConstructor
-    private GetIndividualsPageContainingIndividualAction() {
+    @JsonCreator
+    public static GetIndividualsPageContainingIndividualAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                                      @JsonProperty("individual") @Nonnull OWLNamedIndividual individual,
+                                                                      @JsonProperty("preferredType") @Nonnull Optional<OWLClass> preferredType,
+                                                                      @JsonProperty("preferredMode") @Nullable InstanceRetrievalMode preferredMode) {
+        return new AutoValue_GetIndividualsPageContainingIndividualAction(projectId, individual, preferredType, preferredMode);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public OWLNamedIndividual getIndividual() {
-        return individual;
-    }
+    public abstract OWLNamedIndividual getIndividual();
 
     @Nonnull
-    public Optional<OWLClass> getPreferredType() {
-        return Optional.ofNullable(preferredType);
-    }
+    public abstract Optional<OWLClass> getPreferredType();
 
     @Nonnull
-    public InstanceRetrievalMode getPreferredMode() {
-        return preferredMode;
-    }
+    public abstract InstanceRetrievalMode getPreferredMode();
 }

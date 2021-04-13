@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.dispatch;
 
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.HasSubject;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
@@ -42,7 +42,7 @@ public abstract class AbstractHasProjectIdAndSubject<S> implements HasProjectId,
      */
     @Nonnull
     @Override
-    final public ProjectId getProjectId() {
+    public ProjectId getProjectId() {
         return projectId;
     }
 

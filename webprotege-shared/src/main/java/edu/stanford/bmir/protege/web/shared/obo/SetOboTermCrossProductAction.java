@@ -24,9 +24,9 @@ public class SetOboTermCrossProductAction implements ProjectAction<SetOboTermCro
 
     private OBOTermCrossProduct crossProduct;
 
-    public SetOboTermCrossProductAction(@Nonnull ProjectId projectId,
-                                        @Nonnull OWLClass entity,
-                                        @Nonnull OBOTermCrossProduct crossProduct) {
+    private SetOboTermCrossProductAction(@Nonnull ProjectId projectId,
+                                         @Nonnull OWLClass entity,
+                                         @Nonnull OBOTermCrossProduct crossProduct) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
         this.crossProduct = checkNotNull(crossProduct);
@@ -34,6 +34,12 @@ public class SetOboTermCrossProductAction implements ProjectAction<SetOboTermCro
 
     @GwtSerializationConstructor
     private SetOboTermCrossProductAction() {
+    }
+
+    public static SetOboTermCrossProductAction create(@Nonnull ProjectId projectId,
+                                                      @Nonnull OWLClass entity,
+                                                      @Nonnull OBOTermCrossProduct crossProduct) {
+        return new SetOboTermCrossProductAction(projectId, entity, crossProduct);
     }
 
     @Nonnull

@@ -34,18 +34,18 @@ public class PerformLoginResult_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        result = new PerformLoginResult(response, userInSession);
-        otherResult = new PerformLoginResult(response, userInSession);
+        result = PerformLoginResult.create(response, userInSession);
+        otherResult = PerformLoginResult.create(response, userInSession);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new PerformLoginResult(null, userInSession);
+        PerformLoginResult.create(null, userInSession);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIfUserDetailsIsNull() {
-        new PerformLoginResult(response, null);
+        PerformLoginResult.create(response, null);
     }
 
     @Test

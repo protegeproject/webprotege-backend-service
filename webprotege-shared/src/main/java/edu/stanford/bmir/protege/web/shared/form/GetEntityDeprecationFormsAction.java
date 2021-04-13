@@ -1,6 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -14,29 +18,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-10-21
  */
-public class GetEntityDeprecationFormsAction implements ProjectAction<GetEntityDeprecationFormsResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityDeprecationForms")
+public abstract class GetEntityDeprecationFormsAction implements ProjectAction<GetEntityDeprecationFormsResult> {
 
-    private ProjectId projectId;
-
-    private OWLEntity entity;
-
-    @GwtSerializationConstructor
-    private GetEntityDeprecationFormsAction() {
-    }
-
-    public GetEntityDeprecationFormsAction(@Nonnull ProjectId projectId,
-                                           @Nonnull OWLEntity entity) {
-        this.projectId = checkNotNull(projectId);
-        this.entity = checkNotNull(entity);
+    @JsonCreator
+    public static GetEntityDeprecationFormsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                         @JsonProperty("entity") @Nonnull OWLEntity entity) {
+        return new AutoValue_GetEntityDeprecationFormsAction(projectId, entity);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
-    public OWLEntity getEntity() {
-        return entity;
-    }
+    public abstract OWLEntity getEntity();
 }

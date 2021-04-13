@@ -8,7 +8,6 @@ import com.google.common.annotations.GwtIncompatible;
 import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
-
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;

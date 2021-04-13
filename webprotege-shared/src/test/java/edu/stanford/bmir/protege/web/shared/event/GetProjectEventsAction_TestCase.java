@@ -27,13 +27,13 @@ public class GetProjectEventsAction_TestCase {
 
     @Before
     public void setUp() {
-        action = new GetProjectEventsAction(sinceTag, projectId);
+        action = GetProjectEventsAction.create(sinceTag, projectId);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_sinceTag_IsNull() {
-        new GetProjectEventsAction(null, projectId);
+        GetProjectEventsAction.create(null, projectId);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class GetProjectEventsAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetProjectEventsAction(sinceTag, null);
+        GetProjectEventsAction.create(sinceTag, null);
     }
 
     @Test
@@ -65,22 +65,22 @@ public class GetProjectEventsAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(action, is(new GetProjectEventsAction(sinceTag, projectId)));
+        assertThat(action, is(GetProjectEventsAction.create(sinceTag, projectId)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_sinceTag() {
-        assertThat(action, is(not(new GetProjectEventsAction(mock(EventTag.class), projectId))));
+        assertThat(action, is(not(GetProjectEventsAction.create(mock(EventTag.class), projectId))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(new GetProjectEventsAction(sinceTag, mock(ProjectId.class)))));
+        assertThat(action, is(not(GetProjectEventsAction.create(sinceTag, mock(ProjectId.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(action.hashCode(), is(new GetProjectEventsAction(sinceTag, projectId).hashCode()));
+        assertThat(action.hashCode(), is(GetProjectEventsAction.create(sinceTag, projectId).hashCode()));
     }
 
     @Test

@@ -23,8 +23,12 @@ public class GetEntityCrudKitsAction implements ProjectAction<GetEntityCrudKitsR
     private GetEntityCrudKitsAction() {
     }
 
-    public GetEntityCrudKitsAction(@Nonnull ProjectId projectId) {
+    private GetEntityCrudKitsAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    public static GetEntityCrudKitsAction create(@Nonnull ProjectId projectId) {
+        return new GetEntityCrudKitsAction(projectId);
     }
 
     @Nonnull

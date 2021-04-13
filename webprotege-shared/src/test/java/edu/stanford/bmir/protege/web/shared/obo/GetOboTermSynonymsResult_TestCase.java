@@ -22,13 +22,13 @@ public class GetOboTermSynonymsResult_TestCase {
 
     @Before
     public void setUp() {
-        getOboTermSynonymsResult = new GetOboTermSynonymsResult(synonyms);
+        getOboTermSynonymsResult = GetOboTermSynonymsResult.create(synonyms);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_synonyms_IsNull() {
-        new GetOboTermSynonymsResult(null);
+        GetOboTermSynonymsResult.create(null);
     }
 
     @Test
@@ -49,17 +49,17 @@ public class GetOboTermSynonymsResult_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboTermSynonymsResult, is(new GetOboTermSynonymsResult(synonyms)));
+        assertThat(getOboTermSynonymsResult, is(GetOboTermSynonymsResult.create(synonyms)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_synonyms() {
-        assertThat(getOboTermSynonymsResult, is(not(new GetOboTermSynonymsResult(singletonList(mock(OBOTermSynonym.class))))));
+        assertThat(getOboTermSynonymsResult, is(not(GetOboTermSynonymsResult.create(singletonList(mock(OBOTermSynonym.class))))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboTermSynonymsResult.hashCode(), is(new GetOboTermSynonymsResult(synonyms).hashCode()));
+        assertThat(getOboTermSynonymsResult.hashCode(), is(GetOboTermSynonymsResult.create(synonyms).hashCode()));
     }
 
     @Test

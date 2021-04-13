@@ -23,13 +23,13 @@ public class GetOboNamespacesAction_TestCase {
 
     @Before
     public void setUp() {
-        getOboNamespacesAction = new GetOboNamespacesAction(projectId);
+        getOboNamespacesAction = GetOboNamespacesAction.create(projectId);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetOboNamespacesAction(null);
+        GetOboNamespacesAction.create(null);
     }
 
     @Test
@@ -50,17 +50,17 @@ public class GetOboNamespacesAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboNamespacesAction, is(new GetOboNamespacesAction(projectId)));
+        assertThat(getOboNamespacesAction, is(GetOboNamespacesAction.create(projectId)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboNamespacesAction, is(not(new GetOboNamespacesAction(mock(ProjectId.class)))));
+        assertThat(getOboNamespacesAction, is(not(GetOboNamespacesAction.create(mock(ProjectId.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboNamespacesAction.hashCode(), is(new GetOboNamespacesAction(projectId).hashCode()));
+        assertThat(getOboNamespacesAction.hashCode(), is(GetOboNamespacesAction.create(projectId).hashCode()));
     }
 
     @Test

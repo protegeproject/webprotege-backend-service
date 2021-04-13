@@ -24,9 +24,7 @@ public class SetOboTermIdAction implements ProjectAction<SetOboTermIdResult> {
 
     private OBOTermId oboTermId;
 
-    public SetOboTermIdAction(@Nonnull ProjectId projectId,
-                              @Nonnull OWLEntity entity,
-                              @Nonnull OBOTermId oboTermId) {
+    private SetOboTermIdAction(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity, @Nonnull OBOTermId oboTermId) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
         this.oboTermId = checkNotNull(oboTermId);
@@ -34,6 +32,12 @@ public class SetOboTermIdAction implements ProjectAction<SetOboTermIdResult> {
 
     @GwtSerializationConstructor
     private SetOboTermIdAction() {
+    }
+
+    public static SetOboTermIdAction create(@Nonnull ProjectId projectId,
+                                            @Nonnull OWLEntity entity,
+                                            @Nonnull OBOTermId oboTermId) {
+        return new SetOboTermIdAction(projectId, entity, oboTermId);
     }
 
     @Nonnull

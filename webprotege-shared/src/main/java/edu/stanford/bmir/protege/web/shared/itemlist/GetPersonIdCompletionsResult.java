@@ -20,8 +20,12 @@ public class GetPersonIdCompletionsResult extends GetPossibleItemCompletionsResu
     private GetPersonIdCompletionsResult() {
     }
 
-    public GetPersonIdCompletionsResult(List<PersonId> possibleItemCompletions) {
+    private GetPersonIdCompletionsResult(List<PersonId> possibleItemCompletions) {
         super(possibleItemCompletions);
+    }
+
+    public static GetPersonIdCompletionsResult create(List<PersonId> possibleItemCompletions) {
+        return new GetPersonIdCompletionsResult(possibleItemCompletions);
     }
 
     @Override

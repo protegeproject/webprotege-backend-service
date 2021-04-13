@@ -1,20 +1,18 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableMap;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.form.ExpansionState;
 import edu.stanford.bmir.protege.web.shared.form.HasFormFieldId;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import org.semanticweb.owlapi.model.OWLProperty;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 import static edu.stanford.bmir.protege.web.shared.form.field.FormFieldDescriptor.*;

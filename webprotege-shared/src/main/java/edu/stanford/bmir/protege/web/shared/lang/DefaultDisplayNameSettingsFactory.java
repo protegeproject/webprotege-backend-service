@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.lang;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageData;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

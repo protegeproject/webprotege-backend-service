@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.viz;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
@@ -13,6 +16,11 @@ import java.util.Optional;
  * 11 Oct 2018
  */
 @GwtCompatible(serializable = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @Type(IsAEdge.class),
+        @Type(RelationshipEdge.class)
+})
 public interface Edge extends IsSerializable {
 
     @Nonnull

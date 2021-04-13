@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.change;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,13 +32,13 @@ public class GetProjectChangesResult_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        result = GetProjectChangesResult.get(projectChanges);
-        otherResult = GetProjectChangesResult.get(projectChanges);
+        result = GetProjectChangesResult.create(projectChanges);
+        otherResult = GetProjectChangesResult.create(projectChanges);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        GetProjectChangesResult.get(null);
+        GetProjectChangesResult.create(null);
     }
 
     @Test

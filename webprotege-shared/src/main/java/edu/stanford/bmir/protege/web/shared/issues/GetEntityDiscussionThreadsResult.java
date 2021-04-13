@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
@@ -15,31 +20,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 5 Oct 2016
  */
-public class GetEntityDiscussionThreadsResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityDiscussionThreads")
+public abstract class GetEntityDiscussionThreadsResult implements Result {
 
-    @SuppressWarnings("GwtInconsistentSerializableClass" )
-    private OWLEntityData entityData;
-
-    private ImmutableList<EntityDiscussionThread> threads;
-
-    @Inject
-    public GetEntityDiscussionThreadsResult(@Nonnull OWLEntityData entityData,
-                                            @Nonnull ImmutableList<EntityDiscussionThread> threads) {
-        this.entityData = checkNotNull(entityData);
-        this.threads = checkNotNull(threads);
-    }
-
-    @GwtSerializationConstructor
-    private GetEntityDiscussionThreadsResult() {
+    @JsonCreator
+    public static GetEntityDiscussionThreadsResult create(@JsonProperty("entity") @Nonnull OWLEntityData entityData,
+                                                          @JsonProperty("threads") @Nonnull ImmutableList<EntityDiscussionThread> threads) {
+        return new AutoValue_GetEntityDiscussionThreadsResult(entityData, threads);
     }
 
     @Nonnull
-    public OWLEntityData getEntityData() {
-        return entityData;
-    }
+    public abstract OWLEntityData getEntity();
 
     @Nonnull
-    public ImmutableList<EntityDiscussionThread> getThreads() {
-        return threads;
-    }
+    public abstract ImmutableList<EntityDiscussionThread> getThreads();
 }

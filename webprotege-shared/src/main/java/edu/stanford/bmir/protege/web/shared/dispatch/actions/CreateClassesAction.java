@@ -1,12 +1,16 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 /**
  * Author: Matthew Horridge<br>
@@ -14,16 +18,17 @@ import java.util.Optional;
  * Bio-Medical Informatics Research Group<br>
  * Date: 22/02/2013
  */
-public class CreateClassesAction extends CreateEntitiesInHierarchyAction<CreateClassesResult, OWLClass> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CreateClasses")
+public abstract class CreateClassesAction implements CreateEntitiesInHierarchyAction<CreateClassesResult, OWLClass> {
 
-    @GwtSerializationConstructor
-    private CreateClassesAction() {
-    }
 
-    public CreateClassesAction(@Nonnull ProjectId projectId,
-                               @Nonnull String sourceText,
-                               @Nonnull String langTag,
-                               @Nonnull ImmutableSet<OWLClass> parents) {
-        super(projectId, sourceText, langTag, parents);
+    @JsonCreator
+    public static CreateClassesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                               @JsonProperty("sourceText") @Nonnull String sourceText,
+                               @JsonProperty("langTag") @Nonnull String langTag,
+                               @JsonProperty("parents") @Nonnull ImmutableSet<OWLClass> parents) {
+        return new AutoValue_CreateClassesAction(projectId, sourceText, langTag, parents);
     }
 }

@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
@@ -12,19 +17,15 @@ import java.util.Collection;
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
  */
-public class GetHierarchyPathsToRootResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetHierarchyPathsToRoot")
+public abstract class GetHierarchyPathsToRootResult implements Result {
 
-    private Collection<Path<GraphNode<EntityNode>>> paths;
-
-    public GetHierarchyPathsToRootResult(Collection<Path<GraphNode<EntityNode>>> paths) {
-        this.paths = new ArrayList<>(paths);
+    @JsonCreator
+    public static GetHierarchyPathsToRootResult create(@JsonProperty("paths") Collection<Path<GraphNode<EntityNode>>> paths) {
+        return new AutoValue_GetHierarchyPathsToRootResult(paths);
     }
 
-    @GwtSerializationConstructor
-    private GetHierarchyPathsToRootResult() {
-    }
-
-    public Collection<Path<GraphNode<EntityNode>>> getPaths() {
-        return new ArrayList<>(paths);
-    }
+    public abstract Collection<Path<GraphNode<EntityNode>>> getPaths();
 }

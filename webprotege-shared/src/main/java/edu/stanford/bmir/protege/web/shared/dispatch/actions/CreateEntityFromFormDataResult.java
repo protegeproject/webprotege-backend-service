@@ -1,10 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableCollection;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -16,15 +20,16 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-09-30
  */
-public class CreateEntityFromFormDataResult extends AbstractCreateEntityResult<OWLEntity> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CreateEntityFromFormData")
+public abstract class CreateEntityFromFormDataResult implements AbstractCreateEntityResult<OWLEntity> {
 
-    public CreateEntityFromFormDataResult(@Nonnull ProjectId projectId,
-                                          @Nonnull EventList<ProjectEvent<?>> eventList,
-                                          ImmutableCollection<EntityNode> entities) {
-        super(projectId, eventList, entities);
-    }
+    @JsonCreator
+    public static CreateEntityFromFormDataResult create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                        @JsonProperty("eventList") @Nonnull EventList<ProjectEvent<?>> eventList,
+                                                        @JsonProperty("entities") ImmutableCollection<EntityNode> entities) {
 
-    @GwtSerializationConstructor
-    private CreateEntityFromFormDataResult() {
+        return new AutoValue_CreateEntityFromFormDataResult(projectId, eventList, entities);
     }
 }

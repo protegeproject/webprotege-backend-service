@@ -1,16 +1,17 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.entity.OWLAnnotationPropertyData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
@@ -22,6 +23,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("AnnotationPropertyFrame")
 public abstract class AnnotationPropertyFrame implements EntityFrame<OWLAnnotationPropertyData>, HasPropertyValueList {
 
     @Nonnull
@@ -44,17 +46,20 @@ public abstract class AnnotationPropertyFrame implements EntityFrame<OWLAnnotati
     @Nonnull
     public abstract ImmutableSet<OWLEntityData> getRanges();
 
+
+    @JsonCreator
     @Nonnull
-    public static AnnotationPropertyFrame get(@Nonnull OWLAnnotationPropertyData subject,
-                                              @Nonnull ImmutableSet<PropertyAnnotationValue> propertyValues,
-                                              @Nonnull ImmutableSet<OWLEntityData> domains,
-                                              @Nonnull ImmutableSet<OWLEntityData> ranges) {
+    public static AnnotationPropertyFrame get(@JsonProperty("subject") @Nonnull OWLAnnotationPropertyData subject,
+                                              @JsonProperty("propertyValues") @Nonnull ImmutableSet<PropertyAnnotationValue> propertyValues,
+                                              @JsonProperty("domains") @Nonnull ImmutableSet<OWLEntityData> domains,
+                                              @JsonProperty("ranges") @Nonnull ImmutableSet<OWLEntityData> ranges) {
         return new AutoValue_AnnotationPropertyFrame(subject,
                                                      propertyValues,
                                                      domains,
                                                      ranges);
     }
 
+    @JsonIgnore
     @Override
     public PropertyValueList getPropertyValueList() {
         return new PropertyValueList(getPropertyValues());

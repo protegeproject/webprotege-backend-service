@@ -9,4 +9,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface DispatchServiceAsync {
     void executeAction( Action action, AsyncCallback<DispatchServiceResultContainer> callback );
+
+    void getRpcWhiteList(RpcWhiteList whiteList, AsyncCallback<RpcWhiteList> callback);
 }

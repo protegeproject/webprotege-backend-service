@@ -17,12 +17,16 @@ public class GetProjectPrefixDeclarationsAction implements ProjectAction<GetProj
 
     private String projectId;
 
-    public GetProjectPrefixDeclarationsAction(@Nonnull ProjectId projectId) {
+    private GetProjectPrefixDeclarationsAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId.getId());
     }
 
     @GwtSerializationConstructor
     private GetProjectPrefixDeclarationsAction() {
+    }
+
+    public static GetProjectPrefixDeclarationsAction create(@Nonnull ProjectId projectId) {
+        return new GetProjectPrefixDeclarationsAction(projectId);
     }
 
     @Nonnull

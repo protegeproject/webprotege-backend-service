@@ -12,7 +12,6 @@ import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSuffixSettings;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.bmir.protege.web.shared.crud.oboid.OboIdSuffixSettings.TYPE_ID;
 
 /**

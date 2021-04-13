@@ -1,7 +1,6 @@
 
 package edu.stanford.bmir.protege.web.shared.color;
 
-import edu.stanford.bmir.protege.web.shared.color.Color;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

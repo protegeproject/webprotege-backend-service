@@ -1,7 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.gwt.user.client.rpc.IsSerializable;
-import edu.stanford.bmir.protege.web.shared.HasSignature;
 
 import javax.annotation.Nonnull;
 
@@ -14,6 +15,8 @@ import javax.annotation.Nonnull;
  *     A high level interface for frame objects.  All frames have some kind of subject.
  * </p>
  */
+@JsonSubTypes(@JsonSubTypes.Type(EntityFrame.class))
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public interface Frame<S> extends IsSerializable {
 
     /**

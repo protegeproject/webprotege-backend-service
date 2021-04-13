@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.change;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -15,6 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 19/03/15
  */
+@JsonTypeName("RevertRevision")
 public class RevertRevisionAction implements ProjectAction<RevertRevisionResult> {
 
     private RevisionNumber revisionNumber;
@@ -27,9 +31,15 @@ public class RevertRevisionAction implements ProjectAction<RevertRevisionResult>
     private RevertRevisionAction() {
     }
 
-    public RevertRevisionAction(ProjectId projectId, RevisionNumber revisionNumber) {
+    private RevertRevisionAction(ProjectId projectId, RevisionNumber revisionNumber) {
         this.projectId = checkNotNull(projectId);
         this.revisionNumber = checkNotNull(revisionNumber);
+    }
+
+    @JsonCreator
+    public static RevertRevisionAction create(@JsonProperty("projectId") ProjectId projectId,
+                                              @JsonProperty("revisionNumber") RevisionNumber revisionNumber) {
+        return new RevertRevisionAction(projectId, revisionNumber);
     }
 
     @Nonnull

@@ -51,38 +51,38 @@ public class SetManchesterSyntaxFrameAction_TestCase {
         freshEntities = Sets.newHashSet();
         fromRendering = "FROM";
         toRendering = "TO";
-        setManchesterSyntaxFrameAction = new SetManchesterSyntaxFrameAction(projectId, subject, fromRendering, toRendering, freshEntities, commitMessage);
-        otherSetManchesterSyntaxFrameAction = new SetManchesterSyntaxFrameAction(projectId, subject, fromRendering, toRendering, freshEntities, commitMessage);
+        setManchesterSyntaxFrameAction = SetManchesterSyntaxFrameAction.create(projectId, subject, fromRendering, toRendering, freshEntities, commitMessage);
+        otherSetManchesterSyntaxFrameAction = SetManchesterSyntaxFrameAction.create(projectId, subject, fromRendering, toRendering, freshEntities, commitMessage);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_ProjectId_IsNull() {
-        new SetManchesterSyntaxFrameAction(null, subject, fromRendering, toRendering, freshEntities, commitMessage);
+        SetManchesterSyntaxFrameAction.create(null, subject, fromRendering, toRendering, freshEntities, commitMessage);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_Subject_IsNull() {
-        new SetManchesterSyntaxFrameAction(projectId, null, fromRendering, toRendering, freshEntities, commitMessage);
+        SetManchesterSyntaxFrameAction.create(projectId, null, fromRendering, toRendering, freshEntities, commitMessage);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_FromRendering_IsNull() {
-        new SetManchesterSyntaxFrameAction(projectId, subject, null, toRendering, freshEntities, commitMessage);
+        SetManchesterSyntaxFrameAction.create(projectId, subject, null, toRendering, freshEntities, commitMessage);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_ToRendering_IsNull() {
-        new SetManchesterSyntaxFrameAction(projectId, subject, fromRendering, null, freshEntities, commitMessage);
+        SetManchesterSyntaxFrameAction.create(projectId, subject, fromRendering, null, freshEntities, commitMessage);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_FreshEntities_IsNull() {
-        new SetManchesterSyntaxFrameAction(projectId, subject, fromRendering, toRendering, null, commitMessage);
+        SetManchesterSyntaxFrameAction.create(projectId, subject, fromRendering, toRendering, null, commitMessage);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_CommitMessage_IsNull() {
-        new SetManchesterSyntaxFrameAction(projectId, subject, fromRendering, toRendering, freshEntities, null);
+        SetManchesterSyntaxFrameAction.create(projectId, subject, fromRendering, toRendering, freshEntities, null);
     }
 
     @Test

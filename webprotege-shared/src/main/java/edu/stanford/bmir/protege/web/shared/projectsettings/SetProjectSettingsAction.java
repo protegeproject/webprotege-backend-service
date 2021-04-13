@@ -19,9 +19,13 @@ public class SetProjectSettingsAction extends AbstractHasProjectAction<SetProjec
     private SetProjectSettingsAction() {
     }
 
-    public SetProjectSettingsAction(ProjectSettings projectSettings) {
+    private SetProjectSettingsAction(ProjectSettings projectSettings) {
         super(projectSettings.getProjectId());
         this.projectSettings = projectSettings;
+    }
+
+    public static SetProjectSettingsAction create(ProjectSettings projectSettings) {
+        return new SetProjectSettingsAction(projectSettings);
     }
 
     public ProjectSettings getProjectSettings() {

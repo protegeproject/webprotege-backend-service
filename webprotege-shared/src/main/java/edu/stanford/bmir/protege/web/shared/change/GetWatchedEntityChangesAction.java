@@ -1,9 +1,11 @@
 package edu.stanford.bmir.protege.web.shared.change;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -17,6 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 27/02/15
  */
+@JsonTypeName("GetWatchedEntityChanges")
 public class GetWatchedEntityChangesAction implements ProjectAction<GetWatchedEntityChangesResult>, HasProjectId {
 
     private ProjectId projectId;
@@ -26,10 +29,15 @@ public class GetWatchedEntityChangesAction implements ProjectAction<GetWatchedEn
     private GetWatchedEntityChangesAction() {
     }
 
-    public GetWatchedEntityChangesAction(ProjectId projectId,
-                                         UserId userId) {
+    private GetWatchedEntityChangesAction(ProjectId projectId, UserId userId) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
+    }
+
+    @JsonCreator
+    public static GetWatchedEntityChangesAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                       @JsonProperty("userId") UserId userId) {
+        return new GetWatchedEntityChangesAction(projectId, userId);
     }
 
     @Nonnull

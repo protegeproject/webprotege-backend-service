@@ -1,6 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.semanticweb.owlapi.model.OWLPrimitive;
 import org.semanticweb.owlapi.model.OWLProperty;
 

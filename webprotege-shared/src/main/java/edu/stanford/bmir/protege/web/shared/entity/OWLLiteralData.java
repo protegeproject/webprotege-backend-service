@@ -1,10 +1,16 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.HasLexicalForm;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
@@ -21,16 +27,20 @@ import java.util.Optional;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("OWLLiteralData")
 public abstract class OWLLiteralData extends OWLPrimitiveData implements HasLexicalForm {
 
-    public static OWLLiteralData get(@Nonnull OWLLiteral literal) {
-        return new AutoValue_OWLLiteralData(ImmutableMap.of(), literal);
+    @JsonCreator
+    public static OWLLiteralData get(@JsonProperty("literal") @Nonnull OWLLiteral literal) {
+        return new AutoValue_OWLLiteralData(literal);
     }
 
+    @JsonIgnore
     @Nonnull
     @Override
     public abstract OWLLiteral getObject();
 
+    @JsonIgnore
     @Override
     public PrimitiveType getType() {
         return PrimitiveType.LITERAL;
@@ -41,26 +51,31 @@ public abstract class OWLLiteralData extends OWLPrimitiveData implements HasLexi
         return getObject();
     }
 
+    @JsonIgnore
     @Override
     public String getBrowserText() {
         OWLLiteral literal = getLiteral();
         return literal.getLiteral();
     }
 
+    @JsonIgnore
     @Override
     public String getUnquotedBrowserText() {
         return getBrowserText();
     }
 
+    @JsonIgnore
     @Override
     public String getLexicalForm() {
         return getLiteral().getLiteral();
     }
 
+    @JsonIgnore
     public boolean hasLang() {
         return getLiteral().hasLang();
     }
 
+    @JsonIgnore
     @Nonnull
     public String getLang() {
         return getLiteral().getLang();
@@ -89,5 +104,17 @@ public abstract class OWLLiteralData extends OWLPrimitiveData implements HasLexi
     @Override
     public Optional<OWLLiteral> asLiteral() {
         return Optional.of(getLiteral());
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isDeprecated() {
+        return super.isDeprecated();
+    }
+
+    @JsonIgnore
+    @Override
+    public ImmutableList<ShortForm> getShortForms() {
+        return ImmutableList.of();
     }
 }

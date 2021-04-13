@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.user;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.app.UserInSession;
@@ -15,11 +18,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 12/02/15
  */
+@JsonTypeName("LogOutUser")
 public class LogOutUserResult implements Result {
 
     private UserInSession userInSession;
 
-    public LogOutUserResult(@Nonnull UserInSession userInSession) {
+    @JsonCreator
+    public LogOutUserResult(@JsonProperty("userInSession") @Nonnull UserInSession userInSession) {
         this.userInSession = checkNotNull(userInSession);
     }
 

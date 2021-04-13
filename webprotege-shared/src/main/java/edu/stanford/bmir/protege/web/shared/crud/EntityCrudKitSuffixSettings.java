@@ -1,7 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.crud;
 
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.bmir.protege.web.shared.crud.oboid.OboIdSuffixSettings;
 import edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuffixSettings;
 import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixSettings;

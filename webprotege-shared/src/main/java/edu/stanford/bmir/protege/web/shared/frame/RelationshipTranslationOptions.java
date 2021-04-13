@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.shared.match.criteria.AnyRelationshipPropertyCriteria;
 import edu.stanford.bmir.protege.web.shared.match.criteria.AnyRelationshipValueCriteria;
-import edu.stanford.bmir.protege.web.shared.match.criteria.EntityRelationshipCriteria;
 import edu.stanford.bmir.protege.web.shared.match.criteria.RelationshipCriteria;
 
 import javax.annotation.Nonnull;

@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.semanticweb.owlapi.model.OWLProperty;
 
 /**
@@ -10,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLProperty;
  */
 public abstract class OWLPropertyData extends OWLEntityData {
 
+    @JsonIgnore
     public abstract boolean isOWLAnnotationProperty();
 
     @Override

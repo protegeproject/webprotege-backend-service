@@ -1,13 +1,19 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.IsSerializable;
+import edu.stanford.bmir.protege.web.shared.lang.DisplayNameSettings;
+import edu.stanford.bmir.protege.web.shared.projectsettings.EntityDeprecationSettings;
+import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;
+import java.time.Instant;
 import java.util.Comparator;
 
 import static java.util.Comparator.comparing;
@@ -32,33 +38,48 @@ import static java.util.Comparator.comparing;
         "downloadable"})
 @AutoValue
 @GwtCompatible(serializable = true)
-public abstract class AvailableProject implements IsSerializable, Comparable<AvailableProject>, HasProjectId {
+public abstract class AvailableProject implements IsSerializable, HasProjectId, Comparable<AvailableProject> {
 
     public static final long UNKNOWN = 0;
 
-    private static transient Comparator<AvailableProject> comparator = comparing(AvailableProject::getProjectDetails);
+    private static final Comparator<AvailableProject> COMPARATOR = Comparator.comparing((AvailableProject ap) -> ap.getDisplayName().toLowerCase());
 
     /**
      * Captures the information about a project that is available for the current
      * user.
      *
-     * @param projectDetails      The project details.
      * @param downloadable        A flag indicating whether the project is downloadable by the current
      *                            user (in the current session).
      * @param trashable           A flag indicating whether the project can be moved to the trash by
      * @param lastOpenedTimestamp A time stamp of when the project was last opened by the current
      *                            user.  A zero or negative value indicates unknown.
      */
-    public static AvailableProject get(@Nonnull ProjectDetails projectDetails,
-                                       boolean downloadable,
-                                       boolean trashable,
-                                       long lastOpenedTimestamp) {
-        return new AutoValue_AvailableProject(projectDetails,
+    @JsonCreator
+    public static AvailableProject get(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                       @JsonProperty("displayName") @Nonnull String displayName,
+                                       @JsonProperty("description") @Nonnull String description,
+                                       @JsonProperty("owner") @Nonnull UserId owner,
+                                       @JsonProperty("inTrash") boolean inTrash,
+                                       @JsonProperty("createdAt") long createdAt,
+                                       @JsonProperty("createdBy") @Nonnull UserId createdBy,
+                                       @JsonProperty("lastModifiedAt") long lastModifiedAt,
+                                       @JsonProperty("lastModifiedBy") @Nonnull UserId lastModifiedBy,
+                                       @JsonProperty("downloadable") boolean downloadable,
+                                       @JsonProperty("trashable") boolean trashable,
+                                       @JsonProperty("lastOpenedAt") long lastOpenedTimestamp) {
+        return new AutoValue_AvailableProject(projectId,
+                                              displayName,
+                                              owner,
+                                              description,
+                                              inTrash,
+                                              createdAt,
+                                              createdBy,
+                                              lastModifiedAt,
+                                              lastModifiedBy,
                                               downloadable,
                                               trashable,
                                               lastOpenedTimestamp);
     }
-
 
     /**
      * Gets the {@link ProjectId}
@@ -67,9 +88,7 @@ public abstract class AvailableProject implements IsSerializable, Comparable<Ava
      */
     @Override
     @Nonnull
-    public ProjectId getProjectId() {
-        return getProjectDetails().getProjectId();
-    }
+    public abstract ProjectId getProjectId();
 
 
     /**
@@ -78,9 +97,7 @@ public abstract class AvailableProject implements IsSerializable, Comparable<Ava
      * @return A string representing the display name.
      */
     @Nonnull
-    public String getDisplayName() {
-        return getProjectDetails().getDisplayName();
-    }
+    public abstract String getDisplayName();
 
 
     /**
@@ -89,9 +106,7 @@ public abstract class AvailableProject implements IsSerializable, Comparable<Ava
      * @return The owner of the project represented by a {@link UserId}.
      */
     @Nonnull
-    public UserId getOwner() {
-        return getProjectDetails().getOwner();
-    }
+    public abstract UserId getOwner();
 
     /**
      * Gets the project description.
@@ -99,27 +114,21 @@ public abstract class AvailableProject implements IsSerializable, Comparable<Ava
      * @return A possibly empty string representing the project description.
      */
     @Nonnull
-    public String getDescription() {
-        return getProjectDetails().getDescription();
-    }
+    public abstract String getDescription();
 
     /**
      * Determines whether this project is in the trash or not.
      *
      * @return true if the project is in the trash, otherwise false.
      */
-    public boolean isInTrash() {
-        return getProjectDetails().isInTrash();
-    }
+    public abstract boolean isInTrash();
 
     /**
      * Gets the timestamp of when the project was created.
      *
      * @return A long representing the timestamp.
      */
-    public long getCreatedAt() {
-        return getProjectDetails().getCreatedAt();
-    }
+    public abstract long getCreatedAt();
 
     /**
      * Get the user who created the project.
@@ -127,18 +136,14 @@ public abstract class AvailableProject implements IsSerializable, Comparable<Ava
      * @return A {@link UserId} representing the user who created the project.
      */
     @Nonnull
-    public UserId getCreatedBy() {
-        return getProjectDetails().getCreatedBy();
-    }
+    public abstract UserId getCreatedBy();
 
     /**
      * Gets the timestamp of when the project was last modified.
      *
      * @return A long representing a timestamp.
      */
-    public long getLastModifiedAt() {
-        return getProjectDetails().getLastModifiedAt();
-    }
+    public abstract long getLastModifiedAt();
 
     /**
      * Get the id of the user who last modified the project.
@@ -146,18 +151,7 @@ public abstract class AvailableProject implements IsSerializable, Comparable<Ava
      * @return A {@link UserId} identifying the user who last modified the project.
      */
     @Nonnull
-    public UserId getLastModifiedBy() {
-        return getProjectDetails().getLastModifiedBy();
-    }
-
-    /**
-     * Gets all of the project details as a ProjectDetails object.
-     *
-     * @return The details as a {@link ProjectDetails} object.
-     */
-    @Nonnull
-    @JsonIgnore
-    public abstract ProjectDetails getProjectDetails();
+    public abstract UserId getLastModifiedBy();
 
     /**
      * Determines if this project is downloadable (by the current user).
@@ -183,6 +177,6 @@ public abstract class AvailableProject implements IsSerializable, Comparable<Ava
 
     @Override
     public int compareTo(AvailableProject o) {
-        return comparator.compare(this, o);
+        return COMPARATOR.compare(this, o);
     }
 }

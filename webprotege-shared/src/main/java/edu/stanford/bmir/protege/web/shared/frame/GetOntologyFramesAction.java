@@ -15,8 +15,12 @@ public class GetOntologyFramesAction extends AbstractHasProjectAction<GetOntolog
     private GetOntologyFramesAction() {
     }
 
-    public GetOntologyFramesAction(ProjectId projectId) {
+    private GetOntologyFramesAction(ProjectId projectId) {
         super(projectId);
+    }
+
+    public static GetOntologyFramesAction create(ProjectId projectId) {
+        return new GetOntologyFramesAction(projectId);
     }
 
 

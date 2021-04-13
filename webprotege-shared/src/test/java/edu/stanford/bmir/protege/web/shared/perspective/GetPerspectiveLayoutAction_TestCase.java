@@ -28,12 +28,12 @@ public class GetPerspectiveLayoutAction_TestCase {
 
     @Before
     public void setUp() {
-        getPerspectiveLayoutAction = new GetPerspectiveLayoutAction(projectId, userId, perspectiveId);
+        getPerspectiveLayoutAction = GetPerspectiveLayoutAction.create(projectId, userId, perspectiveId);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetPerspectiveLayoutAction(null, userId, perspectiveId);
+        GetPerspectiveLayoutAction.create(null, userId, perspectiveId);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class GetPerspectiveLayoutAction_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
-        new GetPerspectiveLayoutAction(projectId, null, perspectiveId);
+        GetPerspectiveLayoutAction.create(projectId, null, perspectiveId);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class GetPerspectiveLayoutAction_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_perspectiveId_IsNull() {
-        new GetPerspectiveLayoutAction(projectId, userId, null);
+        GetPerspectiveLayoutAction.create(projectId, userId, null);
     }
 
     @Test
@@ -73,27 +73,28 @@ public class GetPerspectiveLayoutAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getPerspectiveLayoutAction, is(new GetPerspectiveLayoutAction(projectId, userId, perspectiveId)));
+        assertThat(getPerspectiveLayoutAction, is(GetPerspectiveLayoutAction.create(projectId, userId, perspectiveId)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getPerspectiveLayoutAction, is(not(new GetPerspectiveLayoutAction(Mockito.mock(ProjectId.class), userId, perspectiveId))));
+        assertThat(getPerspectiveLayoutAction, is(not(GetPerspectiveLayoutAction.create(Mockito.mock(ProjectId.class), userId, perspectiveId))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(getPerspectiveLayoutAction, is(not(new GetPerspectiveLayoutAction(projectId, Mockito.mock(UserId.class), perspectiveId))));
+        assertThat(getPerspectiveLayoutAction, is(not(GetPerspectiveLayoutAction.create(projectId, Mockito.mock(UserId.class), perspectiveId))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_perspectiveId() {
-        assertThat(getPerspectiveLayoutAction, is(not(new GetPerspectiveLayoutAction(projectId, userId, Mockito.mock(PerspectiveId.class)))));
+        assertThat(getPerspectiveLayoutAction, is(not(GetPerspectiveLayoutAction.create(projectId, userId, Mockito.mock(PerspectiveId.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getPerspectiveLayoutAction.hashCode(), is(new GetPerspectiveLayoutAction(projectId, userId, perspectiveId).hashCode()));
+        assertThat(getPerspectiveLayoutAction.hashCode(), is(GetPerspectiveLayoutAction.create(projectId, userId, perspectiveId)
+                                                                                       .hashCode()));
     }
 
     @Test

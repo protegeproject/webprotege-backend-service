@@ -18,12 +18,16 @@ public class GetProjectFormDescriptorsAction implements ProjectAction<GetProject
 
     private ProjectId projectId;
 
-    public GetProjectFormDescriptorsAction(ProjectId projectId) {
+    private GetProjectFormDescriptorsAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
     }
 
     @GwtSerializationConstructor
     private GetProjectFormDescriptorsAction() {
+    }
+
+    public static GetProjectFormDescriptorsAction create(ProjectId projectId) {
+        return new GetProjectFormDescriptorsAction(projectId);
     }
 
     @Nonnull

@@ -22,13 +22,13 @@ public class GetOboTermCrossProductResult_TestCase {
     public void setUp()
         throws Exception
     {
-        getOboTermCrossProductResult = new GetOboTermCrossProductResult(crossProduct);
+        getOboTermCrossProductResult = GetOboTermCrossProductResult.create(crossProduct);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_crossProduct_IsNull() {
-        new GetOboTermCrossProductResult(null);
+        GetOboTermCrossProductResult.create(null);
     }
 
     @Test
@@ -49,17 +49,17 @@ public class GetOboTermCrossProductResult_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboTermCrossProductResult, is(new GetOboTermCrossProductResult(crossProduct)));
+        assertThat(getOboTermCrossProductResult, is(GetOboTermCrossProductResult.create(crossProduct)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_crossProduct() {
-        assertThat(getOboTermCrossProductResult, is(not(new GetOboTermCrossProductResult(Mockito.mock(OBOTermCrossProduct.class)))));
+        assertThat(getOboTermCrossProductResult, is(not(GetOboTermCrossProductResult.create(Mockito.mock(OBOTermCrossProduct.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboTermCrossProductResult.hashCode(), is(new GetOboTermCrossProductResult(crossProduct).hashCode()));
+        assertThat(getOboTermCrossProductResult.hashCode(), is(GetOboTermCrossProductResult.create(crossProduct).hashCode()));
     }
 
     @Test

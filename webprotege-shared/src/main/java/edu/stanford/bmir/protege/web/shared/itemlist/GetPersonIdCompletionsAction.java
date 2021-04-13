@@ -18,8 +18,12 @@ public class GetPersonIdCompletionsAction extends GetPossibleItemCompletionsActi
     private GetPersonIdCompletionsAction() {
     }
 
-    public GetPersonIdCompletionsAction(String completionText) {
+    private GetPersonIdCompletionsAction(String completionText) {
         super(completionText);
+    }
+
+    public static GetPersonIdCompletionsAction create(String completionText) {
+        return new GetPersonIdCompletionsAction(completionText);
     }
 
     @Override

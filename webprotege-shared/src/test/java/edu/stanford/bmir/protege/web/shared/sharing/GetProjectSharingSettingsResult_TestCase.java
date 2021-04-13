@@ -30,13 +30,13 @@ public class GetProjectSharingSettingsResult_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        result = new GetProjectSharingSettingsResult(projectSharingSettings);
-        otherResult = new GetProjectSharingSettingsResult(projectSharingSettings);
+        result = GetProjectSharingSettingsResult.create(projectSharingSettings);
+        otherResult = GetProjectSharingSettingsResult.create(projectSharingSettings);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new GetProjectSharingSettingsResult(null);
+        GetProjectSharingSettingsResult.create(null);
     }
 
     @Test

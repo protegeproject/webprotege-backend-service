@@ -22,8 +22,12 @@ public class GetOboNamespacesResult implements Result {
     private GetOboNamespacesResult() {
     }
 
-    public GetOboNamespacesResult(Set<OBONamespace> namespaces) {
+    private GetOboNamespacesResult(Set<OBONamespace> namespaces) {
         this.namespaces = ImmutableSet.copyOf(namespaces);
+    }
+
+    public static GetOboNamespacesResult create(Set<OBONamespace> namespaces) {
+        return new GetOboNamespacesResult(namespaces);
     }
 
     public Set<OBONamespace> getNamespaces() {

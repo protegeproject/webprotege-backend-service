@@ -21,12 +21,16 @@ public class MergeEntitiesResult implements Result, HasEventList<ProjectEvent<?>
 
     private EventList<ProjectEvent<?>> eventList;
 
-    public MergeEntitiesResult(@Nonnull EventList<ProjectEvent<?>> eventList) {
+    private MergeEntitiesResult(@Nonnull EventList<ProjectEvent<?>> eventList) {
         this.eventList = checkNotNull(eventList);
     }
 
     @GwtSerializationConstructor
     private MergeEntitiesResult() {
+    }
+
+    public static MergeEntitiesResult create(@Nonnull EventList<ProjectEvent<?>> eventList) {
+        return new MergeEntitiesResult(eventList);
     }
 
     @Override

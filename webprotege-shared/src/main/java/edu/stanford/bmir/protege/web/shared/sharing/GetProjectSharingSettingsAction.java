@@ -21,8 +21,12 @@ public class GetProjectSharingSettingsAction implements ProjectAction<GetProject
     private GetProjectSharingSettingsAction() {
     }
 
-    public GetProjectSharingSettingsAction(ProjectId projectId) {
+    private GetProjectSharingSettingsAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    public static GetProjectSharingSettingsAction create(ProjectId projectId) {
+        return new GetProjectSharingSettingsAction(projectId);
     }
 
     @Nonnull

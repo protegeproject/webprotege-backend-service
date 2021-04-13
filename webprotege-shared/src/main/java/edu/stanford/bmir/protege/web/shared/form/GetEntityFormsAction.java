@@ -1,9 +1,12 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
-import com.google.common.base.MoreObjects;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.form.data.FormRegionFilter;
 import edu.stanford.bmir.protege.web.shared.form.field.FormRegionOrdering;
@@ -20,93 +23,80 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-01
  */
-public class GetEntityFormsAction implements ProjectAction<GetEntityFormsResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityForms")
+public abstract class GetEntityFormsAction implements ProjectAction<GetEntityFormsResult> {
 
-    private ProjectId projectId;
 
-    private OWLEntity entity;
+    public static final String PROJECT_ID = "projectId";
 
-    private ImmutableList<FormId> formFilter;
+    public static final String ENTITY = "entity";
 
-    private ImmutableList<FormPageRequest> formPageRequests;
+    public static final String FORM_REGION_FILTERS = "formRegionFilters";
 
-    private LangTagFilter langTagFilter;
+    public static final String PAGE_REQUESTS = "pageRequests";
 
-    private ImmutableSet<FormRegionOrdering> orderings;
+    public static final String LANG_TAG_FILTER = "langTagFilter";
 
-    private ImmutableSet<FormRegionFilter> filters;
+    public static final String REGION_ORDERINGS = "regionOrderings";
+
+    private static final String FORM_FILTERS = "formFilters";
 
     /**
      * Get the forms for an entity
-     * @param projectId The project id
-     * @param entity The entity
-     * @param formFilter A list of {@link FormId}s.  If the list is empty then all forms that are applicable
- *                   to the entity will be retrieved.  If the list is non-empty then the only the applicable
- *                   forms that have form Ids in the list will be retrieved.
+     *
+     * @param projectId        The project id
+     * @param entity           The entity
+     * @param filters       A list of {@link FormId}s.  If the list is empty then all forms that are applicable
+     *                         to the entity will be retrieved.  If the list is non-empty then the only the applicable
+     *                         forms that have form Ids in the list will be retrieved.
      * @param formPageRequests A list of page requests pertaining to various regions on the form.
-     * @param langTagFilter A language tag filter that can be used to filter data in a specific language.
-     * @param orderings A set of region orderings that can be used to specify the ordering of specific regions of
-     * @param filters A set of region filters that can be used to filter values
+     * @param langTagFilter    A language tag filter that can be used to filter data in a specific language.
+     * @param orderings        A set of region orderings that can be used to specify the ordering of specific regions of
+     * @param filters          A set of region filters that can be used to filter values
      */
-    public GetEntityFormsAction(@Nonnull ProjectId projectId,
-                                @Nonnull OWLEntity entity,
-                                @Nonnull ImmutableList<FormId> formFilter,
-                                @Nonnull ImmutableList<FormPageRequest> formPageRequests,
-                                @Nonnull LangTagFilter langTagFilter,
-                                @Nonnull ImmutableSet<FormRegionOrdering> orderings, ImmutableSet<FormRegionFilter> filters) {
-        this.projectId = checkNotNull(projectId);
-        this.entity = checkNotNull(entity);
-        this.formFilter = checkNotNull(formFilter);
-        this.formPageRequests = checkNotNull(formPageRequests);
-        this.langTagFilter = checkNotNull(langTagFilter);
-        this.orderings = checkNotNull(orderings);
-        this.filters = checkNotNull(filters);
-    }
-
-    @GwtSerializationConstructor
-    private GetEntityFormsAction() {
+    @JsonCreator
+    public static GetEntityFormsAction create(@JsonProperty(PROJECT_ID) @Nonnull ProjectId projectId,
+                                              @JsonProperty(ENTITY) @Nonnull OWLEntity entity,
+                                              @JsonProperty(PAGE_REQUESTS) @Nonnull ImmutableSet<FormPageRequest> formPageRequests,
+                                              @JsonProperty(LANG_TAG_FILTER) @Nonnull LangTagFilter langTagFilter,
+                                              @JsonProperty(REGION_ORDERINGS) @Nonnull ImmutableSet<FormRegionOrdering> orderings,
+                                              @JsonProperty(FORM_FILTERS) @Nonnull ImmutableSet<FormId> filters,
+                                              @JsonProperty(FORM_REGION_FILTERS) ImmutableSet<FormRegionFilter> formRegionFilters) {
+        return new AutoValue_GetEntityFormsAction(projectId,
+                                                  entity,
+                                                  formPageRequests,
+                                                  langTagFilter,
+                                                  orderings,
+                                                  filters,
+                                                  formRegionFilters);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public OWLEntity getEntity() {
-        return entity;
-    }
+    public abstract OWLEntity getEntity();
 
     @Nonnull
-    public ImmutableList<FormPageRequest> getFormPageRequests() {
-        return formPageRequests;
-    }
+    @JsonProperty(PAGE_REQUESTS)
+    public abstract ImmutableSet<FormPageRequest> getFormPageRequests();
 
     @Nonnull
-    public LangTagFilter getLangTagFilter() {
-        return langTagFilter;
-    }
+    @JsonProperty(LANG_TAG_FILTER)
+    public abstract LangTagFilter getLangTagFilter();
 
     @Nonnull
-    public ImmutableSet<FormRegionOrdering> getGridControlOrdering() {
-        return orderings;
-    }
-
-    public ImmutableList<FormId> getFormFilter() {
-        return formFilter;
-    }
+    @JsonProperty(REGION_ORDERINGS)
+    public abstract ImmutableSet<FormRegionOrdering> getGridControlOrdering();
 
     @Nonnull
-    public ImmutableSet<FormRegionFilter> getFilters() {
-        return filters;
-    }
+    @JsonProperty(FORM_FILTERS)
+    public abstract ImmutableSet<FormId> getFormFilters();
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(GetEntityFormsAction.class)
-                .add("forms", formFilter)
-                .toString();
-    }
+    @JsonProperty(FORM_REGION_FILTERS)
+    public abstract ImmutableSet<FormRegionFilter> getFormRegionFilters();
 }
 

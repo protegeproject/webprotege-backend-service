@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.viz;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
@@ -14,12 +17,14 @@ import java.util.Optional;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("IsA")
 public abstract class IsAEdge implements Edge {
 
     private static final String DESCRIPTOR = "ISA";
 
-    public static IsAEdge get(@Nonnull OWLEntityData tail,
-                              @Nonnull OWLEntityData head) {
+    @JsonCreator
+    public static IsAEdge get(@JsonProperty("tail") @Nonnull OWLEntityData tail,
+                              @JsonProperty("head") @Nonnull OWLEntityData head) {
         return new AutoValue_IsAEdge(head, tail);
     }
 

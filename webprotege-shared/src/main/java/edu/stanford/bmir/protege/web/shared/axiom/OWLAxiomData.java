@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.axiom;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
-import org.semanticweb.owlapi.model.OWLAxiom;
 
 import java.io.Serializable;
 

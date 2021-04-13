@@ -21,8 +21,12 @@ public class SetProjectSharingSettingsAction implements ProjectAction<SetProject
     private SetProjectSharingSettingsAction() {
     }
 
-    public SetProjectSharingSettingsAction(ProjectSharingSettings projectSharingSettings) {
+    private SetProjectSharingSettingsAction(ProjectSharingSettings projectSharingSettings) {
         this.projectSharingSettings = checkNotNull(projectSharingSettings);
+    }
+
+    public static SetProjectSharingSettingsAction create(ProjectSharingSettings projectSharingSettings) {
+        return new SetProjectSharingSettingsAction(projectSharingSettings);
     }
 
     @Nonnull

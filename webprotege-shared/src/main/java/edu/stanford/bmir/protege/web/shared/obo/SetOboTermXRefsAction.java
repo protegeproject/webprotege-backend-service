@@ -25,9 +25,7 @@ public class SetOboTermXRefsAction implements ProjectAction<SetOboTermXRefsResul
 
     private List<OBOXRef> xrefs;
 
-    public SetOboTermXRefsAction(@Nonnull ProjectId projectId,
-                                 @Nonnull OWLEntity entity,
-                                 @Nonnull List<OBOXRef> xrefs) {
+    private SetOboTermXRefsAction(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity, @Nonnull List<OBOXRef> xrefs) {
         this.projectId = projectId;
         this.entity = entity;
         this.xrefs = xrefs;
@@ -35,6 +33,12 @@ public class SetOboTermXRefsAction implements ProjectAction<SetOboTermXRefsResul
 
     @GwtSerializationConstructor
     private SetOboTermXRefsAction() {
+    }
+
+    public static SetOboTermXRefsAction create(@Nonnull ProjectId projectId,
+                                               @Nonnull OWLEntity entity,
+                                               @Nonnull List<OBOXRef> xrefs) {
+        return new SetOboTermXRefsAction(projectId, entity, xrefs);
     }
 
     @Override

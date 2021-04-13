@@ -9,15 +9,14 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
+import edu.stanford.bmir.protege.web.shared.match.criteria.CompositeRootCriteria;
+import edu.stanford.bmir.protege.web.shared.match.criteria.EntityTypeIsOneOfCriteria;
+import edu.stanford.bmir.protege.web.shared.match.criteria.MultiMatchType;
 import org.semanticweb.owlapi.model.EntityType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

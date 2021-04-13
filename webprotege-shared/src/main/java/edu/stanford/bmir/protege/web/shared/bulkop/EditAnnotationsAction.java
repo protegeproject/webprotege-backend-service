@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.bulkop;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -9,7 +14,6 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -19,94 +23,48 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 24 Sep 2018
  */
-public class EditAnnotationsAction implements ProjectAction<EditAnnotationsResult>, HasCommitMessage {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("EditAnnotations")
+public abstract class EditAnnotationsAction implements ProjectAction<EditAnnotationsResult>, HasCommitMessage {
 
-    private ProjectId projectId;
-
-    private ImmutableSet<OWLEntity> entities;
-
-    private Operation operation;
-
-    @Nullable
-    private OWLAnnotationProperty property;
-
-    @Nullable
-    private String lexicalValueExpression;
-
-    @Nullable
-    private String langTagExpression;
-
-    private boolean lexicalValueExpressionIsRegEx;
-
-    private NewAnnotationData newAnnotationData;
-
-    private String commitMessage;
-
-    public EditAnnotationsAction(@Nonnull ProjectId projectId,
-                                 @Nonnull ImmutableSet<OWLEntity> entities,
-                                 Operation operation, @Nonnull Optional<OWLAnnotationProperty> property,
-                                 @Nonnull Optional<String> lexicalValueExpression,
-                                 boolean lexicalValueExpressionIsRegEx,
-                                 @Nonnull Optional<String> langTagExpression,
-                                 @Nonnull NewAnnotationData newAnnotationData,
-                                 @Nonnull String commitMessage) {
-        this.projectId = checkNotNull(projectId);
-        this.entities = checkNotNull(entities);
-        this.operation = checkNotNull(operation);
-        this.property = checkNotNull(property).orElse(null);
-        this.lexicalValueExpression = checkNotNull(lexicalValueExpression).orElse(null);
-        this.langTagExpression = checkNotNull(langTagExpression).orElse(null);
-        this.lexicalValueExpressionIsRegEx = lexicalValueExpressionIsRegEx;
-        this.newAnnotationData = checkNotNull(newAnnotationData);
-        this.commitMessage = checkNotNull(commitMessage);
-    }
-
-    @GwtSerializationConstructor
-    private EditAnnotationsAction() {
+    @JsonCreator
+    public static EditAnnotationsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                            @JsonProperty("entities") @Nonnull ImmutableSet<OWLEntity> entities,
+                                            @JsonProperty("operation") Operation operation,
+                                            @JsonProperty("property") @Nonnull Optional<OWLAnnotationProperty> property,
+                                            @JsonProperty("lexicalValueExpression") @Nonnull Optional<String> lexicalValueExpression,
+                                            @JsonProperty("lexicalValueExpressionIsRegEx") boolean lexicalValueExpressionIsRegEx,
+                                            @JsonProperty("langTagExpression") @Nonnull Optional<String> langTagExpression,
+                                            @JsonProperty("newAnnotationData") @Nonnull NewAnnotationData newAnnotationData,
+                                            @JsonProperty("commitMessage") @Nonnull String commitMessage) {
+        return new AutoValue_EditAnnotationsAction(projectId, entities, operation, property, lexicalValueExpression, lexicalValueExpressionIsRegEx, langTagExpression, newAnnotationData, commitMessage);
     }
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     @Nonnull
-    public ImmutableSet<OWLEntity> getEntities() {
-        return entities;
-    }
+    public abstract ImmutableSet<OWLEntity> getEntities();
 
     @Nonnull
-    public Operation getOperation() {
-        return operation;
-    }
+    public abstract Operation getOperation();
 
     @Nonnull
-    public Optional<OWLAnnotationProperty> getProperty() {
-        return Optional.ofNullable(property);
-    }
+    public abstract Optional<OWLAnnotationProperty> getProperty();
 
     @Nonnull
-    public Optional<String> getLexicalValueExpression() {
-        return Optional.ofNullable(lexicalValueExpression);
-    }
+    public abstract Optional<String> getLexicalValueExpression();
 
-    public boolean isLexicalValueExpressionIsRegEx() {
-        return lexicalValueExpressionIsRegEx;
-    }
+    public abstract boolean isLexicalValueExpressionIsRegEx();
 
     @Nonnull
-    public Optional<String> getLangTagExpression() {
-        return Optional.ofNullable(langTagExpression);
-    }
+    public abstract Optional<String> getLangTagExpression();
 
     @Nonnull
-    public NewAnnotationData getNewAnnotationData() {
-        return newAnnotationData;
-    }
+    public abstract NewAnnotationData getNewAnnotationData();
 
     @Nonnull
-    public String getCommitMessage() {
-        return commitMessage;
-    }
+    public abstract String getCommitMessage();
 }

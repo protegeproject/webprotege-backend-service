@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -10,6 +13,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 19/02/15
  */
+@JsonTypeName("AuthenticateUser")
 public class AuthenticateUserAction extends AbstractAuthenticationAction<AuthenticateUserResult> {
 
     /**
@@ -18,7 +22,10 @@ public class AuthenticateUserAction extends AbstractAuthenticationAction<Authent
     private AuthenticateUserAction() {
     }
 
-    public AuthenticateUserAction(UserId userId, ChapSessionId chapSessionId, ChapResponse chapResponse) {
+    @JsonCreator
+    public AuthenticateUserAction(@JsonProperty("userId") UserId userId,
+                                  @JsonProperty("chapSessionId") ChapSessionId chapSessionId,
+                                  @JsonProperty("chapResponse") ChapResponse chapResponse) {
         super(userId, chapSessionId, chapResponse);
     }
 

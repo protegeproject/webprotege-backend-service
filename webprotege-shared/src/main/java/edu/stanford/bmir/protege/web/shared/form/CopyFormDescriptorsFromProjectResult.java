@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
@@ -12,19 +17,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-14
  */
-public class CopyFormDescriptorsFromProjectResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("CopyFormDescriptorsFromProject")
+public abstract class CopyFormDescriptorsFromProjectResult implements Result {
 
-    private ImmutableList<FormDescriptor> copiedFormDescriptors;
+    public abstract ImmutableList<FormDescriptor> getCopiedFormDescriptors();
 
-    public CopyFormDescriptorsFromProjectResult(ImmutableList<FormDescriptor> copiedFormDescriptors) {
-        this.copiedFormDescriptors = checkNotNull(copiedFormDescriptors);
+    @JsonCreator
+    public static CopyFormDescriptorsFromProjectResult create(@JsonProperty("copiedFormDescriptors") ImmutableList<FormDescriptor> copiedFormDescriptors) {
+        return new AutoValue_CopyFormDescriptorsFromProjectResult(copiedFormDescriptors);
     }
 
-    private CopyFormDescriptorsFromProjectResult() {
-    }
 
-    @Nonnull
-    public ImmutableList<FormDescriptor> getCopiedFormDescriptors() {
-        return copiedFormDescriptors;
-    }
 }

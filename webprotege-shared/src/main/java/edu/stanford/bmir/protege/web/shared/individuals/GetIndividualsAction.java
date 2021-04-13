@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.individuals;
 
 import com.google.common.base.MoreObjects;
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -50,16 +50,24 @@ public class GetIndividualsAction extends AbstractHasProjectAction<GetIndividual
      * @param pageRequest     The optional pageRequest for pagination.  Not {@code null}.
      * @throws NullPointerException if any parameters are {@code null}.
      */
-    public GetIndividualsAction(@Nonnull ProjectId projectId,
-                                @Nonnull Optional<OWLClass> type,
-                                @Nonnull String filterString,
-                                @Nonnull InstanceRetrievalMode instanceRetrievalMode,
-                                @Nonnull Optional<PageRequest> pageRequest) {
+    private GetIndividualsAction(@Nonnull ProjectId projectId,
+                                 @Nonnull Optional<OWLClass> type,
+                                 @Nonnull String filterString,
+                                 @Nonnull InstanceRetrievalMode instanceRetrievalMode,
+                                 @Nonnull Optional<PageRequest> pageRequest) {
         super(projectId);
         this.type = checkNotNull(type).orElse(null);
         this.searchString = checkNotNull(filterString);
         this.instanceRetrievalMode = checkNotNull(instanceRetrievalMode);
         this.pageRequest = pageRequest.orElse(null);
+    }
+
+    public static GetIndividualsAction create(@Nonnull ProjectId projectId,
+                                              @Nonnull Optional<OWLClass> type,
+                                              @Nonnull String filterString,
+                                              @Nonnull InstanceRetrievalMode instanceRetrievalMode,
+                                              @Nonnull Optional<PageRequest> pageRequest) {
+        return new GetIndividualsAction(projectId, type, filterString, instanceRetrievalMode, pageRequest);
     }
 
     /**

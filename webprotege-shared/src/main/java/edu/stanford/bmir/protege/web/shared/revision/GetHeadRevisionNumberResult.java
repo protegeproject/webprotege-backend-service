@@ -21,8 +21,12 @@ public class GetHeadRevisionNumberResult implements Result {
     private GetHeadRevisionNumberResult() {
     }
 
-    public GetHeadRevisionNumberResult(RevisionNumber revisionNumber) {
+    private GetHeadRevisionNumberResult(RevisionNumber revisionNumber) {
         this.revisionNumber = checkNotNull(revisionNumber);
+    }
+
+    public static GetHeadRevisionNumberResult create(RevisionNumber revisionNumber) {
+        return new GetHeadRevisionNumberResult(revisionNumber);
     }
 
     public RevisionNumber getRevisionNumber() {

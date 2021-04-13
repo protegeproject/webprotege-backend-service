@@ -1,7 +1,12 @@
 package edu.stanford.bmir.protege.web.shared.usage;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectIdAndSubject;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectIdAndSubject;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -9,30 +14,47 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+import static edu.stanford.bmir.protege.web.shared.pagination.PageRequest.DEFAULT_PAGE_SIZE;
+
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>
  * Bio-Medical Informatics Research Group<br>
  * Date: 11/07/2013
  */
-public class GetUsageAction extends AbstractHasProjectIdAndSubject<OWLEntity> implements ProjectAction<GetUsageResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetUsage")
+public abstract class GetUsageAction implements ProjectAction<GetUsageResult> {
 
-    private static final int DEFAULT_PAGE_SIZE = 500;
+    public static GetUsageAction create(OWLEntity subject,
+                                        ProjectId projectId) {
+        return new AutoValue_GetUsageAction(projectId, subject, null);
+    }
+
+    public static GetUsageAction create(OWLEntity subject,
+                                        ProjectId projectId,
+                                        Optional<UsageFilter> usageFilter) {
+        return new AutoValue_GetUsageAction(projectId, subject, usageFilter.orElse(null));
+    }
+
+    @JsonCreator
+    public static GetUsageAction create(@JsonProperty("subject") OWLEntity subject,
+                                        @JsonProperty("projectId") ProjectId projectId,
+                                        @JsonProperty("usageFilter") @Nullable UsageFilter usageFilter) {
+        return new AutoValue_GetUsageAction(projectId, subject, usageFilter);
+    }
+
+    @Override
+    public abstract ProjectId getProjectId();
+
+    public abstract OWLEntity getSubject();
 
     @Nullable
-    private UsageFilter usageFilter;
+    public abstract UsageFilter getUsageFilterInternal();
 
-    @GwtSerializationConstructor
-    private GetUsageAction() {
-    }
-
-    public GetUsageAction(OWLEntity subject, ProjectId projectId, Optional<UsageFilter> usageFilter) {
-        super(subject, projectId);
-        this.usageFilter = usageFilter.orElse(null);
-    }
-
-    public UsageFilter getUsageFilter() {
-        return usageFilter == null ? new UsageFilter() : usageFilter;
+    public Optional<UsageFilter> getUsageFilter() {
+        return Optional.ofNullable(getUsageFilterInternal());
     }
 
     public int getPageSize() {

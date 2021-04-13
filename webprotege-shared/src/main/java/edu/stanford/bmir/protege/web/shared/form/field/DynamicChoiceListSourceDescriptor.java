@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
+import edu.stanford.bmir.protege.web.shared.match.criteria.CompositeRootCriteria;
+import edu.stanford.bmir.protege.web.shared.match.criteria.MultiMatchType;
+import edu.stanford.bmir.protege.web.shared.match.criteria.RootCriteria;
 
 import javax.annotation.Nonnull;
 

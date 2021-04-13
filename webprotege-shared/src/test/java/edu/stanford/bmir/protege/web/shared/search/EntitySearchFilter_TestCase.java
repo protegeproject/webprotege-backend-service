@@ -1,10 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.search;
 
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import edu.stanford.bmir.protege.web.shared.match.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.bmir.protege.web.shared.match.criteria.EntityMatchCriteria;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EntitySearchFilter_TestCase {

@@ -1,20 +1,19 @@
 package edu.stanford.bmir.protege.web.shared.change;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge
@@ -23,12 +22,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("RevertRevision")
 public abstract class RevertRevisionResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>> {
 
+    @JsonCreator
     @Nonnull
-    public static RevertRevisionResult get(@Nonnull ProjectId projectId,
-                                           @Nonnull RevisionNumber revisionNumber,
-                                           @Nonnull EventList<ProjectEvent<?>> eventList) {
+    public static RevertRevisionResult create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                              @JsonProperty("revisionNumber") @Nonnull RevisionNumber revisionNumber,
+                                              @JsonProperty("eventList") @Nonnull EventList<ProjectEvent<?>> eventList) {
         return new AutoValue_RevertRevisionResult(projectId, revisionNumber, eventList);
     }
 

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
-import jsinterop.annotations.JsIgnore;
 
 import javax.annotation.Nonnull;
 

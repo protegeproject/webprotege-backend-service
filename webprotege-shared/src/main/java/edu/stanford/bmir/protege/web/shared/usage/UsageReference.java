@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.usage;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -32,7 +34,11 @@ public class UsageReference implements Serializable, Comparable<UsageReference> 
     private UsageReference() {
     }
 
-    public UsageReference(AxiomType<?> axiomType, String axiomRendering, java.util.Optional<OWLEntity> axiomSubject, Optional<String> subjectRendering) {
+    @JsonCreator
+    public UsageReference(@JsonProperty("axiomType") AxiomType<?> axiomType,
+                          @JsonProperty("axiomRendering") String axiomRendering,
+                          @JsonProperty("axiomSubject") Optional<OWLEntity> axiomSubject,
+                          @JsonProperty("subjectRendering") Optional<String> subjectRendering) {
         this.subject = checkNotNull(axiomSubject).orElse(null);
         this.subjectRendering = subjectRendering.orElse("");
         this.axiomType = checkNotNull(axiomType);

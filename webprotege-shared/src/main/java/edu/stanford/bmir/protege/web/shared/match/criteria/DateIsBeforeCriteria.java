@@ -7,10 +7,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nonnull;
-import java.time.Instant;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.dispatch;
 
 import edu.stanford.bmir.protege.web.shared.permissions.PermissionDeniedException;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

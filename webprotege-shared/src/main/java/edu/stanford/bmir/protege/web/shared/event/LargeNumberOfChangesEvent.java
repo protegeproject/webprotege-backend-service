@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
-import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
 import com.google.web.bindery.event.shared.Event;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;

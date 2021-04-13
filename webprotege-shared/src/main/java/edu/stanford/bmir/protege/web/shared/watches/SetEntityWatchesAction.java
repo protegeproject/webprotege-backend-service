@@ -33,11 +33,18 @@ public class SetEntityWatchesAction implements ProjectAction<SetEntityWatchesRes
     private SetEntityWatchesAction() {
     }
 
-    public SetEntityWatchesAction(ProjectId projectId, UserId userId, OWLEntity entity, ImmutableSet<Watch> watches) {
+    private SetEntityWatchesAction(ProjectId projectId, UserId userId, OWLEntity entity, ImmutableSet<Watch> watches) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.entity = checkNotNull(entity);
         this.watches = checkNotNull(watches);
+    }
+
+    public static SetEntityWatchesAction create(ProjectId projectId,
+                                                UserId userId,
+                                                OWLEntity entity,
+                                                ImmutableSet<Watch> watches) {
+        return new SetEntityWatchesAction(projectId, userId, entity, watches);
     }
 
     @Nonnull

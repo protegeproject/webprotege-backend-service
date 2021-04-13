@@ -18,8 +18,12 @@ public class PerformLoginAction extends AbstractAuthenticationAction<PerformLogi
     private PerformLoginAction() {
     }
 
-    public PerformLoginAction(UserId userId, ChapSessionId chapSessionId, ChapResponse chapResponse) {
+    private PerformLoginAction(UserId userId, ChapSessionId chapSessionId, ChapResponse chapResponse) {
         super(userId, chapSessionId, chapResponse);
+    }
+
+    public static PerformLoginAction create(UserId userId, ChapSessionId chapSessionId, ChapResponse chapResponse) {
+        return new PerformLoginAction(userId, chapSessionId, chapResponse);
     }
 
     @Override

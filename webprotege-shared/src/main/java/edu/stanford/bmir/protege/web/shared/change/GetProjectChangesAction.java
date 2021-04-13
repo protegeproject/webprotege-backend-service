@@ -32,12 +32,18 @@ public class GetProjectChangesAction implements ProjectAction<GetProjectChangesR
     private GetProjectChangesAction() {
     }
 
-    public GetProjectChangesAction(@Nonnull ProjectId projectId,
-                                   @Nonnull Optional<OWLEntity> subject,
-                                   @Nonnull PageRequest pageRequest) {
+    private GetProjectChangesAction(@Nonnull ProjectId projectId,
+                                    @Nonnull Optional<OWLEntity> subject,
+                                    @Nonnull PageRequest pageRequest) {
         this.projectId = checkNotNull(projectId);
         this.subject = checkNotNull(subject).orElse(null);
         this.pageRequest = checkNotNull(pageRequest);
+    }
+
+    public static GetProjectChangesAction create(@Nonnull ProjectId projectId,
+                                                 @Nonnull Optional<OWLEntity> subject,
+                                                 @Nonnull PageRequest pageRequest) {
+        return new GetProjectChangesAction(projectId, subject, pageRequest);
     }
 
     @Nonnull

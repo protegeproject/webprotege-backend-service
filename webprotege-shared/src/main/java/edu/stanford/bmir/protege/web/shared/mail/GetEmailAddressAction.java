@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.mail;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -11,6 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 06/11/2013
  */
+@JsonTypeName("GetEmailAddress")
 public class GetEmailAddressAction implements Action<GetEmailAddressResult> {
 
     private UserId userId;
@@ -26,11 +28,15 @@ public class GetEmailAddressAction implements Action<GetEmailAddressResult> {
      * @param userId The {@link UserId} that identifies the user whose email address is to be retrieved.  Not {@code null}.
      * @throws NullPointerException if {@code userId} is {@code null}.
      */
-    public GetEmailAddressAction(UserId userId) {
+    private GetEmailAddressAction(UserId userId) {
         this.userId = checkNotNull(userId);
         if(userId.isGuest()) {
             throw new IllegalArgumentException("userId must not be guest");
         }
+    }
+
+    public static GetEmailAddressAction create(UserId userId) {
+        return new GetEmailAddressAction(userId);
     }
 
     /**

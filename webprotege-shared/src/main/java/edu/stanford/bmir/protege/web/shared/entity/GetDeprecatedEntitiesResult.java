@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
@@ -13,20 +18,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 16 Jun 2017
  */
-public class GetDeprecatedEntitiesResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetDeprecatedEntities")
+public abstract class GetDeprecatedEntitiesResult implements Result {
 
-    private Page<OWLEntityData> deprecatedEntities;
-
-    @GwtSerializationConstructor
-    private GetDeprecatedEntitiesResult() {
-    }
-
-    public GetDeprecatedEntitiesResult(@Nonnull Page<OWLEntityData> deprecatedEntities) {
-        this.deprecatedEntities = checkNotNull(deprecatedEntities);
+    @JsonCreator
+    public static GetDeprecatedEntitiesResult create(@JsonProperty("entities") @Nonnull Page<OWLEntityData> entities) {
+        return new AutoValue_GetDeprecatedEntitiesResult(entities);
     }
 
     @Nonnull
-    public Page<OWLEntityData> getDeprecatedEntities() {
-        return deprecatedEntities;
-    }
+    public abstract Page<OWLEntityData> getEntities();
 }

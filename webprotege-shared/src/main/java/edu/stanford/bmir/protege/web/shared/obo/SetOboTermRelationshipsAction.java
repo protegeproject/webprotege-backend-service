@@ -23,9 +23,9 @@ public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRe
 
     private OBOTermRelationships oboTermRelationships;
 
-    public SetOboTermRelationshipsAction(@Nonnull ProjectId projectId,
-                                         @Nonnull OWLEntity entity,
-                                         @Nonnull OBOTermRelationships oboTermRelationships) {
+    private SetOboTermRelationshipsAction(@Nonnull ProjectId projectId,
+                                          @Nonnull OWLEntity entity,
+                                          @Nonnull OBOTermRelationships oboTermRelationships) {
         this.projectId = projectId;
         this.entity = entity;
         this.oboTermRelationships = oboTermRelationships;
@@ -33,6 +33,12 @@ public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRe
 
     @GwtSerializationConstructor
     private SetOboTermRelationshipsAction() {
+    }
+
+    public static SetOboTermRelationshipsAction create(@Nonnull ProjectId projectId,
+                                                       @Nonnull OWLEntity entity,
+                                                       @Nonnull OBOTermRelationships oboTermRelationships) {
+        return new SetOboTermRelationshipsAction(projectId, entity, oboTermRelationships);
     }
 
     @Override

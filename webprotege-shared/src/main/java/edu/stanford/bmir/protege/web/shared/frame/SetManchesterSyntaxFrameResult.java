@@ -2,9 +2,9 @@ package edu.stanford.bmir.protege.web.shared.frame;
 
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -22,9 +22,13 @@ public class SetManchesterSyntaxFrameResult implements Result, HasEventList<Proj
     private SetManchesterSyntaxFrameResult() {
     }
 
-    public SetManchesterSyntaxFrameResult(EventList<ProjectEvent<?>> eventList, String frameText) {
+    private SetManchesterSyntaxFrameResult(EventList<ProjectEvent<?>> eventList, String frameText) {
         this.eventList = checkNotNull(eventList);
         this.frameText = checkNotNull(frameText);
+    }
+
+    public static SetManchesterSyntaxFrameResult create(EventList<ProjectEvent<?>> eventList, String frameText) {
+        return new SetManchesterSyntaxFrameResult(eventList, frameText);
     }
 
     public String getFrameText() {

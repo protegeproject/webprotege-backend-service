@@ -31,13 +31,13 @@ public class GetProjectSharingSettingsAction_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        action = new GetProjectSharingSettingsAction(projectId);
-        otherAction = new GetProjectSharingSettingsAction(projectId);
+        action = GetProjectSharingSettingsAction.create(projectId);
+        otherAction = GetProjectSharingSettingsAction.create(projectId);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new GetProjectSharingSettingsAction(null);
+        GetProjectSharingSettingsAction.create(null);
     }
 
     @Test

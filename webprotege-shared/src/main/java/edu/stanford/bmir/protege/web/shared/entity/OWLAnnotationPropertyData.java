@@ -1,17 +1,20 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
-import org.semanticweb.owlapi.model.OWLLiteral;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  * Author: Matthew Horridge<br>
@@ -21,20 +24,27 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("OWLAnnotationPropertyData")
 public abstract class OWLAnnotationPropertyData extends OWLPropertyData {
 
     public static final int BEFORE = -1;
 
-    @Nonnull
     public static OWLAnnotationPropertyData get(@Nonnull OWLAnnotationProperty property,
-                                                @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
-        return new AutoValue_OWLAnnotationPropertyData(shortForms, false, property);
+                                            @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
+        return get(property, shortForms, false);
     }
 
-    @Nonnull
+
     public static OWLAnnotationPropertyData get(@Nonnull OWLAnnotationProperty property,
-                                                @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
-                                                boolean deprecated) {
+                                            @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
+                                            boolean deprecated) {
+        return get(property, toShortFormList(shortForms), deprecated);
+    }
+
+    @JsonCreator
+    public static OWLAnnotationPropertyData get(@JsonProperty("entity") OWLAnnotationProperty property,
+                                            @JsonProperty("shortForms") ImmutableList<ShortForm> shortForms,
+                                            @JsonProperty("deprecated") boolean deprecated) {
         return new AutoValue_OWLAnnotationPropertyData(shortForms, deprecated, property);
     }
 

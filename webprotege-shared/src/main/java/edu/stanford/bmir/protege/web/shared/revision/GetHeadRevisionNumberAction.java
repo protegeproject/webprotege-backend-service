@@ -21,8 +21,12 @@ public class GetHeadRevisionNumberAction implements ProjectAction<GetHeadRevisio
     private GetHeadRevisionNumberAction() {
     }
 
-    public GetHeadRevisionNumberAction(ProjectId projectId) {
+    private GetHeadRevisionNumberAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    public static GetHeadRevisionNumberAction create(ProjectId projectId) {
+        return new GetHeadRevisionNumberAction(projectId);
     }
 
     @Nonnull

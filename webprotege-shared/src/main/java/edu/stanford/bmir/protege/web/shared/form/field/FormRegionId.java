@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**

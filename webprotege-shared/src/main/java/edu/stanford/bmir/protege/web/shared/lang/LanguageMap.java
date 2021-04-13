@@ -4,18 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
-import com.google.auto.value.extension.memoized.Memoized;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableMap;
-import com.google.gwt.core.client.GWT;
-import com.mongodb.util.JSON;
 import edu.stanford.bmir.protege.web.shared.shortform.*;
 
 import javax.annotation.Nonnull;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static com.google.common.collect.ImmutableList.toImmutableList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Matthew Horridge

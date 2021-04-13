@@ -17,12 +17,16 @@ public class GetOboTermRelationshipsResult implements Result {
 
     private OBOTermRelationships relationships;
 
-    public GetOboTermRelationshipsResult(@Nonnull OBOTermRelationships relationships) {
+    private GetOboTermRelationshipsResult(@Nonnull OBOTermRelationships relationships) {
         this.relationships = checkNotNull(relationships);
     }
 
     @GwtSerializationConstructor
     private GetOboTermRelationshipsResult() {
+    }
+
+    public static GetOboTermRelationshipsResult create(@Nonnull OBOTermRelationships relationships) {
+        return new GetOboTermRelationshipsResult(relationships);
     }
 
     public OBOTermRelationships getRelationships() {

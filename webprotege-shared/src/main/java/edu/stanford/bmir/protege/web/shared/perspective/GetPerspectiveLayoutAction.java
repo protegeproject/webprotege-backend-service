@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.perspective;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -27,10 +27,14 @@ public class GetPerspectiveLayoutAction implements ProjectAction<GetPerspectiveL
     private GetPerspectiveLayoutAction() {
     }
 
-    public GetPerspectiveLayoutAction(ProjectId projectId, UserId userId, PerspectiveId perspectiveId) {
+    private GetPerspectiveLayoutAction(ProjectId projectId, UserId userId, PerspectiveId perspectiveId) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.perspectiveId = checkNotNull(perspectiveId);
+    }
+
+    public static GetPerspectiveLayoutAction create(ProjectId projectId, UserId userId, PerspectiveId perspectiveId) {
+        return new GetPerspectiveLayoutAction(projectId, userId, perspectiveId);
     }
 
     @Nonnull

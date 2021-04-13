@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.dispatch;
 
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
 
 /**
  * Author: Matthew Horridge<br>

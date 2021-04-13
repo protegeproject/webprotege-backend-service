@@ -1,10 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.individuals;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLNamedIndividualData;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
 
 import javax.annotation.Nullable;
@@ -17,41 +21,24 @@ import java.util.Optional;
  * Bio-Medical Informatics Research Group<br>
  * Date: 12/09/2013
  */
-public class GetIndividualsResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetIndividuals")
+public abstract class GetIndividualsResult implements Result {
 
-
-    @SuppressWarnings("GwtInconsistentSerializableClass" )
-    @Nullable
-    private OWLClassData type;
-
-    private Page<EntityNode> result;
-
-    private long totalIndividuals;
-
-    @GwtSerializationConstructor
-    private GetIndividualsResult() {
-    }
-
-    public GetIndividualsResult(Optional<OWLClassData> type,
-                                Page<EntityNode> result, long totalIndividuals) {
-        this.type = type.orElse(null);
-        this.result = result;
-        this.totalIndividuals = totalIndividuals;
+    @JsonCreator
+    public static GetIndividualsResult create(@JsonProperty("type") Optional<OWLClassData> type,
+                                              @JsonProperty("individuals") Page<EntityNode> result) {
+        return new AutoValue_GetIndividualsResult(type.orElse(null), result);
     }
 
     public Optional<OWLClassData> getType() {
-        return Optional.ofNullable(type);
+        return Optional.ofNullable(getTypeInternal());
     }
 
-    public Page<EntityNode> getPaginatedResult() {
-        return result;
-    }
+    @JsonIgnore
+    @Nullable
+    public abstract OWLClassData getTypeInternal();
 
-    public long getTotalIndividuals() {
-        return totalIndividuals;
-    }
-
-    public List<EntityNode> getIndividuals() {
-        return result.getPageElements();
-    }
+    public abstract Page<EntityNode> getIndividuals();
 }

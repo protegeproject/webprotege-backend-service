@@ -32,13 +32,13 @@ public class GetRevisionSummariesResult_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        result = new GetRevisionSummariesResult(summaries);
-        otherResult = new GetRevisionSummariesResult(summaries);
+        result = GetRevisionSummariesResult.create(summaries);
+        otherResult = GetRevisionSummariesResult.create(summaries);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new GetRevisionSummariesResult(null);
+        GetRevisionSummariesResult.create(null);
     }
 
     @Test

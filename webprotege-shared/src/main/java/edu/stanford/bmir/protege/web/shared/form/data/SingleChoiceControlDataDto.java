@@ -3,13 +3,10 @@ package edu.stanford.bmir.protege.web.shared.form.data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.form.field.ChoiceDescriptorDto;
 import edu.stanford.bmir.protege.web.shared.form.field.SingleChoiceControlDescriptor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Optional;
 
 @AutoValue

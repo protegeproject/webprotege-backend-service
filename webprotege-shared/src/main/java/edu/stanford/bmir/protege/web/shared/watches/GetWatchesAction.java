@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.watches;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.HasUserId;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -16,31 +21,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/03/2013
  */
-public class GetWatchesAction implements ProjectAction<GetWatchesResult>, HasUserId {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetWatches")
+public abstract class GetWatchesAction implements ProjectAction<GetWatchesResult>, HasUserId {
 
-    private ProjectId projectId;
-
-    private UserId userId;
-
-    private OWLEntity entity;
-
-    /**
-     * Creates a {@link GetWatchesAction} object for the specified project and user and entity.
-     * @param projectId The {@link ProjectId} of the project whose watches are to be retrieved.
-     * @param userId The {@link UserId} of the user whose watches are to be retrieved in the specified project.
-     * @param entity The entity.
-     * @throws NullPointerException if any parameters are {@code null}.
-     */
-    public GetWatchesAction(ProjectId projectId, UserId userId, OWLEntity entity) {
-        this.projectId = checkNotNull(projectId);
-        this.userId = checkNotNull(userId);
-        this.entity = entity;
-    }
-
-    /**
-     * For serialization only
-     */
-    private GetWatchesAction() {
+    @JsonCreator
+    public static GetWatchesAction create(@JsonProperty("projectId") ProjectId projectId,
+                                          @JsonProperty("userId") UserId userId,
+                                          @JsonProperty("entity") OWLEntity entity) {
+        return new AutoValue_GetWatchesAction(projectId, userId, entity);
     }
 
     /**
@@ -49,20 +39,14 @@ public class GetWatchesAction implements ProjectAction<GetWatchesResult>, HasUse
      */
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     /**
      * Gets the {@link UserId}.
      * @return The {@link UserId}.  Not {@code null}.
      */
     @Override
-    public UserId getUserId() {
-        return userId;
-    }
+    public abstract UserId getUserId();
 
-    public OWLEntity getEntity() {
-        return entity;
-    }
+    public abstract OWLEntity getEntity();
 }

@@ -1,11 +1,17 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
 import edu.stanford.bmir.protege.web.shared.frame.PropertyAnnotationValue;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,36 +23,27 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 01/08/2013
  */
-public class SetOntologyAnnotationsAction extends AbstractHasProjectAction<SetOntologyAnnotationsResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("SetOntologyAnnotations")
+public abstract class SetOntologyAnnotationsAction extends AbstractHasProjectAction<SetOntologyAnnotationsResult> {
 
-    private OWLOntologyID owlOntologyId;
 
-    private Set<PropertyAnnotationValue> fromAnnotations;
-
-    private Set<PropertyAnnotationValue> toAnnotations;
-
-    @GwtSerializationConstructor
-    private SetOntologyAnnotationsAction() {
+    @JsonCreator
+    public static SetOntologyAnnotationsAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                      @JsonProperty("ontologyId") OWLOntologyID ontologyID,
+                                                      @JsonProperty("fromAnnotations") Set<PropertyAnnotationValue> fromAnnotations,
+                                                      @JsonProperty("toAnnotations") Set<PropertyAnnotationValue> toAnnotations) {
+        return new AutoValue_SetOntologyAnnotationsAction(projectId, ontologyID, fromAnnotations, toAnnotations);
     }
 
-    public SetOntologyAnnotationsAction(ProjectId projectId,
-                                        OWLOntologyID ontologyID,
-                                        Set<PropertyAnnotationValue> fromAnnotations, Set<PropertyAnnotationValue> toAnnotations) {
-        super(projectId);
-        this.owlOntologyId = checkNotNull(ontologyID);
-        this.fromAnnotations = new HashSet<>(fromAnnotations);
-        this.toAnnotations = new HashSet<>(toAnnotations);
-    }
+    @Nonnull
+    @Override
+    public abstract ProjectId getProjectId();
 
-    public OWLOntologyID getOntologyId() {
-        return owlOntologyId;
-    }
+    public abstract OWLOntologyID getOntologyId();
 
-    public Set<PropertyAnnotationValue> getFromAnnotations() {
-        return new HashSet<>(fromAnnotations);
-    }
+    public abstract Set<PropertyAnnotationValue> getFromAnnotations();
 
-    public Set<PropertyAnnotationValue> getToAnnotations() {
-        return new HashSet<>(toAnnotations);
-    }
+    public abstract Set<PropertyAnnotationValue> getToAnnotations();
 }

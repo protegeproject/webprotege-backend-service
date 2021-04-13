@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -20,13 +23,15 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("NamedIndividualFrame")
 public abstract class NamedIndividualFrame implements EntityFrame<OWLNamedIndividualData>, HasPropertyValues, HasAnnotationPropertyValues, HasLogicalPropertyValues, HasPropertyValueList, Serializable {
 
+    @JsonCreator
     @Nonnull
-    public static NamedIndividualFrame get(@Nonnull OWLNamedIndividualData subject,
-                                @Nonnull ImmutableSet<OWLClassData> namedTypes,
-                                @Nonnull ImmutableSet<PropertyValue> propertyValueList,
-                                @Nonnull ImmutableSet<OWLNamedIndividualData> sameIndividuals) {
+    public static NamedIndividualFrame get(@JsonProperty("subject") @Nonnull OWLNamedIndividualData subject,
+                                @JsonProperty("classes") @Nonnull ImmutableSet<OWLClassData> namedTypes,
+                                @JsonProperty("propertyValues") @Nonnull ImmutableSet<PropertyValue> propertyValueList,
+                                @JsonProperty("sameIndividuals") @Nonnull ImmutableSet<OWLNamedIndividualData> sameIndividuals) {
         return new AutoValue_NamedIndividualFrame(subject,
                                                   namedTypes,
                                                   propertyValueList,

@@ -1,12 +1,13 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
-import org.mongodb.morphia.annotations.*;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -23,13 +24,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * A thread of comments that are attached to an entity
  */
-@Entity(value = "EntityDiscussionThreads", noClassnameStored = true)
-@Indexes(
-        {
-                @Index(fields = {@Field("projectId"), @Field("entity"), @Field("status")}),
-                @Index(fields = @Field("comments.id"), options = @IndexOptions(unique = true))
-        }
-)
 public class EntityDiscussionThread implements IsSerializable {
 
     public static final String PROJECT_ID = "projectId";
@@ -42,23 +36,22 @@ public class EntityDiscussionThread implements IsSerializable {
 
     public static final String ENTITY = "entity";
 
-    @Id
     private ThreadId id;
 
     private ProjectId projectId;
 
-    @Embedded
     private OWLEntity entity;
 
     private Status status;
 
     private List<Comment> comments;
 
-    @Inject
-    public EntityDiscussionThread(@Nonnull ThreadId id,
-                                  @Nonnull ProjectId projectId,
-                                  @Nonnull OWLEntity entity,
-                                  @Nonnull Status status, @Nonnull ImmutableList<Comment> comments) {
+    @JsonCreator
+    public EntityDiscussionThread(@JsonProperty("id") @Nonnull ThreadId id,
+                                  @JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                  @JsonProperty("entity") @Nonnull OWLEntity entity,
+                                  @JsonProperty("status") @Nonnull Status status,
+                                  @JsonProperty("comments") @Nonnull ImmutableList<Comment> comments) {
         this.id = checkNotNull(id);
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);

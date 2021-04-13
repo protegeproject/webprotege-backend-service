@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -17,7 +19,8 @@ public class AuthenticateUserResult extends AbstractAuthenticationResult {
     private AuthenticateUserResult() {
     }
 
-    public AuthenticateUserResult(AuthenticationResponse response) {
+    @JsonCreator
+    public AuthenticateUserResult(@JsonProperty("response") AuthenticationResponse response) {
         super(response);
     }
 

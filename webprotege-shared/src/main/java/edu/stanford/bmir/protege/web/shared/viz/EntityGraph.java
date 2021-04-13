@@ -1,8 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.viz;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSetMultimap;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -21,12 +27,11 @@ import java.util.Set;
 @GwtCompatible(serializable = true)
 public abstract class EntityGraph {
 
-    @Nullable
-    private transient ImmutableSet<OWLEntityData> edgeLabels = null;
-
+    @JsonCreator
     @Nonnull
-    public static EntityGraph create(OWLEntityData root, ImmutableSet<Edge> edges,
-                                     boolean isPrunedToEdgeLimit) {
+    public static EntityGraph create(@JsonProperty("root") OWLEntityData root,
+                                     @JsonProperty("edges") ImmutableSet<Edge> edges,
+                                     @JsonProperty("prunedToEdgeLimit") boolean isPrunedToEdgeLimit) {
         final ImmutableSet.Builder<OWLEntityData> builder = ImmutableSet.builder();
         final ImmutableSetMultimap.Builder<OWLEntityData, Edge> edgesByTailNode = ImmutableSetMultimap.builder();
         builder.add(root);
@@ -42,16 +47,20 @@ public abstract class EntityGraph {
     @Nonnull
     public abstract OWLEntityData getRoot();
 
+    @JsonIgnore
     public abstract int getNodeCount();
 
+    @JsonIgnore
     @Nonnull
     public abstract ImmutableSet<OWLEntityData> getNodes();
 
+    @JsonIgnore
     public abstract int getEdgeCount();
 
     @Nonnull
     public abstract ImmutableSet<Edge> getEdges();
 
+    @JsonIgnore
     @Nonnull
     public OWLEntity getRootEntity() {
         return getRoot().getEntity();
@@ -59,20 +68,23 @@ public abstract class EntityGraph {
 
     public abstract boolean isPrunedToEdgeLimit();
 
+    @JsonIgnore
     @Nonnull
     public abstract ImmutableSetMultimap<OWLEntityData, Edge> getEdgesByTailNode();
 
+    @JsonIgnore
     public Set<OWLEntityData> getEdgeLabels() {
-        if(edgeLabels != null) {
-            return edgeLabels;
+        if(getEdges().isEmpty()) {
+            return ImmutableSet.of();
         }
         ImmutableSet.Builder<OWLEntityData> builder = ImmutableSet.builder();
         for(Edge edge : getEdges()) {
             edge.getLabellingEntity().ifPresent(builder::add);
         }
-        return edgeLabels = builder.build();
+        return builder.build();
     }
 
+    @JsonIgnore
     public ImmutableMultimap<OWLEntityData, String> getDescriptorsByTailNode() {
         ImmutableMultimap.Builder<OWLEntityData, String> result = ImmutableMultimap.builder();
         for (Edge edge : getEdges()) {
@@ -81,6 +93,7 @@ public abstract class EntityGraph {
         return result.build();
     }
 
+    @JsonIgnore
     public ImmutableMultimap<String, Edge> getEdgesByDescriptor() {
         ImmutableMultimap.Builder<String, Edge> result = ImmutableMultimap.builder();
         for (Edge edge : getEdges()) {
@@ -89,6 +102,7 @@ public abstract class EntityGraph {
         return result.build();
     }
 
+    @JsonIgnore
     public ImmutableSetMultimap<OWLEntityData, Edge> getEdgesByCluster(OWLEntity rootNode) {
         Set<OWLEntityData> processed = new HashSet<>();
         ImmutableSetMultimap.Builder<OWLEntityData, Edge> resultBuilder = ImmutableSetMultimap.builder();
@@ -107,6 +121,7 @@ public abstract class EntityGraph {
         return resultBuilder.build();
     }
 
+    @JsonIgnore
     public Set<OWLEntityData> getTransitiveClosure(OWLEntityData from, Set<OWLEntityData> edgeFilter) {
         Set<OWLEntityData> nodes = new HashSet<>();
         ImmutableMultimap<OWLEntityData, Edge> edgeMap = getEdgesByTailNode();

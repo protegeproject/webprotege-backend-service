@@ -1,10 +1,12 @@
 package edu.stanford.bmir.protege.web.shared.viz;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.projectsettings.GetProjectSettingsResult;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;
@@ -16,12 +18,13 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("GetUserProjectEntityGraphCriteria")
 public abstract class GetUserProjectEntityGraphCriteriaResult implements Result {
 
-
-    public static GetUserProjectEntityGraphCriteriaResult get(@Nonnull ProjectId projectId,
-                                                              @Nonnull UserId userId,
-                                                              @Nonnull EntityGraphSettings settings) {
+    @JsonCreator
+    public static GetUserProjectEntityGraphCriteriaResult create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                                 @JsonProperty("userId") @Nonnull UserId userId,
+                                                                 @JsonProperty("settings") @Nonnull EntityGraphSettings settings) {
         return new AutoValue_GetUserProjectEntityGraphCriteriaResult(projectId,
                                                                      userId,
                                                                      settings);

@@ -18,12 +18,16 @@ public class GetProjectTagsAction implements ProjectAction<GetProjectTagsResult>
 
     private ProjectId projectId;
 
-    public GetProjectTagsAction(@Nonnull ProjectId projectId) {
+    private GetProjectTagsAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
     }
 
     @GwtSerializationConstructor
     private GetProjectTagsAction() {
+    }
+
+    public static GetProjectTagsAction create(@Nonnull ProjectId projectId) {
+        return new GetProjectTagsAction(projectId);
     }
 
     @Nonnull

@@ -17,12 +17,16 @@ public class GetOboTermCrossProductResult implements Result {
 
     private OBOTermCrossProduct crossProduct;
 
-    public GetOboTermCrossProductResult(@Nonnull OBOTermCrossProduct crossProduct) {
+    private GetOboTermCrossProductResult(@Nonnull OBOTermCrossProduct crossProduct) {
         this.crossProduct = checkNotNull(crossProduct);
     }
 
     @GwtSerializationConstructor
     private GetOboTermCrossProductResult() {
+    }
+
+    public static GetOboTermCrossProductResult create(@Nonnull OBOTermCrossProduct crossProduct) {
+        return new GetOboTermCrossProductResult(crossProduct);
     }
 
     @Nonnull

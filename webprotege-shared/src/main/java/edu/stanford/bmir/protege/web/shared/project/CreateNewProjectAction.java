@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 
@@ -11,6 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 21/02/15
  */
+@JsonTypeName("CreateNewProject")
 public class CreateNewProjectAction implements Action<CreateNewProjectResult> {
 
     private NewProjectSettings newProjectSettings;
@@ -21,7 +25,8 @@ public class CreateNewProjectAction implements Action<CreateNewProjectResult> {
     private CreateNewProjectAction() {
     }
 
-    public CreateNewProjectAction(NewProjectSettings newProjectSettings) {
+    @JsonCreator
+    public CreateNewProjectAction(@JsonProperty("newProjectSettings") NewProjectSettings newProjectSettings) {
         this.newProjectSettings = checkNotNull(newProjectSettings);
     }
 

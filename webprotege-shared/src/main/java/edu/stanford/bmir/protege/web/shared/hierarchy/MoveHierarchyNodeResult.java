@@ -1,35 +1,34 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
  */
-public class MoveHierarchyNodeResult implements Result, HasEventList<ProjectEvent<?>> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("MoveHierarchyNode")
+public abstract class MoveHierarchyNodeResult implements Result, HasEventList<ProjectEvent<?>> {
 
-    private boolean moved;
 
-    private EventList<ProjectEvent<?>> eventList;
-
-    public MoveHierarchyNodeResult(boolean moved, EventList<ProjectEvent<?>> eventList) {
-        this.moved = moved;
-        this.eventList = eventList;
+    @JsonCreator
+    public static MoveHierarchyNodeResult create(@JsonProperty("moved") boolean moved,
+                                                 @JsonProperty("eventList") EventList<ProjectEvent<?>> eventList) {
+        return new AutoValue_MoveHierarchyNodeResult(moved, eventList);
     }
 
-    @GwtSerializationConstructor
-    private MoveHierarchyNodeResult() {
-    }
+    public abstract boolean isMoved();
 
     @Override
-    public EventList<ProjectEvent<?>> getEventList() {
-        return eventList;
-    }
+    public abstract EventList<ProjectEvent<?>> getEventList();
 
-    public boolean isMoved() {
-        return moved;
-    }
 }

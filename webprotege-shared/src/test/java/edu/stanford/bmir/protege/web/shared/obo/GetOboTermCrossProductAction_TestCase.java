@@ -24,13 +24,13 @@ public class GetOboTermCrossProductAction_TestCase {
 
     @Before
     public void setUp() {
-        getOboTermCrossProductAction = new GetOboTermCrossProductAction(projectId, entity);
+        getOboTermCrossProductAction = GetOboTermCrossProductAction.create(projectId, entity);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
-        new GetOboTermCrossProductAction(null, entity);
+        GetOboTermCrossProductAction.create(null, entity);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class GetOboTermCrossProductAction_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_entity_IsNull() {
-        new GetOboTermCrossProductAction(projectId, null);
+        GetOboTermCrossProductAction.create(projectId, null);
     }
 
     @Test
@@ -62,22 +62,22 @@ public class GetOboTermCrossProductAction_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(getOboTermCrossProductAction, is(new GetOboTermCrossProductAction(projectId, entity)));
+        assertThat(getOboTermCrossProductAction, is(GetOboTermCrossProductAction.create(projectId, entity)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboTermCrossProductAction, is(not(new GetOboTermCrossProductAction(Mockito.mock(ProjectId.class), entity))));
+        assertThat(getOboTermCrossProductAction, is(not(GetOboTermCrossProductAction.create(Mockito.mock(ProjectId.class), entity))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_entity() {
-        assertThat(getOboTermCrossProductAction, is(not(new GetOboTermCrossProductAction(projectId, Mockito.mock(OWLClass.class)))));
+        assertThat(getOboTermCrossProductAction, is(not(GetOboTermCrossProductAction.create(projectId, Mockito.mock(OWLClass.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(getOboTermCrossProductAction.hashCode(), is(new GetOboTermCrossProductAction(projectId, entity).hashCode()));
+        assertThat(getOboTermCrossProductAction.hashCode(), is(GetOboTermCrossProductAction.create(projectId, entity).hashCode()));
     }
 
     @Test

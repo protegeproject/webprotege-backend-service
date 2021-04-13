@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
@@ -12,27 +17,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 9 Oct 2016
  */
-public class DeleteEntityCommentResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("DeleteEntityComment")
+public abstract class DeleteEntityCommentResult implements Result {
 
-    private CommentId commentId;
-
-    private boolean deleted;
-
-    public DeleteEntityCommentResult(@Nonnull CommentId commentId, boolean deleted) {
-        this.commentId = checkNotNull(commentId);
-        this.deleted = deleted;
-    }
-
-    @GwtSerializationConstructor
-    private DeleteEntityCommentResult() {
+    @JsonCreator
+    public static DeleteEntityCommentResult create(@JsonProperty("commentId") @Nonnull CommentId commentId,
+                                                   @JsonProperty("deleted") boolean deleted) {
+        return new AutoValue_DeleteEntityCommentResult(commentId, deleted);
     }
 
     @Nonnull
-    public CommentId getCommentId() {
-        return commentId;
-    }
+    public abstract CommentId getCommentId();
 
-    public boolean wasDeleted() {
-        return deleted;
-    }
+    @JsonProperty("deleted")
+    public abstract boolean wasDeleted();
 }

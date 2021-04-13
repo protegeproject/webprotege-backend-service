@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.obo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
@@ -15,7 +18,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 22 Jun 2017
  */
+@JsonTypeName("GetOboTermId")
 public class GetOboTermIdResult implements Result {
+
+    public static final String TERM = "term";
 
     private OWLEntity entity;
 
@@ -25,11 +31,18 @@ public class GetOboTermIdResult implements Result {
     private GetOboTermIdResult() {
     }
 
-    public GetOboTermIdResult(@Nonnull OWLEntity entity, @Nonnull OBOTermId termId) {
+    @JsonCreator
+    private GetOboTermIdResult(@JsonProperty(TERM) @Nonnull OWLEntity entity,
+                               @JsonProperty("termId") @Nonnull OBOTermId termId) {
         this.entity = checkNotNull(entity);
         this.termId = checkNotNull(termId);
     }
 
+    public static GetOboTermIdResult create(@Nonnull OWLEntity entity, @Nonnull OBOTermId termId) {
+        return new GetOboTermIdResult(entity, termId);
+    }
+
+    @JsonProperty(TERM)
     @Nonnull
     public OWLEntity getEntity() {
         return entity;

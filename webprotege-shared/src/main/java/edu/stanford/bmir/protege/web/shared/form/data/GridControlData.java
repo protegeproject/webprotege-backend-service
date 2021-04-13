@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.form.data;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.form.field.FormRegionOrdering;
 import edu.stanford.bmir.protege.web.shared.form.field.GridControlDescriptor;

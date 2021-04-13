@@ -1,14 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
-import edu.stanford.bmir.protege.web.shared.search.EntityNameMatchResult;
 import edu.stanford.bmir.protege.web.shared.search.SearchResultMatch;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 
 import javax.annotation.Nonnull;
-import java.io.Serializable;
 
 /**
  * Author: Matthew Horridge<br>
@@ -20,22 +20,10 @@ import java.io.Serializable;
 @GwtCompatible(serializable = true)
 public abstract class EntityLookupResult {
 
-    public static EntityLookupResult get(@Nonnull DictionaryLanguage language,
-                                         @Nonnull EntityNode entityNode,
-                                         @Nonnull SearchResultMatch matchResult,
-                                         @Nonnull String directLink) {
-        return new AutoValue_EntityLookupResult(language, entityNode, matchResult, directLink);
-    }
-
-    @Nonnull
-    public abstract DictionaryLanguage getLanguage();
-
-    @Nonnull
-    public abstract EntityNode getEntityNode();
-
-    @Nonnull
-    public OWLEntityData getOWLEntityData() {
-        return getEntityNode().getEntityData();
+    @JsonCreator
+    public static EntityLookupResult get(@JsonProperty("matchResult") @Nonnull SearchResultMatch matchResult,
+                                         @JsonProperty("directLink") @Nonnull String directLink) {
+        return new AutoValue_EntityLookupResult(matchResult, directLink);
     }
 
     @Nonnull

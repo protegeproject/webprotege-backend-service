@@ -19,8 +19,12 @@ public class GetProjectSharingSettingsResult implements Result {
     private GetProjectSharingSettingsResult() {
     }
 
-    public GetProjectSharingSettingsResult(ProjectSharingSettings projectSharingSettings) {
+    private GetProjectSharingSettingsResult(ProjectSharingSettings projectSharingSettings) {
         this.projectSharingSettings = checkNotNull(projectSharingSettings);
+    }
+
+    public static GetProjectSharingSettingsResult create(ProjectSharingSettings projectSharingSettings) {
+        return new GetProjectSharingSettingsResult(projectSharingSettings);
     }
 
     public ProjectSharingSettings getProjectSharingSettings() {

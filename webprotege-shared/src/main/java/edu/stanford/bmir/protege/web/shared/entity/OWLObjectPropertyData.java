@@ -1,10 +1,15 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
@@ -18,18 +23,26 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("OWLObjectPropertyData")
 public abstract class OWLObjectPropertyData extends OWLPropertyData {
 
 
     public static OWLObjectPropertyData get(@Nonnull OWLObjectProperty property,
                                             @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
-        return new AutoValue_OWLObjectPropertyData(shortForms, false, property);
+        return get(property, shortForms, false);
     }
 
 
     public static OWLObjectPropertyData get(@Nonnull OWLObjectProperty property,
                                             @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
                                             boolean deprecated) {
+        return get(property, toShortFormList(shortForms), deprecated);
+    }
+
+    @JsonCreator
+    public static OWLObjectPropertyData get(@JsonProperty("entity") OWLObjectProperty property,
+                                            @JsonProperty("shortForms") ImmutableList<ShortForm> shortForms,
+                                            @JsonProperty("deprecated") boolean deprecated) {
         return new AutoValue_OWLObjectPropertyData(shortForms, deprecated, property);
     }
 

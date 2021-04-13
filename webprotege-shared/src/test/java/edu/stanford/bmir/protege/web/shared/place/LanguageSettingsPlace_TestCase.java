@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.gwt.place.shared.Place;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

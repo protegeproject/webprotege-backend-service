@@ -10,7 +10,6 @@ import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
-
 import java.util.Comparator;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;

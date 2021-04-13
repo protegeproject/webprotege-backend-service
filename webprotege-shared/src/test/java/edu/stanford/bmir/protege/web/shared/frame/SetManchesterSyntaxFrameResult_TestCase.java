@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
+import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,19 +35,19 @@ public class SetManchesterSyntaxFrameResult_TestCase {
     @Before
     public void setUp() throws Exception {
         frameText = "FRAME TEXT";
-        setManchesterSyntaxFrameResult = new SetManchesterSyntaxFrameResult(eventList, frameText);
-        otherSetManchesterSyntaxFrameResult = new SetManchesterSyntaxFrameResult(eventList, frameText);
+        setManchesterSyntaxFrameResult = SetManchesterSyntaxFrameResult.create(eventList, frameText);
+        otherSetManchesterSyntaxFrameResult = SetManchesterSyntaxFrameResult.create(eventList, frameText);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_EventList_IsNull() {
-        new SetManchesterSyntaxFrameResult(null, frameText);
+        SetManchesterSyntaxFrameResult.create(null, frameText);
     }
 
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_FrameText_IsNull() {
-        new SetManchesterSyntaxFrameResult(eventList, null);
+        SetManchesterSyntaxFrameResult.create(eventList, null);
     }
 
     @Test

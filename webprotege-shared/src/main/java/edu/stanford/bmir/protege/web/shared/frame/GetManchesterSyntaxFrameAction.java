@@ -24,9 +24,13 @@ public class GetManchesterSyntaxFrameAction implements ProjectAction<GetManchest
     private GetManchesterSyntaxFrameAction() {
     }
 
-    public GetManchesterSyntaxFrameAction(ProjectId projectId, OWLEntity subject) {
+    private GetManchesterSyntaxFrameAction(ProjectId projectId, OWLEntity subject) {
         this.projectId = checkNotNull(projectId);
         this.subject = checkNotNull(subject);
+    }
+
+    public static GetManchesterSyntaxFrameAction create(ProjectId projectId, OWLEntity subject) {
+        return new GetManchesterSyntaxFrameAction(projectId, subject);
     }
 
     @Nonnull

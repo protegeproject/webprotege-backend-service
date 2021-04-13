@@ -8,10 +8,6 @@ import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nonnull;
 
-import java.time.Year;
-
-import static com.google.common.base.Preconditions.checkArgument;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

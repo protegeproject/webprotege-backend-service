@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.dispatch;
 
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 
 /**
  * Author: Matthew Horridge<br>

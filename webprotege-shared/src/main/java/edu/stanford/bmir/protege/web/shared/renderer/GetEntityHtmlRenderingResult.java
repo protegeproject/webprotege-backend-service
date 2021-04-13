@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.renderer;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
@@ -13,29 +18,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-03-27
  */
-public class GetEntityHtmlRenderingResult implements Result {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetEntityHtmlRendering")
+public abstract class GetEntityHtmlRenderingResult implements Result {
 
-    private OWLEntityData entityData;
-
-    private String rendering;
-
-    @GwtSerializationConstructor
-    private GetEntityHtmlRenderingResult() {
-    }
-
-    public GetEntityHtmlRenderingResult(OWLEntityData entityData,
-                                        @Nonnull String rendering) {
-        this.entityData = checkNotNull(entityData);
-        this.rendering = checkNotNull(rendering);
+    @JsonCreator
+    public static GetEntityHtmlRenderingResult create(@JsonProperty("entityData") OWLEntityData entityData,
+                                                      @JsonProperty("rendering") @Nonnull String rendering) {
+        return new AutoValue_GetEntityHtmlRenderingResult(entityData, rendering);
     }
 
     @Nonnull
-    public OWLEntityData getEntityData() {
-        return entityData;
-    }
+    public abstract OWLEntityData getEntityData();
 
     @Nonnull
-    public String getRendering() {
-        return rendering;
-    }
+    public abstract String getRendering();
 }

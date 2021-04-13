@@ -18,12 +18,16 @@ public class GetOboTermSynonymsResult implements Result {
 
     private ImmutableList<OBOTermSynonym> synonyms;
 
-    public GetOboTermSynonymsResult(@Nonnull List<OBOTermSynonym> synonyms) {
+    private GetOboTermSynonymsResult(@Nonnull List<OBOTermSynonym> synonyms) {
         this.synonyms = ImmutableList.copyOf(synonyms);
     }
 
     @GwtSerializationConstructor
     private GetOboTermSynonymsResult() {
+    }
+
+    public static GetOboTermSynonymsResult create(@Nonnull List<OBOTermSynonym> synonyms) {
+        return new GetOboTermSynonymsResult(synonyms);
     }
 
     public List<OBOTermSynonym> getSynonyms() {

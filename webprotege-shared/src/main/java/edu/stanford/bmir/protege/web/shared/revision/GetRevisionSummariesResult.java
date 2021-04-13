@@ -22,8 +22,12 @@ public class GetRevisionSummariesResult implements Result {
     private GetRevisionSummariesResult() {
     }
 
-    public GetRevisionSummariesResult(ImmutableList<RevisionSummary> revisionSummaries) {
+    private GetRevisionSummariesResult(ImmutableList<RevisionSummary> revisionSummaries) {
         this.revisionSummaries = checkNotNull(revisionSummaries);
+    }
+
+    public static GetRevisionSummariesResult create(ImmutableList<RevisionSummary> revisionSummaries) {
+        return new GetRevisionSummariesResult(revisionSummaries);
     }
 
     public ImmutableList<RevisionSummary> getRevisionSummaries() {

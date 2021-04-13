@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.HasSubject;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -13,23 +18,16 @@ import javax.annotation.Nonnull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/02/2013
  */
-public class GetNamedIndividualFrameAction implements ProjectAction<GetNamedIndividualFrameResult>, HasSubject<OWLNamedIndividual> {
-
-    private ProjectId projectId;
-
-    private OWLNamedIndividual subject;
-
-    /**
-     * For serialization purposes only
-     */
-    private GetNamedIndividualFrameAction() {
-        super();
-    }
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetNamedIndividualFrame")
+public abstract class GetNamedIndividualFrameAction implements ProjectAction<GetNamedIndividualFrameResult>, HasSubject<OWLNamedIndividual> {
 
 
-    public GetNamedIndividualFrameAction(ProjectId projectId, OWLNamedIndividual subject) {
-        this.projectId = projectId;
-        this.subject = subject;
+    @JsonCreator
+    public static GetNamedIndividualFrameAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                       @JsonProperty("subject") OWLNamedIndividual subject) {
+        return new AutoValue_GetNamedIndividualFrameAction(projectId, subject);
     }
 
     /**
@@ -39,9 +37,7 @@ public class GetNamedIndividualFrameAction implements ProjectAction<GetNamedIndi
      */
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
-        return projectId;
-    }
+    public abstract ProjectId getProjectId();
 
     /**
      * Gets the subject of this object.
@@ -49,24 +45,5 @@ public class GetNamedIndividualFrameAction implements ProjectAction<GetNamedIndi
      * @return The subject.  Not {@code null}.
      */
     @Override
-    public OWLNamedIndividual getSubject() {
-        return subject;
-    }
-
-    @Override
-    public int hashCode() {
-        return "GetNamedIndividualFrameAction".hashCode() + super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj == this) {
-            return true;
-        }
-        if(!(obj instanceof GetNamedIndividualFrameAction)) {
-            return false;
-        }
-        GetNamedIndividualFrameAction other = (GetNamedIndividualFrameAction) obj;
-        return super.equals(other);
-    }
+    public abstract OWLNamedIndividual getSubject();
 }

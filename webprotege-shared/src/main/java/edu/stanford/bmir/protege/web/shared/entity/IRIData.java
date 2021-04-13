@@ -1,14 +1,16 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationValue;
-import org.semanticweb.owlapi.model.OWLEntity;
-import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
+import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -23,14 +25,24 @@ import java.util.Optional;
 @GwtCompatible(serializable = true)
 public abstract class IRIData extends OWLPrimitiveData {
 
-    public static IRIData get(@Nonnull IRI iri,
-                              @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
+    public static IRIData get(@Nonnull IRI iri, @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
+        return get(iri, toShortFormList(shortForms));
+    }
+
+    @JsonCreator
+    public static IRIData get(@JsonProperty("iri") IRI iri,
+                              @JsonProperty("shortForms") ImmutableList<ShortForm> shortForms) {
         return new AutoValue_IRIData(shortForms, iri);
     }
 
     @Nonnull
     @Override
     public abstract IRI getObject();
+
+    @JsonProperty("iri")
+    public IRI getIri() {
+        return getObject();
+    }
 
     @Override
     public PrimitiveType getType() {
@@ -52,15 +64,17 @@ public abstract class IRIData extends OWLPrimitiveData {
         return getObject().toString();
     }
 
+    @JsonIgnore
     public boolean isHTTPLink() {
-        return "http".equalsIgnoreCase(getObject().getScheme())
-                || "https".equalsIgnoreCase(getObject().getScheme());
+        return "http".equalsIgnoreCase(getObject().getScheme()) || "https".equalsIgnoreCase(getObject().getScheme());
     }
 
+    @JsonIgnore
     public boolean isWikipediaLink() {
         return isHTTPLink() && getObject().toString().contains("wikipedia.org/wiki/");
     }
 
+    @JsonIgnore
     @Override
     public String getUnquotedBrowserText() {
         return getObject().toString();
@@ -79,5 +93,11 @@ public abstract class IRIData extends OWLPrimitiveData {
     @Override
     public Optional<IRI> asIRI() {
         return Optional.of(getObject());
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isDeprecated() {
+        return super.isDeprecated();
     }
 }

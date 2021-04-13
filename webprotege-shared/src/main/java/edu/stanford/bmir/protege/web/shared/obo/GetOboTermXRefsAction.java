@@ -21,14 +21,17 @@ public class GetOboTermXRefsAction implements ProjectAction<GetOboTermXRefsResul
 
     private OWLEntity entity;
 
-    public GetOboTermXRefsAction(@Nonnull ProjectId projectId,
-                                 @Nonnull OWLEntity entity) {
+    private GetOboTermXRefsAction(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
         this.projectId = projectId;
         this.entity = entity;
     }
 
     @GwtSerializationConstructor
     private GetOboTermXRefsAction() {
+    }
+
+    public static GetOboTermXRefsAction create(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
+        return new GetOboTermXRefsAction(projectId, entity);
     }
 
     @Override

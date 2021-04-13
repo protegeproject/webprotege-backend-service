@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.bulkop;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
@@ -16,9 +19,11 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("SetAnnotationValue")
 public abstract class SetAnnotationValueResult implements Result, HasEventList<ProjectEvent<?>> {
 
-    public static SetAnnotationValueResult get(@Nonnull EventList<ProjectEvent<?>> eventList) {
+    @JsonCreator
+    public static SetAnnotationValueResult create(@JsonProperty("eventList") @Nonnull EventList<ProjectEvent<?>> eventList) {
         return new AutoValue_SetAnnotationValueResult(eventList);
     }
 }

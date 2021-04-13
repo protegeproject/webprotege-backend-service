@@ -1,17 +1,20 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import org.semanticweb.owlapi.model.OWLDatatype;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  * Author: Matthew Horridge<br>
@@ -21,18 +24,25 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("OWLDatatypeData")
 public abstract class OWLDatatypeData extends OWLEntityData {
 
-    @Nonnull
     public static OWLDatatypeData get(@Nonnull OWLDatatype datatype,
-                                      @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
-        return new AutoValue_OWLDatatypeData(shortForms, false, datatype);
+                                             @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {
+        return get(datatype, shortForms, false);
     }
 
-    @Nonnull
+
     public static OWLDatatypeData get(@Nonnull OWLDatatype datatype,
-                                      @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
-                                      boolean deprecated) {
+                                             @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms,
+                                             boolean deprecated) {
+        return get(datatype, toShortFormList(shortForms), deprecated);
+    }
+
+    @JsonCreator
+    public static OWLDatatypeData get(@JsonProperty("entity") OWLDatatype datatype,
+                                             @JsonProperty("shortForms") ImmutableList<ShortForm> shortForms,
+                                             @JsonProperty("deprecated") boolean deprecated) {
         return new AutoValue_OWLDatatypeData(shortForms, deprecated, datatype);
     }
 

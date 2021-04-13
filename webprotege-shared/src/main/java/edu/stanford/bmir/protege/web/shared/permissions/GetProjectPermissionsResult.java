@@ -21,8 +21,12 @@ public class GetProjectPermissionsResult implements Result {
     private GetProjectPermissionsResult() {
     }
 
-    public GetProjectPermissionsResult(Set<ActionId> allowedActions) {
+    private GetProjectPermissionsResult(Set<ActionId> allowedActions) {
         this.allowedActions = ImmutableSet.copyOf(allowedActions);
+    }
+
+    public static GetProjectPermissionsResult create(Set<ActionId> allowedActions) {
+        return new GetProjectPermissionsResult(allowedActions);
     }
 
     public Set<ActionId> getAllowedActions() {
