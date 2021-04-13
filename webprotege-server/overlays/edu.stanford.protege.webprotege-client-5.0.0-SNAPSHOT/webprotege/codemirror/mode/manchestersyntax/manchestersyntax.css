@@ -1,0 +1,118 @@
+.cm-frame-kw {
+    font-weight: bold;
+    color: #0056a8 !important;
+}
+
+.cm-gen-frame-kw {
+    font-weight: bold;
+    color: #0056a8 !important;
+}
+
+.cm-section-kw {
+    font-weight: bold;
+    color: #0056a8 !important;
+}
+
+.cm-quantifier-kw {
+    font-weight: bold;
+    color: #B200B2 !important;
+}
+
+.cm-connective-kw {
+    font-weight: bold;
+    color: #0082e6 !important;
+}
+
+.cm-open-par {
+    color: #646464 !important;
+}
+
+.cm-close-par {
+    color: #646464 !important;
+}
+
+.cm-comma {
+    color: gray;
+    font-weight: bold !important;
+}
+
+.cm-string {
+    color: #ab5b2f !important;
+}
+
+.cm-builtin-kw {
+    /*color: #bd319c;*/
+    color: #4e8187;
+}
+
+.cm-ontology-list {
+    color: #a8a8a8 !important;
+}
+
+.cm-iri {
+    color: #747474 !important;
+    text-decoration: underline;
+}
+
+.ms-axiom-kw {
+    font-weight: bold;
+    color: #0A5EA8 !important;
+}
+
+.cm-facet {
+    color: #2835D0 !important;
+}
+
+.line-section {
+    text-decoration: underline;
+}
+
+.cm-lang-tag {
+    color: gray;
+}
+
+.cm-literal-datatype {
+    color: gray;
+}
+
+.cm-property {
+    font-weight: bold;
+}
+
+.cm-characteristic-kw {
+    font-weight: bold;
+    color: #7016a8 !important;
+}
+
+
+.cm-integer-lit {
+    color: #2835D0;
+}
+
+
+.cm-decimal-lit {
+    color: #2835D0;
+}
+
+
+.cm-floating-point-lit {
+    color: #2835D0;
+}
+
+.cm-boolean-lit {
+    color: #2835D0;
+}
+
+.cm-variable {
+    /*font-weight: bold;*/
+    color: #2835D0 !important;
+}
+
+.cm-implies {
+    font-weight: bold;
+    color: #0072b2;
+    /*4e8187*/
+}
+
+
+

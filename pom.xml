@@ -452,7 +452,6 @@
         <module>webprotege-server-api</module>
         <module>webprotege-server-core</module>
         <module>webprotege-server</module>
-        <module>webprotege-client</module>
         <module>webprotege-shared-core</module>
         <module>webprotege-server-lucene</module>
     </modules>
