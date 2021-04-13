@@ -4,6 +4,7 @@ import com.google.common.io.BaseEncoding;
 
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -36,11 +37,7 @@ public class Md5MessageDigestAlgorithm implements MessageDigestAlgorithm {
 
     @Override
     public void updateWithBytesFromUtf8String(String utf8String) {
-        try {
-            messageDigest.update(checkNotNull(utf8String).getBytes(UTF_8));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Broken JVM.  UTF-8 Encoding is not available.");
-        }
+        messageDigest.update(checkNotNull(utf8String).getBytes(StandardCharsets.UTF_8));
     }
 
     @Override

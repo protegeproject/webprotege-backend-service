@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.user;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
@@ -67,9 +69,10 @@ public class UserDetails implements Serializable {
     }
 
     @Nonnull
-    public static UserDetails getUserDetails(@Nonnull UserId userId,
-                                             @Nonnull String displayName,
-                                             @Nonnull Optional<String> emailAddress) {
+    @JsonCreator
+    public static UserDetails getUserDetails(@JsonProperty("userId") @Nonnull UserId userId,
+                                             @JsonProperty("displayName") @Nonnull String displayName,
+                                             @JsonProperty("emailAddress") @Nonnull Optional<String> emailAddress) {
         return new UserDetails(userId, displayName, emailAddress);
     }
 

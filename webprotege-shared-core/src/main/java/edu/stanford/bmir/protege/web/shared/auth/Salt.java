@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
 import com.google.common.io.BaseEncoding;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -21,10 +23,12 @@ public class Salt implements IsSerializable {
     private Salt() {
     }
 
+    @JsonCreator
     public Salt(@Nonnull byte[] bytes) {
         this.bytes = checkNotNull(bytes);
     }
 
+    @JsonValue
     @Nonnull
     public byte[] getBytes() {
         return Arrays.copyOf(bytes, bytes.length);

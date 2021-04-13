@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -63,14 +64,14 @@ public class Md5MessageDigestAlgorithm_TestCase {
 
     @Test
     public void shouldUpdateAndComputeDigest() throws UnsupportedEncodingException {
-        algorithm.update("Hello ".getBytes("utf-8"));
-        algorithm.update("WebProtege".getBytes("utf-8"));
+        algorithm.update("Hello ".getBytes(StandardCharsets.UTF_8));
+        algorithm.update("WebProtege".getBytes(StandardCharsets.UTF_8));
         assertThat(algorithm.computeDigest(), is(helloWebProtegeDigest));
     }
 
     @Test
     public void shouldComputeDigestAsString() throws UnsupportedEncodingException {
-        algorithm.update("Hello WebProtege".getBytes("utf-8"));
+        algorithm.update("Hello WebProtege".getBytes(StandardCharsets.UTF_8));
         assertThat(algorithm.computeDigestAsBase16Encoding(), is(HELLO_WEBPROTEGE_HEX_DIGEST));
     }
 

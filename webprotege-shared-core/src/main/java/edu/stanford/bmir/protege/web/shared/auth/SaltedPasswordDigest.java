@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
 import com.google.common.io.BaseEncoding;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -21,6 +24,7 @@ public class SaltedPasswordDigest implements IsSerializable {
 
     private byte [] digest;
 
+    @JsonCreator
     public SaltedPasswordDigest(@Nonnull byte[] digest) {
         this.digest = checkNotNull(digest);
     }
@@ -30,6 +34,7 @@ public class SaltedPasswordDigest implements IsSerializable {
     private SaltedPasswordDigest() {
     }
 
+    @JsonValue
     @Nonnull
     public byte[] getBytes() {
         return Arrays.copyOf(digest, digest.length);

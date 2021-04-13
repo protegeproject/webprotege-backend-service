@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.inject.Provider;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -72,14 +73,14 @@ public class PasswordDigestAlgorithm_TestCase {
         // Wonky stuff in the meta-project
         algorithm.getDigestOfSaltedPassword(password, salt);
         String base16Salt = BaseEncoding.base16().lowerCase().encode(salt.getBytes());
-        verify(messageDigestAlgorithm, times(1)).update(base16Salt.getBytes("utf-8"));
+        verify(messageDigestAlgorithm, times(1)).update(base16Salt.getBytes(StandardCharsets.UTF_8));
     }
 
 
     @Test
     public void shouldUseUtf8EncodingForPassword() throws UnsupportedEncodingException {
         algorithm.getDigestOfSaltedPassword(password, salt);
-        verify(messageDigestAlgorithm, times(1)).update(password.getBytes("utf-8"));
+        verify(messageDigestAlgorithm, times(1)).update(password.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
@@ -87,8 +88,8 @@ public class PasswordDigestAlgorithm_TestCase {
         InOrder inOrder = Mockito.inOrder(messageDigestAlgorithm);
         algorithm.getDigestOfSaltedPassword(password, salt);
         String base16Salt = BaseEncoding.base16().lowerCase().encode(salt.getBytes());
-        inOrder.verify(messageDigestAlgorithm, times(1)).update(base16Salt.getBytes("utf-8"));
-        inOrder.verify(messageDigestAlgorithm, times(1)).update(password.getBytes("utf-8"));
+        inOrder.verify(messageDigestAlgorithm, times(1)).update(base16Salt.getBytes(StandardCharsets.UTF_8));
+        inOrder.verify(messageDigestAlgorithm, times(1)).update(password.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
