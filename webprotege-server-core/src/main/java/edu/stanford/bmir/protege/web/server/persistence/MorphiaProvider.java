@@ -3,8 +3,6 @@ package edu.stanford.bmir.protege.web.server.persistence;
 import edu.stanford.bmir.protege.web.server.access.RoleAssignment;
 import edu.stanford.bmir.protege.web.server.api.ApiKeyIdConverter;
 import edu.stanford.bmir.protege.web.server.api.HashedApiKeyConverter;
-import edu.stanford.bmir.protege.web.server.collection.CollectionIdConverter;
-import edu.stanford.bmir.protege.web.server.collection.CollectionItemConverter;
 import edu.stanford.bmir.protege.web.server.color.ColorConverter;
 import edu.stanford.bmir.protege.web.server.form.FormIdConverter;
 import edu.stanford.bmir.protege.web.server.tag.TagIdConverter;
@@ -13,7 +11,6 @@ import edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.converters.Converters;
 import org.mongodb.morphia.mapping.Mapper;
-import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -42,9 +39,6 @@ public class MorphiaProvider implements Provider<Morphia> {
     private final CommentIdConverter commentIdConverter;
 
     @Nonnull
-    private final CollectionIdConverter collectionIdConverter;
-
-    @Nonnull
     private final FormIdConverter formIdConverter;
 
     @Nonnull
@@ -60,7 +54,6 @@ public class MorphiaProvider implements Provider<Morphia> {
                            @Nonnull ProjectIdConverter projectIdConverter,
                            @Nonnull ThreadIdConverter threadIdConverter,
                            @Nonnull CommentIdConverter commentIdConverter,
-                           @Nonnull CollectionIdConverter collectionIdConverter,
                            @Nonnull FormIdConverter formIdConverter,
                            @Nonnull TagIdConverter tagIdConverter,
                            @Nonnull ColorConverter colorConverter) {
@@ -69,7 +62,6 @@ public class MorphiaProvider implements Provider<Morphia> {
         this.projectIdConverter = projectIdConverter;
         this.threadIdConverter = threadIdConverter;
         this.commentIdConverter = commentIdConverter;
-        this.collectionIdConverter = collectionIdConverter;
         this.formIdConverter = formIdConverter;
         this.tagIdConverter = tagIdConverter;
         this.colorConverter = colorConverter;
@@ -88,12 +80,9 @@ public class MorphiaProvider implements Provider<Morphia> {
         converters.addConverter(projectIdConverter);
         converters.addConverter(threadIdConverter);
         converters.addConverter(commentIdConverter);
-        converters.addConverter(collectionIdConverter);
         converters.addConverter(formIdConverter);
         converters.addConverter(tagIdConverter);
         converters.addConverter(colorConverter);
-        converters.addConverter(new CollectionIdConverter());
-        converters.addConverter(new CollectionItemConverter());
         converters.addConverter(new HashedApiKeyConverter());
         converters.addConverter(new ApiKeyIdConverter());
         morphia.map(EntityDiscussionThread.class);

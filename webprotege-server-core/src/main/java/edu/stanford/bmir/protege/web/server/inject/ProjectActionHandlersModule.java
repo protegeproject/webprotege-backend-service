@@ -9,8 +9,6 @@ import edu.stanford.bmir.protege.web.server.bulkop.SetAnnotationValueActionHandl
 import edu.stanford.bmir.protege.web.server.change.GetProjectChangesActionHandler;
 import edu.stanford.bmir.protege.web.server.change.GetWatchedEntityChangesActionHandler;
 import edu.stanford.bmir.protege.web.server.change.RevertRevisionActionHandler;
-import edu.stanford.bmir.protege.web.server.collection.CreateCollectionItemsActionHandler;
-import edu.stanford.bmir.protege.web.server.collection.GetCollectionItemsActionHandler;
 import edu.stanford.bmir.protege.web.server.crud.GetEntityCrudKitSettingsActionHandler;
 import edu.stanford.bmir.protege.web.server.crud.GetEntityCrudKitsActionHandler;
 import edu.stanford.bmir.protege.web.server.crud.SetEntityCrudKitSettingsActionHandler;
@@ -338,11 +336,6 @@ public class ProjectActionHandlersModule {
     }
 
     @Provides @IntoSet
-    public ProjectActionHandler provideGetFormDescriptorActionHander(GetFormDescriptorActionHander handler) {
-        return handler;
-    }
-
-    @Provides @IntoSet
     public ProjectActionHandler provideGetIssuesActionHandler(GetIssuesActionHandler handler) {
         return handler;
     }
@@ -467,21 +460,6 @@ public class ProjectActionHandlersModule {
 
     @Provides @IntoSet
     public ProjectActionHandler providesSetOboTermXRefsActionHandler(SetOboTermXRefsActionHandler handler) {
-        return handler;
-    }
-
-    @Provides @IntoSet
-    public ProjectActionHandler providesSetFormDataHandler(SetFormDataActionHandler handler) {
-        return handler;
-    }
-
-    @Provides @IntoSet
-    public ProjectActionHandler providesGetCollectionElementsActionHandler(GetCollectionItemsActionHandler handler) {
-        return handler;
-    }
-
-    @Provides @IntoSet
-    public ProjectActionHandler providesCreateCollectionItemsActionHandler(CreateCollectionItemsActionHandler handler) {
         return handler;
     }
 
