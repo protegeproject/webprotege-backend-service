@@ -5,7 +5,6 @@ import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.io.IOException;
 

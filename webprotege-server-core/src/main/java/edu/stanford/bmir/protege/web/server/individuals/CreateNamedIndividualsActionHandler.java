@@ -82,7 +82,7 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
         ImmutableSet<EntityNode> individualData = result.getSubject().stream()
                                                         .map(renderer::render)
                                                         .collect(toImmutableSet());
-        return new CreateNamedIndividualsResult(projectId,
+        return CreateNamedIndividualsResult.create(projectId,
                                                 eventList,
                                                 individualData);
     }

@@ -57,7 +57,7 @@ public class GetIndividualsPageContainingIndividualActionHandler extends Abstrac
                         .getTypes(action.getIndividual())
                         .map(renderer::render)
                         .collect(toImmutableSet());
-        return GetIndividualsPageContainingIndividualResult.get(action.getIndividual(),
+        return GetIndividualsPageContainingIndividualResult.create(action.getIndividual(),
                                                                 entityNodesPage,
                                                                 renderer.render(result.getType()),
                                                                 result.getMode(),

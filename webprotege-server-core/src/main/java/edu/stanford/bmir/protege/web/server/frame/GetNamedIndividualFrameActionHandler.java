@@ -81,7 +81,7 @@ public class GetNamedIndividualFrameActionHandler extends AbstractProjectActionH
                     action.getProjectId(),
                     executionContext.getUserId(),
                     action.getSubject());
-        return new GetNamedIndividualFrameResult(renderedFrame);
+        return GetNamedIndividualFrameResult.create(renderedFrame);
 
     }
 }

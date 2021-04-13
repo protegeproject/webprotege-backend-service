@@ -48,6 +48,6 @@ public class GetPerspectiveDetailsActionHandler extends AbstractProjectActionHan
         var projectId = action.getProjectId();
         var userId = executionContext.getUserId();
         var perspectiveDetails = perspectivesManager.getPerspectiveDetails(projectId, userId);
-        return GetPerspectiveDetailsResult.get(perspectiveDetails);
+        return GetPerspectiveDetailsResult.create(perspectiveDetails);
     }
 }

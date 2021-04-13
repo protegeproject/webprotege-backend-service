@@ -37,6 +37,11 @@ public abstract class EventList<E extends WebProtegeEvent<?>> implements Seriali
         return new AutoValue_EventList<>(startTag, events, endTag);
     }
 
+    public static <E extends WebProtegeEvent<?>> EventList<E> create(EventTag startTag,
+                                                        EventTag endTag) {
+        return create(startTag, ImmutableList.of(), endTag);
+    }
+
     @JsonIgnore
     public int size() {
         return getEvents().size();

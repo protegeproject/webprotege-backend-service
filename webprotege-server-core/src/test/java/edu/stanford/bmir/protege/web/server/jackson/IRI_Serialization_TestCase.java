@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.jackson;
 
-import edu.stanford.bmir.protege.web.MockingUtils;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;

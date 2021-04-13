@@ -52,6 +52,6 @@ public class GetProjectPermissionsActionHandler implements ApplicationActionHand
                 forUser(executionContext.getUserId()),
                 forProject(action.getProjectId())
         );
-        return new GetProjectPermissionsResult(allowedActions);
+        return GetProjectPermissionsResult.create(allowedActions);
     }
 }

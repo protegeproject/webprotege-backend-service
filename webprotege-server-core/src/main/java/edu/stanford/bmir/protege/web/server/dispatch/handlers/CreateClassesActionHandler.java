@@ -72,7 +72,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
     @Override
     protected CreateClassesResult createActionResult(ChangeApplicationResult<Set<OWLClass>> changeApplicationResult, CreateClassesAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
-        return new CreateClassesResult(action.getProjectId(),
+        return CreateClassesResult.create(action.getProjectId(),
                                        classes.stream().map(entityNodeRenderer::render).collect(toImmutableSet()),
                                        eventList);
     }

@@ -7,7 +7,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static edu.stanford.bmir.protege.web.MockingUtils.*;
+import static edu.stanford.bmir.protege.web.MockingUtils.mockIRI;
+import static edu.stanford.bmir.protege.web.MockingUtils.mockOWLAnnotationProperty;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Literal;
 
 public class PlainAnnotationPropertyFrame_Serialization_TestCase {

@@ -53,7 +53,7 @@ public class SetEntityWatchesActionHandler extends AbstractProjectActionHandler<
         for(Watch watch : action.getWatches()) {
             watchManager.addWatch(watch);
         }
-        return new SetEntityWatchesResult(eventManager.getEventsFromTag(startTag));
+        return SetEntityWatchesResult.create(eventManager.getEventsFromTag(startTag));
     }
 
 }

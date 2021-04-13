@@ -56,6 +56,6 @@ public class SetProjectTagsActionHandler extends AbstractProjectActionHandler<Se
     public SetProjectTagsResult execute(@Nonnull SetProjectTagsAction action, @Nonnull ExecutionContext executionContext) {
         EventTag eventTag = eventEventManager.getCurrentTag();
         tagsManager.setProjectTags(action.getTagData());
-        return new SetProjectTagsResult(eventEventManager.getEventsFromTag(eventTag));
+        return SetProjectTagsResult.create(eventEventManager.getEventsFromTag(eventTag));
     }
 }

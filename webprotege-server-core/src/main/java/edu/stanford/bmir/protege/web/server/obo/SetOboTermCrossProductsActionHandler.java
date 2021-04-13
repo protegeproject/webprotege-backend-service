@@ -39,6 +39,6 @@ public class SetOboTermCrossProductsActionHandler extends AbstractProjectActionH
         crossProductsManager.setCrossProduct(executionContext.getUserId(),
                                              action.getEntity(),
                                              action.getCrossProduct());
-        return new SetOboTermCrossProductResult();
+        return SetOboTermCrossProductResult.create();
     }
 }

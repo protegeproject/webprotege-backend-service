@@ -8,10 +8,9 @@ import edu.stanford.bmir.protege.web.shared.form.data.EntityFormControlData;
 import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlData;
 import org.junit.Before;
 import org.junit.Test;
-import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImplString;
 
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class FormControlValueDeserializer_TestCase {
 

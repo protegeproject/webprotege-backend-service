@@ -46,6 +46,6 @@ public class GetPerspectiveLayoutActionHandler implements ProjectActionHandler<G
         var projectId = action.getProjectId();
         var userId = action.getUserId();
         var projectPerspective = perspectivesManager.getPerspectiveLayout(projectId, userId, perspectiveId);
-        return new GetPerspectiveLayoutResult(projectPerspective);
+        return GetPerspectiveLayoutResult.create(projectPerspective);
     }
 }

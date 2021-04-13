@@ -1,12 +1,12 @@
 package edu.stanford.bmir.protege.web.server.project;
 
+import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
 import edu.stanford.bmir.protege.web.server.revision.RevisionManager;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.EventTag;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEventList;
 import edu.stanford.bmir.protege.web.shared.project.NewProjectSettings;
 import edu.stanford.bmir.protege.web.shared.project.ProjectAlreadyExistsException;
 import edu.stanford.bmir.protege.web.shared.project.ProjectDocumentNotFoundException;
@@ -75,7 +75,7 @@ public class ProjectManager {
      * @return A, possibly empty, event list
      */
     @Nonnull
-    public ProjectEventList getProjectEventsSinceTag(@Nonnull ProjectId projectId,
+    public EventList<?> getProjectEventsSinceTag(@Nonnull ProjectId projectId,
                                                      @Nonnull EventTag sinceTag) {
         Optional<EventManager<ProjectEvent<?>>> pem = projectCache.getProjectEventManagerIfActive(projectId);
         if(pem.isEmpty()) {
@@ -83,12 +83,12 @@ public class ProjectManager {
         }
         EventManager<ProjectEvent<?>> eventManager = pem.get();
         EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(sinceTag);
-        return ProjectEventList.builder(eventList.getStartTag(), projectId, eventList.getEndTag()).addEvents(eventList.getEvents()).build();
+        return EventList.create(eventList.getStartTag(), eventList.getEvents(), eventList.getEndTag());
 
     }
 
-    private static ProjectEventList getEmptyProjectEventList(@Nonnull ProjectId projectId,
+    private static EventList<?> getEmptyProjectEventList(@Nonnull ProjectId projectId,
                                                              @Nonnull EventTag sinceTag) {
-        return ProjectEventList.builder(sinceTag, projectId, sinceTag).build();
+        return EventList.create(sinceTag, ImmutableList.of(), sinceTag);
     }
 }

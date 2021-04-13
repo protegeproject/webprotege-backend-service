@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.form.field;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
-import edu.stanford.bmir.protege.web.shared.form.data.FormControlData;
 import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlData;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
 import org.hamcrest.Matchers;

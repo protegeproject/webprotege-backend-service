@@ -92,7 +92,7 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
                                                                 EventList<ProjectEvent<?>> eventList) {
 
         var entityNodes = ImmutableSet.of(renderer.render(changeApplicationResult.getSubject()));
-        return new CreateEntityFromFormDataResult(action.getProjectId(),
+        return CreateEntityFromFormDataResult.create(action.getProjectId(),
                                                   eventList,
                                                   entityNodes);
     }

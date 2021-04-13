@@ -141,7 +141,6 @@ public class EntitySearcher {
                 var matchedLanguageRendering = getLanguageRendering(matchedLanguage);
                 return SearchResultMatch.get(entityNode,
                                              matchedLanguage,
-                                             matchedLanguageRendering,
                                              matchedShortForm,
                                              matchedPositions);
 

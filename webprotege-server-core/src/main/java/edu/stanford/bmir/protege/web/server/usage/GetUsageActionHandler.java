@@ -83,15 +83,15 @@ public class GetUsageActionHandler extends AbstractProjectActionHandler<GetUsage
 
         var usageReferences = referencingAxioms
                 .stream()
-                .filter(ax -> usageFilter.isIncluded(ax.getAxiomType()))
+                .filter(ax -> usageFilter.map(f -> f.isIncluded(ax.getAxiomType())).orElse(true))
                 .flatMap(ax -> ax.accept(referencingAxiomVisitor).stream())
-                .filter(usageReference -> isIncludedBySubject(usageFilter, subject, usageReference))
+                .filter(usageReference -> usageFilter.map(f -> isIncludedBySubject(f, subject, usageReference)).orElse(true))
                 .limit(action.getPageSize())
                 .sorted(new UsageReferenceComparator(subject))
                 .collect(toImmutableList());
 
         var entityNode = entityNodeRenderer.render(subject);
-        return new GetUsageResult(projectId, entityNode, usageReferences, referencingAxioms.size());
+        return GetUsageResult.create(projectId, entityNode, usageReferences, referencingAxioms.size());
     }
 
     private boolean isIncludedBySubject(UsageFilter usageFilter, OWLEntity subject, UsageReference ref) {

@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.server.dispatch.handlers;
 
+import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.dispatch.ApplicationActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
@@ -9,6 +10,7 @@ import edu.stanford.bmir.protege.web.server.project.ProjectDetailsManager;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.EventTag;
 import edu.stanford.bmir.protege.web.shared.event.ProjectMovedToTrashEvent;
+import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
 import edu.stanford.bmir.protege.web.shared.project.MoveProjectsToTrashAction;
 import edu.stanford.bmir.protege.web.shared.project.MoveProjectsToTrashResult;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -53,6 +55,9 @@ public class MoveProjectsToTrashActionHandler implements ApplicationActionHandle
             projectDetailsManager.setInTrash(projectId, true);
             events.add(new ProjectMovedToTrashEvent(projectId));
 
-        return new MoveProjectsToTrashResult(new EventList<>(EventTag.getFirst(), events, EventTag.getFirst()));
+        EventList<WebProtegeEvent<?>> eventList = EventList.create(EventTag.getFirst(),
+                                                                ImmutableList.copyOf(events),
+                                                                EventTag.getFirst());
+        return MoveProjectsToTrashResult.create(eventList);
     }
 }

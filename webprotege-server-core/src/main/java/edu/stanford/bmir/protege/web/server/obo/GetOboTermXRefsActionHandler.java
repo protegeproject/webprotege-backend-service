@@ -35,6 +35,6 @@ public class GetOboTermXRefsActionHandler extends AbstractProjectActionHandler<G
     @Nonnull
     @Override
     public GetOboTermXRefsResult execute(@Nonnull GetOboTermXRefsAction action, @Nonnull ExecutionContext executionContext) {
-        return new GetOboTermXRefsResult(xRefsManager.getXRefs(action.getEntity()));
+        return GetOboTermXRefsResult.create(xRefsManager.getXRefs(action.getEntity()));
     }
 }

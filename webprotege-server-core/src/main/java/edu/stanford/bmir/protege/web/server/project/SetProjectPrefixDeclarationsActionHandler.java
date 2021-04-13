@@ -55,6 +55,6 @@ public class SetProjectPrefixDeclarationsActionHandler extends AbstractProjectAc
                                                                     PrefixDeclaration::getPrefix));
         PrefixDeclarations prefixDeclarations = PrefixDeclarations.get(action.getProjectId(), decls);
         store.save(prefixDeclarations);
-        return new SetProjectPrefixDeclarationsResult(action.getProjectId(), action.getPrefixDeclarations());
+        return SetProjectPrefixDeclarationsResult.create(action.getProjectId(), action.getPrefixDeclarations());
     }
 }

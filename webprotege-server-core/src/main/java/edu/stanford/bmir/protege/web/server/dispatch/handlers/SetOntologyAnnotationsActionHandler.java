@@ -117,6 +117,6 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
         Set<OWLAnnotation> annotations = ontologyAnnotationsIndex
                 .getOntologyAnnotations(ontologyId)
                 .collect(Collectors.toSet());
-        return new SetOntologyAnnotationsResult(annotations, eventList);
+        return SetOntologyAnnotationsResult.create(annotations, eventList);
     }
 }

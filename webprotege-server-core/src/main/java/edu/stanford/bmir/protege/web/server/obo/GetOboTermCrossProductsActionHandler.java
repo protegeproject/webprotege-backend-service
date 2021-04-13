@@ -38,6 +38,6 @@ public class GetOboTermCrossProductsActionHandler extends AbstractProjectActionH
     public GetOboTermCrossProductResult execute(@Nonnull GetOboTermCrossProductAction action,
                                                 @Nonnull ExecutionContext executionContext) {
         OBOTermCrossProduct crossProduct = crossProductsManager.getCrossProduct(action.getEntity());
-        return new GetOboTermCrossProductResult(crossProduct);
+        return GetOboTermCrossProductResult.create(crossProduct);
     }
 }

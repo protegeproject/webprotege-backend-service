@@ -97,7 +97,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
             try {
                 DispatchServiceResultContainer container = execAction(action, requestContext, executionContext);
                 Result result = container.getResult();
-                executionResult = ActionExecutionResult.get(new DispatchServiceResultContainer(result));
+                executionResult = ActionExecutionResult.get(DispatchServiceResultContainer.create(result));
             } catch (ActionExecutionException e) {
                 executionResult = ActionExecutionResult.get(e);
             } catch (PermissionDeniedException e) {
@@ -106,7 +106,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
             executionResultBuilder.add(executionResult);
         }
         ImmutableList<ActionExecutionResult> results = executionResultBuilder.build();
-        return new DispatchServiceResultContainer(BatchResult.get(results));
+        return DispatchServiceResultContainer.create(BatchResult.get(results));
     }
 
     private <A extends Action<R>, R extends Result> DispatchServiceResultContainer execAction(A action, RequestContext requestContext, ExecutionContext executionContext) {
@@ -134,7 +134,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
 
         try {
             R result = actionHandler.execute(action, executionContext);
-            return new DispatchServiceResultContainer(result);
+            return DispatchServiceResultContainer.create(result);
         } catch (PermissionDeniedException e) {
             throw e;
         } catch (Exception e) {

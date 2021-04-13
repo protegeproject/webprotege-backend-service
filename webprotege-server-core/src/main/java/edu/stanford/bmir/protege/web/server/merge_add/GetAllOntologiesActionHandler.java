@@ -62,7 +62,7 @@ public class GetAllOntologiesActionHandler extends AbstractProjectActionHandler<
                 list.add(o.getOntologyId());
             }
 
-            return new GetAllOntologiesResult(list);
+            return GetAllOntologiesResult.create(list);
         }
         catch (Exception e){
             logger.info("An error occurred while merging(adding axioms) ontologies", e);

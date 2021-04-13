@@ -53,13 +53,18 @@ public class DispatchServiceExecutorImpl_TestCase<A extends Action<R>, R extends
     @Mock
     private UserInSession userInSession;
 
+    @Mock
+    private R result;
+
     @Before
     public void setUp() throws Exception {
         executor = new DispatchServiceExecutorImpl(registry, projectManager, userInSessionFactory);
         when(registry.getActionHandler(action)).thenReturn(actionHandler);
         when(actionHandler.getRequestValidator(action, requestContext)).thenReturn(requestValidator);
+        when(actionHandler.execute(action, executionContext)).thenReturn(result);
         when(requestValidator.validateAction()).thenReturn(RequestValidationResult.getValid());
         when(userInSessionFactory.getUserInSession(any())).thenReturn(userInSession);
+
     }
 
     @Test(expected = ActionExecutionException.class)

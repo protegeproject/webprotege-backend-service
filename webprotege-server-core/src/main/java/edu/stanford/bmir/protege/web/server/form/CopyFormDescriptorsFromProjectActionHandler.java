@@ -51,6 +51,6 @@ public class CopyFormDescriptorsFromProjectActionHandler extends AbstractProject
         var formsToCopy = action.getFormIdsToCopy();
         var copier = formsCopierFactory.create(copyFromProjectId, copyToProjectId, formsToCopy);
         var copiedFormDescriptors = copier.copyForms();
-        return new CopyFormDescriptorsFromProjectResult(copiedFormDescriptors);
+        return CopyFormDescriptorsFromProjectResult.create(copiedFormDescriptors);
     }
 }

@@ -8,6 +8,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
+import org.mongodb.morphia.annotations.Id;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -36,6 +37,7 @@ public class EntityDiscussionThread implements IsSerializable {
 
     public static final String ENTITY = "entity";
 
+    @Id
     private ThreadId id;
 
     private ProjectId projectId;

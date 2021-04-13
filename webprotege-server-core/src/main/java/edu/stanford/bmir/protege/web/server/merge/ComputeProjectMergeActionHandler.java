@@ -88,7 +88,7 @@ public class ComputeProjectMergeActionHandler extends AbstractProjectActionHandl
 
             var transformedDiff = renderDiff(uploadedOntologies, diffs);
 
-            return new ComputeProjectMergeResult(transformedDiff);
+            return ComputeProjectMergeResult.create(transformedDiff);
 
         } catch(Exception e) {
             logger.info("An error occurred while merging ontologies", e);
@@ -110,7 +110,7 @@ public class ComputeProjectMergeActionHandler extends AbstractProjectActionHandl
         return modifiedOntologiesCalculator.getModifiedOntologyDiffs();
     }
 
-    private List<DiffElement<String, SafeHtml>> renderDiff(Collection<Ontology> uploadedOntologies,
+    private List<DiffElement<String, String>> renderDiff(Collection<Ontology> uploadedOntologies,
                                                            Set<OntologyDiff> diffs) {
 
         var uploadedProjectModule = new UploadedProjectModule(projectId,
@@ -125,12 +125,10 @@ public class ComputeProjectMergeActionHandler extends AbstractProjectActionHandl
         sortDiff(diffElements);
 
         // Transform from OWLAxiom to SafeHtml
-        List<DiffElement<String, SafeHtml>> transformedDiff = new ArrayList<>();
+        List<DiffElement<String, String>> transformedDiff = new ArrayList<>();
         for(DiffElement<String, OWLAxiom> element : diffElements) {
             var html = renderer.render(element.getLineElement());
-            var safeHtml = new SafeHtmlBuilder().appendHtmlConstant(html)
-                                                      .toSafeHtml();
-            transformedDiff.add(new DiffElement<>(element.getDiffOperation(), element.getSourceDocument(), safeHtml));
+            transformedDiff.add(new DiffElement<>(element.getDiffOperation(), element.getSourceDocument(), html));
         }
         uploadedOntologiesComponent.getProjectDisposablesManager().dispose();
         return transformedDiff;

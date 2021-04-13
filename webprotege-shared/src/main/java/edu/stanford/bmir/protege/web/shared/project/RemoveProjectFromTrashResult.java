@@ -7,10 +7,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasEventListResult;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.HasEventList;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.event.ProjectMovedFromTrashEvent;
+import edu.stanford.bmir.protege.web.shared.event.*;
 
 /**
  * Author: Matthew Horridge<br>
@@ -21,10 +18,10 @@ import edu.stanford.bmir.protege.web.shared.event.ProjectMovedFromTrashEvent;
 @AutoValue
 @GwtCompatible(serializable = true)
 @JsonTypeName("RemoveProjectFromTrash")
-public abstract class RemoveProjectFromTrashResult implements Result, HasEventList<ProjectEvent<?>> {
+public abstract class RemoveProjectFromTrashResult implements Result, HasEventList<WebProtegeEvent<?>> {
 
     @JsonCreator
-    public static RemoveProjectFromTrashResult create(@JsonProperty("eventList") EventList<ProjectEvent<?>> eventList) {
+    public static RemoveProjectFromTrashResult create(@JsonProperty("eventList") EventList<WebProtegeEvent<?>> eventList) {
         return new AutoValue_RemoveProjectFromTrashResult(eventList);
     }
 }

@@ -44,6 +44,6 @@ public class GetOboTermRelationshipsActionHandler extends AbstractProjectActionH
     @Override
     public GetOboTermRelationshipsResult execute(@Nonnull GetOboTermRelationshipsAction action,
                                                  @Nonnull ExecutionContext executionContext) {
-        return new GetOboTermRelationshipsResult(relationshipsManager.getRelationships(action.getEntity().asOWLClass()));
+        return GetOboTermRelationshipsResult.create(relationshipsManager.getRelationships(action.getEntity().asOWLClass()));
     }
 }

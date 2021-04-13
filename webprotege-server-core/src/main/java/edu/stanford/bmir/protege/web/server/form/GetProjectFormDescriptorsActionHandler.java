@@ -59,6 +59,6 @@ public class GetProjectFormDescriptorsActionHandler extends AbstractProjectActio
         var selectors = selectorRepository.findFormSelectors(projectId)
                                           .collect(toImmutableList());
 
-        return GetProjectFormDescriptorsResult.get(projectId, formDescriptors, selectors);
+        return GetProjectFormDescriptorsResult.create(projectId, formDescriptors, selectors);
     }
 }

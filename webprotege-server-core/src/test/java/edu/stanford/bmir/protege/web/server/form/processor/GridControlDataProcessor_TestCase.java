@@ -65,7 +65,7 @@ public class GridControlDataProcessor_TestCase {
         processor = new GridControlDataProcessor(gridRowDataProcessor);
         when(gridControlDescriptor.getColumns())
                 .thenReturn(columns);
-        page = new Page<>(1, 1, ImmutableList.of(gridRowData), 1);
+        page = Page.create(1, 1, ImmutableList.of(gridRowData), 1);
         gridControlData = GridControlData.get(gridControlDescriptor, page, ordering);
     }
 

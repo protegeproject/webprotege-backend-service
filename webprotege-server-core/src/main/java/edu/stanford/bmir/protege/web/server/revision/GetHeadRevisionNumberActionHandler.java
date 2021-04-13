@@ -45,6 +45,6 @@ public class GetHeadRevisionNumberActionHandler extends AbstractProjectActionHan
     @Nonnull
     @Override
     public GetHeadRevisionNumberResult execute(@Nonnull GetHeadRevisionNumberAction action, @Nonnull ExecutionContext executionContext) {
-        return new GetHeadRevisionNumberResult(revisionManager.getCurrentRevision());
+        return GetHeadRevisionNumberResult.create(revisionManager.getCurrentRevision());
     }
 }

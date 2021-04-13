@@ -61,13 +61,13 @@ public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActi
         try {
             OntologyChangeList<?> changeList = changeGenerator.generateChanges(new ChangeGenerationContext(executionContext.getUserId()));
             if (changeList.getChanges().isEmpty()) {
-                return new CheckManchesterSyntaxFrameResult(UNCHANGED);
+                return CheckManchesterSyntaxFrameResult.create(UNCHANGED);
             }
             else {
-                return new CheckManchesterSyntaxFrameResult(CHANGED);
+                return CheckManchesterSyntaxFrameResult.create(CHANGED);
             }
         } catch (ParserException e) {
-            return new CheckManchesterSyntaxFrameResult(ManchesterSyntaxFrameParser.getParseError(e));
+            return CheckManchesterSyntaxFrameResult.create(ManchesterSyntaxFrameParser.getParseError(e));
         }
     }
 

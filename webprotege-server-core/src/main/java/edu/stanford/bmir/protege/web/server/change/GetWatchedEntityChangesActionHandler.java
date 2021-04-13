@@ -53,8 +53,8 @@ public class GetWatchedEntityChangesActionHandler extends AbstractProjectActionH
     public GetWatchedEntityChangesResult execute(@Nonnull GetWatchedEntityChangesAction action, @Nonnull ExecutionContext executionContext) {
         Set<Watch> watches = watchManager.getWatches(action.getUserId());
         ImmutableList<ProjectChange> changes = watchedChangesManager.getProjectChangesForWatches(watches);
-        Page<ProjectChange> page = new Page<>(1, 1, changes, changes.size());
-        return new GetWatchedEntityChangesResult(page);
+        Page<ProjectChange> page = Page.create(1, 1, changes, changes.size());
+        return GetWatchedEntityChangesResult.create(page);
     }
 
     @Nonnull

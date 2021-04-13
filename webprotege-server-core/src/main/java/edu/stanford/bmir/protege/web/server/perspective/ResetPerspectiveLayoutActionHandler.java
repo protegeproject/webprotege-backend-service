@@ -41,6 +41,6 @@ public class ResetPerspectiveLayoutActionHandler extends AbstractProjectActionHa
         var userId = executionContext.getUserId();
         perspectivesManager.resetPerspectiveLayout(projectId, userId, perspectiveId);
         var perspectiveLayout = perspectivesManager.getPerspectiveLayout(projectId, userId, perspectiveId);
-        return new ResetPerspectiveLayoutResult(perspectiveLayout);
+        return ResetPerspectiveLayoutResult.create(perspectiveLayout);
     }
 }

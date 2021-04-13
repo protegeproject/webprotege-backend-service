@@ -65,12 +65,12 @@ public class PerformLoginActionHandler extends AuthenticatedActionHandler<Perfor
         session.setUserInSession(userId);
         activityManager.setLastLogin(userId, System.currentTimeMillis());
         logger.info("{} logged in", userId);
-        return new PerformLoginResult(AuthenticationResponse.SUCCESS, userInSessionFactory.getUserInSession(userId));
+        return PerformLoginResult.create(AuthenticationResponse.SUCCESS, userInSessionFactory.getUserInSession(userId));
     }
 
     @Override
     protected PerformLoginResult createAuthenticationFailedResult() {
-        return new PerformLoginResult(AuthenticationResponse.FAIL,
+        return PerformLoginResult.create(AuthenticationResponse.FAIL,
                                       userInSessionFactory.getUserInSession(UserId.getGuest()));
     }
 }

@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
@@ -58,18 +59,18 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
     public GetEntityFormsResult execute(@Nonnull GetEntityFormsAction action,
                                         @Nonnull ExecutionContext executionContext) {
         var pageRequests = action.getFormPageRequests();
-        var pageRequestIndex = FormPageRequestIndex.create(pageRequests);
+        var pageRequestIndex = FormPageRequestIndex.create(ImmutableList.copyOf(pageRequests));
         var entity = action.getEntity();
         var langTagFilter = action.getLangTagFilter();
         var ordering = action.getGridControlOrdering();
         var formRegionOrderingIndex = FormRegionOrderingIndex.get(ordering);
-        var formRegionFilterIndex = FormRegionFilterIndex.get(action.getFilters());
+        var formRegionFilterIndex = FormRegionFilterIndex.get(action.getFormRegionFilters());
         var module = new EntityFrameFormDataModule(formRegionOrderingIndex,
                                                    langTagFilter,
                                                    pageRequestIndex,
                                                    formRegionFilterIndex);
         var formDataDtoBuilder = projectComponent.getEntityFrameFormDataComponentBuilder(module).formDataBuilder();
-        var formsFilterList = action.getFormFilter();
+        var formsFilterList = action.getFormFilters();
         var formSubject = Optional.of(FormEntitySubject.get(entity));
         var forms = formManager.getFormDescriptors(entity, projectId, FormPurpose.ENTITY_EDITING)
                                .stream()
@@ -78,10 +79,10 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
                                .collect(toImmutableList());
 
         var entityData = renderingManager.getRendering(entity);
-        return new GetEntityFormsResult(entityData, action.getFormFilter(), forms);
+        return GetEntityFormsResult.create(entityData, ImmutableList.copyOf(action.getFormFilters()), forms);
     }
 
-    public static Predicate<FormDescriptor> byFormIds(ImmutableList<FormId> formsFilterList) {
+    public static Predicate<FormDescriptor> byFormIds(ImmutableSet<FormId> formsFilterList) {
         return (FormDescriptor formDescriptor) -> formsFilterList.isEmpty() || formsFilterList.contains(formDescriptor.getFormId());
     }
 

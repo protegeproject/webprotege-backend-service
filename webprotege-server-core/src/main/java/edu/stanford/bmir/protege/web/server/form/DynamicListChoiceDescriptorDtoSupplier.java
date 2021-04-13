@@ -61,7 +61,7 @@ public class DynamicListChoiceDescriptorDtoSupplier {
     }
 
     private ChoiceDescriptorDto toChoiceDescriptorDto(OWLEntityData entityData) {
-        var shortForms = entityData.getShortForms();
+        var shortForms = entityData.getShortFormsMap();
         var dto = PrimitiveFormControlDataDto.get(entityData);
         var languageMap = LanguageMap.fromDictionaryMap(shortForms);
         return ChoiceDescriptorDto.get(dto, languageMap);

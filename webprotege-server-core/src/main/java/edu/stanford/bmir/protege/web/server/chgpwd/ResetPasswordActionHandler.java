@@ -78,17 +78,17 @@ public class ResetPasswordActionHandler implements ApplicationActionHandler<Rese
         try {
             Optional<UserId> userId = userDetailsManager.getUserByUserIdOrEmail(emailAddress);
             if(userId.isEmpty()) {
-                return new ResetPasswordResult(INVALID_EMAIL_ADDRESS);
+                return ResetPasswordResult.create(INVALID_EMAIL_ADDRESS);
             }
             Optional<UserDetails> userDetails = userDetailsManager.getUserDetails(userId.get());
             if(userDetails.isEmpty()) {
-                return new ResetPasswordResult(INVALID_EMAIL_ADDRESS);
+                return ResetPasswordResult.create(INVALID_EMAIL_ADDRESS);
             }
             if(userDetails.get().getEmailAddress().isEmpty()) {
-                return new ResetPasswordResult(INVALID_EMAIL_ADDRESS);
+                return ResetPasswordResult.create(INVALID_EMAIL_ADDRESS);
             }
             if(!userDetails.get().getEmailAddress().get().equalsIgnoreCase(emailAddress)) {
-                return new ResetPasswordResult(INVALID_EMAIL_ADDRESS);
+                return ResetPasswordResult.create(INVALID_EMAIL_ADDRESS);
             }
             String pwd = IdUtil.getBase62UUID();
             Salt salt = saltProvider.get();
@@ -102,13 +102,13 @@ public class ResetPasswordActionHandler implements ApplicationActionHandler<Rese
                     userId.get().getUserName(),
                     emailAddress
             );
-            return new ResetPasswordResult(SUCCESS);
+            return ResetPasswordResult.create(SUCCESS);
         } catch (Exception e) {
             logger.error("Could not reset the user password " +
                                 "associated with the email " +
                                 "address {}.  The following " +
                                 "error occurred: {}.", emailAddress, e.getMessage(), e);
-            return new ResetPasswordResult(INTERNAL_ERROR);
+            return ResetPasswordResult.create(INTERNAL_ERROR);
         }
     }
 }

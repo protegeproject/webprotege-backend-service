@@ -71,7 +71,7 @@ public class GetManchesterSyntaxFrameActionHandler extends AbstractProjectAction
         frameRenderer.setRenderExtensions(true);
         frameRenderer.writeFrame(action.getSubject());
         var frameSubject = renderingManager.getRendering(action.getSubject());
-        return GetManchesterSyntaxFrameResult.get(frameSubject, writer.getBuffer().toString());
+        return GetManchesterSyntaxFrameResult.create(frameSubject, writer.getBuffer().toString());
     }
 
     private Set<OWLOntology> getShellImportsClosure() {

@@ -64,7 +64,7 @@ public class GetEntityDiscussionThreadsHandler implements ProjectActionHandler<G
     public GetEntityDiscussionThreadsResult execute(@Nonnull GetEntityDiscussionThreadsAction action, @Nonnull ExecutionContext executionContext) {
         List<EntityDiscussionThread> threads = repository.findThreads(action.getProjectId(), action.getEntity());
         OWLEntityData entityData = renderingManager.getRendering(action.getEntity());
-        return new GetEntityDiscussionThreadsResult(entityData,
+        return GetEntityDiscussionThreadsResult.create(entityData,
                                                     ImmutableList.copyOf(threads));
     }
 }

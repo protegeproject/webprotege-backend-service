@@ -53,6 +53,6 @@ public class GetCurrentUserInSessionActionHandler implements ApplicationActionHa
     public GetCurrentUserInSessionResult execute(@Nonnull GetCurrentUserInSessionAction action, @Nonnull ExecutionContext executionContext) {
         UserId userId = executionContext.getUserId();
         UserInSession userInSession = userInSessionFactory.getUserInSession(userId);
-        return new GetCurrentUserInSessionResult(userInSession);
+        return GetCurrentUserInSessionResult.create(userInSession);
     }
 }

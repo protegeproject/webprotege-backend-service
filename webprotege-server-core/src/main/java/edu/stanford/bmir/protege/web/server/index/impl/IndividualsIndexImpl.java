@@ -217,7 +217,7 @@ public class IndividualsIndexImpl implements IndividualsIndex, DependentIndex {
             int pageCount = (individuals.size() / pageSize) + 1;
             int pageStartIndex = (individualIndex / pageSize) * pageSize;
             int pageEndIndex = Math.min(pageStartIndex + pageSize, individuals.size());
-            page = new Page<>(pageNumber,
+            page = Page.create(pageNumber,
                               pageCount,
                               individuals.subList(pageStartIndex,
                                                   pageEndIndex),

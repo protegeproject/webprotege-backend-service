@@ -84,7 +84,7 @@ public class EditCommentActionHandler extends AbstractProjectActionHandler<EditC
                                             .findFirst();
         updatedComment.ifPresent(comment -> eventManager.postEvent(new CommentUpdatedEvent(projectId, t.getId(), comment)));
         EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(fromTag);
-        return new EditCommentResult(updatedComment, eventList);
+        return EditCommentResult.create(updatedComment, eventList);
     }
 
 }

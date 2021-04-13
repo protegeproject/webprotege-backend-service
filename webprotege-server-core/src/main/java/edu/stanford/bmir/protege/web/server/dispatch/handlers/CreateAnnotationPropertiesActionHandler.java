@@ -72,7 +72,7 @@ public class CreateAnnotationPropertiesActionHandler extends AbstractProjectChan
                                                                   ExecutionContext executionContext,
                                                                   EventList<ProjectEvent<?>> eventList) {
         Set<OWLAnnotationProperty> properties = changeApplicationResult.getSubject();
-        return new CreateAnnotationPropertiesResult(projectId,
+        return CreateAnnotationPropertiesResult.create(projectId,
                                                     properties.stream()
                                                           .map(entityNodeRenderer::render)
                                                           .collect(toImmutableSet()),

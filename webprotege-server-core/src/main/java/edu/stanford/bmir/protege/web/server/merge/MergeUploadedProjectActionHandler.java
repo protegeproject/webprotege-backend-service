@@ -61,7 +61,7 @@ public class MergeUploadedProjectActionHandler extends AbstractProjectActionHand
     public MergeUploadedProjectResult execute(@Nonnull MergeUploadedProjectAction action,
                                               @Nonnull ExecutionContext executionContext) {
         try {
-            var documentId = action.getUploadedDocumentId();
+            var documentId = action.getDocumentId();
             var uploadedOntologies = uploadedOntologiesCache.getUploadedOntologies(documentId);
             var projectOntologies = projectOntologiesBuilder.buildProjectOntologies();
             var diffCalculator = diffCalculatorFactory.create(projectOntologies, uploadedOntologies);
@@ -72,7 +72,7 @@ public class MergeUploadedProjectActionHandler extends AbstractProjectActionHand
         } catch(IOException | OWLOntologyCreationException e) {
             throw new ActionExecutionException(e);
         }
-        return new MergeUploadedProjectResult();
+        return MergeUploadedProjectResult.create();
     }
 
     @Nonnull

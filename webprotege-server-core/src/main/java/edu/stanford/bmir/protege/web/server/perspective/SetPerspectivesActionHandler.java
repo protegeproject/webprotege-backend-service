@@ -59,6 +59,6 @@ public class SetPerspectivesActionHandler extends AbstractProjectActionHandler<S
             perspectivesManager.savePerspectivesAsProjectDefault(projectId, perspectiveDescriptors, executingUser);
         }
         var resettablePerspectives = perspectivesManager.getResettablePerspectiveIds(projectId, executingUser);
-        return SetPerspectivesResult.get(perspectiveDescriptors, resettablePerspectives);
+        return SetPerspectivesResult.create(perspectiveDescriptors, resettablePerspectives);
     }
 }

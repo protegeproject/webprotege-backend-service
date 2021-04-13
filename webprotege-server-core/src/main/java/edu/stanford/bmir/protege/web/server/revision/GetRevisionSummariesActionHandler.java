@@ -38,7 +38,7 @@ public class GetRevisionSummariesActionHandler extends AbstractProjectActionHand
     @Nonnull
     @Override
     public GetRevisionSummariesResult execute(@Nonnull GetRevisionSummariesAction action, @Nonnull ExecutionContext executionContext) {
-        return new GetRevisionSummariesResult(ImmutableList.copyOf(revisionManager.getRevisionSummaries()));
+        return GetRevisionSummariesResult.create(ImmutableList.copyOf(revisionManager.getRevisionSummaries()));
     }
 
     @Nonnull

@@ -43,6 +43,6 @@ public class GetOboTermIdActionHandler extends AbstractProjectActionHandler<GetO
     @Nonnull
     @Override
     public GetOboTermIdResult execute(@Nonnull GetOboTermIdAction action, @Nonnull ExecutionContext executionContext) {
-        return new GetOboTermIdResult(action.getTerm(), manager.getTermId(action.getTerm()));
+        return GetOboTermIdResult.create(action.getTerm(), manager.getTermId(action.getTerm()));
     }
 }

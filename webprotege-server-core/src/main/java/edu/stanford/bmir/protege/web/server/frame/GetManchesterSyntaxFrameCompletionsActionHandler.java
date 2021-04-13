@@ -109,9 +109,9 @@ public class GetManchesterSyntaxFrameCompletionsActionHandler
             choices.addAll(ontologyNameChoices);
 
 
-            return new GetManchesterSyntaxFrameCompletionsResult(new AutoCompletionResult(choices, fromPos));
+            return GetManchesterSyntaxFrameCompletionsResult.create(new AutoCompletionResult(choices, fromPos));
         }
-        return new GetManchesterSyntaxFrameCompletionsResult(AutoCompletionResult.emptyResult());
+        return GetManchesterSyntaxFrameCompletionsResult.create(AutoCompletionResult.emptyResult());
     }
 
     private List<AutoCompletionChoice> getEntityAutocompletionChoices(@Nonnull GetManchesterSyntaxFrameCompletionsAction action, ParserException e,

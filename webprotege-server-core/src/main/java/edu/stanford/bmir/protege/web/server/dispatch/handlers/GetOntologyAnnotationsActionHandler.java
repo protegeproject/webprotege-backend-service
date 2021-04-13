@@ -77,7 +77,7 @@ public class GetOntologyAnnotationsActionHandler extends AbstractProjectActionHa
                                 ))
                                 .sorted(propertyValueComparator)
                                 .collect(toImmutableList());
-        return new GetOntologyAnnotationsResult(ontologyId, annotations);
+        return GetOntologyAnnotationsResult.create(ontologyId, annotations);
     }
 
 }

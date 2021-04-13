@@ -11,7 +11,6 @@ import org.semanticweb.owlapi.model.IRI;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;

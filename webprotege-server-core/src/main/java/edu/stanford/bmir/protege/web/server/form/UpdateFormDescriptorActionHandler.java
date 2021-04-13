@@ -41,6 +41,6 @@ public class UpdateFormDescriptorActionHandler extends AbstractProjectActionHand
         var projectId = action.getProjectId();
         var formDescriptor = action.getFormDescriptor();
         entityFormRepository.saveFormDescriptor(projectId, formDescriptor);
-        return new UpdateFormDescriptorResult();
+        return UpdateFormDescriptorResult.create();
     }
 }

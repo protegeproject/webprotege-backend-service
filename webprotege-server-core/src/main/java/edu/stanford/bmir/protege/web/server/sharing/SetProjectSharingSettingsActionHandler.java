@@ -41,7 +41,7 @@ public class SetProjectSharingSettingsActionHandler extends AbstractProjectActio
     @Override
     public SetProjectSharingSettingsResult execute(@Nonnull SetProjectSharingSettingsAction action, @Nonnull ExecutionContext executionContext) {
         sharingSettingsManager.setProjectSharingSettings(action.getProjectSharingSettings());
-        return new SetProjectSharingSettingsResult();
+        return SetProjectSharingSettingsResult.create();
     }
 
     @Nonnull

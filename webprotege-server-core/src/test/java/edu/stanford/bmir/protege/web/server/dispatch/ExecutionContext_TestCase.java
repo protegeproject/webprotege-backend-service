@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.dispatch;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 import org.junit.Before;
@@ -9,11 +8,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Locale;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**

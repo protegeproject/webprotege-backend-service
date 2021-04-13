@@ -54,7 +54,7 @@ public class FormsResource {
     @Produces(APPLICATION_JSON)
     @Path("/")
     public Response getForms(@Context UserId userId) {
-        var formsResult = executor.execute(new GetProjectFormDescriptorsAction(projectId), userId);
+        var formsResult = executor.execute(GetProjectFormDescriptorsAction.create(projectId), userId);
         var formDescriptors = formsResult.getFormDescriptors();
         var formSelectorsMap = formsResult.getFormSelectors().stream().collect(toMap(EntityFormSelector::getFormId,
                                                                                      EntityFormSelector::getCriteria,

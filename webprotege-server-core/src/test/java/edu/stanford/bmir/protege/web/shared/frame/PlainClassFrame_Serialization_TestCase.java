@@ -1,15 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.MockingUtils;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 
-import static edu.stanford.bmir.protege.web.MockingUtils.*;
+import static edu.stanford.bmir.protege.web.MockingUtils.mockOWLClass;
+import static edu.stanford.bmir.protege.web.MockingUtils.mockOWLObjectProperty;
 
 public class PlainClassFrame_Serialization_TestCase {
 

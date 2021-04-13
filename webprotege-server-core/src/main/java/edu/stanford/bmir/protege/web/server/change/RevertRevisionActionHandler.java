@@ -58,7 +58,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
                                                       RevertRevisionAction action,
                                                       ExecutionContext executionContext,
                                                       EventList<ProjectEvent<?>> eventList) {
-        return RevertRevisionResult.get(projectId, action.getRevisionNumber(), eventList);
+        return RevertRevisionResult.create(projectId, action.getRevisionNumber(), eventList);
     }
 
     @Nullable

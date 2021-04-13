@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.server.dispatch.handlers;
 
+import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.dispatch.ApplicationActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
@@ -9,8 +10,10 @@ import edu.stanford.bmir.protege.web.server.project.ProjectDetailsManager;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.EventTag;
 import edu.stanford.bmir.protege.web.shared.event.ProjectMovedFromTrashEvent;
+import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.project.RemoveProjectFromTrashAction;
+import edu.stanford.bmir.protege.web.shared.project.RemoveProjectFromTrashResult;
 import edu.stanford.bmir.protege.web.shared.project.RemoveProjectsFromTrashResult;
 
 import javax.annotation.Nonnull;
@@ -24,7 +27,7 @@ import java.util.List;
  * Bio-Medical Informatics Research Group<br>
  * Date: 19/04/2013
  */
-public class RemoveProjectsFromTrashActionHandler implements ApplicationActionHandler<RemoveProjectFromTrashAction, RemoveProjectsFromTrashResult> {
+public class RemoveProjectsFromTrashActionHandler implements ApplicationActionHandler<RemoveProjectFromTrashAction, RemoveProjectFromTrashResult> {
 
     private final ProjectDetailsManager projectDetailsManager;
 
@@ -49,11 +52,12 @@ public class RemoveProjectsFromTrashActionHandler implements ApplicationActionHa
 
     @Nonnull
     @Override
-    public RemoveProjectsFromTrashResult execute(@Nonnull RemoveProjectFromTrashAction action, @Nonnull ExecutionContext executionContext) {
-        List<ProjectMovedFromTrashEvent> events = new ArrayList<>();
+    public RemoveProjectFromTrashResult execute(@Nonnull RemoveProjectFromTrashAction action, @Nonnull ExecutionContext executionContext) {
+        List<WebProtegeEvent<?>> events = new ArrayList<>();
         ProjectId projectId = action.getProjectId();
         projectDetailsManager.setInTrash(projectId, false);
         events.add(new ProjectMovedFromTrashEvent(projectId));
-        return new RemoveProjectsFromTrashResult(new EventList<>(EventTag.getFirst(), events, EventTag.getFirst()));
+        EventList<WebProtegeEvent<?>> eventList = EventList.create(EventTag.getFirst(), ImmutableList.copyOf(events), EventTag.getFirst());
+        return RemoveProjectFromTrashResult.create(eventList);
     }
 }

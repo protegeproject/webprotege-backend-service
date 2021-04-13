@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.jackson;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.semanticweb.owlapi.model.EntityType;
@@ -20,7 +19,7 @@ public class EntityTypeDeserializer extends StdDeserializer<EntityType<?>> {
     }
 
     @Override
-    public EntityType<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public EntityType<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         String typeName = jsonParser.getValueAsString();
         if(EntityType.CLASS.getPrefixedName().equals(typeName)) {
             return EntityType.CLASS;

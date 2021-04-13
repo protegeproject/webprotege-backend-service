@@ -89,8 +89,8 @@ public class ProjectsResource implements ApiRootResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProjects(@Nonnull @Context UserId userId,
                                 @Nonnull @Context UriInfo uriInfo) {
-        GetAvailableProjectsResult result = executor.execute(new GetAvailableProjectsAction(),
+        GetAvailableProjectsResult result = executor.execute(GetAvailableProjectsAction.create(),
                                                              userId);
-        return Response.ok().entity(result.getDetails()).build();
+        return Response.ok().entity(result.getAvailableProjects()).build();
     }
 }

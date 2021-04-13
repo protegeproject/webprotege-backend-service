@@ -44,9 +44,9 @@ public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Bool
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(MoveEntitiesToParentAction action, ExecutionContext executionContext) {
-        if(action.getEntity().isOWLClass()) {
+        if(action.getParentEntity().isOWLClass()) {
             ImmutableSet<OWLClass> clses = action.getEntities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
-            return factory.create(clses, action.getEntity().asOWLClass(), action.getCommitMessage());
+            return factory.create(clses, action.getParentEntity().asOWLClass(), action.getCommitMessage());
         }
         return null;
     }
@@ -56,6 +56,6 @@ public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Bool
                                                             MoveEntitiesToParentAction action,
                                                             ExecutionContext executionContext,
                                                             EventList<ProjectEvent<?>> eventList) {
-        return MoveEntitiesToParentResult.get(eventList);
+        return MoveEntitiesToParentResult.create(eventList);
     }
 }

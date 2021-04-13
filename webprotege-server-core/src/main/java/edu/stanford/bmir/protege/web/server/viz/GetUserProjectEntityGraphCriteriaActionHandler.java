@@ -41,7 +41,7 @@ public class GetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
         var projectId = action.getProjectId();
         var userId = executionContext.getUserId();
         var settings = repository.getSettingsForUserOrProjectDefault(projectId, userId);
-        return GetUserProjectEntityGraphCriteriaResult.get(projectId,
+        return GetUserProjectEntityGraphCriteriaResult.create(projectId,
                                                            userId,
                                                            settings.getSettings());
     }

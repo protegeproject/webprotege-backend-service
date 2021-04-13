@@ -46,6 +46,6 @@ public class GetEntityRenderingActionHandler extends AbstractProjectActionHandle
     public GetEntityRenderingResult execute(@Nonnull GetEntityRenderingAction action,
                                             @Nonnull ExecutionContext executionContext) {
         var entity = action.getEntity();
-        return new GetEntityRenderingResult(renderingManager.getRendering(entity));
+        return GetEntityRenderingResult.create(renderingManager.getRendering(entity));
     }
 }

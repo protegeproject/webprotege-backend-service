@@ -85,7 +85,7 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
     @Override
     public LookupEntitiesResult execute(@Nonnull LookupEntitiesAction action,
                                         @Nonnull ExecutionContext executionContext) {
-        return new LookupEntitiesResult(lookupEntities(action.getEntityLookupRequest()));
+        return LookupEntitiesResult.create(lookupEntities(action.getEntityLookupRequest()));
     }
 
 
@@ -117,12 +117,9 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
                     var node = entityNodeRenderer.render(matchedEntity);
                     var matchResult = SearchResultMatch.get(node,
                                                             shortFormMatch.getLanguage(),
-                                                            ImmutableMap.of(),
                                                             shortFormMatch.getShortForm(),
                                                             matchPositions);
-                    var entityLookupResult = EntityLookupResult.get(language,
-                                                                    node,
-                                                                    matchResult,
+                    var entityLookupResult = EntityLookupResult.get(matchResult,
                                                                     placeUrl.getEntityUrl(projectId, matchedEntity));
                     lookupResults.add(entityLookupResult);
                 }

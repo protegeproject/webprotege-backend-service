@@ -48,6 +48,6 @@ public class GetSearchSettingsActionHandler extends AbstractProjectActionHandler
                                            @Nonnull ExecutionContext executionContext) {
         var projectId = action.getProjectId();
         var filters = searchFilterRepository.getSearchFilters(projectId);
-        return GetSearchSettingsResult.get(filters);
+        return GetSearchSettingsResult.create(filters);
     }
 }

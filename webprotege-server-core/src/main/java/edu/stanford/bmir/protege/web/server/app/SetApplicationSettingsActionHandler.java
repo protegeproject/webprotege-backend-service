@@ -51,6 +51,6 @@ public class SetApplicationSettingsActionHandler implements ApplicationActionHan
     @Override
     public SetApplicationSettingsResult execute(@Nonnull SetApplicationSettingsAction action, @Nonnull ExecutionContext executionContext) {
         applicationSettingsManager.setApplicationSettings(action.getApplicationSettings());
-        return new SetApplicationSettingsResult();
+        return SetApplicationSettingsResult.create();
     }
 }

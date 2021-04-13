@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import static edu.stanford.bmir.protege.web.MockingUtils.mockOWLDataProperty;
 import static edu.stanford.bmir.protege.web.MockingUtils.mockOWLDatatype;
-import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Literal;
 
 public class PropertyDatatypeValue_Serialization_TestCase {
 

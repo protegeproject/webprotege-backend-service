@@ -27,13 +27,7 @@ public class AddProjectTagResult_TestCase {
 
     @Before
     public void setUp() {
-        result = new AddProjectTagResult(addedTag);
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_addedTag_IsNull() {
-        new AddProjectTagResult(null);
+        result = AddProjectTagResult.create(addedTag);
     }
 
     @Test
@@ -54,17 +48,17 @@ public class AddProjectTagResult_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(result, is(new AddProjectTagResult(addedTag)));
+        assertThat(result, is(AddProjectTagResult.create(addedTag)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_addedTag() {
-        assertThat(result, is(not(new AddProjectTagResult(mock(Tag.class)))));
+        assertThat(result, is(not(AddProjectTagResult.create(mock(Tag.class)))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(result.hashCode(), is(new AddProjectTagResult(addedTag).hashCode()));
+        assertThat(result.hashCode(), is(AddProjectTagResult.create(addedTag).hashCode()));
     }
 
     @Test

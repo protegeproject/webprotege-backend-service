@@ -30,6 +30,14 @@ public abstract class CheckManchesterSyntaxFrameResult implements Result {
         return Optional.ofNullable(getErrorInternal());
     }
 
+    public static CheckManchesterSyntaxFrameResult create(ManchesterSyntaxFrameParseResult result) {
+        return create(result, null);
+    }
+
+    public static CheckManchesterSyntaxFrameResult create(ManchesterSyntaxFrameParseError error) {
+        return create(null, error);
+    }
+
     @JsonCreator
     protected static CheckManchesterSyntaxFrameResult create(@JsonProperty("result") ManchesterSyntaxFrameParseResult result,
                                                           @JsonProperty("error") ManchesterSyntaxFrameParseError errorInternal) {

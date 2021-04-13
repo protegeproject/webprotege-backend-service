@@ -49,7 +49,7 @@ public class GridCellDataProcessor_TestCase {
         values = ImmutableList.of(formControlData);
         processor = new GridCellDataProcessor(() -> formControlDataProcessor);
         when(gridCellData.getValues())
-                .thenReturn(new Page<>(1, 1, values, values.size()));
+                .thenReturn(Page.create(1, 1, values, values.size()));
     }
 
     @Test

@@ -80,7 +80,7 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
     @Override
     protected CreateObjectPropertiesResult createActionResult(ChangeApplicationResult<Set<OWLObjectProperty>> changeApplicationResult, CreateObjectPropertiesAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
         Set<OWLObjectProperty> result = changeApplicationResult.getSubject();
-        return new CreateObjectPropertiesResult(projectId,
+        return CreateObjectPropertiesResult.create(projectId,
                                                 result.stream()
                                                       .map(entityNodeRenderer::render)
                                                       .collect(toImmutableSet()),

@@ -102,7 +102,7 @@ public class ProjectChangesManager {
                 getProjectChangesForRevision(revision, subject, changes);
             }
             ImmutableList<ProjectChange> theChanges = changes.build();
-            return new Page<>(1, 1, theChanges, theChanges.size());
+            return Page.create(1, 1, theChanges, theChanges.size());
         }
         else {
             // Pages are in reverse order
@@ -113,7 +113,7 @@ public class ProjectChangesManager {
                     .forEach(revision -> getProjectChangesForRevision(revision, subject, changes));
             ImmutableList<ProjectChange> changeList = changes.build();
             int pageCount = (revisions.size() / pageRequest.getPageSize()) + 1;
-            return new Page<>(pageRequest.getPageNumber(),
+            return Page.create(pageRequest.getPageNumber(),
                               pageCount,
                               changeList, changeList.size());
         }
@@ -168,7 +168,7 @@ public class ProjectChangesManager {
         else {
             pageCount = totalChanges / pageElements + (totalChanges % pageElements);
         }
-        Page<DiffElement<String, SafeHtml>> page = new Page<>(
+        Page<DiffElement<String, SafeHtml>> page = Page.create(
                 1,
                 pageCount,
                 renderedDiffElements,

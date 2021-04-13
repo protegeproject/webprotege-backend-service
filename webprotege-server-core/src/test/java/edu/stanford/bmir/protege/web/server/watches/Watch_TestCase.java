@@ -31,13 +31,13 @@ public class Watch_TestCase {
     @Before
     public void setUp()
             throws Exception {
-        watch = new Watch(userId, entity, type);
+        watch = Watch.create(userId, entity, type);
     }
 
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
-        new Watch(null, entity, type);
+        Watch.create(null, entity, type);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class Watch_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_entity_IsNull() {
-        new Watch(userId, null, type);
+        Watch.create(userId, null, type);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class Watch_TestCase {
     @SuppressWarnings("ConstantConditions")
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_type_IsNull() {
-        new Watch(userId, entity, null);
+        Watch.create(userId, entity, null);
     }
 
     @Test
@@ -80,19 +80,19 @@ public class Watch_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(watch, is(new Watch(userId, entity, type)));
+        assertThat(watch, is(Watch.create(userId, entity, type)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
         assertThat(watch,
-                   is(not(new Watch(mock(UserId.class), entity, type))));
+                   is(not(Watch.create(mock(UserId.class), entity, type))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_entity() {
         assertThat(watch,
-                   is(not(new Watch(userId,
+                   is(not(Watch.create(userId,
                                     mock(OWLEntity.class),
                                     type))));
     }
@@ -100,14 +100,14 @@ public class Watch_TestCase {
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_type() {
         assertThat(watch,
-                   is(not(new Watch(userId,
+                   is(not(Watch.create(userId,
                                     entity,
                                     WatchType.BRANCH))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(watch.hashCode(), is(new Watch(userId, entity, type).hashCode()));
+        assertThat(watch.hashCode(), is(Watch.create(userId, entity, type).hashCode()));
     }
 
     @Test

@@ -54,7 +54,7 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
     }
 
     static GetHierarchyChildrenResult emptyResult() {
-        return new GetHierarchyChildrenResult();
+        return GetHierarchyChildrenResult.create();
     }
 
     @Nonnull
@@ -90,7 +90,7 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
                              pg.transform(child -> nodeRenderer.toGraphNode(child, hierarchyProvider.get()))
                          ).orElse(Page.emptyPage());
 
-        return new GetHierarchyChildrenResult(parentNode, page);
+        return GetHierarchyChildrenResult.create(parentNode, page);
     }
 
     private Comparator<OWLEntity> comparingShortFormIgnoringCase() {

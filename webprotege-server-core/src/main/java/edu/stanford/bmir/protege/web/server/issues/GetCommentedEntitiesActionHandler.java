@@ -105,6 +105,6 @@ public class GetCommentedEntitiesActionHandler extends AbstractProjectActionHand
             result.sort(byLastModified);
         }
         Pager<CommentedEntityData> pager = Pager.getPagerForPageSize(result, request.getPageSize());
-        return new GetCommentedEntitiesResult(action.getProjectId(), pager.getPage(request.getPageNumber()));
+        return GetCommentedEntitiesResult.create(action.getProjectId(), pager.getPage(request.getPageNumber()));
     }
 }

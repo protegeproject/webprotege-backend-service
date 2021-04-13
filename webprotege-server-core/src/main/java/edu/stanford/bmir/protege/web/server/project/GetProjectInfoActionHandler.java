@@ -50,6 +50,6 @@ public class GetProjectInfoActionHandler extends AbstractProjectActionHandler<Ge
         ProjectId projectId = action.getProjectId();
         ProjectSettings projectSettings = projectDetailsManager.getProjectSettings(projectId);
         ImmutableList<DictionaryLanguageUsage> languageUsage = activeLanguagesManager.getLanguageUsage();
-        return GetProjectInfoResult.get(projectSettings, languageUsage);
+        return GetProjectInfoResult.create(projectSettings, languageUsage);
     }
 }

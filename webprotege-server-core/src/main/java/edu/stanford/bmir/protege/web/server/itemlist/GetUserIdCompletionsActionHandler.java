@@ -50,6 +50,6 @@ public class GetUserIdCompletionsActionHandler implements ApplicationActionHandl
         String completionText = action.getCompletionText();
         List<UserId> result = userDetailsManager.getUserIdsContainingIgnoreCase(completionText, 10);
         Collections.sort(result);
-        return new GetUserIdCompletionsResult(result);
+        return GetUserIdCompletionsResult.create(result);
     }
 }

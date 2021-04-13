@@ -91,9 +91,8 @@ public class GetIndividualsActionHandler extends AbstractProjectActionHandler<Ge
         Page<OWLNamedIndividual> pg = result.getIndividuals();
         Page<EntityNode> entityNodes = pg.transform(entityNodeRenderer::render);
         Optional<OWLClassData> renderedType = action.getType().map(t -> typeData);
-        return new GetIndividualsResult(renderedType,
-                                        entityNodes,
-                                        result.getIndividualsCount());
+        return GetIndividualsResult.create(renderedType,
+                                        entityNodes);
     }
 
     @Nonnull

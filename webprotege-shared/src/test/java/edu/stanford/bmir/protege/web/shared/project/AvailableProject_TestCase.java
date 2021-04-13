@@ -16,18 +16,15 @@ import static org.mockito.Mockito.when;
 @RunWith(value = MockitoJUnitRunner.class)
 public class AvailableProject_TestCase {
 
-    private static final String DISPLAY_NAME = "DisplayName";
+    private static final String DISPLAY_NAME = "DISPLAY_NAME";
 
-    private static final String DESCRIPTION = "Description";
+    private static final String DESCRIPTION = "DESCRIPTION";
 
     public static final long CREATED_AT = 33L;
 
     public static final long MODIFIED_AT = 55L;
 
     private AvailableProject availableProject;
-
-    @Mock
-    private ProjectDetails projectDetails;
 
     private boolean downloadable = true;
 
@@ -41,29 +38,11 @@ public class AvailableProject_TestCase {
 
     private long lastOpenedTimestamp = 11L;
 
+    private boolean inTrash = true;
+
     @Before
     public void setUp() {
-        availableProject = AvailableProject.get(projectDetails, downloadable, trashable, lastOpenedTimestamp);
-        when(projectDetails.getDisplayName()).thenReturn(DISPLAY_NAME);
-        when(projectDetails.getDescription()).thenReturn(DESCRIPTION);
-        when(projectDetails.getCreatedAt()).thenReturn(CREATED_AT);
-        when(projectDetails.getCreatedBy()).thenReturn(createdBy);
-        when(projectDetails.getLastModifiedAt()).thenReturn(MODIFIED_AT);
-        when(projectDetails.getOwner()).thenReturn(owner);
-        when(projectDetails.isInTrash()).thenReturn(trashable);
-        when(projectDetails.getProjectId()).thenReturn(projectId);
-        when(projectDetails.getLastModifiedBy()).thenReturn(modifiedBy);
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_projectDetails_IsNull() {
-        AvailableProject.get(null, downloadable, trashable, lastOpenedTimestamp);
-    }
-
-    @Test
-    public void shouldReturnSupplied_projectDetails() {
-        assertThat(availableProject.getProjectDetails(), is(this.projectDetails));
+        availableProject = AvailableProject.get(projectId, DISPLAY_NAME, DESCRIPTION, owner, inTrash, CREATED_AT, createdBy, MODIFIED_AT, modifiedBy, downloadable, trashable, lastOpenedTimestamp);
     }
 
     @Test
@@ -94,32 +73,27 @@ public class AvailableProject_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(availableProject, is(AvailableProject.get(projectDetails, downloadable, trashable, lastOpenedTimestamp)));
+        assertThat(availableProject, is(AvailableProject.get(projectId, DISPLAY_NAME, DESCRIPTION, owner, inTrash, CREATED_AT, createdBy, MODIFIED_AT, modifiedBy,  downloadable, trashable, lastOpenedTimestamp)));
     }
-
-    @Test
-    public void shouldNotBeEqualToOtherThatHasDifferent_projectDetails() {
-        assertThat(availableProject, is(not(AvailableProject.get(mock(ProjectDetails.class), downloadable, trashable, lastOpenedTimestamp))));
-    }
-
+    
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_downloadable() {
-        assertThat(availableProject, is(not(AvailableProject.get(projectDetails, false, trashable, lastOpenedTimestamp))));
+        assertThat(availableProject, is(not(AvailableProject.get(projectId, DISPLAY_NAME, DESCRIPTION, owner, inTrash, CREATED_AT, createdBy, MODIFIED_AT, modifiedBy,  false, trashable, lastOpenedTimestamp))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_trashable() {
-        assertThat(availableProject, is(not(AvailableProject.get(projectDetails, downloadable, false, lastOpenedTimestamp))));
+        assertThat(availableProject, is(not(AvailableProject.get(projectId, DISPLAY_NAME, DESCRIPTION, owner, inTrash, CREATED_AT, createdBy, MODIFIED_AT, modifiedBy,  downloadable, false, lastOpenedTimestamp))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_lastOpened() {
-        assertThat(availableProject, is(not(AvailableProject.get(projectDetails, downloadable, trashable, 33L))));
+        assertThat(availableProject, is(not(AvailableProject.get(projectId, DISPLAY_NAME, DESCRIPTION, owner, inTrash, CREATED_AT, createdBy, MODIFIED_AT, modifiedBy,  downloadable, trashable, 33L))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(availableProject.hashCode(), is(AvailableProject.get(projectDetails, downloadable, trashable, lastOpenedTimestamp).hashCode()));
+        assertThat(availableProject.hashCode(), is(AvailableProject.get(projectId, DISPLAY_NAME, DESCRIPTION, owner, inTrash, CREATED_AT, createdBy, MODIFIED_AT, modifiedBy,  downloadable, trashable, lastOpenedTimestamp).hashCode()));
     }
 
     @Test
@@ -138,7 +112,7 @@ public class AvailableProject_TestCase {
     }
 
     @Test
-    public void should_getDescription() {
+    public void should_getDESCRIPTION() {
         assertThat(availableProject.getDescription(), is(DESCRIPTION));
     }
 
@@ -148,7 +122,7 @@ public class AvailableProject_TestCase {
     }
 
     @Test
-    public void should_getCreatedAt() {
+    public void should_getCREATED_AT() {
         assertThat(availableProject.getCreatedAt(), is(CREATED_AT));
     }
 
@@ -158,12 +132,12 @@ public class AvailableProject_TestCase {
     }
 
     @Test
-    public void should_getLastModifiedAt() {
+    public void should_getMODIFIED_AT() {
         assertThat(availableProject.getLastModifiedAt(), is(MODIFIED_AT));
     }
 
     @Test
-    public void should_getLastModifiedBy() {
+    public void should_getmodifiedBy() {
         assertThat(availableProject.getLastModifiedBy(), is(modifiedBy));
     }
 
@@ -178,7 +152,7 @@ public class AvailableProject_TestCase {
     }
 
     @Test
-    public void should_getDisplayName() {
+    public void should_getDISPLAY_NAME() {
         assertThat(availableProject.getDisplayName(), is(DISPLAY_NAME));
     }
 

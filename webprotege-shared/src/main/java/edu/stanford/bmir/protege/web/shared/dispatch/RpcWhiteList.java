@@ -68,10 +68,7 @@ import edu.stanford.bmir.protege.web.shared.user.CreateUserAccountResult;
 import edu.stanford.bmir.protege.web.shared.user.LogOutUserAction;
 import edu.stanford.bmir.protege.web.shared.user.LogOutUserResult;
 import edu.stanford.bmir.protege.web.shared.viz.*;
-import edu.stanford.bmir.protege.web.shared.watches.GetWatchesAction;
-import edu.stanford.bmir.protege.web.shared.watches.GetWatchesResult;
-import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesAction;
-import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesResult;
+import edu.stanford.bmir.protege.web.shared.watches.*;
 import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhookEventType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -838,6 +835,8 @@ public class RpcWhiteList implements IsSerializable, Action, Result {
     UpdateObjectPropertyFrameAction _UpdateObjectPropertyFrameAction;
 
     UuidFormat _UuidFormat;
+
+    Watch _Watch;
 
     WebhookSetting _WebhookSetting;
 

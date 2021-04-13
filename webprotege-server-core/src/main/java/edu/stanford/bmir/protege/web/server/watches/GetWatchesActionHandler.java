@@ -49,6 +49,6 @@ public class GetWatchesActionHandler extends AbstractProjectActionHandler<GetWat
     @Override
     public GetWatchesResult execute(@Nonnull GetWatchesAction action, @Nonnull ExecutionContext executionContext) {
         Set<Watch> watches = watchManager.getDirectWatches(action.getEntity(), action.getUserId());
-        return new GetWatchesResult(watches);
+        return GetWatchesResult.create(watches);
     }
 }

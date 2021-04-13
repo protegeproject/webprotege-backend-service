@@ -48,7 +48,7 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
     @Override
     protected MoveHierarchyNodeResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult, MoveHierarchyNodeAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
-        return new MoveHierarchyNodeResult(changeApplicationResult.getSubject(),
+        return MoveHierarchyNodeResult.create(changeApplicationResult.getSubject(),
                                            eventList);
     }
 

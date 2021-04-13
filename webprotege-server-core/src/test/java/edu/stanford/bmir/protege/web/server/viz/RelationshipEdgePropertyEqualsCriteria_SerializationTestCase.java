@@ -2,12 +2,10 @@ package edu.stanford.bmir.protege.web.server.viz;
 
 import edu.stanford.bmir.protege.web.MockingUtils;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.viz.AnySubClassOfEdgeCriteria;
 import edu.stanford.bmir.protege.web.shared.viz.EdgeCriteria;
 import edu.stanford.bmir.protege.web.shared.viz.RelationshipEdgePropertyEqualsCriteria;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLProperty;
-import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.io.IOException;
 

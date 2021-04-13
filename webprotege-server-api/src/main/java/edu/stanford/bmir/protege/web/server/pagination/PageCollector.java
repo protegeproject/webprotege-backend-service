@@ -64,7 +64,7 @@ public class PageCollector<T> implements Collector<T, List<T>, Optional<Page<T>>
                 return Optional.empty();
             }
             else {
-                Page<T> page = new Page<>(pageNumber, pageCount, ts, elementCount);
+                Page<T> page = Page.create(pageNumber, pageCount, ts, elementCount);
                 return Optional.of(page);
             }
         };

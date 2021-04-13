@@ -66,7 +66,7 @@ public class FormFieldProcessor_TestCase {
         when(formFieldDescriptor.getOwlBinding())
                 .thenReturn(Optional.of(binding));
         when(fieldData.getFormControlData())
-                .thenReturn(new Page<>(1, 1, ImmutableList.of(formControlData), 1));
+                .thenReturn(Page.create(1, 1, ImmutableList.of(formControlData), 1));
     }
 
     @Test

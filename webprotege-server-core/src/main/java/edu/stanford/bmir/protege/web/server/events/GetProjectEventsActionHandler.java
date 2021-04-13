@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.server.events;
 
+import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.ApplicationActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
@@ -7,10 +8,10 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.project.ProjectManager;
+import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.EventTag;
 import edu.stanford.bmir.protege.web.shared.event.GetProjectEventsAction;
 import edu.stanford.bmir.protege.web.shared.event.GetProjectEventsResult;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEventList;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -66,11 +67,11 @@ public class GetProjectEventsActionHandler implements ApplicationActionHandler<G
                                         VIEW_PROJECT)) {
             return getEmptyResult(projectId, sinceTag);
         }
-        ProjectEventList projectEventList = projectManager.getProjectEventsSinceTag(projectId, sinceTag);
-        return  new GetProjectEventsResult(projectEventList);
+        EventList<?> projectEventList = projectManager.getProjectEventsSinceTag(projectId, sinceTag);
+        return  GetProjectEventsResult.create(projectEventList);
     }
 
     private static GetProjectEventsResult getEmptyResult(ProjectId projectId, EventTag sinceTag) {
-        return new GetProjectEventsResult(ProjectEventList.builder(sinceTag, projectId, sinceTag).build());
+        return GetProjectEventsResult.create(EventList.create(sinceTag, ImmutableList.of(), sinceTag));
     }
 }

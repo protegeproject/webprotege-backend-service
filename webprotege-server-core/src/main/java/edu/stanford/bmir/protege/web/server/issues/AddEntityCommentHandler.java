@@ -112,7 +112,7 @@ public class AddEntityCommentHandler implements ProjectActionHandler<AddEntityCo
         postCommentPostedEvent(threadId, comment);
         EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(startTag);
         sendOutNotifications(threadId, comment);
-        return new AddEntityCommentResult(action.getProjectId(), threadId, comment, renderedComment, eventList);
+        return AddEntityCommentResult.create(action.getProjectId(), threadId, comment, renderedComment, eventList);
 
     }
 

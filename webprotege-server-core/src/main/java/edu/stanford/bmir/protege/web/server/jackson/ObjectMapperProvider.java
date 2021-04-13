@@ -10,6 +10,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import edu.stanford.bmir.protege.web.server.form.FormControlValueDeserializer;
 import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlData;
+import edu.stanford.protege.gwt.graphtree.shared.Path;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
@@ -62,6 +63,14 @@ public class ObjectMapperProvider implements Provider<ObjectMapper> {
         module.addDeserializer(OWLLiteral.class, new OWLLiteralDeserializer(dataFactory));
         module.addDeserializer(PrimitiveFormControlData.class, new FormControlValueDeserializer(dataFactory));
         module.addSerializer(IRI.class, new IriSerializer());
+        module.addSerializer(OWLOntologyID.class, new OWLOntologyIDSerializer());
+        module.addDeserializer(OWLOntologyID.class, new OWLOntologyIDDeserializer());
+
+        module.addSerializer(AxiomType.class, new AxiomTypeSerializer());
+        module.addDeserializer(AxiomType.class, new AxiomTypeDeserializer());
+
+        mapper.addMixIn(Path.class, PathMixin.class);
+
         mapper.registerModule(module);
 
         return mapper;

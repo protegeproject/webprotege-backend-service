@@ -52,6 +52,6 @@ public class UpdateEntityTagsActionHandler extends AbstractProjectActionHandler<
                                action.getFromTagIds(),
                                action.getToTagIds());
         EventList<ProjectEvent<?>> events = eventEventManager.getEventsFromTag(startTag);
-        return new UpdateEntityTagsResult(events);
+        return UpdateEntityTagsResult.create(events);
     }
 }

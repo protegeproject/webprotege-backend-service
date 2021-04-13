@@ -47,6 +47,6 @@ public class SetProjectSettingsActionHandler extends AbstractProjectActionHandle
     @Override
     public SetProjectSettingsResult execute(@Nonnull SetProjectSettingsAction action, @Nonnull ExecutionContext executionContext) {
         projectDetailsManager.setProjectSettings(action.getProjectSettings());
-        return new SetProjectSettingsResult(projectDetailsManager.getProjectSettings(action.getProjectId()));
+        return SetProjectSettingsResult.create(projectDetailsManager.getProjectSettings(action.getProjectId()));
     }
 }

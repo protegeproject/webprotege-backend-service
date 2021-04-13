@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.jackson;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -30,7 +29,7 @@ public class OWLAnnotationValueDeserializer extends StdDeserializer<OWLAnnotatio
     }
 
     @Override
-    public OWLAnnotationValue deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public OWLAnnotationValue deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         if(p.hasToken(JsonToken.START_OBJECT)) {
             return literalDeserializer.deserialize(p, ctxt);
         }

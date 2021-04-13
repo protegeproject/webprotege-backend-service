@@ -69,7 +69,7 @@ public class CreateDataPropertiesActionHandler extends AbstractProjectChangeHand
                                                             EventList<ProjectEvent<?>> eventList) {
         Map<OWLDataProperty, String> map = new HashMap<>();
         Set<OWLDataProperty> properties = changeApplicationResult.getSubject();
-        return new CreateDataPropertiesResult(projectId,
+        return CreateDataPropertiesResult.create(projectId,
                                               properties.stream()
                                                     .map(entityNodeRenderer::render)
                                                     .collect(toImmutableSet()),

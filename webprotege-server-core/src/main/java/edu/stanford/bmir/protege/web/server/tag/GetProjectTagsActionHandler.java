@@ -57,6 +57,6 @@ public class GetProjectTagsActionHandler extends AbstractProjectActionHandler<Ge
 //        projectTags.forEach(tag -> usage.put(tag.getTagId(),
 //                                             tagsManager.getTaggedEntities(tag.getTagId()).size()));
         projectTags.forEach(tag -> usage.put(tag.getTagId(), 0));
-        return new GetProjectTagsResult(projectTags, usage);
+        return GetProjectTagsResult.create(projectTags, usage);
     }
 }

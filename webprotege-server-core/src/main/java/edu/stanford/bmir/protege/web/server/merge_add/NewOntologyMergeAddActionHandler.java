@@ -69,7 +69,7 @@ public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandl
 
             patcher.applyChanges(changes, executionContext);
 
-            return new NewOntologyMergeAddResult();
+            return NewOntologyMergeAddResult.create();
         }
         catch (Exception e){
             logger.info("An error occurred while merging(adding axioms) ontologies", e);

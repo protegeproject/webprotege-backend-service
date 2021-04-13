@@ -169,11 +169,11 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
         }
         final EventTag toTag = curTag.next();
         if(resultList.isEmpty()) {
-            return new EventList<>(fromTag, toTag);
+            return EventList.create(fromTag, ImmutableList.of(), toTag);
         }
         // Prune duplicates
         LinkedHashSet<E> events = new LinkedHashSet<>(resultList);
-        return new EventList<>(fromTag, events, toTag);
+        return EventList.create(fromTag, ImmutableList.copyOf(events), toTag);
     }
 
     public EventTag getCurrentTag() {

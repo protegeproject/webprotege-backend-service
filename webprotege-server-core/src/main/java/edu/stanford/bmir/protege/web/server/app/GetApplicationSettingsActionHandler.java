@@ -50,6 +50,6 @@ public class GetApplicationSettingsActionHandler implements ApplicationActionHan
     @Nonnull
     @Override
     public GetApplicationSettingsResult execute(@Nonnull GetApplicationSettingsAction action, @Nonnull ExecutionContext executionContext) {
-        return new GetApplicationSettingsResult(applicationSettingsManager.getApplicationSettings());
+        return GetApplicationSettingsResult.create(applicationSettingsManager.getApplicationSettings());
     }
 }

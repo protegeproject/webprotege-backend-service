@@ -94,12 +94,12 @@ public class GetMatchingEntitiesActionHandler extends AbstractProjectActionHandl
             List<EntityNode> nodes = pg.getPageElements().stream()
                                        .map(ed -> nodeRenderer.render(ed.getEntity()))
                                        .collect(toList());
-            return new Page<>(pg.getPageNumber(),
+            return Page.create(pg.getPageNumber(),
                               pg.getPageCount(),
                               nodes,
                               pg.getTotalElements());
         });
-        return entityHierarchyNodes.map(GetMatchingEntitiesResult::get)
-                     .orElseGet(() -> GetMatchingEntitiesResult.get(Page.emptyPage()));
+        return entityHierarchyNodes.map(GetMatchingEntitiesResult::create)
+                     .orElseGet(() -> GetMatchingEntitiesResult.create(Page.emptyPage()));
     }
 }

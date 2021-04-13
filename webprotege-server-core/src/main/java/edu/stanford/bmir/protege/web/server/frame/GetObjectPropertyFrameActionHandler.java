@@ -64,7 +64,7 @@ public class GetObjectPropertyFrameActionHandler extends AbstractProjectActionHa
                      action.getProjectId(),
                      executionContext.getUserId(),
                      action.getSubject());
-        return new GetObjectPropertyFrameResult(renderedFrame);
+        return GetObjectPropertyFrameResult.create(renderedFrame);
     }
 
     @Nonnull

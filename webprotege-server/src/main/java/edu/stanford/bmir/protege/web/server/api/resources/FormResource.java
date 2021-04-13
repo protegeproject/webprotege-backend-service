@@ -50,7 +50,7 @@ public class FormResource {
     @Produces(APPLICATION_JSON)
     @Path("/")
     public Response getForm(@Context UserId userId) {
-        var actionResult = actionExecutor.execute(new GetEntityFormDescriptorAction(projectId, formId),
+        var actionResult = actionExecutor.execute(GetEntityFormDescriptorAction.create(projectId, formId),
                                userId);
         var formDescriptor = actionResult.getFormDescriptor().orElse(FormDescriptor.empty(formId));
         var criteria = actionResult.getFormSelectorCriteria().orElse(CompositeRootCriteria.get(ImmutableList.of(), MultiMatchType.ANY));

@@ -54,7 +54,7 @@ public class GetProjectLangTagsActionHandler extends AbstractProjectActionHandle
                 .filter(l -> !l.isBlank())
                 .map(LangTag::get)
                 .collect(toImmutableSet());
-        return new GetProjectLangTagsResult(action.getProjectId(), langTags);
+        return GetProjectLangTagsResult.create(action.getProjectId(), langTags);
 
     }
 }

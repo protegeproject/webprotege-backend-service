@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.jackson;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -30,13 +29,13 @@ public class OWLPropertyDeserializer<P extends OWLProperty> extends StdDeseriali
     public OWLPropertyDeserializer(@Nonnull OWLDataFactory dataFactory,
                                    @Nonnull Class<P> cls) {
         super(OWLProperty.class);
-        deserializer = new OWLEntityDeserializer(dataFactory, cls);
+        deserializer = new OWLEntityDeserializer<>(dataFactory, cls);
         this.cls = checkNotNull(cls);
     }
 
     @Override
     public P deserialize(JsonParser jsonParser,
-                                   DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+                                   DeserializationContext deserializationContext) throws IOException {
         OWLEntity entity = deserializer.deserialize(jsonParser, deserializationContext);
         if(!(cls.isInstance(entity))) {
             throw new JsonParseException(jsonParser,

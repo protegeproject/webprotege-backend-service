@@ -65,7 +65,7 @@ public class GetOntologyFramesActionHandler extends AbstractProjectActionHandler
         var frames = projectOntologiesIndex.getOntologyIds()
                 .map(this::toOntologyFrame)
                 .collect(toImmutableList());
-        return new GetOntologyFramesResult(frames);
+        return GetOntologyFramesResult.create(frames);
     }
 
     private OntologyFrame toOntologyFrame(OWLOntologyID ontId) {

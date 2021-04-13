@@ -55,16 +55,16 @@ public class ProjectSettingsResource {
     @GET
     @Produces(APPLICATION_JSON)
     public Response getProjectSettings(@Context UserId userId) {
-        var projectSettingsResult = actionExecutor.execute(new GetProjectSettingsAction(projectId), userId);
+        var projectSettingsResult = actionExecutor.execute(GetProjectSettingsAction.create(projectId), userId);
         var entityCreationSettingsResult = actionExecutor.execute(new GetEntityCrudKitSettingsAction(projectId),
                                                                   userId);
-        var prefixDeclarationSettingsResult = actionExecutor.execute(new GetProjectPrefixDeclarationsAction(projectId),
+        var prefixDeclarationSettingsResult = actionExecutor.execute(GetProjectPrefixDeclarationsAction.create(projectId),
                                                                      userId);
 
-        var tagsResult = actionExecutor.execute(new GetProjectTagsAction(projectId), userId);
-        var sharingSettings = actionExecutor.execute(new GetProjectSharingSettingsAction(projectId), userId);
-        var searchSettingsResult = actionExecutor.execute(new GetSearchSettingsAction(projectId), userId);
-        var projectSettings = AllProjectSettings.get(projectSettingsResult.getProjectSettings(),
+        var tagsResult = actionExecutor.execute(GetProjectTagsAction.create(projectId), userId);
+        var sharingSettings = actionExecutor.execute(GetProjectSharingSettingsAction.create(projectId), userId);
+        var searchSettingsResult = actionExecutor.execute(GetSearchSettingsAction.create(projectId), userId);
+        var projectSettings = AllProjectSettings.get(projectSettingsResult.getSettings(),
                                                      entityCreationSettingsResult.getSettings(),
                                                      ImmutableList.copyOf(prefixDeclarationSettingsResult.getPrefixDeclarations()),
                                                      ImmutableList.copyOf(tagsResult.getTags()),
@@ -79,7 +79,7 @@ public class ProjectSettingsResource {
     @Consumes(APPLICATION_JSON)
     public Response setProjectSettings(@Context UserId userId, AllProjectSettings allProjectSettings) {
         var projectSettings = allProjectSettings.getProjectSettings().withProjectId(projectId);
-        actionExecutor.execute(new SetProjectSettingsAction(projectSettings), userId);
+        actionExecutor.execute(SetProjectSettingsAction.create(projectSettings), userId);
 
         var entityCreationSettings = allProjectSettings.getEntityCreationSettings();
         var currentSettingsResult = actionExecutor.execute(new GetEntityCrudKitSettingsAction(projectId), userId);
@@ -88,7 +88,7 @@ public class ProjectSettingsResource {
                                                                   entityCreationSettings,
                                                                   IRIPrefixUpdateStrategy.LEAVE_INTACT), userId);
         var prefixDeclarations = allProjectSettings.getPrefixDeclarations();
-        actionExecutor.execute(new SetProjectPrefixDeclarationsAction(projectId, prefixDeclarations), userId);
+        actionExecutor.execute(SetProjectPrefixDeclarationsAction.create(projectId, prefixDeclarations), userId);
 
         var projectTags = allProjectSettings.getProjectTags();
         var projectTagsData = projectTags.stream()
@@ -101,11 +101,11 @@ public class ProjectSettingsResource {
                                                                  tag.getCriteria(),
                                                                  0))
                                          .collect(toImmutableList());
-        actionExecutor.execute(new SetProjectTagsAction(projectId, projectTagsData), userId);
+        actionExecutor.execute(SetProjectTagsAction.create(projectId, projectTagsData), userId);
         var sharingSettings = allProjectSettings.getSharingSettings();
-        actionExecutor.execute(new SetProjectSharingSettingsAction(sharingSettings), userId);
+        actionExecutor.execute(SetProjectSharingSettingsAction.create(sharingSettings), userId);
         var searchSettings = allProjectSettings.getSearchSettings();
-        actionExecutor.execute(new SetSearchSettingsAction(projectId, ImmutableList.of(), searchSettings.getSearchFilters()), userId);
+        actionExecutor.execute(SetSearchSettingsAction.create(projectId, ImmutableList.of(), searchSettings.getSearchFilters()), userId);
         return Response.ok().build();
     }
 }

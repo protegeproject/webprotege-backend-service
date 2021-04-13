@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static edu.stanford.bmir.protege.web.MockingUtils.*;
+import static edu.stanford.bmir.protege.web.MockingUtils.mockOWLDataProperty;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Literal;
 
 public class PropertyLiteralValue_Serialization_TestCase {

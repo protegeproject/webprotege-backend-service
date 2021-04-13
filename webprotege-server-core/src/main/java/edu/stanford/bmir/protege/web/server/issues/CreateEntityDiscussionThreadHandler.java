@@ -124,7 +124,7 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
         setOutNotifications(thread, comment);
 
         List<EntityDiscussionThread> threads = repository.findThreads(projectId, entity);
-        return new CreateEntityDiscussionThreadResult(ImmutableList.copyOf(threads), eventList);
+        return CreateEntityDiscussionThreadResult.create(ImmutableList.copyOf(threads), eventList);
     }
 
     void setOutNotifications(EntityDiscussionThread thread, Comment comment) {

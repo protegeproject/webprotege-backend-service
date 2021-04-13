@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
 import edu.stanford.bmir.protege.web.shared.viz.AnyEdgeCriteria;
 import edu.stanford.bmir.protege.web.shared.viz.EdgeCriteria;
 import org.junit.Test;

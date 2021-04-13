@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.shortform;
 
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
 import org.junit.Test;
-import org.semanticweb.owlapi.model.IRI;
 
 import java.io.IOException;
 

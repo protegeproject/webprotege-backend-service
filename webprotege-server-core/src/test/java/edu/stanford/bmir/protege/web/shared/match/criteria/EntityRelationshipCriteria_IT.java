@@ -1,11 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.match.criteria;
 
-import edu.stanford.bmir.protege.web.MockingUtils;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
 import edu.stanford.bmir.protege.web.shared.match.RelationshipPresence;
-import org.junit.Before;
 import org.junit.Test;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import java.io.IOException;
 

@@ -70,10 +70,10 @@ public class Pager<T> implements Serializable {
     public Page<T> getPage(int pageNumber) {
         checkElementIndex(pageNumber - 1, getPageCount());
         if(partition.isEmpty()) {
-            return new Page<>(pageNumber, getPageCount(), Collections.emptyList(), 0);
+            return Page.create(pageNumber, getPageCount(), Collections.emptyList(), 0);
         }
         else {
-            return new Page<>(pageNumber, getPageCount(), partition.get(pageNumber - 1), sourceDataSize);
+            return Page.create(pageNumber, getPageCount(), partition.get(pageNumber - 1), sourceDataSize);
         }
     }
 }

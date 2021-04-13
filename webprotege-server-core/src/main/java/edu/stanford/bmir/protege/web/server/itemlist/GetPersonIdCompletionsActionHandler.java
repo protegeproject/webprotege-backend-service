@@ -51,6 +51,6 @@ public class GetPersonIdCompletionsActionHandler implements ApplicationActionHan
         List<PersonId> matches = userDetailsManager.getUserIdsContainingIgnoreCase(action.getCompletionText(), 7).stream()
                 .map(u -> PersonId.get(u.getUserName()))
                 .collect(toList());
-        return new GetPersonIdCompletionsResult(matches);
+        return GetPersonIdCompletionsResult.create(matches);
     }
 }

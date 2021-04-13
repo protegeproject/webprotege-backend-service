@@ -9,6 +9,7 @@ import edu.stanford.bmir.protege.web.shared.user.UserId;
 import edu.stanford.bmir.protege.web.shared.viz.ProjectUserEntityGraphSettings;
 import edu.stanford.bmir.protege.web.shared.viz.SetUserProjectEntityGraphResult;
 import edu.stanford.bmir.protege.web.shared.viz.SetUserProjectEntityGraphSettingsAction;
+import edu.stanford.bmir.protege.web.shared.viz.SetUserProjectEntityGraphSettingsResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-10
  */
-public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProjectActionHandler<SetUserProjectEntityGraphSettingsAction, SetUserProjectEntityGraphResult> {
+public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProjectActionHandler<SetUserProjectEntityGraphSettingsAction, SetUserProjectEntityGraphSettingsResult> {
 
     @Nonnull
     private final AccessManager accessManager;
@@ -40,12 +41,12 @@ public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
 
     @Nonnull
     @Override
-    public SetUserProjectEntityGraphResult execute(@Nonnull SetUserProjectEntityGraphSettingsAction action,
+    public SetUserProjectEntityGraphSettingsResult execute(@Nonnull SetUserProjectEntityGraphSettingsAction action,
                                                    @Nonnull ExecutionContext executionContext) {
 
         if(action.getUserId()
                  .equals(Optional.of(UserId.getGuest()))) {
-            return new SetUserProjectEntityGraphResult();
+            return SetUserProjectEntityGraphSettingsResult.create();
         }
         var settings = action.getSettings();
         var projectId = action.getProjectId();
@@ -55,7 +56,7 @@ public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
                                          ProjectUserEntityGraphSettings.get(projectId, null, settings)
                                  );
         repository.saveSettings(userSettings);
-        return new SetUserProjectEntityGraphResult();
+        return SetUserProjectEntityGraphSettingsResult.create();
     }
 
     @Nonnull

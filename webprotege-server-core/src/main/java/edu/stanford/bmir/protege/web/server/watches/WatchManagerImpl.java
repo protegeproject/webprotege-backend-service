@@ -148,6 +148,6 @@ public class WatchManagerImpl implements WatchManager {
     }
 
     private Watch toWatch(WatchRecord record) {
-        return new Watch(record.getUserId(), record.getEntity(), record.getType());
+        return Watch.create(record.getUserId(), record.getEntity(), record.getType());
     }
 }

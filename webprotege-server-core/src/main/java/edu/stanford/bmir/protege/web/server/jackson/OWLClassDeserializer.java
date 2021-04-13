@@ -1,13 +1,10 @@
 package edu.stanford.bmir.protege.web.server.jackson;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.io.IOException;
 
@@ -26,7 +23,7 @@ public class OWLClassDeserializer extends StdDeserializer<OWLClass> {
     }
 
     @Override
-    public OWLClass deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public OWLClass deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         return deserializer.deserialize(jsonParser, deserializationContext);
     }
 }

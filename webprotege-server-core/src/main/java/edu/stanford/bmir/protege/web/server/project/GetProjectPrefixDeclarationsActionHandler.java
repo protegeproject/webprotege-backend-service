@@ -58,6 +58,6 @@ public class GetProjectPrefixDeclarationsActionHandler extends AbstractProjectAc
                                              .stream()
                                              .map(entry -> PrefixDeclaration.get(entry.getKey(), entry.getValue()))
                                              .collect(toList());
-        return new GetProjectPrefixDeclarationsResult(projectId, decls);
+        return GetProjectPrefixDeclarationsResult.create(projectId, decls);
     }
 }

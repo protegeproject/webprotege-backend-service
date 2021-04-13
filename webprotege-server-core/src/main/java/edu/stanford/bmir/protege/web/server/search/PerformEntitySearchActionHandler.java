@@ -71,7 +71,7 @@ public class PerformEntitySearchActionHandler extends AbstractProjectActionHandl
         entitySearcher.invoke();
 
         Page<EntitySearchResult> results = entitySearcher.getResults();
-        return PerformEntitySearchResult.get(searchString, results);
+        return PerformEntitySearchResult.create(searchString, results);
     }
 }
 

@@ -60,6 +60,6 @@ public class GetProjectSettingsActionHandler_TestCase {
     @Test
     public void shouldReturnSettings() {
         GetProjectSettingsResult result = actionHandler.execute(action, executionContext);
-        assertThat(result.getProjectSettings(), is(projectSettings));
+        assertThat(result.getSettings(), is(projectSettings));
     }
 }

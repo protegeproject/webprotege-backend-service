@@ -48,6 +48,6 @@ public class DeleteFormActionHandler extends AbstractProjectActionHandler<Delete
         var projectId = action.getProjectId();
         var formId = action.getFormId();
         entityFormRepository.deleteFormDescriptor(projectId, formId);
-        return new DeleteFormResult();
+        return DeleteFormResult.create();
     }
 }

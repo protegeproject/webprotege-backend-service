@@ -82,6 +82,6 @@ public class GetHierarchySiblingsActionHandler extends AbstractProjectActionHand
                              }
                         )
                         .orElse(Page.emptyPage());
-        return new GetHierarchySiblingsResult(siblings);
+        return GetHierarchySiblingsResult.create(siblings);
     }
 }

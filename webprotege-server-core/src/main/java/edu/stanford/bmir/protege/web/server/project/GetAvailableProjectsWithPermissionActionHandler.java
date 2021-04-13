@@ -65,6 +65,6 @@ public class GetAvailableProjectsWithPermissionActionHandler implements Applicat
                      .map(Optional::get)
                      .map(projectDetailsManager::getProjectDetails)
                      .collect(toImmutableList());
-        return new GetAvailableProjectsWithPermissionResult(projectDetails);
+        return GetAvailableProjectsWithPermissionResult.create(projectDetails);
     }
 }

@@ -56,6 +56,6 @@ public class GetEntityHtmlRenderingActionHandler extends AbstractProjectActionHa
         var entity = action.getEntity();
         renderer.render(entity, sb);
         var entityData = renderingManager.getRendering(entity);
-        return new GetEntityHtmlRenderingResult(entityData, sb.toString());
+        return GetEntityHtmlRenderingResult.create(entityData, sb.toString());
     }
 }

@@ -53,7 +53,7 @@ public class GetEntityCrudKitsActionHandler implements ProjectActionHandler<GetE
     public GetEntityCrudKitsResult execute(@Nonnull GetEntityCrudKitsAction action, @Nonnull ExecutionContext executionContext) {
         var currentSettings = crudKitHandlerCache.getHandler().getSettings();
         List<EntityCrudKit<?>> kits = entityCrudKitRegistry.getKits();
-        return new GetEntityCrudKitsResult(kits, currentSettings);
+        return GetEntityCrudKitsResult.create(kits, currentSettings);
     }
 }
 

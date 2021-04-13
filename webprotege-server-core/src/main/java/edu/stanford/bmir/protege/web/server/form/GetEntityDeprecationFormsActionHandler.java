@@ -98,7 +98,7 @@ public class GetEntityDeprecationFormsActionHandler extends AbstractProjectActio
                 .getEntityDeprecationSettings()
                 .getReplacedByFilter()
                 .orElse(null);
-        return GetEntityDeprecationFormsResult.get(formDtos, referencesCount, criteria);
+        return GetEntityDeprecationFormsResult.create(formDtos, referencesCount, criteria);
     }
 
     private boolean hasSubject(@Nonnull OWLEntity entity, OWLAxiom ax) {

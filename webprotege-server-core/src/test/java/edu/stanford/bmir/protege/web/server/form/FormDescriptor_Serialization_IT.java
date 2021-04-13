@@ -1,12 +1,11 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
 import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptor;
 import edu.stanford.bmir.protege.web.shared.form.FormDescriptor;
 import edu.stanford.bmir.protege.web.shared.form.FormId;
+import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptor;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,9 +18,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Matthew Horridge

@@ -67,6 +67,6 @@ public class GetRootOntologyIdActionHandler extends AbstractProjectActionHandler
     @Override
     public GetRootOntologyIdResult execute(@Nonnull GetRootOntologyIdAction action, @Nonnull ExecutionContext executionContext) {
         var ontologyId = defaultOntologyIdManager.getDefaultOntologyId();
-        return new GetRootOntologyIdResult(projectId, ontologyId);
+        return GetRootOntologyIdResult.create(projectId, ontologyId);
     }
 }

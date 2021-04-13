@@ -49,6 +49,6 @@ public class SetPerspectiveLayoutActionHandler extends AbstractProjectActionHand
         if(!userId.isGuest()) {
             perspectivesManager.savePerspectiveLayout(projectId, userId, layout);
         }
-        return new SetPerspectiveLayoutResult();
+        return SetPerspectiveLayoutResult.create();
     }
 }

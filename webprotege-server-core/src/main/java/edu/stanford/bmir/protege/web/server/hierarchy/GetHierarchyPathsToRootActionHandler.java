@@ -64,8 +64,8 @@ public class GetHierarchyPathsToRootActionHandler extends AbstractProjectActionH
                                                         .map(e -> nodeRenderer.toGraphNode(e, hp))
                                                         .collect(toPath()))
                                .collect(toList());
-            return new GetHierarchyPathsToRootResult(result);
-        }).orElse(new GetHierarchyPathsToRootResult(Collections.emptyList()));
+            return GetHierarchyPathsToRootResult.create(result);
+        }).orElse(GetHierarchyPathsToRootResult.create(Collections.emptyList()));
 
     }
 }
