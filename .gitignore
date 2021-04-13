@@ -17,3 +17,5 @@ velocity.log.*
 dependency-reduced-pom.xml
 
 .protegedata/
+
+overlays
