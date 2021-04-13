@@ -103,12 +103,6 @@
                 <version>${guava.version}-jre</version>
             </dependency>
 
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava-gwt</artifactId>
-                <version>${guava.version}-jre</version>
-            </dependency>
-
             <!-- Dependency Injection via Dagger -->
             <dependency>
                 <groupId>com.google.dagger</groupId>
@@ -241,24 +235,6 @@
                     <version>9.4.12.v20180830</version>
                 </plugin>
                 <plugin>
-                    <groupId>net.ltgt.gwt.maven</groupId>
-                    <artifactId>gwt-maven-plugin</artifactId>
-                    <version>1.0.0</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <sourceLevel>1.8</sourceLevel>
-                        <failOnError>true</failOnError>
-                        <classpathScope>compile+runtime</classpathScope>
-                        <moduleName>edu.stanford.bmir.protege.web.client.WebProtege</moduleName>
-                        <startupUrls>WebProtege.jsp</startupUrls>
-                        <launcherDir>${project.build.directory}/gwt/launcherDir</launcherDir>
-                        <style>OBFUSCATED</style>
-                        <devmodeArgs>
-                            <arg>-style</arg><arg>DETAILED</arg>
-                        </devmodeArgs>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>3.0.1</version>
                     <executions>
@@ -362,16 +338,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>net.ltgt.gwt.maven</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <inherited>false</inherited>
-                <configuration>
-                    <moduleName>edu.stanford.bmir.protege.web.WebProtege</moduleName>
-                    <launcherDir>${project.build.directory}/gwt/launcherDir</launcherDir>
-                    <classpathScope>compile+runtime</classpathScope>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
@@ -386,12 +352,6 @@
                 <data.directory>/srv/webprotege</data.directory>
             </properties>
 
-        </profile>
-        <profile>
-            <id>skip-gwt-compilation</id>
-            <properties>
-                <gwt.skipCompilation>true</gwt.skipCompilation>
-            </properties>
         </profile>
         <!-- Profile for producing a deployment on a particular machine -->
         <profile>
