@@ -6,6 +6,7 @@ import dagger.multibindings.IntoSet;
 import edu.stanford.bmir.protege.web.server.api.exception.PermissionDeniedExceptionMapper;
 import edu.stanford.bmir.protege.web.server.api.exception.UnknownProjectExceptionMapper;
 import edu.stanford.bmir.protege.web.server.api.resources.ProjectsResource;
+import edu.stanford.bmir.protege.web.server.api.rpc.RpcResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
@@ -55,5 +56,13 @@ public class ApiModule {
     ApiRootResource provideProjectsResource(ProjectsResource resource) {
         return resource;
     }
+
+    @Provides
+    @IntoSet
+    ApiRootResource provideRpcResource(RpcResource resource) {
+        return resource;
+    }
+
+
 
 }
