@@ -454,7 +454,6 @@
         <module>webprotege-server</module>
         <module>webprotege-client</module>
         <module>webprotege-shared-core</module>
-        <module>webprotege-cli</module>
         <module>webprotege-server-lucene</module>
     </modules>
 </project>
