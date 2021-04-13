@@ -33,9 +33,6 @@ public class WebProtegeServletContextListener implements ServletContextListener 
 
             servletContext.setAttribute(ServerComponent.class.getName(), serverComponent);
 
-            servletContext.addServlet("DispatchService", serverComponent.getDispatchServlet())
-                          .addMapping("/webprotege/dispatchservice");
-
             servletContext.addServlet("ProjectDownloadServlet", serverComponent.getProjectDownloadServlet())
                           .addMapping("/download");
 
