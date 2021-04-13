@@ -36,19 +36,6 @@
 	</welcome-file-list>
 
 
-	<!-- Error pages -->
-	
-	<error-page>
-		<exception-type>java.lang.Throwable</exception-type>
-		<location>/configuration-error.jsp</location>
-	</error-page>
-
-	<error-page>
-		<error-code>403</error-code>
-		<location>/forbidden.jsp</location>
-	</error-page>
-
-
 	<!-- Security constraints -->
 	
 	<security-constraint>
