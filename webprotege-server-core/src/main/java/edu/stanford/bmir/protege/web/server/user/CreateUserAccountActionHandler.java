@@ -51,7 +51,7 @@ public class CreateUserAccountActionHandler implements ApplicationActionHandler<
     @Nonnull
     @Override
     public CreateUserAccountResult execute(@Nonnull CreateUserAccountAction action, @Nonnull ExecutionContext executionContext) {
-        authenticationManager.registerUser(action.getUserId(), action.getEmailAddress(), action.getPasswordDigest(), action.getSalt());
-        return new CreateUserAccountResult();
+        authenticationManager.registerUser(action.getUserId(), action.getEmailAddress(), action.getPassword());
+        return CreateUserAccountResult.create();
     }
 }

@@ -3,6 +3,7 @@ package edu.stanford.bmir.protege.web.server.user;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.auth.AuthenticationManager;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
+import edu.stanford.bmir.protege.web.shared.auth.Password;
 import edu.stanford.bmir.protege.web.shared.auth.Salt;
 import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
 import edu.stanford.bmir.protege.web.shared.user.CreateUserAccountAction;
@@ -42,26 +43,22 @@ public class CreateUserAccountActionHandler_TestCase {
     private EmailAddress emailAddress;
 
     @Mock
-    private SaltedPasswordDigest saltedPasswordDigest;
-
-    @Mock
-    private Salt salt;
-
-    @Mock
     private AccessManager accessManager;
+
+    @Mock
+    private Password password;
 
     @Before
     public void setUp() throws Exception {
         handler = new CreateUserAccountActionHandler(accessManager, authenticationManager);
         when(action.getUserId()).thenReturn(userId);
         when(action.getEmailAddress()).thenReturn(emailAddress);
-        when(action.getPasswordDigest()).thenReturn(saltedPasswordDigest);
-        when(action.getSalt()).thenReturn(salt);
+        when(action.getPassword()).thenReturn(password);
     }
 
     @Test
     public void shouldCreateUserAccount() {
         handler.execute(action, executionContext);
-        verify(authenticationManager, times(1)).registerUser(userId, emailAddress, saltedPasswordDigest, salt);
+        verify(authenticationManager, times(1)).registerUser(userId, emailAddress, password);
     }
 }

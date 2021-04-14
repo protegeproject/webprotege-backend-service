@@ -23,4 +23,9 @@ public abstract class Password {
     @JsonValue
     @Nonnull
     public abstract String getPassword();
+
+    @Override
+    public String toString() {
+        return "Password{}";
+    }
 }

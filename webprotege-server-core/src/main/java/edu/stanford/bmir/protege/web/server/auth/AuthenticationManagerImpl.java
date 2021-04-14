@@ -38,11 +38,10 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
     }
 
     @Override
-    public UserDetails registerUser(UserId userId, EmailAddress email, SaltedPasswordDigest password, Salt salt) throws UserRegistrationException {
+    public UserDetails registerUser(UserId userId, EmailAddress email, Password password) throws UserRegistrationException {
         checkNotNull(userId);
         checkNotNull(email);
         checkNotNull(password);
-        checkNotNull(salt);
         Optional<UserRecord> existingRecord = repository.findOne(userId);
         if(existingRecord.isPresent()) {
             throw new UserNameAlreadyExistsException(userId.getUserName());
@@ -52,13 +51,16 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
             throw new UserEmailAlreadyExistsException(email.getEmailAddress());
         }
         logger.info("Created new user account for {} with email address {}", userId, email.getEmailAddress());
-        UserRecord newUserRecord = new UserRecord(
+        var salt = saltProvider.get();
+        var digestedPassword = passwordDigestAlgorithm.getDigestOfSaltedPassword(password.getPassword(),
+                                                                                 salt);
+        var newUserRecord = new UserRecord(
                 userId,
                 userId.getUserName(),
                 email.getEmailAddress(),
                 "",
                 salt,
-                password
+                digestedPassword
         );
         repository.save(newUserRecord);
         return UserDetails.getUserDetails(userId, userId.getUserName(), email.getEmailAddress());

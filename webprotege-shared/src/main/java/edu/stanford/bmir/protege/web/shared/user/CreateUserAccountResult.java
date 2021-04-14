@@ -2,8 +2,11 @@ package edu.stanford.bmir.protege.web.shared.user;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.auth.AbstractAuthenticationResult;
+import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
@@ -12,27 +15,13 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 19/02/15
  */
+@AutoValue
+@GwtCompatible(serializable = true)
 @JsonTypeName("CreateUserAccount")
-public class CreateUserAccountResult extends AbstractAuthenticationResult {
+public abstract class CreateUserAccountResult implements Result {
 
     @JsonCreator
-    public CreateUserAccountResult() {
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode("CreateUserAccountResult");
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj == this || obj instanceof CreateUserAccountResult;
-    }
-
-
-    @Override
-    public String toString() {
-        return toStringHelper("CreateUserAccountResult")
-                .toString();
+    public static CreateUserAccountResult create() {
+        return new AutoValue_CreateUserAccountResult();
     }
 }
