@@ -8,10 +8,7 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
 import edu.stanford.bmir.protege.web.server.util.IdUtil;
-import edu.stanford.bmir.protege.web.shared.auth.PasswordDigestAlgorithm;
-import edu.stanford.bmir.protege.web.shared.auth.Salt;
-import edu.stanford.bmir.protege.web.shared.auth.SaltProvider;
-import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
+import edu.stanford.bmir.protege.web.shared.auth.Password;
 import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordAction;
 import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordResult;
 import edu.stanford.bmir.protege.web.shared.user.UserDetails;
@@ -35,10 +32,6 @@ public class ResetPasswordActionHandler implements ApplicationActionHandler<Rese
 
     private final AuthenticationManager authenticationManager;
 
-    private final SaltProvider saltProvider;
-
-    private final PasswordDigestAlgorithm passwordDigestAlgorithm;
-
     private final ResetPasswordMailer mailer;
 
     private static final Logger logger = LoggerFactory.getLogger(ResetPasswordActionHandler.class);
@@ -47,13 +40,9 @@ public class ResetPasswordActionHandler implements ApplicationActionHandler<Rese
     @Inject
     public ResetPasswordActionHandler(UserDetailsManager userDetailsManager,
                                       AuthenticationManager authenticationManager,
-                                      SaltProvider saltProvider,
-                                      PasswordDigestAlgorithm passwordDigestAlgorithm,
                                       ResetPasswordMailer mailer) {
         this.userDetailsManager = userDetailsManager;
         this.authenticationManager = authenticationManager;
-        this.saltProvider = saltProvider;
-        this.passwordDigestAlgorithm = passwordDigestAlgorithm;
         this.mailer = mailer;
     }
 
@@ -90,11 +79,9 @@ public class ResetPasswordActionHandler implements ApplicationActionHandler<Rese
             if(!userDetails.get().getEmailAddress().get().equalsIgnoreCase(emailAddress)) {
                 return ResetPasswordResult.create(INVALID_EMAIL_ADDRESS);
             }
-            String pwd = IdUtil.getBase62UUID();
-            Salt salt = saltProvider.get();
-            SaltedPasswordDigest saltedPasswordDigest = passwordDigestAlgorithm.getDigestOfSaltedPassword(pwd, salt);
-            authenticationManager.setDigestedPassword(userId.get(), saltedPasswordDigest, salt);
-            mailer.sendEmail(userId.get(), emailAddress, pwd, ex -> {
+            var password = Password.create(IdUtil.getBase62UUID());
+            authenticationManager.setPassword(userId.get(), password);
+            mailer.sendEmail(userId.get(), emailAddress, password.getPassword(), ex -> {
                 throw new RuntimeException(ex);
             });
             logger.info("The password for {} has been reset.  " +

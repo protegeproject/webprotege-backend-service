@@ -4,10 +4,7 @@ import edu.stanford.bmir.protege.web.server.auth.AuthenticationManager;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.mail.MessagingExceptionHandler;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
-import edu.stanford.bmir.protege.web.shared.auth.PasswordDigestAlgorithm;
-import edu.stanford.bmir.protege.web.shared.auth.Salt;
-import edu.stanford.bmir.protege.web.shared.auth.SaltProvider;
-import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
+import edu.stanford.bmir.protege.web.shared.auth.*;
 import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordAction;
 import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordData;
 import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordResult;
@@ -60,31 +57,12 @@ public class ResetPasswordActionHandler_TestCase {
     private AuthenticationManager authenticationManager;
 
     @Mock
-    private SaltProvider saltProvider;
-
-    @Mock
-    private PasswordDigestAlgorithm passwordDigestAlgorithm;
-
-    @Mock
     private UserDetails userDetails;
-
-    @Mock
-    private SaltedPasswordDigest passwordDigest;
-
-    @Mock
-    private Salt salt;
 
     @Before
     public void setUp() throws Exception {
         handler = new ResetPasswordActionHandler(userDetailsManager,
-                authenticationManager,
-                saltProvider, passwordDigestAlgorithm, mailer);
-
-        when(passwordDigestAlgorithm.getDigestOfSaltedPassword(anyString(),
-                                                               any()))
-                .thenReturn(passwordDigest);
-        when(saltProvider.get())
-                .thenReturn(salt);
+                authenticationManager, mailer);
         when(action.getResetPasswordData()).thenReturn(data);
         when(data.getEmailAddress()).thenReturn(EMAIL_ADDRESS);
     }
@@ -143,10 +121,8 @@ public class ResetPasswordActionHandler_TestCase {
         when(userDetailsManager.getUserByUserIdOrEmail(any(String.class))).thenReturn(Optional.of(userId));
         when(userDetailsManager.getUserDetails(userId)).thenReturn(Optional.of(userDetails));
         when(userDetails.getEmailAddress()).thenReturn(Optional.of(EMAIL_ADDRESS));
-        doThrow(new RuntimeException()).when(authenticationManager).setDigestedPassword(
-                any(UserId.class),
-                any(SaltedPasswordDigest.class),
-                any(Salt.class));
+        doThrow(new RuntimeException()).when(authenticationManager).setPassword(
+                any(UserId.class), any(Password.class));
         ResetPasswordResult result = handler.execute(action, context);
         assertThat(result.getResultCode(), is(ResetPasswordResultCode.INTERNAL_ERROR));
     }
@@ -159,10 +135,8 @@ public class ResetPasswordActionHandler_TestCase {
                 .thenReturn(Optional.of(userDetails));
         when(userDetails.getEmailAddress())
                 .thenReturn(Optional.of(EMAIL_ADDRESS));
-        doThrow(new RuntimeException()).when(authenticationManager).setDigestedPassword(
-                any(UserId.class),
-                any(SaltedPasswordDigest.class),
-                any(Salt.class));
+        doThrow(new RuntimeException()).when(authenticationManager).setPassword(
+                any(UserId.class), any(Password.class));
         handler.execute(action, context);
         verify(mailer, never()).sendEmail(any(UserId.class), any(String.class), any(String.class), any(MessagingExceptionHandler.class));
     }
