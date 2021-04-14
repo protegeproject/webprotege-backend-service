@@ -94,10 +94,6 @@ public class RpcWhiteList implements IsSerializable, Action, Result {
 
     AddProjectTagResult _AddProjectTagResult;
 
-    AuthenticateUserAction _AuthenticateUserAction;
-
-    AuthenticateUserResult _AuthenticateUserResult;
-
     AvailableProject _AvailableProject;
 
     BatchAction _BatchAction;
@@ -285,10 +281,6 @@ public class RpcWhiteList implements IsSerializable, Action, Result {
     GetAvailableProjectsWithPermissionAction _GetAvailableProjectsWithPermissionAction;
 
     GetAvailableProjectsWithPermissionResult _GetAvailableProjectsWithPermissionResult;
-
-    GetChapSessionAction _GetChapSessionAction;
-
-    GetChapSessionResult _GetChapSessionResult;
 
     GetClassFrameAction _GetClassFrameAction;
 
@@ -844,16 +836,8 @@ public class RpcWhiteList implements IsSerializable, Action, Result {
 
     WhiteSpaceTreatment _WhiteSpaceTreatment;
 
-    GetChapSessionAction getChapSessionAction;
-
-    GetChapSessionResult getChapSessionResult;
-
     PrimitiveFormControlData primitiveFormControlData;
 
     public RpcWhiteList() {
-    }
-
-    GetChapSessionResult set(GetChapSessionResult result) {
-        return null;
     }
 }

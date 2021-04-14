@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.auth.AbstractAuthenticationResult;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import static com.google.common.base.MoreObjects.toStringHelper;

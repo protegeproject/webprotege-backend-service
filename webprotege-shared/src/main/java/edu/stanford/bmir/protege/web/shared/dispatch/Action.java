@@ -6,9 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.app.GetApplicationSettingsAction;
 import edu.stanford.bmir.protege.web.shared.app.SetApplicationSettingsAction;
-import edu.stanford.bmir.protege.web.shared.auth.AuthenticateUserAction;
 import edu.stanford.bmir.protege.web.shared.auth.ChangePasswordAction;
-import edu.stanford.bmir.protege.web.shared.auth.GetChapSessionAction;
 import edu.stanford.bmir.protege.web.shared.auth.PerformLoginAction;
 import edu.stanford.bmir.protege.web.shared.bulkop.EditAnnotationsAction;
 import edu.stanford.bmir.protege.web.shared.bulkop.MoveEntitiesToParentAction;
@@ -16,9 +14,7 @@ import edu.stanford.bmir.protege.web.shared.bulkop.SetAnnotationValueAction;
 import edu.stanford.bmir.protege.web.shared.change.GetProjectChangesAction;
 import edu.stanford.bmir.protege.web.shared.change.GetWatchedEntityChangesAction;
 import edu.stanford.bmir.protege.web.shared.change.RevertRevisionAction;
-import edu.stanford.bmir.protege.web.shared.change.RevertRevisionResult;
 import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordAction;
-import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordData;
 import edu.stanford.bmir.protege.web.shared.crud.GetEntityCrudKitsAction;
 import edu.stanford.bmir.protege.web.shared.crud.SetEntityCrudKitSettingsAction;
 import edu.stanford.bmir.protege.web.shared.dispatch.actions.*;
@@ -32,7 +28,6 @@ import edu.stanford.bmir.protege.web.shared.frame.*;
 import edu.stanford.bmir.protege.web.shared.hierarchy.*;
 import edu.stanford.bmir.protege.web.shared.individuals.GetIndividualsAction;
 import edu.stanford.bmir.protege.web.shared.individuals.GetIndividualsPageContainingIndividualAction;
-import edu.stanford.bmir.protege.web.shared.individuals.GetIndividualsPageContainingIndividualResult;
 import edu.stanford.bmir.protege.web.shared.issues.*;
 import edu.stanford.bmir.protege.web.shared.itemlist.GetPersonIdCompletionsAction;
 import edu.stanford.bmir.protege.web.shared.itemlist.GetPossibleItemCompletionsAction;
@@ -42,18 +37,15 @@ import edu.stanford.bmir.protege.web.shared.mail.SetEmailAddressAction;
 import edu.stanford.bmir.protege.web.shared.match.GetMatchingEntitiesAction;
 import edu.stanford.bmir.protege.web.shared.merge.ComputeProjectMergeAction;
 import edu.stanford.bmir.protege.web.shared.merge.MergeUploadedProjectAction;
-import edu.stanford.bmir.protege.web.shared.merge.MergeUploadedProjectResult;
 import edu.stanford.bmir.protege.web.shared.merge_add.ExistingOntologyMergeAddAction;
 import edu.stanford.bmir.protege.web.shared.merge_add.GetAllOntologiesAction;
 import edu.stanford.bmir.protege.web.shared.merge_add.NewOntologyMergeAddAction;
 import edu.stanford.bmir.protege.web.shared.obo.*;
 import edu.stanford.bmir.protege.web.shared.permissions.GetProjectPermissionsAction;
 import edu.stanford.bmir.protege.web.shared.permissions.RebuildPermissionsAction;
-import edu.stanford.bmir.protege.web.shared.permissions.RebuildPermissionsResult;
 import edu.stanford.bmir.protege.web.shared.perspective.*;
 import edu.stanford.bmir.protege.web.shared.project.*;
 import edu.stanford.bmir.protege.web.shared.projectsettings.GetProjectSettingsAction;
-import edu.stanford.bmir.protege.web.shared.projectsettings.GetProjectSettingsResult;
 import edu.stanford.bmir.protege.web.shared.projectsettings.SetProjectSettingsAction;
 import edu.stanford.bmir.protege.web.shared.renderer.GetEntityHtmlRenderingAction;
 import edu.stanford.bmir.protege.web.shared.renderer.GetEntityRenderingAction;
@@ -67,7 +59,6 @@ import edu.stanford.bmir.protege.web.shared.sharing.SetProjectSharingSettingsAct
 import edu.stanford.bmir.protege.web.shared.tag.*;
 import edu.stanford.bmir.protege.web.shared.usage.GetUsageAction;
 import edu.stanford.bmir.protege.web.shared.user.CreateUserAccountAction;
-import edu.stanford.bmir.protege.web.shared.user.CreateUserAccountResult;
 import edu.stanford.bmir.protege.web.shared.user.LogOutUserAction;
 import edu.stanford.bmir.protege.web.shared.viz.GetEntityGraphAction;
 import edu.stanford.bmir.protege.web.shared.viz.GetUserProjectEntityGraphCriteriaAction;
@@ -90,7 +81,6 @@ import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesAction;
 @JsonSubTypes(value = {
         @Type(value = AddEntityCommentAction.class),
         @Type(value = AddProjectTagAction.class),
-        @Type(value = AuthenticateUserAction.class),
         @Type(value = BatchAction.class),
         @Type(value = ChangePasswordAction.class),
         @Type(value = CheckManchesterSyntaxFrameAction.class),
@@ -104,7 +94,6 @@ import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesAction;
         @Type(value = CreateEntityDiscussionThreadAction.class),
         @Type(value = CreateEntityFromFormDataAction.class),
         @Type(value = CreateNewProjectAction.class),
-        @Type(value = GetChapSessionAction.class),
         @Type(value = LoadProjectAction.class),
         @Type(value = LogOutUserAction.class),
         @Type(value = RebuildPermissionsAction.class),
