@@ -6,7 +6,6 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.shared.auth.*;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -16,14 +15,12 @@ import javax.inject.Inject;
  * Stanford Center for Biomedical Informatics Research
  * 19/02/15
  */
-public class ChangePasswordActionHandler extends AuthenticatedActionHandler<ChangePasswordAction, ChangePasswordResult> implements ApplicationActionHandler<ChangePasswordAction, ChangePasswordResult> {
+public class ChangePasswordActionHandler implements ApplicationActionHandler<ChangePasswordAction, ChangePasswordResult> {
 
     private final AuthenticationManager authenticationManager;
 
-
     @Inject
-    public ChangePasswordActionHandler(ChapSessionManager chapSessionManager, AuthenticationManager authMan, ChapResponseChecker chapResponseChecker) {
-        super(chapSessionManager, authMan, chapResponseChecker);
+    public ChangePasswordActionHandler(AuthenticationManager authMan) {
         this.authenticationManager = authMan;
     }
 
@@ -39,17 +36,17 @@ public class ChangePasswordActionHandler extends AuthenticatedActionHandler<Chan
         return NullValidator.get();
     }
 
+    @Nonnull
     @Override
-    protected ChangePasswordResult createAuthenticationFailedResult() {
-        return new ChangePasswordResult(AuthenticationResponse.FAIL);
-    }
-
-    @Override
-    protected ChangePasswordResult executeAuthenticatedAction(ChangePasswordAction action, ExecutionContext executionContext) {
-        SaltedPasswordDigest newPassword = action.getNewPassword();
-        Salt newSalt = action.getNewSalt();
-        UserId userId = action.getUserId();
-        authenticationManager.setDigestedPassword(userId, newPassword, newSalt);
-        return new ChangePasswordResult(AuthenticationResponse.SUCCESS);
+    public ChangePasswordResult execute(@Nonnull ChangePasswordAction action,
+                                        @Nonnull ExecutionContext executionContext) {
+        var userId = action.getUserId();
+        var authResponse = authenticationManager.authenticateUser(userId,
+                                                                  action.getCurrentPassword());
+        if(authResponse == AuthenticationResponse.FAIL) {
+            return ChangePasswordResult.create(AuthenticationResponse.FAIL);
+        }
+        authenticationManager.setPassword(userId, action.getNewPassword());
+        return ChangePasswordResult.create(AuthenticationResponse.SUCCESS);
     }
 }

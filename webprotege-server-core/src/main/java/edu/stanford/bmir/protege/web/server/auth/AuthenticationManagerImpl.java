@@ -26,10 +26,15 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 
     private final PasswordDigestAlgorithm passwordDigestAlgorithm;
 
+    private final SaltProvider saltProvider;
+
     @Inject
-    public AuthenticationManagerImpl(UserRecordRepository repository, PasswordDigestAlgorithm passwordDigestAlgorithm) {
+    public AuthenticationManagerImpl(UserRecordRepository repository,
+                                     PasswordDigestAlgorithm passwordDigestAlgorithm,
+                                     SaltProvider saltProvider) {
         this.repository = repository;
         this.passwordDigestAlgorithm = passwordDigestAlgorithm;
+        this.saltProvider = saltProvider;
     }
 
     @Override
@@ -110,6 +115,13 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
                              .filter(authenticated -> authenticated)
                              .map(authenticated -> AuthenticationResponse.SUCCESS)
                              .orElse(AuthenticationResponse.FAIL);
+    }
+
+    @Override
+    public void setPassword(@Nonnull UserId userId, @Nonnull Password newPassword) {
+        var salt = saltProvider.get();
+        var digestedPassword = passwordDigestAlgorithm.getDigestOfSaltedPassword(newPassword.getPassword(), salt);
+        setDigestedPassword(userId, digestedPassword, salt);
     }
 
     @Nonnull

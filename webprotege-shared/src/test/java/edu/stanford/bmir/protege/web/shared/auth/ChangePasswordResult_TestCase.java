@@ -29,38 +29,13 @@ public class ChangePasswordResult_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        result = new ChangePasswordResult(authenticationResponse);
-        otherResult = new ChangePasswordResult(authenticationResponse);
+        result = ChangePasswordResult.create(authenticationResponse);
+        otherResult = ChangePasswordResult.create(authenticationResponse);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerException() {
-        new ChangePasswordResult(null);
-    }
-
-    @Test
-    public void shouldBeEqualToSelf() {
-        assertThat(result, is(equalTo(result)));
-    }
-
-    @Test
-    public void shouldNotBeEqualToNull() {
-        assertThat(result, is(not(equalTo(null))));
-    }
-
-    @Test
-    public void shouldBeEqualToOther() {
-        assertThat(result, is(equalTo(otherResult)));
-    }
-
-    @Test
-    public void shouldHaveSameHashCodeAsOther() {
-        assertThat(result.hashCode(), is(otherResult.hashCode()));
-    }
-
-    @Test
-    public void shouldGenerateToString() {
-        assertThat(result.toString(), startsWith("ChangePasswordResult"));
+        ChangePasswordResult.create(null);
     }
 
     @Test

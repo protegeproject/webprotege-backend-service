@@ -29,4 +29,7 @@ public interface AuthenticationManager {
 
     AuthenticationResponse authenticateUser(@Nonnull UserId userId,
                                             @Nonnull Password password);
+
+    void setPassword(@Nonnull UserId userId,
+                     @Nonnull Password newPassword);
 }
