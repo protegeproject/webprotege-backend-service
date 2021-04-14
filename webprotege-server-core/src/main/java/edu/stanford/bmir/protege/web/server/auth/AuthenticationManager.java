@@ -21,12 +21,6 @@ public interface AuthenticationManager {
 
     UserDetails registerUser(UserId userId, EmailAddress email, SaltedPasswordDigest password, Salt salt) throws UserRegistrationException;
 
-    void setDigestedPassword(UserId userId, SaltedPasswordDigest saltedPasswordDigest, Salt salt);
-
-    Optional<Salt> getSalt(UserId userId);
-
-    Optional<SaltedPasswordDigest> getSaltedPasswordDigest(UserId userId);
-
     AuthenticationResponse authenticateUser(@Nonnull UserId userId,
                                             @Nonnull Password password);
 

@@ -64,13 +64,12 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         return UserDetails.getUserDetails(userId, userId.getUserName(), email.getEmailAddress());
     }
 
-    @Override
-    public void setDigestedPassword(UserId userId, SaltedPasswordDigest saltedPasswordDigest, Salt salt) {
+    private void setDigestedPassword(UserId userId, SaltedPasswordDigest saltedPasswordDigest, Salt salt) {
         if (userId.isGuest()) {
             return;
         }
         Optional<UserRecord> record = repository.findOne(userId);
-        if (!record.isPresent()) {
+        if (record.isEmpty()) {
             return;
         }
         UserRecord replacementRecord = new UserRecord(
@@ -82,30 +81,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
                 saltedPasswordDigest
         );
         repository.save(replacementRecord);
-    }
-
-    @Override
-    public Optional<Salt> getSalt(UserId userId) {
-        if(userId.isGuest()) {
-            return Optional.empty();
-        }
-        Optional<UserRecord> record = repository.findOne(userId);
-        if(!record.isPresent()) {
-            return Optional.empty();
-        }
-        return Optional.of(record.get().getSalt());
-    }
-
-    @Override
-    public Optional<SaltedPasswordDigest> getSaltedPasswordDigest(UserId userId) {
-        if(userId.isGuest()) {
-            return Optional.empty();
-        }
-        Optional<UserRecord> record = repository.findOne(userId);
-        if(record == null) {
-            return Optional.empty();
-        }
-        return Optional.of(record.get().getSaltedPasswordDigest());
     }
 
     @Override

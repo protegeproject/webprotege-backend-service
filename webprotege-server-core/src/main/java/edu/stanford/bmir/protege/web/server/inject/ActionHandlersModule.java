@@ -6,12 +6,10 @@ import dagger.multibindings.IntoSet;
 import edu.stanford.bmir.protege.web.server.app.GetApplicationSettingsActionHandler;
 import edu.stanford.bmir.protege.web.server.app.SetApplicationSettingsActionHandler;
 import edu.stanford.bmir.protege.web.server.auth.ChangePasswordActionHandler;
-import edu.stanford.bmir.protege.web.server.auth.GetChapSessionActionHandler;
 import edu.stanford.bmir.protege.web.server.auth.PerformLoginActionHandler;
 import edu.stanford.bmir.protege.web.server.chgpwd.ResetPasswordActionHandler;
 import edu.stanford.bmir.protege.web.server.csv.GetCSVGridActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ApplicationActionHandler;
-import edu.stanford.bmir.protege.web.server.dispatch.ProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.handlers.*;
 import edu.stanford.bmir.protege.web.server.events.GetProjectEventsActionHandler;
 import edu.stanford.bmir.protege.web.server.itemlist.GetPersonIdCompletionsActionHandler;
@@ -27,8 +25,6 @@ import edu.stanford.bmir.protege.web.server.project.GetAvailableProjectsWithPerm
 import edu.stanford.bmir.protege.web.server.project.GetProjectDetailsActionHandler;
 import edu.stanford.bmir.protege.web.server.user.CreateUserAccountActionHandler;
 import edu.stanford.bmir.protege.web.server.user.LogOutUserActionHandler;
-import edu.stanford.bmir.protege.web.shared.perspective.GetPerspectivesAction;
-import edu.stanford.bmir.protege.web.shared.perspective.GetPerspectivesResult;
 
 /**
  * Matthew Horridge
@@ -102,11 +98,6 @@ public class ActionHandlersModule {
 
     @Provides @IntoSet
     public ApplicationActionHandler provideLogOutUserActionHandler(LogOutUserActionHandler handler) {
-        return handler;
-    }
-
-    @Provides @IntoSet
-    public ApplicationActionHandler provideGetChapSessionActionHandler(GetChapSessionActionHandler handler) {
         return handler;
     }
 

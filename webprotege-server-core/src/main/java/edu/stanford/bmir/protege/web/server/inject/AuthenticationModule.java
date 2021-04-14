@@ -17,33 +17,8 @@ import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
 @Module
 public class AuthenticationModule {
 
-    private static final long MAX_SESSION_DURATION_MS = 2 * 60 * 1000;
-
     @Provides
     public MessageDigestAlgorithm provide(Md5MessageDigestAlgorithm algorithm) {
         return algorithm;
-    }
-
-    @Provides
-    @ChapSessionMaxDuration
-    public long provideMaxSessionDuration() {
-        return MAX_SESSION_DURATION_MS;
-    }
-
-    @ApplicationSingleton
-    @Provides
-    public ChapSessionManager provideChapSessionManager(ChapSessionFactory factory,
-                                                        @ChapSessionMaxDuration long maxSessionDuration) {
-        return new ChapSessionManager(factory, maxSessionDuration);
-    }
-
-    @Provides
-    public ChapSessionId provideChapSessionId(ChapSessionIdProvider provider) {
-        return provider.get();
-    }
-
-    @Provides
-    public ChallengeMessage provideChallengeMessage(ChallengeMessageProvider provider) {
-        return provider.get();
     }
 }
