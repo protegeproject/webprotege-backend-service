@@ -1,10 +1,7 @@
 package edu.stanford.bmir.protege.web.server.auth;
 
 import edu.stanford.bmir.protege.web.server.app.UserInSessionFactory;
-import edu.stanford.bmir.protege.web.server.dispatch.ApplicationActionHandler;
-import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
-import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
+import edu.stanford.bmir.protege.web.server.dispatch.*;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
 import edu.stanford.bmir.protege.web.server.user.UserActivityManager;
@@ -25,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 14/02/15
  */
-public class PerformLoginActionHandler extends AuthenticatedActionHandler<PerformLoginAction, PerformLoginResult> implements ApplicationActionHandler<PerformLoginAction, PerformLoginResult> {
+public class PerformLoginActionHandler implements ApplicationActionHandler<PerformLoginAction, PerformLoginResult> {
 
     private static final Logger logger = LoggerFactory.getLogger(PerformLoginActionHandler.class);
 
@@ -35,15 +32,16 @@ public class PerformLoginActionHandler extends AuthenticatedActionHandler<Perfor
     @Nonnull
     private final UserInSessionFactory userInSessionFactory;
 
+    @Nonnull
+    private final AuthenticationManager authenticationManager;
+
     @Inject
     public PerformLoginActionHandler(@Nonnull UserActivityManager activityManager,
-                                     @Nonnull ChapSessionManager chapSessionManager,
-                                     @Nonnull AuthenticationManager authenticationManager,
-                                     @Nonnull ChapResponseChecker chapResponseChecker,
-                                     @Nonnull UserInSessionFactory userInSessionFactory) {
-        super(chapSessionManager, authenticationManager, chapResponseChecker);
+                                     @Nonnull UserInSessionFactory userInSessionFactory,
+                                     @Nonnull AuthenticationManager authenticationManager) {
         this.activityManager = checkNotNull(activityManager);
         this.userInSessionFactory = userInSessionFactory;
+        this.authenticationManager = checkNotNull(authenticationManager);
     }
 
     @Nonnull
@@ -58,19 +56,32 @@ public class PerformLoginActionHandler extends AuthenticatedActionHandler<Perfor
         return NullValidator.get();
     }
 
+    @Nonnull
     @Override
-    protected PerformLoginResult executeAuthenticatedAction(PerformLoginAction action, ExecutionContext executionContext) {
+    public PerformLoginResult execute(@Nonnull PerformLoginAction action, @Nonnull ExecutionContext executionContext) {
         WebProtegeSession session = executionContext.getSession();
-        UserId userId = action.getUserId();
-        session.setUserInSession(userId);
-        activityManager.setLastLogin(userId, System.currentTimeMillis());
-        logger.info("{} logged in", userId);
-        return PerformLoginResult.create(AuthenticationResponse.SUCCESS, userInSessionFactory.getUserInSession(userId));
+        var userId = action.getUserId();
+        if(userId.isGuest()) {
+            logger.info("Attempt to login guest user");
+            return getFailedLoginResult();
+        }
+        var authenticationResult = authenticationManager.authenticateUser(userId, action.getPassword());
+        if(authenticationResult == AuthenticationResponse.SUCCESS) {
+            session.setUserInSession(userId);
+            activityManager.setLastLogin(userId, System.currentTimeMillis());
+            logger.info("{} logged in", userId);
+            var userInSession = userInSessionFactory.getUserInSession(userId);
+            return PerformLoginResult.create(AuthenticationResponse.SUCCESS, userInSession);
+        }
+        else {
+            logger.info("Login attempt failed for user {}", userId);
+            return getFailedLoginResult();
+        }
+
     }
 
-    @Override
-    protected PerformLoginResult createAuthenticationFailedResult() {
-        return PerformLoginResult.create(AuthenticationResponse.FAIL,
-                                      userInSessionFactory.getUserInSession(UserId.getGuest()));
+    @Nonnull
+    private PerformLoginResult getFailedLoginResult() {
+        return PerformLoginResult.create(AuthenticationResponse.FAIL, userInSessionFactory.getUserInSession(UserId.getGuest()));
     }
 }

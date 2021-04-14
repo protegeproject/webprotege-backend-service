@@ -1,7 +1,15 @@
 package edu.stanford.bmir.protege.web.shared.auth;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
+import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
+
+import javax.annotation.Nonnull;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
@@ -10,50 +18,22 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 14/02/15
  */
-public class PerformLoginAction extends AbstractAuthenticationAction<PerformLoginResult> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("PerformLoginAction")
+public abstract class PerformLoginAction implements Action<PerformLoginResult> {
 
-    /**
-     * For serialization only
-     */
-    private PerformLoginAction() {
+
+    @JsonCreator
+    public static PerformLoginAction create(@JsonProperty("userId") UserId userId,
+                                            @JsonProperty("password") Password password) {
+        return new AutoValue_PerformLoginAction(userId, password);
     }
 
-    private PerformLoginAction(UserId userId, ChapSessionId chapSessionId, ChapResponse chapResponse) {
-        super(userId, chapSessionId, chapResponse);
-    }
+    @Nonnull
+    public abstract UserId getUserId();
 
-    public static PerformLoginAction create(UserId userId, ChapSessionId chapSessionId, ChapResponse chapResponse) {
-        return new PerformLoginAction(userId, chapSessionId, chapResponse);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getUserId(), getChapSessionId(), getChapResponse());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof PerformLoginAction)) {
-            return false;
-        }
-        PerformLoginAction other = (PerformLoginAction) obj;
-        return this.getUserId().equals(other.getUserId())
-                && this.getChapSessionId().equals(other.getChapSessionId())
-                && this.getChapResponse().equals(other.getChapResponse());
-    }
-
-
-    @Override
-    public String toString() {
-        return toStringHelper("PerformLoginAction")
-                .addValue(getUserId())
-                .addValue(getChapSessionId())
-                .addValue(getChapResponse())
-                .toString();
-    }
-
-
+    @Nonnull
+    public abstract Password getPassword();
 }
+

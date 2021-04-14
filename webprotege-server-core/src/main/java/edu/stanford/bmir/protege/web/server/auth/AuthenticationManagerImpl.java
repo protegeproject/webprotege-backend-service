@@ -2,12 +2,12 @@ package edu.stanford.bmir.protege.web.server.auth;
 
 import edu.stanford.bmir.protege.web.server.user.UserRecord;
 import edu.stanford.bmir.protege.web.server.user.UserRecordRepository;
-import edu.stanford.bmir.protege.web.shared.auth.Salt;
-import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
+import edu.stanford.bmir.protege.web.shared.auth.*;
 import edu.stanford.bmir.protege.web.shared.user.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Optional;
 
@@ -24,9 +24,12 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationManagerImpl.class);
 
+    private final PasswordDigestAlgorithm passwordDigestAlgorithm;
+
     @Inject
-    public AuthenticationManagerImpl(UserRecordRepository repository) {
+    public AuthenticationManagerImpl(UserRecordRepository repository, PasswordDigestAlgorithm passwordDigestAlgorithm) {
         this.repository = repository;
+        this.passwordDigestAlgorithm = passwordDigestAlgorithm;
     }
 
     @Override
@@ -100,4 +103,19 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         return Optional.of(record.get().getSaltedPasswordDigest());
     }
 
+    @Override
+    public AuthenticationResponse authenticateUser(@Nonnull UserId userId, @Nonnull Password password) {
+        Optional<UserRecord> existingRecord = repository.findOne(userId);
+        return existingRecord.map(r -> checkPassword(password, r))
+                             .filter(authenticated -> authenticated)
+                             .map(authenticated -> AuthenticationResponse.SUCCESS)
+                             .orElse(AuthenticationResponse.FAIL);
+    }
+
+    @Nonnull
+    private Boolean checkPassword(@Nonnull Password password, UserRecord userRecord) {
+        var salt = userRecord.getSalt();
+        var digest = passwordDigestAlgorithm.getDigestOfSaltedPassword(password.getPassword(), salt);
+        return userRecord.getSaltedPasswordDigest().equals(digest);
+    }
 }

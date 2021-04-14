@@ -12,12 +12,12 @@ import javax.annotation.Nonnull;
  * 2021-04-14
  */
 @AutoValue
-public abstract class Pwd {
+public abstract class Password {
 
     @JsonCreator
     @Nonnull
-    public static Pwd create(@Nonnull String password) {
-        return new AutoValue_Pwd(password);
+    public static Password create(@Nonnull String password) {
+        return new AutoValue_Password(password);
     }
 
     @JsonValue
