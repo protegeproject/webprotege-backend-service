@@ -42,11 +42,11 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         checkNotNull(userId);
         checkNotNull(email);
         checkNotNull(password);
-        Optional<UserRecord> existingRecord = repository.findOne(userId);
+        var existingRecord = repository.findOne(userId);
         if(existingRecord.isPresent()) {
             throw new UserNameAlreadyExistsException(userId.getUserName());
         }
-        Optional<UserRecord> existingRecordByEmail = repository.findOneByEmailAddress(email.getEmailAddress());
+        var existingRecordByEmail = repository.findOneByEmailAddress(email.getEmailAddress());
         if(existingRecordByEmail.isPresent()) {
             throw new UserEmailAlreadyExistsException(email.getEmailAddress());
         }
@@ -70,11 +70,11 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         if (userId.isGuest()) {
             return;
         }
-        Optional<UserRecord> record = repository.findOne(userId);
+        var record = repository.findOne(userId);
         if (record.isEmpty()) {
             return;
         }
-        UserRecord replacementRecord = new UserRecord(
+        var replacementRecord = new UserRecord(
                 record.get().getUserId(),
                 record.get().getRealName(),
                 record.get().getEmailAddress(),
