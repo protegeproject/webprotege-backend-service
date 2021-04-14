@@ -20,7 +20,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
-@JsonTypeName("PerformLoginAction")
+@JsonTypeName("PerformLogin")
 public abstract class PerformLoginAction implements Action<PerformLoginResult> {
 
 

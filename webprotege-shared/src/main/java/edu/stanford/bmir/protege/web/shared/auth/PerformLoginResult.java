@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
-@JsonTypeName("PerformLoginResult")
+@JsonTypeName("PerformLogin")
 public abstract class PerformLoginResult implements Result {
 
     @JsonCreator
