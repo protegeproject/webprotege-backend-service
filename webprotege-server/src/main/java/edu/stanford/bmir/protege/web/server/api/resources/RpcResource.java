@@ -1,4 +1,4 @@
-package edu.stanford.bmir.protege.web.server.api.rpc;
+package edu.stanford.bmir.protege.web.server.api.resources;
 
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
 import edu.stanford.bmir.protege.web.server.api.ApiRootResource;
