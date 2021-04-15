@@ -37,10 +37,9 @@ public class ActionExecutor {
     }
 
     @SuppressWarnings("unchecked")
-    public   <A extends Action<R>,  R extends Result> R execute(A action, UserId userId) {
+    public   <A extends Action<R>,  R extends Result> R execute(A action, ExecutionContext executionContext) {
         try {
-            RequestContext requestContext = new RequestContext(userId);
-            ExecutionContext executionContext = new ExecutionContext(new Session(userId));
+            RequestContext requestContext = new RequestContext(executionContext.getUserId());
             DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, executionContext);
             return (R) resultContainer.getResult();
         } catch (ActionExecutionException e) {
@@ -51,46 +50,6 @@ public class ActionExecutor {
             else {
                 throw new InternalServerErrorException();
             }
-        }
-    }
-
-
-    private static class Session implements WebProtegeSession {
-
-        private final UserId userId;
-
-        public Session(UserId userId) {
-            this.userId = userId;
-        }
-
-        @Override
-        public <T> Optional<T> getAttribute(WebProtegeSessionAttribute<T> attribute) {
-            return Optional.empty();
-        }
-
-        @Override
-        public <T> void setAttribute(WebProtegeSessionAttribute<T> attribute, T value) {
-
-        }
-
-        @Override
-        public void removeAttribute(WebProtegeSessionAttribute<?> attribute) {
-
-        }
-
-        @Override
-        public UserId getUserInSession() {
-            return userId;
-        }
-
-        @Override
-        public void setUserInSession(UserId userId) {
-
-        }
-
-        @Override
-        public void clearUserInSession() {
-
         }
     }
 }

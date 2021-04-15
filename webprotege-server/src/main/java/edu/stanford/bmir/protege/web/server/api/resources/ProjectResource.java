@@ -3,6 +3,7 @@ package edu.stanford.bmir.protege.web.server.api.resources;
 import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.shared.project.GetProjectDetailsAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -10,6 +11,8 @@ import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -70,8 +73,8 @@ public class ProjectResource {
     @GET
     @Produces(APPLICATION_JSON)
     @Path("/")
-    public Response getProjectDetails(@Context UserId userId, @Context UriInfo uriInfo) {
-        ProjectDetails projectDetails = executor.execute(new GetProjectDetailsAction(projectId), userId)
+    public Response getProjectDetails(@Context UserId userId, @Context UriInfo uriInfo, @Context ExecutionContext executionContext) {
+        ProjectDetails projectDetails = executor.execute(new GetProjectDetailsAction(projectId), executionContext)
                                                 .getProjectDetails();
         return Response.ok(projectDetails).build();
     }

@@ -45,6 +45,9 @@ public class WebProtegeServletContextListener implements ServletContextListener 
             servletContext.addServlet("JerseyContainerServlet_Rpc", serverComponent.getJerseyServletContainer())
                           .addMapping("/api/*");
 
+            servletContext.addServlet("AuthenticationServlet", serverComponent.getAuthenticationServlet())
+                          .addMapping("/authenticate");
+
             servletContext.addListener(serverComponent.getSessionListener());
             serverComponent.getWebProtegeConfigurationChecker().performConfiguration();
             serverComponent.getProjectCacheManager().start();

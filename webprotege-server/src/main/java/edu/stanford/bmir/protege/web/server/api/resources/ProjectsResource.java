@@ -3,6 +3,7 @@ package edu.stanford.bmir.protege.web.server.api.resources;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
 import edu.stanford.bmir.protege.web.server.api.ApiRootResource;
 import edu.stanford.bmir.protege.web.server.api.ResponseUtil;
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.shared.api.ApiKey;
 import edu.stanford.bmir.protege.web.shared.project.*;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
@@ -60,6 +61,7 @@ public class ProjectsResource implements ApiRootResource {
     public Response createNewProject(@Nonnull @Context UserId userId,
                                      @Nullable @Context ApiKey apiKey,
                                      @Nonnull @Context UriInfo uriInfo,
+                                     @Context ExecutionContext executionContext,
                                      @Nullable NewProjectSettings newProjectSettings) {
         // We require an API key for this particular operation
         if(apiKey == null) {
@@ -70,7 +72,7 @@ public class ProjectsResource implements ApiRootResource {
             return ResponseUtil.badRequest("Missing new project details in body of POST");
         }
         CreateNewProjectAction action = new CreateNewProjectAction(newProjectSettings);
-        CreateNewProjectResult result = executor.execute(action, userId);
+        CreateNewProjectResult result = executor.execute(action, executionContext);
         ProjectDetails projectDetails = result.getProjectDetails();
         // Respond with HTTP 201 (CREATED) and a location header that points
         // to the freshly created project.
@@ -88,9 +90,10 @@ public class ProjectsResource implements ApiRootResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProjects(@Nonnull @Context UserId userId,
-                                @Nonnull @Context UriInfo uriInfo) {
+                                @Nonnull @Context UriInfo uriInfo,
+                                @Context ExecutionContext executionContext) {
         GetAvailableProjectsResult result = executor.execute(GetAvailableProjectsAction.create(),
-                                                             userId);
+                                                             executionContext);
         return Response.ok().entity(result.getAvailableProjects()).build();
     }
 }

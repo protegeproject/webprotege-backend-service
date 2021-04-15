@@ -3,6 +3,7 @@ package edu.stanford.bmir.protege.web.server.app;
 import dagger.Component;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.api.ApiModule;
+import edu.stanford.bmir.protege.web.server.auth.AuthenticationServlet;
 import edu.stanford.bmir.protege.web.server.download.ProjectDownloadServlet;
 import edu.stanford.bmir.protege.web.server.inject.*;
 import edu.stanford.bmir.protege.web.server.inject.project.ProjectModule;
@@ -45,6 +46,8 @@ public interface ServerComponent {
     ServletContainer getJerseyServletContainer();
 
     ProjectDownloadServlet getProjectDownloadServlet();
+
+    AuthenticationServlet getAuthenticationServlet();
 
     WebProtegeSessionListener getSessionListener();
 

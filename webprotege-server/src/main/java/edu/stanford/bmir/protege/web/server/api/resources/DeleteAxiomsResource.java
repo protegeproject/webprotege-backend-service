@@ -3,6 +3,7 @@ package edu.stanford.bmir.protege.web.server.api.resources;
 import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.api.axioms.PostedAxiomsActionExecutor;
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.actions.DeleteAxiomsAction;
 import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -48,12 +49,14 @@ public class DeleteAxiomsResource {
     @Consumes("text/owl-functional")
     @Produces(MediaType.APPLICATION_JSON)
     public Response handleDeleteAxiomsInFunctionalSyntax(@Context UserId userId,
+                                                         @Context ExecutionContext executionContext,
                                                       @Context UriInfo uriInfo,
                                                       InputStream inputStream,
                                                       @QueryParam("msg") @DefaultValue(DELETED_AXIOMS) String msg) {
-        return loadAndDeleteAxioms(userId,
+        return loadAndDeleteAxioms(userId, executionContext,
                                    uriInfo,
-                                   inputStream, msg,
+                                   inputStream,
+                                   msg,
                                    new FunctionalSyntaxDocumentFormat(),
                                    FUNCTIONAL_SYNTAX.getMimeType());
     }
@@ -62,12 +65,14 @@ public class DeleteAxiomsResource {
     @Consumes("application/rdf+xml")
     @Produces(MediaType.APPLICATION_JSON)
     public Response handleDeleteAxiomsInRdfXml(@Context UserId userId,
+                                               @Context ExecutionContext executionContext,
                                             @Context UriInfo uriInfo,
                                             InputStream inputStream,
                                             @QueryParam("msg") @DefaultValue(DELETED_AXIOMS) String msg) {
-        return loadAndDeleteAxioms(userId,
+        return loadAndDeleteAxioms(userId, executionContext,
                                    uriInfo,
-                                   inputStream, msg,
+                                   inputStream,
+                                   msg,
                                    new RDFXMLDocumentFormat(),
                                    RDF_XML.getMimeType());
     }
@@ -77,24 +82,25 @@ public class DeleteAxiomsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response handleDeleteAxiomsInTurtle(@Context UserId userId,
                                             @Context UriInfo uriInfo,
+                                               @Context ExecutionContext executionContext,
                                             InputStream inputStream,
                                             @QueryParam("msg") @DefaultValue(DELETED_AXIOMS) String msg) {
-        return loadAndDeleteAxioms(userId,
+        return loadAndDeleteAxioms(userId, executionContext,
                                    uriInfo,
-                                   inputStream, msg,
+                                   inputStream,
+                                   msg,
                                    new RioTurtleDocumentFormat(),
                                    RDF_TURLE.getMimeType());
     }
 
 
     private Response loadAndDeleteAxioms(@Nonnull UserId userId,
-                                         @Nonnull UriInfo uriInfo,
+                                         @Nonnull ExecutionContext executionContext, @Nonnull UriInfo uriInfo,
                                          @Nonnull InputStream inputStream,
                                          @Nonnull String commitMessage,
                                          @Nonnull OWLDocumentFormat documentFormat,
                                          @Nonnull String mimeType) {
-        return loadAxiomsAndExecuteAction(userId,
-                                          uriInfo,
+        return loadAxiomsAndExecuteAction(userId, executionContext, uriInfo,
                                           inputStream,
                                           commitMessage,
                                           documentFormat,
@@ -103,6 +109,7 @@ public class DeleteAxiomsResource {
     }
 
     private Response loadAxiomsAndExecuteAction(@Nonnull UserId userId,
+                                                @Nonnull ExecutionContext executionContext,
                                                 @Nonnull UriInfo uriInfo,
                                                 @Nonnull InputStream inputStream,
                                                 @Nonnull String commitMessage,
@@ -111,6 +118,7 @@ public class DeleteAxiomsResource {
                                                 PostedAxiomsActionExecutor.ActionFactory actionFactory) {
         return postedAxiomsActionExecutor.loadAxiomsAndExecuteAction(projectId,
                                                               userId,
+                                                              executionContext,
                                                               uriInfo,
                                                               inputStream,
                                                               commitMessage,

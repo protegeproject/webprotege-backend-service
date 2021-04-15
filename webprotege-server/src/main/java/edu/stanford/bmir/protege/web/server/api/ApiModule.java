@@ -38,6 +38,7 @@ public class ApiModule {
         // token or the api key
         resourceConfig.register(new UserIdBinder());
         resourceConfig.register(new ApiKeyBinder());
+        resourceConfig.register(new ExecutionContextBinder());
 
         resourceConfig.register(new JacksonContextResolver());
 

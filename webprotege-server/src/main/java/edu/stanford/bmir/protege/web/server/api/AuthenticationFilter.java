@@ -1,9 +1,13 @@
 package edu.stanford.bmir.protege.web.server.api;
 
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
+import edu.stanford.bmir.protege.web.server.logging.DefaultLogger;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSessionImpl;
 import edu.stanford.bmir.protege.web.shared.api.ApiKey;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -16,8 +20,7 @@ import javax.ws.rs.core.Response;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.server.api.AuthenticationConstants.AUTHENTICATED_USER_API_KEY;
-import static edu.stanford.bmir.protege.web.server.api.AuthenticationConstants.AUTHENTICATED_USER_ID;
+import static edu.stanford.bmir.protege.web.server.api.AuthenticationConstants.*;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
 /**
@@ -39,6 +42,8 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     @Context
     private HttpServletRequest servletRequest;
 
+    private static Logger logger = LoggerFactory.getLogger(AuthenticationFilter.class);
+
 
     @Inject
     public AuthenticationFilter(@Nonnull ApiKeyChecker apiKeyChecker) {
@@ -56,6 +61,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
      */
     @Override
     public void filter(ContainerRequestContext requestContext) {
+        logger.info("Received Rpc Request with cookies: {}", requestContext.getCookies());
+
+
         Optional<ApiKey> apiKey = parseApiKeyFromHeaders(requestContext);
         final UserId userId;
         if(apiKey.isPresent()) {
@@ -69,8 +77,15 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         }
         else {
             requestContext.setProperty(AUTHENTICATED_USER_ID, userId);
+            requestContext.setProperty(EXECUTION_CONTEXT, getExecutionContext());
             apiKey.ifPresent(key -> requestContext.setProperty(AUTHENTICATED_USER_API_KEY, key));
         }
+    }
+
+    @Nonnull
+    private ExecutionContext getExecutionContext() {
+        HttpSession session = servletRequest.getSession(false);
+        return new ExecutionContext(new WebProtegeSessionImpl(session));
     }
 
     private Optional<ApiKey> parseApiKeyFromHeaders(ContainerRequestContext requestContext) {
@@ -85,8 +100,10 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private UserId getUserIdFromSession() {
         HttpSession session = servletRequest.getSession(false);
         if (session != null) {
+            logger.info("HttpSession: {}", session.getId());
             // Get the user from session
             WebProtegeSession webProtegeSession = new WebProtegeSessionImpl(session);
+            logger.info("Session is assigned to " + webProtegeSession.getUserInSession());
             return webProtegeSession.getUserInSession();
         }
         else {

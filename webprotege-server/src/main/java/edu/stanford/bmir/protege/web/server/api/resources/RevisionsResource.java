@@ -4,6 +4,7 @@ import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.actions.GetRevisionAction;
 import edu.stanford.bmir.protege.web.server.dispatch.actions.GetRevisionsAction;
 import edu.stanford.bmir.protege.web.server.revision.RevisionDetails;
@@ -45,6 +46,7 @@ public class RevisionsResource {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public ImmutableList<RevisionDetails> listChanges(@Context UserId userId,
+                                                      @Context ExecutionContext executionContext,
                                                       @QueryParam("from")
                                                       @DefaultValue("1")
                                                               RevisionNumber from,
@@ -57,16 +59,17 @@ public class RevisionsResource {
                                                            from,
                                                            to,
                                                            author);
-        return executor.execute(action, userId).getRevisions();
+        return executor.execute(action, executionContext).getRevisions();
     }
 
     @GET
     @Path("/{revisionNumber : [0-9]+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRevision(@Context UserId userId,
+                                @Context ExecutionContext executionContext,
                                 @Context UriInfo uriInfo,
                                 @PathParam("revisionNumber") RevisionNumber revisionNumber) {
-            Optional<RevisionDetails> revisionDetails = executor.execute(new GetRevisionAction(projectId, revisionNumber), userId)
+            Optional<RevisionDetails> revisionDetails = executor.execute(new GetRevisionAction(projectId, revisionNumber), executionContext)
                                                                 .getRevisionDetails();
             if(revisionDetails.isPresent()) {
                 return Response.ok(revisionDetails.get())

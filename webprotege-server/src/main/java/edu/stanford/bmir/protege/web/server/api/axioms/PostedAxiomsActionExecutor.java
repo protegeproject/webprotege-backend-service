@@ -4,6 +4,7 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.access.ProjectResource;
 import edu.stanford.bmir.protege.web.server.access.Subject;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.shared.access.ActionId;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
@@ -43,6 +44,7 @@ public class PostedAxiomsActionExecutor {
 
     public Response loadAxiomsAndExecuteAction(@Nonnull ProjectId projectId,
                                                @Nonnull UserId userId,
+                                               @Nonnull ExecutionContext executionContext,
                                                @Nonnull UriInfo uriInfo,
                                                @Nonnull InputStream inputStream,
                                                @Nonnull String commitMessage,
@@ -64,7 +66,7 @@ public class PostedAxiomsActionExecutor {
         PostedAxiomsLoadResponse loadResponse = axiomsLoader.loadAxioms(inputStream);
         if(loadResponse.isSuccess()) {
             Action<?> action = actionFactory.createAction(loadResponse.axioms(), commitMessage);
-            Result result = executor.execute(action, userId);
+            Result result = executor.execute(action, executionContext);
             return Response.created(uriInfo.getAbsolutePath())
                            .entity(result)
                            .build();

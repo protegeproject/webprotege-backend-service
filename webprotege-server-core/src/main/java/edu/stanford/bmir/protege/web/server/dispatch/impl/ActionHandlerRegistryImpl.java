@@ -43,7 +43,10 @@ public abstract class ActionHandlerRegistryImpl implements ActionHandlerRegistry
         checkNotNull(action, "action must not be null");
         ActionHandler<A, R> handler = (ActionHandler<A, R>) registry.get(action.getClass());
         if(handler == null) {
-            throw new ActionHandlerNotFoundException(action);
+            handler = (ActionHandler<A, R>) registry.get(action.getClass().getSuperclass());
+            if (handler == null) {
+                throw new ActionHandlerNotFoundException(action);
+            }
         }
         return handler;
     }

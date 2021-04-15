@@ -55,4 +55,5 @@ public interface WebProtegeSession {
      */
     void clearUserInSession();
 
+    String getSessionId();
 }

@@ -4,6 +4,7 @@ import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.BatchAction;
 import edu.stanford.bmir.protege.web.shared.form.*;
@@ -53,8 +54,8 @@ public class FormsResource {
     @GET
     @Produces(APPLICATION_JSON)
     @Path("/")
-    public Response getForms(@Context UserId userId) {
-        var formsResult = executor.execute(GetProjectFormDescriptorsAction.create(projectId), userId);
+    public Response getForms(@Context UserId userId, @Context ExecutionContext executionContext) {
+        var formsResult = executor.execute(GetProjectFormDescriptorsAction.create(projectId), executionContext);
         var formDescriptors = formsResult.getFormDescriptors();
         var formSelectorsMap = formsResult.getFormSelectors().stream().collect(toMap(EntityFormSelector::getFormId,
                                                                                      EntityFormSelector::getCriteria,
@@ -78,6 +79,7 @@ public class FormsResource {
     @Path("/")
     public Response setForms(@Context UserId userId,
                              @Context UriInfo uriInfo,
+                             @Context ExecutionContext executionContext,
                              List<EntityFormDescriptor> entityFormDescriptors) {
         var actionListBuilder = ImmutableList.<Action<?>>builder();
         for(var entityFormDescriptor : entityFormDescriptors) {
@@ -89,7 +91,7 @@ public class FormsResource {
             actionListBuilder.add(action);
         }
         var batchAction = BatchAction.create(actionListBuilder.build());
-        executor.execute(batchAction, userId);
+        executor.execute(batchAction, executionContext);
         return Response.created(uriInfo.getRequestUri()).build();
     }
 

@@ -69,7 +69,7 @@ public class PerformLoginActionHandler implements ApplicationActionHandler<Perfo
         if(authenticationResult == AuthenticationResponse.SUCCESS) {
             session.setUserInSession(userId);
             activityManager.setLastLogin(userId, System.currentTimeMillis());
-            logger.info("{} logged in", userId);
+            logger.info("{} logged in (attached to session {})", userId, session.getSessionId());
             var userInSession = userInSessionFactory.getUserInSession(userId);
             return PerformLoginResult.create(AuthenticationResponse.SUCCESS, userInSession);
         }

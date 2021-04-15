@@ -30,4 +30,6 @@ public class AuthenticationConstants {
      */
     public static final String AUTHENTICATED_USER_API_KEY = "auth.apiKey";
 
+    public static final String EXECUTION_CONTEXT = "auth.executionContent";
+
 }

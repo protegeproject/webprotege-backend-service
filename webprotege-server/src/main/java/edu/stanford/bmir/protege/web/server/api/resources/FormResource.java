@@ -4,6 +4,7 @@ import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
+import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.shared.form.EntityFormDescriptor;
 import edu.stanford.bmir.protege.web.shared.form.FormDescriptor;
 import edu.stanford.bmir.protege.web.shared.form.FormId;
@@ -49,9 +50,9 @@ public class FormResource {
     @GET
     @Produces(APPLICATION_JSON)
     @Path("/")
-    public Response getForm(@Context UserId userId) {
+    public Response getForm(@Context UserId userId, @Context ExecutionContext executionContext) {
         var actionResult = actionExecutor.execute(GetEntityFormDescriptorAction.create(projectId, formId),
-                               userId);
+                                                  executionContext);
         var formDescriptor = actionResult.getFormDescriptor().orElse(FormDescriptor.empty(formId));
         var criteria = actionResult.getFormSelectorCriteria().orElse(CompositeRootCriteria.get(ImmutableList.of(), MultiMatchType.ANY));
         var purpose = actionResult.getPurpose();

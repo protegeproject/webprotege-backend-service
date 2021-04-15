@@ -65,4 +65,9 @@ public class WebProtegeSessionImpl implements WebProtegeSession {
     public void clearUserInSession() {
         removeAttribute(WebProtegeSessionAttribute.LOGGED_IN_USER);
     }
+
+    @Override
+    public String getSessionId() {
+        return httpSession.getId();
+    }
 }
