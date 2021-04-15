@@ -68,7 +68,7 @@ public class GetDataPropertyFrameActionHandler extends AbstractProjectActionHand
                     action.getProjectId(),
                     executionContext.getUserId(),
                     action.getSubject());
-        return new GetDataPropertyFrameResult(renderedFrame);
+        return GetDataPropertyFrameResult.create(renderedFrame);
     }
 
     @Nonnull
