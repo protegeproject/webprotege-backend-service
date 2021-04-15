@@ -93,6 +93,7 @@ import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesAction;
         @Type(value = CreateObjectPropertiesAction.class),
         @Type(value = CreateEntityDiscussionThreadAction.class),
         @Type(value = CreateEntityFromFormDataAction.class),
+        @Type(value = GetAnnotationPropertyFrameAction.class),
         @Type(value = CreateNewProjectAction.class),
         @Type(value = LoadProjectAction.class),
         @Type(value = LogOutUserAction.class),

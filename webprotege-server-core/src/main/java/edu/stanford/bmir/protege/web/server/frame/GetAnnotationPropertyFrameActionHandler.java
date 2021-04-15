@@ -70,7 +70,7 @@ public class GetAnnotationPropertyFrameActionHandler extends AbstractProjectActi
                     action.getProjectId(),
                     executionContext.getUserId(),
                     action.getSubject());
-        return new GetAnnotationPropertyFrameResult(renderedFrame);
+        return GetAnnotationPropertyFrameResult.create(renderedFrame);
     }
 
     @Nonnull
