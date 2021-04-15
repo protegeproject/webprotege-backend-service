@@ -107,6 +107,7 @@ import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesAction;
         @Type(value = GetAllOntologiesAction.class),
         @Type(value = GetApplicationSettingsAction.class),
         @Type(value = GetAvailableProjectsAction.class),
+        @Type(value = GetClassFrameAction.class),
         @Type(value = GetCommentedEntitiesAction.class),
         @Type(value = GetAvailableProjectsWithPermissionAction.class),
         @Type(value = GetCurrentUserInSessionAction.class),

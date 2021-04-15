@@ -86,6 +86,6 @@ public class GetClassFrameActionHandler extends AbstractProjectActionHandler<Get
                     action.getProjectId(),
                     executionContext.getUserId(),
                     subject);
-        return new GetClassFrameResult(renderedFrame);
+        return GetClassFrameResult.get(renderedFrame);
     }
 }

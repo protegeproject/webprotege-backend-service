@@ -1,5 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.GetObjectResult;
 
 /**
@@ -7,24 +12,18 @@ import edu.stanford.bmir.protege.web.shared.dispatch.GetObjectResult;
  * Stanford Center for Biomedical Informatics Research
  * 28 Jul 16
  */
-public class GetClassFrameResult implements GetObjectResult<ClassFrame> {
+@AutoValue
+@GwtCompatible(serializable = true)
+@JsonTypeName("GetClassFrame")
+public abstract class GetClassFrameResult implements GetObjectResult<ClassFrame> {
 
 
-    private ClassFrame frame;
-
-    /**
-     * For serialization purposes only
-     */
-    private GetClassFrameResult() {
+    @JsonCreator
+    public static GetClassFrameResult get(@JsonProperty("frame") ClassFrame classFrame) {
+        return new AutoValue_GetClassFrameResult(classFrame);
     }
 
-    public GetClassFrameResult(ClassFrame frame) {
-        this.frame = frame;
-    }
-
-    public ClassFrame getFrame() {
-        return frame;
-    }
+    public abstract ClassFrame getFrame();
 
     /**
      * Gets the object.
@@ -33,6 +32,6 @@ public class GetClassFrameResult implements GetObjectResult<ClassFrame> {
      */
     @Override
     public ClassFrame getObject() {
-        return frame;
+        return getFrame();
     }
 }
