@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.entity.OWLNamedIndividualData;
@@ -15,12 +18,14 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("PropertyIndividualValue")
 public abstract class PropertyIndividualValue extends ObjectPropertyValue {
 
+    @JsonCreator
     @Nonnull
-    public static PropertyIndividualValue get(@Nonnull OWLObjectPropertyData property,
-                                              @Nonnull OWLNamedIndividualData value,
-                                              @Nonnull State state) {
+    public static PropertyIndividualValue get(@JsonProperty("property") @Nonnull OWLObjectPropertyData property,
+                                              @JsonProperty("value") @Nonnull OWLNamedIndividualData value,
+                                              @JsonProperty("state") @Nonnull State state) {
         return new AutoValue_PropertyIndividualValue(property,
                                                      value,
                                                      state);

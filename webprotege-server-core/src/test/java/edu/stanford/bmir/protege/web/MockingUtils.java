@@ -91,6 +91,14 @@ public class MockingUtils {
         return OWLNamedIndividualData.get(mockOWLNamedIndividual(), ImmutableList.of(), false);
     }
 
+    public static OWLDatatypeData mockOWLDatatypeData() {
+        return OWLDatatypeData.get(mockOWLDatatype(), ImmutableList.of(), true);
+    }
+
+    public static OWLLiteralData mockOWLLiteralData() {
+        return OWLLiteralData.get(mockLiteral());
+    }
+
     public HasSignature mockHasSignature(OWLEntity ... entities) {
         HasSignature hasSignature = mock(HasSignature.class);
         when(hasSignature.getSignature()).thenReturn(new HashSet<OWLEntity>(Arrays.asList(entities)));

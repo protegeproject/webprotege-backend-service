@@ -1,6 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.shared.PrimitiveType;
@@ -25,6 +29,18 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
  *     {@link IRI}.
  * </p>
  */
+@JsonSubTypes({
+        @Type(OWLClassData.class),
+        @Type(OWLObjectPropertyData.class),
+        @Type(OWLDataPropertyData.class),
+        @Type(OWLAnnotationPropertyData.class),
+        @Type(OWLNamedIndividualData.class),
+        @Type(OWLDatatypeData.class),
+        @Type(IRIData.class),
+        @Type(OWLLiteralData.class)
+
+})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public abstract class OWLPrimitiveData extends ObjectData implements Comparable<OWLPrimitiveData> {
 
 

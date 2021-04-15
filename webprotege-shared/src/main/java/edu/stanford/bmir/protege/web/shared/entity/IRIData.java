@@ -3,6 +3,7 @@ package edu.stanford.bmir.protege.web.shared.entity;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -23,6 +24,7 @@ import java.util.Optional;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("IRIData")
 public abstract class IRIData extends OWLPrimitiveData {
 
     public static IRIData get(@Nonnull IRI iri, @Nonnull ImmutableMap<DictionaryLanguage, String> shortForms) {

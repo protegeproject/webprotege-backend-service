@@ -1,5 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.bmir.protege.web.shared.entity.OWLPrimitiveData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLPropertyData;
 
@@ -12,6 +16,14 @@ import java.io.Serializable;
  * Bio-Medical Informatics Research Group<br>
  * Date: 21/11/2012
  */
+@JsonSubTypes({
+        @Type(PropertyClassValue.class),
+        @Type(PropertyIndividualValue.class),
+        @Type(PropertyDatatypeValue.class),
+        @Type(PropertyLiteralValue.class),
+        @Type(PropertyAnnotationValue.class)
+})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public abstract class PropertyValue implements Comparable<PropertyValue>, Serializable {
 
 
@@ -21,10 +33,13 @@ public abstract class PropertyValue implements Comparable<PropertyValue>, Serial
 
     public abstract State getState();
 
+    @JsonIgnore
     public abstract boolean isValueMostSpecific();
 
+    @JsonIgnore
     public abstract boolean isAnnotation();
 
+    @JsonIgnore
     public abstract boolean isLogical();
 
     public abstract <R, E extends Throwable>  R accept(PropertyValueVisitor<R, E> visitor) throws E;

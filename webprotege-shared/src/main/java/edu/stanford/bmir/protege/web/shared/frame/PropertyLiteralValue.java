@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.entity.OWLDataPropertyData;
@@ -15,12 +18,14 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("PropertyLiteralValue")
 public abstract class PropertyLiteralValue extends DataPropertyValue {
 
+    @JsonCreator
     @Nonnull
-    public static PropertyLiteralValue get(@Nonnull OWLDataPropertyData property,
-                                @Nonnull OWLLiteralData value,
-                                @Nonnull State state) {
+    public static PropertyLiteralValue get(@JsonProperty("property") @Nonnull OWLDataPropertyData property,
+                                           @JsonProperty("value") @Nonnull OWLLiteralData value,
+                                           @JsonProperty("state") @Nonnull State state) {
         return new AutoValue_PropertyLiteralValue(property, value, state);
     }
 
@@ -62,10 +67,6 @@ public abstract class PropertyLiteralValue extends DataPropertyValue {
     @Nonnull
     @Override
     public PlainPropertyLiteralValue toPlainPropertyValue() {
-        return PlainPropertyLiteralValue.get(
-                getProperty().getEntity(),
-                getValue().getLiteral(),
-                getState()
-        );
+        return PlainPropertyLiteralValue.get(getProperty().getEntity(), getValue().getLiteral(), getState());
     }
 }
