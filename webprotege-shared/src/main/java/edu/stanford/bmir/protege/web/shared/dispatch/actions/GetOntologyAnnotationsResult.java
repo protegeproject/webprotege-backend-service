@@ -1,17 +1,14 @@
-package edu.stanford.bmir.protege.web.shared.dispatch.actions;
+package edu.stanford.bmir.protege.web.shared.frame;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+import edu.stanford.bmir.protege.web.shared.dispatch.GetObjectResult;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyAnnotationValue;
-import org.semanticweb.owlapi.model.OWLOntologyID;
-
-import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -22,19 +19,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
-@JsonTypeName("GetOntologyAnnotations")
-public abstract class GetOntologyAnnotationsResult implements Result {
-
+@JsonTypeName("GetAnnotationPropertyFrame")
+public abstract class GetAnnotationPropertyFrameResult implements Result, GetObjectResult<AnnotationPropertyFrame> {
 
     @JsonCreator
-    public static GetOntologyAnnotationsResult create(@JsonProperty("ontologyId") OWLOntologyID ontologyID,
-                                                      @JsonProperty("annotations") ImmutableList<PropertyAnnotationValue> annotations) {
-        return new AutoValue_GetOntologyAnnotationsResult(ontologyID, annotations);
+    public static GetAnnotationPropertyFrameResult create(@JsonProperty("frame") AnnotationPropertyFrame frame) {
+        return new AutoValue_GetAnnotationPropertyFrameResult(frame);
     }
 
-    @Nonnull
-    public abstract OWLOntologyID getOntologyId();
+    public abstract AnnotationPropertyFrame getFrame();
 
-    @Nonnull
-    public abstract ImmutableList<PropertyAnnotationValue> getAnnotations();
+    @JsonIgnore
+    @Override
+    public AnnotationPropertyFrame getObject() {
+        return getFrame();
+    }
 }

@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.tag;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
@@ -22,7 +24,9 @@ public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
 
     private OWLEntity entity;
 
-    private GetEntityTagsAction(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
+
+    private GetEntityTagsAction(@Nonnull ProjectId projectId,
+                                @Nonnull OWLEntity entity) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
     }
@@ -42,7 +46,9 @@ public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
         return create(projectId, entity);
     }
 
-    public static GetEntityTagsAction create(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
+    @JsonCreator
+    public static GetEntityTagsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                             @JsonProperty("entity") @Nonnull OWLEntity entity) {
         return new GetEntityTagsAction(projectId, entity);
     }
 
