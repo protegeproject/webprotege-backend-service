@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
@@ -17,7 +19,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetProjectDetails")
 public abstract class GetProjectDetailsResult implements Result {
 
-    public static GetProjectDetailsResult get(@Nonnull ProjectDetails projectDetails) {
+    @JsonCreator
+    public static GetProjectDetailsResult get(@JsonProperty("projectDetails") @Nonnull ProjectDetails projectDetails) {
         return new AutoValue_GetProjectDetailsResult(projectDetails);
     }
 
