@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.project;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 
@@ -13,6 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 10/03/16
  */
+@JsonTypeName("GetProjectDetails")
 public class GetProjectDetailsAction implements Action<GetProjectDetailsResult>, HasProjectId {
 
     private ProjectId projectId;
