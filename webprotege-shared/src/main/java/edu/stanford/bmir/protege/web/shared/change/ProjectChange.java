@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.change;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -35,6 +36,7 @@ public abstract class ProjectChange implements IsSerializable, Serializable {
 
     public abstract RevisionNumber getRevisionNumber();
 
+    @JsonProperty("userId")
     public abstract UserId getAuthor();
     
     public abstract String getSummary();
