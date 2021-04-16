@@ -85,7 +85,7 @@ public class GetIndividualsAction extends AbstractHasProjectAction<GetIndividual
      * @return The search string.  An empty string matches all results.
      */
     @Nonnull
-    public String getFilterString() {
+    public String getSearchString() {
         return searchString;
     }
 

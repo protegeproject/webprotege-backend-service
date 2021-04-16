@@ -76,7 +76,7 @@ public class GetIndividualsActionHandler extends AbstractProjectActionHandler<Ge
                                         @Nonnull ExecutionContext executionContext) {
         OWLClass type = action.getType().orElse(DataFactory.getOWLThing());
         IndividualsQueryResult result;
-        String filterString = action.getFilterString();
+        String filterString = action.getSearchString();
         PageRequest pageRequest = action.getPageRequest().orElse(PageRequest.requestSinglePage());
         result = individualsIndex.getIndividuals(type,
                                                  action.getInstanceRetrievalMode(),
