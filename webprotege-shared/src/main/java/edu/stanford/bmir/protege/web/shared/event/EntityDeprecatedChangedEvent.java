@@ -4,6 +4,8 @@ import com.google.web.bindery.event.shared.Event;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
+import java.util.Objects;
+
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>
@@ -46,5 +48,22 @@ public class EntityDeprecatedChangedEvent extends ProjectEvent<EntityDeprecatedC
     @Override
     protected void dispatch(EntityDeprecatedChangedHandler handler) {
         handler.handleEntityDeprecatedChangedEvent(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof EntityDeprecatedChangedEvent)) {
+            return false;
+        }
+        EntityDeprecatedChangedEvent that = (EntityDeprecatedChangedEvent) o;
+        return deprecated == that.deprecated && entity.equals(that.entity) && this.getProjectId().equals(that.getProjectId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(entity, deprecated, getProjectId());
     }
 }

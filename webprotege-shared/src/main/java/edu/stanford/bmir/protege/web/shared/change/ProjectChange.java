@@ -22,7 +22,7 @@ import java.io.Serializable;
 public abstract class ProjectChange implements IsSerializable, Serializable {
 
     @Nonnull
-    public static ProjectChange get(@Nonnull RevisionNumber revisionNumber, UserId author, long timestamp, String summary, int changeCount, Page<DiffElement<String, SafeHtml>> diff) {
+    public static ProjectChange get(@Nonnull RevisionNumber revisionNumber, UserId author, long timestamp, String summary, int changeCount, Page<DiffElement<String, String>> diff) {
         return new AutoValue_ProjectChange(changeCount,
                                            revisionNumber,
                                            author,
@@ -41,5 +41,5 @@ public abstract class ProjectChange implements IsSerializable, Serializable {
 
     public abstract long getTimestamp();
 
-    public abstract Page<DiffElement<String, SafeHtml>> getDiff();
+    public abstract Page<DiffElement<String, String>> getDiff();
 }

@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gwt.event.shared.EventHandler;
 import edu.stanford.bmir.protege.web.shared.HasSignature;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -49,6 +50,7 @@ public abstract class EntityFrameChangedEvent<E extends OWLEntity, H extends Eve
      * Gets the signature of the object that implements this interface.
      * @return A set of entities that represent the signature of this object
      */
+    @JsonIgnore
     @Override
     public Set<OWLEntity> getSignature() {
         return Collections.singleton(entity);

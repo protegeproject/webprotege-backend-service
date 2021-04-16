@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.util.Set;
@@ -19,5 +20,6 @@ public interface HasSignature {
      * Gets the signature of the object that implements this interface.
      * @return A set of entities that represent the signature of this object
      */
+    @JsonIgnore
     Set<OWLEntity> getSignature();
 }

@@ -1,10 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.lang;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.web.bindery.event.shared.Event;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
+
+import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -26,8 +30,9 @@ public class DisplayNameSettingsChangedEvent extends ProjectEvent<DisplayNameSet
         this.displayNameSettings = checkNotNull(displayNameSettings);
     }
 
-    public static DisplayNameSettingsChangedEvent get(@Nonnull ProjectId projectId,
-                                                      @Nonnull DisplayNameSettings displayNameSettings) {
+    @JsonCreator
+    public static DisplayNameSettingsChangedEvent get(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                                      @JsonProperty("displayNameSettings") @Nonnull DisplayNameSettings displayNameSettings) {
         return new DisplayNameSettingsChangedEvent(projectId, displayNameSettings);
     }
 
@@ -47,7 +52,25 @@ public class DisplayNameSettingsChangedEvent extends ProjectEvent<DisplayNameSet
     }
 
     @Nonnull
-    public DisplayNameSettings getDisplayLanguage() {
+    public DisplayNameSettings getDisplayNameSettings() {
         return displayNameSettings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DisplayNameSettingsChangedEvent)) {
+            return false;
+        }
+        DisplayNameSettingsChangedEvent that = (DisplayNameSettingsChangedEvent) o;
+        return displayNameSettings.equals(that.displayNameSettings)
+                && getProjectId().equals(that.getProjectId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(displayNameSettings, getProjectId());
     }
 }

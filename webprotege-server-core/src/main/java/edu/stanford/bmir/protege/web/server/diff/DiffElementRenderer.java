@@ -60,7 +60,7 @@ public class DiffElementRenderer<S extends Serializable> {
         };
     }
 
-    public DiffElement<S, SafeHtml> render(DiffElement<S, OntologyChange> element) {
+    public DiffElement<S, String> render(DiffElement<S, OntologyChange> element) {
         OntologyChange lineElement = element.getLineElement();
         return new DiffElement<>(
                 element.getDiffOperation(),
@@ -69,7 +69,7 @@ public class DiffElementRenderer<S extends Serializable> {
         );
     }
 
-    public SafeHtml renderData(OntologyChange change) {
-        return change.accept(visitor);
+    public String renderData(OntologyChange change) {
+        return change.accept(visitor).asString();
     }
 }

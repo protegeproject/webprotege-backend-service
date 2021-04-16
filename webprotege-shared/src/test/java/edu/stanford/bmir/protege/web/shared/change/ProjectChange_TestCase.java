@@ -45,7 +45,7 @@ public class ProjectChange_TestCase {
     private String summary = "The Summary";
 
     @Mock
-    private Page<DiffElement<String, SafeHtml>> diff;
+    private Page<DiffElement<String, String>> diff;
 
     @Mock
     private ImmutableSet<OWLEntityData> subjects;

@@ -3,6 +3,8 @@ package edu.stanford.bmir.protege.web.shared.projectsettings;
 import com.google.web.bindery.event.shared.Event;
 import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
 
+import java.util.Objects;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -46,5 +48,22 @@ public class ProjectSettingsChangedEvent extends WebProtegeEvent<ProjectSettings
     @Override
     protected void dispatch(ProjectSettingsChangedHandler projectSettingsChangedHandler) {
         projectSettingsChangedHandler.handleProjectSettingsChanged(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProjectSettingsChangedEvent)) {
+            return false;
+        }
+        ProjectSettingsChangedEvent that = (ProjectSettingsChangedEvent) o;
+        return Objects.equals(projectSettings, that.projectSettings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectSettings);
     }
 }

@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.tag;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableSet;
 import com.google.web.bindery.event.shared.Event;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
@@ -25,14 +26,14 @@ public class EntityTagsChangedEvent extends ProjectEvent<EntityTagsChangedHandle
 
     private OWLEntity entity;
 
-    private Collection<Tag> tags;
+    private ImmutableSet<Tag> tags;
 
     public EntityTagsChangedEvent(@Nonnull ProjectId projectId,
                                   @Nonnull OWLEntity entity,
                                   @Nonnull Collection<Tag> tags) {
         super(checkNotNull(projectId));
         this.entity = checkNotNull(entity);
-        this.tags = checkNotNull(tags);
+        this.tags = ImmutableSet.copyOf(checkNotNull(tags));
     }
 
     @GwtSerializationConstructor

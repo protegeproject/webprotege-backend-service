@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -95,5 +96,24 @@ public class DiscussionThreadStatusChangedEvent extends ProjectEvent<DiscussionT
                 .addValue(entity)
                 .addValue(status)
                 .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DiscussionThreadStatusChangedEvent)) {
+            return false;
+        }
+        DiscussionThreadStatusChangedEvent that = (DiscussionThreadStatusChangedEvent) o;
+        return openCommentsCountForEntity == that.openCommentsCountForEntity && Objects.equals(projectId,
+                                                                                               that.projectId) && Objects
+                .equals(threadId, that.threadId) && Objects.equals(entity, that.entity) && status == that.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, threadId, entity, openCommentsCountForEntity, status);
     }
 }

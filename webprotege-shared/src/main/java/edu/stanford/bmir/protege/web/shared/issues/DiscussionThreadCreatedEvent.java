@@ -5,6 +5,8 @@ import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstruc
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 
+import java.util.Objects;
+
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
@@ -39,4 +41,21 @@ public class DiscussionThreadCreatedEvent extends ProjectEvent<DiscussionThreadC
         handler.handleDiscussionThreadCreated(this);
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof DiscussionThreadCreatedEvent)) {
+            return false;
+        }
+        DiscussionThreadCreatedEvent that = (DiscussionThreadCreatedEvent) o;
+        return Objects.equals(thread, that.thread) && Objects.equals(getProjectId(), ((DiscussionThreadCreatedEvent) o).getProjectId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(thread, getProjectId());
+    }
 }

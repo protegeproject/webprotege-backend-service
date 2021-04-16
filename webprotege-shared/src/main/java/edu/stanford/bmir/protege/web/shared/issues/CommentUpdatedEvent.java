@@ -8,6 +8,8 @@ import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
 
+import java.util.Objects;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -60,5 +62,24 @@ public class CommentUpdatedEvent extends ProjectEvent<CommentUpdatedHandler> imp
 
     public Comment getComment() {
         return comment;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CommentUpdatedEvent)) {
+            return false;
+        }
+        CommentUpdatedEvent that = (CommentUpdatedEvent) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(threadId, that.threadId) && Objects.equals(
+                comment,
+                that.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, threadId, comment);
     }
 }

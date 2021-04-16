@@ -9,6 +9,7 @@ import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -90,5 +91,25 @@ public class CommentPostedEvent extends ProjectEvent<CommentPostedHandler> imple
 
     public int getOpenCommentCountForEntity() {
         return openCommentCountForEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CommentPostedEvent)) {
+            return false;
+        }
+        CommentPostedEvent that = (CommentPostedEvent) o;
+        return commentCountForEntity == that.commentCountForEntity && openCommentCountForEntity == that.openCommentCountForEntity && projectId
+                .equals(that.projectId) && threadId.equals(that.threadId) && comment.equals(that.comment) && Objects.equals(
+                entity,
+                that.entity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId, threadId, comment, entity, commentCountForEntity, openCommentCountForEntity);
     }
 }

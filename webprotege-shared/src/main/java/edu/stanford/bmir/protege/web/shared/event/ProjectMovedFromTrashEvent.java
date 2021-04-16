@@ -3,6 +3,8 @@ package edu.stanford.bmir.protege.web.shared.event;
 import com.google.web.bindery.event.shared.Event;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
+import java.util.Objects;
+
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>
@@ -34,5 +36,22 @@ public class ProjectMovedFromTrashEvent extends WebProtegeEvent<ProjectMovedFrom
     @Override
     protected void dispatch(ProjectMovedFromTrashHandler handler) {
         handler.handleProjectMovedFromTrash(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProjectMovedFromTrashEvent)) {
+            return false;
+        }
+        ProjectMovedFromTrashEvent that = (ProjectMovedFromTrashEvent) o;
+        return Objects.equals(projectId, that.projectId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId);
     }
 }

@@ -6,6 +6,7 @@ import edu.stanford.bmir.protege.web.shared.HasChangedValue;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -16,9 +17,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 18/12/2012
  */
-public class OntologyBrowserTextChangedEvent extends Event<OntologyBrowserTextChangedEventHandler> implements Serializable, HasChangedValue<String> {
+public class OntologyBrowserTextChangedEvent extends WebProtegeEvent<OntologyBrowserTextChangedEventHandler> implements Serializable, HasChangedValue<String> {
 
-    public static final transient Type<OntologyBrowserTextChangedEventHandler> TYPE = new Type<OntologyBrowserTextChangedEventHandler>();
+    public static final transient Event.Type<OntologyBrowserTextChangedEventHandler> TYPE = new Event.Type<>();
 
     private OWLOntologyID ontologyID;
 
@@ -64,12 +65,12 @@ public class OntologyBrowserTextChangedEvent extends Event<OntologyBrowserTextCh
     }
 
     /**
-     * Returns the {@link Type} used to register this event, allowing an
+     * Returns the {@link Event.Type} used to register this event, allowing an
      * {@link EventBus} to find handlers of the appropriate class.
      * @return the type
      */
     @Override
-    public Type<OntologyBrowserTextChangedEventHandler> getAssociatedType() {
+    public Event.Type<OntologyBrowserTextChangedEventHandler> getAssociatedType() {
         return TYPE;
     }
 
@@ -80,11 +81,28 @@ public class OntologyBrowserTextChangedEvent extends Event<OntologyBrowserTextCh
      * {@link EventBus#fireEventFromSource(Event,
      * Object)}.
      * @param handler handler
-     * @see EventBus#dispatchEvent(Event,
-     *      Object)
      */
     @Override
     protected void dispatch(OntologyBrowserTextChangedEventHandler handler) {
         handler.ontologyBrowserTextChanged(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof OntologyBrowserTextChangedEvent)) {
+            return false;
+        }
+        OntologyBrowserTextChangedEvent that = (OntologyBrowserTextChangedEvent) o;
+        return Objects.equals(ontologyID, that.ontologyID) && Objects.equals(oldValue, that.oldValue) && Objects.equals(
+                newValue,
+                that.newValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ontologyID, oldValue, newValue);
     }
 }

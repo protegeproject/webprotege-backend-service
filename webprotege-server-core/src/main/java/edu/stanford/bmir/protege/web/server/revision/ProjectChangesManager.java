@@ -159,7 +159,7 @@ public class ProjectChangesManager {
         Revision2DiffElementsTranslator translator = revision2DiffElementsTranslatorProvider.get();
         List<DiffElement<String, OntologyChange>> axiomDiffElements = translator.getDiffElementsFromRevision(limitedRecords);
         sortDiff(axiomDiffElements);
-        List<DiffElement<String, SafeHtml>> renderedDiffElements = renderDiffElements(axiomDiffElements);
+        List<DiffElement<String, String>> renderedDiffElements = renderDiffElements(axiomDiffElements);
         int pageElements = renderedDiffElements.size();
         int pageCount;
         if (pageElements == 0) {
@@ -168,7 +168,7 @@ public class ProjectChangesManager {
         else {
             pageCount = totalChanges / pageElements + (totalChanges % pageElements);
         }
-        Page<DiffElement<String, SafeHtml>> page = Page.create(
+        Page<DiffElement<String, String>> page = Page.create(
                 1,
                 pageCount,
                 renderedDiffElements,
@@ -184,9 +184,9 @@ public class ProjectChangesManager {
         changesBuilder.add(projectChange);
     }
 
-    private List<DiffElement<String, SafeHtml>> renderDiffElements(List<DiffElement<String, OntologyChange>> axiomDiffElements) {
+    private List<DiffElement<String, String>> renderDiffElements(List<DiffElement<String, OntologyChange>> axiomDiffElements) {
 
-        List<DiffElement<String, SafeHtml>> diffElements = new ArrayList<>();
+        List<DiffElement<String, String>> diffElements = new ArrayList<>();
         DiffElementRenderer<String> renderer = new DiffElementRenderer<>(browserTextProvider);
         for (DiffElement<String, OntologyChange> axiomDiffElement : axiomDiffElements) {
             diffElements.add(renderer.render(axiomDiffElement));

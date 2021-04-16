@@ -14,27 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class UpdateFrameAction extends AbstractHasProjectAction<Result> {
 
-    private PlainEntityFrame from;
+    public abstract PlainEntityFrame getFrom();
 
-    private PlainEntityFrame to;
-
-    /**
-     * For serialization purposes only
-     */
-    protected UpdateFrameAction() {
-    }
-
-    protected UpdateFrameAction(ProjectId projectId, PlainEntityFrame from, PlainEntityFrame to) {
-        super(projectId);
-        this.from = checkNotNull(from);
-        this.to = checkNotNull(to);
-    }
-
-    public PlainEntityFrame getFrom() {
-        return from;
-    }
-
-    public PlainEntityFrame getTo() {
-        return to;
-    }
+    public abstract PlainEntityFrame getTo();
 }

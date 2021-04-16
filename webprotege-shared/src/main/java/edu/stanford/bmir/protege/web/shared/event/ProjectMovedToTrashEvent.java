@@ -5,6 +5,7 @@ import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 /**
  * Author: Matthew Horridge<br>
@@ -38,5 +39,22 @@ public class ProjectMovedToTrashEvent extends WebProtegeEvent<ProjectMovedToTras
     @Override
     protected void dispatch(ProjectMovedToTrashHandler handler) {
         handler.handleProjectMovedToTrash(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProjectMovedToTrashEvent)) {
+            return false;
+        }
+        ProjectMovedToTrashEvent that = (ProjectMovedToTrashEvent) o;
+        return Objects.equals(projectId, that.projectId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectId);
     }
 }

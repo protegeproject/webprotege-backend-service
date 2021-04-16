@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import com.google.web.bindery.event.shared.Event;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -10,6 +12,7 @@ import edu.stanford.bmir.protege.web.shared.project.ProjectId;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/03/2013
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "eventType")
 public abstract class WebProtegeEvent<H> implements IsSerializable {
 
     private ProjectId projectId;
@@ -17,6 +20,7 @@ public abstract class WebProtegeEvent<H> implements IsSerializable {
     protected WebProtegeEvent() {
     }
 
+    @JsonIgnore
     public abstract Event.Type<H> getAssociatedType();
 
     protected abstract void dispatch(H handler);

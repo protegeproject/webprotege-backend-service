@@ -5,6 +5,8 @@ import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
+import java.util.Objects;
+
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
@@ -61,5 +63,22 @@ public class WatchAddedEvent extends ProjectEvent<WatchAddedHandler> {
                 .addValue(getProjectId())
                 .addValue(getWatch())
                 .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof WatchAddedEvent)) {
+            return false;
+        }
+        WatchAddedEvent that = (WatchAddedEvent) o;
+        return Objects.equals(watch, that.watch);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(watch);
     }
 }
