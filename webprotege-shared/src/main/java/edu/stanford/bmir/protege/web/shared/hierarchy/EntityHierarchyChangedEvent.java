@@ -9,6 +9,8 @@ import edu.stanford.protege.gwt.graphtree.shared.graph.GraphModelChangedEvent;
 
 import javax.annotation.Nonnull;
 
+import java.util.Objects;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -51,5 +53,22 @@ public class EntityHierarchyChangedEvent extends ProjectEvent<EntityHierarchyCha
 
     public GraphModelChangedEvent<EntityNode> getChangeEvent() {
         return changeEvent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof EntityHierarchyChangedEvent)) {
+            return false;
+        }
+        EntityHierarchyChangedEvent that = (EntityHierarchyChangedEvent) o;
+        return hierarchyId.equals(that.hierarchyId) && changeEvent.equals(that.changeEvent) && getSource().equals(that.getSource());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hierarchyId, changeEvent, getSource());
     }
 }

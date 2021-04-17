@@ -34,6 +34,5 @@ public abstract class GridColumnId implements FormRegionId {
     }
 
     @Override
-    @JsonValue
     public abstract String getId();
 }
