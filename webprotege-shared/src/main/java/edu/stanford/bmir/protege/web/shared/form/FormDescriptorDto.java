@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -16,10 +18,11 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 @AutoValue
 public abstract class FormDescriptorDto {
 
-    public static FormDescriptorDto get(@Nonnull FormId formId,
-                                        @Nonnull LanguageMap label,
-                                        @Nonnull ImmutableList<FormFieldDescriptorDto> fields,
-                                        @Nullable FormSubjectFactoryDescriptor subjectFactoryDescriptor) {
+    @JsonCreator
+    public static FormDescriptorDto get(@JsonProperty("formId") @Nonnull FormId formId,
+                                        @JsonProperty("label") @Nonnull LanguageMap label,
+                                        @JsonProperty("fields") @Nonnull ImmutableList<FormFieldDescriptorDto> fields,
+                                        @JsonProperty("formSubjectFactoryDescriptor") @Nullable FormSubjectFactoryDescriptor subjectFactoryDescriptor) {
         return new AutoValue_FormDescriptorDto(formId, label, fields, subjectFactoryDescriptor);
     }
 

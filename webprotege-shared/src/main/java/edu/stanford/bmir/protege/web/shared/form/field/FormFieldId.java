@@ -1,6 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
@@ -15,11 +17,12 @@ import javax.annotation.Nonnull;
  */
 @GwtCompatible(serializable = true)
 @AutoValue
+@JsonTypeName("FormFieldId")
 public abstract class FormFieldId implements FormRegionId {
 
     @JsonCreator
     @Nonnull
-    public static FormFieldId get(@Nonnull String id) {
+    public static FormFieldId get(@JsonProperty("id") @Nonnull String id) {
         checkFormat(id);
         return new AutoValue_FormFieldId(id);
     }
@@ -31,6 +34,5 @@ public abstract class FormFieldId implements FormRegionId {
     }
 
     @Override
-    @JsonValue
     public abstract String getId();
 }

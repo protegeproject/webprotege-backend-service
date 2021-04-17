@@ -1,6 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -17,11 +20,13 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 
 @GwtCompatible(serializable = true)
 @AutoValue
+@JsonTypeName("GridControlDescriptorDto")
 public abstract class GridControlDescriptorDto implements FormControlDescriptorDto {
 
+    @JsonCreator
     @Nonnull
-    public static GridControlDescriptorDto get(@Nonnull ImmutableList<GridColumnDescriptorDto> columns,
-                                               @Nullable FormSubjectFactoryDescriptor formSubjectFactoryDescriptor) {
+    public static GridControlDescriptorDto get(@JsonProperty("columns") @Nonnull ImmutableList<GridColumnDescriptorDto> columns,
+                                               @JsonProperty("formSubjectFactoryDescriptor") @Nullable FormSubjectFactoryDescriptor formSubjectFactoryDescriptor) {
         return new AutoValue_GridControlDescriptorDto(columns, formSubjectFactoryDescriptor);
     }
 

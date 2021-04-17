@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
@@ -21,7 +22,7 @@ public abstract class GridColumnId implements FormRegionId {
 
     @JsonCreator
     @Nonnull
-    public static GridColumnId get(@Nonnull String id) {
+    public static GridColumnId get(@JsonProperty("id") @Nonnull String id) {
         checkFormat(id);
         return new AutoValue_GridColumnId(id);
     }

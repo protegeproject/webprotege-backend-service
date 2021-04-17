@@ -1,7 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.form.field.NumberControlDescriptor;
@@ -13,14 +15,16 @@ import java.util.Optional;
 
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("NumberControlDataDto")
 public abstract class NumberControlDataDto implements FormControlDataDto, Comparable<NumberControlDataDto> {
 
     private Double numericValue;
 
+    @JsonCreator
     @Nonnull
-    public static NumberControlDataDto get(@Nonnull NumberControlDescriptor descriptor,
-                                           @Nonnull OWLLiteral value,
-                                           int depth) {
+    public static NumberControlDataDto get(@JsonProperty("descriptor") @Nonnull NumberControlDescriptor descriptor,
+                                           @JsonProperty("value") @Nonnull OWLLiteral value,
+                                           @JsonProperty("depth") int depth) {
         return new AutoValue_NumberControlDataDto(depth, descriptor, value);
     }
 

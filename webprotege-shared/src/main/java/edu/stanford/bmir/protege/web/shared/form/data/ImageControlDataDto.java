@@ -1,6 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.form.field.ImageControlDescriptor;
@@ -12,12 +14,14 @@ import java.util.Optional;
 
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("ImageControlDataDto")
 public abstract class ImageControlDataDto implements FormControlDataDto {
 
+    @JsonCreator
     @Nonnull
-    public static ImageControlDataDto get(@Nonnull ImageControlDescriptor descriptor,
-                                          @Nonnull IRI iri,
-                                          int depth) {
+    public static ImageControlDataDto get(@JsonProperty("descriptor") @Nonnull ImageControlDescriptor descriptor,
+                                          @JsonProperty("iri") @Nonnull IRI iri,
+                                          @JsonProperty("depth") int depth) {
         return new AutoValue_ImageControlDataDto(depth, descriptor, iri);
     }
 

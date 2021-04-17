@@ -1,5 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
@@ -17,18 +18,19 @@ import java.util.Optional;
 @AutoValue
 public abstract class FormFieldDescriptorDto implements IsSerializable, HasFormFieldId {
 
+    @JsonCreator
     @Nonnull
-    public static FormFieldDescriptorDto get(FormFieldId formFieldId,
-                                                OwlBinding owlBinding,
-                                                LanguageMap newlabel,
-                                                FieldRun fieldRun,
-                                                FormControlDescriptorDto descriptorDto,
-                                                Optionality optionality,
-                                                Repeatability repeatability,
-                                                FormFieldDeprecationStrategy deprecationStrategy,
-                                                boolean newReadOnly,
-                                                ExpansionState initialExpansionState,
-                                                LanguageMap help) {
+    public static FormFieldDescriptorDto get(@JsonProperty("id") FormFieldId formFieldId,
+                                             @JsonProperty("owlBinding") OwlBinding owlBinding,
+                                               @JsonProperty("label")  LanguageMap newlabel,
+                                              @JsonProperty("fieldRun")   FieldRun fieldRun,
+                                              @JsonProperty("formControlDescriptor")   FormControlDescriptorDto descriptorDto,
+                                              @JsonProperty("optionality")   Optionality optionality,
+                                              @JsonProperty("repeatability")   Repeatability repeatability,
+                                              @JsonProperty("deprecationStrategy")   FormFieldDeprecationStrategy deprecationStrategy,
+                                              @JsonProperty("readOnly")   boolean newReadOnly,
+                                              @JsonProperty("initialExpansionState")   ExpansionState initialExpansionState,
+                                              @JsonProperty("help")   LanguageMap help) {
         return new AutoValue_FormFieldDescriptorDto(formFieldId,
                                                     owlBinding,
                                                     newlabel,

@@ -1,7 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
@@ -13,11 +15,13 @@ import java.util.Optional;
 
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("EntityNameControlDataDto")
 public abstract class EntityNameControlDataDto implements FormControlDataDto {
 
-    public static EntityNameControlDataDto get(@Nonnull EntityNameControlDescriptor descriptor,
-                                               @Nonnull OWLEntityData entityData,
-                                               int depth) {
+    @JsonCreator
+    public static EntityNameControlDataDto get(@JsonProperty("descriptor") @Nonnull EntityNameControlDescriptor descriptor,
+                                               @JsonProperty("entityData") @Nonnull OWLEntityData entityData,
+                                               @JsonProperty("depth") int depth) {
         return new AutoValue_EntityNameControlDataDto(depth, descriptor, entityData);
     }
 

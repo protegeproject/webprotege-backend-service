@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.form.data.FormSubject;
@@ -15,6 +18,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("FormPageRequest")
 public abstract class FormPageRequest {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
@@ -24,12 +28,13 @@ public abstract class FormPageRequest {
         GRID_CONTROL
     }
 
+    @JsonCreator
     @Nonnull
-    public static FormPageRequest get(@Nonnull FormId formId,
-                                      @Nonnull FormSubject subject,
-                                      @Nonnull FormRegionId formFieldId,
-                                      @Nonnull SourceType sourceType,
-                                      @Nonnull PageRequest pageRequest) {
+    public static FormPageRequest get(@JsonProperty("formId") @Nonnull FormId formId,
+                                      @JsonProperty("subject") @Nonnull FormSubject subject,
+                                      @JsonProperty("regionId") @Nonnull FormRegionId formFieldId,
+                                      @JsonProperty("sourceType") @Nonnull SourceType sourceType,
+                                      @JsonProperty("pageRequest") @Nonnull PageRequest pageRequest) {
         return new AutoValue_FormPageRequest(formId, subject, formFieldId, sourceType, pageRequest);
     }
 
@@ -39,6 +44,7 @@ public abstract class FormPageRequest {
     @Nonnull
     public abstract FormSubject getSubject();
 
+    @JsonProperty("regionId")
     @Nonnull
     public abstract FormRegionId getFieldId();
 

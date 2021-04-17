@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
@@ -15,10 +17,11 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
-@JsonTypeName("entity")
+@JsonTypeName("Entity")
 public abstract class FormEntitySubject implements FormSubject {
 
-    public static FormEntitySubject get(@Nonnull OWLEntity entity) {
+    @JsonCreator
+    public static FormEntitySubject get(@JsonProperty("entity") @Nonnull OWLEntity entity) {
         return new AutoValue_FormEntitySubject(entity);
     }
 

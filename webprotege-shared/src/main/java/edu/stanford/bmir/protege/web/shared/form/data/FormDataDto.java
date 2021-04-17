@@ -1,6 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -16,13 +19,15 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("FormDataDto")
 public abstract class FormDataDto implements FormControlDataDto {
 
+    @JsonCreator
     @Nonnull
-    public static FormDataDto get(@Nonnull FormSubjectDto subject,
-                                  @Nonnull FormDescriptorDto formDescriptor,
-                                  @Nonnull ImmutableList<FormFieldDataDto> formFieldData,
-                                  int depth) {
+    public static FormDataDto get(@JsonProperty("subject") @Nonnull FormSubjectDto subject,
+                                  @JsonProperty("formDescriptor") @Nonnull FormDescriptorDto formDescriptor,
+                                  @JsonProperty("formFieldData") @Nonnull ImmutableList<FormFieldDataDto> formFieldData,
+                                  @JsonProperty("depth") int depth) {
         return new AutoValue_FormDataDto(depth, subject, formDescriptor, formFieldData);
     }
 

@@ -1,6 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.form.field;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
@@ -12,11 +15,13 @@ import java.util.Optional;
 
 @GwtCompatible(serializable = true)
 @AutoValue
+@JsonTypeName("EntityNameControlDescriptorDto")
 public abstract class EntityNameControlDescriptorDto implements FormControlDescriptorDto {
 
+    @JsonCreator
     @Nonnull
-    public static EntityNameControlDescriptorDto get(@Nonnull LanguageMap placeholder,
-                                                     @Nullable CompositeRootCriteria matchCriteria) {
+    public static EntityNameControlDescriptorDto get(@JsonProperty("placeholder") @Nonnull LanguageMap placeholder,
+                                                     @JsonProperty("matchCriteria") @Nullable CompositeRootCriteria matchCriteria) {
         return new AutoValue_EntityNameControlDescriptorDto(placeholder, matchCriteria);
     }
 
