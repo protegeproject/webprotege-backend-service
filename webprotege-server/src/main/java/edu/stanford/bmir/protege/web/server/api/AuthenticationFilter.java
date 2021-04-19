@@ -56,35 +56,31 @@ public class AuthenticationFilter implements ContainerRequestFilter {
      * (Authorization: ApiKey your-api-key-here), or from a session token, that is
      * present when a user logs into WebProtege using a Web browser.
      *
-     * If the user cannot be determined then the request is aborted with an UNAUTHORIZED (HTTP 401)
-     * response code.
+     * If an API key is provided and the user cannot be determined then the request
+     * is aborted with an UNAUTHORIZED (HTTP 401) response code.
      */
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        logger.info("Received Rpc Request with cookies: {}", requestContext.getCookies());
-
-
         Optional<ApiKey> apiKey = parseApiKeyFromHeaders(requestContext);
         final UserId userId;
         if(apiKey.isPresent()) {
             userId = getUserIdFromApiKey(apiKey.get());
+            if (userId.isGuest()) {
+                requestContext.abortWith(Response.status(UNAUTHORIZED).build());
+                return;
+            }
         }
         else {
             userId = getUserIdFromSession();
         }
-        if(userId.isGuest()) {
-            requestContext.abortWith(Response.status(UNAUTHORIZED).build());
-        }
-        else {
-            requestContext.setProperty(AUTHENTICATED_USER_ID, userId);
-            requestContext.setProperty(EXECUTION_CONTEXT, getExecutionContext());
-            apiKey.ifPresent(key -> requestContext.setProperty(AUTHENTICATED_USER_API_KEY, key));
-        }
+        requestContext.setProperty(AUTHENTICATED_USER_ID, userId);
+        requestContext.setProperty(EXECUTION_CONTEXT, getExecutionContext());
+        apiKey.ifPresent(key -> requestContext.setProperty(AUTHENTICATED_USER_API_KEY, key));
     }
 
     @Nonnull
     private ExecutionContext getExecutionContext() {
-        HttpSession session = servletRequest.getSession(false);
+        HttpSession session = servletRequest.getSession(true);
         return new ExecutionContext(new WebProtegeSessionImpl(session));
     }
 
@@ -100,10 +96,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
     private UserId getUserIdFromSession() {
         HttpSession session = servletRequest.getSession(false);
         if (session != null) {
-            logger.info("HttpSession: {}", session.getId());
-            // Get the user from session
             WebProtegeSession webProtegeSession = new WebProtegeSessionImpl(session);
-            logger.info("Session is assigned to " + webProtegeSession.getUserInSession());
             return webProtegeSession.getUserInSession();
         }
         else {
