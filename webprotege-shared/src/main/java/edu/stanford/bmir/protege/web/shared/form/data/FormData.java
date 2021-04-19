@@ -2,6 +2,8 @@ package edu.stanford.bmir.protege.web.shared.form.data;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
@@ -20,12 +22,13 @@ import java.util.Optional;
  */
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("FormData")
 public abstract class FormData implements FormControlData {
 
     @JsonCreator
-    public static FormData get(@Nonnull Optional<FormEntitySubject> subject,
-                               @Nonnull FormDescriptor formDescriptor,
-                               @Nonnull ImmutableList<FormFieldData> formFieldData) {
+    public static FormData get(@JsonProperty("subject") @Nonnull Optional<FormEntitySubject> subject,
+                               @JsonProperty("formDescriptor") @Nonnull FormDescriptor formDescriptor,
+                               @JsonProperty("formFieldData") @Nonnull ImmutableList<FormFieldData> formFieldData) {
         return new AutoValue_FormData(subject.orElse(null), formDescriptor, formFieldData);
     }
 

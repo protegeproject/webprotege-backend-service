@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.gwt.user.client.rpc.IsSerializable;
@@ -17,8 +19,9 @@ import javax.annotation.Nonnull;
 @GwtCompatible(serializable = true)
 public abstract class FormFieldData implements IsSerializable {
 
-    public static FormFieldData get(@Nonnull FormFieldDescriptor descriptor,
-                                    @Nonnull Page<FormControlData> formControlData) {
+    @JsonCreator
+    public static FormFieldData get(@JsonProperty("descriptor") @Nonnull FormFieldDescriptor descriptor,
+                                    @JsonProperty("formControlData") @Nonnull Page<FormControlData> formControlData) {
         return new AutoValue_FormFieldData(descriptor, formControlData);
     }
 
