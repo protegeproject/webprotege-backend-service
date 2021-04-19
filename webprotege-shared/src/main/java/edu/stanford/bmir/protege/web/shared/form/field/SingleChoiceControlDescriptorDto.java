@@ -27,7 +27,7 @@ public abstract class SingleChoiceControlDescriptorDto implements FormControlDes
 
 
     @Nonnull
-    protected abstract ChoiceListSourceDescriptor getChoiceListSourceDescriptor();
+    public abstract ChoiceListSourceDescriptor getChoiceListSourceDescriptor();
 
     @Nonnull
     public abstract SingleChoiceControlType getWidgetType();

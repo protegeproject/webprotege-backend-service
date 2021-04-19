@@ -1,5 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.entity.IRIData;
@@ -11,9 +14,11 @@ import java.util.Optional;
 
 @AutoValue
 @GwtCompatible(serializable = true)
+@JsonTypeName("IriFormControlDataDto")
 public abstract class IriFormControlDataDto extends PrimitiveFormControlDataDto {
 
-    public static IriFormControlDataDto get(@Nonnull IRIData iriData) {
+    @JsonCreator
+    public static IriFormControlDataDto get(@JsonProperty("iri") @Nonnull IRIData iriData) {
         return new AutoValue_IriFormControlDataDto(iriData);
     }
 

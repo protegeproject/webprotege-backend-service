@@ -1,5 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.bmir.protege.web.shared.DataFactory;
 import edu.stanford.bmir.protege.web.shared.entity.IRIData;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
@@ -10,6 +14,12 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 
+@JsonSubTypes({
+        @Type(EntityFormControlDataDto.class),
+        @Type(LiteralFormControlDataDto.class),
+        @Type(IriFormControlDataDto.class)
+})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public abstract class PrimitiveFormControlDataDto implements Comparable<PrimitiveFormControlDataDto> {
 
     public static final int BEFORE = -1;
@@ -80,10 +90,12 @@ public abstract class PrimitiveFormControlDataDto implements Comparable<Primitiv
         }
     }
 
+    @JsonIgnore
     public boolean isDeprecated() {
         return false;
     }
 
+    @JsonIgnore
     @Nonnull
     public abstract OWLPrimitiveData getPrimitiveData();
 }
