@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
 import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
@@ -12,6 +11,8 @@ import org.semanticweb.owlapi.vocab.Namespaces;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Matthew Horridge
@@ -26,11 +27,11 @@ public class ProjectViewPlaceTokenizer implements WebProtegePlaceTokenizer<Proje
 
     private static final String SELECTION = "?selection=";
 
-    private static RegExp regExp = RegExp.compile(PROJECTS + "(.{36})" + PERSPECTIVES + "([^\\?]*)(\\" + SELECTION + "(.*))?" );
+    private static Pattern pattern = Pattern.compile(PROJECTS + "(.{36})" + PERSPECTIVES + "([^\\?]*)(\\" + SELECTION + "(.*))?" );
 
     @Override
     public boolean matches(String token) {
-        return regExp.test(token);
+        return pattern.matcher(token).matches();
     }
 
     @Override
@@ -41,10 +42,13 @@ public class ProjectViewPlaceTokenizer implements WebProtegePlaceTokenizer<Proje
     public ProjectViewPlace getPlace(String token) {
         token = URL.decode(token);
 
-        MatchResult result = regExp.exec(token);
-        String projectId = result.getGroup(1);
-        String perspectiveId = result.getGroup(2);
-        String selectionString = result.getGroup(4);
+        Matcher matcher = pattern.matcher(token);
+        if (!matcher.matches()) {
+            return null;
+        }
+        String projectId = matcher.group(1);
+        String perspectiveId = matcher.group(2);
+        String selectionString = matcher.group(4);
 
         ProjectViewPlace.Builder builder = new ProjectViewPlace.Builder(ProjectId.get(projectId), PerspectiveId.get(perspectiveId));
 
