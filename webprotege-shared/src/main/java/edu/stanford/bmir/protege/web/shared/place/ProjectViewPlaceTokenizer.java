@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.common.collect.Lists;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.regexp.shared.MatchResult;
@@ -40,19 +39,13 @@ public class ProjectViewPlaceTokenizer implements WebProtegePlaceTokenizer<Proje
     }
 
     public ProjectViewPlace getPlace(String token) {
-        GWT.log("[ProjectViewPlaceTokenizer] Parsing: " + token);
         token = URL.decode(token);
-        GWT.log("[ProjectViewPlaceTokenizer] Decoded: " + token);
 
         MatchResult result = regExp.exec(token);
-        GWT.log("[ProjectViewPlaceTokenizer] MatchResult: " + result);
         String projectId = result.getGroup(1);
         String perspectiveId = result.getGroup(2);
         String selectionString = result.getGroup(4);
 
-        GWT.log("[ProjectViewPlaceTokenizer] Parsed: ProjectId: " + projectId);
-        GWT.log("[ProjectViewPlaceTokenizer] Parsed: PerspectiveId: " + perspectiveId);
-        GWT.log("[ProjectViewPlaceTokenizer] Parsed: Selection: " + selectionString);
         ProjectViewPlace.Builder builder = new ProjectViewPlace.Builder(ProjectId.get(projectId), PerspectiveId.get(perspectiveId));
 
         if(selectionString != null) {
