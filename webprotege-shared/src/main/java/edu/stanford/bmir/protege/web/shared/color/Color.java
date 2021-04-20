@@ -20,7 +20,7 @@ import static java.lang.Math.abs;
  * Stanford Center for Biomedical Informatics Research
  * 15 Mar 2018
  *
- * A simple utility class for representing colors (since Java Color is not GWT compatible)
+ * A simple utility class for representing colors
  */
 @AutoValue
 

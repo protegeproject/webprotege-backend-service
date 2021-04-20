@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
-import com.google.common.annotations.GwtIncompatible;
-
 import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
@@ -30,7 +28,6 @@ public abstract class PerspectiveId implements  Serializable {
         return new AutoValue_PerspectiveId(id);
     }
 
-    @GwtIncompatible
     public static PerspectiveId generate() {
         return get(UUID.randomUUID().toString());
     }

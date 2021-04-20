@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.issues;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.common.annotations.GwtIncompatible;
 
 
 
@@ -30,7 +29,6 @@ public class CommentId {
         return new CommentId(checkNotNull(idString));
     }
 
-    @GwtIncompatible
     public static CommentId create() {
         //noinspection NonJREEmulationClassesInClientCode
         return new CommentId(UUID.randomUUID().toString());

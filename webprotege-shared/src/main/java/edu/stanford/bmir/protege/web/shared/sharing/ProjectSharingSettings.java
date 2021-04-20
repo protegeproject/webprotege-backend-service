@@ -27,12 +27,6 @@ public class ProjectSharingSettings implements Serializable {
     @Nullable
     private SharingPermission linkSharingPermission = null;
 
-    /**
-     * Default no-args constructor for GWT serialization purposes.
-     */
-    private ProjectSharingSettings() {
-    }
-
     public ProjectSharingSettings(ProjectId projectId, Optional<SharingPermission> linkSharingPermission, List<SharingSetting> sharingSettings) {
         this.projectId = checkNotNull(projectId);
         this.sharingSettings.addAll(checkNotNull(sharingSettings));

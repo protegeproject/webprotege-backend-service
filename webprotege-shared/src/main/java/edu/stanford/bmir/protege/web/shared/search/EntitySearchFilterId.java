@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
-import com.google.common.annotations.GwtIncompatible;
 import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
@@ -38,7 +37,6 @@ public abstract class EntitySearchFilterId {
      * Create a new filter id using a random UUID.  This method only works
      * on the server.
      */
-    @GwtIncompatible
     @Nonnull
     public static EntitySearchFilterId createFilterId() {
         return get(UUID.randomUUID().toString());

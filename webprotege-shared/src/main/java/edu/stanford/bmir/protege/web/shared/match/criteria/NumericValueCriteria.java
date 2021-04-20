@@ -30,7 +30,7 @@ public abstract class NumericValueCriteria implements LexicalValueCriteria {
     @JsonIgnore
     protected abstract String getName();
 
-    // This weirdness is due to a problem I'm having with GWT serializing embedded enums
+    // This weirdness is due to a problem I'm having with serializing embedded enums
     // if the enum isn't reachable in a way other than through a custom field serializer
     public abstract double getValue();
 
