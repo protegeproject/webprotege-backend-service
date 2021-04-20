@@ -1,8 +1,15 @@
 package edu.stanford.bmir.protege.web.shared.watches;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasEventListResult;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
+
+import java.util.Objects;
+
+import static dagger.internal.Preconditions.checkNotNull;
 
 /**
  * Author: Matthew Horridge<br>
@@ -10,14 +17,37 @@ import edu.stanford.bmir.protege.web.shared.event.EventList;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/03/2013
  */
-public class AddWatchResult extends AbstractHasEventListResult<ProjectEvent<?>> {
+public class AddWatchResult implements Result, HasEventList<ProjectEvent<?>> {
 
+    private EventList<ProjectEvent<?>> eventList;
 
     private AddWatchResult() {
     }
 
-    public AddWatchResult(EventList<ProjectEvent<?>> events) {
-        super(events);
+    @JsonCreator
+    public AddWatchResult(@JsonProperty("eventList") EventList<ProjectEvent<?>> eventList) {
+        this.eventList = checkNotNull(eventList);
     }
 
+    @Override
+    public EventList<ProjectEvent<?>> getEventList() {
+        return eventList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof AddWatchResult)) {
+            return false;
+        }
+        AddWatchResult that = (AddWatchResult) o;
+        return Objects.equals(eventList, that.eventList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventList);
+    }
 }

@@ -14,7 +14,6 @@ import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.project.RemoveProjectFromTrashAction;
 import edu.stanford.bmir.protege.web.shared.project.RemoveProjectFromTrashResult;
-import edu.stanford.bmir.protege.web.shared.project.RemoveProjectsFromTrashResult;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
