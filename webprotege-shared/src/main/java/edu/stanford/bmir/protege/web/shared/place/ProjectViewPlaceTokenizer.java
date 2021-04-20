@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * Stanford Center for Biomedical Informatics Research
  * 12/02/16
  */
-public class ProjectViewPlaceTokenizer implements WebProtegePlaceTokenizer<ProjectViewPlace> {
+public class ProjectViewPlaceTokenizer {
 
     private static final String PROJECTS = "projects/";
 
@@ -28,12 +28,10 @@ public class ProjectViewPlaceTokenizer implements WebProtegePlaceTokenizer<Proje
 
     private static Pattern pattern = Pattern.compile(PROJECTS + "(.{36})" + PERSPECTIVES + "([^\\?]*)(\\" + SELECTION + "(.*))?" );
 
-    @Override
     public boolean matches(String token) {
         return pattern.matcher(token).matches();
     }
 
-    @Override
     public boolean isTokenizerFor(Place place) {
         return place instanceof ProjectViewPlace;
     }

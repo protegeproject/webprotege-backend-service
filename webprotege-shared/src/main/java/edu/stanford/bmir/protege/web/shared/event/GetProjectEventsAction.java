@@ -1,9 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
 import com.google.common.base.Objects;
-import com.google.gwt.user.client.rpc.InvocationException;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.dispatch.InvocationExceptionTolerantAction;
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
@@ -19,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/03/2013
  */
-public class GetProjectEventsAction implements Action<GetProjectEventsResult>, InvocationExceptionTolerantAction, HasProjectId {
+public class GetProjectEventsAction implements Action<GetProjectEventsResult>, HasProjectId {
 
     private ProjectId projectId;
 
@@ -48,11 +46,6 @@ public class GetProjectEventsAction implements Action<GetProjectEventsResult>, I
     @Override
     public ProjectId getProjectId() {
         return projectId;
-    }
-
-    @Override
-    public Optional<String> handleInvocationException(InvocationException ex) {
-        return Optional.empty();
     }
 
     @Override
