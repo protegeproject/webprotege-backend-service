@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.project;
 import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.core.shared.GwtIncompatible;
+
 import edu.stanford.bmir.protege.web.shared.lang.DisplayNameSettings;
 import edu.stanford.bmir.protege.web.shared.projectsettings.EntityDeprecationSettings;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;

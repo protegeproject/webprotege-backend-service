@@ -271,7 +271,6 @@
                                 <webApp>
                                     <resourceBases>
                                         <resourceBase>${basedir}/src/main/webapp</resourceBase>
-                                        <resourceBase>${basedir}/../target/gwt/launcherDir/</resourceBase>
                                     </resourceBases>
                                 </webApp>
                             </configuration>

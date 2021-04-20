@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.tag;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gwt.core.shared.GwtIncompatible;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
