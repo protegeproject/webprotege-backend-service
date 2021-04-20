@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.annotations.GwtIncompatible;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 
 import javax.annotation.Nonnull;
 import java.util.UUID;

@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.obo;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import javax.annotation.Nonnull;

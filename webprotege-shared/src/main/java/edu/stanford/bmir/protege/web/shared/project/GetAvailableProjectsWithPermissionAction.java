@@ -7,7 +7,7 @@ import com.google.auto.value.AutoValue;
 
 import com.google.common.base.MoreObjects;
 import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 
 import javax.annotation.Nonnull;

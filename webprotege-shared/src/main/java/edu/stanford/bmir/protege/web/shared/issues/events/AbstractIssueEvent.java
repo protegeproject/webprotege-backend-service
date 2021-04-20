@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.issues.events;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;

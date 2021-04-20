@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
 import com.google.web.bindery.event.shared.Event;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;

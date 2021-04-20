@@ -5,7 +5,7 @@ import com.google.auto.value.AutoValue;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 

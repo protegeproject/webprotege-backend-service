@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.form.field.GridColumnId;
 
 import javax.annotation.Nonnull;

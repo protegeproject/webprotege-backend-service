@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 
 import javax.annotation.Nonnull;
 import java.util.Objects;

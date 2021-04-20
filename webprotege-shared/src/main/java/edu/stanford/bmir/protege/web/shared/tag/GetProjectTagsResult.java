@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.tag;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import javax.annotation.Nonnull;

@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.form.field;
 import com.google.common.base.Objects;
 import com.google.common.collect.Range;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 

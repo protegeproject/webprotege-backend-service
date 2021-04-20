@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;

@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.permissions;
 
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.app.UserInSession;
 
 import javax.annotation.Nonnull;

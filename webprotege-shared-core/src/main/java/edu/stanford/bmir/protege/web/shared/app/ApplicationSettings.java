@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.app;
 
 import com.google.common.base.Objects;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.user.EmailAddress;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 

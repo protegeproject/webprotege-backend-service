@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 

@@ -7,7 +7,7 @@ import com.google.auto.value.AutoValue;
 
 import com.google.common.collect.ImmutableList;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.form.data.FormControlDataDto;
 
 import java.io.Serializable;

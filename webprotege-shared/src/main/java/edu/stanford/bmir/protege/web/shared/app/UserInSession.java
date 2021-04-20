@@ -6,7 +6,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
 
 import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.user.UserDetails;
 
 import javax.annotation.Nonnull;

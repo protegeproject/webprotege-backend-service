@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
 import com.google.common.base.MoreObjects;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 

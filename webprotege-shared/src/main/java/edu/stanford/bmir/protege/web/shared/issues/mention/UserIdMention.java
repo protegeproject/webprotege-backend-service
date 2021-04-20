@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.issues.mention;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.issues.Mention;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 

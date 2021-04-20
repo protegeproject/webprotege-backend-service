@@ -53,7 +53,6 @@ public class GetProjectEventsAction implements Action<GetProjectEventsResult>, I
 
     @Override
     public Optional<String> handleInvocationException(InvocationException ex) {
-        GWT.log("Could not retrieve events due to server connection problems.");
         return Optional.empty();
     }
 

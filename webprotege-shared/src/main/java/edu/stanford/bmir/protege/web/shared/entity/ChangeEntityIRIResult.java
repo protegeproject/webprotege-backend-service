@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.entity;
 
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 

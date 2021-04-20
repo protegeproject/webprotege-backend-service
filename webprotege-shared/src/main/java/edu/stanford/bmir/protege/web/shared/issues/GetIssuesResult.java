@@ -13,7 +13,6 @@ import java.util.List;
  * Stanford Center for Biomedical Informatics Research
  * 27 Jul 16
  */
-@SuppressWarnings("GwtInconsistentSerializableClass" )
 public class GetIssuesResult implements Result, HasProjectId {
 
     private ProjectId projectId;

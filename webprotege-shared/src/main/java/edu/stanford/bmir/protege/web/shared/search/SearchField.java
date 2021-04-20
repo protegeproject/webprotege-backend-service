@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.search;
 
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 
 import javax.annotation.Nonnull;
 

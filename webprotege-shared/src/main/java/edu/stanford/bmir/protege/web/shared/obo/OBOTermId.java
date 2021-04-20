@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.obo;
 
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 
 import java.io.Serializable;
 

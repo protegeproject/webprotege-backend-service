@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.obo;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import java.util.Set;
