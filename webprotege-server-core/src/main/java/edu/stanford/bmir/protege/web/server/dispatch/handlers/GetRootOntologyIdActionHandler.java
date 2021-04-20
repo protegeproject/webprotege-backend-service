@@ -5,8 +5,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
 import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetRootOntologyIdAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetRootOntologyIdResult;
+import edu.stanford.bmir.protege.web.shared.ontology.GetRootOntologyIdAction;
+import edu.stanford.bmir.protege.web.shared.ontology.GetRootOntologyIdResult;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;

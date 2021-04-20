@@ -3,6 +3,8 @@ package edu.stanford.bmir.protege.web.shared.dispatch.actions;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.shared.ontology.GetRootOntologyIdAction;
+import edu.stanford.bmir.protege.web.shared.ontology.GetRootOntologyIdResult;
 import org.junit.Test;
 
 import java.io.IOException;

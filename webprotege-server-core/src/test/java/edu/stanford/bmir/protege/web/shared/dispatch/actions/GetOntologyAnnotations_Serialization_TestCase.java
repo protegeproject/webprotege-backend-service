@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.shared.ontology.GetOntologyAnnotationsAction;
+import edu.stanford.bmir.protege.web.shared.ontology.GetOntologyAnnotationsResult;
 import org.junit.Test;
 
 import java.io.IOException;

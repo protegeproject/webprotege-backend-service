@@ -4,6 +4,8 @@ import edu.stanford.bmir.protege.web.shared.app.UserInSession;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.shared.user.GetCurrentUserInSessionAction;
+import edu.stanford.bmir.protege.web.shared.user.GetCurrentUserInSessionResult;
 import edu.stanford.bmir.protege.web.shared.user.UserDetails;
 import org.junit.Test;
 

@@ -17,7 +17,6 @@ import edu.stanford.bmir.protege.web.shared.change.RevertRevisionAction;
 import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordAction;
 import edu.stanford.bmir.protege.web.shared.crud.GetEntityCrudKitsAction;
 import edu.stanford.bmir.protege.web.shared.crud.SetEntityCrudKitSettingsAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.*;
 import edu.stanford.bmir.protege.web.shared.entity.*;
 import edu.stanford.bmir.protege.web.shared.event.GetProjectEventsAction;
 import edu.stanford.bmir.protege.web.shared.form.*;
@@ -39,6 +38,9 @@ import edu.stanford.bmir.protege.web.shared.merge_add.ExistingOntologyMergeAddAc
 import edu.stanford.bmir.protege.web.shared.merge_add.GetAllOntologiesAction;
 import edu.stanford.bmir.protege.web.shared.merge_add.NewOntologyMergeAddAction;
 import edu.stanford.bmir.protege.web.shared.obo.*;
+import edu.stanford.bmir.protege.web.shared.ontology.GetOntologyAnnotationsAction;
+import edu.stanford.bmir.protege.web.shared.ontology.GetRootOntologyIdAction;
+import edu.stanford.bmir.protege.web.shared.ontology.SetOntologyAnnotationsAction;
 import edu.stanford.bmir.protege.web.shared.permissions.GetProjectPermissionsAction;
 import edu.stanford.bmir.protege.web.shared.permissions.RebuildPermissionsAction;
 import edu.stanford.bmir.protege.web.shared.perspective.*;
@@ -57,6 +59,7 @@ import edu.stanford.bmir.protege.web.shared.sharing.SetProjectSharingSettingsAct
 import edu.stanford.bmir.protege.web.shared.tag.*;
 import edu.stanford.bmir.protege.web.shared.usage.GetUsageAction;
 import edu.stanford.bmir.protege.web.shared.user.CreateUserAccountAction;
+import edu.stanford.bmir.protege.web.shared.user.GetCurrentUserInSessionAction;
 import edu.stanford.bmir.protege.web.shared.user.LogOutUserAction;
 import edu.stanford.bmir.protege.web.shared.viz.GetEntityGraphAction;
 import edu.stanford.bmir.protege.web.shared.viz.GetUserProjectEntityGraphCriteriaAction;

@@ -8,8 +8,8 @@ import edu.stanford.bmir.protege.web.server.index.OntologyAnnotationsIndex;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
 import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetOntologyAnnotationsAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetOntologyAnnotationsResult;
+import edu.stanford.bmir.protege.web.shared.ontology.GetOntologyAnnotationsAction;
+import edu.stanford.bmir.protege.web.shared.ontology.GetOntologyAnnotationsResult;
 import edu.stanford.bmir.protege.web.shared.frame.PropertyAnnotationValue;
 import edu.stanford.bmir.protege.web.shared.frame.State;
 

@@ -7,8 +7,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.shared.app.UserInSession;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetCurrentUserInSessionAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetCurrentUserInSessionResult;
+import edu.stanford.bmir.protege.web.shared.user.GetCurrentUserInSessionAction;
+import edu.stanford.bmir.protege.web.shared.user.GetCurrentUserInSessionResult;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;
