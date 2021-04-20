@@ -19,7 +19,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class OBOTermCrossProduct implements Serializable {
 
-    @SuppressWarnings("GwtInconsistentSerializableClass")
     @Nullable
     private OWLClassData genus;
 
