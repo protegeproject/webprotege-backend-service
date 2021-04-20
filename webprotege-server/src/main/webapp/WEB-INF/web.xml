@@ -11,18 +11,6 @@
 		<param-value>true</param-value>
 	</context-param>
 
-	<!-- Filters -->
-
-	<filter>
-		<filter-name>WebProtegeWebAppFilter</filter-name>
-		<filter-class>edu.stanford.bmir.protege.web.server.filter.WebProtegeWebAppFilter</filter-class>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>WebProtegeWebAppFilter</filter-name>
-		<url-pattern>*</url-pattern>
-	</filter-mapping>
-
 	<!-- Listener for initializing and disposing WebProtege -->
 	
 	<listener>

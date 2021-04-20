@@ -1,19 +1,12 @@
 package edu.stanford.bmir.protege.web.server.app;
 
 import ch.qos.logback.classic.LoggerContext;
-import edu.stanford.bmir.protege.web.server.filter.WebProtegeWebAppFilter;
-import edu.stanford.bmir.protege.web.server.init.WebProtegeConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Date;
 
 import static edu.stanford.bmir.protege.web.server.logging.WebProtegeLogger.WebProtegeMarker;
 
@@ -26,42 +19,35 @@ public class WebProtegeServletContextListener implements ServletContextListener 
 
     public void contextInitialized(ServletContextEvent sce) {
         logger.info(WebProtegeMarker, "Initializing WebProtege");
-        try {
-            ServerComponent serverComponent = DaggerServerComponent.create();
 
-            ServletContext servletContext = sce.getServletContext();
+        ServerComponent serverComponent = DaggerServerComponent.create();
 
-            servletContext.setAttribute(ServerComponent.class.getName(), serverComponent);
+        ServletContext servletContext = sce.getServletContext();
 
-            servletContext.addServlet("ProjectDownloadServlet", serverComponent.getProjectDownloadServlet())
-                          .addMapping("/download");
+        servletContext.setAttribute(ServerComponent.class.getName(), serverComponent);
 
-            servletContext.addServlet("FileUploadServlet", serverComponent.getFileUploadServlet())
-                          .addMapping("/webprotege/submitfile");
+        servletContext.addServlet("ProjectDownloadServlet", serverComponent.getProjectDownloadServlet())
+                      .addMapping("/download");
 
-            servletContext.addServlet("JerseyContainerServlet", serverComponent.getJerseyServletContainer())
-                          .addMapping("/data/*");
+        servletContext.addServlet("FileUploadServlet", serverComponent.getFileUploadServlet())
+                      .addMapping("/webprotege/submitfile");
 
-            servletContext.addServlet("JerseyContainerServlet_Rpc", serverComponent.getJerseyServletContainer())
-                          .addMapping("/api/*");
+        servletContext.addServlet("JerseyContainerServlet", serverComponent.getJerseyServletContainer())
+                      .addMapping("/data/*");
 
-            servletContext.addServlet("AuthenticationServlet", serverComponent.getAuthenticationServlet())
-                          .addMapping("/authenticate");
+        servletContext.addServlet("JerseyContainerServlet_Rpc", serverComponent.getJerseyServletContainer())
+                      .addMapping("/api/*");
 
-            servletContext.addListener(serverComponent.getSessionListener());
-            serverComponent.getWebProtegeConfigurationChecker().performConfiguration();
-            serverComponent.getProjectCacheManager().start();
+        servletContext.addServlet("AuthenticationServlet", serverComponent.getAuthenticationServlet())
+                      .addMapping("/authenticate");
 
-            Runtime runtime = Runtime.getRuntime();
-            logger.info("Max  Memory: {} MB", (runtime.maxMemory() / (1024 * 1024)));
-            logger.info(WebProtegeMarker, "WebProtege initialization complete");
-        } catch (WebProtegeConfigurationException e) {
-            logger.error(WebProtegeMarker, "Encountered a configuration error during initialization: {}", e.getMessage(), e);
-            WebProtegeWebAppFilter.setConfigError(e);
-        } catch (Throwable error) {
-            logger.error(WebProtegeMarker, "Encountered an error during initialization: {}", error.getMessage(), error);
-            WebProtegeWebAppFilter.setError(error);
-        }
+        servletContext.addListener(serverComponent.getSessionListener());
+        serverComponent.getWebProtegeConfigurationChecker().performConfiguration();
+        serverComponent.getProjectCacheManager().start();
+
+        Runtime runtime = Runtime.getRuntime();
+        logger.info("Max  Memory: {} MB", (runtime.maxMemory() / (1024 * 1024)));
+        logger.info(WebProtegeMarker, "WebProtege initialization complete");
     }
 
     @Override
