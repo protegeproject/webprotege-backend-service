@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.issues.mention;
 
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
 import edu.stanford.bmir.protege.web.shared.DataFactory;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 import org.semanticweb.owlapi.model.EntityType;
@@ -11,6 +9,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -32,7 +32,7 @@ public class MentionParser {
     private static final int ENTITY_MATCH_GROUP = 11;
 
     // @formatter:off
-    private final RegExp pattern = RegExp.compile(
+    private final Pattern pattern = Pattern.compile(
             // Start of string or some kind of boundary
             "(^|[\\s\\.\\,\\(\\)\\[\\]\\{\\}])" +
                     // Issue e.g. #33 for issue 33
@@ -47,7 +47,7 @@ public class MentionParser {
                     // Entity e.g. Class(<http:/my.ontology/ClassA>)
                     "((Class|ObjectProperty|DataProperty|AnnotationProperty|NamedIndividual|Datatype)\\(<([^>]+)>\\)))",
             // Global and Multiple
-            "gm");
+            Pattern.DOTALL);
     // @formatter:on
 
 
@@ -64,30 +64,28 @@ public class MentionParser {
     public List<ParsedMention> parseMentions(@Nonnull String text) {
         checkNotNull(text);
         List<ParsedMention> parsedMentions = new ArrayList<>();
-        MatchResult matchResult = pattern.exec(text);
-        while (matchResult != null) {
+        Matcher matchResult = pattern.matcher(text);
+        while (matchResult.find()) {
             ParsedMention mention = parseMentionFromMatch(matchResult);
             parsedMentions.add(mention);
-            pattern.setLastIndex(matchResult.getIndex() + 1);
-            matchResult = pattern.exec(text);
         }
         return parsedMentions;
     }
 
-    private static ParsedMention parseMentionFromMatch(MatchResult matchResult) {
-        String issueMatchGroup = matchResult.getGroup(ISSUE_MENTION_MATCH_GROUP);
+    private static ParsedMention parseMentionFromMatch(Matcher matchResult) {
+        String issueMatchGroup = matchResult.group(ISSUE_MENTION_MATCH_GROUP);
         if (issueMatchGroup != null) {
             return parseIssueMention(matchResult);
         }
-        String userIdMatchGroup = matchResult.getGroup(USER_ID_MATCH_GROUP);
+        String userIdMatchGroup = matchResult.group(USER_ID_MATCH_GROUP);
         if (userIdMatchGroup != null) {
             return parseUserIdMention(matchResult);
         }
-        String revisionMatchGroup = matchResult.getGroup(REVISION_MATCH_GROUP);
+        String revisionMatchGroup = matchResult.group(REVISION_MATCH_GROUP);
         if (revisionMatchGroup != null) {
             return parseRevisionMention(matchResult);
         }
-        String entityMatchGroup = matchResult.getGroup(ENTITY_MATCH_GROUP);
+        String entityMatchGroup = matchResult.group(ENTITY_MATCH_GROUP);
         if (entityMatchGroup != null) {
             return parseEntityMention(matchResult);
         }
@@ -95,28 +93,28 @@ public class MentionParser {
     }
 
 
-    private static ParsedMention parseIssueMention(MatchResult matchResult) {
-        String issueMatchGroup = matchResult.getGroup(ISSUE_MENTION_MATCH_GROUP);
+    private static ParsedMention parseIssueMention(Matcher matchResult) {
+        String issueMatchGroup = matchResult.group(ISSUE_MENTION_MATCH_GROUP);
         if (issueMatchGroup == null) {
-            throw new IllegalStateException("Revision match group is not present in input: " + matchResult.getInput());
+            throw new IllegalStateException("Revision match group is not present in input");
         }
-        int startIndex = matchResult.getIndex() + matchResult.getGroup(START_BOUNDARY_GROUP).length();
+        int startIndex = matchResult.start() + matchResult.group(START_BOUNDARY_GROUP).length();
         int endIndex = startIndex + issueMatchGroup.length();
-        String issueNumberGroup = matchResult.getGroup(ISSUE_MENTION_MATCH_GROUP + 1);
+        String issueNumberGroup = matchResult.group(ISSUE_MENTION_MATCH_GROUP + 1);
         return new ParsedMention(
                 new IssueMention(Integer.parseInt(issueNumberGroup)),
                 startIndex,
                 endIndex);
     }
 
-    private static ParsedMention parseRevisionMention(MatchResult matchResult) {
-        String revisionMatchGroup = matchResult.getGroup(REVISION_MATCH_GROUP);
+    private static ParsedMention parseRevisionMention(Matcher matchResult) {
+        String revisionMatchGroup = matchResult.group(REVISION_MATCH_GROUP);
         if (revisionMatchGroup == null) {
-            throw new IllegalStateException("Revision match group is not present in input: " + matchResult.getInput());
+            throw new IllegalStateException("Revision match group is not present in input");
         }
-        int startIndex = matchResult.getIndex() + matchResult.getGroup(START_BOUNDARY_GROUP).length();
+        int startIndex = matchResult.start() + matchResult.group(START_BOUNDARY_GROUP).length();
         int endIndex = startIndex + revisionMatchGroup.length();
-        String revisionNumberGroup = matchResult.getGroup(REVISION_MATCH_GROUP + 1);
+        String revisionNumberGroup = matchResult.group(REVISION_MATCH_GROUP + 1);
         return new ParsedMention(
                 new RevisionMention(
                         Long.parseLong(revisionNumberGroup)),
@@ -125,14 +123,14 @@ public class MentionParser {
     }
 
 
-    private static ParsedMention parseUserIdMention(MatchResult matchResult) {
-        String userIdMatchGroup = matchResult.getGroup(USER_ID_MATCH_GROUP);
+    private static ParsedMention parseUserIdMention(Matcher matchResult) {
+        String userIdMatchGroup = matchResult.group(USER_ID_MATCH_GROUP);
         if (userIdMatchGroup == null) {
-            throw new IllegalStateException("UserId match group is not present in input: " + matchResult.getInput());
+            throw new IllegalStateException("UserId match group is not present in input");
         }
-        int startIndex = matchResult.getIndex() + matchResult.getGroup(START_BOUNDARY_GROUP).length();
+        int startIndex = matchResult.start() + matchResult.group(START_BOUNDARY_GROUP).length();
         int endIndex = startIndex + userIdMatchGroup.length();
-        String plainUserIdMatchGroup = matchResult.getGroup(USER_ID_MATCH_GROUP + 2);
+        String plainUserIdMatchGroup = matchResult.group(USER_ID_MATCH_GROUP + 2);
         if (plainUserIdMatchGroup != null) {
             return new ParsedMention(
                     new UserIdMention(
@@ -141,7 +139,7 @@ public class MentionParser {
                     startIndex + userIdMatchGroup.length());
         }
         else {
-            String bracketedUserIdMatchGroup = matchResult.getGroup(USER_ID_MATCH_GROUP + 3);
+            String bracketedUserIdMatchGroup = matchResult.group(USER_ID_MATCH_GROUP + 3);
             if (bracketedUserIdMatchGroup != null) {
                 return new ParsedMention(
                         new UserIdMention(
@@ -152,24 +150,24 @@ public class MentionParser {
 
             }
             else {
-                throw new IllegalStateException("UserId not present in input " + matchResult.getInput());
+                throw new IllegalStateException("UserId not present in input");
             }
         }
     }
 
 
-    private static ParsedMention parseEntityMention(MatchResult matchResult) {
-        String entityMatchGroup = matchResult.getGroup(ENTITY_MATCH_GROUP);
+    private static ParsedMention parseEntityMention(Matcher matchResult) {
+        String entityMatchGroup = matchResult.group(ENTITY_MATCH_GROUP);
         if (entityMatchGroup == null) {
-            throw new IllegalStateException("Entity match group is not present in input: " + matchResult.getInput());
+            throw new IllegalStateException("Entity match group is not present in input");
         }
-        String entityTypeGroup = matchResult.getGroup(ENTITY_MATCH_GROUP + 1);
+        String entityTypeGroup = matchResult.group(ENTITY_MATCH_GROUP + 1);
         if (entityTypeGroup == null) {
-            throw new IllegalStateException("EntityType group is not present in input: " + matchResult.getInput());
+            throw new IllegalStateException("EntityType group is not present in input");
         }
-        String entityIriGroup = matchResult.getGroup(ENTITY_MATCH_GROUP + 2);
+        String entityIriGroup = matchResult.group(ENTITY_MATCH_GROUP + 2);
         if (entityIriGroup == null) {
-            throw new IllegalStateException("Entity IRI group is not present in input: " + matchResult.getInput());
+            throw new IllegalStateException("Entity IRI group is not present in input");
         }
         EntityType<?> entityType = null;
         for (EntityType<?> type : EntityType.values()) {
@@ -182,7 +180,7 @@ public class MentionParser {
             throw new IllegalStateException("Illegal entity type: " + entityTypeGroup);
         }
         IRI entityIri = IRI.create(entityIriGroup);
-        int startIndex = matchResult.getIndex() + matchResult.getGroup(START_BOUNDARY_GROUP).length();
+        int startIndex = matchResult.start() + matchResult.group(START_BOUNDARY_GROUP).length();
         int endIndex = startIndex + entityMatchGroup.length();
         return new ParsedMention(
                 new EntityMention(
