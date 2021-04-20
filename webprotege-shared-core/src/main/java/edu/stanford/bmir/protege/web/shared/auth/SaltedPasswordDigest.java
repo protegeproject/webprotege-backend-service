@@ -30,7 +30,7 @@ public class SaltedPasswordDigest {
     }
 
 
-    @GwtSerializationConstructor
+
     private SaltedPasswordDigest() {
     }
 

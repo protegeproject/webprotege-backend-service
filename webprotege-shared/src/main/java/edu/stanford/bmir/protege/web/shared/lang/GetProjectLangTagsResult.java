@@ -31,7 +31,7 @@ public class GetProjectLangTagsResult implements Result {
         this.langTags = checkNotNull(langTags);
     }
 
-    @GwtSerializationConstructor
+
     private GetProjectLangTagsResult() {
     }
 

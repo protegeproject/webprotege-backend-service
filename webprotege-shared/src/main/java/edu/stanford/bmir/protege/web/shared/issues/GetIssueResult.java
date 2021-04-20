@@ -17,7 +17,7 @@ public class GetIssueResult implements Result {
         this.issue = issue;
     }
 
-    @GwtSerializationConstructor
+
     private GetIssueResult() {
     }
 

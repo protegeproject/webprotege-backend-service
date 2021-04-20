@@ -22,7 +22,7 @@ public class GetProjectFormDescriptorsAction implements ProjectAction<GetProject
         this.projectId = checkNotNull(projectId);
     }
 
-    @GwtSerializationConstructor
+
     private GetProjectFormDescriptorsAction() {
     }
 

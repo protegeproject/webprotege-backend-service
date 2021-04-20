@@ -21,7 +21,7 @@ public class GetFreshFormIdAction implements ProjectAction<GetFreshFormIdResult>
         this.projectId = checkNotNull(projectId);
     }
 
-    @GwtSerializationConstructor
+
     private GetFreshFormIdAction() {
     }
 

@@ -24,7 +24,7 @@ public class UserIdMention extends Mention {
         this.userId = userId;
     }
 
-    @GwtSerializationConstructor
+
     private UserIdMention() {
     }
 

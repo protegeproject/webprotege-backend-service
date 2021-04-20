@@ -43,7 +43,7 @@ public class ApplicationSettings {
 
     private long maxUploadSize;
 
-    @GwtSerializationConstructor
+
     private ApplicationSettings() {
     }
 

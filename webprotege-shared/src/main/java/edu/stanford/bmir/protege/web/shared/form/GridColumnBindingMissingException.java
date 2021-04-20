@@ -22,7 +22,7 @@ public class GridColumnBindingMissingException extends RuntimeException {
         this.columnId = checkNotNull(columnId);
     }
 
-    @GwtSerializationConstructor
+
     private GridColumnBindingMissingException() {
     }
 

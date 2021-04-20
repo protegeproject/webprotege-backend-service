@@ -21,7 +21,7 @@ public class GetProjectPrefixDeclarationsAction implements ProjectAction<GetProj
         this.projectId = checkNotNull(projectId.getId());
     }
 
-    @GwtSerializationConstructor
+
     private GetProjectPrefixDeclarationsAction() {
     }
 

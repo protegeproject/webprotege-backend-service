@@ -27,7 +27,7 @@ public class AddIssueCommentAction implements Action<AddIssueCommentResult>, Has
         this.comment = comment;
     }
 
-    @GwtSerializationConstructor
+
     private AddIssueCommentAction() {
     }
 

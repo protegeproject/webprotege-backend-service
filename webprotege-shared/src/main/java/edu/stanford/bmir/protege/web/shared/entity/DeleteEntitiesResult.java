@@ -32,7 +32,7 @@ public class DeleteEntitiesResult implements Result, HasEventList<ProjectEvent<?
 
     private EventList<ProjectEvent<?>> events;
 
-    @GwtSerializationConstructor
+
     private DeleteEntitiesResult() {
     }
 

@@ -37,7 +37,7 @@ public class EntityHierarchyChangedEvent extends ProjectEvent<EntityHierarchyCha
         return hierarchyId;
     }
 
-    @GwtSerializationConstructor
+
     private EntityHierarchyChangedEvent() {
     }
 

@@ -37,7 +37,7 @@ public class SetEntityFormDescriptorAction implements ProjectAction<SetEntityFor
         this.selectorCriteria = checkNotNull(selectorCriteria);
     }
 
-    @GwtSerializationConstructor
+
     private SetEntityFormDescriptorAction() {
     }
 

@@ -27,7 +27,7 @@ public class GetOboTermCrossProductAction implements ProjectAction<GetOboTermCro
         this.entity = checkNotNull(entity);
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermCrossProductAction() {
     }
 

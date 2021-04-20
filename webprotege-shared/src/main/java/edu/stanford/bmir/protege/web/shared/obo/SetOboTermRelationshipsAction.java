@@ -31,7 +31,7 @@ public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRe
         this.oboTermRelationships = oboTermRelationships;
     }
 
-    @GwtSerializationConstructor
+
     private SetOboTermRelationshipsAction() {
     }
 

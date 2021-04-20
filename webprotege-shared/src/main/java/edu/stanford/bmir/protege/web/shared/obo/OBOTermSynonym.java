@@ -22,7 +22,7 @@ public class OBOTermSynonym extends OBOTermMetaData implements Serializable {
     private OBOTermSynonymScope scope;
 
 
-    @GwtSerializationConstructor
+
     private OBOTermSynonym() {
     }
 

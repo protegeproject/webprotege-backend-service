@@ -28,7 +28,7 @@ public class LogOutUserResult implements Result {
         this.userInSession = checkNotNull(userInSession);
     }
 
-    @GwtSerializationConstructor
+
     private LogOutUserResult() {
     }
 

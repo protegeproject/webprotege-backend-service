@@ -21,7 +21,7 @@ public class OBOTermId implements Serializable {
     
     private String namespace;
 
-    @GwtSerializationConstructor
+
     private OBOTermId() {
     }
 

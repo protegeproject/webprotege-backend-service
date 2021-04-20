@@ -36,7 +36,7 @@ public class CommentUpdatedEvent extends ProjectEvent<CommentUpdatedHandler> imp
         this.comment = checkNotNull(comment);
     }
 
-    @GwtSerializationConstructor
+
     private CommentUpdatedEvent() {
     }
 

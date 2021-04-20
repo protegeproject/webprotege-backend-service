@@ -17,7 +17,7 @@ public class GetProjectInfoAction implements ProjectAction<GetProjectInfoResult>
 
     private ProjectId projectId;
 
-    @GwtSerializationConstructor
+
     private GetProjectInfoAction() {
     }
 

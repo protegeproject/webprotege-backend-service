@@ -20,7 +20,7 @@ public class GetIssueAction implements Action<GetIssueResult> {
         this.issueNumber = issueNumber;
     }
 
-    @GwtSerializationConstructor
+
     private GetIssueAction() {
     }
 

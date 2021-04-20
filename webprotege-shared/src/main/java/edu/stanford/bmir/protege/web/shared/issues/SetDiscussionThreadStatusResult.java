@@ -31,7 +31,7 @@ public class SetDiscussionThreadStatusResult implements Result, HasEventList<Pro
         this.eventList = checkNotNull(eventList);
     }
 
-    @GwtSerializationConstructor
+
     private SetDiscussionThreadStatusResult() {
     }
 

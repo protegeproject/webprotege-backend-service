@@ -23,7 +23,7 @@ public class GetOboTermDefinitionAction implements ProjectAction<GetOboTermDefin
 
     private OWLEntity term;
 
-    @GwtSerializationConstructor
+
     private GetOboTermDefinitionAction() {
     }
 

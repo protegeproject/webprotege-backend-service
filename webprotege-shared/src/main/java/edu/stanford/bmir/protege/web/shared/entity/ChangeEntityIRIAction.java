@@ -25,7 +25,7 @@ public class ChangeEntityIRIAction implements ProjectAction<ChangeEntityIRIResul
 
     private IRI theNewIri;
 
-    @GwtSerializationConstructor
+
     private ChangeEntityIRIAction() {
     }
 

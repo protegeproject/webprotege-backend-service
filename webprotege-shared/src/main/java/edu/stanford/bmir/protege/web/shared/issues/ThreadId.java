@@ -31,7 +31,7 @@ public class ThreadId {
         return new ThreadId(UUID.randomUUID().toString());
     }
 
-    @GwtSerializationConstructor
+
     private ThreadId() {
     }
 

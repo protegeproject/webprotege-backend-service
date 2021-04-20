@@ -25,7 +25,7 @@ public class ChangeEntityIRIResult implements Result, HasProjectId {
 
     private OWLEntityData theNewEntity;
 
-    @GwtSerializationConstructor
+
     private ChangeEntityIRIResult() {
     }
 

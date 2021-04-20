@@ -39,7 +39,7 @@ public class SetEntityFormsDataAction implements ProjectAction<SetEntityFormData
                       "Missing pristine forms data");
     }
 
-    @GwtSerializationConstructor
+
     private SetEntityFormsDataAction() {
     }
 

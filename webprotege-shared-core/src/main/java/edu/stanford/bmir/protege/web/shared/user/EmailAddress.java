@@ -21,7 +21,7 @@ public class EmailAddress implements Serializable {
 
     private String address;
 
-    @GwtSerializationConstructor
+
     private EmailAddress() {
     }
 

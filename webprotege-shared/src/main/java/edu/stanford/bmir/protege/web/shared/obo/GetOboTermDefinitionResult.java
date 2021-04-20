@@ -17,7 +17,7 @@ public class GetOboTermDefinitionResult implements Result {
 
     private OBOTermDefinition definition;
 
-    @GwtSerializationConstructor
+
     private GetOboTermDefinitionResult() {
     }
 

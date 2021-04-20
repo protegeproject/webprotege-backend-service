@@ -31,7 +31,7 @@ public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
         this.entity = checkNotNull(entity);
     }
 
-    @GwtSerializationConstructor
+
     private GetEntityTagsAction() {
     }
 

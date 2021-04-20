@@ -19,7 +19,7 @@ public abstract  class AbstractIssueEvent implements IssueEvent {
 
     private long timestamp;
 
-    @GwtSerializationConstructor
+
     protected AbstractIssueEvent() {
     }
 

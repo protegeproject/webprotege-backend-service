@@ -22,7 +22,7 @@ public class GetOboTermXRefsResult implements Result {
         this.xRefs = ImmutableList.copyOf(xRefs);
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermXRefsResult() {
     }
 

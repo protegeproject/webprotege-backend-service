@@ -24,7 +24,7 @@ public class ApplicationLocation {
 
     private int port;
 
-    @GwtSerializationConstructor
+
     private ApplicationLocation() {
     }
 

@@ -24,7 +24,7 @@ public class IssueTargetRemoved extends AbstractIssueEvent {
         this.entity = checkNotNull(entity);
     }
 
-    @GwtSerializationConstructor
+
     public IssueTargetRemoved() {
     }
 

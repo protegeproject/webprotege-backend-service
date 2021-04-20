@@ -24,7 +24,7 @@ public class GetProjectLangTagsAction implements ProjectAction<GetProjectLangTag
         this.projectId = checkNotNull(projectId);
     }
 
-    @GwtSerializationConstructor
+
     private GetProjectLangTagsAction() {
     }
 

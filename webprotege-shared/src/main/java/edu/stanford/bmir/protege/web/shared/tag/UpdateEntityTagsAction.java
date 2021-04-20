@@ -38,7 +38,7 @@ public class UpdateEntityTagsAction implements ProjectAction<UpdateEntityTagsRes
         this.toTagIds = ImmutableSet.copyOf(toTagIds);
     }
 
-    @GwtSerializationConstructor
+
     private UpdateEntityTagsAction() {
     }
 

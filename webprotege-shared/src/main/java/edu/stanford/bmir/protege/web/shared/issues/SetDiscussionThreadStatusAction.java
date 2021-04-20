@@ -29,7 +29,7 @@ public class SetDiscussionThreadStatusAction implements ProjectAction<SetDiscuss
         this.status = checkNotNull(status);
     }
 
-    @GwtSerializationConstructor
+
     private SetDiscussionThreadStatusAction() {
     }
 

@@ -28,7 +28,7 @@ public class IssueReferenced extends AbstractIssueEvent {
         this.referencedByIssueNumber = referencedByIssueNumber;
     }
 
-    @GwtSerializationConstructor
+
     private IssueReferenced() {
     }
 

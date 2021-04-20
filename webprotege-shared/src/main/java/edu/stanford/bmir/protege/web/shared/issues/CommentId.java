@@ -36,7 +36,7 @@ public class CommentId {
         return new CommentId(UUID.randomUUID().toString());
     }
 
-    @GwtSerializationConstructor
+
     private CommentId() {
     }
 

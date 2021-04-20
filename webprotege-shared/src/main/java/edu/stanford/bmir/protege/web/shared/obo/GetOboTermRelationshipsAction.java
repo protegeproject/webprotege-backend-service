@@ -27,7 +27,7 @@ public class GetOboTermRelationshipsAction implements ProjectAction<GetOboTermRe
         this.entity = checkNotNull(entity);
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermRelationshipsAction() {
     }
 

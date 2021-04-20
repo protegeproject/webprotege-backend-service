@@ -33,7 +33,7 @@ public class SetOboTermSynonymsAction implements ProjectAction<SetOboTermSynonym
         this.synonyms = ImmutableList.copyOf(synonyms);
     }
 
-    @GwtSerializationConstructor
+
     private SetOboTermSynonymsAction() {
     }
 

@@ -20,7 +20,7 @@ public class ResetPerspectiveLayoutAction implements ProjectAction<ResetPerspect
 
     private PerspectiveId perspectiveId;
 
-    @GwtSerializationConstructor
+
     private ResetPerspectiveLayoutAction() {
     }
 

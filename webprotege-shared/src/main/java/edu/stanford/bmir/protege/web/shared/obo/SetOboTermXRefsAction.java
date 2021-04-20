@@ -31,7 +31,7 @@ public class SetOboTermXRefsAction implements ProjectAction<SetOboTermXRefsResul
         this.xrefs = xrefs;
     }
 
-    @GwtSerializationConstructor
+
     private SetOboTermXRefsAction() {
     }
 

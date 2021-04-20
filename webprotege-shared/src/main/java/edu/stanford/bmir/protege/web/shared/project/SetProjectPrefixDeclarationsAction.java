@@ -28,7 +28,7 @@ public class SetProjectPrefixDeclarationsAction implements ProjectAction<SetProj
         this.prefixDeclarations = new ArrayList<>(checkNotNull(prefixDeclarations));
     }
 
-    @GwtSerializationConstructor
+
     private SetProjectPrefixDeclarationsAction() {
     }
 

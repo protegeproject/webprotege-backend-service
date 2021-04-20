@@ -47,7 +47,7 @@ public class DiscussionThreadStatusChangedEvent extends ProjectEvent<DiscussionT
         this.status = checkNotNull(status);
     }
 
-    @GwtSerializationConstructor
+
     private DiscussionThreadStatusChangedEvent() {
     }
 

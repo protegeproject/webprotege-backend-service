@@ -20,7 +20,7 @@ public class ActionId implements Comparator<ActionId> {
 
     private String id;
 
-    @GwtSerializationConstructor
+
     private ActionId() {
     }
 

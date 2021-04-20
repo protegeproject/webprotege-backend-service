@@ -30,7 +30,7 @@ public class ApiKeyInfo {
         this.purpose = checkNotNull(purpose);
     }
 
-    @GwtSerializationConstructor
+
     private ApiKeyInfo() {
     }
 

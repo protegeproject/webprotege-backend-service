@@ -28,7 +28,7 @@ public class PermissionsChangedEvent extends ProjectEvent<PermissionsChangedHand
         super(checkNotNull(source));
     }
 
-    @GwtSerializationConstructor
+
     private PermissionsChangedEvent() {
     }
 

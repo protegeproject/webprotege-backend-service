@@ -32,7 +32,7 @@ public class GetEntityDiscussionThreadsAction implements ProjectAction<GetEntity
         return new GetEntityDiscussionThreadsAction(projectId, entity);
     }
 
-    @GwtSerializationConstructor
+
     private GetEntityDiscussionThreadsAction() {
     }
 

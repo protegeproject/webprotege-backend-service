@@ -30,7 +30,7 @@ public class SetOboTermIdAction implements ProjectAction<SetOboTermIdResult> {
         this.oboTermId = checkNotNull(oboTermId);
     }
 
-    @GwtSerializationConstructor
+
     private SetOboTermIdAction() {
     }
 

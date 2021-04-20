@@ -27,7 +27,7 @@ public class GetProjectPrefixDeclarationsResult implements Result {
         this.prefixDeclarations = new ArrayList<>(checkNotNull(prefixDeclarations));
     }
 
-    @GwtSerializationConstructor
+
     private GetProjectPrefixDeclarationsResult() {
     }
 

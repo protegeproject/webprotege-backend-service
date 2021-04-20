@@ -32,7 +32,7 @@ public class DeleteAnnotationsAction implements ProjectAction<DeleteAnnotationsR
         this.criteria = checkNotNull(criteria);
     }
 
-    @GwtSerializationConstructor
+
     private DeleteAnnotationsAction() {
     }
 

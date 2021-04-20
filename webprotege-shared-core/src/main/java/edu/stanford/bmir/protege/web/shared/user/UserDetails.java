@@ -50,7 +50,7 @@ public class UserDetails implements Serializable {
     }
 
 
-    @GwtSerializationConstructor
+
     private UserDetails() {
     }
 

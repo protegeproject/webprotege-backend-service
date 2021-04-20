@@ -33,7 +33,7 @@ public class ProjectTagsChangedEvent extends ProjectEvent<ProjectTagsChangedHand
         this.projectTags = ImmutableList.copyOf(checkNotNull(projectTags));
     }
 
-    @GwtSerializationConstructor
+
     private ProjectTagsChangedEvent() {
     }
 

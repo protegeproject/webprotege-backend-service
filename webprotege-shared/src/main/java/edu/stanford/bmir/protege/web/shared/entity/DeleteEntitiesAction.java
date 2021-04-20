@@ -30,7 +30,7 @@ public class DeleteEntitiesAction implements ProjectAction<DeleteEntitiesResult>
 
     private Set<OWLEntity> entities;
 
-    @GwtSerializationConstructor
+
     private DeleteEntitiesAction() {
     }
 

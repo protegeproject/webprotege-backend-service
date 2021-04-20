@@ -34,7 +34,7 @@ public class SetOboTermDefinitionAction implements ProjectAction<SetOboTermDefin
         this.def = def;
     }
 
-    @GwtSerializationConstructor
+
     private SetOboTermDefinitionAction() {
     }
 

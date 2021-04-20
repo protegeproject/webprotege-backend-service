@@ -26,7 +26,7 @@ public class IssueMilestoned extends AbstractIssueEvent {
         this.milestone = checkNotNull(milestone);
     }
 
-    @GwtSerializationConstructor
+
     private IssueMilestoned() {
     }
 

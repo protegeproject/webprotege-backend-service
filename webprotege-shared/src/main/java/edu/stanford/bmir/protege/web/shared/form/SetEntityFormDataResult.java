@@ -21,7 +21,7 @@ public class SetEntityFormDataResult implements Result, HasEventList<ProjectEven
         this.eventList = checkNotNull(eventList);
     }
 
-    @GwtSerializationConstructor
+
     private SetEntityFormDataResult() {
     }
 

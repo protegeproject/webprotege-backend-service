@@ -30,7 +30,7 @@ public class RevisionSummary implements Serializable, Comparable<RevisionSummary
     private String description;
     
 
-    @GwtSerializationConstructor
+
     private RevisionSummary() {
     }
 

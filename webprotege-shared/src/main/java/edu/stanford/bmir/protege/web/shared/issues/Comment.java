@@ -63,7 +63,7 @@ public class Comment {
         this.renderedBody = renderedBody;
     }
 
-    @GwtSerializationConstructor
+
     private Comment() {
     }
 

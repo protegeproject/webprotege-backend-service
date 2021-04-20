@@ -22,7 +22,7 @@ public class PermissionDeniedException extends RuntimeException {
 
     private UserInSession userInSession;
 
-    @GwtSerializationConstructor
+
     private PermissionDeniedException() {
     }
 

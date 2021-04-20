@@ -26,7 +26,7 @@ public class IssueUnassigned extends AbstractIssueEvent {
         this.assignee = checkNotNull(assignee);
     }
 
-    @GwtSerializationConstructor
+
     private IssueUnassigned() {
     }
 

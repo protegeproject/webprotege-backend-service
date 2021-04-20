@@ -37,7 +37,7 @@ public class PrefixDeclaration {
         this.prefix = checkNotNull(prefix);
     }
 
-    @GwtSerializationConstructor
+
     private PrefixDeclaration() {
     }
 

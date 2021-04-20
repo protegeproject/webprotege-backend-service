@@ -19,7 +19,7 @@ public class IssueReopened extends AbstractIssueEvent {
         super(userId, timestamp);
     }
 
-    @GwtSerializationConstructor
+
     private IssueReopened() {
     }
 

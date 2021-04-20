@@ -171,7 +171,7 @@ public class Issue {
         this.events = ImmutableList.copyOf(checkNotNull(events));
     }
 
-    @GwtSerializationConstructor
+
     private Issue() {
     }
 

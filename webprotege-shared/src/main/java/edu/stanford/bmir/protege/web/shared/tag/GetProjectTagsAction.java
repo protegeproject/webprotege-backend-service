@@ -22,7 +22,7 @@ public class GetProjectTagsAction implements ProjectAction<GetProjectTagsResult>
         this.projectId = checkNotNull(projectId);
     }
 
-    @GwtSerializationConstructor
+
     private GetProjectTagsAction() {
     }
 

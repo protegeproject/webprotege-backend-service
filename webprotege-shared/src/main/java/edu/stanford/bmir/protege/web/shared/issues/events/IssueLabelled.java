@@ -19,7 +19,7 @@ public class IssueLabelled extends AbstractIssueEvent {
     @Nonnull
     private String label;
 
-    @GwtSerializationConstructor
+
     private IssueLabelled() {
     }
 

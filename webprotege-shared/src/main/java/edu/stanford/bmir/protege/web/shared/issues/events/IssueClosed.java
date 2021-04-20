@@ -15,7 +15,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class IssueClosed extends AbstractIssueEvent {
 
-    @GwtSerializationConstructor
+
     private IssueClosed() {
     }
 

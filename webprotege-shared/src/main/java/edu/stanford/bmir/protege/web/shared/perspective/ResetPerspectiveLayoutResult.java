@@ -18,7 +18,7 @@ public class ResetPerspectiveLayoutResult implements Result {
 
     private PerspectiveLayout resetLayout;
 
-    @GwtSerializationConstructor
+
     private ResetPerspectiveLayoutResult() {
     }
 

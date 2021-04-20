@@ -19,7 +19,7 @@ public class RoleId {
 
     private String id;
 
-    @GwtSerializationConstructor
+
     private RoleId() {
     }
 

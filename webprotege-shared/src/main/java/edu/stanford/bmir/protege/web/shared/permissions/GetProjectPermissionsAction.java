@@ -24,7 +24,7 @@ public class GetProjectPermissionsAction implements Action<GetProjectPermissions
 
     private UserId userId;
 
-    @GwtSerializationConstructor
+
     private GetProjectPermissionsAction() {
     }
 

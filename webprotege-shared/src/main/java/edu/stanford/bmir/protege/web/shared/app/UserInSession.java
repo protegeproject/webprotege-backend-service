@@ -31,7 +31,7 @@ public class UserInSession {
     /**
      * For serialization
      */
-    @GwtSerializationConstructor
+
     private UserInSession() {
     }
 

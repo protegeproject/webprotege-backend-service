@@ -19,7 +19,7 @@ public class IssueMention extends Mention {
         this.issueNumber = issueNumber;
     }
 
-    @GwtSerializationConstructor
+
     private IssueMention() {
     }
 

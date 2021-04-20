@@ -22,7 +22,7 @@ public class GetOboTermSynonymsResult implements Result {
         this.synonyms = ImmutableList.copyOf(synonyms);
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermSynonymsResult() {
     }
 

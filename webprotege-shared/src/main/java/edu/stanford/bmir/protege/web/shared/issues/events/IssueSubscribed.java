@@ -26,7 +26,7 @@ public class IssueSubscribed extends AbstractIssueEvent {
         this.subscriber = checkNotNull(subscriber);
     }
 
-    @GwtSerializationConstructor
+
     private IssueSubscribed() {
     }
 

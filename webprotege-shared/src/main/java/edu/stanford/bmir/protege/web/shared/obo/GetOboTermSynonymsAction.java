@@ -28,7 +28,7 @@ public class GetOboTermSynonymsAction implements ProjectAction<GetOboTermSynonym
         this.entity = checkNotNull(entity);
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermSynonymsAction() {
     }
 

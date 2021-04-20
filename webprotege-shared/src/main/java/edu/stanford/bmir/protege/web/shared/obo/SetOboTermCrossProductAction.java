@@ -32,7 +32,7 @@ public class SetOboTermCrossProductAction implements ProjectAction<SetOboTermCro
         this.crossProduct = checkNotNull(crossProduct);
     }
 
-    @GwtSerializationConstructor
+
     private SetOboTermCrossProductAction() {
     }
 

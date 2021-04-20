@@ -24,7 +24,7 @@ public class FormFieldBindingMissingException extends RuntimeException {
         this.formFieldId = checkNotNull(formFieldId);
     }
 
-    @GwtSerializationConstructor
+
     private FormFieldBindingMissingException() {
     }
 

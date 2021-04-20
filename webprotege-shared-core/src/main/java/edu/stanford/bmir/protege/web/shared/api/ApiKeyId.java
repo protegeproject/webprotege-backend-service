@@ -25,7 +25,7 @@ public class ApiKeyId {
         this.id = checkNotNull(id);
     }
 
-    @GwtSerializationConstructor
+
     private ApiKeyId() {
     }
 

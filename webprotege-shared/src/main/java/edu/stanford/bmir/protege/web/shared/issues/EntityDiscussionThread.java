@@ -61,7 +61,7 @@ public class EntityDiscussionThread {
         this.status = checkNotNull(status);
     }
 
-    @GwtSerializationConstructor
+
     private EntityDiscussionThread() {
     }
 

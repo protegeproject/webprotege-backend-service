@@ -27,7 +27,7 @@ public class SetPerspectiveDetailsAction implements ProjectAction<SetPerspective
         this.perspectiveDetails = checkNotNull(perspectiveDetails);
     }
 
-    @GwtSerializationConstructor
+
     private SetPerspectiveDetailsAction() {
     }
 

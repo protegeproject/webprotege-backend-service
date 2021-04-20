@@ -23,7 +23,7 @@ public class EntityMention extends Mention {
         this.entity = entity;
     }
 
-    @GwtSerializationConstructor
+
     private EntityMention() {
     }
 

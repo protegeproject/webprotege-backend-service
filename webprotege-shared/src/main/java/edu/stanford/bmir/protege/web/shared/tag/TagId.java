@@ -26,7 +26,7 @@ public class TagId {
         this.id = checkNotNull(id);
     }
 
-    @GwtSerializationConstructor
+
     private TagId() {
     }
 

@@ -19,7 +19,7 @@ public class IssueAssigned extends AbstractIssueEvent {
     @Nonnull
     private UserId assignee;
 
-    @GwtSerializationConstructor
+
     private IssueAssigned() {
     }
 

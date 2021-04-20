@@ -20,7 +20,7 @@ public class Milestone {
     @Nonnull
     private String label;
 
-    @GwtSerializationConstructor
+
     private Milestone() {
     }
 

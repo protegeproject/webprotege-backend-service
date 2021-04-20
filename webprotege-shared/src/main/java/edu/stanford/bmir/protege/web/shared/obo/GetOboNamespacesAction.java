@@ -19,7 +19,7 @@ public class GetOboNamespacesAction implements ProjectAction<GetOboNamespacesRes
 
     private ProjectId projectId;
 
-    @GwtSerializationConstructor
+
     private GetOboNamespacesAction() {
     }
 

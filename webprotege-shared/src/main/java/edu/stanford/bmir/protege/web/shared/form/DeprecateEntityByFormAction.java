@@ -28,7 +28,7 @@ public class DeprecateEntityByFormAction implements ProjectAction<DeprecateEntit
 
     private ProjectId projectId;
 
-    @GwtSerializationConstructor
+
     private DeprecateEntityByFormAction() {
     }
 

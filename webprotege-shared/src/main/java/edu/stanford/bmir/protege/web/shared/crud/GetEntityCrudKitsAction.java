@@ -19,7 +19,7 @@ public class GetEntityCrudKitsAction implements ProjectAction<GetEntityCrudKitsR
 
     private ProjectId projectId;
 
-    @GwtSerializationConstructor
+
     private GetEntityCrudKitsAction() {
     }
 

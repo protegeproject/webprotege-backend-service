@@ -17,7 +17,7 @@ public class LargeNumberOfChangesEvent extends ProjectEvent<LargeNumberOfChanges
         super(source);
     }
 
-    @GwtSerializationConstructor
+
     private LargeNumberOfChangesEvent() {
     }
 

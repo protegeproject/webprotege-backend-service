@@ -20,7 +20,7 @@ public class IssueDemilestoned extends AbstractIssueEvent {
     @Nonnull
     private Milestone milestone;
 
-    @GwtSerializationConstructor
+
     private IssueDemilestoned() {
     }
 

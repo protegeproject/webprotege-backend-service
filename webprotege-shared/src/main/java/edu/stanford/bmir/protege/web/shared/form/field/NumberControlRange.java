@@ -37,7 +37,7 @@ public class NumberControlRange {
         this.upperBoundType = upperBoundType;
     }
 
-    @GwtSerializationConstructor
+
     private NumberControlRange() {
     }
 

@@ -35,7 +35,7 @@ public class NumberControlDescriptor implements FormControlDescriptor {
     @Nonnull
     private NumberControlType widgetType = NumberControlType.PLAIN;
 
-    @GwtSerializationConstructor
+
     private NumberControlDescriptor() {
     }
 

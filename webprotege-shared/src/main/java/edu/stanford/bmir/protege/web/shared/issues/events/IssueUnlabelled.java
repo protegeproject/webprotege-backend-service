@@ -26,7 +26,7 @@ public class IssueUnlabelled extends AbstractIssueEvent {
         this.label = checkNotNull(label);
     }
 
-    @GwtSerializationConstructor
+
     private IssueUnlabelled() {
     }
 

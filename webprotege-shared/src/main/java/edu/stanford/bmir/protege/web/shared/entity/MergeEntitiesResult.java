@@ -25,7 +25,7 @@ public class MergeEntitiesResult implements Result, HasEventList<ProjectEvent<?>
         this.eventList = checkNotNull(eventList);
     }
 
-    @GwtSerializationConstructor
+
     private MergeEntitiesResult() {
     }
 

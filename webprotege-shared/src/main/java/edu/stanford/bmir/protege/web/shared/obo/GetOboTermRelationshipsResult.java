@@ -21,7 +21,7 @@ public class GetOboTermRelationshipsResult implements Result {
         this.relationships = checkNotNull(relationships);
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermRelationshipsResult() {
     }
 

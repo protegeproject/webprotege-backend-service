@@ -44,7 +44,7 @@ public class CommentedEntityData implements  Comparable<CommentedEntityData> {
                       .reversed()
                       .thenComparing(c -> c.getEntityData().getBrowserText().toLowerCase());
 
-    @GwtSerializationConstructor
+
     private CommentedEntityData() {
     }
 

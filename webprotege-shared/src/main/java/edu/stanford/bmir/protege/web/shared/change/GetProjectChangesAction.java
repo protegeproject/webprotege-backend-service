@@ -28,7 +28,7 @@ public class GetProjectChangesAction implements ProjectAction<GetProjectChangesR
 
     private PageRequest pageRequest;
 
-    @GwtSerializationConstructor
+
     private GetProjectChangesAction() {
     }
 

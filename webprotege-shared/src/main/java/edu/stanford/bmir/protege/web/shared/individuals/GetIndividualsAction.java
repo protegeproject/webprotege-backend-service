@@ -34,7 +34,7 @@ public class GetIndividualsAction implements ProjectAction<GetIndividualsResult>
     private InstanceRetrievalMode instanceRetrievalMode;
 
 
-    @GwtSerializationConstructor
+
     private GetIndividualsAction() {
     }
 

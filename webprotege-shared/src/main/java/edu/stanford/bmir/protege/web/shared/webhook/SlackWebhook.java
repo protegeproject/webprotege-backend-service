@@ -26,7 +26,7 @@ public class SlackWebhook implements Webhook {
 
     private String payloadUrl;
 
-    @GwtSerializationConstructor
+
     private SlackWebhook() {
     }
 

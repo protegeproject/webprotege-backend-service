@@ -19,7 +19,7 @@ public class RevisionMention extends Mention {
         this.revisionNumber = revisionNumber;
     }
 
-    @GwtSerializationConstructor
+
     private RevisionMention() {
     }
 

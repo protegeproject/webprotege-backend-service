@@ -37,7 +37,7 @@ public class ProjectId implements Serializable {
         this.id = checkFormat(checkNotNull(id));
     }
 
-    @GwtSerializationConstructor
+
     private ProjectId() {
     }
 

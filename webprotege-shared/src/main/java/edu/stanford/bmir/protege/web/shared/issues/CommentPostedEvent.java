@@ -53,7 +53,7 @@ public class CommentPostedEvent extends ProjectEvent<CommentPostedHandler> imple
         this.openCommentCountForEntity = openCommentCountForEntity;
     }
 
-    @GwtSerializationConstructor
+
     private CommentPostedEvent() {
     }
 

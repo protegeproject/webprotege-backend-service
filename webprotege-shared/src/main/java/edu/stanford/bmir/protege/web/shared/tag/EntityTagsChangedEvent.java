@@ -36,7 +36,7 @@ public class EntityTagsChangedEvent extends ProjectEvent<EntityTagsChangedHandle
         this.tags = ImmutableSet.copyOf(checkNotNull(tags));
     }
 
-    @GwtSerializationConstructor
+
     private EntityTagsChangedEvent() {
     }
 

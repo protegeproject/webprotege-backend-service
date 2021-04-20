@@ -26,7 +26,7 @@ public class GetProjectTagsResult implements Result {
         this.tagUsage = new HashMap<>(tagUsage);
     }
 
-    @GwtSerializationConstructor
+
     private GetProjectTagsResult() {
     }
 

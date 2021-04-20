@@ -18,7 +18,7 @@ public class GetOboNamespacesResult implements Result {
 
     private ImmutableSet<OBONamespace> namespaces;
 
-    @GwtSerializationConstructor
+
     private GetOboNamespacesResult() {
     }
 

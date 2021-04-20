@@ -27,7 +27,7 @@ public class GetOboTermIdResult implements Result {
 
     private OBOTermId termId;
 
-    @GwtSerializationConstructor
+
     private GetOboTermIdResult() {
     }
 

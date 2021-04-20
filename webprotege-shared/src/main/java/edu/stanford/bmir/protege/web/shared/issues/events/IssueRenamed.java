@@ -28,7 +28,7 @@ public class IssueRenamed extends AbstractIssueEvent {
         this.to = checkNotNull(to);
     }
 
-    @GwtSerializationConstructor
+
     private IssueRenamed() {
     }
 

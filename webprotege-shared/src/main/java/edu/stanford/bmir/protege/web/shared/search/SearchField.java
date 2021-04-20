@@ -18,7 +18,7 @@ public class SearchField {
 
     private String fieldName;
 
-    @GwtSerializationConstructor
+
     private SearchField() {
     }
 

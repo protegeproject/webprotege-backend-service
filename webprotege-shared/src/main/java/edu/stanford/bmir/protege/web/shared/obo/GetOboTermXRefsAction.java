@@ -26,7 +26,7 @@ public class GetOboTermXRefsAction implements ProjectAction<GetOboTermXRefsResul
         this.entity = entity;
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermXRefsAction() {
     }
 

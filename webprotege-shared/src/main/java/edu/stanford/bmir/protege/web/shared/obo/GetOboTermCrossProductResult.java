@@ -21,7 +21,7 @@ public class GetOboTermCrossProductResult implements Result {
         this.crossProduct = checkNotNull(crossProduct);
     }
 
-    @GwtSerializationConstructor
+
     private GetOboTermCrossProductResult() {
     }
 

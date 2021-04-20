@@ -28,7 +28,7 @@ public class GetEntityTagsResult implements Result {
         this.projectTags = new ArrayList<>(checkNotNull(projectTags));
     }
 
-    @GwtSerializationConstructor
+
     private GetEntityTagsResult() {
     }
 

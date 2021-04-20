@@ -26,7 +26,7 @@ public class GetHierarchyRootsAction implements ProjectAction<GetHierarchyRootsR
         this.hierarchyId = checkNotNull(hierarchyId);
     }
 
-    @GwtSerializationConstructor
+
     private GetHierarchyRootsAction() {
     }
 

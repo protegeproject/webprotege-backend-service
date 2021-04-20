@@ -25,7 +25,7 @@ public class IssueTargetAdded extends AbstractIssueEvent {
         this.targetEntity = checkNotNull(targetEntity);
     }
 
-    @GwtSerializationConstructor
+
     private IssueTargetAdded() {
     }
 

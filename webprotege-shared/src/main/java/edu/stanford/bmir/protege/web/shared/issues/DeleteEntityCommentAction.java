@@ -36,7 +36,7 @@ public class DeleteEntityCommentAction implements ProjectAction<DeleteEntityComm
         this.projectId = checkNotNull(projectId);
     }
 
-    @GwtSerializationConstructor
+
     private DeleteEntityCommentAction() {
     }
 

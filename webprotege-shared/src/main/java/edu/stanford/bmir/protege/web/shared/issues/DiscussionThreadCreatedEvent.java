@@ -23,7 +23,7 @@ public class DiscussionThreadCreatedEvent extends ProjectEvent<DiscussionThreadC
         this.thread = thread;
     }
 
-    @GwtSerializationConstructor
+
     private DiscussionThreadCreatedEvent() {
     }
 
