@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.mansyntax.render;
 
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.manchestersyntax.parser.ManchesterOWLSyntax;
 import org.semanticweb.owlapi.model.*;
@@ -145,7 +144,7 @@ public class ManchesterSyntaxObjectRenderer implements OWLObjectRenderer {
             stringBuilder.append("<span title=\"").append(entity.getEntityType().getName()).append(": ");
             stringBuilder.append(entity.getIRI());
             stringBuilder.append("\" class=\"").append(classNamesBuilder.toString().trim()).append("\">");
-            stringBuilder.append(new SafeHtmlBuilder().appendEscaped(shortForm).toSafeHtml().asString().replace(" ", "&nbsp;"));
+            stringBuilder.append(shortForm.replace(" ", "&nbsp;"));
             stringBuilder.append("</span>");
         }
 
@@ -246,12 +245,6 @@ public class ManchesterSyntaxObjectRenderer implements OWLObjectRenderer {
                 }
             }
 
-        }
-
-        private void renderEscapedIRI(IRI iri, StringBuilder sb) {
-            SafeHtmlBuilder htmlBuilder = new SafeHtmlBuilder();
-            htmlBuilder.appendEscaped(iri.toString());
-            sb.append(htmlBuilder.toSafeHtml().asString());
         }
 
         private void renderCollection(Collection<? extends OWLObject> collection, String separator) {
@@ -872,7 +865,9 @@ public class ManchesterSyntaxObjectRenderer implements OWLObjectRenderer {
         @Override
         public void visit(OWLFacetRestriction node) {
             stringBuilder.append(
-                    new SafeHtmlBuilder().appendEscaped(node.getFacet().getSymbolicForm()).toSafeHtml().asString()
+                    node.getFacet().getSymbolicForm()
+                    .replace("<", "&lt;")
+                    .replace(">", "&gt;")
             );
             renderSpace();
             node.getFacetValue().accept(this);

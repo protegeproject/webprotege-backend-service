@@ -3,8 +3,6 @@ package edu.stanford.bmir.protege.web.shared.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
-
 import edu.stanford.bmir.protege.web.shared.diff.DiffElement;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;

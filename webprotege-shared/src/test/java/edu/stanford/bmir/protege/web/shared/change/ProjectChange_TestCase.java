@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.change;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import edu.stanford.bmir.protege.web.shared.diff.DiffElement;
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;

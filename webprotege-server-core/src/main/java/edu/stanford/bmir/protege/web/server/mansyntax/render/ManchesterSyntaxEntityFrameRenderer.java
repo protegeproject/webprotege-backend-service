@@ -4,7 +4,6 @@ import com.google.common.base.Optional;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
 import org.semanticweb.owlapi.manchestersyntax.parser.ManchesterOWLSyntax;
@@ -239,7 +238,7 @@ public class ManchesterSyntaxEntityFrameRenderer {
     }
 
     private void renderEscaped(String s, StringBuilder builder) {
-        builder.append(new SafeHtmlBuilder().appendEscaped(s).toSafeHtml().asString());
+        builder.append(s);
     }
 
 

@@ -122,7 +122,7 @@ public class ComputeProjectMergeActionHandler extends AbstractProjectActionHandl
         List<DiffElement<String, OWLAxiom>> diffElements = getDiffElements(diffs);
         sortDiff(diffElements);
 
-        // Transform from OWLAxiom to SafeHtml
+        // Transform from OWLAxiom to String
         List<DiffElement<String, String>> transformedDiff = new ArrayList<>();
         for(DiffElement<String, OWLAxiom> element : diffElements) {
             var html = renderer.render(element.getLineElement());

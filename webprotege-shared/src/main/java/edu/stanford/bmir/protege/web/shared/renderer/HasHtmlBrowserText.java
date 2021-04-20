@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.renderer;
 
-import com.google.gwt.safehtml.shared.SafeHtml;
 import org.semanticweb.owlapi.model.OWLObject;
 
 /**
@@ -10,5 +9,5 @@ import org.semanticweb.owlapi.model.OWLObject;
  */
 public interface HasHtmlBrowserText {
 
-    SafeHtml getHtmlBrowserText(OWLObject object);
+    String getHtmlBrowserText(OWLObject object);
 }

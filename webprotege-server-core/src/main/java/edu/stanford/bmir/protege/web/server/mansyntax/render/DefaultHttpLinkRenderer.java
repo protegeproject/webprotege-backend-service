@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.mansyntax.render;
 
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 import javax.inject.Inject;
@@ -80,11 +79,4 @@ public class DefaultHttpLinkRenderer implements HttpLinkRenderer {
         builder.append("</span>");
         builder.append("</a>");
     }
-
-    private void renderEscaped(String iri, StringBuilder sb) {
-        SafeHtmlBuilder htmlBuilder = new SafeHtmlBuilder();
-        htmlBuilder.appendEscaped(iri);
-        sb.append(htmlBuilder.toSafeHtml().asString());
-    }
-
 }

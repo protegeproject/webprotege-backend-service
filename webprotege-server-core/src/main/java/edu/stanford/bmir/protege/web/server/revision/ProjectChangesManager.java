@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.revision;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.*;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import edu.stanford.bmir.protege.web.server.axiom.AxiomIRISubjectProvider;
 import edu.stanford.bmir.protege.web.server.change.OntologyChange;
 import edu.stanford.bmir.protege.web.server.diff.DiffElementRenderer;

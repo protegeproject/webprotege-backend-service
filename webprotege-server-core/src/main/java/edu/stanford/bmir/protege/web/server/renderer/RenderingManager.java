@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.renderer;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.gwt.safehtml.shared.SafeHtml;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import edu.stanford.bmir.protege.web.server.mansyntax.render.DeprecatedEntityChecker;
 import edu.stanford.bmir.protege.web.server.mansyntax.render.HasGetRendering;
 import edu.stanford.bmir.protege.web.server.mansyntax.render.HighlightedEntityChecker;
@@ -73,8 +71,8 @@ public class RenderingManager implements HasGetRendering, HasHtmlBrowserText {
     }
 
     @Override
-    public SafeHtml getHtmlBrowserText(OWLObject object) {
-        return new SafeHtmlBuilder().appendHtmlConstant(getHTMLBrowserText(object)).toSafeHtml();
+    public String getHtmlBrowserText(OWLObject object) {
+        return getHTMLBrowserText(object);
     }
 
     public String getHTMLBrowserText(OWLObject object, final Set<String> highlightedPhrases) {
