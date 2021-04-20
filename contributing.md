@@ -28,7 +28,7 @@ We will assign the correct labels to your issue after reviewing your issue.
 
 ## Code Contributions
 
-WebProtégé is written using Java and the Google Web Toolkit (GWT).  You can contribute by forking the GitHub repository and submitting a pull request.  
+The WebProtégé backend is written using Java.  You can contribute by forking the GitHub repository and submitting a pull request.  
 
 Once you have submitted a pull request we will review your code and test it.  We may require you to make some changes to your code or the documentaiton of your code.  You should include automated tests with your code.
 

@@ -44,48 +44,9 @@ To build WebProtégé from source
 Running from Maven
 ------------------
 
-To run WebProtégé in SuperDev Mode using maven
+To run WebProtégé
 
-1) Start the GWT code server in one terminal window
+1) Start the WebProtégé server on a port that doesn't clash with the front end server
     ```
-    mvn gwt:codeserver
+    mvn -Dmaven.tomcat.port=8082 tomcat7:run
     ```
-2) In a different terminal window start the tomcat server
-    ```
-    mvn -Denv=dev tomcat7:run
-    ```
-3) Browse to WebProtégé in a Web browser by navigating to [http://localhost:8080](http://localhost:8080)
-
-Running from Docker
--------------------
-
-To run WebProtégé using Docker containers:
-
-1. Enter this following command in the Terminal to start the docker container in the background
-
-   ```bash
-   docker-compose up -d
-   ```
-
-2. Create the admin user (follow the questions prompted to provider username, email and password)
-
-   ```bash
-   docker exec -it webprotege java -jar /webprotege-cli.jar create-admin-account
-   ```
-
-3. Browse to WebProtégé Settings page in a Web browser by navigating to [http://localhost:5000/#application/settings](http://localhost:5000/#application/settings)
-   1. Define the `System notification email address` and `application host URL`
-   2. Enable `User creation`, `Project creation` and `Project import`
-
-To stop WebProtégé and MongoDB:
-
-   ```bash
-   docker-compose down
-   ```
-
-Sharing the volumes used by the WebProtégé app and MongoDB allow to keep persistent data, even when the containers stop. Default shared data storage:
-
-* WebProtégé will store its data in the source code folder at `./.protegedata/protege` where you run `docker-compose`
-* MongoDB will store its data in the source code folder at `./.protegedata/mongodb` where you run `docker-compose`
-
-> Path to the shared volumes can be changed in the `docker-compose.yml` file.
