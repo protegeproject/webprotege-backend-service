@@ -1,11 +1,10 @@
-package edu.stanford.bmir.protege.web.shared.dispatch.actions;
+package edu.stanford.bmir.protege.web.shared.frame;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.frame.NamedIndividualFrame;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

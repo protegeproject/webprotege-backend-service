@@ -1,10 +1,9 @@
-package edu.stanford.bmir.protege.web.shared.dispatch.actions;
+package edu.stanford.bmir.protege.web.shared.frame;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.HasSubject;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;

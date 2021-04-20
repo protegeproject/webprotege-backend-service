@@ -5,6 +5,8 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.OWLNamedIndividualData;
+import edu.stanford.bmir.protege.web.shared.frame.GetNamedIndividualFrameAction;
+import edu.stanford.bmir.protege.web.shared.frame.GetNamedIndividualFrameResult;
 import edu.stanford.bmir.protege.web.shared.frame.NamedIndividualFrame;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
 import org.junit.Test;

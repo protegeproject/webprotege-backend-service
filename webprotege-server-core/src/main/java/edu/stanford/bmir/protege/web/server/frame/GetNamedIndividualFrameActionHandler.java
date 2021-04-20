@@ -5,8 +5,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.frame.translator.NamedIndividualFrameTranslator;
 import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetNamedIndividualFrameAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.actions.GetNamedIndividualFrameResult;
+import edu.stanford.bmir.protege.web.shared.frame.GetNamedIndividualFrameAction;
+import edu.stanford.bmir.protege.web.shared.frame.GetNamedIndividualFrameResult;
 import edu.stanford.bmir.protege.web.shared.frame.PropertyValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
