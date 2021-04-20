@@ -2,8 +2,6 @@ package edu.stanford.bmir.protege.web.shared;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
 import edu.stanford.bmir.protege.web.shared.entity.*;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 import edu.stanford.bmir.protege.web.shared.shortform.LocalNameDictionaryLanguage;
@@ -18,6 +16,8 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 import javax.annotation.Nonnull;
 import java.util.Date;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Author: Matthew Horridge<br>
@@ -302,14 +302,14 @@ public class DataFactory {
         final String timeZoneFrag = "(Z|(?:\\+|-)(?:(?:0[0-9]|1[0-3]):[0-5][0-9]|14:00))?"; // Group 3
 
         String pattern = "^" + yearMonthDayFrag + timeFrag + timeZoneFrag + "$";
-        RegExp regExp = RegExp.compile(pattern);
-        MatchResult matchResult = regExp.exec(lexicalValue);
-        if(matchResult == null) {
+        Pattern regExp = Pattern.compile(pattern);
+        Matcher matcher = regExp.matcher(lexicalValue);
+        if(matcher.matches()) {
             throw new IllegalArgumentException();
         }
-        String matchedYearMonthDay = matchResult.getGroup(1);
-        String matchedTime = matchResult.getGroup(2);
-        String matchedTimeZone = matchResult.getGroup(3);
+        String matchedYearMonthDay = matcher.group(1);
+        String matchedTime = matcher.group(2);
+        String matchedTimeZone = matcher.group(3);
 
         String properLexicalValue = matchedYearMonthDay;
         if(matchedTime != null) {
