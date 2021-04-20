@@ -1,13 +1,10 @@
-package edu.stanford.bmir.protege.web.shared.dispatch.actions;
+package edu.stanford.bmir.protege.web.shared.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
-import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;

@@ -1,7 +1,6 @@
-package edu.stanford.bmir.protege.web.shared.dispatch.actions;
+package edu.stanford.bmir.protege.web.shared.entity;
 
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

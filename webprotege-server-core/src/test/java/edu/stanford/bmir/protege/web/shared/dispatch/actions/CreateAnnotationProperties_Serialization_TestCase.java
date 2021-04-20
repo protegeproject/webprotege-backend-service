@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.entity.CreateAnnotationPropertiesAction;
+import edu.stanford.bmir.protege.web.shared.entity.CreateAnnotationPropertiesResult;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.EventTag;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
@@ -24,16 +26,16 @@ public class CreateAnnotationProperties_Serialization_TestCase {
     @Test
     public void shouldSerializeAction() throws IOException {
         var action = CreateAnnotationPropertiesAction.create(ProjectId.getNil(),
-                                                          "A\nB",
-                                                          "en", of());
+                                                             "A\nB",
+                                                             "en", of());
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 
     @Test
     public void shouldSerializeResult() throws IOException {
         var result = CreateAnnotationPropertiesResult.create(ProjectId.getNil(),
-                                                          ImmutableSet.of(),
-                                                          EventList.create(EventTag.get(2), ImmutableList.of(), EventTag.get(2)));
+                                                             ImmutableSet.of(),
+                                                             EventList.create(EventTag.get(2), ImmutableList.of(), EventTag.get(2)));
         JsonSerializationTestUtil.testSerialization(result, Result.class);
     }
 }

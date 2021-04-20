@@ -1,4 +1,4 @@
-package edu.stanford.bmir.protege.web.shared.dispatch.actions;
+package edu.stanford.bmir.protege.web.shared.entity;
 
 import com.google.common.collect.ImmutableCollection;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;

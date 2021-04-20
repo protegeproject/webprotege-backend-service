@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.entity.CreateObjectPropertiesAction;
+import edu.stanford.bmir.protege.web.shared.entity.CreateObjectPropertiesResult;
 import edu.stanford.bmir.protege.web.shared.event.EventList;
 import edu.stanford.bmir.protege.web.shared.event.EventTag;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
