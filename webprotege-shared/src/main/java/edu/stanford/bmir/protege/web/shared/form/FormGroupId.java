@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
-import com.google.common.annotations.GwtIncompatible;
 import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
@@ -25,7 +24,6 @@ public abstract class FormGroupId {
         return new AutoValue_FormGroupId(id);
     }
 
-    @GwtIncompatible
     public static FormGroupId generate() {
         return get(UUID.randomUUID().toString());
     }
