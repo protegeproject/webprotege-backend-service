@@ -13,23 +13,11 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
  */
 public class NamedIndividualFrameChangedEvent extends EntityFrameChangedEvent<OWLNamedIndividual, NamedIndividualFrameChangedEventHandler> {
 
-    public static final transient Event.Type<NamedIndividualFrameChangedEventHandler> NAMED_INDIVIDUAL_CHANGED = new Event.Type<NamedIndividualFrameChangedEventHandler>();
-
     public NamedIndividualFrameChangedEvent(OWLNamedIndividual entity, ProjectId projectId, UserId userId) {
         super(entity, projectId, userId);
     }
 
     private NamedIndividualFrameChangedEvent() {
-    }
-
-    /**
-     * Returns the {@link com.google.web.bindery.event.shared.Event.Type} used to register this event, allowing an
-     * {@link com.google.web.bindery.event.shared.EventBus} to find handlers of the appropriate class.
-     * @return the type
-     */
-    @Override
-    public Event.Type<NamedIndividualFrameChangedEventHandler> getAssociatedType() {
-        return NAMED_INDIVIDUAL_CHANGED;
     }
 
     /**

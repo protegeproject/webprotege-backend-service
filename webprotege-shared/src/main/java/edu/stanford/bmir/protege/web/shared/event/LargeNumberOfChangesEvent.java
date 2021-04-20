@@ -11,19 +11,12 @@ import edu.stanford.bmir.protege.web.shared.project.ProjectId;
  */
 public class LargeNumberOfChangesEvent extends ProjectEvent<LargeNumberOfChangesHandler> {
 
-    public static final Event.Type<LargeNumberOfChangesHandler> LARGE_NUMBER_OF_CHANGES = new Event.Type<>();
-
     public LargeNumberOfChangesEvent(ProjectId source) {
         super(source);
     }
 
 
     private LargeNumberOfChangesEvent() {
-    }
-
-    @Override
-    public Event.Type<LargeNumberOfChangesHandler> getAssociatedType() {
-        return LARGE_NUMBER_OF_CHANGES;
     }
 
     @Override

@@ -14,8 +14,6 @@ import java.util.Objects;
  */
 public class DiscussionThreadCreatedEvent extends ProjectEvent<DiscussionThreadCreatedHandler> implements HasProjectId {
 
-    public static final transient Event.Type<DiscussionThreadCreatedHandler> ON_DISCUSSION_THREAD_CREATED = new Event.Type<>();
-
     private EntityDiscussionThread thread;
 
     public DiscussionThreadCreatedEvent(EntityDiscussionThread thread) {
@@ -29,11 +27,6 @@ public class DiscussionThreadCreatedEvent extends ProjectEvent<DiscussionThreadC
 
     public EntityDiscussionThread getThread() {
         return thread;
-    }
-
-    @Override
-    public Event.Type<DiscussionThreadCreatedHandler> getAssociatedType() {
-        return ON_DISCUSSION_THREAD_CREATED;
     }
 
     @Override

@@ -19,8 +19,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CommentUpdatedEvent extends ProjectEvent<CommentUpdatedHandler> implements HasProjectId {
 
-    public static final transient Event.Type<CommentUpdatedHandler> ON_COMMENT_UPDATED = new Event.Type<>();
-
     private ProjectId projectId;
 
     private ThreadId threadId;
@@ -38,11 +36,6 @@ public class CommentUpdatedEvent extends ProjectEvent<CommentUpdatedHandler> imp
 
 
     private CommentUpdatedEvent() {
-    }
-
-    @Override
-    public Event.Type<CommentUpdatedHandler> getAssociatedType() {
-        return ON_COMMENT_UPDATED;
     }
 
     @Override

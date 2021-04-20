@@ -19,8 +19,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class OntologyBrowserTextChangedEvent extends WebProtegeEvent<OntologyBrowserTextChangedEventHandler> implements Serializable, HasChangedValue<String> {
 
-    public static final transient Event.Type<OntologyBrowserTextChangedEventHandler> TYPE = new Event.Type<>();
-
     private OWLOntologyID ontologyID;
 
     private String oldValue;
@@ -62,16 +60,6 @@ public class OntologyBrowserTextChangedEvent extends WebProtegeEvent<OntologyBro
     @Override
     public Optional<String> getNewValue() {
         return Optional.of(newValue);
-    }
-
-    /**
-     * Returns the {@link Event.Type} used to register this event, allowing an
-     * {@link EventBus} to find handlers of the appropriate class.
-     * @return the type
-     */
-    @Override
-    public Event.Type<OntologyBrowserTextChangedEventHandler> getAssociatedType() {
-        return TYPE;
     }
 
     /**

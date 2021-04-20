@@ -23,8 +23,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ProjectChangedEvent extends ProjectEvent<ProjectChangedHandler> {
 
-    public transient static final Event.Type<ProjectChangedHandler> TYPE = new Event.Type<ProjectChangedHandler>();
-
     private Set<OWLEntityData> subjects;
 
     private RevisionSummary revisionSummary;
@@ -88,13 +86,6 @@ public class ProjectChangedEvent extends ProjectEvent<ProjectChangedHandler> {
         return new HashSet<OWLEntityData>(subjects);
     }
 
-
-
-
-    @Override
-    public Event.Type<ProjectChangedHandler> getAssociatedType() {
-        return TYPE;
-    }
 
     @Override
     protected void dispatch(ProjectChangedHandler handler) {

@@ -21,8 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DiscussionThreadStatusChangedEvent extends ProjectEvent<DiscussionThreadStatusChangedHandler> {
 
-    public static final transient Event.Type<DiscussionThreadStatusChangedHandler> ON_STATUS_CHANGED = new Event.Type<>();
-
     private ProjectId projectId;
 
     private ThreadId threadId;
@@ -76,11 +74,6 @@ public class DiscussionThreadStatusChangedEvent extends ProjectEvent<DiscussionT
 
     public Status getStatus() {
         return status;
-    }
-
-    @Override
-    public Event.Type<DiscussionThreadStatusChangedHandler> getAssociatedType() {
-        return ON_STATUS_CHANGED;
     }
 
     @Override

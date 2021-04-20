@@ -13,23 +13,11 @@ import org.semanticweb.owlapi.model.OWLDatatype;
  */
 public class DatatypeFrameChangedEvent extends EntityFrameChangedEvent<OWLDatatype, DatatypeFrameChangedEventHandler> {
 
-    public static final transient Event.Type<DatatypeFrameChangedEventHandler> TYPE = new Event.Type<DatatypeFrameChangedEventHandler>();
-
     public DatatypeFrameChangedEvent(OWLDatatype entity, ProjectId projectId, UserId userId) {
         super(entity, projectId, userId);
     }
 
     private DatatypeFrameChangedEvent() {
-    }
-
-    /**
-     * Returns the {@link com.google.web.bindery.event.shared.Event.Type} used to register this event, allowing an
-     * {@link com.google.web.bindery.event.shared.EventBus} to find handlers of the appropriate class.
-     * @return the type
-     */
-    @Override
-    public Event.Type<DatatypeFrameChangedEventHandler> getAssociatedType() {
-        return TYPE;
     }
 
     /**

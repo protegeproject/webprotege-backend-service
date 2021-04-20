@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared;
 
-import com.google.gwt.event.shared.GwtEvent;
+import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
 
 /**
  * Author: Matthew Horridge<br>
@@ -8,13 +8,9 @@ import com.google.gwt.event.shared.GwtEvent;
  * Bio-Medical Informatics Research Group<br>
  * Date: 19/03/2013
  */
-public class DirtyChangedEvent extends GwtEvent<DirtyChangedHandler> {
+public class DirtyChangedEvent extends WebProtegeEvent<DirtyChangedHandler> {
 
-    public static final Type<DirtyChangedHandler> TYPE = new Type<DirtyChangedHandler>();
-
-    @Override
-    public Type<DirtyChangedHandler> getAssociatedType() {
-        return TYPE;
+    public DirtyChangedEvent() {
     }
 
     @Override

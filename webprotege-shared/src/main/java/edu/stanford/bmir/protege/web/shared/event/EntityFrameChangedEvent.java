@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.gwt.event.shared.EventHandler;
+
 import edu.stanford.bmir.protege.web.shared.HasSignature;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.user.UserId;

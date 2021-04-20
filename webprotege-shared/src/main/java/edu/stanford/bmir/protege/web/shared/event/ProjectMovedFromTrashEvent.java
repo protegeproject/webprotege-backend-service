@@ -13,8 +13,6 @@ import java.util.Objects;
  */
 public class ProjectMovedFromTrashEvent extends WebProtegeEvent<ProjectMovedFromTrashHandler> {
 
-    public static final transient Event.Type<ProjectMovedFromTrashHandler> ON_PROJECT_MOVED_FROM_TRASH = new Event.Type<>();
-
     private ProjectId projectId;
 
     private ProjectMovedFromTrashEvent() {
@@ -26,11 +24,6 @@ public class ProjectMovedFromTrashEvent extends WebProtegeEvent<ProjectMovedFrom
 
     public ProjectId getProjectId() {
         return projectId;
-    }
-
-    @Override
-    public Event.Type<ProjectMovedFromTrashHandler> getAssociatedType() {
-        return ON_PROJECT_MOVED_FROM_TRASH;
     }
 
     @Override

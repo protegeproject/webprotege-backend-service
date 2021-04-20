@@ -14,9 +14,6 @@ import edu.stanford.bmir.protege.web.shared.user.UserId;
  */
 public class UserStartingViewingProjectEvent extends ProjectEvent<UserStartedViewingProjectHandler> implements HasUserId {
 
-    public transient static final Event.Type<UserStartedViewingProjectHandler> TYPE = new Event.Type<UserStartedViewingProjectHandler>();
-
-
     private UserId userId;
 
     public UserStartingViewingProjectEvent(ProjectId source, UserId userId) {
@@ -26,11 +23,6 @@ public class UserStartingViewingProjectEvent extends ProjectEvent<UserStartedVie
 
     private UserStartingViewingProjectEvent() {
 
-    }
-
-    @Override
-    public Event.Type<UserStartedViewingProjectHandler> getAssociatedType() {
-        return TYPE;
     }
 
     @Override

@@ -21,20 +21,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class PermissionsChangedEvent extends ProjectEvent<PermissionsChangedHandler> {
 
-    public static final transient Event.Type<PermissionsChangedHandler> ON_PERMISSIONS_CHANGED = new Event.Type<>();
-
-
     public PermissionsChangedEvent(@Nonnull ProjectId source) {
         super(checkNotNull(source));
     }
 
 
     private PermissionsChangedEvent() {
-    }
-
-    @Override
-    public Event.Type<PermissionsChangedHandler> getAssociatedType() {
-        return ON_PERMISSIONS_CHANGED;
     }
 
     @Override

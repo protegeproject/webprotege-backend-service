@@ -21,9 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class EntityTagsChangedEvent extends ProjectEvent<EntityTagsChangedHandler> {
 
-    public static final transient Event.Type<EntityTagsChangedHandler> ON_ENTITY_TAGS_CHANGED = new Event.Type<>();
-
-
     private OWLEntity entity;
 
     private ImmutableSet<Tag> tags;
@@ -48,11 +45,6 @@ public class EntityTagsChangedEvent extends ProjectEvent<EntityTagsChangedHandle
     @Nonnull
     public Collection<Tag> getTags() {
         return tags;
-    }
-
-    @Override
-    public Event.Type<EntityTagsChangedHandler> getAssociatedType() {
-        return ON_ENTITY_TAGS_CHANGED;
     }
 
     @Override

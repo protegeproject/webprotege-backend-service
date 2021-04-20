@@ -17,8 +17,6 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class WatchRemovedEvent extends ProjectEvent<WatchRemovedHandler> implements HasUserId {
 
-    public transient static final Event.Type<WatchRemovedHandler> ON_WATCH_REMOVED = new Event.Type<WatchRemovedHandler>();
-
     private Watch watch;
 
     public WatchRemovedEvent(ProjectId source, Watch watch) {
@@ -27,11 +25,6 @@ public class WatchRemovedEvent extends ProjectEvent<WatchRemovedHandler> impleme
     }
 
     private WatchRemovedEvent() {
-    }
-
-    @Override
-    public Event.Type<WatchRemovedHandler> getAssociatedType() {
-        return ON_WATCH_REMOVED;
     }
 
     @Override

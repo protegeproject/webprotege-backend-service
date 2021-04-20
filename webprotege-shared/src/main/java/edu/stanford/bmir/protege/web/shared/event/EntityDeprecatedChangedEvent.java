@@ -14,8 +14,6 @@ import java.util.Objects;
  */
 public class EntityDeprecatedChangedEvent extends ProjectEvent<EntityDeprecatedChangedHandler> {
 
-    public transient static final Event.Type<EntityDeprecatedChangedHandler> ON_ENTITY_DEPRECATED = new Event.Type<EntityDeprecatedChangedHandler>();
-
     private OWLEntity entity;
 
     private boolean deprecated;
@@ -38,11 +36,6 @@ public class EntityDeprecatedChangedEvent extends ProjectEvent<EntityDeprecatedC
 
     public boolean isDeprecated() {
         return deprecated;
-    }
-
-    @Override
-    public Event.Type<EntityDeprecatedChangedHandler> getAssociatedType() {
-        return ON_ENTITY_DEPRECATED;
     }
 
     @Override

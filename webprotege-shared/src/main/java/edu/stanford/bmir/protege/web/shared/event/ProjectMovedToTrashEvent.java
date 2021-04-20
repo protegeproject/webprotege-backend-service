@@ -15,8 +15,6 @@ import java.util.Objects;
  */
 public class ProjectMovedToTrashEvent extends WebProtegeEvent<ProjectMovedToTrashHandler> implements HasProjectId {
 
-    public static final transient Event.Type<ProjectMovedToTrashHandler> ON_PROJECT_MOVED_TO_TRASH = new Event.Type<>();
-
     private ProjectId projectId;
 
     private ProjectMovedToTrashEvent() {
@@ -29,11 +27,6 @@ public class ProjectMovedToTrashEvent extends WebProtegeEvent<ProjectMovedToTras
     @Nonnull
     public ProjectId getProjectId() {
         return projectId;
-    }
-
-    @Override
-    public Event.Type<ProjectMovedToTrashHandler> getAssociatedType() {
-        return ON_PROJECT_MOVED_TO_TRASH;
     }
 
     @Override

@@ -17,8 +17,6 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class WatchAddedEvent extends ProjectEvent<WatchAddedHandler> {
 
-    public static final transient Event.Type<WatchAddedHandler> ON_WATCH_ADDED = new Event.Type<>();
-
     private Watch watch;
 
     /**
@@ -45,11 +43,6 @@ public class WatchAddedEvent extends ProjectEvent<WatchAddedHandler> {
         return watch.getUserId();
     }
 
-
-    @Override
-    public Event.Type<WatchAddedHandler> getAssociatedType() {
-        return ON_WATCH_ADDED;
-    }
 
     @Override
     protected void dispatch(WatchAddedHandler handler) {

@@ -21,9 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ProjectTagsChangedEvent extends ProjectEvent<ProjectTagsChangedHandler> {
 
-    public static final transient Event.Type<ProjectTagsChangedHandler> ON_PROJECT_TAGS_CHANGED = new Event.Type<>();
-
-
     private Collection<Tag> projectTags;
 
     @Inject
@@ -43,11 +40,6 @@ public class ProjectTagsChangedEvent extends ProjectEvent<ProjectTagsChangedHand
     @Nonnull
     public Collection<Tag> getProjectTags() {
         return projectTags;
-    }
-
-    @Override
-    public Event.Type<ProjectTagsChangedHandler> getAssociatedType() {
-        return ON_PROJECT_TAGS_CHANGED;
     }
 
     @Override

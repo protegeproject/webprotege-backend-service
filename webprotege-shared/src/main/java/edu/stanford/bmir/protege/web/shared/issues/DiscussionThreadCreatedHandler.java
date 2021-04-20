@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
-import com.google.gwt.event.shared.EventHandler;
+
+import edu.stanford.bmir.protege.web.shared.event.EventHandler;
 
 /**
  * Matthew Horridge

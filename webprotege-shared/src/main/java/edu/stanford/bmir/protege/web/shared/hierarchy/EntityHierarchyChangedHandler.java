@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
-import com.google.gwt.event.shared.EventHandler;
+
+import edu.stanford.bmir.protege.web.shared.event.EventHandler;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 1 Dec 2017

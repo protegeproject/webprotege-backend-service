@@ -25,9 +25,6 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
  */
 public class BrowserTextChangedEvent extends ProjectEvent<BrowserTextChangedHandler> {
 
-    public transient static final Event.Type<BrowserTextChangedHandler> ON_BROWSER_TEXT_CHANGED = new Event.Type<>();
-
-
     private OWLEntity entity;
 
     private String newBrowserText;
@@ -53,12 +50,6 @@ public class BrowserTextChangedEvent extends ProjectEvent<BrowserTextChangedHand
                                     .collect(toImmutableMap(ShortForm::getDictionaryLanguage, ShortForm::getShortForm));
     }
 
-    /**
-     * For serialization purposes only
-     */
-    private BrowserTextChangedEvent() {
-    }
-
     public OWLEntity getEntity() {
         return entity;
     }
@@ -81,11 +72,6 @@ public class BrowserTextChangedEvent extends ProjectEvent<BrowserTextChangedHand
                               .collect(toImmutableList());
     }
 
-
-    @Override
-    public Event.Type<BrowserTextChangedHandler> getAssociatedType() {
-        return ON_BROWSER_TEXT_CHANGED;
-    }
 
     @Override
     protected void dispatch(BrowserTextChangedHandler handler) {

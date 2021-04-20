@@ -14,8 +14,6 @@ import java.io.Serializable;
  */
 public class OntologyFrameChangedEvent extends ProjectEvent<OntologyFrameChangedEventHandler> implements Serializable {
 
-    public static final transient Event.Type<OntologyFrameChangedEventHandler> TYPE = new Event.Type<OntologyFrameChangedEventHandler>();
-
     private OWLOntologyID ontologyID;
 
     public OntologyFrameChangedEvent(OWLOntologyID ontologyID, ProjectId projectId) {
@@ -30,16 +28,6 @@ public class OntologyFrameChangedEvent extends ProjectEvent<OntologyFrameChanged
 
     public OWLOntologyID getOntologyID() {
         return ontologyID;
-    }
-
-    /**
-     * Returns the {@link com.google.web.bindery.event.shared.Event.Type} used to register this event, allowing an
-     * {@link com.google.web.bindery.event.shared.EventBus} to find handlers of the appropriate class.
-     * @return the type
-     */
-    @Override
-    public Event.Type<OntologyFrameChangedEventHandler> getAssociatedType() {
-        return TYPE;
     }
 
     /**

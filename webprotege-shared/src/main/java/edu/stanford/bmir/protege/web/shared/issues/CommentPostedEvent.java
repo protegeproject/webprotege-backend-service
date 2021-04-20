@@ -21,16 +21,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CommentPostedEvent extends ProjectEvent<CommentPostedHandler> implements HasProjectId {
 
-
-    public static final transient Event.Type<CommentPostedHandler> ON_COMMENT_POSTED = new Event.Type<>();
-
     private ProjectId projectId;
 
     private ThreadId threadId;
 
     private Comment comment;
 
-    @SuppressWarnings("GwtInconsistentSerializableClass" )
     @Nullable
     private OWLEntityData entity;
 
@@ -55,11 +51,6 @@ public class CommentPostedEvent extends ProjectEvent<CommentPostedHandler> imple
 
 
     private CommentPostedEvent() {
-    }
-
-    @Override
-    public Event.Type<CommentPostedHandler> getAssociatedType() {
-        return ON_COMMENT_POSTED;
     }
 
     @Override

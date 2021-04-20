@@ -2,16 +2,13 @@ package edu.stanford.bmir.protege.web.server.events;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
-import com.google.gwt.event.shared.EventHandler;
+
 import com.google.web.bindery.event.shared.Event;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import edu.stanford.bmir.protege.web.shared.HasDispose;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.EventTag;
-import edu.stanford.bmir.protege.web.shared.event.LargeNumberOfChangesEvent;
-import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
+import edu.stanford.bmir.protege.web.shared.event.*;
 import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
@@ -138,7 +135,8 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
             writeLock.unlock();
         }
         for(E event : new LinkedHashSet<>(events)) {
-            eventBus.fireEvent(event.asGWTEvent());
+            throw new RuntimeException("Needs reimplementing");
+//            eventBus.fireEvent((WebProtegeEvent) event);
         }
         return currentTag;
     }

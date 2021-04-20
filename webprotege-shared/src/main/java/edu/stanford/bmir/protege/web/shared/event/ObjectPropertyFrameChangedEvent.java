@@ -15,25 +15,11 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
  */
 public class ObjectPropertyFrameChangedEvent extends EntityFrameChangedEvent<OWLObjectProperty, ObjectPropertyFrameChangedEventHandler> {
 
-    @JsonIgnore
-    public transient static final Event.Type<ObjectPropertyFrameChangedEventHandler> TYPE = new Event.Type<ObjectPropertyFrameChangedEventHandler>();
-
     public ObjectPropertyFrameChangedEvent(OWLObjectProperty entity, ProjectId projectId, UserId userId) {
         super(entity, projectId, userId);
     }
 
     private ObjectPropertyFrameChangedEvent() {
-    }
-
-    /**
-     * Returns the {@link com.google.web.bindery.event.shared.Event.Type} used to register this event, allowing an
-     * {@link com.google.web.bindery.event.shared.EventBus} to find handlers of the appropriate class.
-     * @return the type
-     */
-    @JsonIgnore
-    @Override
-    public Event.Type<ObjectPropertyFrameChangedEventHandler> getAssociatedType() {
-        return TYPE;
     }
 
     /**

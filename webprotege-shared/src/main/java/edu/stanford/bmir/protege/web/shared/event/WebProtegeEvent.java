@@ -20,9 +20,6 @@ public abstract class WebProtegeEvent<H> {
     protected WebProtegeEvent() {
     }
 
-    @JsonIgnore
-    public abstract Event.Type<H> getAssociatedType();
-
     protected abstract void dispatch(H handler);
 
     public ProjectId getSource() {
@@ -32,29 +29,4 @@ public abstract class WebProtegeEvent<H> {
     protected void setSource(ProjectId source) {
         this.projectId = source;
     }
-
-    public String toDebugString() {
-        return "WebProtegeEvent";
-    }
-
-    public Event<H> asGWTEvent() {
-        return new Event<H>() {
-
-            @Override
-            public Object getSource() {
-                return WebProtegeEvent.this.getSource();
-            }
-
-            @Override
-            public Type<H> getAssociatedType() {
-                return WebProtegeEvent.this.getAssociatedType();
-            }
-
-            @Override
-            protected void dispatch(H h) {
-                WebProtegeEvent.this.dispatch(h);
-            }
-        };
-    }
-
 }

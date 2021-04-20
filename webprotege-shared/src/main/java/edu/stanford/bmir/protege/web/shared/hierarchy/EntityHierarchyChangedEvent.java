@@ -18,8 +18,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class EntityHierarchyChangedEvent extends ProjectEvent<EntityHierarchyChangedHandler> {
 
-    public static final transient Event.Type<EntityHierarchyChangedHandler> ON_HIERARCHY_CHANGED = new Event.Type<>();
-
     private HierarchyId hierarchyId;
 
     private GraphModelChangedEvent<EntityNode> changeEvent;
@@ -39,11 +37,6 @@ public class EntityHierarchyChangedEvent extends ProjectEvent<EntityHierarchyCha
 
 
     private EntityHierarchyChangedEvent() {
-    }
-
-    @Override
-    public Event.Type<EntityHierarchyChangedHandler> getAssociatedType() {
-        return ON_HIERARCHY_CHANGED;
     }
 
     @Override
