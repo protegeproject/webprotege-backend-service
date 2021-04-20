@@ -42,7 +42,6 @@ public class TagId implements IsSerializable {
     /**
      * Creates a fresh tag with a new UUID.  Note that this only works on the server.
      */
-    @GwtIncompatible
     public static TagId createTagId() {
         return getId(UUID.randomUUID().toString());
     }

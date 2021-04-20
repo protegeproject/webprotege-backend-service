@@ -1,9 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import edu.stanford.bmir.gwtcodemirror.client.AutoCompletionResult;
-import edu.stanford.bmir.gwtcodemirror.client.EditorPosition;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.shared.mansyntax.AutoCompletionResult;
+import edu.stanford.bmir.protege.web.shared.mansyntax.EditorPosition;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
 import org.junit.Test;
 

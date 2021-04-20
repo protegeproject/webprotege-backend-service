@@ -26,7 +26,6 @@ public class ThreadId implements IsSerializable {
         this.id = checkNotNull(id);
     }
 
-    @GwtIncompatible
     public static ThreadId create() {
         //noinspection NonJREEmulationClassesInClientCode
         return new ThreadId(UUID.randomUUID().toString());

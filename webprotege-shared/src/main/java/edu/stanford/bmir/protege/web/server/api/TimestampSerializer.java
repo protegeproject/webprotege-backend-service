@@ -16,7 +16,6 @@ import java.time.format.DateTimeFormatter;
  * Stanford Center for Biomedical Informatics Research
  * 23 Apr 2018
  */
-@GwtIncompatible
 public class TimestampSerializer extends StdSerializer<Long> {
 
     private static final String UTC = "UTC";
@@ -29,7 +28,6 @@ public class TimestampSerializer extends StdSerializer<Long> {
         super(Long.class);
     }
 
-    @GwtIncompatible
     @Override
     public void serialize(Long l, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         String formatted = toIsoDateTime(l);

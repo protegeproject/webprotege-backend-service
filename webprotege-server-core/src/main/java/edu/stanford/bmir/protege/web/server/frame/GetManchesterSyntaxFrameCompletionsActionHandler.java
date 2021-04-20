@@ -2,13 +2,13 @@ package edu.stanford.bmir.protege.web.server.frame;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import edu.stanford.bmir.gwtcodemirror.client.AutoCompletionChoice;
-import edu.stanford.bmir.gwtcodemirror.client.AutoCompletionResult;
-import edu.stanford.bmir.gwtcodemirror.client.EditorPosition;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
+import edu.stanford.bmir.protege.web.shared.mansyntax.AutoCompletionChoice;
+import edu.stanford.bmir.protege.web.shared.mansyntax.AutoCompletionResult;
+import edu.stanford.bmir.protege.web.shared.mansyntax.EditorPosition;
 import edu.stanford.bmir.protege.web.server.mansyntax.ManchesterSyntaxFrameParser;
 import edu.stanford.bmir.protege.web.server.renderer.ManchesterSyntaxKeywords;
 import edu.stanford.bmir.protege.web.server.shortform.DictionaryManager;
@@ -27,9 +27,6 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 import java.util.*;
 
-import static edu.stanford.bmir.protege.web.server.shortform.SearchString.parseSearchString;
-import static edu.stanford.bmir.protege.web.server.shortform.ShortFormQuotingUtils.getQuotedShortForm;
-import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 
 

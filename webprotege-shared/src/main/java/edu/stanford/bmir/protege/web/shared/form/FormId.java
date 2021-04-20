@@ -31,8 +31,6 @@ public abstract class FormId implements Serializable, IsSerializable {
     public static FormId valueOf(@Nonnull String id) {
         return get(id);
     }
-
-    @GwtIncompatible
     public static FormId generate() {
         return get(UUID.randomUUID().toString());
     }

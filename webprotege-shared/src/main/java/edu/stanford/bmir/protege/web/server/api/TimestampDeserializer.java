@@ -22,7 +22,6 @@ import java.time.format.DateTimeFormatterBuilder;
  * Deserializes ISO timestamps into longs (UTC Zone).  This also deserializes
  * mongodb timestamps which look like this  ISODate("2018-09-01T01:02:03Z")
  */
-@GwtIncompatible
 public class TimestampDeserializer extends StdDeserializer<Long> {
 
     private static final String UTC = "UTC";
@@ -40,7 +39,6 @@ public class TimestampDeserializer extends StdDeserializer<Long> {
         super(String.class);
     }
 
-    @GwtIncompatible
     @Override
     public Long deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
         String ts = extractDateTime(jsonParser.getValueAsString());
@@ -49,7 +47,6 @@ public class TimestampDeserializer extends StdDeserializer<Long> {
         return instant.toEpochMilli();
     }
 
-    @GwtIncompatible
     private static String extractDateTime(@Nonnull String dateTime) {
         if(dateTime.startsWith(ISODATE_PREFIX)) {
             return dateTime.substring(ISODATE_PREFIX.length(), dateTime.length() - ISODATE_SUFFIX.length());
@@ -59,7 +56,6 @@ public class TimestampDeserializer extends StdDeserializer<Long> {
         }
     }
 
-    @GwtIncompatible
     private static DateTimeFormatter createFormatter() {
         // This stuff is due to a JDK bug in parsing date times with basic zone
         // offsets (i.e. zone offsets that do not contain colons)

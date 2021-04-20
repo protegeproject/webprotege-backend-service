@@ -101,7 +101,6 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
      */
     @JsonCreator
     @JsonSetter(nulls = Nulls.AS_EMPTY)
-    @GwtIncompatible
     public static ProjectDetails valueOf(@Nonnull @JsonProperty(PROJECT_ID) ProjectId projectId,
                                          @Nonnull @JsonProperty(DISPLAY_NAME) String displayName,
                                          @Nullable @JsonProperty(DESCRIPTION) String description,
@@ -324,7 +323,6 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
     public abstract long getCreatedAt();
 
     @JsonProperty(CREATED_AT)
-    @GwtIncompatible
     protected Instant createdAt() {
         return Instant.ofEpochMilli(getCreatedAt());
     }
@@ -348,7 +346,6 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
     public abstract long getLastModifiedAt();
 
     @JsonProperty(MODIFIED_AT)
-    @GwtIncompatible
     protected Instant modifiedAt() {
         return Instant.ofEpochMilli(getLastModifiedAt());
     }
