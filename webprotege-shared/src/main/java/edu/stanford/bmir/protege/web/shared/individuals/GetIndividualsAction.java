@@ -3,6 +3,7 @@ package edu.stanford.bmir.protege.web.shared.individuals;
 import com.google.common.base.MoreObjects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -20,7 +21,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 12/09/2013
  */
-public class GetIndividualsAction extends AbstractHasProjectAction<GetIndividualsResult> {
+public class GetIndividualsAction implements ProjectAction<GetIndividualsResult> {
+
+    private ProjectId projectId;
 
     @Nullable
     private OWLClass type;
@@ -55,7 +58,7 @@ public class GetIndividualsAction extends AbstractHasProjectAction<GetIndividual
                                  @Nonnull String filterString,
                                  @Nonnull InstanceRetrievalMode instanceRetrievalMode,
                                  @Nonnull Optional<PageRequest> pageRequest) {
-        super(projectId);
+        this.projectId = checkNotNull(projectId);
         this.type = checkNotNull(type).orElse(null);
         this.searchString = checkNotNull(filterString);
         this.instanceRetrievalMode = checkNotNull(instanceRetrievalMode);
@@ -68,6 +71,12 @@ public class GetIndividualsAction extends AbstractHasProjectAction<GetIndividual
                                               @Nonnull InstanceRetrievalMode instanceRetrievalMode,
                                               @Nonnull Optional<PageRequest> pageRequest) {
         return new GetIndividualsAction(projectId, type, filterString, instanceRetrievalMode, pageRequest);
+    }
+
+    @Nonnull
+    @Override
+    public ProjectId getProjectId() {
+        return projectId;
     }
 
     /**
@@ -103,26 +112,27 @@ public class GetIndividualsAction extends AbstractHasProjectAction<GetIndividual
     }
 
     @Override
-    public int hashCode() {
-        return "GetIndividualsAction".hashCode() + Objects.hashCode(this.type) + Objects.hashCode(pageRequest);
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GetIndividualsAction)) {
+            return false;
+        }
+        GetIndividualsAction that = (GetIndividualsAction) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(type, that.type) && Objects.equals(
+                pageRequest,
+                that.pageRequest) && Objects.equals(searchString,
+                                                    that.searchString) && instanceRetrievalMode == that.instanceRetrievalMode;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if(o == this) {
-            return true;
-        }
-        if(!(o instanceof GetIndividualsAction)) {
-            return false;
-        }
-        GetIndividualsAction other = (GetIndividualsAction) o;
-        return Objects.equals(this.type, other.type) && Objects.equals(this.pageRequest, other.pageRequest);
+    public int hashCode() {
+        return Objects.hash(projectId, type, pageRequest, searchString, instanceRetrievalMode);
     }
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper("GetIndividualsAction")
-                          .add("type", type)
-                          .addValue(pageRequest).toString();
+        return "GetIndividualsAction{" + "projectId=" + projectId + ", type=" + type + ", pageRequest=" + pageRequest + ", searchString='" + searchString + '\'' + ", instanceRetrievalMode=" + instanceRetrievalMode + '}';
     }
 }

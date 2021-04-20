@@ -3,13 +3,19 @@ package edu.stanford.bmir.protege.web.shared.projectsettings;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
+import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+
+import javax.annotation.Nonnull;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 25/11/14
  */
-public class SetProjectSettingsAction extends AbstractHasProjectAction<SetProjectSettingsResult> {
+public class SetProjectSettingsAction implements ProjectAction<SetProjectSettingsResult> {
 
     private ProjectSettings projectSettings;
 
@@ -20,12 +26,17 @@ public class SetProjectSettingsAction extends AbstractHasProjectAction<SetProjec
     }
 
     private SetProjectSettingsAction(ProjectSettings projectSettings) {
-        super(projectSettings.getProjectId());
-        this.projectSettings = projectSettings;
+        this.projectSettings = checkNotNull(projectSettings);
     }
 
     public static SetProjectSettingsAction create(ProjectSettings projectSettings) {
         return new SetProjectSettingsAction(projectSettings);
+    }
+
+    @Nonnull
+    @Override
+    public ProjectId getProjectId() {
+        return projectSettings.getProjectId();
     }
 
     public ProjectSettings getProjectSettings() {

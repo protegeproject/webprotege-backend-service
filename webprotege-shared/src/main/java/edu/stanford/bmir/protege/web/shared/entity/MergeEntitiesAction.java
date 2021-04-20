@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.bulkop.HasCommitMessage;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -24,9 +25,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 9 Mar 2018
  */
 @AutoValue
-
 @JsonTypeName("MergeEntities")
-public abstract class MergeEntitiesAction extends AbstractHasProjectAction<MergeEntitiesResult> implements HasCommitMessage {
+public abstract class MergeEntitiesAction implements ProjectAction<MergeEntitiesResult>, HasCommitMessage {
 
 
     /**

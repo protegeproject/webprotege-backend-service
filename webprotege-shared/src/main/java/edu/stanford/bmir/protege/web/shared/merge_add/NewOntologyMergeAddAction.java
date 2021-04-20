@@ -7,6 +7,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.csv.DocumentId;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @AutoValue
 
 @JsonTypeName("NewOntologyMergeAdd")
-public abstract class NewOntologyMergeAddAction extends AbstractHasProjectAction<NewOntologyMergeAddResult> {
+public abstract class NewOntologyMergeAddAction implements ProjectAction<NewOntologyMergeAddResult> {
 
     @JsonCreator
     public static NewOntologyMergeAddAction create(@JsonProperty("projectId") ProjectId projectId,

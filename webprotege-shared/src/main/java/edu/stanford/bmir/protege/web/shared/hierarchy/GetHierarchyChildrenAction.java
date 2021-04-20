@@ -8,6 +8,7 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -23,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @AutoValue
 
 @JsonTypeName("GetHierarchyChildren")
-public abstract class GetHierarchyChildrenAction extends AbstractHasProjectAction<GetHierarchyChildrenResult> {
+public abstract class GetHierarchyChildrenAction implements ProjectAction<GetHierarchyChildrenResult> {
 
     @JsonCreator
     public static GetHierarchyChildrenAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

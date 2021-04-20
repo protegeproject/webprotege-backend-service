@@ -1,10 +1,14 @@
 package edu.stanford.bmir.protege.web.shared.obo;
 
-import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
+
+import javax.annotation.Nonnull;
+
+import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -14,7 +18,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 21 Jun 2017
  */
-public class GetOboTermDefinitionAction extends AbstractHasProjectAction<GetOboTermDefinitionResult> {
+public class GetOboTermDefinitionAction implements ProjectAction<GetOboTermDefinitionResult> {
+
+    private ProjectId projectId;
 
     private OWLEntity term;
 
@@ -23,7 +29,7 @@ public class GetOboTermDefinitionAction extends AbstractHasProjectAction<GetOboT
     }
 
     private GetOboTermDefinitionAction(ProjectId projectId, OWLEntity term) {
-        super(projectId);
+        this.projectId = checkNotNull(projectId);
         this.term = checkNotNull(term);
     }
 
@@ -31,34 +37,35 @@ public class GetOboTermDefinitionAction extends AbstractHasProjectAction<GetOboT
         return new GetOboTermDefinitionAction(projectId, term);
     }
 
+    @Nonnull
+    @Override
+    public ProjectId getProjectId() {
+        return projectId;
+    }
+
     public OWLEntity getTerm() {
         return term;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(term, getProjectId());
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GetOboTermDefinitionAction)) {
+            return false;
+        }
+        GetOboTermDefinitionAction that = (GetOboTermDefinitionAction) o;
+        return Objects.equals(projectId, that.projectId) && Objects.equals(term, that.term);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof GetOboTermDefinitionAction)) {
-            return false;
-        }
-        GetOboTermDefinitionAction other = (GetOboTermDefinitionAction) obj;
-        return this.term.equals(other.term)
-                && this.getProjectId().equals(other.getProjectId());
+    public int hashCode() {
+        return Objects.hash(projectId, term);
     }
-
 
     @Override
     public String toString() {
-        return toStringHelper("GetOboTermDefinitionAction")
-                .addValue(getProjectId())
-                .addValue(term)
-                .toString();
+        return "GetOboTermDefinitionAction{" + "projectId=" + projectId + ", term=" + term + '}';
     }
 }

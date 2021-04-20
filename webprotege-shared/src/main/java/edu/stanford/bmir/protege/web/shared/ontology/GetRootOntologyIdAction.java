@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
@@ -19,7 +20,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("GetRootOntologyId")
-public abstract class GetRootOntologyIdAction extends AbstractHasProjectAction<GetRootOntologyIdResult> {
+public abstract class GetRootOntologyIdAction implements ProjectAction<GetRootOntologyIdResult> {
 
     @JsonCreator
     public static GetRootOntologyIdAction create(@JsonProperty("projectId") ProjectId projectId) {

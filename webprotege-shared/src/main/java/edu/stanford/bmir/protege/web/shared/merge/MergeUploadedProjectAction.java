@@ -7,6 +7,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.csv.DocumentId;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
@@ -19,7 +20,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("MergeUploadedProject")
-public abstract class MergeUploadedProjectAction extends AbstractHasProjectAction<MergeUploadedProjectResult> {
+public abstract class MergeUploadedProjectAction implements ProjectAction<MergeUploadedProjectResult> {
 
     @JsonCreator
     public static MergeUploadedProjectAction create(@JsonProperty("projectId") ProjectId projectId,

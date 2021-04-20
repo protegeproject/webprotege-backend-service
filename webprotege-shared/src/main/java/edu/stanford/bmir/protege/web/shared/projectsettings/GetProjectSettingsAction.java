@@ -3,15 +3,21 @@ package edu.stanford.bmir.protege.web.shared.projectsettings;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+
+import javax.annotation.Nonnull;
+
+import static dagger.internal.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 25/11/14
  */
-public class GetProjectSettingsAction extends AbstractHasProjectAction<GetProjectSettingsResult> {
+public class GetProjectSettingsAction implements ProjectAction<GetProjectSettingsResult> {
 
+    private ProjectId projectId;
 
     /**
      * For serialization purposes only
@@ -20,11 +26,17 @@ public class GetProjectSettingsAction extends AbstractHasProjectAction<GetProjec
     }
 
     private GetProjectSettingsAction(ProjectId projectId) {
-        super(projectId);
+        this.projectId = checkNotNull(projectId);
     }
 
     public static GetProjectSettingsAction create(ProjectId projectId) {
         return new GetProjectSettingsAction(projectId);
+    }
+
+    @Nonnull
+    @Override
+    public ProjectId getProjectId() {
+        return projectId;
     }
 
     @Override

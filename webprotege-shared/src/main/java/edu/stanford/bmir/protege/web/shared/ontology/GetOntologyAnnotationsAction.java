@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -22,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @AutoValue
 
 @JsonTypeName("GetOntologyAnnotations")
-public abstract class GetOntologyAnnotationsAction extends AbstractHasProjectAction<GetOntologyAnnotationsResult> {
+public abstract class GetOntologyAnnotationsAction implements ProjectAction<GetOntologyAnnotationsResult> {
 
     @JsonCreator
     public static GetOntologyAnnotationsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

@@ -1,8 +1,11 @@
 package edu.stanford.bmir.protege.web.shared.csv;
 
 import edu.stanford.bmir.protege.web.shared.dispatch.AbstractHasProjectAction;
+import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
+
+import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -12,7 +15,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 31/05/2013
  */
-public class ImportCSVFileAction extends AbstractHasProjectAction<ImportCSVFileResult> {
+public class ImportCSVFileAction implements ProjectAction<ImportCSVFileResult> {
+
+    private ProjectId projectId;
 
     private OWLClass importRootClass;
 
@@ -27,10 +32,16 @@ public class ImportCSVFileAction extends AbstractHasProjectAction<ImportCSVFileR
     }
 
     public ImportCSVFileAction(ProjectId projectId, DocumentId csvDocumentId, OWLClass importRootClass, CSVImportDescriptor descriptor) {
-        super(projectId);
+        this.projectId = checkNotNull(projectId);
         this.importRootClass = checkNotNull(importRootClass);
         this.documentId = checkNotNull(csvDocumentId);
         this.descriptor = checkNotNull(descriptor);
+    }
+
+    @Nonnull
+    @Override
+    public ProjectId getProjectId() {
+        return projectId;
     }
 
     public DocumentId getDocumentId() {
