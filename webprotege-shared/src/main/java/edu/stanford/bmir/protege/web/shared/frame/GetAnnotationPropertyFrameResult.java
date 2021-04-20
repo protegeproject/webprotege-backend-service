@@ -1,13 +1,9 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
-import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
-import edu.stanford.bmir.protege.web.shared.dispatch.GetObjectResult;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -20,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @AutoValue
 
 @JsonTypeName("GetAnnotationPropertyFrame")
-public abstract class GetAnnotationPropertyFrameResult implements Result, GetObjectResult<AnnotationPropertyFrame> {
+public abstract class GetAnnotationPropertyFrameResult implements Result {
 
     @JsonCreator
     public static GetAnnotationPropertyFrameResult create(@JsonProperty("frame") AnnotationPropertyFrame frame) {
@@ -28,10 +24,4 @@ public abstract class GetAnnotationPropertyFrameResult implements Result, GetObj
     }
 
     public abstract AnnotationPropertyFrame getFrame();
-
-    @JsonIgnore
-    @Override
-    public AnnotationPropertyFrame getObject() {
-        return getFrame();
-    }
 }

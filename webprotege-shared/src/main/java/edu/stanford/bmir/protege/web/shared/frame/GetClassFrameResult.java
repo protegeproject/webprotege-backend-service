@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
-import edu.stanford.bmir.protege.web.shared.dispatch.GetObjectResult;
+import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 /**
  * Matthew Horridge
@@ -13,10 +12,8 @@ import edu.stanford.bmir.protege.web.shared.dispatch.GetObjectResult;
  * 28 Jul 16
  */
 @AutoValue
-
 @JsonTypeName("GetClassFrame")
-public abstract class GetClassFrameResult implements GetObjectResult<ClassFrame> {
-
+public abstract class GetClassFrameResult implements Result {
 
     @JsonCreator
     public static GetClassFrameResult get(@JsonProperty("frame") ClassFrame classFrame) {
@@ -24,14 +21,4 @@ public abstract class GetClassFrameResult implements GetObjectResult<ClassFrame>
     }
 
     public abstract ClassFrame getFrame();
-
-    /**
-     * Gets the object.
-     *
-     * @return The object.  Not {@code null}.
-     */
-    @Override
-    public ClassFrame getObject() {
-        return getFrame();
-    }
 }
