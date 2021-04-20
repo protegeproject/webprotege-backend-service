@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.shortform;
 
 import com.fasterxml.jackson.annotation.*;
-import com.google.common.annotations.GwtCompatible;
+
 import org.semanticweb.owlapi.vocab.SKOSVocabulary;
 
 import javax.annotation.Nonnull;

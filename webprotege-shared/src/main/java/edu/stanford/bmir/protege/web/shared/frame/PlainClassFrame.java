@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
 import org.semanticweb.owlapi.model.OWLClass;

@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;

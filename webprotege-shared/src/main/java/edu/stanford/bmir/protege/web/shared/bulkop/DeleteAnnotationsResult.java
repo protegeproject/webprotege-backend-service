@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.bulkop;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.event.HasEventList;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;

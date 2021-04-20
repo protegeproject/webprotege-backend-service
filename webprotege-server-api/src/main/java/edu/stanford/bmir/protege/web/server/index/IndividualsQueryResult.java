@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.index;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import org.semanticweb.owlapi.model.OWLClass;

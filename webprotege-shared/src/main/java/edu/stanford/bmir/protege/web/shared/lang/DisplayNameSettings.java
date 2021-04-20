@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.lang;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;

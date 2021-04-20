@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.projectsettings;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import com.google.common.collect.ImmutableSet;
 
 import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhookEventType;

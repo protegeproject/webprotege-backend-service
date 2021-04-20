@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.bulkop;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 
 import javax.annotation.Nonnull;

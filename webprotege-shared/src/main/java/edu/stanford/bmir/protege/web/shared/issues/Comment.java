@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import com.google.common.base.Objects;
 
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;

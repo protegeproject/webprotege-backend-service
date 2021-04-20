@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.search;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 
 import javax.annotation.Nonnull;
 

@@ -4,7 +4,7 @@ package edu.stanford.bmir.protege.web.shared.hierarchy;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 
 
 import javax.annotation.Nonnull;

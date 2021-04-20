@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 
 import javax.annotation.Nonnull;
 

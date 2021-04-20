@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.viz;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;

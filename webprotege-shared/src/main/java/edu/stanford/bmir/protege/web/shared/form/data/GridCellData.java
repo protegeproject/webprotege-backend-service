@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.form.data;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import edu.stanford.bmir.protege.web.shared.form.field.GridColumnId;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import org.semanticweb.owlapi.model.OWLEntity;

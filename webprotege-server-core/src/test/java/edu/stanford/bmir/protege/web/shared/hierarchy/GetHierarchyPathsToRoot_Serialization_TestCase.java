@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.hierarchy;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;

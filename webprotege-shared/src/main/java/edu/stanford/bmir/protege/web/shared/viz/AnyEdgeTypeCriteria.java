@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.viz;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 
 /**
  * Matthew Horridge

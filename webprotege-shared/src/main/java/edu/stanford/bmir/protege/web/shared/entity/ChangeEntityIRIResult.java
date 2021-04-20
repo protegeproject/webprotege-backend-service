@@ -16,7 +16,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 10 May 2017
  */
-@SuppressWarnings("GwtInconsistentSerializableClass")
 public class ChangeEntityIRIResult implements Result, HasProjectId {
 
     private ProjectId projectId;

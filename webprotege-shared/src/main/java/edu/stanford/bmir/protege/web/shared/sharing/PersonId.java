@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.sharing;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 

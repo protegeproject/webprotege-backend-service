@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.change;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import com.google.gwt.safehtml.shared.SafeHtml;
 
 import edu.stanford.bmir.protege.web.shared.diff.DiffElement;

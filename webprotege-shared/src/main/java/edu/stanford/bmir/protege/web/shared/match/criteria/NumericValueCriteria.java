@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.match.criteria;
 
 import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 
 import javax.annotation.Nonnull;
 

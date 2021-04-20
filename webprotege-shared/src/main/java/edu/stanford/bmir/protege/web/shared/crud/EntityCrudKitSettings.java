@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.crud;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
 
 import javax.annotation.Nonnull;

@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.shared.form.data.FormEntitySubject;
 import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;

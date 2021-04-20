@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.perspective;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.annotations.GwtCompatible;
+
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
 import edu.stanford.protege.widgetmap.shared.node.Node;
 
