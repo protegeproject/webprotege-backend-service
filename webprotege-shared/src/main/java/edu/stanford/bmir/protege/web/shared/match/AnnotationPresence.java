@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.match;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 /**
  * Matthew Horridge

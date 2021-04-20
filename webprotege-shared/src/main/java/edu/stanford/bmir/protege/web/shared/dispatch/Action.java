@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.dispatch;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.app.GetApplicationSettingsAction;
 import edu.stanford.bmir.protege.web.shared.app.SetApplicationSettingsAction;
 import edu.stanford.bmir.protege.web.shared.auth.ChangePasswordAction;
@@ -225,5 +225,5 @@ import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesAction;
         @Type(value = UpdateNamedIndividualFrameAction.class),
         @Type(value = UpdateObjectPropertyFrameAction.class)
 })
-public interface Action<R extends Result> extends IsSerializable {
+public interface Action<R extends Result> {
 }

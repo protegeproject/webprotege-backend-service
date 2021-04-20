@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.merge;
 
 import com.google.common.base.Objects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;

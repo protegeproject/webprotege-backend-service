@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.match.criteria;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 /**
  * Matthew Horridge
@@ -17,6 +17,6 @@ import com.google.gwt.user.client.rpc.IsSerializable;
         @Type(AnnotationSetCriteria.class),
         @Type(RootCriteria.class)
 })
-public interface Criteria extends IsSerializable {
+public interface Criteria {
 
 }

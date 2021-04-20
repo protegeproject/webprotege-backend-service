@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.form;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.form.field.FormFieldDescriptor;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.form.ExpansionState;
 import edu.stanford.bmir.protege.web.shared.form.HasFormFieldId;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 
 @AutoValue
-public abstract class FormFieldDescriptorDto implements IsSerializable, HasFormFieldId {
+public abstract class FormFieldDescriptorDto implements  HasFormFieldId {
 
     @JsonCreator
     @Nonnull

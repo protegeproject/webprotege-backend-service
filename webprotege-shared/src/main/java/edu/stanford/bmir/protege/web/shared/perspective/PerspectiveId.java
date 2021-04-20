@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.annotations.GwtIncompatible;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 @AutoValue
 
-public abstract class PerspectiveId implements IsSerializable, Serializable {
+public abstract class PerspectiveId implements  Serializable {
 
     @JsonCreator
     @Nonnull

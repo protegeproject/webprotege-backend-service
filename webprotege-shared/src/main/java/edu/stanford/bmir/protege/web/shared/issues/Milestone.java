@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 
 import javax.annotation.Nonnull;

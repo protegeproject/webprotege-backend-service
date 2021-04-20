@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.lang.DisplayNameSettings;
 import edu.stanford.bmir.protege.web.shared.projectsettings.EntityDeprecationSettings;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
@@ -38,7 +38,7 @@ import static java.util.Comparator.comparing;
         "downloadable"})
 @AutoValue
 
-public abstract class AvailableProject implements IsSerializable, HasProjectId, Comparable<AvailableProject> {
+public abstract class AvailableProject implements  HasProjectId, Comparable<AvailableProject> {
 
     public static final long UNKNOWN = 0;
 

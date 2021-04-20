@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.form.field;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import org.semanticweb.owlapi.model.OWLProperty;
 
 import javax.annotation.Nonnull;
@@ -24,7 +24,7 @@ import java.util.Optional;
                       @JsonSubTypes.Type(value = OwlInstanceBinding.class, name = OwlInstanceBinding.TYPE),
                       @JsonSubTypes.Type(value = OwlSubClassBinding.class, name = OwlSubClassBinding.TYPE)
               })
-public interface OwlBinding extends IsSerializable {
+public interface OwlBinding {
 
     String VALUES_CRITERIA = "valuesCriteria";
 

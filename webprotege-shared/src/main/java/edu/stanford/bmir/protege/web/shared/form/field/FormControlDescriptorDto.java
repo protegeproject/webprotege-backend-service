@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 @JsonSubTypes({
         @Type(EntityNameControlDescriptorDto.class),
@@ -18,7 +18,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public interface FormControlDescriptorDto extends IsSerializable {
+public interface FormControlDescriptorDto {
 
     <R> R accept(FormControlDescriptorDtoVisitor<R> visitor);
 

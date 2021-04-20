@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.frame;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import org.semanticweb.owlapi.model.EntityType;
 
 import java.io.Serializable;

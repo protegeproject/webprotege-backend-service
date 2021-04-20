@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.form;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.form.field.FormFieldId;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.annotations.GwtCompatible;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 
 import javax.annotation.Nonnull;
@@ -21,7 +21,7 @@ import java.util.Optional;
         @Type(IsAEdge.class),
         @Type(RelationshipEdge.class)
 })
-public interface Edge extends IsSerializable {
+public interface Edge {
 
     @Nonnull
     OWLEntityData getHead();

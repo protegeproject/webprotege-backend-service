@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.form.field;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.google.common.base.Objects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 /**
  * Author: Matthew Horridge<br>
@@ -8,7 +8,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Bio-Medical Informatics Research Group<br>
  * Date: 25/01/2012
  */
-public interface Filter<T> extends IsSerializable {
+public interface Filter<T> {
 
     boolean isIncluded(T object);
 }

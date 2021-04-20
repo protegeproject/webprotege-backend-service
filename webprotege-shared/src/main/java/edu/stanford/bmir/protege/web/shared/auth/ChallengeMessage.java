@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.auth;
 
 import com.google.common.base.Objects;
 import com.google.common.io.BaseEncoding;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import java.util.Arrays;
 

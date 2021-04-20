@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.entity;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.user.UserId;
 
@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 8 Mar 2017
  */
-public class CommentedEntityData implements IsSerializable, Comparable<CommentedEntityData> {
+public class CommentedEntityData implements  Comparable<CommentedEntityData> {
 
     public static final transient Comparator<CommentedEntityData> byEntity = Comparator.naturalOrder();
 

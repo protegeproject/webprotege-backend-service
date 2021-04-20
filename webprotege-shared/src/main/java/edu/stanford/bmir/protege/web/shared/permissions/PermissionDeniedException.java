@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.permissions;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.app.UserInSession;
 

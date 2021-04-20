@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared;
 
 import com.google.common.base.Objects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 

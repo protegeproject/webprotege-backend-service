@@ -4,7 +4,7 @@ package edu.stanford.bmir.protege.web.shared.form.field;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import javax.annotation.Nonnull;
 
@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
                       @JsonSubTypes.Type(value = GridControlDescriptor.class, name = GridControlDescriptor.TYPE),
                       @JsonSubTypes.Type(value = SubFormControlDescriptor.class, name = SubFormControlDescriptor.TYPE)
               })
-public interface FormControlDescriptor extends IsSerializable {
+public interface FormControlDescriptor {
 
     @JsonIgnore
     @Nonnull

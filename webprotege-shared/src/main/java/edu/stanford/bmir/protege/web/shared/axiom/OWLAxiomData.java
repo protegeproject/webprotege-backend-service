@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.axiom;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 26/01/15
  */
-public class OWLAxiomData implements IsSerializable, Serializable {
+public class OWLAxiomData implements  Serializable {
 
     private String htmlRendering;
 

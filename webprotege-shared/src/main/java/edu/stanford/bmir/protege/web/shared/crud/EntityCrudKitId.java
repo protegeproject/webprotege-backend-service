@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.crud;
 
 import com.google.common.base.MoreObjects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.HasLexicalForm;
 
 import java.io.Serializable;

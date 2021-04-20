@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.color.Color;
 import edu.stanford.bmir.protege.web.shared.match.criteria.RootCriteria;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -28,7 +28,7 @@ import static edu.stanford.bmir.protege.web.shared.DeserializationUtil.nonNull;
  */
 @AutoValue
 
-public abstract class Tag implements IsSerializable, WithProjectId<Tag> {
+public abstract class Tag implements  WithProjectId<Tag> {
 
 
     public static final String ID = "_id";

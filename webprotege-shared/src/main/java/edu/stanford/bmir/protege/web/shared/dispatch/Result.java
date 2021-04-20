@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.dispatch;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.app.GetApplicationSettingsResult;
 import edu.stanford.bmir.protege.web.shared.app.SetApplicationSettingsResult;
 import edu.stanford.bmir.protege.web.shared.auth.*;
@@ -206,6 +206,6 @@ import edu.stanford.bmir.protege.web.shared.watches.SetEntityWatchesResult;
         @Type(UpdateEntityTagsResult.class),
         @Type(UpdateFormDescriptorResult.class),
 })
-public interface Result extends IsSerializable {
+public interface Result {
 
 }

@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.webhook;
 
 import com.google.common.base.Objects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 

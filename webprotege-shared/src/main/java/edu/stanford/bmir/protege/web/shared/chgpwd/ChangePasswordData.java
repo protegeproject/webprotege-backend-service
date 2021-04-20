@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.chgpwd;
 
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

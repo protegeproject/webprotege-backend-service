@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.merge;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Stanford Center for Biomedical Informatics Research
  * 26/01/15
  */
-public class Diff<T extends Serializable> implements IsSerializable, Serializable {
+public class Diff<T extends Serializable> implements  Serializable {
 
     private ImmutableSet<T> added;
 

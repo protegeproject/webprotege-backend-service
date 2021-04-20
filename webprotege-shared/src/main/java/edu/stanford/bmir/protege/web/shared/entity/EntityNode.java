@@ -8,7 +8,7 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.DataFactory;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageData;
@@ -31,7 +31,7 @@ import static java.util.stream.Collectors.toMap;
  */
 @AutoValue
 
-public abstract class EntityNode implements IsSerializable, Serializable, Comparable<EntityNode>, HasTextRendering {
+public abstract class EntityNode implements  Serializable, Comparable<EntityNode>, HasTextRendering {
 
     private static final boolean NOT_DEPRECATED = false;
 

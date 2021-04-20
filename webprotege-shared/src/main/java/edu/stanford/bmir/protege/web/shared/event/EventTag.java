@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.event;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import javax.annotation.concurrent.Immutable;
 import java.io.Serializable;

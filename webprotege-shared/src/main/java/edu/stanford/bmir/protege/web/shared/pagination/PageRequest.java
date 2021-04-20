@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.pagination;
 
 import com.google.common.base.MoreObjects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import java.io.Serializable;
 
