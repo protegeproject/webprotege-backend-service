@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.common.base.Objects;
-import com.google.gwt.place.shared.Place;
 import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
@@ -17,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 08/04/2013
  */
-public class ProjectViewPlace extends Place implements HasProjectId {
+public class ProjectViewPlace implements HasProjectId {
 
     private final ProjectId projectId;
 
@@ -113,7 +112,7 @@ public class ProjectViewPlace extends Place implements HasProjectId {
             return this;
         }
 
-        public Builder withSelectedItemsFromPlace(Place place) {
+        public Builder withSelectedItemsFromPlace(Object place) {
             if(!(place instanceof ProjectViewPlace)) {
                 return this;
             }

@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.common.collect.Lists;
 import com.google.gwt.http.client.URL;
-import com.google.gwt.place.shared.Place;
 import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
@@ -30,10 +29,6 @@ public class ProjectViewPlaceTokenizer {
 
     public boolean matches(String token) {
         return pattern.matcher(token).matches();
-    }
-
-    public boolean isTokenizerFor(Place place) {
-        return place instanceof ProjectViewPlace;
     }
 
     public ProjectViewPlace getPlace(String token) {
