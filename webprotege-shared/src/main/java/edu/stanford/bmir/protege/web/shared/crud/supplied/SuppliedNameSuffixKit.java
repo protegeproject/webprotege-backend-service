@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.crud.supplied;
 
-import com.google.gwt.http.client.URL;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKit;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitId;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
@@ -53,7 +52,7 @@ public class SuppliedNameSuffixKit extends EntityCrudKit<SuppliedNameSuffixSetti
 
     @Override
     public IRI generateExample(EntityCrudKitPrefixSettings prefixSettings, SuppliedNameSuffixSettings suffixSettings) {
-        return IRI.create(URL.encode(prefixSettings.getIRIPrefix()), "Person");
+        return IRI.create(prefixSettings.getIRIPrefix(), "Person");
     }
 
     @Override

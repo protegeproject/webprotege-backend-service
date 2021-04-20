@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.crud.uuid;
 
-import com.google.gwt.http.client.URL;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKit;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitId;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
@@ -55,7 +54,7 @@ public class UuidSuffixKit extends EntityCrudKit<UuidSuffixSettings> {
 
     @Override
     public IRI generateExample(EntityCrudKitPrefixSettings prefixSettings, UuidSuffixSettings suffixSettings) {
-        return IRI.create(URL.encode(prefixSettings.getIRIPrefix()), EXAMPLE_SUFFIX);
+        return IRI.create(prefixSettings.getIRIPrefix(), EXAMPLE_SUFFIX);
     }
 
     @Override

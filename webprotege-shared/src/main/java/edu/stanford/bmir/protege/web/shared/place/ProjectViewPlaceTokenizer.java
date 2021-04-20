@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.common.collect.Lists;
-import com.google.gwt.http.client.URL;
 import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
@@ -32,7 +31,7 @@ public class ProjectViewPlaceTokenizer {
     }
 
     public ProjectViewPlace getPlace(String token) {
-        token = URL.decode(token);
+        token = decodeUrl(token);
 
         Matcher matcher = pattern.matcher(token);
         if (!matcher.matches()) {
@@ -59,6 +58,10 @@ public class ProjectViewPlaceTokenizer {
             }
         }
         return builder.build();
+    }
+
+    private String decodeUrl(String url) {
+        return url;
     }
 
     public String getToken(ProjectViewPlace place) {

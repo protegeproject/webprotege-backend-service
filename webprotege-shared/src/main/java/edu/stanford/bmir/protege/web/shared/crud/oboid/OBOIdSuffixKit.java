@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.crud.oboid;
 
 import com.google.common.collect.ImmutableList;
-import com.google.gwt.http.client.URL;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKit;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitId;
 import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
@@ -64,7 +63,7 @@ public class OBOIdSuffixKit extends EntityCrudKit<OboIdSuffixSettings> {
             sb.append("0");
         }
         sb.append("1");
-        return IRI.create(URL.encode(prefixSettings.getIRIPrefix()), sb.toString());
+        return IRI.create(prefixSettings.getIRIPrefix(), sb.toString());
     }
 
     @Override

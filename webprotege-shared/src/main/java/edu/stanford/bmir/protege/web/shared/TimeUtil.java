@@ -127,10 +127,6 @@ public class TimeUtil {
         return getDaysBetween(new Date(timestamp), new Date(referenceTimestamp));
     }
 
-
-    /**
-     * Taken from {@link com.google.gwt.user.datepicker.client.CalendarUtil}
-     */
     private static int getDaysBetween(Date start, Date finish) {
         // Convert the dates to the same time
         start = copyDate(start);
@@ -147,10 +143,6 @@ public class TimeUtil {
         return (int) ((bTime - aTime + adjust) / (24 * 60 * 60 * 1000));
     }
 
-
-    /**
-     * Taken from {@link com.google.gwt.user.datepicker.client.CalendarUtil}
-     */
     private static Date copyDate(Date date) {
         if (date == null) {
             return null;
@@ -160,9 +152,6 @@ public class TimeUtil {
         return newDate;
     }
 
-    /**
-     * Taken from {@link com.google.gwt.user.datepicker.client.CalendarUtil}
-     */
     private static void resetTime(Date date) {
         long msec = resetMilliseconds(date.getTime());
         date.setTime(msec);
