@@ -1,5 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.sharing;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
@@ -33,7 +35,9 @@ public class SharingSetting implements Comparable<SharingSetting>, Serializable 
      * @throws NullPointerException if the userId parameter is <code>null</code> or the sharingPermission parameter
      * is <code>null</code>.
      */
-    public SharingSetting(PersonId personId, SharingPermission sharingPermission) {
+    @JsonCreator
+    public SharingSetting(@JsonProperty("personId") PersonId personId,
+                          @JsonProperty("sharingPermission") SharingPermission sharingPermission) {
         this.personId = checkNotNull(personId);
         this.sharingPermission = checkNotNull(sharingPermission);
     }
