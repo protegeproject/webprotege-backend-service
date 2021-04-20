@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * prefix names must be terminated with a colon.
  */
 @JsonPropertyOrder({"prefixName", "prefix"})
-public class PrefixDeclaration implements IsSerializable {
+public class PrefixDeclaration {
 
     private String prefixName;
 

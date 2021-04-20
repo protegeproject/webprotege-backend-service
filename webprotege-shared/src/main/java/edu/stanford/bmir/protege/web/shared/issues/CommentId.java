@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 7 Oct 2016
  */
-public class CommentId implements IsSerializable {
+public class CommentId {
 
     private String id;
 

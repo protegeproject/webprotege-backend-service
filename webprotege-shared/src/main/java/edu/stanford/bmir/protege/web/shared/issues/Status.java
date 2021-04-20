@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Stanford Center for Biomedical Informatics Research
  * 27 Jul 16
  */
-public enum Status implements IsSerializable {
+public enum Status {
 
     OPEN,
 

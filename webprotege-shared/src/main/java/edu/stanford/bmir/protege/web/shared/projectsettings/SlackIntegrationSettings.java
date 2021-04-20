@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-public abstract class SlackIntegrationSettings implements IsSerializable {
+public abstract class SlackIntegrationSettings {
 
     public static final String PAYLOAD_URL = "payloadUrl";
 

@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-public abstract class FilterName implements IsSerializable {
+public abstract class FilterName {
 
     @Nonnull
     @JsonCreator

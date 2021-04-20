@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 1 Aug 16
  */
-public class Milestone implements IsSerializable {
+public class Milestone {
 
     @Nonnull
     private String label;

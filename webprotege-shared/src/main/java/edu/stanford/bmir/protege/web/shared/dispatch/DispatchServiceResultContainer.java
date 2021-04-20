@@ -15,7 +15,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 @AutoValue
 
-public abstract class DispatchServiceResultContainer implements IsSerializable {
+public abstract class DispatchServiceResultContainer {
 
     @JsonCreator
     public static DispatchServiceResultContainer create(@JsonProperty("result") Result result) {

@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 27 Jul 16
  */
-public class Issue implements IsSerializable {
+public class Issue {
 
     @Nonnull
     private ProjectId projectId;

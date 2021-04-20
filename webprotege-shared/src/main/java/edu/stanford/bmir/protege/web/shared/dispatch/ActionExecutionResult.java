@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 
 @AutoValue
-public abstract class ActionExecutionResult implements IsSerializable {
+public abstract class ActionExecutionResult {
 
     @JsonCreator
     private static ActionExecutionResult create(@Nullable @JsonProperty("result") DispatchServiceResultContainer result,

@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toList;
  */
 @AutoValue
 
-public abstract class EntityGraphSettings implements IsSerializable {
+public abstract class EntityGraphSettings {
 
     public static final String FILTERS = "filters";
 

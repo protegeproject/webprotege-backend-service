@@ -12,7 +12,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 25 Jun 2017
  */
-public class NumberControlRange implements IsSerializable {
+public class NumberControlRange {
 
     private static final NumberControlRange ANY_NUMBER = new NumberControlRange(Double.MIN_VALUE,
                                                                                 BoundType.INCLUSIVE,

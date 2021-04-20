@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/05/2013
  */
-public class CSVImportDescriptor implements IsSerializable {
+public class CSVImportDescriptor {
 
     private CSVRowImportType rowImportType;
 

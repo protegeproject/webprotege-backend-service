@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @AutoValue
 
-public abstract class WebhookSetting implements IsSerializable {
+public abstract class WebhookSetting {
 
     public static final String PAYLOAD_URL = "payloadUrl";
 

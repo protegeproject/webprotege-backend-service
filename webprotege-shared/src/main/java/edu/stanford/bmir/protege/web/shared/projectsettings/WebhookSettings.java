@@ -17,7 +17,7 @@ import java.util.List;
  */
 @AutoValue
 
-public abstract class WebhookSettings implements IsSerializable {
+public abstract class WebhookSettings {
 
     @JsonProperty("webhookSettings")
     @Nonnull

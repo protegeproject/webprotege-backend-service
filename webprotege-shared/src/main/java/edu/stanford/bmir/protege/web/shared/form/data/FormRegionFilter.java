@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-public abstract class FormRegionFilter implements IsSerializable {
+public abstract class FormRegionFilter {
 
     @Nonnull
     public static FormRegionFilter get(@Nonnull FormRegionId formRegionId,

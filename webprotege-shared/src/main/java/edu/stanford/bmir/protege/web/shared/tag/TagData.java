@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 @AutoValue
 
-public abstract class TagData implements IsSerializable {
+public abstract class TagData {
 
     public static TagData get(@Nonnull String label,
                               @Nonnull String description,

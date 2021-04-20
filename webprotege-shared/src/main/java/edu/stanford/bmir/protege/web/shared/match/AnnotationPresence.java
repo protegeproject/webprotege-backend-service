@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Stanford Center for Biomedical Informatics Research
  * 8 Jun 2018
  */
-public enum AnnotationPresence implements IsSerializable {
+public enum AnnotationPresence {
 
     AT_LEAST_ONE,
 

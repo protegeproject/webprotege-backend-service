@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Stanford Center for Biomedical Informatics Research
  * 9 Mar 2018
  */
-public enum MergedEntityTreatment implements IsSerializable {
+public enum MergedEntityTreatment {
 
     DELETE_MERGED_ENTITY,
 

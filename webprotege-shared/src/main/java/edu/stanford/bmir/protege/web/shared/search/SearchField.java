@@ -12,7 +12,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 21 Apr 2017
  */
-public class SearchField implements IsSerializable {
+public class SearchField {
 
     private static final SearchField SEARCH_FIELD = new SearchField("Display name");
 

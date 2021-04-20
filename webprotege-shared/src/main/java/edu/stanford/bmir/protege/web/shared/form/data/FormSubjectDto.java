@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
         @JsonSubTypes.Type(FormEntitySubjectDto.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public abstract class FormSubjectDto implements IsSerializable {
+public abstract class FormSubjectDto {
 
     @Nonnull
     public static FormEntitySubjectDto get(@Nonnull OWLEntityData entity) {

@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @AutoValue
 
-public abstract class HierarchyId implements IsSerializable {
+public abstract class HierarchyId {
 
     public static final HierarchyId CLASS_HIERARCHY = get("Class");
 

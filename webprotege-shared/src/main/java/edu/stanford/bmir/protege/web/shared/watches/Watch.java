@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @AutoValue
 
-public abstract class Watch implements IsSerializable {
+public abstract class Watch {
 
     public static final String USER_ID = "userId";
 

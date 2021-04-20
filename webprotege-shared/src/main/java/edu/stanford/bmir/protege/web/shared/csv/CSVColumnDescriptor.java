@@ -11,7 +11,7 @@ import org.semanticweb.owlapi.model.*;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/05/2013
  */
-public final class CSVColumnDescriptor implements IsSerializable {
+public final class CSVColumnDescriptor {
 
     private int columnIndex;
 

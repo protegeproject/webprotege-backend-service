@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 10 Jun 2018
  */
-public enum NumericPredicate implements IsSerializable {
+public enum NumericPredicate {
 
     GREATER_THAN(">") {
         @Override

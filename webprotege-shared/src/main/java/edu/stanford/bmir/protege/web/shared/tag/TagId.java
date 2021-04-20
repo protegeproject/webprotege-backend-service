@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 14 Mar 2018
  */
-public class TagId implements IsSerializable {
+public class TagId {
 
     private String id;
 

@@ -13,7 +13,7 @@ import edu.stanford.bmir.protege.web.shared.project.ProjectId;
  * Date: 20/03/2013
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, property = "eventType")
-public abstract class WebProtegeEvent<H> implements IsSerializable {
+public abstract class WebProtegeEvent<H> {
 
     private ProjectId projectId;
 

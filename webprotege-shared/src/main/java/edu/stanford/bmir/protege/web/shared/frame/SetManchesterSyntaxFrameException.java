@@ -7,7 +7,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Stanford Center for Biomedical Informatics Research
  * 25/07/15
  */
-public class SetManchesterSyntaxFrameException extends RuntimeException implements IsSerializable {
+public class SetManchesterSyntaxFrameException extends RuntimeException {
 
     private ManchesterSyntaxFrameParseError error;
 

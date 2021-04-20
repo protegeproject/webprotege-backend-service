@@ -10,7 +10,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 26/02/16
  */
-public class PortletId implements IsSerializable {
+public class PortletId {
 
     private String id;
 

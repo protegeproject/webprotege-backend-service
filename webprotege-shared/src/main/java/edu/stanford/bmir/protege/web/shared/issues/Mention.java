@@ -13,7 +13,7 @@ import java.util.Optional;
  *
  * Represents the mention of some object in String
  */
-public abstract class Mention implements IsSerializable {
+public abstract class Mention {
 
     /**
      * If this mention mentions a UserId then this method returns the UserId.

@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * Represents a user in the current session
  */
-public class UserInSession implements IsSerializable {
+public class UserInSession {
 
     private UserDetails userDetails;
 

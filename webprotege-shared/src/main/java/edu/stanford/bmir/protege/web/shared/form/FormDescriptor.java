@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 30/03/16
  */
-public class FormDescriptor implements IsSerializable {
+public class FormDescriptor {
 
     private FormId formId;
 

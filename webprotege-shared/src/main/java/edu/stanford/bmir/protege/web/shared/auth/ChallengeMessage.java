@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 17/02/15
  */
-public class ChallengeMessage implements IsSerializable {
+public class ChallengeMessage {
 
     private byte [] message;
 

@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 19/05/2013
  */
-public class CSVGrid implements IsSerializable {
+public class CSVGrid {
 
     private List<CSVRow> grid = new ArrayList<CSVRow>();
 

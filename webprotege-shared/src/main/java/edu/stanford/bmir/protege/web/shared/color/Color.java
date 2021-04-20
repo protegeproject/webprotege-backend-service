@@ -24,7 +24,7 @@ import static java.lang.Math.abs;
  */
 @AutoValue
 
-public abstract class Color implements IsSerializable {
+public abstract class Color {
 
     private static final int MIN = 0;
 

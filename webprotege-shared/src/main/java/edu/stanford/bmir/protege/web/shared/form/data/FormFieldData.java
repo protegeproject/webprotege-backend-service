@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-public abstract class FormFieldData implements IsSerializable {
+public abstract class FormFieldData {
 
     @JsonCreator
     public static FormFieldData get(@JsonProperty("descriptor") @Nonnull FormFieldDescriptor descriptor,

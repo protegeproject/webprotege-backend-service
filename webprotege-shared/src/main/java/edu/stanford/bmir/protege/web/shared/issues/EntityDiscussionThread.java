@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * A thread of comments that are attached to an entity
  */
-public class EntityDiscussionThread implements IsSerializable {
+public class EntityDiscussionThread {
 
     public static final String PROJECT_ID = "projectId";
 

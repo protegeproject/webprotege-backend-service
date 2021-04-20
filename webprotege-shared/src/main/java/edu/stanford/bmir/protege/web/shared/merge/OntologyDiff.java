@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 26/01/15
  */
-public class OntologyDiff implements IsSerializable {
+public class OntologyDiff {
 
     private OWLOntologyID fromOntologyId;
 

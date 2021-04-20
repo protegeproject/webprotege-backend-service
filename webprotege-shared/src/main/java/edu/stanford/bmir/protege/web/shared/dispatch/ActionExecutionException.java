@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     is the exception thrown during action execution.
  * </p>
  */
-public class ActionExecutionException extends RuntimeException implements IsSerializable {
+public class ActionExecutionException extends RuntimeException {
 
     private Throwable serializedCause;
 

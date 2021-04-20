@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 @AutoValue
 
-public abstract class NewProjectSettings implements IsSerializable {
+public abstract class NewProjectSettings {
 
 
     private static final String PROJECT_OWNER = "projectOwner";

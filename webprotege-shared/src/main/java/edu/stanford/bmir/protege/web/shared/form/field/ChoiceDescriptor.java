@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  */
 
 @AutoValue
-public abstract class ChoiceDescriptor implements IsSerializable {
+public abstract class ChoiceDescriptor {
 
     @JsonCreator
     public static ChoiceDescriptor choice(@Nonnull @JsonProperty("label") LanguageMap label,

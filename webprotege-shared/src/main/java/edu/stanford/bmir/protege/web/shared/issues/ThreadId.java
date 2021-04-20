@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 5 Oct 2016
  */
-public class ThreadId implements IsSerializable {
+public class ThreadId {
 
     private String id;
 

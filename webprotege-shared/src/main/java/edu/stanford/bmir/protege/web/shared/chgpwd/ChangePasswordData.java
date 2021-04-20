@@ -10,7 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 27/08/2013
  */
-public final class ChangePasswordData implements IsSerializable {
+public final class ChangePasswordData {
 
     private String oldPassword;
 

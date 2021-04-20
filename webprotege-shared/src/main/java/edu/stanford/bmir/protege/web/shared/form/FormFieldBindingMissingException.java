@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-26
  */
-public class FormFieldBindingMissingException extends RuntimeException implements IsSerializable {
+public class FormFieldBindingMissingException extends RuntimeException {
 
     private FormFieldId formFieldId;
 

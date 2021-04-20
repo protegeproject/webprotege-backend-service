@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-26
  */
-public class GridColumnBindingMissingException extends RuntimeException implements IsSerializable {
+public class GridColumnBindingMissingException extends RuntimeException {
 
     private GridColumnId columnId;
 

@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     permissions to do so.
  * </p>
  */
-public class PermissionDeniedException extends RuntimeException implements IsSerializable {
+public class PermissionDeniedException extends RuntimeException {
 
     private UserInSession userInSession;
 
