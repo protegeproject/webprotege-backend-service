@@ -1,11 +1,11 @@
 package edu.stanford.bmir.protege.web.shared.place;
 
 import com.google.common.collect.Lists;
-import com.google.gwt.regexp.shared.MatchResult;
-import com.google.gwt.regexp.shared.RegExp;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 19/05/2014
@@ -48,13 +48,13 @@ public class ItemTokenizer {
 
     public List<ItemToken> parseTokens(String buffer) {
         List<ItemToken> result = Lists.newArrayList();
-        RegExp regExp = RegExp.compile(REGEX);
+        Pattern regExp = Pattern.compile(REGEX);
         List<String> tokens = getSeparatedTokens(buffer);
         for(String token : tokens) {
-            MatchResult matchResult = regExp.exec(token);
-            if(matchResult != null) {
-                String type = matchResult.getGroup(TYPE_GROUP);
-                String content = matchResult.getGroup(CONTENT_GROUP);
+            Matcher matcher = regExp.matcher(token);
+            if(matcher.matches()) {
+                String type = matcher.group(TYPE_GROUP);
+                String content = matcher.group(CONTENT_GROUP);
                 result.add(new ItemToken(type, content));
             }
         }
