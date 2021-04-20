@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 12/04/16
  */
-public class CompositeFieldDescriptorEntry implements Serializable, IsSerializable {
+public class CompositeFieldDescriptorEntry implements Serializable {
 
     private FormFieldDescriptor descriptor;
 

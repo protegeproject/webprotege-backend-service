@@ -9,5 +9,5 @@ import java.io.Serializable;
  * Stanford Center for Biomedical Informatics Research
  * 27 Jul 16
  */
-public class IssueTarget implements Serializable, IsSerializable {
+public class IssueTarget implements Serializable {
 }

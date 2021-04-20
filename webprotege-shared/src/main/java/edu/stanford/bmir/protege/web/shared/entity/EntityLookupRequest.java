@@ -26,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     of entities to be looked up can be specified as well as a match limit.
  * </p>
  */
-public class EntityLookupRequest implements Serializable, IsSerializable {
+public class EntityLookupRequest implements Serializable {
 
     public static final int DEFAULT_MATCH_LIMIT = 20;
 

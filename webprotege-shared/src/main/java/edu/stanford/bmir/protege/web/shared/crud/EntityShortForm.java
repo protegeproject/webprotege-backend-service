@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 08/08/2013
  */
-public class EntityShortForm implements Serializable, IsSerializable {
+public class EntityShortForm implements Serializable {
 
     private String shortForm;
 

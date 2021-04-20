@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     Provides an identifier for an {@link EntityCrudKit} and its associated paraphernalia.
  * </p>
  */
-public final class EntityCrudKitId implements Serializable, HasLexicalForm, IsSerializable {
+public final class EntityCrudKitId implements Serializable, HasLexicalForm {
 
     private String lexicalForm;
 

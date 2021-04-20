@@ -19,7 +19,7 @@ import java.io.Serializable;
  */
 @AutoValue
 
-public abstract class PersonId implements Serializable, IsSerializable, Comparable<PersonId> {
+public abstract class PersonId implements Serializable, Comparable<PersonId> {
 
     @JsonCreator
     @Nonnull

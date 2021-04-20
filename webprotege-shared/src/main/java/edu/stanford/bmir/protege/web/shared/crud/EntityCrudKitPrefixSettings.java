@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
  */
 @AutoValue
 
-public abstract class EntityCrudKitPrefixSettings implements HasIRIPrefix, IsSerializable {
+public abstract class EntityCrudKitPrefixSettings implements HasIRIPrefix {
 
     public static final String DEFAULT_IRI_PREFIX = "http://www.example.org/";
 

@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkElementIndex;
  * Bio-Medical Informatics Research Group<br>
  * Date: 08/10/2013
  */
-public class PageRequest implements Serializable, IsSerializable {
+public class PageRequest implements Serializable {
 
     public static final int DEFAULT_PAGE_SIZE = 30;
 

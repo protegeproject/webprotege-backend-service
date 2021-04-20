@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
  */
-public class ManchesterSyntaxFrameParseError implements Serializable, IsSerializable {
+public class ManchesterSyntaxFrameParseError implements Serializable {
 
     private int line;
 

@@ -17,7 +17,7 @@ import java.io.Serializable;
  * </p>
  */
 @Immutable
-public class EventTag implements Serializable, IsSerializable, Comparable<EventTag> {
+public class EventTag implements Serializable, Comparable<EventTag> {
 
     private static final EventTag FIRST = new EventTag(0);
 

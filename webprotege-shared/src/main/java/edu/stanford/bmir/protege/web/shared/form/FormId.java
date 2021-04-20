@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 
 @AutoValue
-public abstract class FormId implements Serializable, IsSerializable {
+public abstract class FormId implements Serializable {
 
     @JsonCreator
     public static FormId get(@Nonnull String id) {

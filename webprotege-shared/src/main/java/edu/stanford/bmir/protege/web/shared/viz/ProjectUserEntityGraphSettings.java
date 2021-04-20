@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 @AutoValue
 
-public abstract class ProjectUserEntityGraphSettings implements HasProjectId, IsSerializable {
+public abstract class ProjectUserEntityGraphSettings implements HasProjectId {
 
     public static final String PROJECT_ID = "projectId";
 

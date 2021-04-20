@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     the display name.
  * </p>
  */
-public abstract class EntityCrudKit<S extends EntityCrudKitSuffixSettings> implements HasKitId, HasDisplayName, Serializable, IsSerializable {
+public abstract class EntityCrudKit<S extends EntityCrudKitSuffixSettings> implements HasKitId, HasDisplayName, Serializable {
 
     private EntityCrudKitId kitId;
 

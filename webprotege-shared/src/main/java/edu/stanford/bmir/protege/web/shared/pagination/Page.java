@@ -27,7 +27,7 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 @AutoValue
 
 @JsonTypeName("Page")
-public abstract class Page<T> implements Serializable, Iterable<T>, IsSerializable {
+public abstract class Page<T> implements Serializable, Iterable<T> {
 
     public static <T> Page<T> emptyPage() {
         return create(1, 1, Collections.emptyList(), 0);

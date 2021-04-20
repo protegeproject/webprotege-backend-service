@@ -21,7 +21,7 @@ import java.io.Serializable;
  * Date: 09/07/2012
  */
 @AutoValue
-public abstract class ProjectSettings implements Serializable, IsSerializable, WithProjectId<ProjectSettings> {
+public abstract class ProjectSettings implements Serializable, WithProjectId<ProjectSettings> {
 
     private static final String PROJECT_ID = "projectId";
 

@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 8 Jun 2017
  */
-public class SlackWebhook implements Webhook, IsSerializable {
+public class SlackWebhook implements Webhook {
 
 
     public static final String PROJECT_ID = "projectId";
