@@ -55,7 +55,7 @@ public class ProjectId_TestCase {
 
     @Test
     public void getRegExpReturnsCorrectExpression() {
-        String regExp = UUIDUtil.getIdRegExp().getSource();
+        String regExp = UUIDUtil.getIdRegExp().toString();
         assertEquals("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", regExp);
     }
 

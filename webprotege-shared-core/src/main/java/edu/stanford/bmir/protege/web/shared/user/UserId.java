@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.shared.user;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     Instances of this class are used to refer to a particular user.  Each user has a user name.
  * </p>
  */
-public class UserId implements Serializable, IsSerializable, Comparable<UserId> {
+public class UserId implements Serializable, Comparable<UserId> {
 
     /**
      * The distinguished name for the guest user.

@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.shared.api;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gwt.core.shared.GwtIncompatible;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 
 import javax.annotation.Nonnull;
@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 18 Apr 2018
  */
-public class ApiKeyId implements IsSerializable {
+public class ApiKeyId {
 
     private String id;
 
@@ -34,7 +34,6 @@ public class ApiKeyId implements IsSerializable {
         return new ApiKeyId(id);
     }
 
-    @GwtIncompatible
     @Nonnull
     public static ApiKeyId generateApiKeyId() {
         return valueOf(UUID.randomUUID().toString());

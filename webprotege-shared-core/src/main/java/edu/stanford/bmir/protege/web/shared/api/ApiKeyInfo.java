@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.api;
 
 import com.google.common.base.Objects;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 
 import javax.annotation.Nonnull;
@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
-public class ApiKeyInfo implements IsSerializable {
+public class ApiKeyInfo {
 
     private ApiKeyId apiKeyId;
 

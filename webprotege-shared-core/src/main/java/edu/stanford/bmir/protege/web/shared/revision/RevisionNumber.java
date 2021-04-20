@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.revision;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
@@ -17,7 +17,7 @@ import java.io.Serializable;
  *     revision, but the latest possible revision of a project (see the {@link #getHeadRevisionNumber()} for details).
  * </p>
  */
-public class RevisionNumber implements Serializable, IsSerializable, Comparable<RevisionNumber> {
+public class RevisionNumber implements Serializable, Comparable<RevisionNumber> {
 
     
     private static final long HEAD = Long.MAX_VALUE;

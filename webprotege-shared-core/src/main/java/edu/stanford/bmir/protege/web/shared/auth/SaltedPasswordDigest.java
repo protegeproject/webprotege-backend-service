@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
 import com.google.common.io.BaseEncoding;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 
 import javax.annotation.Nonnull;
@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * Represents the MD5 digest of a salted password.
  */
-public class SaltedPasswordDigest implements IsSerializable {
+public class SaltedPasswordDigest {
 
     private byte [] digest;
 

@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.api;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gwt.core.shared.GwtIncompatible;
+
 
 import javax.annotation.Nonnull;
 
@@ -27,7 +27,6 @@ public class ApiKey {
         return new ApiKey(checkNotNull(key));
     }
 
-    @GwtIncompatible
     @Nonnull
     public static ApiKey generateApiKey() {
         String uuid = UUID.randomUUID().toString();

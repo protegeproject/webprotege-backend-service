@@ -3,7 +3,6 @@ package edu.stanford.bmir.protege.web.shared.project;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gwt.user.client.rpc.IsSerializable;
 import edu.stanford.bmir.protege.web.shared.annotations.GwtSerializationConstructor;
 import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
 
@@ -24,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      An identifier for a project.  Project identifiers are essentially UUID strings.
  * </p>
  */
-public class ProjectId implements Serializable, IsSerializable {
+public class ProjectId implements Serializable {
 
     private String id = "";
 

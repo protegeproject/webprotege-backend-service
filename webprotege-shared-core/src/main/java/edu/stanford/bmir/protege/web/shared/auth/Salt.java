@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
 import com.google.common.io.BaseEncoding;
-import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 17/02/15
  */
-public class Salt implements IsSerializable {
+public class Salt {
 
     private byte [] bytes;
 

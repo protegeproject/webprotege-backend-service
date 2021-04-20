@@ -48,7 +48,7 @@ public class FormId_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_id() {
-        assertThat(formId, is(not(FormId.get("String-1c11bb8a-d00d-4d02-ab5c-84498c0f513c"))));
+        assertThat(formId, is(not(FormId.get("1c11bb8a-d00d-4d02-ab5c-84498c0f513c"))));
     }
 
     @Test
