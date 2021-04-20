@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 21 Mar 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("UpdateEntityTags")
 public abstract class UpdateEntityTagsResult implements Result, HasEventList<ProjectEvent<?>> {
 

@@ -19,7 +19,7 @@ import java.util.List;
  * Date: 01/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetAvailableProjects")
 public abstract class GetAvailableProjectsResult implements Result {
 

@@ -7,7 +7,7 @@ import com.google.common.annotations.GwtCompatible;
 import javax.annotation.Nonnull;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FormRegionOrdering {
 
     public static final String REGION_ID = "regionId";

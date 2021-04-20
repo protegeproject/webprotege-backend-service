@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-08
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class EntityFormSelector {
 

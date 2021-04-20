@@ -24,7 +24,7 @@ import java.util.Set;
  * 11 Oct 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityGraph {
 
     @JsonCreator

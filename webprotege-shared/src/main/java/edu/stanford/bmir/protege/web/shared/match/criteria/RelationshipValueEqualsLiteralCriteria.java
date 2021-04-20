@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2019-12-04
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ValueEqualToLiteral")
 public abstract class RelationshipValueEqualsLiteralCriteria implements RelationshipValueEqualsCriteria {
 

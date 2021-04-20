@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 11 Oct 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityGraph")
 public abstract class GetEntityGraphResult implements Result {
 

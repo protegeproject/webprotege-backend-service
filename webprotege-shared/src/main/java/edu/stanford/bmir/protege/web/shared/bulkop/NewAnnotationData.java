@@ -16,7 +16,7 @@ import java.util.Optional;
  * 27 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class NewAnnotationData {
 
     @JsonCreator

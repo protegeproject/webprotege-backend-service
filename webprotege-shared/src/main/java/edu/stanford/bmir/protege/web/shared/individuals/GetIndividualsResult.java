@@ -22,7 +22,7 @@ import java.util.Optional;
  * Date: 12/09/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetIndividuals")
 public abstract class GetIndividualsResult implements Result {
 

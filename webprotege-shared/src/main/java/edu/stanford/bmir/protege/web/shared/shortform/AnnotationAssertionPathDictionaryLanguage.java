@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-08-05
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName(AnnotationAssertionPathDictionaryLanguage.TYPE_NAME)
 public abstract class AnnotationAssertionPathDictionaryLanguage extends DictionaryLanguage {

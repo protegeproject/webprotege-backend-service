@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2019-12-10
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetUserProjectEntityGraphSettings")
 public abstract class SetUserProjectEntityGraphSettingsAction implements ProjectAction<SetUserProjectEntityGraphSettingsResult> {
 

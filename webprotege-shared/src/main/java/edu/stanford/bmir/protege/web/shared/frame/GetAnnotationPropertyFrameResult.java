@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 28 Jul 16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetAnnotationPropertyFrame")
 public abstract class GetAnnotationPropertyFrameResult implements Result, GetObjectResult<AnnotationPropertyFrame> {
 

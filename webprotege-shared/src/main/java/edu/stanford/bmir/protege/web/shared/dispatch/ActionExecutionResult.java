@@ -18,7 +18,7 @@ import java.util.Optional;
  * Stanford Center for Biomedical Informatics Research
  * 28 Oct 2018
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class ActionExecutionResult implements IsSerializable {
 

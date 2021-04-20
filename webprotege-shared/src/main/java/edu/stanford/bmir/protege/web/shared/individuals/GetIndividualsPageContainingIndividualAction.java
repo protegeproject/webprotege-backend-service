@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 19 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetIndividualsPageContainingIndividual")
 public abstract class GetIndividualsPageContainingIndividualAction implements ProjectAction<GetIndividualsPageContainingIndividualResult> {
 

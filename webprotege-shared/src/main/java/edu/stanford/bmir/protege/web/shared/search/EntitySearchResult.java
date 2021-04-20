@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-07-24
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class EntitySearchResult {
 

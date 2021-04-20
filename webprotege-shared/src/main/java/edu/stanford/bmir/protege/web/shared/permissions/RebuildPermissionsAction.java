@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Action;
  * 11 Apr 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("RebuildPermissions")
 public abstract class RebuildPermissionsAction implements Action<RebuildPermissionsResult> {
 

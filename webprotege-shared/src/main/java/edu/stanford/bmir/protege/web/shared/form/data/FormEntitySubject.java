@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2020-01-13
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("Entity")
 public abstract class FormEntitySubject implements FormSubject {
 

@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(OwlSubClassBinding.TYPE)
 public abstract class OwlSubClassBinding implements OwlBinding {
 

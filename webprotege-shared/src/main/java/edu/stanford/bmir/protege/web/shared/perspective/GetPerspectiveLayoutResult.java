@@ -13,7 +13,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 17/02/16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetPerspectiveLayout")
 public abstract class GetPerspectiveLayoutResult implements Result {
 

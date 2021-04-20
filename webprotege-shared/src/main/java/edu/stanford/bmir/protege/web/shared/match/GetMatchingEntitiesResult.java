@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * 14 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetMatchingEntitiesResult")
 public abstract class GetMatchingEntitiesResult implements Result {
 

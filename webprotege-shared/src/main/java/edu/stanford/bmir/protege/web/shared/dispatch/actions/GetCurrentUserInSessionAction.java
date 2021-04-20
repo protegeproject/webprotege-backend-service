@@ -13,7 +13,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Action;
  * Date: 04/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetCurrentUserInSession")
 public abstract class GetCurrentUserInSessionAction implements Action<GetCurrentUserInSessionResult> {
 

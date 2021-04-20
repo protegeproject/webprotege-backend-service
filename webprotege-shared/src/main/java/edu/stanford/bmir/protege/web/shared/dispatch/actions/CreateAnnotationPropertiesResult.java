@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * Date: 25/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateAnnotationProperties")
 public abstract class CreateAnnotationPropertiesResult implements CreateEntitiesInHierarchyResult<OWLAnnotationProperty> {
 

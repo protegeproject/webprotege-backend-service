@@ -7,7 +7,7 @@ import com.google.common.annotations.GwtCompatible;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ExistingOntologyMergeAdd")
 public class ExistingOntologyMergeAddResult implements Result {
 

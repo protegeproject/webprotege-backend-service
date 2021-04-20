@@ -16,7 +16,7 @@ import java.util.UUID;
  * 2020-04-27
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FormGroupId {
 
     @JsonCreator

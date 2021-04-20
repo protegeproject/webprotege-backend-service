@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * Date: 05/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("LoadProject")
 public abstract class LoadProjectResult implements Result, HasUserId, HasProjectId {
 

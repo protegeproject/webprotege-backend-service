@@ -8,7 +8,7 @@ import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
 import javax.annotation.Nonnull;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class ChoiceDescriptorDto {
 
     @Nonnull

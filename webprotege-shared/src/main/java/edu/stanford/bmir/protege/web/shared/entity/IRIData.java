@@ -23,7 +23,7 @@ import java.util.Optional;
  * Date: 06/12/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("IRIData")
 public abstract class IRIData extends OWLPrimitiveData {
 

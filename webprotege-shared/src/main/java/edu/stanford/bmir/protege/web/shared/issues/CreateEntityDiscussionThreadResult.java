@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 6 Oct 2016
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateEntityDiscussionThread")
 public abstract class CreateEntityDiscussionThreadResult implements Result, HasEventList<ProjectEvent<?>> {
 

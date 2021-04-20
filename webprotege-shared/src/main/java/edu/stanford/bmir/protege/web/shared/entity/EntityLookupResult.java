@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Date: 21/05/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityLookupResult {
 
     @JsonCreator

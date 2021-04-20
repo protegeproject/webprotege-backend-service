@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 27 Oct 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("Batch")
 public abstract class BatchAction implements Action<BatchResult> {
 

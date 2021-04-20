@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("NewOntologyMergeAdd")
 public abstract class NewOntologyMergeAddAction extends AbstractHasProjectAction<NewOntologyMergeAddResult> {
 

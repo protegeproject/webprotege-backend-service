@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-08-15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntitySearchFilterId {
 
     /**

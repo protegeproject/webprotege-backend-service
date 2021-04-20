@@ -13,7 +13,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Action;
  * Date: 01/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetAvailableProjects")
 public abstract class GetAvailableProjectsAction implements Action<GetAvailableProjectsResult> {
 

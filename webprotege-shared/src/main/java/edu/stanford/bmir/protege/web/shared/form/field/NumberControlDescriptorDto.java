@@ -9,7 +9,7 @@ import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
 
 import javax.annotation.Nonnull;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("NumberControlDescriptorDto")
 public abstract class NumberControlDescriptorDto implements FormControlDescriptorDto {

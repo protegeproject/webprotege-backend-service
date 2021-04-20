@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * 2019-12-10
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetUserProjectEntityGraphCriteria")
 public abstract class GetUserProjectEntityGraphCriteriaResult implements Result {
 

@@ -18,7 +18,7 @@ import java.util.Optional;
  * 2020-01-08
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ImageControlData")
 public abstract class ImageControlData implements FormControlData {
 

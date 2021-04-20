@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 7 Oct 2016
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("AddEntityComment")
 public abstract class AddEntityCommentResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>> {
 

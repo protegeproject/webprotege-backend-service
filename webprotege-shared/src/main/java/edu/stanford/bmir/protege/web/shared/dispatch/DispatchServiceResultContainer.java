@@ -14,7 +14,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * Date: 24/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class DispatchServiceResultContainer implements IsSerializable {
 
     @JsonCreator

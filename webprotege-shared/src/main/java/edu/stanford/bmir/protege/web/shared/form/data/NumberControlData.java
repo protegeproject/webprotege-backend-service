@@ -19,7 +19,7 @@ import java.util.Optional;
  * 2020-01-08
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("NumberControlData")
 public abstract class NumberControlData implements FormControlData {
 

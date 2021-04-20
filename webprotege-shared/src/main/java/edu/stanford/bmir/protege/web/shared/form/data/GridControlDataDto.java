@@ -15,7 +15,7 @@ import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import javax.annotation.Nonnull;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GridControlDataDto")
 public abstract class GridControlDataDto implements FormControlDataDto, HasFilterState {
 

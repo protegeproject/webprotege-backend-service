@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 14/02/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("PerformLogin")
 public abstract class PerformLoginResult implements Result {
 

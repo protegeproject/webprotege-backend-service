@@ -14,7 +14,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * Date: 20/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetProjectEvents")
 public abstract class GetProjectEventsResult implements Result {
 

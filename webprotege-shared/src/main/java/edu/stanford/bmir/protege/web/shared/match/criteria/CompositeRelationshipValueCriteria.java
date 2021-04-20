@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2020-01-23
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CompositeCriteria")
 public abstract class CompositeRelationshipValueCriteria implements RelationshipValueCriteria {
 

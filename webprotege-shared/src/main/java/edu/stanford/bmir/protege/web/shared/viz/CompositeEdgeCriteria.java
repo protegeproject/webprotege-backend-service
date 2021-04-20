@@ -19,7 +19,7 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  * 2019-12-05
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CompositeOf")
 public abstract class CompositeEdgeCriteria implements EdgeCriteria {
 

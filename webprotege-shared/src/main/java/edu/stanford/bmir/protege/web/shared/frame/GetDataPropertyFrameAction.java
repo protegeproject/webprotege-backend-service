@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * Date: 23/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetDataPropertyFrame")
 public abstract class GetDataPropertyFrameAction implements ProjectAction<GetDataPropertyFrameResult>, HasSubject<OWLDataProperty> {
 

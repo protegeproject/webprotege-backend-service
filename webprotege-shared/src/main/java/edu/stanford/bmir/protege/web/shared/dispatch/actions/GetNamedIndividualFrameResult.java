@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 28 Jul 16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetNamedIndividualFrame")
 public abstract class GetNamedIndividualFrameResult implements Result, GetObjectResult<NamedIndividualFrame> {
 

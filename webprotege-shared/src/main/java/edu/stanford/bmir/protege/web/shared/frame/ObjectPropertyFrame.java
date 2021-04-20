@@ -22,7 +22,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * Date: 22/12/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ObjectPropertyFrame")
 public abstract class ObjectPropertyFrame implements EntityFrame<OWLObjectPropertyData>, HasAnnotationPropertyValues, Serializable {
 

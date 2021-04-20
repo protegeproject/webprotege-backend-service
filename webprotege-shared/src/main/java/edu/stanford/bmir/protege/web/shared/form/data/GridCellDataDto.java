@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class GridCellDataDto implements HasFilterState {
 
     public static GridCellDataDto get(@Nonnull GridColumnId columnId,

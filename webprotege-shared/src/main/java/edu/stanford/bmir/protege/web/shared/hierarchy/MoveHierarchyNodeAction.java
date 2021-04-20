@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MoveHierarchyNode")
 public abstract class MoveHierarchyNodeAction implements ProjectAction<MoveHierarchyNodeResult> {
 

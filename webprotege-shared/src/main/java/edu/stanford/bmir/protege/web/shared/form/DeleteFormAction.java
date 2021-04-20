@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-04-15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("DeleteForm")
 public abstract class DeleteFormAction implements ProjectAction<DeleteFormResult> {
 

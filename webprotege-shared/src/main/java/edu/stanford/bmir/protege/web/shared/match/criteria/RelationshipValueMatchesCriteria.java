@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
  * 2019-12-02
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ValueMatches")
 public abstract class RelationshipValueMatchesCriteria implements RelationshipValueCriteria {
 

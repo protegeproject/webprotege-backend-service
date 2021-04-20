@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-09-28
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityCreationForms")
 public abstract class GetEntityCreationFormsAction implements ProjectAction<GetEntityCreationFormsResult> {
 

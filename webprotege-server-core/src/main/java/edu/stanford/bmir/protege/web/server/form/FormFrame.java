@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Represents the translation of form data into frame data
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FormFrame {
 
     @Nonnull

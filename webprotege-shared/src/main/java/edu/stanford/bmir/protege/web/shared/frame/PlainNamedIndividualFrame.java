@@ -20,7 +20,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * 2020-03-31
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(PlainNamedIndividualFrame.INDIVIDUAL_FRAME)
 public abstract class PlainNamedIndividualFrame extends PlainEntityFrame {
 

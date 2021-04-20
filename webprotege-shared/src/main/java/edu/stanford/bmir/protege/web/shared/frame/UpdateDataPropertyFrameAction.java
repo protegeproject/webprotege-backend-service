@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Date: 23/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("UpdateDataPropertyFrame")
 public abstract class UpdateDataPropertyFrameAction extends UpdateFrameAction implements HasProjectId {
 

@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 2019-12-07
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class GetProjectEntityGraphDefaultEdgeCriteriaResult implements Result, HasProjectId {
 
     @Nonnull

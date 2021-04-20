@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Date: 12/09/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateNamedIndividuals")
 public abstract class CreateNamedIndividualsAction implements AbstractCreateEntitiesAction<CreateNamedIndividualsResult, OWLNamedIndividual> {
 

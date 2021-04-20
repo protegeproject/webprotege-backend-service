@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * 21 Aug 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetProjectInfo")
 public abstract class GetProjectInfoResult implements Result {
 

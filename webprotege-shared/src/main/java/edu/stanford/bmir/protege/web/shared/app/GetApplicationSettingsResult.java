@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 16 Mar 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetApplicationSettings")
 public abstract class GetApplicationSettingsResult implements Result {
 

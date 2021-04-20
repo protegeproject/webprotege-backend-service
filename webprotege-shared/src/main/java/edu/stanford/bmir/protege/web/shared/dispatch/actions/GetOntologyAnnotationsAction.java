@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Date: 21/02/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetOntologyAnnotations")
 public abstract class GetOntologyAnnotationsAction extends AbstractHasProjectAction<GetOntologyAnnotationsResult> {
 

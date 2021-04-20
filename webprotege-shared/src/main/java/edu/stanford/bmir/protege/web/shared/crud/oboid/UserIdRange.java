@@ -16,7 +16,7 @@ import java.io.Serializable;
  * Date: 30/07/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class UserIdRange implements Serializable {
 
     public static long getDefaultEnd() {

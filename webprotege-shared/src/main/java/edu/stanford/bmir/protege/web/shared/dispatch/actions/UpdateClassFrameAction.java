@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
  * Date: 20/02/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("UpdateClassFrame")
 public abstract class UpdateClassFrameAction extends UpdateFrameAction {
 

@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("NumberControlDataDto")
 public abstract class NumberControlDataDto implements FormControlDataDto, Comparable<NumberControlDataDto> {
 

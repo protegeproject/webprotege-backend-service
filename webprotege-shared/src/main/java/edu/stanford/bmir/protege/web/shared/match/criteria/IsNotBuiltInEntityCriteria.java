@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 16 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("IsNotBuiltInEntity")
 public abstract class IsNotBuiltInEntityCriteria implements EntityMatchCriteria {
 

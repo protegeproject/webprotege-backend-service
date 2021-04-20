@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-08-22
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("UpdateFormDescriptor")
 public abstract class UpdateFormDescriptorAction implements ProjectAction<UpdateFormDescriptorResult> {
 

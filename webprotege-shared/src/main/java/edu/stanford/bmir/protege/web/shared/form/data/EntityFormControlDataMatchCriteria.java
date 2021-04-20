@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 2020-06-16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityFormControlDataMatchCriteria implements PrimitiveFormControlDataMatchCriteria {
 
     public static final String ENTITY_MATCHES = "entityMatches";

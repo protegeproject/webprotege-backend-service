@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * </p>
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class ProjectEntityCrudKitSettings {
 
 

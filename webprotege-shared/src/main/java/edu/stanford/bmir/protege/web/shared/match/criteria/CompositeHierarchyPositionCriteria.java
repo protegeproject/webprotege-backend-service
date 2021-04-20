@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2020-04-08
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CompositeCriteria")
 public abstract class CompositeHierarchyPositionCriteria implements HierarchyPositionCriteria {
 

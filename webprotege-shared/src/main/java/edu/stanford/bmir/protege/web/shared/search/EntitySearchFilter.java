@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2020-08-15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntitySearchFilter {
 
     public static final String ID = "_id";

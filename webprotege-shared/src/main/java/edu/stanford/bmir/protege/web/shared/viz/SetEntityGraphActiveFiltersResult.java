@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 2019-12-14
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetEntityGraphActiveFilters")
 public abstract class SetEntityGraphActiveFiltersResult implements Result {
 

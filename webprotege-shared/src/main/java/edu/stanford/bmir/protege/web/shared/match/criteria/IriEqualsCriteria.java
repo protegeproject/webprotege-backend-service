@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * 11 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("IriEquals")
 public abstract class IriEqualsCriteria implements IriCriteria, AnnotationPropertyCriteria {
 

@@ -18,7 +18,7 @@ import java.util.Optional;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("FormDataDto")
 public abstract class FormDataDto implements FormControlDataDto {
 

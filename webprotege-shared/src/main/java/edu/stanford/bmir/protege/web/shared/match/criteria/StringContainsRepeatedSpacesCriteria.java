@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 11 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("StringContainsRepeatedSpaces")
 public abstract class StringContainsRepeatedSpacesCriteria implements LexicalValueCriteria {
 

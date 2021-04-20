@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2020-01-06
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FormFieldData implements IsSerializable {
 
     @JsonCreator

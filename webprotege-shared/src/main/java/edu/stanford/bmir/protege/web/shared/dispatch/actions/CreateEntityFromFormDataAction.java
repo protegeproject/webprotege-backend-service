@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
  * 2020-09-30
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateEntityFromFormData")
 public abstract class CreateEntityFromFormDataAction implements ProjectAction<CreateEntityFromFormDataResult> {
 

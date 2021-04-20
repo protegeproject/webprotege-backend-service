@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2019-12-14
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetEntityGraphActiveFilters")
 public abstract class SetEntityGraphActiveFiltersAction implements ProjectAction<SetEntityGraphActiveFiltersResult> {
 

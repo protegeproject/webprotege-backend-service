@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
  * Date: 14/08/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityCrudKitPrefixSettings implements HasIRIPrefix, IsSerializable {
 
     public static final String DEFAULT_IRI_PREFIX = "http://www.example.org/";

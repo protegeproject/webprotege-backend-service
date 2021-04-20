@@ -26,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Date: 11/07/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetUsage")
 public abstract class GetUsageResult implements Result, HasProjectId {
 

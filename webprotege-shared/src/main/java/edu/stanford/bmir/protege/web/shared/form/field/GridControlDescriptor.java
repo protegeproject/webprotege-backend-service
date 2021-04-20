@@ -23,7 +23,7 @@ import java.util.stream.Stream;
  */
 @JsonTypeName(GridControlDescriptor.TYPE)
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class GridControlDescriptor implements FormControlDescriptor {
 
     protected static final String TYPE = "GRID";

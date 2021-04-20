@@ -15,7 +15,7 @@ import java.util.Optional;
  * Stanford Center for Biomedical Informatics Research
  * 11 Oct 2018
  */
-@GwtCompatible(serializable = true)
+
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @Type(IsAEdge.class),

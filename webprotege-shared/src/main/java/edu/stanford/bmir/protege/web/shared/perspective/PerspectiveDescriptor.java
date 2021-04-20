@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 2020-08-31
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class PerspectiveDescriptor {
 
     public static final String PERSPECTIVE_ID = "perspectiveId";

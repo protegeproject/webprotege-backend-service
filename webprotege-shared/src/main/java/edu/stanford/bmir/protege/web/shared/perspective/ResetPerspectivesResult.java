@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 2020-09-03
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ResetPerspectives")
 public abstract class ResetPerspectivesResult implements Result {
 

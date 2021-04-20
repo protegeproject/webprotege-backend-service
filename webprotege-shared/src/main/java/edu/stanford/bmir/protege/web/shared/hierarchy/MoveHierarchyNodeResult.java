@@ -15,7 +15,7 @@ import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MoveHierarchyNode")
 public abstract class MoveHierarchyNodeResult implements Result, HasEventList<ProjectEvent<?>> {
 

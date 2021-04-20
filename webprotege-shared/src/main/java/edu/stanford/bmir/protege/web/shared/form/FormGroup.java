@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 2020-04-27
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FormGroup {
 
     public static final String ID = "id";

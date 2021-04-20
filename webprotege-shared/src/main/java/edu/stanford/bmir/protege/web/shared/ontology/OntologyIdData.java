@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 25/07/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class OntologyIdData extends ObjectData {
 
     public static OntologyIdData get(@Nonnull OWLOntologyID ontologyID,

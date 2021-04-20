@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 @JsonTypeName("CheckManchesterSyntax")
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class CheckManchesterSyntaxFrameResult implements Result {
 
     public abstract ManchesterSyntaxFrameParseResult getResult();

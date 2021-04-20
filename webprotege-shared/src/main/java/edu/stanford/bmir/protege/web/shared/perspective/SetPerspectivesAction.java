@@ -27,7 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 18/02/16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetPerspectives")
 public abstract class SetPerspectivesAction implements ProjectAction<SetPerspectivesResult>, HasProjectId {
 

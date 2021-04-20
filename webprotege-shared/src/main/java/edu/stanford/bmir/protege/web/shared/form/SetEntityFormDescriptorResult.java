@@ -10,7 +10,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 2020-01-16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class SetEntityFormDescriptorResult implements Result {
 
     public static SetEntityFormDescriptorResult get() {

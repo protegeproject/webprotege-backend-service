@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 24 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetAnnotationValue")
 public abstract class SetAnnotationValueAction implements ProjectAction<SetAnnotationValueResult>, HasCommitMessage {
 

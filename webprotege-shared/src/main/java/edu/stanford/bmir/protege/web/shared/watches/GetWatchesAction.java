@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Date: 20/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetWatches")
 public abstract class GetWatchesAction implements ProjectAction<GetWatchesResult>, HasUserId {
 

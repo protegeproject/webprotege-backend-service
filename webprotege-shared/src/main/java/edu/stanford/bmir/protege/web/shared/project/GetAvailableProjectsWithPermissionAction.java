@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-04-14
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetAvailableProjectsWithPermission")
 public abstract class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult> {
 

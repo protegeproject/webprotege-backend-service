@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 19/02/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ChangePassword")
 public abstract class ChangePasswordAction implements Action<ChangePasswordResult> {
 

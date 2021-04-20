@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 14 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("Annotations")
 public abstract class CompositeAnnotationValueCriteria implements AnnotationValueCriteria {
 

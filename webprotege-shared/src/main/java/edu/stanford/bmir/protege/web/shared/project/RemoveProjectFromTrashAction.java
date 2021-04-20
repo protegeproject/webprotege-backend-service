@@ -14,7 +14,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Action;
  * Date: 19/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("RemoveProjectFromTrash")
 public abstract class RemoveProjectFromTrashAction implements Action<RemoveProjectFromTrashResult> {
 

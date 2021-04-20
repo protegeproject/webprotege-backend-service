@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 10 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("EntityHasNonUniqueLangTagsCriteria")
 public abstract class EntityHasNonUniqueLangTagsCriteria implements EntityMatchCriteria {
 

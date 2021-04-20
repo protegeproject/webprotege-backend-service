@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * 26/01/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ComputeProjectMerge")
 public abstract class ComputeProjectMergeAction implements ProjectAction<ComputeProjectMergeResult> {
 

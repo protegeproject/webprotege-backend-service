@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2020-03-31
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(PlainPropertyLiteralValue.PROPERTY_LITERAL_VALUE)
 public abstract class PlainPropertyLiteralValue extends PlainPropertyValue {
 

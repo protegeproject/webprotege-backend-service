@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 13 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("StringHasUntrimmedSpace")
 public class StringHasUntrimmedSpaceCriteria implements LexicalValueCriteria {
 

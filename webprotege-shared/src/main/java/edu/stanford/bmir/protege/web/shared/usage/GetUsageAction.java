@@ -23,7 +23,7 @@ import static edu.stanford.bmir.protege.web.shared.pagination.PageRequest.DEFAUL
  * Date: 11/07/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetUsage")
 public abstract class GetUsageAction implements ProjectAction<GetUsageResult> {
 

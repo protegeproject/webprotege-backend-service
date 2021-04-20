@@ -21,7 +21,7 @@ import static edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuf
  * Date: 13/08/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(TYPE_ID)
 public abstract class SuppliedNameSuffixSettings extends EntityCrudKitSuffixSettings {
 

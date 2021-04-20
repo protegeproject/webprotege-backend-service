@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * 2020-06-18
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class CompositeLiteralCriteria implements LiteralCriteria {
 
     public static CompositeLiteralCriteria get(@Nonnull ImmutableList<? extends LiteralCriteria> criteria,

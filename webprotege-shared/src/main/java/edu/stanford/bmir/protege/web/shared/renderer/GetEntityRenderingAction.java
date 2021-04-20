@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 25/02/2014
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityRendering")
 public abstract class GetEntityRenderingAction implements ProjectAction<GetEntityRenderingResult> {
 

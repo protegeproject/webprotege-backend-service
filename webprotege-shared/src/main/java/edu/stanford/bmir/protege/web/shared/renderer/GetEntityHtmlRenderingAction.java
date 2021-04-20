@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-03-27
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityHtmlRendering")
 public abstract class GetEntityHtmlRenderingAction implements ProjectAction<GetEntityHtmlRenderingResult> {
 

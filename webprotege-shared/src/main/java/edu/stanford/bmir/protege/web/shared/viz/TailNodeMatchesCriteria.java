@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2019-12-06
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("TailNodeMatches")
 public abstract class TailNodeMatchesCriteria implements NodeMatchesCriteria {
 

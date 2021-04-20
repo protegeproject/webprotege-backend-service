@@ -11,7 +11,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetAllOntologies")
 public abstract class GetAllOntologiesAction implements ProjectAction<GetAllOntologiesResult> {
 

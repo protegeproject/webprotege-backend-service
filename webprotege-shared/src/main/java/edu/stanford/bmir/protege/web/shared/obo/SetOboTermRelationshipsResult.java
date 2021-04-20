@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 22 Jun 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetOboTermRelationships")
 public abstract class SetOboTermRelationshipsResult implements Result {
 

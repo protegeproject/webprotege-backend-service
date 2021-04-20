@@ -23,7 +23,7 @@ import static java.lang.Math.abs;
  * A simple utility class for representing colors (since Java Color is not GWT compatible)
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class Color implements IsSerializable {
 
     private static final int MIN = 0;

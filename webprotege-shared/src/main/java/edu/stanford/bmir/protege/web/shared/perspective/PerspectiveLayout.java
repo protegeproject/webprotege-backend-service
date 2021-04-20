@@ -17,7 +17,7 @@ import java.util.Optional;
  * 2020-08-28
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class PerspectiveLayout {
 
     public static final String PERSPECTIVE_ID = "perspectiveId";

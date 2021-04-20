@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2020-04-26
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class LangTagFilter {
 
     public static final String FILTERED_LANG_TAGS = "filteredLangTags";

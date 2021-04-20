@@ -10,7 +10,7 @@ import com.google.common.annotations.GwtCompatible;
  * 2019-12-06
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("AnyEdgeType")
 public class AnyEdgeTypeCriteria {
 

@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 12 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("StringContainsRegexMatch")
 public abstract class StringContainsRegexMatchCriteria implements RegexMatchCriteria {
 

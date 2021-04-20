@@ -18,7 +18,7 @@ import java.util.Optional;
  * 2020-10-23
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityDeprecationSettings {
 
 

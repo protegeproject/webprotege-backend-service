@@ -18,7 +18,7 @@ import java.io.Serializable;
  * Identifies a Person in a sharing setting.  The person may or may not be a user in webprotege.
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class PersonId implements Serializable, IsSerializable, Comparable<PersonId> {
 
     @JsonCreator

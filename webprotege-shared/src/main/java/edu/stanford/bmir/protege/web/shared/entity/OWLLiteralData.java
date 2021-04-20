@@ -26,7 +26,7 @@ import java.util.Optional;
  * Date: 28/11/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("OWLLiteralData")
 public abstract class OWLLiteralData extends OWLPrimitiveData implements HasLexicalForm {
 

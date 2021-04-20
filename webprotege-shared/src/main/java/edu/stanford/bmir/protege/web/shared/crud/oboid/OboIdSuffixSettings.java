@@ -24,7 +24,7 @@ import static edu.stanford.bmir.protege.web.shared.crud.oboid.OboIdSuffixSetting
  * </p>
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(TYPE_ID)
 public abstract class OboIdSuffixSettings extends EntityCrudKitSuffixSettings {
 

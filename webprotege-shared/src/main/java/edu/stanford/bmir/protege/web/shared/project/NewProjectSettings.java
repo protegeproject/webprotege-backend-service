@@ -20,7 +20,7 @@ import java.util.Optional;
  * Date: 18/01/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class NewProjectSettings implements IsSerializable {
 
 

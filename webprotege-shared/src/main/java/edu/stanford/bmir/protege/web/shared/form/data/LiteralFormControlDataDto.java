@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("LiteralFormControlDataDto")
 public abstract class LiteralFormControlDataDto extends PrimitiveFormControlDataDto {
 

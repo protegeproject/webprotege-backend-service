@@ -13,7 +13,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.GetObjectResult;
  * 28 Jul 16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetClassFrame")
 public abstract class GetClassFrameResult implements GetObjectResult<ClassFrame> {
 

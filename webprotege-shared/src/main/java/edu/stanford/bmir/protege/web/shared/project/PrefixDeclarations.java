@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 22 Feb 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class PrefixDeclarations {
 
     public static final String PROJECT_ID = "_id";

@@ -17,7 +17,7 @@ import java.util.Optional;
  * 2019-11-30
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityFormControlData implements PrimitiveFormControlData {
 
     public static EntityFormControlData get(@Nonnull OWLEntity entity) {

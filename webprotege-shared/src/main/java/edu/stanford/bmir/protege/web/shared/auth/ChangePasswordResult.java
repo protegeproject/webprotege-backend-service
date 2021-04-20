@@ -18,7 +18,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * 19/02/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ChangePassword")
 public abstract class ChangePasswordResult implements Result {
 

@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 14 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CompositeCriteria")
 public abstract class CompositeRootCriteria implements RootCriteria, EntityMatchCriteria {
 

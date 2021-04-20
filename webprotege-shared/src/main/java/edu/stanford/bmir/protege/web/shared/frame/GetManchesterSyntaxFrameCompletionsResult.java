@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 20/03/2014
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetManchesterSyntaxFrameCompletions")
 public abstract class GetManchesterSyntaxFrameCompletionsResult implements Result {
 

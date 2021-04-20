@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nonnull;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("SingleChoiceControlDescriptorDto")
 public abstract class SingleChoiceControlDescriptorDto implements FormControlDescriptorDto {

@@ -13,7 +13,7 @@ import org.semanticweb.owlapi.model.IRI;
 import javax.annotation.Nonnull;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("FormEntitySubjectDto")
 public abstract class FormEntitySubjectDto extends FormSubjectDto {
 

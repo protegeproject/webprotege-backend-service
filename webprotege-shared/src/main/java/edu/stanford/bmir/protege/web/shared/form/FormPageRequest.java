@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * 2020-04-22
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("FormPageRequest")
 public abstract class FormPageRequest {
 

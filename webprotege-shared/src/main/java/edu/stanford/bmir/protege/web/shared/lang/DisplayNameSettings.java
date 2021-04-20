@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * 31 Jul 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class DisplayNameSettings {
 
     private static final String PRIMARY_DISPLAY_NAME_LANGUAGES = "primaryDisplayNameLanguages";

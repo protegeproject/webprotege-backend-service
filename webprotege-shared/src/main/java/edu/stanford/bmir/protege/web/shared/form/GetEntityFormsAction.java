@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2019-11-01
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityForms")
 public abstract class GetEntityFormsAction implements ProjectAction<GetEntityFormsResult> {
 

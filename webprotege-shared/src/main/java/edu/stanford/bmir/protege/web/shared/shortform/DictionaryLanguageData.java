@@ -23,7 +23,7 @@ import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_LABEL;
  * 17 Jul 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public abstract class DictionaryLanguageData {
 

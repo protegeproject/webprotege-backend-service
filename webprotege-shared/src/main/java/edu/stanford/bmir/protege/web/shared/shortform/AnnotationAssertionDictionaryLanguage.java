@@ -18,7 +18,7 @@ import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_LABEL;
  * Stanford Center for Biomedical Informatics Research
  * 2020-08-05
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName(AnnotationAssertionDictionaryLanguage.TYPE_NAME)
 public abstract class AnnotationAssertionDictionaryLanguage extends DictionaryLanguage {

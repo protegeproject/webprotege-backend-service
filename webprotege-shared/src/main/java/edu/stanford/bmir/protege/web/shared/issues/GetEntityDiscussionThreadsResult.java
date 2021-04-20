@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 5 Oct 2016
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityDiscussionThreads")
 public abstract class GetEntityDiscussionThreadsResult implements Result {
 

@@ -16,7 +16,7 @@ import edu.stanford.bmir.protege.web.shared.event.*;
  * Date: 19/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("RemoveProjectFromTrash")
 public abstract class RemoveProjectFromTrashResult implements Result, HasEventList<WebProtegeEvent<?>> {
 

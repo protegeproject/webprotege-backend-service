@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * 25 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MoveEntitiesToParent")
 public abstract class MoveEntitiesToParentResult implements Result, HasEventList<ProjectEvent<?>> {
 

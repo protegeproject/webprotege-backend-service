@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 2020-11-01
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(IncrementingPatternDescriptor.TYPE_NAME)
 public abstract class IncrementingPatternDescriptor implements GeneratedValueDescriptor {
 

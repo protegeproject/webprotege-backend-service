@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 07/02/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetProjectSharingSettings")
 public abstract class SetProjectSharingSettingsResult implements Result {
 

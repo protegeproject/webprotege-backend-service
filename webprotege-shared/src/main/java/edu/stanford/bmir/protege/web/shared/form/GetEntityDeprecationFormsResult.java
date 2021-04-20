@@ -20,7 +20,7 @@ import java.util.Optional;
  * 2020-10-21
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityDeprecationForms")
 public abstract class GetEntityDeprecationFormsResult implements Result {
 

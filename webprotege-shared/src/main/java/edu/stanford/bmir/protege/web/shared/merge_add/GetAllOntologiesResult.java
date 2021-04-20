@@ -11,7 +11,7 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 import java.util.List;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetAllOntologies")
 public abstract class GetAllOntologiesResult implements Result {
 

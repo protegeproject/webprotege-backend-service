@@ -16,7 +16,7 @@ import static org.semanticweb.owlapi.vocab.OWLRDFVocabulary.RDFS_LABEL;
  * Stanford Center for Biomedical Informatics Research
  * 5 Apr 2018
  */
-@GwtCompatible(serializable = true)
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", defaultImpl = DictionaryLanguage.class)
 @JsonSubTypes({

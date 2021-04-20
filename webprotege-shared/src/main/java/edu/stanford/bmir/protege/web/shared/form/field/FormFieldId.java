@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 30/03/16
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("FormFieldId")
 public abstract class FormFieldId implements FormRegionId {

@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class ShortForm {
 
     public static final String DICTIONARY_LANGUAGE = "dictionaryLanguage";

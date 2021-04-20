@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 7 Mar 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetCommentedEntities")
 public abstract class GetCommentedEntitiesAction implements ProjectAction<GetCommentedEntitiesResult> {
 

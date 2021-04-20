@@ -17,7 +17,7 @@ import java.util.Optional;
  * 2020-01-08
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SingleChoiceControlData")
 public abstract class SingleChoiceControlData implements FormControlData {
 

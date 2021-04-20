@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
  * 2020-01-08
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(MultiChoiceControlDescriptor.TYPE)
 public abstract class MultiChoiceControlDescriptor implements FormControlDescriptor {
 

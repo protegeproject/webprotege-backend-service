@@ -19,7 +19,7 @@ import java.util.Optional;
  */
 @JsonTypeName(SingleChoiceControlDescriptor.TYPE)
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class SingleChoiceControlDescriptor implements FormControlDescriptor {
 
     protected static final String TYPE = "SINGLE_CHOICE";

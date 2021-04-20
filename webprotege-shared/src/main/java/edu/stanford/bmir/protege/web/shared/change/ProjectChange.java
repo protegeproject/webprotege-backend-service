@@ -19,7 +19,7 @@ import java.io.Serializable;
  * 24/02/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class ProjectChange implements IsSerializable, Serializable {
 
     @Nonnull

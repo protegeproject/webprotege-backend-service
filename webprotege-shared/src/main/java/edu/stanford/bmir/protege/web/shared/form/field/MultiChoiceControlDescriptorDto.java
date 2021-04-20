@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nonnull;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("MultiChoiceControlDescriptorDto")
 public abstract class MultiChoiceControlDescriptorDto implements FormControlDescriptorDto {

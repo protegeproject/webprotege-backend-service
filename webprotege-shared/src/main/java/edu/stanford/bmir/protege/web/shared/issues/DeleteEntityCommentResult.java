@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 9 Oct 2016
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("DeleteEntityComment")
 public abstract class DeleteEntityCommentResult implements Result {
 

@@ -22,7 +22,7 @@ import java.util.Set;
  */
 @JsonTypeName("CheckManchesterSyntax")
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class CheckManchesterSyntaxFrameAction implements ProjectAction<CheckManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
 

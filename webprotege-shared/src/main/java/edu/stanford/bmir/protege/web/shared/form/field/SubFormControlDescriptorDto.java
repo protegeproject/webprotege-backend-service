@@ -9,7 +9,7 @@ import edu.stanford.bmir.protege.web.shared.form.FormDescriptorDto;
 
 import javax.annotation.Nonnull;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("SubFormControlDescriptorDto")
 public abstract class SubFormControlDescriptorDto implements FormControlDescriptorDto {

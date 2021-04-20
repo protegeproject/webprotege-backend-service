@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-09-03
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetPerspectiveDetails")
 public abstract class GetPerspectiveDetailsAction implements ProjectAction<GetPerspectiveDetailsResult> {
 

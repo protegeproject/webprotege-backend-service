@@ -23,7 +23,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Date: 20/02/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetClassFrame")
 public abstract class GetClassFrameAction implements ProjectAction<GetClassFrameResult>, HasProjectId, HasSubject<OWLClass> {
 

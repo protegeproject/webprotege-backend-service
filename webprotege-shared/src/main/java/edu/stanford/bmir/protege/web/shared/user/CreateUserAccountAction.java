@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 19/02/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateUserAccount")
 public abstract class CreateUserAccountAction implements Action<CreateUserAccountResult> {
 

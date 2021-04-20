@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2019-12-05
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("RelationshipEdgePropertyEquals")
 public abstract class RelationshipEdgePropertyEqualsCriteria implements EdgeCriteria {
 

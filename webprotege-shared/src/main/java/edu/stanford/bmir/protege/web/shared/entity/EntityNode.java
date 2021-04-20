@@ -30,7 +30,7 @@ import static java.util.stream.Collectors.toMap;
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityNode implements IsSerializable, Serializable, Comparable<EntityNode>, HasTextRendering {
 
     private static final boolean NOT_DEPRECATED = false;

@@ -15,7 +15,7 @@ import java.util.Optional;
  * 2020-09-02
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class PerspectiveDetails {
 
 

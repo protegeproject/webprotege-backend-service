@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2020-09-03
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetPerspectiveDetails")
 public abstract class GetPerspectiveDetailsResult implements Result {
 

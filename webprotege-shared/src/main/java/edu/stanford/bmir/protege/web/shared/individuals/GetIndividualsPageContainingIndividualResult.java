@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * 19 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetIndividualsPageContainingIndividual")
 public abstract class GetIndividualsPageContainingIndividualResult implements Result {
 

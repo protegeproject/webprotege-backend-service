@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 16 Jun 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetDeprecatedEntities")
 public abstract class GetDeprecatedEntitiesResult implements Result {
 

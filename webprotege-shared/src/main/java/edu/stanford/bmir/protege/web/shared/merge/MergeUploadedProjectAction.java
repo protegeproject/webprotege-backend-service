@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * 26/01/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MergeUploadedProject")
 public abstract class MergeUploadedProjectAction extends AbstractHasProjectAction<MergeUploadedProjectResult> {
 

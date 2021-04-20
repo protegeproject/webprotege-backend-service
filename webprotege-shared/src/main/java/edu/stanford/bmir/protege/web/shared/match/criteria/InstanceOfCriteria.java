@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 25 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("InstanceOf")
 public abstract class InstanceOfCriteria implements EntityMatchCriteria, HierarchyPositionCriteria {
 

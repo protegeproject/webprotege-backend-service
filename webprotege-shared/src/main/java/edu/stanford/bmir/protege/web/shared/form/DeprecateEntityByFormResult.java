@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2020-10-22
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class DeprecateEntityByFormResult implements Result, HasEventList<ProjectEvent<?>> {
 
     public static DeprecateEntityByFormResult get(EventList<ProjectEvent<?>> eventList) {

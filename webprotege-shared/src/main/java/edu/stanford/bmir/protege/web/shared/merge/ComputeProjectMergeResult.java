@@ -17,7 +17,7 @@ import java.util.List;
  * 26/01/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ComputeProjectMerge")
 public abstract class ComputeProjectMergeResult implements Result {
 

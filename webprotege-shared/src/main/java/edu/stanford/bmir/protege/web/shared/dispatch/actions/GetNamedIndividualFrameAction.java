@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * Date: 20/02/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetNamedIndividualFrame")
 public abstract class GetNamedIndividualFrameAction implements ProjectAction<GetNamedIndividualFrameResult>, HasSubject<OWLNamedIndividual> {
 

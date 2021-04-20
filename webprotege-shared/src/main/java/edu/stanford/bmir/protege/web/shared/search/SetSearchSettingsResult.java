@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 2020-08-17
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetSearchSettings")
 public class SetSearchSettingsResult implements Result {
 

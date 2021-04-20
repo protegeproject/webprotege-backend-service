@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 15 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("DateIsBefore")
 public abstract class DateIsBeforeCriteria implements DateCriteria {
 

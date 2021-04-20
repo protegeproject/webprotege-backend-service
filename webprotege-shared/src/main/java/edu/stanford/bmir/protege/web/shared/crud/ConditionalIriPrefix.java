@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  * 2020-04-07
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class ConditionalIriPrefix {
 
     public static final String IRI_PREFIX = "iriPrefix";

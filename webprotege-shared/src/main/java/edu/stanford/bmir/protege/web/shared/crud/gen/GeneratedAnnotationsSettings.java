@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 2020-11-01
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class GeneratedAnnotationsSettings {
 
     public static final String DESCRIPTORS = "descriptors";

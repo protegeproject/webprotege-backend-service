@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 2019-12-02
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("AnyValue")
 public abstract class AnyRelationshipValueCriteria implements RelationshipValueCriteria {
 

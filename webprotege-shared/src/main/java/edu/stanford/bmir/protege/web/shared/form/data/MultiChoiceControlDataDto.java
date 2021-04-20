@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MultiChoiceControlDataDto")
 public abstract class MultiChoiceControlDataDto implements FormControlDataDto {
 

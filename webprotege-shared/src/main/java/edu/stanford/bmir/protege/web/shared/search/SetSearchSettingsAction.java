@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-08-17
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetSearchSettings")
 public abstract class SetSearchSettingsAction implements ProjectAction<SetSearchSettingsResult> {
 

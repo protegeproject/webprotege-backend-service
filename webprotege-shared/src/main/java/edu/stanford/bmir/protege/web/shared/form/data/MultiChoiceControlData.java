@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2020-01-08
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MultiChoiceControlData")
 public abstract class MultiChoiceControlData implements FormControlData {
 

@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  * Date: 13/11/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityNameMatchResult implements Comparable<EntityNameMatchResult> {
 
     public static EntityNameMatchResult get(int start, int end, EntityNameMatchType matchType, PrefixNameMatchType prefixNameMatchType) {

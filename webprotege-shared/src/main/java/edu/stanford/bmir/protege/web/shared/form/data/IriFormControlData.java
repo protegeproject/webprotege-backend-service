@@ -16,7 +16,7 @@ import java.util.Optional;
  * 2020-01-07
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class IriFormControlData implements PrimitiveFormControlData {
 
     public static IriFormControlData get(@Nonnull IRI iri) {

@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 16 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("LangTagIsEmpty")
 public abstract class LangTagIsEmptyCriteria implements LangTagCriteria {
 

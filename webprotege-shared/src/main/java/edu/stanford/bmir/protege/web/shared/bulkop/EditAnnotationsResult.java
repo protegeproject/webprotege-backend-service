@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * 24 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("EditAnnotations")
 public abstract class EditAnnotationsResult implements Result, HasEventList<ProjectEvent<?>> {
 

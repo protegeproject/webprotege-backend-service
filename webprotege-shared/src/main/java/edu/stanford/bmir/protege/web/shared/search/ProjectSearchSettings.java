@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 2020-11-03
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class ProjectSearchSettings {
 
     public static final String SEARCH_FILTERS = "searchFilters";

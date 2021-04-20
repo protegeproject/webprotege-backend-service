@@ -18,7 +18,7 @@ import java.util.Set;
  * Date: 20/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetWatches")
 public abstract class GetWatchesResult implements Result {
 

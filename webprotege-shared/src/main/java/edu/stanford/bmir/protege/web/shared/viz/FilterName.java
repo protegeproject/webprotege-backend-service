@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 2019-12-11
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FilterName implements IsSerializable {
 
     @Nonnull

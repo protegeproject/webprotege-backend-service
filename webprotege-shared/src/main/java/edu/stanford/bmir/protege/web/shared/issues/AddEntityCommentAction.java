@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * 7 Oct 2016
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("AddEntityComment")
 public abstract class AddEntityCommentAction implements ProjectAction<AddEntityCommentResult>, HasProjectId {
 

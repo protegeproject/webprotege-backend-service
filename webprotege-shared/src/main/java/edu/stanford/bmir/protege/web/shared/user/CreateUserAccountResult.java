@@ -14,7 +14,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * 19/02/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateUserAccount")
 public abstract class CreateUserAccountResult implements Result {
 

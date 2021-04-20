@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetHierarchyChildren")
 public abstract class GetHierarchyChildrenAction extends AbstractHasProjectAction<GetHierarchyChildrenResult> {
 

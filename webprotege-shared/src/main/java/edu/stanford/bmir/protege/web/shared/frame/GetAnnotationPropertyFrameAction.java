@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * Date: 23/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetAnnotationPropertyFrame")
 public abstract class GetAnnotationPropertyFrameAction implements ProjectAction<GetAnnotationPropertyFrameResult> {
 

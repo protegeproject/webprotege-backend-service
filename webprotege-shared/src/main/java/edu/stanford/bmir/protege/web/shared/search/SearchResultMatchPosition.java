@@ -13,7 +13,7 @@ import java.util.Comparator;
  * Stanford Center for Biomedical Informatics Research
  * 2020-07-17
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class SearchResultMatchPosition implements Comparable<SearchResultMatchPosition> {
 

@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 22 Jun 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetOboTermId")
 public abstract class GetOboTermIdAction implements ProjectAction<GetOboTermIdResult> {
 

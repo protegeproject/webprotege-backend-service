@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SingleChoiceControlDataDto")
 public abstract class SingleChoiceControlDataDto implements FormControlDataDto {
 

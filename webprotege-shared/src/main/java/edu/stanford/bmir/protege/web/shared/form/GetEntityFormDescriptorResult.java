@@ -20,7 +20,7 @@ import java.util.Optional;
  * 2020-01-16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityFormDescriptor")
 public abstract class GetEntityFormDescriptorResult implements Result {
 

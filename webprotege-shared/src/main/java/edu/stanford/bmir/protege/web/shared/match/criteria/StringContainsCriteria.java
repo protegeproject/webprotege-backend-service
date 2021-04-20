@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
  * 11 Jun 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("StringContains")
 public abstract class StringContainsCriteria implements SimpleStringCriteria {
 

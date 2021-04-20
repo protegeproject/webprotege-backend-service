@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 2019-12-10
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("SetUserProjectEntityGraphSettings")
 public abstract class SetUserProjectEntityGraphSettingsResult implements Result {
 

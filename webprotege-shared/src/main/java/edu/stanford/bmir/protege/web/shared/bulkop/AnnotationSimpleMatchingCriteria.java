@@ -14,7 +14,7 @@ import java.util.Optional;
  * 26 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class AnnotationSimpleMatchingCriteria {
 
     public static AnnotationSimpleMatchingCriteria get(@Nullable OWLAnnotationProperty property,

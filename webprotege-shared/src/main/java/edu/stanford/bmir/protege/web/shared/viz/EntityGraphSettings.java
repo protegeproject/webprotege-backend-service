@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toList;
  * 2019-12-06
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityGraphSettings implements IsSerializable {
 
     public static final String FILTERS = "filters";

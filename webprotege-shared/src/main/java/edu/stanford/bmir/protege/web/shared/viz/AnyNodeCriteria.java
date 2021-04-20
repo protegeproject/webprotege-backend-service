@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * 2019-12-06
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("AnyNode")
 public abstract class AnyNodeCriteria implements EdgeNodeCriteria {
 

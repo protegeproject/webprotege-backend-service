@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 26/01/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MergeUploadedProject")
 public abstract class MergeUploadedProjectResult implements Result {
 

@@ -17,7 +17,7 @@ import edu.stanford.bmir.protege.web.shared.project.ProjectId;
  * 7 Mar 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetCommentedEntities")
 public abstract class GetCommentedEntitiesResult implements Result {
 

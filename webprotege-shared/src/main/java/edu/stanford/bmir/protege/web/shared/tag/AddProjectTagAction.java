@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @JsonTypeName("AddProjectTag")
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class AddProjectTagAction implements ProjectAction<AddProjectTagResult> {
 
     /**

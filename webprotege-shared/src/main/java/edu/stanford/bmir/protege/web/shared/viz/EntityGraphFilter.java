@@ -18,7 +18,7 @@ import static edu.stanford.bmir.protege.web.shared.DeserializationUtil.nonNull;
  * 2019-12-11
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityGraphFilter {
 
     private static final String NAME = "name";

@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 21 Apr 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("PerformEntitySearch")
 public abstract class PerformEntitySearchResult implements Result {
 

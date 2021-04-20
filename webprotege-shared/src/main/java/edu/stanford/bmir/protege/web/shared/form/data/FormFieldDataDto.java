@@ -10,7 +10,7 @@ import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import javax.annotation.Nonnull;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FormFieldDataDto {
 
     @JsonCreator

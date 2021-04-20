@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  * 2019-12-19
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("NoEdge")
 public abstract class NoEdgeCriteria implements EdgeCriteria {
 

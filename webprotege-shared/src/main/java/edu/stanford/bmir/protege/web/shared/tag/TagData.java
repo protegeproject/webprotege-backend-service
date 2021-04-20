@@ -19,7 +19,7 @@ import java.util.Optional;
  * 23 Mar 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class TagData implements IsSerializable {
 
     public static TagData get(@Nonnull String label,

@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
  */
 @JsonTypeName(FixedChoiceListSourceDescriptor.TYPE)
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FixedChoiceListSourceDescriptor implements ChoiceListSourceDescriptor {
 
     public static final String TYPE = "Fixed";

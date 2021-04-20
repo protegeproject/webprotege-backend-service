@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("GridControlDescriptorDto")
 public abstract class GridControlDescriptorDto implements FormControlDescriptorDto {

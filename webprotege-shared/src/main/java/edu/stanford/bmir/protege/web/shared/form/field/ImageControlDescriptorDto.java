@@ -7,7 +7,7 @@ import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nonnull;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("ImageControlDescriptorDto")
 public abstract class ImageControlDescriptorDto implements FormControlDescriptorDto {

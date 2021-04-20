@@ -22,7 +22,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * Date: 09/12/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("NamedIndividualFrame")
 public abstract class NamedIndividualFrame implements EntityFrame<OWLNamedIndividualData>, HasPropertyValues, HasAnnotationPropertyValues, HasLogicalPropertyValues, HasPropertyValueList, Serializable {
 

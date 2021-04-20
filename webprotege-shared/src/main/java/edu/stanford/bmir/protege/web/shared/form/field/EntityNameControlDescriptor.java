@@ -25,7 +25,7 @@ import java.util.Optional;
  */
 @JsonTypeName(EntityNameControlDescriptor.TYPE)
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityNameControlDescriptor implements FormControlDescriptor {
 
     protected static final String TYPE = "ENTITY_NAME";

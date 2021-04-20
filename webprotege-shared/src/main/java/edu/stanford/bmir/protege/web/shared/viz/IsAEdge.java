@@ -16,7 +16,7 @@ import java.util.Optional;
  * 11 Oct 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("IsA")
 public abstract class IsAEdge implements Edge {
 

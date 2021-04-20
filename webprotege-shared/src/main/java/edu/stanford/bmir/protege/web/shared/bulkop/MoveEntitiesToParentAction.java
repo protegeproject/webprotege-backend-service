@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 25 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("MoveEntitiesToParent")
 public abstract class MoveEntitiesToParentAction implements ProjectAction<MoveEntitiesToParentResult>, HasCommitMessage {
 

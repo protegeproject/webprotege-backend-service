@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 24 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("EditAnnotations")
 public abstract class EditAnnotationsAction implements ProjectAction<EditAnnotationsResult>, HasCommitMessage {
 

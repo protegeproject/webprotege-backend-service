@@ -25,7 +25,7 @@ import static edu.stanford.bmir.protege.web.shared.form.field.FormFieldDescripto
  * 30/03/16
  */
 @JsonPropertyOrder({ID, OWL_BINDING, LABEL, FIELD_RUN, FORM_CONTROL_DESCRIPTOR, REPEATABILITY, OPTIONALITY, READ_ONLY, HELP})
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class FormFieldDescriptor implements HasFormFieldId, HasRepeatability, IsSerializable, BoundControlDescriptor {
 

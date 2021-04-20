@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * Represents criteria to match an annotation
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("AnnotationComponents")
 public abstract class AnnotationComponentsCriteria implements AnnotationCriteria {
 

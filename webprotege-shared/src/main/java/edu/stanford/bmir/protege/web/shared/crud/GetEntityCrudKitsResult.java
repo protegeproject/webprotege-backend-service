@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Date: 8/19/13
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityCrudKits")
 public abstract class GetEntityCrudKitsResult implements Result {
 

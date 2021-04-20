@@ -19,7 +19,7 @@ import java.util.Objects;
  * Date: 25/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateAnnotationProperties")
 public abstract class CreateAnnotationPropertiesAction implements CreateEntitiesInHierarchyAction<CreateAnnotationPropertiesResult, OWLAnnotationProperty> {
 

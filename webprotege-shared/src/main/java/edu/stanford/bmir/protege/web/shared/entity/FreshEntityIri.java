@@ -26,7 +26,7 @@ import static java.util.stream.Collectors.joining;
  * 2020-04-03
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FreshEntityIri {
 
     private static final String QUERY_SEPARATOR = "?";

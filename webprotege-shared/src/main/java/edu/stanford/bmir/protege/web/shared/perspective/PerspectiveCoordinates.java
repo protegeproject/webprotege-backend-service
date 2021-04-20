@@ -18,7 +18,7 @@ import java.util.Optional;
  * 2020-08-31
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class PerspectiveCoordinates implements WithProjectId<PerspectiveCoordinates> {
 
     public static final String PROJECT_ID = "projectId";

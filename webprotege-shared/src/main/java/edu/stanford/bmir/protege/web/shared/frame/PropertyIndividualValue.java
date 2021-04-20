@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * Date: 21/11/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("PropertyIndividualValue")
 public abstract class PropertyIndividualValue extends ObjectPropertyValue {
 

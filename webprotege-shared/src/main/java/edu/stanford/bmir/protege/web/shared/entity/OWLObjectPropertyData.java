@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
  * Date: 28/11/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("OWLObjectPropertyData")
 public abstract class OWLObjectPropertyData extends OWLPropertyData {
 

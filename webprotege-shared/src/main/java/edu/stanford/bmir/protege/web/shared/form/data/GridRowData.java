@@ -14,7 +14,7 @@ import java.util.Optional;
  * 2019-11-30
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class GridRowData implements Comparable<GridRowData> {
 
     public static GridRowData get(@Nullable FormEntitySubject subject,

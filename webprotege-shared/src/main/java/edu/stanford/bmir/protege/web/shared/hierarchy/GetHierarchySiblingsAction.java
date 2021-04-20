@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 13 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetHierarchySiblings")
 public abstract class GetHierarchySiblingsAction extends AbstractHasProjectAction<GetHierarchySiblingsResult> {
 

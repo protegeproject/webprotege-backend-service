@@ -19,7 +19,7 @@ import java.util.Optional;
  * 2019-11-24
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(OwlPropertyBinding.TYPE)
 public abstract class OwlPropertyBinding implements OwlBinding {
 

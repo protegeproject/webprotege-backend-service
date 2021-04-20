@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 14 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class IndividualsQueryResult {
 
     public static IndividualsQueryResult get(Page<OWLNamedIndividual> queryResultPage,

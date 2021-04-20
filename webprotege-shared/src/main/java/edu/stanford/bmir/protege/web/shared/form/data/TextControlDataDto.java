@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.Optional;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("TextControlDataDto")
 public abstract class TextControlDataDto implements FormControlDataDto, Comparable<TextControlDataDto> {
 

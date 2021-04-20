@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * 27 Oct 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("Batch")
 public abstract class BatchResult implements Result {
 

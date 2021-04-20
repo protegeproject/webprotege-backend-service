@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2020-09-28
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEntityCreationForms")
 public abstract class GetEntityCreationFormsResult implements Result {
 

@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 11 Apr 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("RebuildPermissions")
 public class RebuildPermissionsResult implements Result {
 

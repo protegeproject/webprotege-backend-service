@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 8 Oct 2016
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("EditComment")
 public abstract class EditCommentResult implements Result, HasEventList<ProjectEvent<?>> {
 

@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 2020-04-15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("DeleteForm")
 public abstract class DeleteFormResult implements Result {
 

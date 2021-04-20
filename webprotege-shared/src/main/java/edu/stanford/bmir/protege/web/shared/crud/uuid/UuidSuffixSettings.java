@@ -25,7 +25,7 @@ import static edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixSettings.
  * </p>
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(TYPE_ID)
 public abstract class UuidSuffixSettings extends EntityCrudKitSuffixSettings {
 

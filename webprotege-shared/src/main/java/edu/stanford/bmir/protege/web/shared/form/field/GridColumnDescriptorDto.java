@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class GridColumnDescriptorDto {
 

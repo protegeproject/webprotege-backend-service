@@ -25,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 21 Apr 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("PerformEntitySearch")
 public abstract class PerformEntitySearchAction implements ProjectAction<PerformEntitySearchResult>, HasProjectId {
 

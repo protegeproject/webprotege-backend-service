@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetManchesterSyntaxFrame")
 public abstract class GetManchesterSyntaxFrameResult implements Result {
 

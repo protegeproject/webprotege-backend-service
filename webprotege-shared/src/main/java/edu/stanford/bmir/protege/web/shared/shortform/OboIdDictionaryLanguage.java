@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-08-05
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName(OboIdDictionaryLanguage.TYPE_NAME)
 public abstract class OboIdDictionaryLanguage extends DictionaryLanguage {

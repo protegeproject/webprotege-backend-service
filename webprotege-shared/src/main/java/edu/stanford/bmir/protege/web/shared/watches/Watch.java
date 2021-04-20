@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 19 Apr 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class Watch implements IsSerializable {
 
     public static final String USER_ID = "userId";

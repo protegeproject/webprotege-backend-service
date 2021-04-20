@@ -18,7 +18,7 @@ import java.util.Optional;
  * 2020-03-26
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(OwlInstanceBinding.TYPE)
 public abstract class OwlInstanceBinding implements OwlBinding {
 

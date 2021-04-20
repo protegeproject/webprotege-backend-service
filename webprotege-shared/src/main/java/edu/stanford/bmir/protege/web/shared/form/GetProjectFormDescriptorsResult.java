@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * 2019-11-20
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetProjectFormDescriptors")
 public abstract class GetProjectFormDescriptorsResult implements Result, HasProjectId {
 

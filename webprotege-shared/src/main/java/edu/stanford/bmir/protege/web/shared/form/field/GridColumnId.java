@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-25
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("GridColumnId")
 public abstract class GridColumnId implements FormRegionId {

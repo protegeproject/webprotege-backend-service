@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
                       @Type(AnnotationComponentsCriteria.class),
               })
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class RelationshipCriteria implements Criteria {
 
     @Nonnull

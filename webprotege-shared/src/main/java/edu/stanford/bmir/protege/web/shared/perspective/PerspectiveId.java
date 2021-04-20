@@ -18,7 +18,7 @@ import java.util.UUID;
  * 12/02/16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class PerspectiveId implements IsSerializable, Serializable {
 
     @JsonCreator

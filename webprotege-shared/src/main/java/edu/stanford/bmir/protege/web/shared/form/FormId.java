@@ -17,7 +17,7 @@ import java.util.UUID;
  * Stanford Center for Biomedical Informatics Research
  * 30/03/16
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class FormId implements Serializable, IsSerializable {
 

@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @JsonTypeName("PropertyEquals")
-@GwtCompatible(serializable = true)
+
 public abstract class RelationshipPropertyEqualsCriteria implements RelationshipPropertyCriteria {
 
     private static final String PROPERTY = "property";

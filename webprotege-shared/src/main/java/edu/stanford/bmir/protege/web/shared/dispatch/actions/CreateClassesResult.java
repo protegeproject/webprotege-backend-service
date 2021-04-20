@@ -20,7 +20,7 @@ import org.semanticweb.owlapi.model.OWLClass;
  * Date: 22/02/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateClasses")
 public abstract class CreateClassesResult implements CreateEntitiesInHierarchyResult<OWLClass> {
 

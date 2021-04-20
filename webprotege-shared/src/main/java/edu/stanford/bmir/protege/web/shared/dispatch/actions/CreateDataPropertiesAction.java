@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
  * Date: 25/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("CreateDataProperties")
 public abstract class CreateDataPropertiesAction implements CreateEntitiesInHierarchyAction<CreateDataPropertiesResult, OWLDataProperty> {
 

@@ -14,7 +14,7 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 import java.util.List;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ExistingOntologyMergeAdd")
 public abstract class ExistingOntologyMergeAddAction implements ProjectAction<ExistingOntologyMergeAddResult> {
 

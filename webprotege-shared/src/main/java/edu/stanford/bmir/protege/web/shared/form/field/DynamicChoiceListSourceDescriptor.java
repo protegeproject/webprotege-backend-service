@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * 2020-01-11
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName(DynamicChoiceListSourceDescriptor.TYPE)
 public abstract class DynamicChoiceListSourceDescriptor implements ChoiceListSourceDescriptor {
 

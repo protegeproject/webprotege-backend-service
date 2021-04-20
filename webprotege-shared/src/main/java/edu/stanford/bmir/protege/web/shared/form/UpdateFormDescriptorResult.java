@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.dispatch.Result;
  * 2020-08-22
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("UpdateFormDescriptor")
 public abstract class UpdateFormDescriptorResult implements Result {
 

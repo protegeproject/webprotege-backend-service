@@ -18,7 +18,7 @@ import java.util.Collection;
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetHierarchyPathsToRoot")
 public abstract class GetHierarchyPathsToRootResult implements Result {
 

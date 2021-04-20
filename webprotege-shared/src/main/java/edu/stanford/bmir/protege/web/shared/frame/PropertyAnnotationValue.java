@@ -20,7 +20,7 @@ import java.util.Optional;
  * Date: 21/11/2012
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("PropertyAnnotationValue")
 public abstract class PropertyAnnotationValue extends PropertyValue {
 

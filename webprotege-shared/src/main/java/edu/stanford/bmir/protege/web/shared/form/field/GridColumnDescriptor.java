@@ -18,7 +18,7 @@ import java.util.stream.Stream;
  * 2019-11-24
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class GridColumnDescriptor implements BoundControlDescriptor {
 
     @Nonnull

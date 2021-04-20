@@ -8,7 +8,7 @@ import com.google.common.annotations.GwtCompatible;
 
 import javax.annotation.Nonnull;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 @JsonTypeName("TextControlDescriptorDto")
 public abstract class TextControlDescriptorDto implements FormControlDescriptorDto {

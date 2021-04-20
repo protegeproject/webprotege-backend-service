@@ -14,7 +14,7 @@ import java.util.Optional;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class FormDescriptorDto {
 

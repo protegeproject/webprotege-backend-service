@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 @JsonTypeName("EntityRelationship")
-@GwtCompatible(serializable = true)
+
 public abstract class EntityRelationshipCriteria implements EntityMatchCriteria {
 
     private static final String PRESENCE = "presence";

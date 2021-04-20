@@ -16,7 +16,7 @@ import java.util.List;
  * 8 Jun 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class WebhookSettings implements IsSerializable {
 
     @JsonProperty("webhookSettings")

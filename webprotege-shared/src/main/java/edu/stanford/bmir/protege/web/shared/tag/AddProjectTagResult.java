@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 18 Mar 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("AddProjectTag")
 public abstract class AddProjectTagResult implements Result {
 

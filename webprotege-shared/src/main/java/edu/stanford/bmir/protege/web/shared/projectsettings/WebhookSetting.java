@@ -16,7 +16,7 @@ import java.util.Set;
  * 8 Jun 2017
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class WebhookSetting implements IsSerializable {
 
     public static final String PAYLOAD_URL = "payloadUrl";

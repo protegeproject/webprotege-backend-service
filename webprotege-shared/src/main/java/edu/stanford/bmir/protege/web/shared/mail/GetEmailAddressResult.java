@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * </p>
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetEmailAddress")
 public abstract class GetEmailAddressResult implements Result {
 

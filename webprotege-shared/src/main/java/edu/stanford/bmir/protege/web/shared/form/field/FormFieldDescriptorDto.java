@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class FormFieldDescriptorDto implements IsSerializable, HasFormFieldId {
 

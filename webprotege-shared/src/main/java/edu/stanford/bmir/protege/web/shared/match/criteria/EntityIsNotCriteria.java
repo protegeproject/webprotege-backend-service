@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2020-11-06
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("EntityIsNot")
 public abstract class EntityIsNotCriteria implements EntityMatchCriteria {
 

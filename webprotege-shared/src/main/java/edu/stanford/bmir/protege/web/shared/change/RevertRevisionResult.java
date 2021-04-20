@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * 19/03/15
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("RevertRevision")
 public abstract class RevertRevisionResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>> {
 

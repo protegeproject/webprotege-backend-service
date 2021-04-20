@@ -19,7 +19,7 @@ import java.util.Optional;
  * 2019-11-11
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class FormSubjectFactoryDescriptor {
 
     @JsonCreator

@@ -20,7 +20,7 @@ import java.util.Optional;
  * 2019-12-11
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class ProjectUserEntityGraphSettings implements HasProjectId, IsSerializable {
 
     public static final String PROJECT_ID = "projectId";

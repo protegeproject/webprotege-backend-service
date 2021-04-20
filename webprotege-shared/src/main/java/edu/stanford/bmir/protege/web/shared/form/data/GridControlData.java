@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  * 2019-11-30
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GridControlData")
 public abstract class GridControlData implements ComplexFormControlValue {
 

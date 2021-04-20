@@ -17,7 +17,7 @@ import java.util.Map;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-02
  */
-@GwtCompatible(serializable = true)
+
 @AutoValue
 public abstract class LanguageMap {
 

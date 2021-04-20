@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Date: 12/11/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("LookupEntities")
 public abstract class LookupEntitiesResult implements Result {
 

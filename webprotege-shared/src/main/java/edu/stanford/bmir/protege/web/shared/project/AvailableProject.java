@@ -37,7 +37,7 @@ import static java.util.Comparator.comparing;
         "trashable",
         "downloadable"})
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class AvailableProject implements IsSerializable, HasProjectId, Comparable<AvailableProject> {
 
     public static final long UNKNOWN = 0;

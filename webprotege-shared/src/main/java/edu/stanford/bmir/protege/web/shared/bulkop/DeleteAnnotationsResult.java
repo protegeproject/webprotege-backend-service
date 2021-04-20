@@ -12,7 +12,7 @@ import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
  * 26 Sep 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class DeleteAnnotationsResult implements Result, HasEventList<ProjectEvent<?>> {
 
 }

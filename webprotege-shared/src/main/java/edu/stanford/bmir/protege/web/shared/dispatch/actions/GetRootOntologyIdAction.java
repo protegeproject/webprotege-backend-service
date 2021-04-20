@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
  * Date: 20/02/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetRootOntologyId")
 public abstract class GetRootOntologyIdAction extends AbstractHasProjectAction<GetRootOntologyIdResult> {
 

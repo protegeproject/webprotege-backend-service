@@ -17,7 +17,7 @@ import java.io.Serializable;
  * Date: 14/08/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class EntityCrudKitSettings<S extends EntityCrudKitSuffixSettings> implements Serializable {
 
     public static final String PREFIX_SETTINGS = "prefixSettings";

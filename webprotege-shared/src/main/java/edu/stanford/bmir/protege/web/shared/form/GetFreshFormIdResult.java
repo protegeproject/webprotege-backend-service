@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * 2020-01-16
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class GetFreshFormIdResult implements Result, HasProjectId {
 
     public static GetFreshFormIdResult get(@Nonnull ProjectId projectId,

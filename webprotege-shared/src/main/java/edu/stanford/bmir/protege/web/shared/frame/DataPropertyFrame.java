@@ -24,7 +24,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * Date: 23/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("DataPropertyFrame")
 public abstract class DataPropertyFrame implements EntityFrame<OWLDataPropertyData>, Serializable, HasPropertyValueList, HasPropertyValues, HasAnnotationPropertyValues, HasLogicalPropertyValues {
 

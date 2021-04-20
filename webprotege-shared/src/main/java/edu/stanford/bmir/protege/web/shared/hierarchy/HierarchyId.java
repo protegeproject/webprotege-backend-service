@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 22/03/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class HierarchyId implements IsSerializable {
 
     public static final HierarchyId CLASS_HIERARCHY = get("Class");

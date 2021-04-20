@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
  * 21 Aug 2018
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class DictionaryLanguageUsage {
 
     public static DictionaryLanguageUsage get(@Nonnull DictionaryLanguage language,

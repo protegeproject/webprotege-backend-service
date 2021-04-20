@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("ImageControlDataDto")
 public abstract class ImageControlDataDto implements FormControlDataDto {
 

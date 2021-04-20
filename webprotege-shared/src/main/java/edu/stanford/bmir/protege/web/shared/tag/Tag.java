@@ -27,7 +27,7 @@ import static edu.stanford.bmir.protege.web.shared.DeserializationUtil.nonNull;
  * development and project management.
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 public abstract class Tag implements IsSerializable, WithProjectId<Tag> {
 
 

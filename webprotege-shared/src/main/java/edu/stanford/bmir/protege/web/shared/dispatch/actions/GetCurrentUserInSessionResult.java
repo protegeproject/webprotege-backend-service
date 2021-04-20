@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Date: 04/04/2013
  */
 @AutoValue
-@GwtCompatible(serializable = true)
+
 @JsonTypeName("GetCurrentUserInSession")
 public abstract class GetCurrentUserInSessionResult implements Result {
 
