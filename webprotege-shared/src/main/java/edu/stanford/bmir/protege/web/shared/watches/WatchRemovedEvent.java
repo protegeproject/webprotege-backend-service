@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.shared.watches;
 
 import com.google.common.base.Objects;
-import com.google.web.bindery.event.shared.Event;
+
 import edu.stanford.bmir.protege.web.shared.HasUserId;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;

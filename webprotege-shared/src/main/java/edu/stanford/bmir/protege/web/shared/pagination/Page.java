@@ -30,7 +30,7 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
 public abstract class Page<T> implements Serializable, Iterable<T> {
 
     public static <T> Page<T> emptyPage() {
-        return create(1, 1, Collections.emptyList(), 0);
+        return create(1, 1, ImmutableList.of(), 0);
     }
 
     public static Page<FormControlDataDto> of(FormControlDataDto firstValue) {

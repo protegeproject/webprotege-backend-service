@@ -3,10 +3,7 @@ package edu.stanford.bmir.protege.web.server.events;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 
-import com.google.web.bindery.event.shared.Event;
-import com.google.web.bindery.event.shared.EventBus;
-import com.google.web.bindery.event.shared.HandlerRegistration;
-import com.google.web.bindery.event.shared.SimpleEventBus;
+
 import edu.stanford.bmir.protege.web.shared.HasDispose;
 import edu.stanford.bmir.protege.web.shared.event.*;
 import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
@@ -49,8 +46,6 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
 
     private final EventLifeTime eventLifeTime;
 
-    private EventBus eventBus = new SimpleEventBus();
-
     private ProjectId projectId;
 
 
@@ -61,9 +56,6 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
         thread.setName(thread.getName().replace("thread", "event-purge-thread"));
         return thread;
     });
-
-    private List<HandlerRegistration> registeredHandlers = new ArrayList<>();
-
 
     @Inject
     public EventManager(EventLifeTime eventLifeTime, ProjectId projectId) {
@@ -182,13 +174,6 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
         finally {
             readLock.unlock();
         }
-    }
-
-
-    public <T extends EventHandler> HandlerRegistration addHandler(Event.Type<T> type, T handler) {
-        final HandlerRegistration handlerRegistration = eventBus.addHandler(type, handler);
-        registeredHandlers.add(handlerRegistration);
-        return handlerRegistration;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,13 +298,6 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
         if(purgeSweepService != null) {
             purgeSweepService.shutdown();
             purgeSweepService = null;
-        }
-        removeRegisteredHandlersFromEventBus();
-    }
-
-    private void removeRegisteredHandlersFromEventBus() {
-        for(HandlerRegistration handlerRegistration : registeredHandlers) {
-            handlerRegistration.removeHandler();
         }
     }
 }

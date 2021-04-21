@@ -8,10 +8,8 @@ import edu.stanford.bmir.protege.web.server.hierarchy.GraphNodeRenderer;
 import edu.stanford.bmir.protege.web.server.hierarchy.HierarchyProvider;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.hierarchy.EntityHierarchyChangedEvent;
-import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
+import edu.stanford.bmir.protege.web.shared.hierarchy.*;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.protege.gwt.graphtree.shared.graph.*;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -111,7 +109,7 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
                      mappedChanges.add(mappedChg);
                  }
              }));
-        var mappedEvent = new GraphModelChangedEvent<>(mappedChanges.build());
+        var mappedEvent = GraphModelChangedEvent.create(mappedChanges.build());
         return new EntityHierarchyChangedEvent(projectId, hierarchyId, mappedEvent);
     }
 }

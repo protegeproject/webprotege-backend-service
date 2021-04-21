@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.server.hierarchy;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
 import edu.stanford.bmir.protege.web.server.change.ChangeApplicationResult;
 import edu.stanford.bmir.protege.web.server.change.OntologyChange;
@@ -10,10 +11,8 @@ import edu.stanford.bmir.protege.web.server.events.HighLevelProjectEventProxy;
 import edu.stanford.bmir.protege.web.server.events.SimpleHighLevelProjectEventProxy;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.EntityHierarchyChangedEvent;
-import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
+import edu.stanford.bmir.protege.web.shared.hierarchy.*;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.protege.gwt.graphtree.shared.graph.*;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -98,22 +97,22 @@ public abstract class HierarchyChangeComputer<T extends OWLEntity> implements Ev
         Set<T> rootsAfter = new HashSet<>(hierarchyProvider.getRoots());
         for (T rootAfter : rootsAfter) {
             if (!roots.contains(rootAfter)) {
-                List<GraphModelChange<EntityNode>> changes = Collections.singletonList(new AddRootNode<>(
-                        new GraphNode<>(renderer.render(rootAfter),
-                                        hierarchyProvider.isLeaf(rootAfter))));
+                ImmutableList<GraphModelChange<EntityNode>> changes = ImmutableList.of(new AddRootNode(
+                        new GraphNode(renderer.render(rootAfter),
+                                      hierarchyProvider.isLeaf(rootAfter))));
                 EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(projectId,
                                                                                     hierarchyId,
-                                                                                    new GraphModelChangedEvent<>(changes));
+                                                                                    GraphModelChangedEvent.create(changes));
                 projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
             }
         }
         for (T rootBefore : roots) {
             if (!rootsAfter.contains(rootBefore)) {
-                List<GraphModelChange<EntityNode>> changes = Collections.singletonList(new RemoveRootNode<>(
-                        new GraphNode<>(renderer.render(rootBefore))));
+                ImmutableList<GraphModelChange<EntityNode>> changes = ImmutableList.of(new RemoveRootNode(
+                        new GraphNode(renderer.render(rootBefore))));
                 EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(projectId,
                                                                                     hierarchyId,
-                                                                                    new GraphModelChangedEvent<>(changes));
+                                                                                    GraphModelChangedEvent.create(changes));
                 projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
             }
         }

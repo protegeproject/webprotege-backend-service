@@ -7,8 +7,8 @@ import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyPathsToRootAction;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyPathsToRootResult;
-import edu.stanford.protege.gwt.graphtree.shared.Path;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphNode;
+import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
+import edu.stanford.bmir.protege.web.shared.hierarchy.Path;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -16,8 +16,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.*;
 
+import static edu.stanford.bmir.protege.web.server.hierarchy.PathCollector.toPath;
 import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
-import static edu.stanford.protege.gwt.graphtree.shared.PathCollector.toPath;
 import static java.util.stream.Collectors.toList;
 
 /**

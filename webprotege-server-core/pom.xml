@@ -167,12 +167,6 @@
         </dependency>
 
         <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>widgetmap</artifactId>
-            <version>${widgetmap.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.6.2</version>
@@ -236,12 +230,6 @@
             <groupId>com.atlassian.commonmark</groupId>
             <artifactId>commonmark-ext-ins</artifactId>
             <version>${commonmark.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>graphtree</artifactId>
-            <version>${graphtree.version}</version>
         </dependency>
 
         <dependency>

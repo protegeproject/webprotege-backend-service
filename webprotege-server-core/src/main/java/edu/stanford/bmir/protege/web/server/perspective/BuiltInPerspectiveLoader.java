@@ -1,19 +1,11 @@
 package edu.stanford.bmir.protege.web.server.perspective;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
-import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
-import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveLayout;
-import edu.stanford.protege.widgetmap.shared.node.Node;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

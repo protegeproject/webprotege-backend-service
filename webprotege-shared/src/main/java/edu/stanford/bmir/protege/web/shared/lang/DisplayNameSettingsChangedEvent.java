@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.lang;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.web.bindery.event.shared.Event;
+
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 

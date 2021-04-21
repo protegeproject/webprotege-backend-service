@@ -4,10 +4,8 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
 import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProvider;
 import edu.stanford.bmir.protege.web.server.hierarchy.HierarchyChangeComputer;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.EntityHierarchyChangedEvent;
+import edu.stanford.bmir.protege.web.shared.hierarchy.*;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.protege.gwt.graphtree.shared.graph.*;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLClass;
 
@@ -54,7 +52,7 @@ public class OWLClassHierarchyChangeComputer extends HierarchyChangeComputer<OWL
                         new GraphNode<>(child, classHierarchyProvider.isLeaf(child))
                 )
         );
-        var event = new GraphModelChangedEvent<>(ImmutableList.of(removeEdge));
+        var event = GraphModelChangedEvent.create(ImmutableList.of(removeEdge));
         var proxyEvent = proxyFactory.create(event, classHierarchyProvider, CLASS_HIERARCHY);
         return ImmutableList.of(proxyEvent);
     }
@@ -67,7 +65,7 @@ public class OWLClassHierarchyChangeComputer extends HierarchyChangeComputer<OWL
                         new GraphNode<>(child, classHierarchyProvider.isLeaf(child))
                 )
         );
-        var event = new GraphModelChangedEvent<>(ImmutableList.of(addEdge));
+        var event = GraphModelChangedEvent.create(ImmutableList.of(addEdge));
         var proxyEvent = proxyFactory.create(event, classHierarchyProvider, CLASS_HIERARCHY);
         return ImmutableList.of(proxyEvent);
     }

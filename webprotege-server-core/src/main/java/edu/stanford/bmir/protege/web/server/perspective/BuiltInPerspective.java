@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
+import edu.stanford.bmir.protege.web.shared.perspective.Node;
 import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
-import edu.stanford.protege.widgetmap.shared.node.Node;
 
 import javax.annotation.Nonnull;
 

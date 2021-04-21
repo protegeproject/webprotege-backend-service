@@ -8,8 +8,8 @@ import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyRootsAction;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyRootsResult;
+import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
 import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphNode;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

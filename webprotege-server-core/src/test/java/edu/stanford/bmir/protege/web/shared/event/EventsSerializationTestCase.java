@@ -3,7 +3,10 @@ package edu.stanford.bmir.protege.web.shared.event;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.hierarchy.EntityHierarchyChangedEvent;
+import edu.stanford.bmir.protege.web.shared.hierarchy.GraphModelChange;
+import edu.stanford.bmir.protege.web.shared.hierarchy.GraphModelChangedEvent;
 import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
 import edu.stanford.bmir.protege.web.shared.issues.*;
 import edu.stanford.bmir.protege.web.shared.lang.DisplayNameSettings;
@@ -20,9 +23,6 @@ import edu.stanford.bmir.protege.web.shared.watches.Watch;
 import edu.stanford.bmir.protege.web.shared.watches.WatchAddedEvent;
 import edu.stanford.bmir.protege.web.shared.watches.WatchRemovedEvent;
 import edu.stanford.bmir.protege.web.shared.watches.WatchType;
-import edu.stanford.protege.gwt.graphtree.shared.graph.AddEdge;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphModelChange;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphModelChangedEvent;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -156,11 +156,11 @@ public class EventsSerializationTestCase {
 
     @Test
     public void shouldSerializeEntityHierarchyChangedEvent() throws IOException {
-        var changes = ImmutableList.of();
+        var changes = ImmutableList.<GraphModelChange<EntityNode>>of();
         JsonSerializationTestUtil.testSerialization(
                 new EntityHierarchyChangedEvent(mockProjectId(),
                                                 HierarchyId.CLASS_HIERARCHY,
-                                                new GraphModelChangedEvent(changes)),
+                                                GraphModelChangedEvent.create(changes)),
                 WebProtegeEvent.class
         );
     }

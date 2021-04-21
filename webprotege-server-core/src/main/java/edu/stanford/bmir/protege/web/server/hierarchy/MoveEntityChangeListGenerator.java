@@ -8,9 +8,9 @@ import edu.stanford.bmir.protege.web.server.msg.MessageFormatter;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
+import edu.stanford.bmir.protege.web.shared.hierarchy.DropType;
 import edu.stanford.bmir.protege.web.shared.hierarchy.MoveHierarchyNodeAction;
-import edu.stanford.protege.gwt.graphtree.shared.DropType;
-import edu.stanford.protege.gwt.graphtree.shared.Path;
+import edu.stanford.bmir.protege.web.shared.hierarchy.Path;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

@@ -10,7 +10,6 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.validation.constraints.Null;
 import java.io.PrintStream;
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -117,7 +116,7 @@ public class AxiomMultimapIndex<V, A extends OWLAxiom> {
         return naryKeyValueExtractor != null;
     }
 
-    @Null
+    @Nullable
     private Iterable<V> getNaryKeyValueExtractor(A ax) {
         checkNotNull(naryKeyValueExtractor);
         return naryKeyValueExtractor.extractValue(ax);

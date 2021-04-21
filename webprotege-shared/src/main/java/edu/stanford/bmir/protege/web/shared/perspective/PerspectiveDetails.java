@@ -3,7 +3,6 @@ package edu.stanford.bmir.protege.web.shared.perspective;
 import com.google.auto.value.AutoValue;
 
 import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import edu.stanford.protege.widgetmap.shared.node.Node;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,7 +14,6 @@ import java.util.Optional;
  * 2020-09-02
  */
 @AutoValue
-
 public abstract class PerspectiveDetails {
 
 

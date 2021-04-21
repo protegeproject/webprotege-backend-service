@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
-import edu.stanford.protege.widgetmap.shared.node.Node;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;

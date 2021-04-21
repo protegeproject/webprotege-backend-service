@@ -9,9 +9,6 @@ import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphNode;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

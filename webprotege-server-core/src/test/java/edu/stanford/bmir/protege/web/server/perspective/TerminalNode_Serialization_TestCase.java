@@ -1,9 +1,9 @@
 package edu.stanford.bmir.protege.web.server.perspective;
 
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.protege.widgetmap.shared.node.Node;
-import edu.stanford.protege.widgetmap.shared.node.TerminalNode;
-import edu.stanford.protege.widgetmap.shared.node.TerminalNodeId;
+import edu.stanford.bmir.protege.web.shared.perspective.Node;
+import edu.stanford.bmir.protege.web.shared.perspective.TerminalNode;
+import edu.stanford.bmir.protege.web.shared.perspective.TerminalNodeId;
 import org.junit.Before;
 import org.junit.Test;
 

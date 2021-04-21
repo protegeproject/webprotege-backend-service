@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
-import com.google.web.bindery.event.shared.Event;
-import com.google.web.bindery.event.shared.EventBus;
 import edu.stanford.bmir.protege.web.shared.HasChangedValue;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -62,14 +60,6 @@ public class OntologyBrowserTextChangedEvent extends WebProtegeEvent<OntologyBro
         return Optional.of(newValue);
     }
 
-    /**
-     * Implemented by subclasses to to invoke their handlers in a type safe
-     * manner. Intended to be called by {@link EventBus#fireEvent(
-     *Event)} or
-     * {@link EventBus#fireEventFromSource(Event,
-     * Object)}.
-     * @param handler handler
-     */
     @Override
     protected void dispatch(OntologyBrowserTextChangedEventHandler handler) {
         handler.ontologyBrowserTextChanged(this);

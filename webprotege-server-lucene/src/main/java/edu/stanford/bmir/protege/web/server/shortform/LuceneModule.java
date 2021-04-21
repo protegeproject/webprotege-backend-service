@@ -16,7 +16,6 @@ import org.apache.lucene.store.FSDirectory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.validation.constraints.Min;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 

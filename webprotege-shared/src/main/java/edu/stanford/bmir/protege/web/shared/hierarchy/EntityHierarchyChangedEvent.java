@@ -1,11 +1,10 @@
 package edu.stanford.bmir.protege.web.shared.hierarchy;
 
-import com.google.web.bindery.event.shared.Event;
+
 
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphModelChangedEvent;
 
 import javax.annotation.Nonnull;
 
@@ -20,11 +19,11 @@ public class EntityHierarchyChangedEvent extends ProjectEvent<EntityHierarchyCha
 
     private HierarchyId hierarchyId;
 
-    private GraphModelChangedEvent<EntityNode> changeEvent;
+    private GraphModelChangedEvent changeEvent;
 
     public EntityHierarchyChangedEvent(@Nonnull ProjectId source,
                                        @Nonnull HierarchyId hierarchyId,
-                                       @Nonnull GraphModelChangedEvent<EntityNode> changeEvent) {
+                                       @Nonnull GraphModelChangedEvent changeEvent) {
         super(source);
         this.hierarchyId = checkNotNull(hierarchyId);
         this.changeEvent = checkNotNull(changeEvent);
@@ -44,7 +43,7 @@ public class EntityHierarchyChangedEvent extends ProjectEvent<EntityHierarchyCha
         handler.handleHierarchyChanged(this);
     }
 
-    public GraphModelChangedEvent<EntityNode> getChangeEvent() {
+    public GraphModelChangedEvent getChangeEvent() {
         return changeEvent;
     }
 

@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.issues;
 
-import com.google.web.bindery.event.shared.Event;
+
 
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;

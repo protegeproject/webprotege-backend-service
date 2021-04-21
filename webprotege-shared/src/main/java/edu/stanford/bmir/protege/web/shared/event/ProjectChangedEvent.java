@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.shared.event;
 
 
 import com.google.common.base.MoreObjects;
-import com.google.web.bindery.event.shared.Event;
+
 import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;

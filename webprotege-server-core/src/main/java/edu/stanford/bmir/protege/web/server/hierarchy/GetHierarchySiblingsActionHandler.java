@@ -9,8 +9,8 @@ import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchySiblingsAction;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchySiblingsResult;
+import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphNode;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

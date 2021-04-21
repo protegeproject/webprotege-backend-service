@@ -8,10 +8,7 @@ import com.google.auto.value.AutoValue;
 
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.protege.gwt.graphtree.shared.Path;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphNode;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**

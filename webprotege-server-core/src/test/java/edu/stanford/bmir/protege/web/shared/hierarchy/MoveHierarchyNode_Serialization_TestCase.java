@@ -3,8 +3,6 @@ package edu.stanford.bmir.protege.web.shared.hierarchy;
 import edu.stanford.bmir.protege.web.shared.dispatch.Action;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.protege.gwt.graphtree.shared.DropType;
-import edu.stanford.protege.gwt.graphtree.shared.Path;
 import org.junit.Test;
 
 import java.io.IOException;

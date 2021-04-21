@@ -9,8 +9,6 @@ import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.protege.gwt.graphtree.shared.DropType;
-import edu.stanford.protege.gwt.graphtree.shared.Path;
 
 import javax.annotation.Nonnull;
 

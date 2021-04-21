@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.event;
 
-import com.google.web.bindery.event.shared.Event;
+
 import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
 import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 

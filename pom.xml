@@ -13,8 +13,6 @@
         <guava.version>28.0</guava.version>
         <dagger.version>2.20</dagger.version>
         <owlapi.version>4.5.13</owlapi.version>
-        <widgetmap.version>4.0.1</widgetmap.version>
-        <graphtree.version>1.2.0</graphtree.version>
         <autovalue.version>1.7.1</autovalue.version>
         <jackson.version>2.11.0</jackson.version>
         <commons.io.version>2.7</commons.io.version>
@@ -41,13 +39,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.google.gwt</groupId>
-                <artifactId>gwt</artifactId>
-                <version>2.8.2</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
@@ -88,13 +79,6 @@
                 <artifactId>asm-xml</artifactId>
                 <version>7.0</version>
             </dependency>
-
-            <dependency>
-                <groupId>edu.stanford.protege</groupId>
-                <artifactId>graphtree</artifactId>
-                <version>1.1.1</version>
-            </dependency>
-
 
             <!-- Use specific version of guava for all subprojects -->
             <dependency>

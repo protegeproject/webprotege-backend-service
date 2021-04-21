@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.shared.projectsettings;
 
-import com.google.web.bindery.event.shared.Event;
+
 import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
 
 import java.util.Objects;

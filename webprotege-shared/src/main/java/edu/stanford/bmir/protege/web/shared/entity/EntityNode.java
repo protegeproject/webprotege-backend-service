@@ -15,7 +15,6 @@ import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageData;
 import edu.stanford.bmir.protege.web.shared.shortform.ShortForm;
 import edu.stanford.bmir.protege.web.shared.tag.Tag;
 import edu.stanford.bmir.protege.web.shared.watches.Watch;
-import edu.stanford.protege.gwt.graphtree.shared.tree.HasTextRendering;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -31,7 +30,7 @@ import static java.util.stream.Collectors.toMap;
  */
 @AutoValue
 
-public abstract class EntityNode implements  Serializable, Comparable<EntityNode>, HasTextRendering {
+public abstract class EntityNode implements  Serializable, Comparable<EntityNode> {
 
     private static final boolean NOT_DEPRECATED = false;
 
@@ -107,7 +106,6 @@ public abstract class EntityNode implements  Serializable, Comparable<EntityNode
 
     @JsonIgnore
     @Nonnull
-    @Override
     public String getText() {
         return getBrowserText();
     }

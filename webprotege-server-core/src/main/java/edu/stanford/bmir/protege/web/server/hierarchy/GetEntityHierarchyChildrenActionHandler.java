@@ -10,9 +10,9 @@ import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyChildrenAction;
 import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyChildrenResult;
+import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
 import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
 import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphNode;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -78,7 +78,7 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
             return emptyResult();
         }
         OWLEntity parent = action.getEntity();
-        GraphNode<EntityNode> parentNode = nodeRenderer.toGraphNode(parent, hierarchyProvider.get());
+        GraphNode parentNode = nodeRenderer.toGraphNode(parent, hierarchyProvider.get());
         Page<GraphNode<EntityNode>> page = hierarchyProvider.get().getChildren(parent).stream()
                          // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
                          // owl:topDataProperty

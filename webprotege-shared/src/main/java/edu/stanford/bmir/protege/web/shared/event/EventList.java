@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
 import com.google.common.collect.ImmutableList;
-import com.google.web.bindery.event.shared.Event;
+
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -26,7 +26,6 @@ import static dagger.internal.codegen.DaggerStreams.toImmutableList;
  * Date: 28/11/2012
  */
 @AutoValue
-
 @JsonTypeName("OWLClassData")
 public abstract class OWLClassData extends OWLEntityData {
 

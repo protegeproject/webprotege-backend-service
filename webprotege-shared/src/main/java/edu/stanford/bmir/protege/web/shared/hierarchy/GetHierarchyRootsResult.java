@@ -8,10 +8,8 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.shared.dispatch.Result;
 import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.protege.gwt.graphtree.shared.graph.GraphNode;
 
 import javax.annotation.Nonnull;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -22,13 +20,11 @@ import java.util.List;
 @JsonTypeName("GetHierarchyRoots")
 public abstract class GetHierarchyRootsResult implements Result {
 
-    @NotNull
     @JsonCreator
     public static GetHierarchyRootsResult create(@JsonProperty("rootNodes") @Nonnull List<GraphNode<EntityNode>> rootNodes) {
         return new AutoValue_GetHierarchyRootsResult(ImmutableList.copyOf(rootNodes));
     }
 
-    @NotNull
     public static GetHierarchyRootsResult empty() {
         return create(ImmutableList.of());
     }
