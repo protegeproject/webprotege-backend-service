@@ -14,12 +14,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-shared-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
             <version>1</version>
