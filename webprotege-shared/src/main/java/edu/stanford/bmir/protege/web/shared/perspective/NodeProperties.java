@@ -16,14 +16,9 @@ import java.util.*;
  */
 public class NodeProperties {
 
-    private static final NodeProperties EMPTY_NODE_PROPERTIES = new NodeProperties();
+    private static final NodeProperties EMPTY_NODE_PROPERTIES = new NodeProperties(Collections.emptyMap());
 
-    // Cannot be final because of GWT serialization
-    private Map<String, NodePropertyValue> properties = new HashMap<>();
-
-    private NodeProperties() {
-
-    }
+    private final Map<String, NodePropertyValue> properties = new HashMap<>();
 
     @JsonCreator
     private NodeProperties(@Nullable Map<String, NodePropertyValue> properties) {
