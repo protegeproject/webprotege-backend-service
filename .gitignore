@@ -19,3 +19,5 @@ dependency-reduced-pom.xml
 .protegedata/
 
 overlays
+
+.DS_Store
