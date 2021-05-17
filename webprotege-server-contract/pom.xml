@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>webprotege-shared</artifactId>
+            <artifactId>webprotege-server-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 

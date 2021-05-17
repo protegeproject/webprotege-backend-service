@@ -9,7 +9,7 @@
         <version>5.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>webprotege-shared</artifactId>
+    <artifactId>webprotege-server-common</artifactId>
 
     <dependencies>
 

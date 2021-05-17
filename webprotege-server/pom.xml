@@ -183,7 +183,7 @@
                     <configuration>
                         <scanIntervalSeconds>5</scanIntervalSeconds>
                         <webApp>
-                            <extraClasspath>${basedir}/../webprotege-shared/target/classes/</extraClasspath>
+                            <extraClasspath>${basedir}/../webprotege-server-common/target/classes/</extraClasspath>
                         </webApp>
                         <contextXml>${basedir}/src/main/jettyconf/context.xml</contextXml>
                     </configuration>
