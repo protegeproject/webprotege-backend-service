@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>webprotege-server-api</artifactId>
+            <artifactId>webprotege-server-contract</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

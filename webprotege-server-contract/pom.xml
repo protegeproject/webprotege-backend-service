@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>webprotege-server-api</artifactId>
+    <artifactId>webprotege-server-contract</artifactId>
 
     <dependencies>
         <dependency>

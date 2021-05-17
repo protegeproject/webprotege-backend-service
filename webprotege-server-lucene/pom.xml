@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-server-api</artifactId>
+            <artifactId>webprotege-server-contract</artifactId>
             <version>${project.version}</version>
         </dependency>
 
