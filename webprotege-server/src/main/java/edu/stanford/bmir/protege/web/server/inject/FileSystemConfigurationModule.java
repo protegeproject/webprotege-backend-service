@@ -55,7 +55,7 @@ public class FileSystemConfigurationModule {
     @Provides
     @CommentNotificationEmailTemplate
     public OverridableFile provideCommentNotificationTemplateFile(OverridableFileFactory factory) {
-        return factory.getOverridableFile("templates/comment-notification-email-template.html" );
+        return factory.getOverridableFile("templates/comment-notification-email-template.html");
     }
 
     @Provides
@@ -67,7 +67,7 @@ public class FileSystemConfigurationModule {
     @Provides
     @PasswordResetEmailTemplate
     public OverridableFile providePasswordResetEmailTemplate(OverridableFileFactory factory) {
-        return factory.getOverridableFile("templates/password-reset-email-template.html" );
+        return factory.getOverridableFile("templates/password-reset-email-template.html");
     }
 
     @Provides
