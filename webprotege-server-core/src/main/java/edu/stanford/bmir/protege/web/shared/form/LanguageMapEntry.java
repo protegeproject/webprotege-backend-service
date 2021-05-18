@@ -1,4 +1,4 @@
-package edu.stanford.bmir.protege.web.client.form;
+package edu.stanford.bmir.protege.web.shared.form;
 
 import com.google.auto.value.AutoValue;
 
