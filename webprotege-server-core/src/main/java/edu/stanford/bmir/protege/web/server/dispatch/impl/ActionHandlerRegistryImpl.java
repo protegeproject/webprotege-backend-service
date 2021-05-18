@@ -3,8 +3,8 @@ package edu.stanford.bmir.protege.web.server.dispatch.impl;
 import edu.stanford.bmir.protege.web.server.dispatch.ActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ActionHandlerNotFoundException;
 import edu.stanford.bmir.protege.web.server.dispatch.ActionHandlerRegistry;
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;

@@ -1,16 +1,13 @@
 package edu.stanford.bmir.protege.web.server.issues;
 
 import com.github.mustachejava.DefaultMustacheFactory;
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.app.ApplicationNameSupplier;
 import edu.stanford.bmir.protege.web.server.app.PlaceUrl;
 import edu.stanford.bmir.protege.web.server.filemanager.FileContents;
 import edu.stanford.bmir.protege.web.server.templates.TemplateEngine;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.issues.Comment;
-import edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,10 +17,8 @@ import org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.io.File;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;

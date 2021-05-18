@@ -1,9 +1,8 @@
 package edu.stanford.bmir.protege.web.server.user;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.auth.Salt;
-import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.auth.Salt;
+import edu.stanford.bmir.protege.web.server.auth.SaltedPasswordDigest;
 
 import javax.annotation.Nonnull;
 

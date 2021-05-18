@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.axiom;
 
-import edu.stanford.bmir.protege.web.shared.object.OWLObjectSelector;
+import edu.stanford.bmir.protege.web.server.object.OWLObjectSelector;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

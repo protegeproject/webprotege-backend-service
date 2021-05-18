@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.server.hierarchy;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.index.*;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

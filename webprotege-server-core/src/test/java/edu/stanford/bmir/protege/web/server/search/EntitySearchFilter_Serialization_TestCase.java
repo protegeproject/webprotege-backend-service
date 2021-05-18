@@ -1,11 +1,9 @@
 package edu.stanford.bmir.protege.web.server.search;
 
-import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.match.criteria.EntityIsDeprecatedCriteria;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilterId;
+import edu.stanford.bmir.protege.web.server.lang.LanguageMap;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.server.match.criteria.EntityIsDeprecatedCriteria;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.Test;
 
 import java.io.IOException;

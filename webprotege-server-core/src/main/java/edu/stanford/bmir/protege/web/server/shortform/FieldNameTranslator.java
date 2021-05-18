@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-
 import javax.annotation.Nonnull;
 
 /**

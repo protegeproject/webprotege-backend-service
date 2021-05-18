@@ -1,10 +1,10 @@
 package edu.stanford.bmir.protege.web.server.metaproject;
 
 import com.google.common.io.BaseEncoding;
-import edu.stanford.bmir.protege.web.shared.auth.Md5DigestAlgorithmProvider;
-import edu.stanford.bmir.protege.web.shared.auth.PasswordDigestAlgorithm;
-import edu.stanford.bmir.protege.web.shared.auth.Salt;
-import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
+import edu.stanford.bmir.protege.web.server.auth.Md5DigestAlgorithmProvider;
+import edu.stanford.bmir.protege.web.server.auth.PasswordDigestAlgorithm;
+import edu.stanford.bmir.protege.web.server.auth.Salt;
+import edu.stanford.bmir.protege.web.server.auth.SaltedPasswordDigest;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;

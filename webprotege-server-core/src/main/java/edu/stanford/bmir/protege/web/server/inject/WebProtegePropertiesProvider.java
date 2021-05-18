@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.server.inject;
 import edu.stanford.bmir.protege.web.server.app.WebProtegeProperties;
 import edu.stanford.bmir.protege.web.server.filemanager.ConfigInputStreamSupplier;
 import edu.stanford.bmir.protege.web.server.init.WebProtegeConfigurationException;
-import edu.stanford.bmir.protege.web.shared.app.WebProtegePropertyName;
+import edu.stanford.bmir.protege.web.server.app.WebProtegePropertyName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

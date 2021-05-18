@@ -2,10 +2,8 @@ package edu.stanford.bmir.protege.web.server.crud.supplied;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.supplied.WhiteSpaceTreatment;
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSuffixSettings;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -28,7 +26,7 @@ public class SuppliedNameSuffixSettings_SerializationTestCase {
 
     @Test
     public void shouldDeserializeFullClassNameForBackwardsCompatibility() throws IOException {
-        var serialization = "{\"_class\" : \"edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuffixSettings\"}";
+        var serialization = "{\"_class\" : \"edu.stanford.bmir.protege.web.server.crud.supplied.SuppliedNameSuffixSettings\"}";
         ObjectMapperProvider objectMapperProvider = new ObjectMapperProvider();
         ObjectMapper objectMapper = objectMapperProvider.get();
         var deserializedObject = objectMapper.readValue(serialization, EntityCrudKitSuffixSettings.class);

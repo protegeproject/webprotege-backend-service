@@ -1,14 +1,11 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.server.frame.FrameComponentSessionRenderer;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.form.data.FormControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.data.FormEntitySubject;
-import edu.stanford.bmir.protege.web.shared.form.data.FormSubject;
-import edu.stanford.bmir.protege.web.shared.form.data.MultiChoiceControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.field.MultiChoiceControlDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.field.OwlBinding;
+import edu.stanford.bmir.protege.web.server.form.data.FormControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.data.FormEntitySubject;
+import edu.stanford.bmir.protege.web.server.form.data.MultiChoiceControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.field.MultiChoiceControlDescriptor;
+import edu.stanford.bmir.protege.web.server.form.field.OwlBinding;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

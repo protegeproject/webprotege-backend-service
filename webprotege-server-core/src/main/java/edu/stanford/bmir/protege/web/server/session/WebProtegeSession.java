@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.session;
 
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import java.util.Optional;
 

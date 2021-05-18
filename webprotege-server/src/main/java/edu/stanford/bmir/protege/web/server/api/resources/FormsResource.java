@@ -5,13 +5,11 @@ import com.google.auto.factory.Provided;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.dispatch.BatchAction;
-import edu.stanford.bmir.protege.web.shared.form.*;
-import edu.stanford.bmir.protege.web.shared.match.criteria.Criteria;
-import edu.stanford.bmir.protege.web.shared.match.criteria.RootCriteria;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
+import edu.stanford.bmir.protege.web.server.dispatch.BatchAction;
+import edu.stanford.bmir.protege.web.server.form.*;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.ws.rs.*;

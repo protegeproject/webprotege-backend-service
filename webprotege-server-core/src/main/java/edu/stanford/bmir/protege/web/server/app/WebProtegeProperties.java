@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.app;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.server.init.WebProtegeConfigurationException;
-import edu.stanford.bmir.protege.web.shared.app.WebProtegePropertyName;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -11,7 +10,7 @@ import java.util.Optional;
 import java.util.Properties;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.app.WebProtegePropertyName.*;
+import static edu.stanford.bmir.protege.web.server.app.WebProtegePropertyName.*;
 
 /**
  * Accessor methods for the webprotege.properties property values.  The set of properties is read-only.  This is
@@ -29,10 +28,10 @@ public class WebProtegeProperties implements Serializable {
      * Initialises WebProtegeProperties with property values from a {@link java.util.Properties} object.
      * @param properties A {@link Properties} object which contains the properties to be used in the initialization.
      * Not {@code null}.  Only property values whose property names are equal to the property names specified
-     *                   by the {@link edu.stanford.bmir.protege.web.shared.app.WebProtegePropertyName} enum will
+     *                   by the {@link WebProtegePropertyName} enum will
      *                   be read.
      * @throws NullPointerException if {@code properties} is {@code null}.
-     * See the {@link edu.stanford.bmir.protege.web.shared.app.WebProtegePropertyName}
+     * See the {@link WebProtegePropertyName}
      * enum for a list of required properties (which do not have defaults).
      */
     public WebProtegeProperties(Properties properties) {

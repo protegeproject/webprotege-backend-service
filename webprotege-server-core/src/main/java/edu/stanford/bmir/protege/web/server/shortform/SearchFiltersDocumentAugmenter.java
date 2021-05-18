@@ -1,12 +1,6 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
-import com.google.auto.factory.AutoFactory;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.server.match.EntityMatcherFactory;
-import edu.stanford.bmir.protege.web.server.match.Matcher;
-import edu.stanford.bmir.protege.web.server.repository.ProjectEntitySearchFiltersManager;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;

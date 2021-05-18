@@ -3,18 +3,15 @@ package edu.stanford.bmir.protege.web.server.watches;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.watches.GetWatchesAction;
-import edu.stanford.bmir.protege.web.shared.watches.GetWatchesResult;
-import edu.stanford.bmir.protege.web.shared.watches.Watch;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.Set;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.WATCH_CHANGES;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.WATCH_CHANGES;
 
 /**
  * Matthew Horridge

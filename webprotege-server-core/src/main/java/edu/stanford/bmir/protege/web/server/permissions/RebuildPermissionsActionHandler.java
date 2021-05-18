@@ -6,13 +6,11 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.ApplicationPermissionValidator;
-import edu.stanford.bmir.protege.web.shared.permissions.RebuildPermissionsAction;
-import edu.stanford.bmir.protege.web.shared.permissions.RebuildPermissionsResult;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.REBUILD_PERMISSIONS;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.REBUILD_PERMISSIONS;
 
 /**
  * Matthew Horridge

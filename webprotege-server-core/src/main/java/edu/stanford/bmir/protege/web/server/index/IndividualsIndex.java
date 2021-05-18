@@ -1,9 +1,9 @@
 package edu.stanford.bmir.protege.web.server.index;
 
 
-import edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 

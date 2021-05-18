@@ -1,15 +1,14 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyIndividualValue;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.State;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyIndividualValue;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.frame.State;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.Collections;
 import java.util.Set;
 
 /**

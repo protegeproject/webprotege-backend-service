@@ -2,11 +2,11 @@ package edu.stanford.bmir.protege.web.server.form.processor;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.form.FormFrameBuilder;
-import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.GridColumnBindingMissingException;
-import edu.stanford.bmir.protege.web.shared.form.data.GridRowData;
-import edu.stanford.bmir.protege.web.shared.form.field.GridColumnDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.field.OwlBinding;
+import edu.stanford.bmir.protege.web.server.form.FormSubjectFactoryDescriptor;
+import edu.stanford.bmir.protege.web.server.form.GridColumnBindingMissingException;
+import edu.stanford.bmir.protege.web.server.form.data.GridRowData;
+import edu.stanford.bmir.protege.web.server.form.field.GridColumnDescriptor;
+import edu.stanford.bmir.protege.web.server.form.field.OwlBinding;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.server.shortform;
 import dagger.Module;
 import dagger.Provides;
 import edu.stanford.bmir.protege.web.server.index.*;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 
 /**
  * Matthew Horridge

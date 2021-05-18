@@ -10,12 +10,12 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.CreateAnnotationPropertiesAction;
-import edu.stanford.bmir.protege.web.shared.entity.CreateAnnotationPropertiesResult;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.entity.CreateAnnotationPropertiesAction;
+import edu.stanford.bmir.protege.web.server.entity.CreateAnnotationPropertiesResult;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 
 import javax.annotation.Nonnull;
@@ -24,8 +24,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.CREATE_PROPERTY;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.CREATE_PROPERTY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;
 
 /**

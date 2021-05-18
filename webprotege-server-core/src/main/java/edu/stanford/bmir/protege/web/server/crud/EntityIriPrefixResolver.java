@@ -3,8 +3,6 @@ package edu.stanford.bmir.protege.web.server.crud;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.match.HierarchyPositionCriteriaMatchableEntityTypesExtractor;
 import edu.stanford.bmir.protege.web.server.match.MatcherFactory;
-import edu.stanford.bmir.protege.web.shared.crud.ConditionalIriPrefix;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 

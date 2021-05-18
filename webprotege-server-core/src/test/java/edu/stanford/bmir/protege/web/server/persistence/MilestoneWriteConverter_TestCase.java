@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.issues.Milestone;
+import edu.stanford.bmir.protege.web.server.issues.Milestone;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

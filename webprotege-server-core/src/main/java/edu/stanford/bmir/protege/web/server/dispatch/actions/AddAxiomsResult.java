@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.dispatch.actions;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
+import edu.stanford.bmir.protege.web.server.project.HasProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.annotation.Nonnull;
 

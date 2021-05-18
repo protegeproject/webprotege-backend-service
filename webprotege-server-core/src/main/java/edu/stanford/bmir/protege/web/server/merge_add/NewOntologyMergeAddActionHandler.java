@@ -7,9 +7,7 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.merge.ProjectOntologiesBuilder;
 import edu.stanford.bmir.protege.web.server.upload.UploadedOntologiesCache;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.merge_add.NewOntologyMergeAddAction;
-import edu.stanford.bmir.protege.web.shared.merge_add.NewOntologyMergeAddResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +16,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.*;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.*;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.*;
 
 public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandler<NewOntologyMergeAddAction, NewOntologyMergeAddResult> {
 

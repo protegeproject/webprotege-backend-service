@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.project;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.inject.OverridableFileFactory;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclaration;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 

@@ -6,8 +6,7 @@ import edu.stanford.bmir.protege.web.server.mansyntax.render.DeprecatedEntityChe
 import edu.stanford.bmir.protege.web.server.shortform.DictionaryManager;
 import edu.stanford.bmir.protege.web.server.tag.TagsManager;
 import edu.stanford.bmir.protege.web.server.watches.WatchManager;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

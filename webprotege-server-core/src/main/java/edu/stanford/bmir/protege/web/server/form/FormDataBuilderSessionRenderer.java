@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import edu.stanford.bmir.protege.web.server.frame.FrameComponentSessionRenderer;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 

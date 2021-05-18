@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.obo;
 
 import edu.stanford.bmir.protege.web.server.index.ProjectAnnotationAssertionAxiomsBySubjectIndex;
-import edu.stanford.bmir.protege.web.shared.obo.OBOXRef;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 

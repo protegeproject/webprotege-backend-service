@@ -1,7 +1,6 @@
 
 package edu.stanford.bmir.protege.web.server.access;
 
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

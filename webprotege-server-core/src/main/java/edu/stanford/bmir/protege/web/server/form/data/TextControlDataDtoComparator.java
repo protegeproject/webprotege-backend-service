@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.form.data;
 
-import edu.stanford.bmir.protege.web.shared.form.data.TextControlDataDto;
-
 import javax.inject.Inject;
 import java.util.Comparator;
 

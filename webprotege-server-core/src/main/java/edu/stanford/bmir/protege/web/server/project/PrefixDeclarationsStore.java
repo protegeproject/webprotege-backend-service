@@ -3,15 +3,13 @@ package edu.stanford.bmir.protege.web.server.project;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclarations;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.bson.Document;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.project.PrefixDeclarations.PROJECT_ID;
+import static edu.stanford.bmir.protege.web.server.project.PrefixDeclarations.PROJECT_ID;
 
 /**
  * Matthew Horridge

@@ -5,13 +5,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
 import edu.stanford.bmir.protege.web.server.persistence.MongoTestUtils;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclarations;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 
 import static edu.stanford.bmir.protege.web.server.persistence.MongoTestUtils.*;
 import static org.hamcrest.MatcherAssert.assertThat;

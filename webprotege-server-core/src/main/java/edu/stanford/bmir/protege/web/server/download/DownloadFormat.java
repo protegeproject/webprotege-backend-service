@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.download;
 
-import edu.stanford.bmir.protege.web.shared.download.DownloadFormatExtension;
 import org.semanticweb.owlapi.formats.*;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 

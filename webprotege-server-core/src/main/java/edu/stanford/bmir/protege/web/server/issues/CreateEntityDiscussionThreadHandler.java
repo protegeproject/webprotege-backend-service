@@ -8,15 +8,14 @@ import edu.stanford.bmir.protege.web.server.events.EventManager;
 import edu.stanford.bmir.protege.web.server.mansyntax.render.HasGetRendering;
 import edu.stanford.bmir.protege.web.server.project.ProjectDetailsRepository;
 import edu.stanford.bmir.protege.web.server.webhook.CommentPostedSlackWebhookInvoker;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.EventTag;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.issues.*;
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.EventTag;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.project.ProjectDetails;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -25,7 +24,7 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.CREATE_OBJECT_COMMENT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.CREATE_OBJECT_COMMENT;
 
 /**
  * Matthew Horridge

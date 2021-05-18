@@ -2,10 +2,10 @@ package edu.stanford.bmir.protege.web.server.form.processor;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.form.FormFrameBuilder;
-import edu.stanford.bmir.protege.web.shared.form.data.FormControlData;
-import edu.stanford.bmir.protege.web.shared.form.data.GridCellData;
-import edu.stanford.bmir.protege.web.shared.form.field.OwlBinding;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
+import edu.stanford.bmir.protege.web.server.form.data.FormControlData;
+import edu.stanford.bmir.protege.web.server.form.data.GridCellData;
+import edu.stanford.bmir.protege.web.server.form.field.OwlBinding;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 

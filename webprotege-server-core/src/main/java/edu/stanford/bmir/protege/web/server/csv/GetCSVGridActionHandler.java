@@ -6,10 +6,6 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.inject.UploadsDirectory;
-import edu.stanford.bmir.protege.web.shared.csv.CSVGrid;
-import edu.stanford.bmir.protege.web.shared.csv.DocumentId;
-import edu.stanford.bmir.protege.web.shared.csv.GetCSVGridAction;
-import edu.stanford.bmir.protege.web.shared.csv.GetCSVGridResult;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

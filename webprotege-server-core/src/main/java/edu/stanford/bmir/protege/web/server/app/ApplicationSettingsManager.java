@@ -3,14 +3,10 @@ package edu.stanford.bmir.protege.web.server.app;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.access.ApplicationResource;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
-import edu.stanford.bmir.protege.web.shared.app.AccountCreationSetting;
-import edu.stanford.bmir.protege.web.shared.app.ApplicationSettings;
-import edu.stanford.bmir.protege.web.shared.app.ProjectCreationSetting;
-import edu.stanford.bmir.protege.web.shared.app.ProjectUploadSetting;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.user.EmailAddress;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.access.RoleId;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.user.EmailAddress;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -23,16 +19,16 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.bmir.protege.web.server.access.Subject.forAnySignedInUser;
 import static edu.stanford.bmir.protege.web.server.access.Subject.forGuestUser;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.CREATE_EMPTY_PROJECT;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.UPLOAD_PROJECT;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInRole.*;
-import static edu.stanford.bmir.protege.web.shared.app.AccountCreationSetting.ACCOUNT_CREATION_ALLOWED;
-import static edu.stanford.bmir.protege.web.shared.app.AccountCreationSetting.ACCOUNT_CREATION_NOT_ALLOWED;
-import static edu.stanford.bmir.protege.web.shared.app.NotificationEmailsSetting.SEND_NOTIFICATION_EMAILS;
-import static edu.stanford.bmir.protege.web.shared.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_ALLOWED;
-import static edu.stanford.bmir.protege.web.shared.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_NOT_ALLOWED;
-import static edu.stanford.bmir.protege.web.shared.app.ProjectUploadSetting.PROJECT_UPLOAD_ALLOWED;
-import static edu.stanford.bmir.protege.web.shared.app.ProjectUploadSetting.PROJECT_UPLOAD_NOT_ALLOWED;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.CREATE_EMPTY_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.UPLOAD_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInRole.*;
+import static edu.stanford.bmir.protege.web.server.app.AccountCreationSetting.ACCOUNT_CREATION_ALLOWED;
+import static edu.stanford.bmir.protege.web.server.app.AccountCreationSetting.ACCOUNT_CREATION_NOT_ALLOWED;
+import static edu.stanford.bmir.protege.web.server.app.NotificationEmailsSetting.SEND_NOTIFICATION_EMAILS;
+import static edu.stanford.bmir.protege.web.server.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_ALLOWED;
+import static edu.stanford.bmir.protege.web.server.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_NOT_ALLOWED;
+import static edu.stanford.bmir.protege.web.server.app.ProjectUploadSetting.PROJECT_UPLOAD_ALLOWED;
+import static edu.stanford.bmir.protege.web.server.app.ProjectUploadSetting.PROJECT_UPLOAD_NOT_ALLOWED;
 
 /**
  * Matthew Horridge

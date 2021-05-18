@@ -9,8 +9,7 @@ import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
 import edu.stanford.bmir.protege.web.server.index.AxiomsByReferenceIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.usage.*;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

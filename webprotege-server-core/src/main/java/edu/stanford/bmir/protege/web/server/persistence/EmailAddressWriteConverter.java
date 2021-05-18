@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.user.EmailAddress;
+import edu.stanford.bmir.protege.web.server.user.EmailAddress;
 
 /**
  * Author: Matthew Horridge<br>

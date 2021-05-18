@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.filemanager;
 
 import com.google.common.io.BaseEncoding;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.inject.Inject;
 import java.io.File;

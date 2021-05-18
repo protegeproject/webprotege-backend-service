@@ -1,8 +1,6 @@
 
 package edu.stanford.bmir.protege.web.server.access;
 
-import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

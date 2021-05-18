@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.inject.project;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

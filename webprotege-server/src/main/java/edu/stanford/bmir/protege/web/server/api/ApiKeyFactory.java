@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.api;
 
-import edu.stanford.bmir.protege.web.shared.api.ApiKey;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
 import org.glassfish.hk2.api.Factory;
 
 import javax.annotation.Nonnull;

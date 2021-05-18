@@ -1,10 +1,9 @@
 package edu.stanford.bmir.protege.web.server.issues;
 
-import edu.stanford.bmir.protege.web.shared.issues.Comment;
-import edu.stanford.bmir.protege.web.shared.issues.mention.MentionParser;
-import edu.stanford.bmir.protege.web.shared.issues.mention.ParsedMention;
-import edu.stanford.bmir.protege.web.shared.issues.mention.UserIdMention;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.issues.mention.MentionParser;
+import edu.stanford.bmir.protege.web.server.issues.mention.ParsedMention;
+import edu.stanford.bmir.protege.web.server.issues.mention.UserIdMention;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +11,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
 /**

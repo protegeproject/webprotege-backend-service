@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.obo;
 
-import edu.stanford.bmir.protege.web.shared.obo.OBOTermDefinition;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

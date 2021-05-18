@@ -4,8 +4,6 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.UserIsProjectOwnerValidator;
 import edu.stanford.bmir.protege.web.server.project.ProjectManager;
-import edu.stanford.bmir.protege.web.shared.sharing.ProjectSharingSettings;
-import edu.stanford.bmir.protege.web.shared.sharing.SetProjectSharingSettingsAction;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -3,8 +3,8 @@ package edu.stanford.bmir.protege.web.server.dispatch.validators;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidationResult;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.issues.EntityDiscussionThreadRepository;
-import edu.stanford.bmir.protege.web.shared.issues.ThreadId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.issues.ThreadId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 

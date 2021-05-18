@@ -1,10 +1,8 @@
 package edu.stanford.bmir.protege.web.server.issues;
 
 import com.mongodb.BasicDBObject;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.issues.*;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
@@ -17,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread.*;
+import static edu.stanford.bmir.protege.web.server.issues.EntityDiscussionThread.*;
 
 /**
  * Matthew Horridge

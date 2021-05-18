@@ -7,17 +7,14 @@ import edu.stanford.bmir.protege.web.server.crud.persistence.ProjectEntityCrudKi
 import edu.stanford.bmir.protege.web.server.crud.persistence.ProjectEntityCrudKitSettingsRepository;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.crud.IRIPrefixUpdateStrategy;
-import edu.stanford.bmir.protege.web.shared.crud.SetEntityCrudKitSettingsAction;
-import edu.stanford.bmir.protege.web.shared.crud.SetEntityCrudKitSettingsResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_NEW_ENTITY_SETTINGS;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_NEW_ENTITY_SETTINGS;
 
 /**
  * Author: Matthew Horridge<br>

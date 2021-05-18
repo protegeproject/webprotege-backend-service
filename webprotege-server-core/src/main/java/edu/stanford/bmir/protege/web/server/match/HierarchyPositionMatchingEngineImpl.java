@@ -5,8 +5,8 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProvider;
 import edu.stanford.bmir.protege.web.server.index.IndividualsByTypeIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectSignatureIndex;
-import edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
+import edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode;
+import edu.stanford.bmir.protege.web.server.match.criteria.*;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 

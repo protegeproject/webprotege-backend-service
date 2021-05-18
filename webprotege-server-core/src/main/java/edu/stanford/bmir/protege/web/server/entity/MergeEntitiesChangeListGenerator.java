@@ -10,15 +10,14 @@ import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.issues.EntityDiscussionThreadRepository;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.entity.MergedEntityTreatment;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.entity.MergedEntityTreatment.DEPRECATE_MERGED_ENTITY;
+import static edu.stanford.bmir.protege.web.server.entity.MergedEntityTreatment.DEPRECATE_MERGED_ENTITY;
 import static org.semanticweb.owlapi.vocab.SKOSVocabulary.ALTLABEL;
 import static org.semanticweb.owlapi.vocab.SKOSVocabulary.PREFLABEL;
 

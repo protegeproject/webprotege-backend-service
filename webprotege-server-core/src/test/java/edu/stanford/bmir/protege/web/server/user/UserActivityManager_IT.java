@@ -2,8 +2,7 @@ package edu.stanford.bmir.protege.web.server.user;
 
 import com.mongodb.MongoClient;
 import edu.stanford.bmir.protege.web.server.project.RecentProjectRecord;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;

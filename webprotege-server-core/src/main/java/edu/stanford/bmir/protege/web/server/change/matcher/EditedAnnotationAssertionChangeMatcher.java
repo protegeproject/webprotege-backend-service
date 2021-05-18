@@ -4,7 +4,7 @@ import edu.stanford.bmir.protege.web.server.change.OntologyChange;
 import edu.stanford.bmir.protege.web.server.change.description.*;
 import edu.stanford.bmir.protege.web.server.owlapi.OWLObjectStringFormatter;
 import edu.stanford.bmir.protege.web.server.renderer.LiteralLangTagTransformer;
-import edu.stanford.bmir.protege.web.shared.lang.LanguageTagFormatter;
+import edu.stanford.bmir.protege.web.server.lang.LanguageTagFormatter;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

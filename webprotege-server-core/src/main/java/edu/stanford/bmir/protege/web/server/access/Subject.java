@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.access;
 
 
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;

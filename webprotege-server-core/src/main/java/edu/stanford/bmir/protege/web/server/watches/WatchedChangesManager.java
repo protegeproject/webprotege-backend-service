@@ -7,9 +7,8 @@ import edu.stanford.bmir.protege.web.server.revision.EntitiesByRevisionCache;
 import edu.stanford.bmir.protege.web.server.revision.ProjectChangesManager;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
 import edu.stanford.bmir.protege.web.server.revision.RevisionManager;
-import edu.stanford.bmir.protege.web.shared.change.ProjectChange;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.watches.Watch;
+import edu.stanford.bmir.protege.web.server.change.ProjectChange;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.watches.WatchType.BRANCH;
+import static edu.stanford.bmir.protege.web.server.watches.WatchType.BRANCH;
 
 /**
  * Matthew Horridge

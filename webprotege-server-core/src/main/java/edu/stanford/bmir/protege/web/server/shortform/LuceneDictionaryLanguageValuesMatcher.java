@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.semanticweb.owlapi.model.OWLEntity;

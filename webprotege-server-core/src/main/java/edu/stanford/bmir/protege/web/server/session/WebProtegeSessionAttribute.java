@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.server.session;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

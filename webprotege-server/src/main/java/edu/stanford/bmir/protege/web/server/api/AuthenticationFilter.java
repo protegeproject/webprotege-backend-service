@@ -1,11 +1,9 @@
 package edu.stanford.bmir.protege.web.server.api;
 
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.server.logging.DefaultLogger;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSessionImpl;
-import edu.stanford.bmir.protege.web.shared.api.ApiKey;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

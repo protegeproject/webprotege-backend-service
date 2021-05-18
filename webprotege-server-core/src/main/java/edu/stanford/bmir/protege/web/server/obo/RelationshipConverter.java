@@ -1,9 +1,8 @@
 package edu.stanford.bmir.protege.web.server.obo;
 
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.entity.OWLClassData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLObjectPropertyData;
-import edu.stanford.bmir.protege.web.shared.obo.OBORelationship;
+import edu.stanford.bmir.protege.web.server.entity.OWLClassData;
+import edu.stanford.bmir.protege.web.server.entity.OWLObjectPropertyData;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLObjectProperty;

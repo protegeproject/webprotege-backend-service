@@ -8,13 +8,11 @@ import edu.stanford.bmir.protege.web.server.change.AddAxiomChange;
 import edu.stanford.bmir.protege.web.server.change.OntologyChangeList;
 import edu.stanford.bmir.protege.web.server.crud.*;
 import edu.stanford.bmir.protege.web.server.shortform.LocalNameExtractor;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitId;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityShortForm;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuffixKit;
-import edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuffixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitId;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitPrefixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityShortForm;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationsSettings;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

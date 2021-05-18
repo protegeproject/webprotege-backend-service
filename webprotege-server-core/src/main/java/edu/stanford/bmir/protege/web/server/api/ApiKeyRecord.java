@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.api;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.api.ApiKeyId;
 
 import javax.annotation.Nonnull;
 import java.util.Date;

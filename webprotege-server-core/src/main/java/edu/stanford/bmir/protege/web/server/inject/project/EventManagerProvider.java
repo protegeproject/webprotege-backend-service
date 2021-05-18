@@ -3,8 +3,8 @@ package edu.stanford.bmir.protege.web.server.inject.project;
 import edu.stanford.bmir.protege.web.server.events.EventLifeTime;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
 import edu.stanford.bmir.protege.web.server.project.ProjectDisposablesManager;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

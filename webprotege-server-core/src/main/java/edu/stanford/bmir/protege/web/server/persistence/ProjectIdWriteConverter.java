@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 /**
  * Author: Matthew Horridge<br>

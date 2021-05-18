@@ -7,7 +7,7 @@ import edu.stanford.bmir.protege.web.server.color.ColorConverter;
 import edu.stanford.bmir.protege.web.server.form.FormIdConverter;
 import edu.stanford.bmir.protege.web.server.tag.TagIdConverter;
 import edu.stanford.bmir.protege.web.server.user.UserActivityRecord;
-import edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread;
+import edu.stanford.bmir.protege.web.server.issues.EntityDiscussionThread;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.converters.Converters;
 import org.mongodb.morphia.mapping.Mapper;

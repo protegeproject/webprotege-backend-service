@@ -8,10 +8,7 @@ import edu.stanford.bmir.protege.web.server.index.AxiomsByReferenceIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.inject.ProjectComponent;
 import edu.stanford.bmir.protege.web.server.project.ProjectDetailsManager;
-import edu.stanford.bmir.protege.web.shared.form.FormPurpose;
-import edu.stanford.bmir.protege.web.shared.form.GetEntityDeprecationFormsAction;
-import edu.stanford.bmir.protege.web.shared.form.GetEntityDeprecationFormsResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 

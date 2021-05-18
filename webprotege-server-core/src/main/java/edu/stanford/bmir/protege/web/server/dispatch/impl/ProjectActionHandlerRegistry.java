@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.dispatch.impl;
 
 import edu.stanford.bmir.protege.web.server.dispatch.ProjectActionHandler;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 
 import javax.inject.Inject;
 import java.util.Set;

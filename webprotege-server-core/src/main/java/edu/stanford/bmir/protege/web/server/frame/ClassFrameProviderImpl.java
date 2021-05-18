@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.frame;
 
 import edu.stanford.bmir.protege.web.server.frame.translator.Class2ClassFrameTranslatorFactory;
-import edu.stanford.bmir.protege.web.shared.frame.ClassFrameTranslationOptions;
-import edu.stanford.bmir.protege.web.shared.frame.PlainClassFrame;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;

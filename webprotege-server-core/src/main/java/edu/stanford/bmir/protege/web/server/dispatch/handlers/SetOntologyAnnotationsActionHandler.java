@@ -6,12 +6,12 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectChangeHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
 import edu.stanford.bmir.protege.web.server.index.OntologyAnnotationsIndex;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.ontology.SetOntologyAnnotationsAction;
-import edu.stanford.bmir.protege.web.shared.ontology.SetOntologyAnnotationsResult;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyAnnotationValue;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.ontology.SetOntologyAnnotationsAction;
+import edu.stanford.bmir.protege.web.server.ontology.SetOntologyAnnotationsResult;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.frame.PropertyAnnotationValue;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
@@ -23,8 +23,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY_ANNOTATIONS;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY_ANNOTATIONS;
 import static java.util.Arrays.asList;
 
 /**

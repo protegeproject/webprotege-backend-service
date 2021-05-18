@@ -5,7 +5,7 @@ import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
 import edu.stanford.bmir.protege.web.server.revision.RevisionManager;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.revision.RevisionNumber;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

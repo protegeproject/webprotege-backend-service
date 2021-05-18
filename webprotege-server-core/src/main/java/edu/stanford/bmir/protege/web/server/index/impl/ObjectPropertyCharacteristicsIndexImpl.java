@@ -4,7 +4,7 @@ import edu.stanford.bmir.protege.web.server.index.AxiomsByTypeIndex;
 import edu.stanford.bmir.protege.web.server.index.DependentIndex;
 import edu.stanford.bmir.protege.web.server.index.Index;
 import edu.stanford.bmir.protege.web.server.index.ObjectPropertyCharacteristicsIndex;
-import edu.stanford.bmir.protege.web.shared.frame.ObjectPropertyCharacteristic;
+import edu.stanford.bmir.protege.web.server.frame.ObjectPropertyCharacteristic;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyCharacteristicAxiom;

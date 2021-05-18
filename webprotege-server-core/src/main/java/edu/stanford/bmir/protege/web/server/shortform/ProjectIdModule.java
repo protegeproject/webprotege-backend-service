@@ -2,8 +2,8 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import dagger.Module;
 import dagger.Provides;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 /**
  * Matthew Horridge

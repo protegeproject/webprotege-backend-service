@@ -2,8 +2,8 @@ package edu.stanford.bmir.protege.web.server.match;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.index.ProjectSignatureIndex;
-import edu.stanford.bmir.protege.web.shared.match.criteria.Criteria;
-import edu.stanford.bmir.protege.web.shared.match.criteria.RootCriteria;
+import edu.stanford.bmir.protege.web.server.match.criteria.Criteria;
+import edu.stanford.bmir.protege.web.server.match.criteria.RootCriteria;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.server.match.Matcher;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
+import edu.stanford.bmir.protege.web.server.search.EntitySearchFilter;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

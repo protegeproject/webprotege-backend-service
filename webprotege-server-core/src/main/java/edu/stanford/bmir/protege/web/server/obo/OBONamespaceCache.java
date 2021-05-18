@@ -7,8 +7,7 @@ import edu.stanford.bmir.protege.web.server.index.AxiomsByEntityReferenceIndex;
 import edu.stanford.bmir.protege.web.server.index.OntologyAnnotationsIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.obo.OBONamespace;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 import org.obolibrary.obo2owl.Obo2OWLConstants;
 import org.semanticweb.owlapi.model.*;
 

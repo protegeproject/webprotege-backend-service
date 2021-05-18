@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.project;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclaration;
 
 import javax.annotation.Nonnull;
 

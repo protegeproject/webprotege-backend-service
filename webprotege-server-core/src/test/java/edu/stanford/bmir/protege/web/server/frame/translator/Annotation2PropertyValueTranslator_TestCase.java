@@ -1,7 +1,8 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
-import edu.stanford.bmir.protege.web.server.frame.translator.Annotation2PropertyValueTranslator;
-import edu.stanford.bmir.protege.web.shared.frame.*;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyAnnotationValue;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.frame.State;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

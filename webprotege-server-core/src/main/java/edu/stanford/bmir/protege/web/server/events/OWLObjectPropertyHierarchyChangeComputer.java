@@ -2,11 +2,8 @@ package edu.stanford.bmir.protege.web.server.events;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
-import edu.stanford.bmir.protege.web.server.hierarchy.HierarchyChangeComputer;
-import edu.stanford.bmir.protege.web.server.hierarchy.ObjectPropertyHierarchyProvider;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.*;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.hierarchy.*;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
@@ -15,7 +12,7 @@ import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
 
-import static edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId.OBJECT_PROPERTY_HIERARCHY;
+import static edu.stanford.bmir.protege.web.server.hierarchy.HierarchyId.OBJECT_PROPERTY_HIERARCHY;
 
 /**
 * Matthew Horridge
@@ -46,7 +43,7 @@ public class OWLObjectPropertyHierarchyChangeComputer extends HierarchyChangeCom
                 new GraphNode(renderer.render(child))
         ));
         return Collections.singletonList(SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(getProjectId(),
-                                                                         OBJECT_PROPERTY_HIERARCHY,
+                                                                                                               OBJECT_PROPERTY_HIERARCHY,
                                                                                                                GraphModelChangedEvent
                                                                                                                        .create(ImmutableList
                                                                                                                                        .of(

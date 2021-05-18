@@ -10,8 +10,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.actions.AddAxiomsAction;
 import edu.stanford.bmir.protege.web.server.dispatch.actions.AddAxiomsResult;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
 import edu.stanford.bmir.protege.web.server.project.chg.ChangeManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

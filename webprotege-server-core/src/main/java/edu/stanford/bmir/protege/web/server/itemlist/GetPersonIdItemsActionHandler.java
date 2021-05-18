@@ -6,10 +6,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
-import edu.stanford.bmir.protege.web.shared.itemlist.GetPersonIdItemsAction;
-import edu.stanford.bmir.protege.web.shared.itemlist.GetPersonIdItemsResult;
-import edu.stanford.bmir.protege.web.shared.sharing.PersonId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.sharing.PersonId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

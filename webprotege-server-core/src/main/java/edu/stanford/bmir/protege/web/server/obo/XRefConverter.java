@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.obo;
 
-import edu.stanford.bmir.protege.web.shared.obo.OBOXRef;
 import org.obolibrary.obo2owl.Obo2OWLConstants;
 
 import javax.annotation.Nonnull;

@@ -8,16 +8,13 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.ProjectPermissionValidator;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread;
-import edu.stanford.bmir.protege.web.shared.issues.GetEntityDiscussionThreadsAction;
-import edu.stanford.bmir.protege.web.shared.issues.GetEntityDiscussionThreadsResult;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.List;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_OBJECT_COMMENT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_OBJECT_COMMENT;
 
 /**
  * Matthew Horridge

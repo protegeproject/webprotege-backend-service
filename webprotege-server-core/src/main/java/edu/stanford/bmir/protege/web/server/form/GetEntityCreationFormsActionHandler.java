@@ -4,11 +4,6 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.inject.ProjectComponent;
-import edu.stanford.bmir.protege.web.shared.form.FormPurpose;
-import edu.stanford.bmir.protege.web.shared.form.GetEntityCreationFormsAction;
-import edu.stanford.bmir.protege.web.shared.form.GetEntityCreationFormsResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.renderer.GetEntityRenderingResult;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

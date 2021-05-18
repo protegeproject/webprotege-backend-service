@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.form.data;
 
 import com.google.common.collect.Comparators;
-import edu.stanford.bmir.protege.web.shared.form.data.MultiChoiceControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlDataDto;
 
 import javax.inject.Inject;
 import java.util.Comparator;

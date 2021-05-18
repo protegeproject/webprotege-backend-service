@@ -5,13 +5,9 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.access.ProjectResource;
 import edu.stanford.bmir.protege.web.server.access.Subject;
 import edu.stanford.bmir.protege.web.server.user.HasGetUserIdByUserIdOrEmail;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.sharing.PersonId;
-import edu.stanford.bmir.protege.web.shared.sharing.ProjectSharingSettings;
-import edu.stanford.bmir.protege.web.shared.sharing.SharingPermission;
-import edu.stanford.bmir.protege.web.shared.sharing.SharingSetting;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.access.RoleId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

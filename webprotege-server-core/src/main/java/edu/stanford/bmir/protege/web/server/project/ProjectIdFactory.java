@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.project;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-
 import java.util.UUID;
 
 /**

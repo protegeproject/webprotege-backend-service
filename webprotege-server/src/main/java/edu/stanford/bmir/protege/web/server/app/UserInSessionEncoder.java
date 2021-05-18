@@ -1,13 +1,12 @@
 package edu.stanford.bmir.protege.web.server.app;
 
-import edu.stanford.bmir.protege.web.shared.app.UserInSession;
-import edu.stanford.bmir.protege.web.shared.user.UserDetails;
+import edu.stanford.bmir.protege.web.server.user.UserDetails;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
-import static edu.stanford.bmir.protege.web.shared.app.UserInSessionEncoding.*;
+import static edu.stanford.bmir.protege.web.server.app.UserInSessionEncoding.*;
 
 /**
  * Matthew Horridge

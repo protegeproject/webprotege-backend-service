@@ -1,8 +1,5 @@
 package edu.stanford.bmir.protege.web.server.user;
 
-import edu.stanford.bmir.protege.web.shared.user.EmailAddress;
-import edu.stanford.bmir.protege.web.shared.user.UserDetails;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

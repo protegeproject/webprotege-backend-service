@@ -1,11 +1,9 @@
 package edu.stanford.bmir.protege.web.server.auth;
 
-import edu.stanford.bmir.protege.web.shared.auth.AuthenticationResponse;
-import edu.stanford.bmir.protege.web.shared.auth.Password;
-import edu.stanford.bmir.protege.web.shared.user.EmailAddress;
-import edu.stanford.bmir.protege.web.shared.user.UserDetails;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.user.UserRegistrationException;
+import edu.stanford.bmir.protege.web.server.user.EmailAddress;
+import edu.stanford.bmir.protege.web.server.user.UserDetails;
+import edu.stanford.bmir.protege.web.server.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserRegistrationException;
 
 import javax.annotation.Nonnull;
 

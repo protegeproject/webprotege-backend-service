@@ -1,10 +1,9 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.*;
-import edu.stanford.bmir.protege.web.shared.form.data.FormEntitySubject;
-import edu.stanford.bmir.protege.web.shared.form.data.FormSubject;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyValue;
+import edu.stanford.bmir.protege.web.server.form.data.FormEntitySubject;
+import edu.stanford.bmir.protege.web.server.form.data.FormSubject;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 

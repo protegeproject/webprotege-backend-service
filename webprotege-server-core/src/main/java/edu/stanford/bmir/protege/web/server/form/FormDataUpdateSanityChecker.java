@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.bmir.protege.web.shared.form.FormId;
-import edu.stanford.bmir.protege.web.shared.form.data.FormData;
+import edu.stanford.bmir.protege.web.server.form.data.FormData;
 
 import javax.annotation.Nonnull;
 

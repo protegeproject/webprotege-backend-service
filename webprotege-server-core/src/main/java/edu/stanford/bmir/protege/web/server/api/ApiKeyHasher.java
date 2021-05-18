@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.api;
 
 import com.google.common.hash.Hashing;
-import edu.stanford.bmir.protege.web.shared.api.ApiKey;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

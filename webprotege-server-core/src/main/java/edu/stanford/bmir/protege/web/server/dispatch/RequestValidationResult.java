@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.dispatch;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.InvalidRequestException;
-
 import java.util.Optional;
 
 /**

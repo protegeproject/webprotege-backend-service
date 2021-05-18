@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.server.project;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.inject.OverridableFile;
 import edu.stanford.bmir.protege.web.server.inject.OverridableFileFactory;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

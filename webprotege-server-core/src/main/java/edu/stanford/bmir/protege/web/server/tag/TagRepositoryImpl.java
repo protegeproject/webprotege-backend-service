@@ -10,10 +10,8 @@ import com.mongodb.client.model.ReplaceOneModel;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.WriteModel;
 import edu.stanford.bmir.protege.web.server.persistence.Repository;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.tag.Tag;
-import edu.stanford.bmir.protege.web.shared.tag.TagId;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.bson.Document;
 
 import javax.annotation.Nonnull;

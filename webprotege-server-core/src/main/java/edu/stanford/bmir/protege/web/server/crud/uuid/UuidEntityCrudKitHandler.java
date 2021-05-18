@@ -8,13 +8,10 @@ import edu.stanford.bmir.protege.web.server.change.OntologyChangeList;
 import edu.stanford.bmir.protege.web.server.crud.*;
 import edu.stanford.bmir.protege.web.server.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.bmir.protege.web.server.util.IdUtil;
-import edu.stanford.bmir.protege.web.shared.crud.*;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidFormat;
-import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.shortform.AnnotationAssertionDictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageVisitor;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.bmir.protege.web.server.shortform.AnnotationAssertionDictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguageVisitor;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

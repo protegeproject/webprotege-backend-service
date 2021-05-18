@@ -3,8 +3,6 @@ package edu.stanford.bmir.protege.web.server.merge;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.change.*;
 import edu.stanford.bmir.protege.web.server.diff.OntologyDiff2OntologyChanges;
-import edu.stanford.bmir.protege.web.shared.merge.Diff;
-import edu.stanford.bmir.protege.web.shared.merge.OntologyDiff;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

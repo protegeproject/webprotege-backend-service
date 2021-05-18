@@ -4,9 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import edu.stanford.bmir.protege.web.server.lang.ActiveLanguagesManager;
 import edu.stanford.bmir.protege.web.server.lang.ActiveLanguagesManagerImpl;
-import edu.stanford.bmir.protege.web.server.lang.LanguageManager;
 import edu.stanford.bmir.protege.web.server.shortform.*;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.OWLEntityProvider;
 
 /**

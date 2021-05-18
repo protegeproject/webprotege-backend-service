@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.watches;
 
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

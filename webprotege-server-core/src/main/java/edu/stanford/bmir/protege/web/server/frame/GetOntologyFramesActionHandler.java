@@ -7,8 +7,7 @@ import edu.stanford.bmir.protege.web.server.index.OntologyAnnotationsIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.renderer.ContextRenderer;
 import edu.stanford.bmir.protege.web.server.shortform.WebProtegeOntologyIRIShortFormProvider;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.frame.*;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Matthew Horridge

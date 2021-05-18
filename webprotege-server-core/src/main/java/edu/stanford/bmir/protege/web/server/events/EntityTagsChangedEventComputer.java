@@ -7,11 +7,10 @@ import edu.stanford.bmir.protege.web.server.change.OntologyChange;
 import edu.stanford.bmir.protege.web.server.change.OntologyChangeSubjectProvider;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
 import edu.stanford.bmir.protege.web.server.tag.TagsManager;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.tag.EntityTagsChangedEvent;
-import edu.stanford.bmir.protege.web.shared.tag.Tag;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.tag.EntityTagsChangedEvent;
+import edu.stanford.bmir.protege.web.server.tag.Tag;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

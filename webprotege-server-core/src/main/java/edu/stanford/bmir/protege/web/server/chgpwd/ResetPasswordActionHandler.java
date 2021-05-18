@@ -8,11 +8,9 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
 import edu.stanford.bmir.protege.web.server.util.IdUtil;
-import edu.stanford.bmir.protege.web.shared.auth.Password;
-import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordAction;
-import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordResult;
-import edu.stanford.bmir.protege.web.shared.user.UserDetails;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.auth.Password;
+import edu.stanford.bmir.protege.web.server.user.UserDetails;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +18,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordResultCode.*;
+import static edu.stanford.bmir.protege.web.server.chgpwd.ResetPasswordResultCode.*;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 01/10/2014

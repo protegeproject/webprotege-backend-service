@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.mongodb.morphia.converters.SimpleValueConverter;
 import org.mongodb.morphia.mapping.MappedField;
 

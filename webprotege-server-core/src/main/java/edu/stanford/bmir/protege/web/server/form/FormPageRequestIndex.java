@@ -3,10 +3,9 @@ package edu.stanford.bmir.protege.web.server.form;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.bmir.protege.web.shared.form.FormPageRequest;
-import edu.stanford.bmir.protege.web.shared.form.data.FormSubject;
-import edu.stanford.bmir.protege.web.shared.form.field.FormRegionId;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.form.data.FormSubject;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionId;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
 
 import javax.annotation.Nonnull;
 

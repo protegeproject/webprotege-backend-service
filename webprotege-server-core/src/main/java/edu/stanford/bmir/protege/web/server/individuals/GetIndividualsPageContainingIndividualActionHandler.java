@@ -7,10 +7,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
 import edu.stanford.bmir.protege.web.server.index.IndividualsIndex;
 import edu.stanford.bmir.protege.web.server.index.IndividualsQueryResult;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.individuals.GetIndividualsPageContainingIndividualAction;
-import edu.stanford.bmir.protege.web.shared.individuals.GetIndividualsPageContainingIndividualResult;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
+import edu.stanford.bmir.protege.web.server.entity.EntityNode;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

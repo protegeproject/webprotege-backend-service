@@ -1,10 +1,7 @@
 package edu.stanford.bmir.protege.web.server.api;
 
-import edu.stanford.bmir.protege.web.shared.api.ApiKey;
-import edu.stanford.bmir.protege.web.shared.api.ApiKeyId;
-import edu.stanford.bmir.protege.web.shared.api.ApiKeyInfo;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

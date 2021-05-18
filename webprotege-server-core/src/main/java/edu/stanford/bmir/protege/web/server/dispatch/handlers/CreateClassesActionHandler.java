@@ -9,11 +9,11 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectChangeHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.CreateClassesAction;
-import edu.stanford.bmir.protege.web.shared.entity.CreateClassesResult;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.entity.CreateClassesAction;
+import edu.stanford.bmir.protege.web.server.entity.CreateClassesResult;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
@@ -23,8 +23,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.CREATE_CLASS;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.CREATE_CLASS;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;
 
 /**

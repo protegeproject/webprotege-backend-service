@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.api;
 
 import edu.stanford.bmir.protege.web.server.persistence.TypeSafeConverter;
-import edu.stanford.bmir.protege.web.shared.api.ApiKeyId;
 import org.mongodb.morphia.converters.SimpleValueConverter;
 import org.mongodb.morphia.mapping.MappedField;
 

@@ -9,17 +9,15 @@ import edu.stanford.bmir.protege.web.server.mansyntax.ManchesterSyntaxChangeGene
 import edu.stanford.bmir.protege.web.server.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.bmir.protege.web.server.mansyntax.ManchesterSyntaxFrameParser;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.frame.CheckManchesterSyntaxFrameAction;
-import edu.stanford.bmir.protege.web.shared.frame.CheckManchesterSyntaxFrameResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ParserException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import static edu.stanford.bmir.protege.web.shared.frame.ManchesterSyntaxFrameParseResult.CHANGED;
-import static edu.stanford.bmir.protege.web.shared.frame.ManchesterSyntaxFrameParseResult.UNCHANGED;
+import static edu.stanford.bmir.protege.web.server.frame.ManchesterSyntaxFrameParseResult.CHANGED;
+import static edu.stanford.bmir.protege.web.server.frame.ManchesterSyntaxFrameParseResult.UNCHANGED;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014

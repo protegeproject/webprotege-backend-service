@@ -5,12 +5,9 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.CompositeRequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.ProjectPermissionValidator;
-import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
+import edu.stanford.bmir.protege.web.server.access.ActionId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.project.HasProjectId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -101,7 +98,7 @@ public abstract class AbstractProjectActionHandler<A extends ProjectAction<R>, R
     /**
      * Gets an additional validator that is specific to the implementing handler.  This is returned as part of a
      * {@link CompositeRequestValidator} by the the implementation of
-     * the {@link #getRequestValidator(edu.stanford.bmir.protege.web.shared.dispatch.Action,
+     * the {@link #getRequestValidator(Action,
      * edu.stanford.bmir.protege.web.server.dispatch.RequestContext)} method.
      *
      * @param action         The action that the validation will be completed against.

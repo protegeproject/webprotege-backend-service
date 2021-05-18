@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.server.rpc;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
 
 /**
  * Matthew Horridge

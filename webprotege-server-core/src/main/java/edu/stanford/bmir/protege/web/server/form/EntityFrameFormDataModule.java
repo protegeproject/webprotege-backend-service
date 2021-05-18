@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import dagger.Module;
 import dagger.Provides;
-import edu.stanford.bmir.protege.web.shared.lang.LangTagFilter;
+import edu.stanford.bmir.protege.web.server.lang.LangTagFilter;
 
 import javax.annotation.Nonnull;
 

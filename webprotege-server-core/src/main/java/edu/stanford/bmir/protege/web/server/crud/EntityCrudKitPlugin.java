@@ -1,9 +1,5 @@
 package edu.stanford.bmir.protege.web.server.crud;
 
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKit;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSuffixSettings;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

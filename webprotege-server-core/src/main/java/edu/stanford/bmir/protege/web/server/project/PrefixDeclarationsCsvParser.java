@@ -5,7 +5,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclaration;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;

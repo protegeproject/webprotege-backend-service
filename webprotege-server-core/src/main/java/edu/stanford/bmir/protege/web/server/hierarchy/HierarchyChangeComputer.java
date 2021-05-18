@@ -10,9 +10,8 @@ import edu.stanford.bmir.protege.web.server.events.EventTranslator;
 import edu.stanford.bmir.protege.web.server.events.HighLevelProjectEventProxy;
 import edu.stanford.bmir.protege.web.server.events.SimpleHighLevelProjectEventProxy;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.*;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.entity.EntityNode;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 

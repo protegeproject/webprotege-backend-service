@@ -1,16 +1,12 @@
 package edu.stanford.bmir.protege.web.server.chgpwd;
 
 import edu.stanford.bmir.protege.web.server.auth.AuthenticationManager;
+import edu.stanford.bmir.protege.web.server.auth.Password;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.mail.MessagingExceptionHandler;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
-import edu.stanford.bmir.protege.web.shared.auth.*;
-import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordAction;
-import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordData;
-import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordResult;
-import edu.stanford.bmir.protege.web.shared.chgpwd.ResetPasswordResultCode;
-import edu.stanford.bmir.protege.web.shared.user.UserDetails;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserDetails;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

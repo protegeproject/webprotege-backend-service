@@ -5,11 +5,8 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.lang.ActiveLanguagesManager;
-import edu.stanford.bmir.protege.web.shared.lang.DictionaryLanguageUsage;
-import edu.stanford.bmir.protege.web.shared.project.GetProjectInfoAction;
-import edu.stanford.bmir.protege.web.shared.project.GetProjectInfoResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.projectsettings.ProjectSettings;
+import edu.stanford.bmir.protege.web.server.lang.DictionaryLanguageUsage;
+import edu.stanford.bmir.protege.web.server.projectsettings.ProjectSettings;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

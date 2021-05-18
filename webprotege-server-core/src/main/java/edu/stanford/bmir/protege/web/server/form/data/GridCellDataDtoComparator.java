@@ -1,13 +1,10 @@
 package edu.stanford.bmir.protege.web.server.form.data;
 
 import com.google.common.collect.Comparators;
-import edu.stanford.bmir.protege.web.shared.form.data.FormControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.data.GridCellDataDto;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Comparator;
-import java.util.List;
 
 public class GridCellDataDtoComparator implements Comparator<GridCellDataDto> {
 

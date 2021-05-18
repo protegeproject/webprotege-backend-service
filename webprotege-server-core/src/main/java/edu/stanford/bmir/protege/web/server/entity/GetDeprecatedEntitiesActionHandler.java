@@ -5,14 +5,12 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.index.DeprecatedEntitiesIndex;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.GetDeprecatedEntitiesAction;
-import edu.stanford.bmir.protege.web.shared.entity.GetDeprecatedEntitiesResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Matthew Horridge

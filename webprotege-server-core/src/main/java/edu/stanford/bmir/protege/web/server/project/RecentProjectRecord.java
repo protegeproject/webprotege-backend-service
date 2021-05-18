@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.project;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.mongodb.morphia.annotations.Property;
 
 import javax.annotation.Nonnull;

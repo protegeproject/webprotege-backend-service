@@ -3,8 +3,8 @@ package edu.stanford.bmir.protege.web.server.app;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSessionImpl;
 import edu.stanford.bmir.protege.web.server.user.UserActivityManager;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

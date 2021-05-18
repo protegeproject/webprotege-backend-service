@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.match;
 
-import edu.stanford.bmir.protege.web.shared.match.criteria.CompositeHierarchyPositionCriteria;
+import edu.stanford.bmir.protege.web.server.match.criteria.CompositeHierarchyPositionCriteria;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

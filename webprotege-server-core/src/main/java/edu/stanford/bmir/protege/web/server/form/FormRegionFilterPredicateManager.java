@@ -1,10 +1,9 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import edu.stanford.bmir.protege.web.server.match.Matcher;
-import edu.stanford.bmir.protege.web.shared.form.data.FormControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.data.FormRegionFilter;
-import edu.stanford.bmir.protege.web.shared.form.field.FormRegionId;
-import edu.stanford.bmir.protege.web.shared.form.field.GridColumnId;
+import edu.stanford.bmir.protege.web.server.form.data.FormControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.data.FormRegionFilter;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

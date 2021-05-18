@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.app;
 
-import edu.stanford.bmir.protege.web.shared.app.ApplicationLocation;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

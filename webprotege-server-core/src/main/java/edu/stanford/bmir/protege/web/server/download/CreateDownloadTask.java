@@ -5,9 +5,9 @@ import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.project.ProjectManager;
 import edu.stanford.bmir.protege.web.server.revision.RevisionManager;
 import edu.stanford.bmir.protege.web.server.util.MemoryMonitor;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

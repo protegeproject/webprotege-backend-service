@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.download;
 
-import edu.stanford.bmir.protege.web.shared.download.ProjectDownloadConstants;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.revision.RevisionNumber;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

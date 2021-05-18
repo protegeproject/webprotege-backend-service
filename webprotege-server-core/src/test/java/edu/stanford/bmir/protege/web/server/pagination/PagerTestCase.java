@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.pagination;
 
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
 import org.junit.Test;
 
 import java.util.Arrays;

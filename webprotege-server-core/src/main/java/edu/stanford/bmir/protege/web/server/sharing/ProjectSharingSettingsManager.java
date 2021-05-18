@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.sharing;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.sharing.ProjectSharingSettings;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 /**
  * Matthew Horridge

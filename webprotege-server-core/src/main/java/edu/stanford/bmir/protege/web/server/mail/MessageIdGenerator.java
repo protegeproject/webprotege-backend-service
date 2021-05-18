@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.mail;
 
 import edu.stanford.bmir.protege.web.server.app.ApplicationHostSupplier;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

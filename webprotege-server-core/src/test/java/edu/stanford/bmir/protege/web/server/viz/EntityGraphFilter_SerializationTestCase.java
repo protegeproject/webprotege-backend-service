@@ -1,9 +1,6 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.viz.CompositeEdgeCriteria;
-import edu.stanford.bmir.protege.web.shared.viz.EntityGraphFilter;
-import edu.stanford.bmir.protege.web.shared.viz.FilterName;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
 import org.junit.Test;
 
 import java.io.IOException;

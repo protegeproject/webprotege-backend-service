@@ -5,8 +5,7 @@ import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.change.*;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.csv.*;
+import edu.stanford.bmir.protege.web.server.DataFactory;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

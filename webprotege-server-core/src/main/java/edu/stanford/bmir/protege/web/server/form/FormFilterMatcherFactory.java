@@ -1,10 +1,10 @@
 package edu.stanford.bmir.protege.web.server.form;
 
+import edu.stanford.bmir.protege.web.server.form.data.*;
 import edu.stanford.bmir.protege.web.server.match.LiteralMatcherFactory;
 import edu.stanford.bmir.protege.web.server.match.Matcher;
 import edu.stanford.bmir.protege.web.server.match.MatcherFactory;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.form.data.*;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

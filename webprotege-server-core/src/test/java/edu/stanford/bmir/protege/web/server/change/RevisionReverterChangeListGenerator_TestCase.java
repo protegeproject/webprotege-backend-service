@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
 import edu.stanford.bmir.protege.web.server.revision.RevisionManager;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.revision.RevisionNumber;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,9 +12,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.awt.image.renderable.RenderContext;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;

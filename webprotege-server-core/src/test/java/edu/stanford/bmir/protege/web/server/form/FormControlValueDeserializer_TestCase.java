@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.bmir.protege.web.MockingUtils;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
-import edu.stanford.bmir.protege.web.shared.form.data.EntityFormControlData;
-import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlData;
+import edu.stanford.bmir.protege.web.server.form.data.EntityFormControlData;
+import edu.stanford.bmir.protege.web.server.form.data.PrimitiveFormControlData;
 import org.junit.Before;
 import org.junit.Test;
 

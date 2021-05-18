@@ -3,9 +3,7 @@ package edu.stanford.bmir.protege.web.server.obo;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.obo.SetOboTermSynonymsAction;
-import edu.stanford.bmir.protege.web.shared.obo.SetOboTermSynonymsResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

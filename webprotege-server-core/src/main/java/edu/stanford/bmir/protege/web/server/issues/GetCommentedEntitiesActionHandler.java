@@ -6,10 +6,9 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.index.EntitiesInProjectSignatureIndex;
 import edu.stanford.bmir.protege.web.server.mansyntax.render.HasGetRendering;
 import edu.stanford.bmir.protege.web.server.pagination.Pager;
-import edu.stanford.bmir.protege.web.shared.entity.CommentedEntityData;
-import edu.stanford.bmir.protege.web.shared.issues.*;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.entity.CommentedEntityData;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -19,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.entity.CommentedEntityData.byEntity;
-import static edu.stanford.bmir.protege.web.shared.entity.CommentedEntityData.byLastModified;
+import static edu.stanford.bmir.protege.web.server.entity.CommentedEntityData.byEntity;
+import static edu.stanford.bmir.protege.web.server.entity.CommentedEntityData.byLastModified;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;

@@ -1,10 +1,9 @@
 package edu.stanford.bmir.protege.web.server.api.exception;
 
 import edu.stanford.bmir.protege.web.server.api.ResponseUtil;
-import edu.stanford.bmir.protege.web.shared.permissions.PermissionDeniedException;
+import edu.stanford.bmir.protege.web.server.permissions.PermissionDeniedException;
 
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ExceptionMapper;

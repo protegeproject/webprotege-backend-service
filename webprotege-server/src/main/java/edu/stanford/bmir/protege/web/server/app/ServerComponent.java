@@ -10,8 +10,8 @@ import edu.stanford.bmir.protege.web.server.inject.project.ProjectModule;
 import edu.stanford.bmir.protege.web.server.project.ProjectCacheManager;
 import edu.stanford.bmir.protege.web.server.upload.FileUploadServlet;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.inject.SharedApplicationModule;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.inject.SharedApplicationModule;
 import org.glassfish.jersey.servlet.ServletContainer;
 
 /**

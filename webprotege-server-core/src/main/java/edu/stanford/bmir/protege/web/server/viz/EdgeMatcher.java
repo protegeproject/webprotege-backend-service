@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
-import edu.stanford.bmir.protege.web.shared.viz.Edge;
-
 import javax.annotation.Nonnull;
 
 /**

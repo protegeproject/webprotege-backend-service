@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.events;
 
 import com.google.auto.value.AutoValue;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
 
 import javax.annotation.Nonnull;
 

@@ -4,7 +4,6 @@ import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.usage.UsageReference;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

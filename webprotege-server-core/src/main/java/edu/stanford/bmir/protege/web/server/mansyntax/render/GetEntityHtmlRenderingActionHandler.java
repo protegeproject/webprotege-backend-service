@@ -4,9 +4,9 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.renderer.GetEntityHtmlRenderingAction;
-import edu.stanford.bmir.protege.web.shared.renderer.GetEntityHtmlRenderingResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.renderer.GetEntityHtmlRenderingAction;
+import edu.stanford.bmir.protege.web.server.renderer.GetEntityHtmlRenderingResult;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

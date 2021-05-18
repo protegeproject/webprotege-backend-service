@@ -2,10 +2,9 @@ package edu.stanford.bmir.protege.web.server.tag;
 
 import com.google.common.collect.Streams;
 import edu.stanford.bmir.protege.web.server.events.HasPostEvents;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.tag.*;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -18,7 +17,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.tag.TagId.createTagId;
+import static edu.stanford.bmir.protege.web.server.tag.TagId.createTagId;
 import static java.util.stream.Collectors.*;
 
 /**

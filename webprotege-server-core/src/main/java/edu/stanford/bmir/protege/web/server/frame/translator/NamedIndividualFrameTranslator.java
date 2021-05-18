@@ -2,11 +2,8 @@ package edu.stanford.bmir.protege.web.server.frame.translator;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Streams;
-import edu.stanford.bmir.protege.web.server.frame.ClassFrameProvider;
-import edu.stanford.bmir.protege.web.server.frame.Mode;
-import edu.stanford.bmir.protege.web.server.frame.PropertyValueMinimiser;
+import edu.stanford.bmir.protege.web.server.frame.*;
 import edu.stanford.bmir.protege.web.server.index.*;
-import edu.stanford.bmir.protege.web.shared.frame.*;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

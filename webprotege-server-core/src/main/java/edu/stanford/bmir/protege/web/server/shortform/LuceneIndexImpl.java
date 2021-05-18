@@ -2,11 +2,10 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.pagination.PageCollector;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilterId;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.search.EntitySearchFilter;
+import edu.stanford.bmir.protege.web.server.search.EntitySearchFilterId;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.Term;

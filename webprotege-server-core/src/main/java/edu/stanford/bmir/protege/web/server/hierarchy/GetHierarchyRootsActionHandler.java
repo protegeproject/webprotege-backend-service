@@ -4,12 +4,8 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyRootsAction;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyRootsResult;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.entity.EntityNode;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -19,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 

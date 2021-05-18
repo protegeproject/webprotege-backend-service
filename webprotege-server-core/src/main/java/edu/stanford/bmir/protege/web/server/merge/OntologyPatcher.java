@@ -4,7 +4,6 @@ import edu.stanford.bmir.protege.web.server.change.*;
 import edu.stanford.bmir.protege.web.server.diff.OntologyDiff2OntologyChanges;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
-import edu.stanford.bmir.protege.web.shared.merge.OntologyDiff;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

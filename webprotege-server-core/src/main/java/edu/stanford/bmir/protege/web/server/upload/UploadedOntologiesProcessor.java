@@ -4,7 +4,7 @@ import edu.stanford.bmir.protege.web.server.owlapi.WebProtegeOWLManager;
 import edu.stanford.bmir.protege.web.server.project.Ontology;
 import edu.stanford.bmir.protege.web.server.project.RawProjectSourcesImporter;
 import edu.stanford.bmir.protege.web.server.project.UploadedProjectSourcesExtractor;
-import edu.stanford.bmir.protege.web.shared.csv.DocumentId;
+import edu.stanford.bmir.protege.web.server.csv.DocumentId;
 import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;

@@ -1,9 +1,7 @@
 
 package edu.stanford.bmir.protege.web.server.watches;
 
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.watches.Watch;
-import edu.stanford.bmir.protege.web.shared.watches.WatchType;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

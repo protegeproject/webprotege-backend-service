@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.form;
 
-import edu.stanford.bmir.protege.web.shared.form.data.*;
-import edu.stanford.bmir.protege.web.shared.lang.LangTag;
-import edu.stanford.bmir.protege.web.shared.lang.LangTagFilter;
+import edu.stanford.bmir.protege.web.server.form.data.*;
+import edu.stanford.bmir.protege.web.server.lang.LangTag;
+import edu.stanford.bmir.protege.web.server.lang.LangTagFilter;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 import javax.annotation.Nonnull;

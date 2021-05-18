@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.form;
 
-import edu.stanford.bmir.protege.web.shared.form.FormDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.FormDescriptorDto;
-import edu.stanford.bmir.protege.web.shared.form.field.*;
+import edu.stanford.bmir.protege.web.server.form.field.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

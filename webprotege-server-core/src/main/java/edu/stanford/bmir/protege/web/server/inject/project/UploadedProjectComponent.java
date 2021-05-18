@@ -2,9 +2,8 @@ package edu.stanford.bmir.protege.web.server.inject.project;
 
 import dagger.Component;
 import edu.stanford.bmir.protege.web.server.project.ProjectDisposablesManager;
-import edu.stanford.bmir.protege.web.server.shortform.AnnotationAssertionAxiomsModule;
 import edu.stanford.bmir.protege.web.server.shortform.LuceneModule;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 
 /**

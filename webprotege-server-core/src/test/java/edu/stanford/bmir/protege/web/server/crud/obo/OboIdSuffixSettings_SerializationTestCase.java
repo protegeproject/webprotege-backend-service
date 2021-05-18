@@ -3,11 +3,11 @@ package edu.stanford.bmir.protege.web.server.crud.obo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.oboid.OboIdSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.oboid.UserIdRange;
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSuffixSettings;
+import edu.stanford.bmir.protege.web.server.crud.oboid.OboIdSuffixSettings;
+import edu.stanford.bmir.protege.web.server.crud.oboid.UserIdRange;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 

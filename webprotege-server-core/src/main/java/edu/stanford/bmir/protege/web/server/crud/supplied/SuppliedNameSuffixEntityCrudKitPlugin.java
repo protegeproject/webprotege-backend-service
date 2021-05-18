@@ -3,12 +3,10 @@ package edu.stanford.bmir.protege.web.server.crud.supplied;
 import edu.stanford.bmir.protege.web.server.crud.ChangeSetEntityCrudSession;
 import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitHandler;
 import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitPlugin;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKit;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuffixKit;
-import edu.stanford.bmir.protege.web.shared.crud.supplied.SuppliedNameSuffixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKit;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitPrefixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSettings;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationsSettings;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

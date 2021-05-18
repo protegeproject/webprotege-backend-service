@@ -1,11 +1,10 @@
 package edu.stanford.bmir.protege.web.server.index.impl;
 
 import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProvider;
-import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProviderImpl;
 import edu.stanford.bmir.protege.web.server.index.*;
 import edu.stanford.bmir.protege.web.server.individuals.IndividualRendering;
 import edu.stanford.bmir.protege.web.server.shortform.DictionaryManager;
-import edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode;
+import edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -14,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode.ALL_INSTANCES;
+import static edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode.ALL_INSTANCES;
 import static java.util.stream.Collectors.toSet;
 
 /**

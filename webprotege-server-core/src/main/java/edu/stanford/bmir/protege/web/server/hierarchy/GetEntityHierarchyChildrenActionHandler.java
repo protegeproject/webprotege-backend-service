@@ -6,13 +6,9 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.mansyntax.render.DeprecatedEntityChecker;
 import edu.stanford.bmir.protege.web.server.pagination.PageCollector;
 import edu.stanford.bmir.protege.web.server.shortform.DictionaryManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyChildrenAction;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyChildrenResult;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.entity.EntityNode;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -21,7 +17,7 @@ import javax.inject.Inject;
 import java.util.Comparator;
 import java.util.Optional;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 import static java.util.Comparator.comparing;
 
 /**

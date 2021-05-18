@@ -1,0 +1,30 @@
+package edu.stanford.bmir.protege.web.server.form;
+
+import com.google.auto.value.AutoValue;
+
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
+import edu.stanford.bmir.protege.web.server.project.HasProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+
+import javax.annotation.Nonnull;
+
+/**
+ * Matthew Horridge
+ * Stanford Center for Biomedical Informatics Research
+ * 2020-01-16
+ */
+@AutoValue
+
+public abstract class GetFreshFormIdResult implements Result, HasProjectId {
+
+    public static GetFreshFormIdResult get(@Nonnull ProjectId projectId,
+                                           @Nonnull FormId formId) {
+        return new AutoValue_GetFreshFormIdResult(projectId, formId);
+    }
+
+    @Nonnull
+    public abstract ProjectId getProjectId();
+
+    @Nonnull
+    public abstract FormId getFormId();
+}

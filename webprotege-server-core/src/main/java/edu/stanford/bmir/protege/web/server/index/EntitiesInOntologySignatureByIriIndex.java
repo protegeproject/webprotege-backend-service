@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.index;
 
 
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntologyID;

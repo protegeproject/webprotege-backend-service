@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.perspective;
 
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.perspective.NodeProperties;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
 import org.junit.Before;
 import org.junit.Test;
 

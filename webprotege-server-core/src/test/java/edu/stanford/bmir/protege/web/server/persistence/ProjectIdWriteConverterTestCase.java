@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.Test;
 
 import java.util.UUID;

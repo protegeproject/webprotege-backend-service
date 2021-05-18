@@ -2,12 +2,10 @@ package edu.stanford.bmir.protege.web.server.crud.uuid;
 
 import edu.stanford.bmir.protege.web.server.crud.ChangeSetEntityCrudSession;
 import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitPlugin;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKit;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixKit;
-import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKit;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitPrefixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSettings;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationsSettings;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.tag;
 
 import com.mongodb.MongoClient;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.tag.TagId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.server.dispatch.validators;
 
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidationResult;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 /**
  * Matthew Horridge

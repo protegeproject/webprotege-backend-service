@@ -1,10 +1,8 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
 import edu.stanford.bmir.protege.web.server.persistence.Repository;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.viz.EntityGraphSettings;
-import edu.stanford.bmir.protege.web.shared.viz.ProjectUserEntityGraphSettings;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 

@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.common.collect.ImmutableSetMultimap;
-import edu.stanford.bmir.protege.web.shared.shortform.*;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.Term;

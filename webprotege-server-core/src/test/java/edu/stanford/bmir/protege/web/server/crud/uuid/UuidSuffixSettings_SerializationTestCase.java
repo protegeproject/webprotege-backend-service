@@ -2,9 +2,8 @@ package edu.stanford.bmir.protege.web.server.crud.uuid;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSuffixSettings;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
 import org.junit.Test;
 
 import java.io.IOException;

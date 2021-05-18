@@ -1,11 +1,9 @@
 package edu.stanford.bmir.protege.web.server.inject;
 
 import edu.stanford.bmir.protege.web.server.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.bmir.protege.web.server.index.OntologyAxiomsIndex;
 import edu.stanford.bmir.protege.web.server.index.impl.IndexUpdater;
 import edu.stanford.bmir.protege.web.server.revision.RevisionManager;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.inject.Inject;
 

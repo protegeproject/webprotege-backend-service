@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.util;
 
-import edu.stanford.bmir.protege.web.shared.HasDispose;
+import edu.stanford.bmir.protege.web.server.HasDispose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

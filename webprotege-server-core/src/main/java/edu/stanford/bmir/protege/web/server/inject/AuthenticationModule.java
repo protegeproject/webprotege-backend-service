@@ -2,8 +2,8 @@ package edu.stanford.bmir.protege.web.server.inject;
 
 import dagger.Module;
 import dagger.Provides;
-import edu.stanford.bmir.protege.web.shared.auth.Md5MessageDigestAlgorithm;
-import edu.stanford.bmir.protege.web.shared.auth.MessageDigestAlgorithm;
+import edu.stanford.bmir.protege.web.server.auth.Md5MessageDigestAlgorithm;
+import edu.stanford.bmir.protege.web.server.auth.MessageDigestAlgorithm;
 
 /**
  * Matthew Horridge

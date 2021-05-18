@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.perspective;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,8 +10,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;

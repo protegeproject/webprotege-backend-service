@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.dispatch.actions;
 
 import edu.stanford.bmir.protege.web.server.revision.RevisionDetails;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -4,10 +4,13 @@ import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 
 
-import edu.stanford.bmir.protege.web.shared.HasDispose;
-import edu.stanford.bmir.protege.web.shared.event.*;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.EventTag;
+import edu.stanford.bmir.protege.web.server.event.LargeNumberOfChangesEvent;
+import edu.stanford.bmir.protege.web.server.event.WebProtegeEvent;
+import edu.stanford.bmir.protege.web.server.HasDispose;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.upload;
 
 import edu.stanford.bmir.protege.web.server.inject.UploadsDirectory;
-import edu.stanford.bmir.protege.web.shared.csv.DocumentId;
+import edu.stanford.bmir.protege.web.server.csv.DocumentId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

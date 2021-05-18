@@ -3,10 +3,10 @@ package edu.stanford.bmir.protege.web.server.templates;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.server.app.ApplicationPreferences;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.project.ProjectDetails;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 

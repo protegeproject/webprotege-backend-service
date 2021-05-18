@@ -1,12 +1,10 @@
 package edu.stanford.bmir.protege.web.server.revision;
 
 import edu.stanford.bmir.protege.web.server.project.ProjectDisposablesManager;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

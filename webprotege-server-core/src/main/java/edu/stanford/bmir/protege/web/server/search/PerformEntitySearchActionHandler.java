@@ -5,17 +5,14 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.lang.LanguageManager;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchResult;
-import edu.stanford.bmir.protege.web.shared.search.PerformEntitySearchAction;
-import edu.stanford.bmir.protege.web.shared.search.PerformEntitySearchResult;
-import edu.stanford.bmir.protege.web.shared.shortform.*;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.shortform.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import static edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageFilter.EmptyLangTagTreatment.INCLUDE_EMPTY_LANG_TAGS;
+import static edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguageFilter.EmptyLangTagTreatment.INCLUDE_EMPTY_LANG_TAGS;
 
 /**
  * Matthew Horridge

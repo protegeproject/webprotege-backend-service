@@ -1,16 +1,12 @@
 package edu.stanford.bmir.protege.web.server.perspective;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveDescriptor;
-import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

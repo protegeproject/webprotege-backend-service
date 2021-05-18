@@ -4,9 +4,9 @@ import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
 import edu.stanford.bmir.protege.web.server.api.ApiRootResource;
 import edu.stanford.bmir.protege.web.server.api.ResponseUtil;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.api.ApiKey;
-import edu.stanford.bmir.protege.web.shared.project.*;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.api.ApiKey;
+import edu.stanford.bmir.protege.web.server.project.*;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,11 +14,8 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;
-import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.stream.Collectors.toList;
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 

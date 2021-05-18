@@ -2,11 +2,9 @@ package edu.stanford.bmir.protege.web.server.change;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
-import edu.stanford.bmir.protege.web.shared.HasSubject;
-import org.semanticweb.owlapi.model.OWLEntity;
+import edu.stanford.bmir.protege.web.server.HasSubject;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;

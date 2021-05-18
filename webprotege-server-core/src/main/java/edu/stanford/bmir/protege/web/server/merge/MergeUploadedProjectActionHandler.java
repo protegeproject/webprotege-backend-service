@@ -4,10 +4,8 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.upload.UploadedOntologiesCache;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.ActionExecutionException;
-import edu.stanford.bmir.protege.web.shared.merge.MergeUploadedProjectAction;
-import edu.stanford.bmir.protege.web.shared.merge.MergeUploadedProjectResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.dispatch.ActionExecutionException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import javax.annotation.Nonnull;
@@ -15,8 +13,8 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Arrays;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.UPLOAD_AND_MERGE;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.UPLOAD_AND_MERGE;
 
 /**
  * Matthew Horridge

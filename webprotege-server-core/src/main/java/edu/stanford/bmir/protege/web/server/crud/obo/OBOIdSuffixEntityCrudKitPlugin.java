@@ -2,12 +2,12 @@ package edu.stanford.bmir.protege.web.server.crud.obo;
 
 import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitHandler;
 import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitPlugin;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKit;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.bmir.protege.web.shared.crud.oboid.OBOIdSuffixKit;
-import edu.stanford.bmir.protege.web.shared.crud.oboid.OboIdSuffixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKit;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitPrefixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSettings;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.bmir.protege.web.server.crud.oboid.OBOIdSuffixKit;
+import edu.stanford.bmir.protege.web.server.crud.oboid.OboIdSuffixSettings;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.State;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.frame.State;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;

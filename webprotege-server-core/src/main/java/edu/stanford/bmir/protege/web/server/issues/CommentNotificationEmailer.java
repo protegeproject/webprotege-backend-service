@@ -8,13 +8,10 @@ import edu.stanford.bmir.protege.web.server.mail.MessageId;
 import edu.stanford.bmir.protege.web.server.mail.SendMail;
 import edu.stanford.bmir.protege.web.server.project.ProjectDetailsManager;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.issues.Comment;
-import edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserDetails;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserDetails;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -27,8 +24,7 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.bmir.protege.web.server.access.ProjectResource.forProject;
 import static edu.stanford.bmir.protege.web.server.access.Subject.forUser;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.CREATE_OBJECT_COMMENT;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_OBJECT_COMMENT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_OBJECT_COMMENT;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 

@@ -2,12 +2,12 @@ package edu.stanford.bmir.protege.web.server.persistence;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import edu.stanford.bmir.protege.web.shared.issues.Mention;
-import edu.stanford.bmir.protege.web.shared.issues.mention.EntityMention;
-import edu.stanford.bmir.protege.web.shared.issues.mention.IssueMention;
-import edu.stanford.bmir.protege.web.shared.issues.mention.RevisionMention;
-import edu.stanford.bmir.protege.web.shared.issues.mention.UserIdMention;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.issues.Mention;
+import edu.stanford.bmir.protege.web.server.issues.mention.EntityMention;
+import edu.stanford.bmir.protege.web.server.issues.mention.IssueMention;
+import edu.stanford.bmir.protege.web.server.issues.mention.RevisionMention;
+import edu.stanford.bmir.protege.web.server.issues.mention.UserIdMention;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 
 /**

@@ -10,12 +10,9 @@ import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 import edu.stanford.bmir.protege.web.server.api.TimestampSerializer;
 import edu.stanford.bmir.protege.web.server.persistence.Repository;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguageData;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -32,7 +29,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static edu.stanford.bmir.protege.web.shared.project.ProjectDetails.*;
+import static edu.stanford.bmir.protege.web.server.project.ProjectDetails.*;
 
 /**
  * Matthew Horridge

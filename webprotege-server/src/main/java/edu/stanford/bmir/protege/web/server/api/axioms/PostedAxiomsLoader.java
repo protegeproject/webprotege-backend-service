@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.server.api.axioms;
 
 import com.google.common.base.Stopwatch;
 import edu.stanford.bmir.protege.web.server.owlapi.WebProtegeOWLManager;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.io.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.model.parameters.Imports;

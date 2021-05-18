@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.hierarchy;
 
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
+import edu.stanford.bmir.protege.web.server.entity.EntityNode;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

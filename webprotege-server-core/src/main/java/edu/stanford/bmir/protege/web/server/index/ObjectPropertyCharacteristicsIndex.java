@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.index;
 
 
-import edu.stanford.bmir.protege.web.shared.frame.ObjectPropertyCharacteristic;
+import edu.stanford.bmir.protege.web.server.frame.ObjectPropertyCharacteristic;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 

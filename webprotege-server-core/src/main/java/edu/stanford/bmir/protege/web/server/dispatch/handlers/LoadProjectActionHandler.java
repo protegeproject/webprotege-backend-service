@@ -11,10 +11,10 @@ import edu.stanford.bmir.protege.web.server.project.ProjectDetailsManager;
 import edu.stanford.bmir.protege.web.server.project.ProjectManager;
 import edu.stanford.bmir.protege.web.server.user.UserActivityManager;
 import edu.stanford.bmir.protege.web.server.util.MemoryMonitor;
-import edu.stanford.bmir.protege.web.shared.project.LoadProjectAction;
-import edu.stanford.bmir.protege.web.shared.project.LoadProjectResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.LoadProjectAction;
+import edu.stanford.bmir.protege.web.server.project.LoadProjectResult;
+import edu.stanford.bmir.protege.web.server.project.ProjectDetails;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.concurrent.TimeUnit;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>

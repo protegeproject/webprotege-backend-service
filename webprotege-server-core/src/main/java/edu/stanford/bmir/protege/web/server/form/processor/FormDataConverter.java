@@ -2,12 +2,11 @@ package edu.stanford.bmir.protege.web.server.form.processor;
 
 import edu.stanford.bmir.protege.web.server.form.FormFrame;
 import edu.stanford.bmir.protege.web.server.form.FormSubjectResolver;
-import edu.stanford.bmir.protege.web.shared.form.data.*;
-import edu.stanford.bmir.protege.web.shared.frame.EntityFrame;
+import edu.stanford.bmir.protege.web.server.form.data.FormData;
+import edu.stanford.bmir.protege.web.server.frame.EntityFrame;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.inject.Provider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

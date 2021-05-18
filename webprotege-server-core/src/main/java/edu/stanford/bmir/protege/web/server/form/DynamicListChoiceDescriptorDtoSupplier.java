@@ -3,12 +3,12 @@ package edu.stanford.bmir.protege.web.server.form;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.match.HierarchyPositionMatchingEngine;
 import edu.stanford.bmir.protege.web.server.match.MatchingEngine;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.field.ChoiceDescriptorDto;
-import edu.stanford.bmir.protege.web.shared.form.field.DynamicChoiceListSourceDescriptor;
-import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import edu.stanford.bmir.protege.web.shared.match.criteria.HierarchyPositionCriteria;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.form.data.PrimitiveFormControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.field.ChoiceDescriptorDto;
+import edu.stanford.bmir.protege.web.server.form.field.DynamicChoiceListSourceDescriptor;
+import edu.stanford.bmir.protege.web.server.lang.LanguageMap;
+import edu.stanford.bmir.protege.web.server.match.criteria.HierarchyPositionCriteria;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

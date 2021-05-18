@@ -2,9 +2,6 @@ package edu.stanford.bmir.protege.web.server.revision;
 
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.revision.GetHeadRevisionNumberAction;
-import edu.stanford.bmir.protege.web.shared.revision.GetHeadRevisionNumberResult;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,11 +1,11 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.server.frame.FrameComponentSessionRenderer;
-import edu.stanford.bmir.protege.web.shared.form.data.*;
-import edu.stanford.bmir.protege.web.shared.form.field.ChoiceDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.field.ChoiceDescriptorDto;
-import edu.stanford.bmir.protege.web.shared.form.field.FixedChoiceListSourceDescriptor;
+import edu.stanford.bmir.protege.web.server.form.data.PrimitiveFormControlData;
+import edu.stanford.bmir.protege.web.server.form.data.PrimitiveFormControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.field.ChoiceDescriptor;
+import edu.stanford.bmir.protege.web.server.form.field.ChoiceDescriptorDto;
+import edu.stanford.bmir.protege.web.server.form.field.FixedChoiceListSourceDescriptor;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

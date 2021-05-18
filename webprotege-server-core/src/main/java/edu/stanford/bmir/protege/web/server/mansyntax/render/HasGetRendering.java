@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.mansyntax.render;
 
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 /**

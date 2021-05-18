@@ -4,15 +4,14 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.msg.MessageFormatter;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.entity.EntityShortFormsParser;
-import edu.stanford.bmir.protege.web.shared.entity.FreshEntityIri;
+import edu.stanford.bmir.protege.web.server.DataFactory;
+import edu.stanford.bmir.protege.web.server.entity.EntityShortFormsParser;
+import edu.stanford.bmir.protege.web.server.entity.FreshEntityIri;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.Namespaces;
 
 import javax.annotation.Nonnull;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static org.semanticweb.owlapi.model.EntityType.*;

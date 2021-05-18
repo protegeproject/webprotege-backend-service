@@ -3,12 +3,8 @@ package edu.stanford.bmir.protege.web.server.form;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.form.EntityFormSelector;
-import edu.stanford.bmir.protege.web.shared.form.FormPurpose;
-import edu.stanford.bmir.protege.web.shared.form.GetEntityFormDescriptorAction;
-import edu.stanford.bmir.protege.web.shared.form.GetEntityFormDescriptorResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

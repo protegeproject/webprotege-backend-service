@@ -33,15 +33,15 @@ import edu.stanford.bmir.protege.web.server.shortform.DictionaryUpdatesProcessor
 import edu.stanford.bmir.protege.web.server.util.IriReplacer;
 import edu.stanford.bmir.protege.web.server.util.IriReplacerFactory;
 import edu.stanford.bmir.protege.web.server.webhook.ProjectChangedWebhookInvoker;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityShortForm;
-import edu.stanford.bmir.protege.web.shared.entity.FreshEntityIri;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.permissions.PermissionDeniedException;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.DataFactory;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSuffixSettings;
+import edu.stanford.bmir.protege.web.server.crud.EntityShortForm;
+import edu.stanford.bmir.protege.web.server.entity.FreshEntityIri;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.permissions.PermissionDeniedException;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -55,7 +55,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.bmir.protege.web.server.access.Subject.forUser;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.*;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.*;
 
 /**
  * Matthew Horridge

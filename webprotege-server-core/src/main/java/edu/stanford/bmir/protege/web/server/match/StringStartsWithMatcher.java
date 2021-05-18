@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.match;
 
-import edu.stanford.bmir.protege.web.shared.match.criteria.StringStartsWithCriteria;
+import edu.stanford.bmir.protege.web.server.match.criteria.StringStartsWithCriteria;
 import org.apache.commons.lang.StringUtils;
-import org.semanticweb.owlapi.model.OWLLiteral;
 
 import javax.annotation.Nonnull;
 

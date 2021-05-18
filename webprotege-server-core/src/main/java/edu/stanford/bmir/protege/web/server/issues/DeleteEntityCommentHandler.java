@@ -1,9 +1,6 @@
 package edu.stanford.bmir.protege.web.server.issues;
 
 import edu.stanford.bmir.protege.web.server.dispatch.*;
-import edu.stanford.bmir.protege.web.shared.issues.DeleteEntityCommentAction;
-import edu.stanford.bmir.protege.web.shared.issues.DeleteEntityCommentResult;
-import edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

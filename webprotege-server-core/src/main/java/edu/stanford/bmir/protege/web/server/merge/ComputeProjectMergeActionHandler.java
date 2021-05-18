@@ -9,13 +9,10 @@ import edu.stanford.bmir.protege.web.server.inject.project.UploadedProjectModule
 import edu.stanford.bmir.protege.web.server.lang.LanguageManager;
 import edu.stanford.bmir.protege.web.server.project.Ontology;
 import edu.stanford.bmir.protege.web.server.upload.UploadedOntologiesCache;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.diff.DiffElement;
-import edu.stanford.bmir.protege.web.shared.diff.DiffOperation;
-import edu.stanford.bmir.protege.web.shared.merge.ComputeProjectMergeAction;
-import edu.stanford.bmir.protege.web.shared.merge.ComputeProjectMergeResult;
-import edu.stanford.bmir.protege.web.shared.merge.OntologyDiff;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.diff.DiffElement;
+import edu.stanford.bmir.protege.web.server.diff.DiffOperation;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +21,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.*;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.UPLOAD_AND_MERGE;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.UPLOAD_AND_MERGE;
 
 /**
  * Matthew Horridge

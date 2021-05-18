@@ -1,27 +1,21 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.match.criteria.MultiMatchType;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.viz.*;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.bson.Document;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import java.util.Arrays;
-import java.util.List;
-
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.viz.ProjectUserEntityGraphSettings.PROJECT_ID;
-import static edu.stanford.bmir.protege.web.shared.viz.ProjectUserEntityGraphSettings.USER_ID;
+import static edu.stanford.bmir.protege.web.server.viz.ProjectUserEntityGraphSettings.PROJECT_ID;
+import static edu.stanford.bmir.protege.web.server.viz.ProjectUserEntityGraphSettings.USER_ID;
 
 /**
  * Matthew Horridge

@@ -1,13 +1,11 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.data.*;
-import edu.stanford.bmir.protege.web.shared.form.field.OwlBinding;
-import edu.stanford.bmir.protege.web.shared.form.field.SubFormControlDescriptor;
+import edu.stanford.bmir.protege.web.server.form.data.FormControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.data.FormEntitySubject;
+import edu.stanford.bmir.protege.web.server.form.field.OwlBinding;
+import edu.stanford.bmir.protege.web.server.form.field.SubFormControlDescriptor;
 import org.semanticweb.owlapi.model.EntityType;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLPrimitive;
 
 import javax.annotation.Nonnull;

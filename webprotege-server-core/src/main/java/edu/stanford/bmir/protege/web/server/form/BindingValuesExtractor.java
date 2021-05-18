@@ -2,14 +2,14 @@ package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
+import edu.stanford.bmir.protege.web.server.form.field.*;
 import edu.stanford.bmir.protege.web.server.frame.ClassFrameProvider;
 import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProvider;
 import edu.stanford.bmir.protege.web.server.index.*;
 import edu.stanford.bmir.protege.web.server.match.MatcherFactory;
-import edu.stanford.bmir.protege.web.shared.form.data.FormEntitySubject;
-import edu.stanford.bmir.protege.web.shared.form.field.*;
-import edu.stanford.bmir.protege.web.shared.frame.ClassFrameTranslationOptions;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.form.data.FormEntitySubject;
+import edu.stanford.bmir.protege.web.server.frame.ClassFrameTranslationOptions;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

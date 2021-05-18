@@ -1,16 +1,13 @@
 package edu.stanford.bmir.protege.web.server.revision;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Interners;
 import edu.stanford.bmir.protege.web.server.change.OntologyChangeRecordTranslator;
 import edu.stanford.bmir.protege.web.server.inject.ChangeHistoryFileFactory;
-import edu.stanford.bmir.protege.web.shared.HasDispose;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.HasDispose;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.binaryowl.BinaryOWLOntologyChangeLog;
 import org.semanticweb.binaryowl.chunk.SkipSetting;
 import org.semanticweb.owlapi.model.OWLDataFactory;

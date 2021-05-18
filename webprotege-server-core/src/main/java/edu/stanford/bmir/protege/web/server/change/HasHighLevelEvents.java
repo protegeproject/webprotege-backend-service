@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.change;
 
 import edu.stanford.bmir.protege.web.server.events.HighLevelProjectEventProxy;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 
 import java.util.List;
 

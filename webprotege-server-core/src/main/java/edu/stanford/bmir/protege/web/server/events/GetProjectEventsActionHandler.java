@@ -8,12 +8,12 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.project.ProjectManager;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.EventTag;
-import edu.stanford.bmir.protege.web.shared.event.GetProjectEventsAction;
-import edu.stanford.bmir.protege.web.shared.event.GetProjectEventsResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.EventTag;
+import edu.stanford.bmir.protege.web.server.event.GetProjectEventsAction;
+import edu.stanford.bmir.protege.web.server.event.GetProjectEventsResult;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -21,7 +21,7 @@ import javax.inject.Inject;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.bmir.protege.web.server.access.ProjectResource.forProject;
 import static edu.stanford.bmir.protege.web.server.access.Subject.forUser;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>

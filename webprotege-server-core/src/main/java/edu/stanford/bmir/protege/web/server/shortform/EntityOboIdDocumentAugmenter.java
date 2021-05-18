@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
-import edu.stanford.bmir.protege.web.shared.obo.OboId;
-import edu.stanford.bmir.protege.web.shared.shortform.OboIdDictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.obo.OboId;
 import org.apache.lucene.document.Document;
 import org.semanticweb.owlapi.model.OWLEntity;
 

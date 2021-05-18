@@ -4,9 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.tag.Tag;
-import edu.stanford.bmir.protege.web.shared.tag.TagId;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

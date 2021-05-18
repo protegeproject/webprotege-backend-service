@@ -1,8 +1,5 @@
 package edu.stanford.bmir.protege.web.server.frame;
 
-import edu.stanford.bmir.protege.web.server.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.bmir.protege.web.shared.frame.FrameComponentRenderer;
-
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 

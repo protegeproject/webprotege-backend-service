@@ -1,9 +1,7 @@
 package edu.stanford.bmir.protege.web.server.frame;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.server.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.bmir.protege.web.shared.entity.*;
-import edu.stanford.bmir.protege.web.shared.frame.FrameComponentRenderer;
+import edu.stanford.bmir.protege.web.server.entity.*;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -13,7 +11,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
 /**
  * Matthew Horridge

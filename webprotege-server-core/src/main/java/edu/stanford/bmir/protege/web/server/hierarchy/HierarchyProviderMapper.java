@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.hierarchy;
 
-import edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

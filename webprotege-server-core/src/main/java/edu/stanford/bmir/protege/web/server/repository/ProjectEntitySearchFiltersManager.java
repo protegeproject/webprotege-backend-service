@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.repository;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
+import edu.stanford.bmir.protege.web.server.search.EntitySearchFilter;
 
 import javax.annotation.Nonnull;
 

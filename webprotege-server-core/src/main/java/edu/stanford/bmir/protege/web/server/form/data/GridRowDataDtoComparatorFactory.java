@@ -1,8 +1,10 @@
 package edu.stanford.bmir.protege.web.server.form.data;
 
 import edu.stanford.bmir.protege.web.server.form.FormRegionOrderingIndex;
-import edu.stanford.bmir.protege.web.shared.form.data.GridRowDataDto;
-import edu.stanford.bmir.protege.web.shared.form.field.*;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionOrdering;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionOrderingDirection;
+import edu.stanford.bmir.protege.web.server.form.field.GridColumnId;
+import edu.stanford.bmir.protege.web.server.form.field.GridControlDescriptor;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

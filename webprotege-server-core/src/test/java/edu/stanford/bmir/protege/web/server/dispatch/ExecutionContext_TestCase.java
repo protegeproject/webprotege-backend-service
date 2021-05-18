@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.dispatch;
 
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

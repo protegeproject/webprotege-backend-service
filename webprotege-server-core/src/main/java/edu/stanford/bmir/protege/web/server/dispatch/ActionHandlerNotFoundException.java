@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.dispatch;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**

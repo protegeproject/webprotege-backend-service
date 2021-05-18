@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.access;
 
 import com.google.auto.value.AutoValue;
-import edu.stanford.bmir.protege.web.shared.access.ActionId;
 
 import javax.annotation.Nonnull;
 

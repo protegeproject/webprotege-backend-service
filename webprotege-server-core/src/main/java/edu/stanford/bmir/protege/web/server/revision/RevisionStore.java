@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.revision;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;

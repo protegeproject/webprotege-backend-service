@@ -2,9 +2,9 @@ package edu.stanford.bmir.protege.web.server.persistence;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import edu.stanford.bmir.protege.web.shared.issues.Milestone;
-import edu.stanford.bmir.protege.web.shared.issues.events.*;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.issues.events.*;
+import edu.stanford.bmir.protege.web.server.issues.Milestone;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 

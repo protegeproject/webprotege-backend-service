@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.form.processor;
 
 import edu.stanford.bmir.protege.web.server.form.FormFrameBuilder;
-import edu.stanford.bmir.protege.web.shared.form.data.*;
-import edu.stanford.bmir.protege.web.shared.form.field.OwlBinding;
+import edu.stanford.bmir.protege.web.server.form.data.*;
+import edu.stanford.bmir.protege.web.server.form.field.OwlBinding;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

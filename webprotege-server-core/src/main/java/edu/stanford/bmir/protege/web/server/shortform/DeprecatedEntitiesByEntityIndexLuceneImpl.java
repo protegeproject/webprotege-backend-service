@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
 import edu.stanford.bmir.protege.web.server.index.DeprecatedEntitiesByEntityIndex;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;

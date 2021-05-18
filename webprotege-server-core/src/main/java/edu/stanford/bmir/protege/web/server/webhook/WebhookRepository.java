@@ -1,9 +1,7 @@
 package edu.stanford.bmir.protege.web.server.webhook;
 
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhook;
-import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhookEventType;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import javax.annotation.Nonnull;
 import java.util.List;

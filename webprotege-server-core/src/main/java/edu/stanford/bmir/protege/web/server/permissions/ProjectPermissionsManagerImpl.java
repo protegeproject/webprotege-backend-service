@@ -3,8 +3,8 @@ package edu.stanford.bmir.protege.web.server.permissions;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.access.Resource;
 import edu.stanford.bmir.protege.web.server.project.ProjectDetailsRepository;
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.project.ProjectDetails;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 import static edu.stanford.bmir.protege.web.server.access.Subject.forUser;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 06/02/15

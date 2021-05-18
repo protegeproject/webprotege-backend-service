@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.index.impl;
 
 import edu.stanford.bmir.protege.web.server.index.AxiomsByTypeIndex;
-import edu.stanford.bmir.protege.web.shared.frame.ObjectPropertyCharacteristic;
-import org.hamcrest.Matchers;
+import edu.stanford.bmir.protege.web.server.frame.ObjectPropertyCharacteristic;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,7 @@ import org.semanticweb.owlapi.model.*;
 
 import java.util.stream.Stream;
 
-import static edu.stanford.bmir.protege.web.shared.frame.ObjectPropertyCharacteristic.*;
+import static edu.stanford.bmir.protege.web.server.frame.ObjectPropertyCharacteristic.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;

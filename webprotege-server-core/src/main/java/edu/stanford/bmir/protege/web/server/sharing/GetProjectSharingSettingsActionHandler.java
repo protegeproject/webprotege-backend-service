@@ -3,16 +3,13 @@ package edu.stanford.bmir.protege.web.server.sharing;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.sharing.GetProjectSharingSettingsAction;
-import edu.stanford.bmir.protege.web.shared.sharing.GetProjectSharingSettingsResult;
-import edu.stanford.bmir.protege.web.shared.sharing.ProjectSharingSettings;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_SHARING_SETTINGS;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_SHARING_SETTINGS;
 
 /**
  * Matthew Horridge

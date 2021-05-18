@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
+import edu.stanford.bmir.protege.web.server.frame.*;
 import edu.stanford.bmir.protege.web.server.owlapi.ConjunctSet;
-import edu.stanford.bmir.protege.web.shared.frame.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLClassExpressionVisitorExAdapter;
 
@@ -135,8 +135,8 @@ public class ClassExpression2PropertyValuesTranslator {
                 .filter(OWLClassExpression::isNamed)
                 .map(OWLClassExpression::asOWLClass)
                 .map(filler -> PlainPropertyClassValue.get(property,
-                                                      filler,
-                                                      nextState))
+                                                           filler,
+                                                           nextState))
                 .collect(toSet());
     }
 

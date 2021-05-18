@@ -1,9 +1,6 @@
 package edu.stanford.bmir.protege.web.server.crud;
 
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationsSettings;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.stream.Collectors.toMap;

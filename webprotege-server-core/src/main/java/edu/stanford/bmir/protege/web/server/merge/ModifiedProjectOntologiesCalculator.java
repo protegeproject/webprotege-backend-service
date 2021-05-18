@@ -5,7 +5,6 @@ import com.google.auto.factory.Provided;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.project.Ontology;
-import edu.stanford.bmir.protege.web.shared.merge.OntologyDiff;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 

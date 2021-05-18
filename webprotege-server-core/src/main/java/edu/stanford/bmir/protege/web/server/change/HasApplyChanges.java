@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.change;
 
-import edu.stanford.bmir.protege.web.shared.permissions.PermissionDeniedException;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.permissions.PermissionDeniedException;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 25/03/2014

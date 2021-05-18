@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.diff;
 
 import edu.stanford.bmir.protege.web.server.change.*;
-import edu.stanford.bmir.protege.web.shared.merge.Diff;
-import edu.stanford.bmir.protege.web.shared.merge.OntologyDiff;
+import edu.stanford.bmir.protege.web.server.merge.Diff;
+import edu.stanford.bmir.protege.web.server.merge.OntologyDiff;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 

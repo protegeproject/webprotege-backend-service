@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.permissions;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.project.ProjectDetails;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import java.util.List;
 

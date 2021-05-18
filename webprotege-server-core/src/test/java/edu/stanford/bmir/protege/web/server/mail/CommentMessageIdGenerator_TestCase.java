@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.mail;
 
-import edu.stanford.bmir.protege.web.shared.issues.CommentId;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.issues.CommentId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

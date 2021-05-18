@@ -3,7 +3,6 @@ package edu.stanford.bmir.protege.web.server.events;
 import edu.stanford.bmir.protege.web.server.change.ChangeApplicationResult;
 import edu.stanford.bmir.protege.web.server.change.OntologyChange;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
 
 import java.util.List;
 

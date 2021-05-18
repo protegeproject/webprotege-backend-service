@@ -1,10 +1,9 @@
 package edu.stanford.bmir.protege.web.server.webhook;
 
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhook;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.List;
 
-import static edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhookEventType.PROJECT_CHANGED;
+import static edu.stanford.bmir.protege.web.server.webhook.ProjectWebhookEventType.PROJECT_CHANGED;
 
 /**
  * Matthew Horridge

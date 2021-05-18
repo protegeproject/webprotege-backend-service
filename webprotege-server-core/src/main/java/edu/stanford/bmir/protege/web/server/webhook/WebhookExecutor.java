@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.webhook;
 
-import edu.stanford.bmir.protege.web.shared.HasDispose;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.HasDispose;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

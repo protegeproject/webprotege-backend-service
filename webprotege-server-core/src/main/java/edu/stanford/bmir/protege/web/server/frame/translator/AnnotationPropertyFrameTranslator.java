@@ -1,9 +1,11 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
 import edu.stanford.bmir.protege.web.server.frame.Mode;
+import edu.stanford.bmir.protege.web.server.frame.PlainAnnotationPropertyFrame;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyAnnotationValue;
+import edu.stanford.bmir.protege.web.server.frame.State;
 import edu.stanford.bmir.protege.web.server.index.*;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.frame.*;
+import edu.stanford.bmir.protege.web.server.DataFactory;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -85,7 +87,7 @@ public class AnnotationPropertyFrameTranslator {
      */
     private Function<OWLAnnotationAssertionAxiom, PlainPropertyAnnotationValue> toPropertyValue() {
         return ax -> PlainPropertyAnnotationValue.get(
-               ax.getProperty(),
+                ax.getProperty(),
                 ax.getValue(),
                 State.ASSERTED
         );

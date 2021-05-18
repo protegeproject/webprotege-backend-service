@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.change;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.HasResult;
+import edu.stanford.bmir.protege.web.server.HasResult;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 

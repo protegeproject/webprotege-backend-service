@@ -3,9 +3,7 @@ package edu.stanford.bmir.protege.web.server.itemlist;
 
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
-import edu.stanford.bmir.protege.web.shared.itemlist.GetPossibleItemCompletionsResult;
-import edu.stanford.bmir.protege.web.shared.itemlist.GetUserIdCompletionsAction;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

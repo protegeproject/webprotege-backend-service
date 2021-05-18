@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.crud.gen;
 
 import edu.stanford.bmir.protege.web.server.index.AnnotationAssertionAxiomsByValueIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
-import edu.stanford.bmir.protege.web.shared.crud.gen.IncrementingPatternDescriptor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

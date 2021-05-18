@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import org.hamcrest.Matchers;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 

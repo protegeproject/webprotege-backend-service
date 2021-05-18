@@ -7,8 +7,7 @@ import edu.stanford.bmir.protege.web.server.change.RemoveAxiomChange;
 import edu.stanford.bmir.protege.web.server.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.project.chg.ChangeManager;
-import edu.stanford.bmir.protege.web.shared.obo.OBOXRef;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

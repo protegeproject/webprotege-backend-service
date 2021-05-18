@@ -3,8 +3,7 @@ package edu.stanford.bmir.protege.web.server.revision;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.change.OntologyChange;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import java.util.Iterator;

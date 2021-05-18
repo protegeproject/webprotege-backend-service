@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.server.rpc;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
 
 import javax.annotation.Nullable;
 import java.util.Optional;

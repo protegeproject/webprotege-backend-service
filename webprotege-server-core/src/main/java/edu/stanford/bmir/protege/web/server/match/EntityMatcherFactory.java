@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.match;
 
-import edu.stanford.bmir.protege.web.shared.match.criteria.EntityMatchCriteria;
+import edu.stanford.bmir.protege.web.server.match.criteria.EntityMatchCriteria;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

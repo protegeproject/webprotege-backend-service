@@ -6,14 +6,12 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.EventTag;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.frame.EntityFrame;
-import edu.stanford.bmir.protege.web.shared.frame.PlainEntityFrame;
-import edu.stanford.bmir.protege.web.shared.frame.UpdateFrameAction;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.EventTag;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -56,7 +54,7 @@ public abstract class AbstractUpdateFrameHandler<A extends UpdateFrameAction, F 
      * @param action The action to be handled/executed
      * @param executionContext The {@link edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext} that should be
      * used to provide details such as the
-     * {@link edu.stanford.bmir.protege.web.shared.user.UserId} of the user who requested the action be executed.
+     * {@link UserId} of the user who requested the action be executed.
      * @return The result of the execution to be returned to the client.
      */
     @Nonnull

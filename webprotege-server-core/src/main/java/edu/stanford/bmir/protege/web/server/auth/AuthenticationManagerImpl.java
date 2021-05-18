@@ -1,9 +1,6 @@
 package edu.stanford.bmir.protege.web.server.auth;
 
-import edu.stanford.bmir.protege.web.server.user.UserRecord;
-import edu.stanford.bmir.protege.web.server.user.UserRecordRepository;
-import edu.stanford.bmir.protege.web.shared.auth.*;
-import edu.stanford.bmir.protege.web.shared.user.*;
+import edu.stanford.bmir.protege.web.server.user.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

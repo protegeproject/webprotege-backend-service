@@ -3,10 +3,7 @@ package edu.stanford.bmir.protege.web.server.form;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.form.FormId;
-import edu.stanford.bmir.protege.web.shared.form.GetFreshFormIdAction;
-import edu.stanford.bmir.protege.web.shared.form.GetFreshFormIdResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

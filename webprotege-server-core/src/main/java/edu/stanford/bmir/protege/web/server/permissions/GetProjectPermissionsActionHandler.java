@@ -6,9 +6,7 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
-import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.permissions.GetProjectPermissionsAction;
-import edu.stanford.bmir.protege.web.shared.permissions.GetProjectPermissionsResult;
+import edu.stanford.bmir.protege.web.server.access.ActionId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

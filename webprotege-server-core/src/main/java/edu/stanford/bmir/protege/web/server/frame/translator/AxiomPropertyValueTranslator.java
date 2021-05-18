@@ -1,14 +1,11 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
-import edu.stanford.bmir.protege.web.server.frame.Mode;
-import edu.stanford.bmir.protege.web.shared.frame.*;
+import edu.stanford.bmir.protege.web.server.frame.*;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
-import org.semanticweb.owlapi.util.OWLAxiomVisitorAdapter;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.Collections;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;

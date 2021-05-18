@@ -1,10 +1,9 @@
 package edu.stanford.bmir.protege.web.server.frame;
 
-import edu.stanford.bmir.protege.web.shared.entity.OWLAnnotationPropertyData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLLiteralData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLPrimitiveData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLPropertyData;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyValue;
+import edu.stanford.bmir.protege.web.server.entity.OWLAnnotationPropertyData;
+import edu.stanford.bmir.protege.web.server.entity.OWLLiteralData;
+import edu.stanford.bmir.protege.web.server.entity.OWLPrimitiveData;
+import edu.stanford.bmir.protege.web.server.entity.OWLPropertyData;
 import org.semanticweb.owlapi.model.HasLang;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 

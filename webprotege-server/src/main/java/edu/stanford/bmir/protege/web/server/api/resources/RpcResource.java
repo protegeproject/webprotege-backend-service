@@ -3,16 +3,14 @@ package edu.stanford.bmir.protege.web.server.api.resources;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
 import edu.stanford.bmir.protege.web.server.api.ApiRootResource;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.server.rpc.JsonRpcError;
 import edu.stanford.bmir.protege.web.server.rpc.JsonRpcRequest;
 import edu.stanford.bmir.protege.web.server.rpc.JsonRpcResponse;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;

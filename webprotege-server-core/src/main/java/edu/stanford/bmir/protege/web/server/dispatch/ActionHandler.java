@@ -1,8 +1,5 @@
 package edu.stanford.bmir.protege.web.server.dispatch;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 

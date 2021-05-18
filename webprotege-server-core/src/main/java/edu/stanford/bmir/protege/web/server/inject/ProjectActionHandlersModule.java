@@ -62,8 +62,8 @@ import edu.stanford.bmir.protege.web.server.watches.AddWatchActionHandler;
 import edu.stanford.bmir.protege.web.server.watches.GetWatchesActionHandler;
 import edu.stanford.bmir.protege.web.server.watches.RemoveWatchActionHandler;
 import edu.stanford.bmir.protege.web.server.watches.SetEntityWatchesActionHandler;
-import edu.stanford.bmir.protege.web.shared.issues.DeleteEntityCommentAction;
-import edu.stanford.bmir.protege.web.shared.issues.DeleteEntityCommentResult;
+import edu.stanford.bmir.protege.web.server.issues.DeleteEntityCommentAction;
+import edu.stanford.bmir.protege.web.server.issues.DeleteEntityCommentResult;
 
 /**
  * Matthew Horridge

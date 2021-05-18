@@ -7,11 +7,9 @@ import edu.stanford.bmir.protege.web.server.change.HasApplyChanges;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.MergeEntitiesAction;
-import edu.stanford.bmir.protege.web.shared.entity.MergeEntitiesResult;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -19,7 +17,7 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.MERGE_ENTITIES;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.MERGE_ENTITIES;
 
 /**
  * Matthew Horridge

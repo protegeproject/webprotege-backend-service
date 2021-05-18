@@ -4,8 +4,7 @@ import edu.stanford.bmir.protege.web.server.index.ClassAssertionAxiomsByClassInd
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.match.MatcherFactory;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.frame.EntityFrame;
-import edu.stanford.bmir.protege.web.shared.frame.PlainEntityFrame;
+import edu.stanford.bmir.protege.web.server.frame.PlainEntityFrame;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

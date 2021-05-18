@@ -1,7 +1,6 @@
 
 package edu.stanford.bmir.protege.web.server.project;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

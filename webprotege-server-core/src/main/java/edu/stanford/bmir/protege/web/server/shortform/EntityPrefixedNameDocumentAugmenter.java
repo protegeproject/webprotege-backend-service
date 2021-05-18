@@ -2,8 +2,7 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.server.project.BuiltInPrefixDeclarations;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclaration;
-import edu.stanford.bmir.protege.web.shared.shortform.PrefixedNameDictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.project.PrefixDeclaration;
 import org.apache.lucene.document.Document;
 import org.semanticweb.owlapi.model.OWLEntity;
 

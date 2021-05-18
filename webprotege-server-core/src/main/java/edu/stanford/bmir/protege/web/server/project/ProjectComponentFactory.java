@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.project;
 
 import edu.stanford.bmir.protege.web.server.inject.ProjectComponent;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
 
 import javax.annotation.Nonnull;
 

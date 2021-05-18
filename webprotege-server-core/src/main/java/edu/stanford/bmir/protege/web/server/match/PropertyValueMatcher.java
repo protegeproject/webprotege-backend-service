@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.match;
 
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyValue;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
 import org.semanticweb.owlapi.model.OWLPrimitive;
 import org.semanticweb.owlapi.model.OWLProperty;
 

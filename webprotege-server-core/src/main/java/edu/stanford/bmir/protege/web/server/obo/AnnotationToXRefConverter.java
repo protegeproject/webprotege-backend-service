@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.obo;
 
-import edu.stanford.bmir.protege.web.shared.obo.OBOXRef;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

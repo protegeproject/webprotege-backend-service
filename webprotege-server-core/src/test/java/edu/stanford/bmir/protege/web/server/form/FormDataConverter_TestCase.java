@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.form;
 
+import edu.stanford.bmir.protege.web.server.form.data.FormData;
 import edu.stanford.bmir.protege.web.server.form.processor.FormDataConverter;
 import edu.stanford.bmir.protege.web.server.form.processor.FormDataProcessor;
-import edu.stanford.bmir.protege.web.shared.form.data.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

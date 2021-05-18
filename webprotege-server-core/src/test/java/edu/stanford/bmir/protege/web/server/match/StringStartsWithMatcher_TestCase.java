@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.match;
 
-import edu.stanford.bmir.protege.web.shared.match.criteria.StringStartsWithCriteria;
+import edu.stanford.bmir.protege.web.server.match.criteria.StringStartsWithCriteria;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

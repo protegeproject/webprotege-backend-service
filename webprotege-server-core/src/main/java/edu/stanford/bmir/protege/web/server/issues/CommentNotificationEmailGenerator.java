@@ -6,9 +6,7 @@ import edu.stanford.bmir.protege.web.server.app.PlaceUrl;
 import edu.stanford.bmir.protege.web.server.filemanager.FileContents;
 import edu.stanford.bmir.protege.web.server.templates.TemplateEngine;
 import edu.stanford.bmir.protege.web.server.templates.TemplateObjectsBuilder;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.issues.Comment;
-import edu.stanford.bmir.protege.web.shared.issues.EntityDiscussionThread;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

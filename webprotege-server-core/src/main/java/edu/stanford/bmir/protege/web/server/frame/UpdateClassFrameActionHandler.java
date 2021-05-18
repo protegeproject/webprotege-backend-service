@@ -2,14 +2,12 @@ package edu.stanford.bmir.protege.web.server.frame;
 
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.change.HasApplyChanges;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.dispatch.UpdateObjectResult;
-import edu.stanford.bmir.protege.web.shared.frame.UpdateClassFrameAction;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
-import edu.stanford.bmir.protege.web.shared.frame.ClassFrame;
-import edu.stanford.bmir.protege.web.shared.frame.PlainEntityFrame;
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
+import edu.stanford.bmir.protege.web.server.dispatch.UpdateObjectResult;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -32,8 +30,8 @@ public class UpdateClassFrameActionHandler extends AbstractUpdateFrameHandler<Up
     }
 
     /**
-     * Gets the class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action} handled by this handler.
-     * @return The class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action}.  Not {@code null}.
+     * Gets the class of {@link Action} handled by this handler.
+     * @return The class of {@link Action}.  Not {@code null}.
      */
     @Nonnull
     @Override

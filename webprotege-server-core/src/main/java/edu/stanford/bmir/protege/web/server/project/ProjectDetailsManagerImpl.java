@@ -1,19 +1,15 @@
 package edu.stanford.bmir.protege.web.server.project;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.bmir.protege.web.server.projectsettings.*;
 import edu.stanford.bmir.protege.web.server.webhook.SlackWebhookRepository;
 import edu.stanford.bmir.protege.web.server.webhook.WebhookRepository;
-import edu.stanford.bmir.protege.web.shared.lang.DefaultDisplayNameSettingsFactory;
-import edu.stanford.bmir.protege.web.shared.project.NewProjectSettings;
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.project.UnknownProjectException;
-import edu.stanford.bmir.protege.web.shared.projectsettings.*;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhook;
-import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhookEventType;
-import edu.stanford.bmir.protege.web.shared.webhook.SlackWebhook;
+import edu.stanford.bmir.protege.web.server.lang.DefaultDisplayNameSettingsFactory;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.user.UserId;
+import edu.stanford.bmir.protege.web.server.webhook.ProjectWebhook;
+import edu.stanford.bmir.protege.web.server.webhook.ProjectWebhookEventType;
+import edu.stanford.bmir.protege.web.server.webhook.SlackWebhook;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

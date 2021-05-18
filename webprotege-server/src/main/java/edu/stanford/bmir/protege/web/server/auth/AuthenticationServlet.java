@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.bmir.protege.web.server.api.ActionExecutor;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSessionImpl;
-import edu.stanford.bmir.protege.web.shared.auth.AuthenticationResponse;
-import edu.stanford.bmir.protege.web.shared.auth.PerformLoginAction;
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

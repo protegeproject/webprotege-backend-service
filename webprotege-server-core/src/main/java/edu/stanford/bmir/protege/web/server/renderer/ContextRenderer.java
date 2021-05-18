@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.renderer;
 
-import edu.stanford.bmir.protege.web.shared.entity.*;
+import edu.stanford.bmir.protege.web.server.entity.*;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

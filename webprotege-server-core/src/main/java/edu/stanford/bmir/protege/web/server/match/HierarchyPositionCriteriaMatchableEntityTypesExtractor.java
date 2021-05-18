@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.match;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
+import edu.stanford.bmir.protege.web.server.match.criteria.*;
 import org.semanticweb.owlapi.model.EntityType;
 
 import javax.annotation.Nonnull;

@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.issues;
 
-import edu.stanford.bmir.protege.web.shared.issues.Issue;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 
 import java.util.Optional;
 import java.util.stream.Stream;

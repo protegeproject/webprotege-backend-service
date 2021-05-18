@@ -1,9 +1,7 @@
 package edu.stanford.bmir.protege.web.server.app;
 
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.app.ApplicationLocation;
-import edu.stanford.bmir.protege.web.shared.app.ApplicationSettings;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.DataFactory;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

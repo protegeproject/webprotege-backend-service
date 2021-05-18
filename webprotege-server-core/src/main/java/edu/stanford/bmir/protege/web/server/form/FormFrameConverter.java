@@ -1,9 +1,8 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.form.data.FormEntitySubject;
-import edu.stanford.bmir.protege.web.shared.form.data.FormSubject;
-import edu.stanford.bmir.protege.web.shared.frame.*;
+import edu.stanford.bmir.protege.web.server.form.data.FormEntitySubject;
+import edu.stanford.bmir.protege.web.server.frame.*;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -37,8 +36,8 @@ public class FormFrameConverter {
                     @Override
                     public Optional<PlainEntityFrame> visit(@Nonnull OWLClass cls) {
                         return Optional.of(PlainClassFrame.get(cls,
-                                                          formFrame.getClasses(),
-                                                          formFrame.getPropertyValues()));
+                                                               formFrame.getClasses(),
+                                                               formFrame.getPropertyValues()));
                     }
 
                     @Nonnull
@@ -56,17 +55,17 @@ public class FormFrameConverter {
                     @Override
                     public Optional<PlainEntityFrame> visit(@Nonnull OWLDataProperty property) {
                         return Optional.of(PlainDataPropertyFrame.get(property,
-                                                                 getAnnotationPropertyValues(formFrame),
-                                                                 ImmutableSet.of(),
-                                                                 ImmutableSet.of(),
-                                                                 false));
+                                                                      getAnnotationPropertyValues(formFrame),
+                                                                      ImmutableSet.of(),
+                                                                      ImmutableSet.of(),
+                                                                      false));
                     }
 
                     @Nonnull
                     @Override
                     public Optional<PlainEntityFrame> visit(@Nonnull OWLNamedIndividual individual) {
                         return Optional.of(PlainNamedIndividualFrame.get(individual,
-                                                                    formFrame.getClasses(), ImmutableSet.<OWLNamedIndividual>of(),
+                                                                         formFrame.getClasses(), ImmutableSet.<OWLNamedIndividual>of(),
                                                                          formFrame.getPropertyValues()));
                     }
 
@@ -80,9 +79,9 @@ public class FormFrameConverter {
                     @Override
                     public Optional<PlainEntityFrame> visit(@Nonnull OWLAnnotationProperty property) {
                         return Optional.of(PlainAnnotationPropertyFrame.get(property,
-                                                                       getAnnotationPropertyValues(formFrame),
-                                                                       ImmutableSet.of(),
-                                                                       ImmutableSet.of()));
+                                                                            getAnnotationPropertyValues(formFrame),
+                                                                            ImmutableSet.of(),
+                                                                            ImmutableSet.of()));
                     }
                 });
     }

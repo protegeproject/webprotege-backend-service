@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.pagination;
 
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;

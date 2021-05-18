@@ -23,11 +23,11 @@ import edu.stanford.bmir.protege.web.server.repository.ProjectEntitySearchFilter
 import edu.stanford.bmir.protege.web.server.shortform.LuceneIndexesDirectory;
 import edu.stanford.bmir.protege.web.server.shortform.LuceneModule;
 import edu.stanford.bmir.protege.web.server.util.DisposableObjectManager;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.match.criteria.EntityMatchCriteria;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.match.criteria.EntityMatchCriteria;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.search.EntitySearchFilter;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguage;
 import org.apache.commons.io.FileUtils;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.*;

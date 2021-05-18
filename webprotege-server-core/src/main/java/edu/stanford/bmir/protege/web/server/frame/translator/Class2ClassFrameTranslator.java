@@ -8,11 +8,11 @@ import edu.stanford.bmir.protege.web.server.frame.PropertyValueMinimiser;
 import edu.stanford.bmir.protege.web.server.hierarchy.HasGetAncestors;
 import edu.stanford.bmir.protege.web.server.index.*;
 import edu.stanford.bmir.protege.web.server.match.RelationshipMatcherFactory;
-import edu.stanford.bmir.protege.web.shared.frame.ClassFrameTranslationOptions;
-import edu.stanford.bmir.protege.web.shared.frame.PlainClassFrame;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.State;
-import edu.stanford.bmir.protege.web.shared.match.criteria.RelationshipCriteria;
+import edu.stanford.bmir.protege.web.server.frame.ClassFrameTranslationOptions;
+import edu.stanford.bmir.protege.web.server.frame.PlainClassFrame;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.frame.State;
+import edu.stanford.bmir.protege.web.server.match.criteria.RelationshipCriteria;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -21,14 +21,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static edu.stanford.bmir.protege.web.server.index.ClassFrameAxiomsIndex.AnnotationsTreatment.EXCLUDE_ANNOTATIONS;
 import static edu.stanford.bmir.protege.web.server.index.ClassFrameAxiomsIndex.AnnotationsTreatment.INCLUDE_ANNOTATIONS;
-import static edu.stanford.bmir.protege.web.shared.frame.ClassFrameTranslationOptions.AncestorsTreatment.INCLUDE_ANCESTORS;
-import static edu.stanford.bmir.protege.web.shared.frame.RelationshipTranslationOptions.RelationshipMinification.MINIMIZED_RELATIONSHIPS;
+import static edu.stanford.bmir.protege.web.server.frame.ClassFrameTranslationOptions.AncestorsTreatment.INCLUDE_ANCESTORS;
+import static edu.stanford.bmir.protege.web.server.frame.RelationshipTranslationOptions.RelationshipMinification.MINIMIZED_RELATIONSHIPS;
 
 /**
  * Author: Matthew Horridge<br>

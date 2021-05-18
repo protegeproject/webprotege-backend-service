@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.crud.persistence;
 
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitId;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitId;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

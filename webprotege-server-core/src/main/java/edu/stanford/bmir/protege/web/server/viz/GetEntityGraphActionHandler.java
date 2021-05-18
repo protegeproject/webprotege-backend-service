@@ -6,8 +6,6 @@ import com.google.common.base.Stopwatch;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.viz.GetEntityGraphAction;
-import edu.stanford.bmir.protege.web.shared.viz.GetEntityGraphResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

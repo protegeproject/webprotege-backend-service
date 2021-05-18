@@ -2,7 +2,7 @@ package edu.stanford.bmir.protege.web.server.change.description;
 
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.server.owlapi.OWLObjectStringFormatter;
-import edu.stanford.bmir.protege.web.shared.frame.ObjectPropertyCharacteristic;
+import edu.stanford.bmir.protege.web.server.frame.ObjectPropertyCharacteristic;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import javax.annotation.Nonnull;

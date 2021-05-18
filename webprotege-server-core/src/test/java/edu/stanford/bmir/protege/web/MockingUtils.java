@@ -2,18 +2,15 @@ package edu.stanford.bmir.protege.web;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.HasSignature;
-import edu.stanford.bmir.protege.web.shared.csv.DocumentId;
-import edu.stanford.bmir.protege.web.shared.entity.*;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.EventTag;
-import edu.stanford.bmir.protege.web.shared.event.WebProtegeEvent;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.entity.*;
+import edu.stanford.bmir.protege.web.server.HasSignature;
+import edu.stanford.bmir.protege.web.server.csv.DocumentId;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.EventTag;
+import edu.stanford.bmir.protege.web.server.event.WebProtegeEvent;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.vocab.OWL2Datatype;
-import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import uk.ac.manchester.cs.owl.owlapi.*;
 

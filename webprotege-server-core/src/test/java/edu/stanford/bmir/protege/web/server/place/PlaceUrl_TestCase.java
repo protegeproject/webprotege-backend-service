@@ -1,11 +1,11 @@
 package edu.stanford.bmir.protege.web.server.place;
 
 import edu.stanford.bmir.protege.web.server.app.*;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.app.ApplicationScheme;
-import edu.stanford.bmir.protege.web.shared.perspective.EntityTypePerspectiveMapper;
-import edu.stanford.bmir.protege.web.shared.perspective.PerspectiveId;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.DataFactory;
+import edu.stanford.bmir.protege.web.server.app.ApplicationScheme;
+import edu.stanford.bmir.protege.web.server.perspective.EntityTypePerspectiveMapper;
+import edu.stanford.bmir.protege.web.server.perspective.PerspectiveId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

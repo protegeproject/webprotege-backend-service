@@ -1,8 +1,5 @@
 package edu.stanford.bmir.protege.web.server.revision;
 
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionSummary;
-
 import java.util.Optional;
 
 

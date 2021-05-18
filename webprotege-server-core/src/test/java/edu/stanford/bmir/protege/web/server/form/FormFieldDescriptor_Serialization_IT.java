@@ -1,10 +1,9 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.stanford.bmir.protege.web.server.form.field.*;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
-import edu.stanford.bmir.protege.web.shared.form.ExpansionState;
-import edu.stanford.bmir.protege.web.shared.form.field.*;
-import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
+import edu.stanford.bmir.protege.web.server.lang.LanguageMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.IRI;

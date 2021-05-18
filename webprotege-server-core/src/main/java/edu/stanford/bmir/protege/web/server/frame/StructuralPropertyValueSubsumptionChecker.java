@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.frame;
 
 import edu.stanford.bmir.protege.web.server.hierarchy.HasHasAncestor;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
 import org.semanticweb.owlapi.model.*;
 
 import javax.inject.Inject;

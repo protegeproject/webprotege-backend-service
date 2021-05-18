@@ -3,7 +3,7 @@ package edu.stanford.bmir.protege.web.server.match;
 import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProvider;
-import edu.stanford.bmir.protege.web.shared.match.criteria.HierarchyFilterType;
+import edu.stanford.bmir.protege.web.server.match.criteria.HierarchyFilterType;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 

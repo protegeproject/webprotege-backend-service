@@ -11,7 +11,7 @@ import edu.stanford.bmir.protege.web.server.change.RemoveAxiomChange;
 import edu.stanford.bmir.protege.web.server.index.AxiomsByEntityReferenceIndex;
 import edu.stanford.bmir.protege.web.server.index.OntologyAxiomsSignatureIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectAxiomsSignatureIndex;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLEntityCollectionContainerCollector;
 

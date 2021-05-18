@@ -7,14 +7,13 @@ import edu.stanford.bmir.protege.web.server.form.processor.FormDataConverter;
 import edu.stanford.bmir.protege.web.server.frame.EmptyEntityFrameFactory;
 import edu.stanford.bmir.protege.web.server.frame.FrameChangeGeneratorFactory;
 import edu.stanford.bmir.protege.web.server.frame.FrameUpdate;
+import edu.stanford.bmir.protege.web.server.frame.PlainEntityFrame;
 import edu.stanford.bmir.protege.web.server.msg.MessageFormatter;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.form.FormId;
-import edu.stanford.bmir.protege.web.shared.form.data.FormData;
-import edu.stanford.bmir.protege.web.shared.form.data.FormEntitySubject;
-import edu.stanford.bmir.protege.web.shared.form.data.FormSubject;
-import edu.stanford.bmir.protege.web.shared.frame.*;
+import edu.stanford.bmir.protege.web.server.form.data.FormData;
+import edu.stanford.bmir.protege.web.server.form.data.FormEntitySubject;
+import edu.stanford.bmir.protege.web.server.form.data.FormSubject;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

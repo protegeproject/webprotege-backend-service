@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.form.processor;
 
 import edu.stanford.bmir.protege.web.server.form.FormFrameBuilder;
-import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptorMissingException;
-import edu.stanford.bmir.protege.web.shared.form.data.FormData;
+import edu.stanford.bmir.protege.web.server.form.FormSubjectFactoryDescriptorMissingException;
+import edu.stanford.bmir.protege.web.server.form.data.FormData;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

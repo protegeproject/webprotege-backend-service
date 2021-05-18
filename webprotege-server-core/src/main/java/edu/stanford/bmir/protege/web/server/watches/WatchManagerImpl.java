@@ -1,13 +1,10 @@
 package edu.stanford.bmir.protege.web.server.watches;
 
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
-import edu.stanford.bmir.protege.web.shared.event.*;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.watches.Watch;
-import edu.stanford.bmir.protege.web.shared.watches.WatchAddedEvent;
-import edu.stanford.bmir.protege.web.shared.watches.WatchRemovedEvent;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.watches.WatchType.BRANCH;
+import static edu.stanford.bmir.protege.web.server.watches.WatchType.BRANCH;
 import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
 

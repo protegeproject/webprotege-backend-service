@@ -1,11 +1,7 @@
 package edu.stanford.bmir.protege.web.server.project;
 
-import edu.stanford.bmir.protege.web.shared.project.NewProjectSettings;
-import edu.stanford.bmir.protege.web.shared.project.ProjectDetails;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.project.UnknownProjectException;
-import edu.stanford.bmir.protege.web.shared.projectsettings.ProjectSettings;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.projectsettings.ProjectSettings;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 /**
  * Matthew Horridge

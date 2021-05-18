@@ -4,9 +4,9 @@ import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.change.*;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.frame.HasFreshEntities;
-import edu.stanford.bmir.protege.web.shared.frame.ManchesterSyntaxFrameParseError;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.frame.HasFreshEntities;
+import edu.stanford.bmir.protege.web.server.frame.ManchesterSyntaxFrameParseError;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ParserException;
 import org.semanticweb.owlapi.util.OntologyAxiomPair;
 

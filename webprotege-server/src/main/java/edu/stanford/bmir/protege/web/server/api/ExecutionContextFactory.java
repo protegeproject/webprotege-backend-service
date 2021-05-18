@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.api;
 
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
 import org.glassfish.hk2.api.Factory;
 
 import javax.annotation.Nonnull;
@@ -10,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.server.api.AuthenticationConstants.AUTHENTICATED_USER_ID;
 import static edu.stanford.bmir.protege.web.server.api.AuthenticationConstants.EXECUTION_CONTEXT;
 
 /**

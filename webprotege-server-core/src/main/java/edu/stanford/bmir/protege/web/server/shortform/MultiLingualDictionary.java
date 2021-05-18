@@ -1,16 +1,6 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
-import com.google.common.collect.ImmutableMap;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import org.semanticweb.owlapi.model.EntityType;
-import org.semanticweb.owlapi.model.OWLEntity;
-
-import javax.annotation.Nonnull;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 
 /**
  * Matthew Horridge

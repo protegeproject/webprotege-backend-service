@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.match;
 
-import edu.stanford.bmir.protege.web.shared.match.criteria.NumericPredicate;
+import edu.stanford.bmir.protege.web.server.match.criteria.NumericPredicate;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

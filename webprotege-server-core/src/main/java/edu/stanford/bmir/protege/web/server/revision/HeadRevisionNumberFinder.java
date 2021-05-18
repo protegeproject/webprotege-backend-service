@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.revision;
 
 import edu.stanford.bmir.protege.web.server.inject.ChangeHistoryFileFactory;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.binaryowl.BinaryOWLChangeLogHandler;
 import org.semanticweb.binaryowl.BinaryOWLOntologyChangeLog;
 import org.semanticweb.binaryowl.change.OntologyChangeRecordList;

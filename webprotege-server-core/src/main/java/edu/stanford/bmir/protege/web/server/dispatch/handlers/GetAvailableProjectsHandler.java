@@ -11,11 +11,11 @@ import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.permissions.ProjectPermissionsManager;
 import edu.stanford.bmir.protege.web.server.user.UserActivityManager;
 import edu.stanford.bmir.protege.web.server.user.UserActivityRecord;
-import edu.stanford.bmir.protege.web.shared.project.AvailableProject;
-import edu.stanford.bmir.protege.web.shared.project.GetAvailableProjectsAction;
-import edu.stanford.bmir.protege.web.shared.project.GetAvailableProjectsResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.project.AvailableProject;
+import edu.stanford.bmir.protege.web.server.project.GetAvailableProjectsAction;
+import edu.stanford.bmir.protege.web.server.project.GetAvailableProjectsResult;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -25,8 +25,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import static edu.stanford.bmir.protege.web.server.access.Subject.forUser;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.DOWNLOAD_PROJECT;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.MOVE_ANY_PROJECT_TO_TRASH;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.DOWNLOAD_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.MOVE_ANY_PROJECT_TO_TRASH;
 import static java.util.stream.Collectors.toList;
 
 /**

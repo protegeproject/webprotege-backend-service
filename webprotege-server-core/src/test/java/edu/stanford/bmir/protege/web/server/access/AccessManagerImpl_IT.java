@@ -4,8 +4,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import edu.stanford.bmir.protege.web.server.persistence.MongoTestUtils;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInRole;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;

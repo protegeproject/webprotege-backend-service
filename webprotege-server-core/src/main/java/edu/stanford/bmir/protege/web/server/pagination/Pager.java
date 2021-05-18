@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.pagination;
 
 import com.google.common.collect.Lists;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
 
 import java.io.Serializable;
 import java.util.Collections;

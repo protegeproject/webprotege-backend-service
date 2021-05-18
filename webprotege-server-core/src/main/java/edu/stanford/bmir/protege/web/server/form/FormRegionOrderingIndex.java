@@ -1,15 +1,12 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.form.field.FormRegionId;
-import edu.stanford.bmir.protege.web.shared.form.field.FormRegionOrdering;
-import edu.stanford.bmir.protege.web.shared.form.field.FormRegionOrderingDirection;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionId;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionOrdering;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionOrderingDirection;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
 

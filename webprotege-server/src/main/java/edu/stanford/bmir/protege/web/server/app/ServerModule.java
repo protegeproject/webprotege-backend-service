@@ -5,7 +5,7 @@ import dagger.Provides;
 import edu.stanford.bmir.protege.web.server.logging.DefaultLogger;
 import edu.stanford.bmir.protege.web.server.logging.WebProtegeLogger;
 import edu.stanford.bmir.protege.web.server.project.ProjectComponentFactory;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
 
 /**
  * Matthew Horridge

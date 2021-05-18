@@ -1,10 +1,8 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.match.criteria.EntityTypeIsOneOfCriteria;
-import edu.stanford.bmir.protege.web.shared.viz.EdgeCriteria;
-import edu.stanford.bmir.protege.web.shared.viz.HeadNodeMatchesCriteria;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.server.match.criteria.EntityTypeIsOneOfCriteria;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.EntityType;
 

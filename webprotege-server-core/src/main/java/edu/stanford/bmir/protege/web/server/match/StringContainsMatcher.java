@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.match;
 
-import edu.stanford.bmir.protege.web.shared.match.criteria.StringContainsCriteria;
-import edu.stanford.bmir.protege.web.shared.match.criteria.StringStartsWithCriteria;
+import edu.stanford.bmir.protege.web.server.match.criteria.StringContainsCriteria;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;

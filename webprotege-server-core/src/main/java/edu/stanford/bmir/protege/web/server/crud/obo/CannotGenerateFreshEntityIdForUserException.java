@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.crud.obo;
 
 import edu.stanford.bmir.protege.web.server.crud.CannotGenerateFreshEntityIdException;
-import edu.stanford.bmir.protege.web.shared.crud.oboid.UserIdRange;
+import edu.stanford.bmir.protege.web.server.crud.oboid.UserIdRange;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

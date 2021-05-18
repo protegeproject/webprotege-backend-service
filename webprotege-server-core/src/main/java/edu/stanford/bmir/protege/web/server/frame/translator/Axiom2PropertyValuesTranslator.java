@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.State;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.frame.State;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLAxiomVisitorExAdapter;
 

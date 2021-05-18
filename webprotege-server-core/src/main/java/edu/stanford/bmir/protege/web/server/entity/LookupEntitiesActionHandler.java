@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.entity;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.app.PlaceUrl;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
@@ -9,14 +8,15 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.lang.LanguageManager;
 import edu.stanford.bmir.protege.web.server.match.Matcher;
 import edu.stanford.bmir.protege.web.server.match.MatcherFactory;
+import edu.stanford.bmir.protege.web.server.search.EntityNameMatchResult;
+import edu.stanford.bmir.protege.web.server.search.SearchResultMatch;
+import edu.stanford.bmir.protege.web.server.search.SearchResultMatchPosition;
 import edu.stanford.bmir.protege.web.server.shortform.DictionaryManager;
 import edu.stanford.bmir.protege.web.server.shortform.SearchString;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.*;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.search.*;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguage;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.project;
 
 import edu.stanford.bmir.protege.web.server.app.ApplicationDisposablesManager;
-import edu.stanford.bmir.protege.web.shared.HasDispose;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.HasDispose;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

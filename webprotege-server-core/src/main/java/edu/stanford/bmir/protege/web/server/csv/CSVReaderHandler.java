@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.csv;
 
-import edu.stanford.bmir.protege.web.shared.csv.CSVRow;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

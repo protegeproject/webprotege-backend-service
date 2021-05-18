@@ -8,12 +8,8 @@ import edu.stanford.bmir.protege.web.server.index.*;
 import edu.stanford.bmir.protege.web.server.owlapi.ConjunctSet;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
 import edu.stanford.bmir.protege.web.server.util.ClassExpression;
-import edu.stanford.bmir.protege.web.shared.entity.OWLEntityData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLNamedIndividualData;
-import edu.stanford.bmir.protege.web.shared.viz.Edge;
-import edu.stanford.bmir.protege.web.shared.viz.EntityGraph;
-import edu.stanford.bmir.protege.web.shared.viz.IsAEdge;
-import edu.stanford.bmir.protege.web.shared.viz.RelationshipEdge;
+import edu.stanford.bmir.protege.web.server.entity.OWLEntityData;
+import edu.stanford.bmir.protege.web.server.entity.OWLNamedIndividualData;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

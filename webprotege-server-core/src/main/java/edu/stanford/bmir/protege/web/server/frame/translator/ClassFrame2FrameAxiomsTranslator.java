@@ -1,9 +1,8 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
 import edu.stanford.bmir.protege.web.server.frame.Mode;
-import edu.stanford.bmir.protege.web.server.owlapi.NonCachingDataFactory;
-import edu.stanford.bmir.protege.web.shared.frame.PlainClassFrame;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.frame.PlainClassFrame;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;

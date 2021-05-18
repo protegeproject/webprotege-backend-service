@@ -2,16 +2,13 @@ package edu.stanford.bmir.protege.web.server.inject;
 
 import com.mongodb.*;
 import edu.stanford.bmir.protege.web.server.app.ApplicationDisposablesManager;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;

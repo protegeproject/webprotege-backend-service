@@ -1,12 +1,8 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.match.criteria.MultiMatchType;
-import edu.stanford.bmir.protege.web.shared.viz.AnyInstanceOfEdgeCriteria;
-import edu.stanford.bmir.protege.web.shared.viz.AnySubClassOfEdgeCriteria;
-import edu.stanford.bmir.protege.web.shared.viz.CompositeEdgeCriteria;
-import edu.stanford.bmir.protege.web.shared.viz.EdgeCriteria;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
+import edu.stanford.bmir.protege.web.server.match.criteria.MultiMatchType;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,13 +1,12 @@
 package edu.stanford.bmir.protege.web.server.index.impl;
 
 import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProvider;
-import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProviderImpl;
 import edu.stanford.bmir.protege.web.server.index.ClassAssertionAxiomsByClassIndex;
 import edu.stanford.bmir.protege.web.server.index.ClassAssertionAxiomsByIndividualIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectSignatureByTypeIndex;
 import edu.stanford.bmir.protege.web.server.shortform.DictionaryManager;
-import edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode;
+import edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

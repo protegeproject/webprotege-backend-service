@@ -4,7 +4,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.UpdateOptions;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
 import org.bson.Document;
 
 import javax.annotation.Nonnull;

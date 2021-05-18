@@ -5,8 +5,6 @@ import com.google.auto.factory.Provided;
 import edu.stanford.bmir.protege.web.server.change.*;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.diff.DiffElement;
-import edu.stanford.bmir.protege.web.shared.diff.DiffOperation;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 

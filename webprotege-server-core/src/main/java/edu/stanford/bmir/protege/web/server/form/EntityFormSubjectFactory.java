@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.form;
 
-import edu.stanford.bmir.protege.web.shared.entity.FreshEntityIri;
-import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptor;
+import edu.stanford.bmir.protege.web.server.entity.FreshEntityIri;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

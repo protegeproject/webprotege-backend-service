@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.tag;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.tag.TagId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.mongodb.morphia.annotations.*;
 import org.semanticweb.owlapi.model.OWLEntity;
 

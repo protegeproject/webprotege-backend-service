@@ -1,11 +1,8 @@
 package edu.stanford.bmir.protege.web.server.form.data;
 
-import edu.stanford.bmir.protege.web.shared.form.data.GridCellDataDto;
-import edu.stanford.bmir.protege.web.shared.form.data.GridRowDataDto;
-import edu.stanford.bmir.protege.web.shared.form.field.FormRegionOrderingDirection;
+import edu.stanford.bmir.protege.web.server.form.field.FormRegionOrderingDirection;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
 import java.util.Comparator;
 
 import static com.google.common.base.Preconditions.checkNotNull;

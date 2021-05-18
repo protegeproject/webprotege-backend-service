@@ -4,9 +4,7 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.frame.translator.ObjectPropertyFrameTranslator;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.frame.GetObjectPropertyFrameAction;
-import edu.stanford.bmir.protege.web.shared.frame.GetObjectPropertyFrameResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Provider;
 
 import static edu.stanford.bmir.protege.web.server.logging.Markers.BROWSING;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>

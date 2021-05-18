@@ -4,12 +4,8 @@ import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.access.ProjectResource;
 import edu.stanford.bmir.protege.web.server.access.Subject;
 import edu.stanford.bmir.protege.web.server.dispatch.*;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.viz.ProjectUserEntityGraphSettings;
-import edu.stanford.bmir.protege.web.shared.viz.SetUserProjectEntityGraphResult;
-import edu.stanford.bmir.protege.web.shared.viz.SetUserProjectEntityGraphSettingsAction;
-import edu.stanford.bmir.protege.web.shared.viz.SetUserProjectEntityGraphSettingsResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

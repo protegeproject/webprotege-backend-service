@@ -1,8 +1,8 @@
 package edu.stanford.bmir.protege.web.server.match;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
+import edu.stanford.bmir.protege.web.server.frame.PlainPropertyValue;
+import edu.stanford.bmir.protege.web.server.match.criteria.*;
 import org.apache.commons.lang.StringUtils;
 import org.semanticweb.owlapi.model.*;
 

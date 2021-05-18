@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.issues.CommentId;
+import edu.stanford.bmir.protege.web.server.issues.CommentId;
 import org.mongodb.morphia.converters.SimpleValueConverter;
 import org.mongodb.morphia.mapping.MappedField;
 

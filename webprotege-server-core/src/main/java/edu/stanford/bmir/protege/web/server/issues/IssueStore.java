@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.issues;
 
 import com.mongodb.MongoClient;
-import edu.stanford.bmir.protege.web.shared.issues.Issue;
 
 import java.util.Optional;
 

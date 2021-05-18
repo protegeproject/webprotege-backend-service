@@ -4,11 +4,10 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.app.UserInSessionFactory;
 import edu.stanford.bmir.protege.web.server.dispatch.*;
 import edu.stanford.bmir.protege.web.server.project.ProjectManager;
-import edu.stanford.bmir.protege.web.shared.dispatch.*;
-import edu.stanford.bmir.protege.web.shared.permissions.PermissionDeniedException;
-import edu.stanford.bmir.protege.web.shared.project.HasProjectId;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.permissions.PermissionDeniedException;
+import edu.stanford.bmir.protege.web.server.project.HasProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

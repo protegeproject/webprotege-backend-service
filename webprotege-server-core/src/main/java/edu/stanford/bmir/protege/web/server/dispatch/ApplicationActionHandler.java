@@ -1,8 +1,5 @@
 package edu.stanford.bmir.protege.web.server.dispatch;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

@@ -1,15 +1,11 @@
 package edu.stanford.bmir.protege.web.server.frame.translator;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.server.frame.translator.ClassExpression2PropertyValuesTranslator;
-import edu.stanford.bmir.protege.web.server.renderer.ContextRenderer;
-import edu.stanford.bmir.protege.web.shared.entity.*;
-import edu.stanford.bmir.protege.web.shared.frame.*;
+import edu.stanford.bmir.protege.web.server.frame.*;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.*;
@@ -21,7 +17,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Matthew Horridge

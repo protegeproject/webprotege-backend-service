@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.object;
 
-import edu.stanford.bmir.protege.web.shared.object.SWRLAtomSelector;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

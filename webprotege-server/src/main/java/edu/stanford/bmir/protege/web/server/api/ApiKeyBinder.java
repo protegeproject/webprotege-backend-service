@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.api;
 
-import edu.stanford.bmir.protege.web.shared.api.ApiKey;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.process.internal.RequestScoped;
 

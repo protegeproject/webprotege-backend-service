@@ -2,10 +2,8 @@ package edu.stanford.bmir.protege.web.server.events;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.entity.EntityNodeRenderer;
-import edu.stanford.bmir.protege.web.server.hierarchy.DataPropertyHierarchyProvider;
-import edu.stanford.bmir.protege.web.server.hierarchy.HierarchyChangeComputer;
-import edu.stanford.bmir.protege.web.shared.hierarchy.*;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.hierarchy.*;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 
@@ -13,7 +11,7 @@ import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
 
-import static edu.stanford.bmir.protege.web.shared.hierarchy.HierarchyId.DATA_PROPERTY_HIERARCHY;
+import static edu.stanford.bmir.protege.web.server.hierarchy.HierarchyId.DATA_PROPERTY_HIERARCHY;
 
 /**
 * Matthew Horridge

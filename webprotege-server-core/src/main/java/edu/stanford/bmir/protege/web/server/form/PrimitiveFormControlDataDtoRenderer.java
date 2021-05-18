@@ -1,13 +1,12 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.bmir.protege.web.server.frame.FrameComponentSessionRenderer;
 import edu.stanford.bmir.protege.web.server.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.bmir.protege.web.shared.entity.IRIData;
-import edu.stanford.bmir.protege.web.shared.entity.OWLLiteralData;
-import edu.stanford.bmir.protege.web.shared.form.data.IriFormControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.data.LiteralFormControlDataDto;
-import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlDataDto;
+import edu.stanford.bmir.protege.web.server.entity.IRIData;
+import edu.stanford.bmir.protege.web.server.entity.OWLLiteralData;
+import edu.stanford.bmir.protege.web.server.form.data.IriFormControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.data.LiteralFormControlDataDto;
+import edu.stanford.bmir.protege.web.server.form.data.PrimitiveFormControlDataDto;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;

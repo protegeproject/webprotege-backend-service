@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.auth.Salt;
+import edu.stanford.bmir.protege.web.server.auth.Salt;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

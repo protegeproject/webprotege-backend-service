@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.diff;
 
 import edu.stanford.bmir.protege.web.server.change.*;
-import edu.stanford.bmir.protege.web.shared.diff.DiffElement;
-import edu.stanford.bmir.protege.web.shared.renderer.HasHtmlBrowserText;
+import edu.stanford.bmir.protege.web.server.renderer.HasHtmlBrowserText;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;

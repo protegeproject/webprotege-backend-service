@@ -2,23 +2,16 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Streams;
 import edu.stanford.bmir.protege.web.server.lang.LanguageManager;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.obo.OboId;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.LocalNameDictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.OboIdDictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.PrefixedNameDictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.search.EntitySearchFilter;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;

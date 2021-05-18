@@ -5,16 +5,14 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.user.UserDetailsManager;
-import edu.stanford.bmir.protege.web.shared.mail.SetEmailAddressAction;
-import edu.stanford.bmir.protege.web.shared.mail.SetEmailAddressResult;
-import edu.stanford.bmir.protege.web.shared.user.EmailAddress;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.EmailAddress;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.bmir.protege.web.shared.mail.SetEmailAddressResult.Result.*;
+import static edu.stanford.bmir.protege.web.server.mail.SetEmailAddressResult.Result.*;
 
 /**
  * Author: Matthew Horridge<br>

@@ -1,12 +1,8 @@
 package edu.stanford.bmir.protege.web.server.perspective;
 
-import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.*;
-import edu.stanford.bmir.protege.web.server.dispatch.validators.ProjectPermissionValidator;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.perspective.SetPerspectivesAction;
-import edu.stanford.bmir.protege.web.shared.perspective.SetPerspectivesResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

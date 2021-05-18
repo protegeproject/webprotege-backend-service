@@ -3,8 +3,7 @@ package edu.stanford.bmir.protege.web.server.crud.gen;
 import com.google.auto.value.AutoValue;
 import edu.stanford.bmir.protege.web.server.index.AnnotationAssertionAxiomsByValueIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
-import edu.stanford.bmir.protege.web.shared.crud.gen.IncrementingPatternDescriptor;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
@@ -12,7 +11,6 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import java.util.HashMap;
-import java.util.IllegalFormatException;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;

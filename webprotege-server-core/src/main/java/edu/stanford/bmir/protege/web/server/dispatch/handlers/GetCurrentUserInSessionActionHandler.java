@@ -1,15 +1,12 @@
 package edu.stanford.bmir.protege.web.server.dispatch.handlers;
 
 import edu.stanford.bmir.protege.web.server.app.UserInSessionFactory;
-import edu.stanford.bmir.protege.web.server.dispatch.ApplicationActionHandler;
-import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
-import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
+import edu.stanford.bmir.protege.web.server.dispatch.*;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
-import edu.stanford.bmir.protege.web.shared.app.UserInSession;
-import edu.stanford.bmir.protege.web.shared.user.GetCurrentUserInSessionAction;
-import edu.stanford.bmir.protege.web.shared.user.GetCurrentUserInSessionResult;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.app.UserInSession;
+import edu.stanford.bmir.protege.web.server.user.GetCurrentUserInSessionAction;
+import edu.stanford.bmir.protege.web.server.user.GetCurrentUserInSessionResult;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -33,8 +30,8 @@ public class GetCurrentUserInSessionActionHandler implements ApplicationActionHa
     }
 
     /**
-     * Gets the class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action} handled by this handler.
-     * @return The class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action}.  Not {@code null}.
+     * Gets the class of {@link Action} handled by this handler.
+     * @return The class of {@link Action}.  Not {@code null}.
      */
     @Nonnull
     @Override

@@ -2,16 +2,12 @@ package edu.stanford.bmir.protege.web.server.form;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.server.form.data.FormControlDataDtoComparator;
-import edu.stanford.bmir.protege.web.server.form.data.GridRowDataDtoComparatorFactory;
+import edu.stanford.bmir.protege.web.server.form.data.*;
+import edu.stanford.bmir.protege.web.server.form.field.*;
 import edu.stanford.bmir.protege.web.server.pagination.PageCollector;
-import edu.stanford.bmir.protege.web.shared.form.FilterState;
-import edu.stanford.bmir.protege.web.shared.form.FormPageRequest;
-import edu.stanford.bmir.protege.web.shared.form.data.*;
-import edu.stanford.bmir.protege.web.shared.form.field.*;
-import edu.stanford.bmir.protege.web.shared.lang.LangTagFilter;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.lang.LangTagFilter;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

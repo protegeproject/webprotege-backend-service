@@ -1,9 +1,8 @@
 package edu.stanford.bmir.protege.web.server.webhook;
 
 import com.mongodb.DuplicateKeyException;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.webhook.SlackWebhook;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.InsertOptions;
 import org.mongodb.morphia.query.Query;
@@ -15,7 +14,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.webhook.SlackWebhook.PROJECT_ID;
+import static edu.stanford.bmir.protege.web.server.webhook.SlackWebhook.PROJECT_ID;
 
 /**
  * Matthew Horridge

@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.api.exception;
 
-import edu.stanford.bmir.protege.web.shared.project.UnknownProjectException;
+import edu.stanford.bmir.protege.web.server.project.UnknownProjectException;
 
-import javax.inject.Inject;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;

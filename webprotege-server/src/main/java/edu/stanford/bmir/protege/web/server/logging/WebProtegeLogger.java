@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.logging;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 

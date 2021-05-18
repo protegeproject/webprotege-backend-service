@@ -6,19 +6,16 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.watches.WatchManager;
 import edu.stanford.bmir.protege.web.server.watches.WatchedChangesManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.change.GetWatchedEntityChangesAction;
-import edu.stanford.bmir.protege.web.shared.change.GetWatchedEntityChangesResult;
-import edu.stanford.bmir.protege.web.shared.change.ProjectChange;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.watches.Watch;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
+import edu.stanford.bmir.protege.web.server.watches.Watch;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Set;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_CHANGES;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_CHANGES;
 
 /**
  * Matthew Horridge

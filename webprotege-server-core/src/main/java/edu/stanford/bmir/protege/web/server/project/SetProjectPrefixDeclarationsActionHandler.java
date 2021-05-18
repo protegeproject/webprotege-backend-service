@@ -3,11 +3,7 @@ package edu.stanford.bmir.protege.web.server.project;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclaration;
-import edu.stanford.bmir.protege.web.shared.project.PrefixDeclarations;
-import edu.stanford.bmir.protege.web.shared.project.SetProjectPrefixDeclarationsAction;
-import edu.stanford.bmir.protege.web.shared.project.SetProjectPrefixDeclarationsResult;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_PROJECT_PREFIXES;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_PROJECT_PREFIXES;
 
 /**
  * Matthew Horridge

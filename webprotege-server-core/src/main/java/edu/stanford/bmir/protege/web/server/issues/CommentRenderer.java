@@ -1,8 +1,7 @@
 package edu.stanford.bmir.protege.web.server.issues;
 
-import edu.stanford.bmir.protege.web.shared.issues.Mention;
-import edu.stanford.bmir.protege.web.shared.issues.mention.MentionParser;
-import edu.stanford.bmir.protege.web.shared.issues.mention.ParsedMention;
+import edu.stanford.bmir.protege.web.server.issues.mention.MentionParser;
+import edu.stanford.bmir.protege.web.server.issues.mention.ParsedMention;
 import org.commonmark.Extension;
 import org.commonmark.ext.autolink.AutolinkExtension;
 import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;

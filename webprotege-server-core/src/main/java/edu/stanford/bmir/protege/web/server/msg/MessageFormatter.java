@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.msg;
 
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

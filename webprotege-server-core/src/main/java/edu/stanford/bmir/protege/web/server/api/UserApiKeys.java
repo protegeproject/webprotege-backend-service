@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.api;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.mongodb.morphia.annotations.*;
 
 import javax.annotation.Nonnull;

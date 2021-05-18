@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.index.impl;
 
 import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProvider;
-import edu.stanford.bmir.protege.web.server.hierarchy.ClassHierarchyProviderImpl;
 import edu.stanford.bmir.protege.web.server.index.*;
 import edu.stanford.bmir.protege.web.server.individuals.IndividualRendering;
 import edu.stanford.bmir.protege.web.server.index.IndividualsQueryResult;
@@ -9,10 +8,10 @@ import edu.stanford.bmir.protege.web.server.shortform.DictionaryManager;
 import edu.stanford.bmir.protege.web.server.shortform.Scanner;
 import edu.stanford.bmir.protege.web.server.shortform.SearchString;
 import edu.stanford.bmir.protege.web.server.util.Counter;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.DataFactory;
+import edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -25,8 +24,8 @@ import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.bmir.protege.web.server.pagination.PageCollector.toPage;
-import static edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode.ALL_INSTANCES;
-import static edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode.DIRECT_INSTANCES;
+import static edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode.ALL_INSTANCES;
+import static edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode.DIRECT_INSTANCES;
 import static java.util.stream.Collectors.toList;
 
 /**

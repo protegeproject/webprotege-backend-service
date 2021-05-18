@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.match;
 
 import com.google.common.primitives.Doubles;
-import edu.stanford.bmir.protege.web.shared.match.criteria.NumericPredicate;
+import edu.stanford.bmir.protege.web.server.match.criteria.NumericPredicate;
 
 import javax.annotation.Nonnull;
 

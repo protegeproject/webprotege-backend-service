@@ -1,9 +1,8 @@
 package edu.stanford.bmir.protege.web.server.watches;
 
 import com.google.common.base.Objects;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.watches.WatchType;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.mongodb.morphia.annotations.*;
 import org.semanticweb.owlapi.model.OWLEntity;
 

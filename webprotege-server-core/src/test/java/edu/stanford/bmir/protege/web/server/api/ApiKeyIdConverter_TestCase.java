@@ -1,6 +1,5 @@
 package edu.stanford.bmir.protege.web.server.api;
 
-import edu.stanford.bmir.protege.web.shared.api.ApiKeyId;
 import org.junit.Test;
 import org.mongodb.morphia.mapping.MappedField;
 

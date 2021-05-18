@@ -2,9 +2,8 @@ package edu.stanford.bmir.protege.web.server.lang;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.change.OntologyChange;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
-import edu.stanford.bmir.protege.web.shared.lang.DictionaryLanguageUsage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguage;
 
 import javax.annotation.Nonnull;
 import java.util.List;

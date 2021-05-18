@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.crud;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.change.OntologyChangeList;
-import edu.stanford.bmir.protege.web.shared.crud.*;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 

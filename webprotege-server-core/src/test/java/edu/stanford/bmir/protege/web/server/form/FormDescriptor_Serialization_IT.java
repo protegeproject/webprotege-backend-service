@@ -2,11 +2,8 @@ package edu.stanford.bmir.protege.web.server.form;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.form.FormDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.FormId;
-import edu.stanford.bmir.protege.web.shared.form.FormSubjectFactoryDescriptor;
-import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
+import edu.stanford.bmir.protege.web.server.DataFactory;
+import edu.stanford.bmir.protege.web.server.lang.LanguageMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.EntityType;

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import edu.stanford.bmir.protege.web.server.form.FormControlValueDeserializer;
-import edu.stanford.bmir.protege.web.shared.form.data.PrimitiveFormControlData;
+import edu.stanford.bmir.protege.web.server.form.data.PrimitiveFormControlData;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 

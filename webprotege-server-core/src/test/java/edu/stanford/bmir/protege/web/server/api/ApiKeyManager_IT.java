@@ -2,9 +2,7 @@ package edu.stanford.bmir.protege.web.server.api;
 
 import com.mongodb.MongoClient;
 import edu.stanford.bmir.protege.web.server.persistence.MongoTestUtils;
-import edu.stanford.bmir.protege.web.shared.api.ApiKey;
-import edu.stanford.bmir.protege.web.shared.api.ApiKeyInfo;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

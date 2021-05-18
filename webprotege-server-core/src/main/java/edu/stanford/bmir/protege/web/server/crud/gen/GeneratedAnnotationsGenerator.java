@@ -5,18 +5,13 @@ import edu.stanford.bmir.protege.web.server.change.OntologyChangeList;
 import edu.stanford.bmir.protege.web.server.crud.EntityIriPrefixCriteriaRewriter;
 import edu.stanford.bmir.protege.web.server.match.MatcherFactory;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationDescriptor;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedValueDescriptor;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedValueDescriptorVisitor;
-import edu.stanford.bmir.protege.web.shared.crud.gen.IncrementingPatternDescriptor;
+import edu.stanford.bmir.protege.web.server.crud.EntityCrudKitSettings;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import java.util.Collection;
-import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

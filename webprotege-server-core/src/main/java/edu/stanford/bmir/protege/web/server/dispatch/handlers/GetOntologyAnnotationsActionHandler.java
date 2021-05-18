@@ -7,18 +7,18 @@ import edu.stanford.bmir.protege.web.server.frame.PropertyValueComparator;
 import edu.stanford.bmir.protege.web.server.index.OntologyAnnotationsIndex;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
 import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.ontology.GetOntologyAnnotationsAction;
-import edu.stanford.bmir.protege.web.shared.ontology.GetOntologyAnnotationsResult;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyAnnotationValue;
-import edu.stanford.bmir.protege.web.shared.frame.State;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.ontology.GetOntologyAnnotationsAction;
+import edu.stanford.bmir.protege.web.server.ontology.GetOntologyAnnotationsResult;
+import edu.stanford.bmir.protege.web.server.frame.PropertyAnnotationValue;
+import edu.stanford.bmir.protege.web.server.frame.State;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>

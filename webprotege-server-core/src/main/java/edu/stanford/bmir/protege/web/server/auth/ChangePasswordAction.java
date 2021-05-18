@@ -1,0 +1,36 @@
+package edu.stanford.bmir.protege.web.server.auth;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.auto.value.AutoValue;
+
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
+import edu.stanford.bmir.protege.web.server.user.UserId;
+
+import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+/**
+ * Matthew Horridge
+ * Stanford Center for Biomedical Informatics Research
+ * 19/02/15
+ */
+@AutoValue
+
+@JsonTypeName("ChangePassword")
+public abstract class ChangePasswordAction implements Action<ChangePasswordResult> {
+
+    @JsonCreator
+    public static ChangePasswordAction create(@JsonProperty("userId") UserId userId,
+                                              @JsonProperty("currentPassword") Password currentPassword,
+                                              @JsonProperty("newPassword") Password newPassword) {
+        return new AutoValue_ChangePasswordAction(userId, currentPassword, newPassword);
+    }
+
+    public abstract UserId getUserId();
+
+    public abstract Password getCurrentPassword();
+
+    public abstract Password getNewPassword();
+}

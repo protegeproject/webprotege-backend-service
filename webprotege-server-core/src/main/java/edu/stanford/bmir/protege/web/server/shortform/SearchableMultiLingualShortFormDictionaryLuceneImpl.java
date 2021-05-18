@@ -2,10 +2,9 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.search.EntitySearchFilter;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
+import edu.stanford.bmir.protege.web.server.pagination.PageRequest;
+import edu.stanford.bmir.protege.web.server.search.EntitySearchFilter;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.EntityType;
 import org.slf4j.Logger;

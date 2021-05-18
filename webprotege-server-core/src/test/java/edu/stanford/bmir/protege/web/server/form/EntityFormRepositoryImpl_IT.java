@@ -1,26 +1,21 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import com.mongodb.client.MongoDatabase;
+import edu.stanford.bmir.protege.web.server.form.field.*;
 import edu.stanford.bmir.protege.web.server.jackson.ObjectMapperProvider;
 import edu.stanford.bmir.protege.web.server.persistence.MongoTestUtils;
-import edu.stanford.bmir.protege.web.shared.form.ExpansionState;
-import edu.stanford.bmir.protege.web.shared.form.FormDescriptor;
-import edu.stanford.bmir.protege.web.shared.form.FormId;
-import edu.stanford.bmir.protege.web.shared.form.field.*;
-import edu.stanford.bmir.protege.web.shared.lang.LanguageMap;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.lang.LanguageMap;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
-import java.util.Map;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.floatThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 

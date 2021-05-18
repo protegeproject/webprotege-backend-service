@@ -1,10 +1,5 @@
 package edu.stanford.bmir.protege.web.server.access;
 
-import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInRole;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
-
 import javax.annotation.Nonnull;
 import java.util.*;
 

@@ -2,13 +2,9 @@ package edu.stanford.bmir.protege.web.server.frame;
 
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.frame.GetClassFrameAction;
-import edu.stanford.bmir.protege.web.shared.frame.ClassFrameTranslationOptions;
-import edu.stanford.bmir.protege.web.shared.frame.GetClassFrameResult;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.RelationshipTranslationOptions;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +15,9 @@ import javax.inject.Inject;
 import java.util.Comparator;
 
 import static edu.stanford.bmir.protege.web.server.logging.Markers.BROWSING;
-import static edu.stanford.bmir.protege.web.shared.frame.ClassFrameTranslationOptions.AncestorsTreatment.EXCLUDE_ANCESTORS;
-import static edu.stanford.bmir.protege.web.shared.frame.RelationshipTranslationOptions.*;
-import static edu.stanford.bmir.protege.web.shared.frame.RelationshipTranslationOptions.RelationshipMinification.NON_MINIMIZED_RELATIONSHIPS;
+import static edu.stanford.bmir.protege.web.server.frame.ClassFrameTranslationOptions.AncestorsTreatment.EXCLUDE_ANCESTORS;
+import static edu.stanford.bmir.protege.web.server.frame.RelationshipTranslationOptions.*;
+import static edu.stanford.bmir.protege.web.server.frame.RelationshipTranslationOptions.RelationshipMinification.NON_MINIMIZED_RELATIONSHIPS;
 
 /**
  * Author: Matthew Horridge<br>
@@ -54,8 +50,8 @@ public class GetClassFrameActionHandler extends AbstractProjectActionHandler<Get
     }
 
     /**
-     * Gets the class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action} handled by this handler.
-     * @return The class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action}.  Not {@code null}.
+     * Gets the class of {@link Action} handled by this handler.
+     * @return The class of {@link Action}.  Not {@code null}.
      */
     @Nonnull
     @Override

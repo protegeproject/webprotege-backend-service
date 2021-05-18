@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.app;
 
 import com.mongodb.MongoClient;
-import edu.stanford.bmir.protege.web.shared.HasDispose;
+import edu.stanford.bmir.protege.web.server.HasDispose;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

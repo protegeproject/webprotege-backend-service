@@ -3,9 +3,6 @@ package edu.stanford.bmir.protege.web.server.obo;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.obo.GetOboTermCrossProductAction;
-import edu.stanford.bmir.protege.web.shared.obo.GetOboTermCrossProductResult;
-import edu.stanford.bmir.protege.web.shared.obo.OBOTermCrossProduct;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

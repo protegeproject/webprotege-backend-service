@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.webhook;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.bmir.protege.web.shared.webhook.Webhook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

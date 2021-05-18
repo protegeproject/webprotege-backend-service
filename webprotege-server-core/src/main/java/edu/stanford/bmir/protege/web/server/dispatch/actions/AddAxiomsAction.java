@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.dispatch.actions;
 
-import edu.stanford.bmir.protege.web.shared.dispatch.ProjectAction;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.dispatch.ProjectAction;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
 import javax.annotation.Nonnull;

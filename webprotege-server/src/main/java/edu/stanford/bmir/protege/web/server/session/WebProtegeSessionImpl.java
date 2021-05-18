@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.session;
 
 import com.google.common.base.MoreObjects;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;

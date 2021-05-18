@@ -1,19 +1,16 @@
 package edu.stanford.bmir.protege.web.server.crud;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.DataFactory;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.bmir.protege.web.shared.crud.EntityCrudKitSettings;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationDescriptor;
-import edu.stanford.bmir.protege.web.shared.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.bmir.protege.web.shared.crud.gen.IncrementingPatternDescriptor;
-import edu.stanford.bmir.protege.web.shared.crud.uuid.UuidSuffixSettings;
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.match.criteria.*;
+import edu.stanford.bmir.protege.web.server.match.criteria.HierarchyFilterType;
+import edu.stanford.bmir.protege.web.server.match.criteria.SubClassOfCriteria;
+import edu.stanford.bmir.protege.web.server.DataFactory;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationDescriptor;
+import edu.stanford.bmir.protege.web.server.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.bmir.protege.web.server.crud.gen.IncrementingPatternDescriptor;
+import edu.stanford.bmir.protege.web.server.crud.uuid.UuidSuffixSettings;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.semanticweb.owlapi.model.EntityType;
 
 import java.io.IOException;
 

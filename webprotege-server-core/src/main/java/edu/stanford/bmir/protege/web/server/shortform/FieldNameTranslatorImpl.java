@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
-import edu.stanford.bmir.protege.web.shared.shortform.*;
-
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 

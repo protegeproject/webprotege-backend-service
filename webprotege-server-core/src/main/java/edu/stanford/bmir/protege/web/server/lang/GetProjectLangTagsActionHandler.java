@@ -2,11 +2,8 @@ package edu.stanford.bmir.protege.web.server.lang;
 
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.*;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.lang.GetProjectLangTagsAction;
-import edu.stanford.bmir.protege.web.shared.lang.GetProjectLangTagsResult;
-import edu.stanford.bmir.protege.web.shared.lang.LangTag;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.shortform.DictionaryLanguage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

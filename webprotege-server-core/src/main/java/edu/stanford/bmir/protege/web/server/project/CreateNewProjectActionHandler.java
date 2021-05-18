@@ -11,12 +11,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.ApplicationPermissionValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.CompositeRequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.UserIsSignedInValidator;
-import edu.stanford.bmir.protege.web.shared.permissions.PermissionDeniedException;
-import edu.stanford.bmir.protege.web.shared.project.CreateNewProjectAction;
-import edu.stanford.bmir.protege.web.shared.project.CreateNewProjectResult;
-import edu.stanford.bmir.protege.web.shared.project.NewProjectSettings;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.permissions.PermissionDeniedException;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
@@ -27,9 +23,9 @@ import java.io.IOException;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.bmir.protege.web.server.access.Subject.forAnySignedInUser;
 import static edu.stanford.bmir.protege.web.server.access.Subject.forUser;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.CREATE_EMPTY_PROJECT;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.UPLOAD_PROJECT;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInRole.*;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.CREATE_EMPTY_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.UPLOAD_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInRole.*;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singleton;
 

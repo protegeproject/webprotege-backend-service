@@ -2,11 +2,7 @@ package edu.stanford.bmir.protege.web.server.access;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.CountOptions;
 import org.mongodb.morphia.query.Query;

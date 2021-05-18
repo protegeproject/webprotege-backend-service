@@ -1,21 +1,16 @@
 package edu.stanford.bmir.protege.web.server.api;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.dispatch.DispatchServiceExecutor;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
-import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
-import edu.stanford.bmir.protege.web.server.session.WebProtegeSessionAttribute;
-import edu.stanford.bmir.protege.web.shared.dispatch.Action;
-import edu.stanford.bmir.protege.web.shared.dispatch.ActionExecutionException;
-import edu.stanford.bmir.protege.web.shared.dispatch.DispatchServiceResultContainer;
-import edu.stanford.bmir.protege.web.shared.dispatch.Result;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
+import edu.stanford.bmir.protege.web.server.dispatch.ActionExecutionException;
+import edu.stanford.bmir.protege.web.server.dispatch.DispatchServiceResultContainer;
+import edu.stanford.bmir.protege.web.server.dispatch.Result;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.ws.rs.InternalServerErrorException;
-import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

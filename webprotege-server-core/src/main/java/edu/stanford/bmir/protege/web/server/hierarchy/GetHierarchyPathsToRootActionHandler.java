@@ -3,12 +3,8 @@ package edu.stanford.bmir.protege.web.server.hierarchy;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.entity.EntityNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyPathsToRootAction;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GetHierarchyPathsToRootResult;
-import edu.stanford.bmir.protege.web.shared.hierarchy.GraphNode;
-import edu.stanford.bmir.protege.web.shared.hierarchy.Path;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.entity.EntityNode;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -17,7 +13,7 @@ import javax.inject.Inject;
 import java.util.*;
 
 import static edu.stanford.bmir.protege.web.server.hierarchy.PathCollector.toPath;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 import static java.util.stream.Collectors.toList;
 
 /**

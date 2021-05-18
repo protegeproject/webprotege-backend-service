@@ -1,6 +1,6 @@
 package edu.stanford.bmir.protege.web.server.persistence;
 
-import edu.stanford.bmir.protege.web.shared.auth.SaltedPasswordDigest;
+import edu.stanford.bmir.protege.web.server.auth.SaltedPasswordDigest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

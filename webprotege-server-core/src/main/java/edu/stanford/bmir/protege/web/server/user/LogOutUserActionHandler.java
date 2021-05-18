@@ -7,9 +7,6 @@ import edu.stanford.bmir.protege.web.server.dispatch.RequestContext;
 import edu.stanford.bmir.protege.web.server.dispatch.RequestValidator;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
-import edu.stanford.bmir.protege.web.shared.user.LogOutUserAction;
-import edu.stanford.bmir.protege.web.shared.user.LogOutUserResult;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

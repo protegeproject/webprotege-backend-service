@@ -1,8 +1,5 @@
 package edu.stanford.bmir.protege.web.server.hierarchy;
 
-import edu.stanford.bmir.protege.web.shared.hierarchy.Path;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -4,15 +4,14 @@ package edu.stanford.bmir.protege.web.server.owlapi.change;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.bmir.protege.web.server.change.OntologyChange;
 import edu.stanford.bmir.protege.web.server.revision.Revision;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.revision.RevisionNumber;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.semanticweb.owlapi.change.OWLOntologyChangeRecord;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

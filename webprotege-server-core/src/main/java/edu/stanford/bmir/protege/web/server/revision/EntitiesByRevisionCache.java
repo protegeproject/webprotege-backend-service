@@ -3,7 +3,6 @@ package edu.stanford.bmir.protege.web.server.revision;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.bmir.protege.web.server.axiom.AxiomSubjectProvider;
 import edu.stanford.bmir.protege.web.server.change.OntologyChange;
-import edu.stanford.bmir.protege.web.shared.revision.RevisionNumber;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

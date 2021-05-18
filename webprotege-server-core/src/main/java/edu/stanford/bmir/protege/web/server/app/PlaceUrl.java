@@ -1,10 +1,10 @@
 package edu.stanford.bmir.protege.web.server.app;
 
-import edu.stanford.bmir.protege.web.shared.perspective.EntityTypePerspectiveMapper;
-import edu.stanford.bmir.protege.web.shared.place.ItemSelection;
-import edu.stanford.bmir.protege.web.shared.place.ProjectViewPlace;
-import edu.stanford.bmir.protege.web.shared.place.ProjectViewPlaceTokenizer;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.perspective.EntityTypePerspectiveMapper;
+import edu.stanford.bmir.protege.web.server.place.ItemSelection;
+import edu.stanford.bmir.protege.web.server.place.ProjectViewPlace;
+import edu.stanford.bmir.protege.web.server.place.ProjectViewPlaceTokenizer;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

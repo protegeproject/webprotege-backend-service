@@ -1,53 +1,10 @@
 package edu.stanford.bmir.protege.web.server.revision;
 
-import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.server.axiom.*;
-import edu.stanford.bmir.protege.web.server.change.*;
-import edu.stanford.bmir.protege.web.server.diff.Revision2DiffElementsTranslator;
-import edu.stanford.bmir.protege.web.server.index.*;
-import edu.stanford.bmir.protege.web.server.index.impl.*;
-import edu.stanford.bmir.protege.web.server.inject.ChangeHistoryFileFactory;
-import edu.stanford.bmir.protege.web.server.lang.ActiveLanguagesManagerImpl;
-import edu.stanford.bmir.protege.web.server.lang.LanguageManager;
-import edu.stanford.bmir.protege.web.server.mansyntax.render.*;
-import edu.stanford.bmir.protege.web.server.object.OWLObjectComparatorImpl;
-import edu.stanford.bmir.protege.web.server.owlapi.ProjectAnnotationAssertionAxiomsBySubjectIndexImpl;
-import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.server.project.ProjectDetailsRepository;
-import edu.stanford.bmir.protege.web.server.project.chg.OntologyChangeTranslator;
-import edu.stanford.bmir.protege.web.server.project.chg.OntologyChangeTranslatorVisitor;
-import edu.stanford.bmir.protege.web.server.renderer.OWLObjectRendererImpl;
-import edu.stanford.bmir.protege.web.server.renderer.RenderingManager;
-import edu.stanford.bmir.protege.web.server.renderer.ShortFormAdapter;
-import edu.stanford.bmir.protege.web.server.shortform.*;
-import edu.stanford.bmir.protege.web.shared.change.ProjectChange;
-import edu.stanford.bmir.protege.web.shared.object.*;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
-import edu.stanford.bmir.protege.web.shared.pagination.PageRequest;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.util.DefaultPrefixManager;
-import org.semanticweb.owlapi.util.OWLEntityComparator;
 
-import javax.annotation.Nonnull;
-import java.io.File;
-import java.util.*;
-
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
 
 /**
  * Matthew Horridge

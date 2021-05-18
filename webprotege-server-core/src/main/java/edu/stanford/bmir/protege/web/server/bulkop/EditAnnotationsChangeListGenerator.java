@@ -7,8 +7,6 @@ import edu.stanford.bmir.protege.web.server.change.*;
 import edu.stanford.bmir.protege.web.server.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
 import edu.stanford.bmir.protege.web.server.owlapi.RenameMap;
-import edu.stanford.bmir.protege.web.shared.bulkop.NewAnnotationData;
-import edu.stanford.bmir.protege.web.shared.bulkop.Operation;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

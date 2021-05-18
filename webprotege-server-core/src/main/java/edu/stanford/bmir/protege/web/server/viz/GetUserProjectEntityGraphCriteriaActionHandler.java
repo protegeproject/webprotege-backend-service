@@ -3,8 +3,6 @@ package edu.stanford.bmir.protege.web.server.viz;
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
-import edu.stanford.bmir.protege.web.shared.viz.GetUserProjectEntityGraphCriteriaAction;
-import edu.stanford.bmir.protege.web.shared.viz.GetUserProjectEntityGraphCriteriaResult;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

@@ -1,7 +1,5 @@
 package edu.stanford.bmir.protege.web.server.access;
 
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
-
 import javax.annotation.Nonnull;
 import java.util.Collection;
 

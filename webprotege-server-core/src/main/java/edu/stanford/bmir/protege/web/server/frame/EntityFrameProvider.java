@@ -1,9 +1,6 @@
 package edu.stanford.bmir.protege.web.server.frame;
 
 import edu.stanford.bmir.protege.web.server.frame.translator.*;
-import edu.stanford.bmir.protege.web.shared.frame.ClassFrameTranslationOptions;
-import edu.stanford.bmir.protege.web.shared.frame.PlainEntityFrame;
-import edu.stanford.bmir.protege.web.shared.frame.RelationshipTranslationOptions;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

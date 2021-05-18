@@ -5,10 +5,7 @@ import edu.stanford.bmir.protege.web.server.dispatch.*;
 import edu.stanford.bmir.protege.web.server.dispatch.validators.NullValidator;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
 import edu.stanford.bmir.protege.web.server.user.UserActivityManager;
-import edu.stanford.bmir.protege.web.shared.auth.AuthenticationResponse;
-import edu.stanford.bmir.protege.web.shared.auth.PerformLoginAction;
-import edu.stanford.bmir.protege.web.shared.auth.PerformLoginResult;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

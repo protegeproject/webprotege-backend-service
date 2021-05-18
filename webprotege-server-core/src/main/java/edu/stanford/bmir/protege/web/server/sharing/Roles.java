@@ -1,13 +1,12 @@
 package edu.stanford.bmir.protege.web.server.sharing;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
-import edu.stanford.bmir.protege.web.shared.sharing.SharingPermission;
+import edu.stanford.bmir.protege.web.server.access.RoleId;
 
 import java.util.Collection;
 import java.util.Optional;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInRole.*;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInRole.*;
 
 /**
  * Matthew Horridge

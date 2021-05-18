@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.app;
 
 import edu.stanford.bmir.protege.web.server.persistence.Repository;
-import edu.stanford.bmir.protege.web.shared.inject.ApplicationSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ApplicationSingleton;
 import org.mongodb.morphia.Datastore;
 
 import javax.annotation.Nonnull;

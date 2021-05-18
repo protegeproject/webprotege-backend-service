@@ -1,7 +1,7 @@
 package edu.stanford.bmir.protege.web.server.mansyntax.render;
 
 import edu.stanford.bmir.protege.web.server.index.DeprecatedEntitiesByEntityIndex;
-import edu.stanford.bmir.protege.web.shared.inject.ProjectSingleton;
+import edu.stanford.bmir.protege.web.server.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

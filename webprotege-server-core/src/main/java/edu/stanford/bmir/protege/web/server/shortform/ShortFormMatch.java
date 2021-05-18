@@ -1,14 +1,10 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
-import com.google.common.primitives.ImmutableIntArray;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-import java.util.Comparator;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;

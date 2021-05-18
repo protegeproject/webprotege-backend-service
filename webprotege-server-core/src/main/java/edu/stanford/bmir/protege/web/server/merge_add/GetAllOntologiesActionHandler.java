@@ -6,10 +6,8 @@ import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.merge.ProjectOntologiesBuilder;
 import edu.stanford.bmir.protege.web.server.project.Ontology;
 import edu.stanford.bmir.protege.web.server.upload.UploadedOntologiesCache;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.merge_add.GetAllOntologiesAction;
-import edu.stanford.bmir.protege.web.shared.merge_add.GetAllOntologiesResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
 
 public class GetAllOntologiesActionHandler extends AbstractProjectActionHandler<GetAllOntologiesAction, GetAllOntologiesResult> {
     private static final Logger logger = LoggerFactory.getLogger(NewOntologyMergeAddActionHandler.class);

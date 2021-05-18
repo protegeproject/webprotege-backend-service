@@ -1,7 +1,6 @@
 package edu.stanford.bmir.protege.web.server.form;
 
 import edu.stanford.bmir.protege.web.server.persistence.TypeSafeConverter;
-import edu.stanford.bmir.protege.web.shared.form.FormId;
 import org.mongodb.morphia.converters.SimpleValueConverter;
 import org.mongodb.morphia.mapping.MappedField;
 

@@ -2,18 +2,20 @@ package edu.stanford.bmir.protege.web.server.dispatch.handlers;
 
 import edu.stanford.bmir.protege.web.server.access.AccessManager;
 import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectActionHandler;
+import edu.stanford.bmir.protege.web.server.dispatch.Action;
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.project.DefaultOntologyIdManager;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.ontology.GetRootOntologyIdAction;
-import edu.stanford.bmir.protege.web.shared.ontology.GetRootOntologyIdResult;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.ontology.GetRootOntologyIdAction;
+import edu.stanford.bmir.protege.web.server.ontology.GetRootOntologyIdResult;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>
@@ -40,8 +42,8 @@ public class GetRootOntologyIdActionHandler extends AbstractProjectActionHandler
     }
 
     /**
-     * Gets the class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action} handled by this handler.
-     * @return The class of {@link edu.stanford.bmir.protege.web.shared.dispatch.Action}.  Not {@code null}.
+     * Gets the class of {@link Action} handled by this handler.
+     * @return The class of {@link Action}.  Not {@code null}.
      */
     @Nonnull
     @Override
@@ -60,7 +62,7 @@ public class GetRootOntologyIdActionHandler extends AbstractProjectActionHandler
      * @param action The action to be handled/executed
      * @param executionContext The {@link edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext} that should be
      * used to provide details such as the
-     * {@link edu.stanford.bmir.protege.web.shared.user.UserId} of the user who requested the action be executed.
+     * {@link UserId} of the user who requested the action be executed.
      * @return The result of the execution to be returned to the client.
      */
     @Nonnull

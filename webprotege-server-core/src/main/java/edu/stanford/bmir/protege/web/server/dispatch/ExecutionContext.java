@@ -2,8 +2,8 @@ package edu.stanford.bmir.protege.web.server.dispatch;
 
 import com.google.common.base.MoreObjects;
 import edu.stanford.bmir.protege.web.server.session.WebProtegeSession;
-import edu.stanford.bmir.protege.web.shared.HasUserId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.HasUserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -31,7 +31,7 @@ public class ExecutionContext implements HasUserId {
     /**
      * Gets the {@link UserId} in this execution context.
      * @return The {@link UserId}.  Not {@code null}.  If the associated session (see {@link #getSession()})
-     * does not have a logged in user then the {@link edu.stanford.bmir.protege.web.shared.user.UserId}
+     * does not have a logged in user then the {@link UserId}
      * equal to the guest user is returned.
      */
     public UserId getUserId() {

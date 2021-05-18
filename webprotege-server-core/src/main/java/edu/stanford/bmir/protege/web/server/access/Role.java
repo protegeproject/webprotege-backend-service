@@ -2,8 +2,6 @@ package edu.stanford.bmir.protege.web.server.access;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.bmir.protege.web.shared.access.ActionId;
-import edu.stanford.bmir.protege.web.shared.access.RoleId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;

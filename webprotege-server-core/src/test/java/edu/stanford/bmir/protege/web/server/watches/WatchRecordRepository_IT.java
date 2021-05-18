@@ -2,9 +2,8 @@ package edu.stanford.bmir.protege.web.server.watches;
 
 import com.mongodb.MongoClient;
 import edu.stanford.bmir.protege.web.server.persistence.MongoTestUtils;
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
-import edu.stanford.bmir.protege.web.shared.watches.WatchType;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

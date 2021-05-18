@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.frame;
 
 import com.google.common.collect.Lists;
-import edu.stanford.bmir.protege.web.shared.frame.PlainPropertyValue;
-import edu.stanford.bmir.protege.web.shared.frame.PropertyValue;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

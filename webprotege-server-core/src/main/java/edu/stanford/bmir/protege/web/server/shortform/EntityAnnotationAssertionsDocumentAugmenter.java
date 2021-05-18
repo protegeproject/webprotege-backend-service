@@ -1,9 +1,6 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
 import edu.stanford.bmir.protege.web.server.index.ProjectAnnotationAssertionAxiomsBySubjectIndex;
-import edu.stanford.bmir.protege.web.shared.shortform.AnnotationAssertionDictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.AnnotationAssertionPathDictionaryLanguage;
-import edu.stanford.bmir.protege.web.shared.shortform.DictionaryLanguage;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;

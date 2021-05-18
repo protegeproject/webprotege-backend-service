@@ -2,8 +2,8 @@ package edu.stanford.bmir.protege.web.server.index;
 
 import com.google.auto.value.AutoValue;
 
-import edu.stanford.bmir.protege.web.shared.individuals.InstanceRetrievalMode;
-import edu.stanford.bmir.protege.web.shared.pagination.Page;
+import edu.stanford.bmir.protege.web.server.individuals.InstanceRetrievalMode;
+import edu.stanford.bmir.protege.web.server.pagination.Page;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 

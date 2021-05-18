@@ -1,19 +1,14 @@
 package edu.stanford.bmir.protege.web.server.project;
 
-import com.google.common.base.Optional;
 import edu.stanford.bmir.protege.web.server.index.ProjectOntologiesIndex;
-import edu.stanford.bmir.protege.web.shared.util.UUIDUtil;
-import org.hamcrest.Matchers;
+import edu.stanford.bmir.protege.web.server.util.UUIDUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
-import java.util.NoSuchElementException;
-import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;

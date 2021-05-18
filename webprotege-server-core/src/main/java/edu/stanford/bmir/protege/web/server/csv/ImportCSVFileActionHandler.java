@@ -9,19 +9,16 @@ import edu.stanford.bmir.protege.web.server.dispatch.AbstractProjectChangeHandle
 import edu.stanford.bmir.protege.web.server.dispatch.ExecutionContext;
 import edu.stanford.bmir.protege.web.server.events.EventManager;
 import edu.stanford.bmir.protege.web.server.inject.UploadsDirectory;
-import edu.stanford.bmir.protege.web.shared.access.BuiltInAction;
-import edu.stanford.bmir.protege.web.shared.csv.CSVGrid;
-import edu.stanford.bmir.protege.web.shared.csv.ImportCSVFileAction;
-import edu.stanford.bmir.protege.web.shared.csv.ImportCSVFileResult;
-import edu.stanford.bmir.protege.web.shared.event.EventList;
-import edu.stanford.bmir.protege.web.shared.event.EventTag;
-import edu.stanford.bmir.protege.web.shared.event.ProjectEvent;
+import edu.stanford.bmir.protege.web.server.access.BuiltInAction;
+import edu.stanford.bmir.protege.web.server.event.EventList;
+import edu.stanford.bmir.protege.web.server.event.EventTag;
+import edu.stanford.bmir.protege.web.server.event.ProjectEvent;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.*;
 
-import static edu.stanford.bmir.protege.web.shared.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.bmir.protege.web.server.access.BuiltInAction.EDIT_ONTOLOGY;
 import static java.util.Collections.singletonList;
 
 /**

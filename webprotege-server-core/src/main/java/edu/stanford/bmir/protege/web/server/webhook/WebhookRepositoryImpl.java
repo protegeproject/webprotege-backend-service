@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.webhook;
 
-import edu.stanford.bmir.protege.web.shared.project.ProjectId;
-import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhook;
-import edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhookEventType;
+import edu.stanford.bmir.protege.web.server.project.ProjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.query.Query;
 
@@ -11,8 +9,8 @@ import javax.inject.Inject;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhook.PROJECT_ID;
-import static edu.stanford.bmir.protege.web.shared.webhook.ProjectWebhook.SUBSCRIBED_TO_EVENTS;
+import static edu.stanford.bmir.protege.web.server.webhook.ProjectWebhook.PROJECT_ID;
+import static edu.stanford.bmir.protege.web.server.webhook.ProjectWebhook.SUBSCRIBED_TO_EVENTS;
 
 /**
  * Matthew Horridge

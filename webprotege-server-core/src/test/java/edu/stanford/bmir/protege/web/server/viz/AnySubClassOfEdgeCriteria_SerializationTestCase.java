@@ -1,8 +1,6 @@
 package edu.stanford.bmir.protege.web.server.viz;
 
-import edu.stanford.bmir.protege.web.shared.match.JsonSerializationTestUtil;
-import edu.stanford.bmir.protege.web.shared.viz.AnySubClassOfEdgeCriteria;
-import edu.stanford.bmir.protege.web.shared.viz.EdgeCriteria;
+import edu.stanford.bmir.protege.web.server.match.JsonSerializationTestUtil;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -8,7 +8,7 @@ import edu.stanford.bmir.protege.web.server.inject.OverridableFile;
 import edu.stanford.bmir.protege.web.server.mail.MessagingExceptionHandler;
 import edu.stanford.bmir.protege.web.server.mail.SendMailImpl;
 import edu.stanford.bmir.protege.web.server.templates.TemplateEngine;
-import edu.stanford.bmir.protege.web.shared.user.UserId;
+import edu.stanford.bmir.protege.web.server.user.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
