@@ -16,13 +16,7 @@
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-server-lucene</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
+        
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
