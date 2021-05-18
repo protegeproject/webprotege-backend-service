@@ -1,6 +1,7 @@
 package edu.stanford.bmir.protege.web.server.shortform;
 
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

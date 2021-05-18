@@ -2,7 +2,6 @@ package edu.stanford.bmir.protege.web.server.shortform;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
