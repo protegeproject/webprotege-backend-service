@@ -393,7 +393,6 @@
 
     <modules>
         <module>webprotege-server-common</module>
-        <module>webprotege-server-contract</module>
         <module>webprotege-server-core</module>
         <module>webprotege-server</module>
     </modules>
