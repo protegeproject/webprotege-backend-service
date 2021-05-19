@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.watches;
 
 import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
+import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
@@ -30,43 +32,46 @@ public class WatchRecordRepository_IT {
 
     private WatchRecordRepositoryImpl repository;
 
-    private Datastore datastore;
-
-    private MongoClient mongoClient;
-
     private UserId userId = UserId.getUserId("The User");
 
     private OWLEntity entity = new OWLClassImpl(IRI.create("http://the.ontology/ClsA"));
 
     private ProjectId projectId = ProjectId.get(UUID.randomUUID().toString());
 
+    private MongoClient client;
+
+    private MongoDatabase database;
+
     @Before
     public void setUp() throws Exception {
-        Morphia morphia = MongoTestUtils.createMorphia();
-        mongoClient = MongoTestUtils.createMongoClient();
-        datastore = morphia.createDatastore(mongoClient, MongoTestUtils.getTestDbName());
-        repository = new WatchRecordRepositoryImpl(datastore);
+        client = MongoTestUtils.createMongoClient();
+        database = client.getDatabase(MongoTestUtils.getTestDbName());
+        repository = new WatchRecordRepositoryImpl(database, new ObjectMapperProvider().get());
         repository.ensureIndexes();
     }
 
     @Test
     public void shouldSaveWatch() {
         repository.saveWatchRecord(new WatchRecord(projectId, userId, entity, WatchType.ENTITY));
-        assertThat(datastore.getCount(WatchRecord.class), is(1L));
+        assertThat(getDocumentCount(), is(1L));
+    }
+
+    private long getDocumentCount() {
+        return database.getCollection("Watches").countDocuments();
     }
 
     @Test
     public void shouldNotDuplicateWatch() {
         repository.saveWatchRecord(new WatchRecord(projectId, userId, entity, WatchType.ENTITY));
         repository.saveWatchRecord(new WatchRecord(projectId, userId, entity, WatchType.ENTITY));
-        assertThat(datastore.getCount(WatchRecord.class), is(1L));
+        assertThat(getDocumentCount(), is(1L));
     }
 
     @Test
     public void shouldReplaceWatchWithDifferentType() {
         repository.saveWatchRecord(new WatchRecord(projectId, userId, entity, WatchType.ENTITY));
         repository.saveWatchRecord(new WatchRecord(projectId, userId, entity, WatchType.BRANCH));
-        assertThat(datastore.getCount(WatchRecord.class), is(1L));
+        assertThat(getDocumentCount(), is(1L));
         List<WatchRecord> watches = repository.findWatchRecords(projectId, userId, singleton(entity));
         assertThat(watches.size(), is(1));
         assertThat(watches.iterator().next().getType(), is(WatchType.BRANCH));
@@ -90,14 +95,14 @@ public class WatchRecordRepository_IT {
     public void shouldDeleteWatchRecord() {
         WatchRecord watchRecord = new WatchRecord(projectId, userId, entity, WatchType.ENTITY);
         repository.saveWatchRecord(watchRecord);
-        assertThat(datastore.getCount(WatchRecord.class), is(1L));
+        assertThat(getDocumentCount(), is(1L));
         repository.deleteWatchRecord(watchRecord);
-        assertThat(datastore.getCount(WatchRecord.class), is(0L));
+        assertThat(getDocumentCount(), is(0L));
     }
 
     @After
     public void tearDown() throws Exception {
-        datastore.getDB().dropDatabase();
-        mongoClient.close();
+        database.drop();
+        client.close();
     }
 }
