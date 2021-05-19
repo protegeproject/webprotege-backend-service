@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.jackson;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import edu.stanford.protege.webprotege.entity.Entity;
 import org.semanticweb.owlapi.model.EntityType;
 
 import java.io.IOException;
@@ -21,24 +22,29 @@ public class EntityTypeDeserializer extends StdDeserializer<EntityType<?>> {
     @Override
     public EntityType<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         String typeName = jsonParser.getValueAsString();
-        if(EntityType.CLASS.getPrefixedName().equals(typeName)) {
+        if(isEntityType(typeName, EntityType.CLASS)) {
             return EntityType.CLASS;
         }
-        else if(EntityType.OBJECT_PROPERTY.getPrefixedName().equals(typeName)) {
+        else if(isEntityType(typeName, EntityType.OBJECT_PROPERTY)) {
             return EntityType.OBJECT_PROPERTY;
         }
-        else if(EntityType.DATA_PROPERTY.getPrefixedName().equals(typeName)) {
+        else if(isEntityType(typeName, EntityType.DATA_PROPERTY)) {
             return EntityType.DATA_PROPERTY;
         }
-        else if(EntityType.ANNOTATION_PROPERTY.getPrefixedName().equals(typeName)) {
+        else if(isEntityType(typeName, EntityType.ANNOTATION_PROPERTY)) {
             return EntityType.ANNOTATION_PROPERTY;
         }
-        else if(EntityType.NAMED_INDIVIDUAL.getPrefixedName().equals(typeName)) {
+        else if(isEntityType(typeName, EntityType.NAMED_INDIVIDUAL)) {
             return EntityType.NAMED_INDIVIDUAL;
         }
-        else if(EntityType.DATATYPE.getPrefixedName().equals(typeName)) {
+        else if(isEntityType(typeName, EntityType.DATATYPE)) {
             return EntityType.DATATYPE;
         }
         throw new IOException("Unrecognized entity type name: " + typeName);
+    }
+
+    private static boolean isEntityType(String typeName, EntityType<?> entityType) {
+        return entityType.getPrefixedName().equals(typeName)
+                || entityType.getName().equals(typeName);
     }
 }
