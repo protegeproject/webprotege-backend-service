@@ -14,7 +14,7 @@
 	<!-- Listener for initializing and disposing WebProtege -->
 	
 	<listener>
-		<listener-class>edu.stanford.bmir.protege.web.server.app.WebProtegeServletContextListener</listener-class>
+		<listener-class>edu.stanford.protege.webprotege.app.WebProtegeServletContextListener</listener-class>
 	</listener>
 
 	<!-- Default page to serve -->
