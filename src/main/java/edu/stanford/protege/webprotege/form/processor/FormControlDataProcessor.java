@@ -40,9 +40,14 @@ public class FormControlDataProcessor {
 
             @Override
             public void visit(@Nonnull FormData formData) {
-                var formDataProcessor = formDataProcessorProvider.get();
-                var nestedFormFrameBuilder = formDataProcessor.processFormData(formData, true);
-                formFrameBuilder.add(binding, nestedFormFrameBuilder);
+                var nonEmpty = formData.getFormFieldData()
+                                       .stream()
+                                       .anyMatch(FormFieldData::isNonEmpty);
+                if (nonEmpty) {
+                    var formDataProcessor = formDataProcessorProvider.get();
+                    var nestedFormFrameBuilder = formDataProcessor.processFormData(formData, true);
+                    formFrameBuilder.add(binding, nestedFormFrameBuilder);
+                }
             }
 
             @Override
@@ -105,3 +110,4 @@ public class FormControlDataProcessor {
              .ifPresent(iri -> formFrameBuilder.addIriValue(binding, iri));
     }
 }
+

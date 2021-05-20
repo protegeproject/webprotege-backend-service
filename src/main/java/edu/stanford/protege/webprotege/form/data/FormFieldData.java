@@ -33,4 +33,12 @@ public abstract class FormFieldData {
      */
     @Nonnull
     public abstract Page<FormControlData> getFormControlData();
+
+    public boolean isEmpty() {
+        return getFormControlData().getPageElements().isEmpty();
+    }
+
+    public boolean isNonEmpty() {
+        return !isEmpty();
+    }
 }
