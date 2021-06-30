@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.form;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.form.processor.FormDataConverter;
 import edu.stanford.protege.webprotege.frame.EmptyEntityFrameFactory;
 import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
@@ -19,7 +20,9 @@ import org.semanticweb.owlapi.model.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -42,7 +45,7 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     private final ImmutableMap<FormId, FormData> pristineFormsData;
 
     @Nonnull
-    private final ImmutableMap<FormId, FormData> editedFormsData;
+    private final FormDataByFormId editedFormsData;
 
     @Nonnull
     private final FrameChangeGeneratorFactory frameChangeGeneratorFactory;
@@ -62,18 +65,22 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     @Nonnull
     private final DefaultOntologyIdManager defaultOntologyIdManager;
 
+    @Nonnull
+    private final DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory;
+
 
     @Inject
     public EntityFormChangeListGenerator(@Nonnull OWLEntity subject,
                                          @Nonnull ImmutableMap<FormId, FormData> pristineFormsData,
-                                         @Nonnull ImmutableMap<FormId, FormData> editedFormData,
+                                         @Nonnull FormDataByFormId editedFormData,
                                          @Nonnull FormDataConverter formDataProcessor,
                                          @Nonnull MessageFormatter messageFormatter,
                                          @Nonnull FrameChangeGeneratorFactory frameChangeGeneratorFactory,
                                          @Nonnull FormFrameConverter formFrameConverter,
                                          @Nonnull EmptyEntityFrameFactory emptyEntityFrameFactory,
                                          @Nonnull OWLDataFactory dataFactory,
-                                         @Nonnull DefaultOntologyIdManager defaultOntologyIdManager) {
+                                         @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                         @Nonnull DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory) {
         this.subject = checkNotNull(subject);
         this.pristineFormsData = checkNotNull(pristineFormsData);
         this.editedFormsData = checkNotNull(editedFormData);
@@ -84,6 +91,7 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
         this.emptyEntityFrameFactory = emptyEntityFrameFactory;
         this.dataFactory = dataFactory;
         this.defaultOntologyIdManager = defaultOntologyIdManager;
+        this.deleteEntitiesChangeListGeneratorFactory = deleteEntitiesChangeListGeneratorFactory;
     }
 
     @Override
@@ -91,14 +99,11 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
         var allChanges = new ArrayList<OntologyChangeList<OWLEntity>>();
         for (FormId formId : pristineFormsData.keySet()) {
             var pristineFormData = pristineFormsData.get(formId);
-            var editedFormData = editedFormsData.get(formId);
+            var editedFormData = editedFormsData.getFormData(formId);
             if (pristineFormData == null) {
                 throw new RuntimeException("Pristine form data not found for form " + formId);
             }
-            var editedFormFrame = formDataProcessor.convert(editedFormData);
-            if (editedFormFrame == null) {
-                throw new RuntimeException("Edited form data not found for form " + formId);
-            }
+            var editedFormFrame = getFormFrame(editedFormData);
             var pristineFormFrame = formDataProcessor.convert(pristineFormData);
             if (!pristineFormFrame.equals(editedFormFrame)) {
                 var pristineFramesBySubject = getFormFrameClosureBySubject(pristineFormFrame);
@@ -114,6 +119,15 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
         else {
             return combineIndividualChangeLists(allChanges);
         }
+    }
+
+    private FormFrame getFormFrame(@Nonnull Optional<FormData> editedFormData) {
+        return editedFormData.map(formDataProcessor::convert)
+                             .orElse(emptyFormFrame(subject));
+    }
+
+    private static FormFrame emptyFormFrame(OWLEntity subject) {
+        return FormFrame.get(FormEntitySubject.get(subject));
     }
 
     private OntologyChangeList<OWLEntity> emptyChangeList() {
@@ -164,6 +178,15 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
                 resultBuilder.add(changes);
                 var emptyFormFrame = FormFrame.get(FormSubject.get(subject.getEntity()));
                 generateChangesForInstances(subject.getEntity(), pristineFrame, emptyFormFrame, resultBuilder);
+                if(!this.subject.equals(subject.getEntity())) {
+                    // Non-top-level subject.  This needs deleting because it corresponds to a grid row subject,
+                    // or sub-form subject
+                    var deletionChangeListGenerator = deleteEntitiesChangeListGeneratorFactory.create(Collections.singleton(subject.getEntity()));
+                    var deletionChanges = OntologyChangeList.<OWLEntity>builder()
+                            .addAll(deletionChangeListGenerator.generateChanges(context).getChanges())
+                            .build(subject.getEntity());
+                    resultBuilder.add(deletionChanges);
+                }
             }
             else {
                 // Edited, possibly

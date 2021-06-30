@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.form.EntityFormChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.form.FormDataByFormId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -22,7 +23,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-10-01
  */
 public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGenerator<OWLEntity> {
-
     @Nonnull
     private final EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory;
 
@@ -130,12 +130,12 @@ public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGe
                                                FormData.empty(entity, formId));
         var newEntityFormData = ImmutableMap.of(formId,
                                                 formData);
-        var formChangesList = formChangeListGeneratorFactory.create(entity, pristineFormData, newEntityFormData);
+        var formChangesList = formChangeListGeneratorFactory.create(entity, pristineFormData, new FormDataByFormId(newEntityFormData));
         var formChanges = formChangesList.generateChanges(context);
         return OntologyChangeList.<OWLEntity>builder()
-                          .addAll(changeListBuilder.build())
-                          .addAll(formChanges.getChanges())
-                          .build(formChanges.getResult());
+                .addAll(changeListBuilder.build())
+                .addAll(formChanges.getChanges())
+                .build(formChanges.getResult());
     }
 
     @Override
@@ -147,6 +147,6 @@ public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGe
     @Override
     public String getMessage(ChangeApplicationResult<OWLEntity> result) {
         return "Created " + renderingManager.getRendering(result.getSubject())
-                .getBrowserText();
+                                            .getBrowserText();
     }
 }

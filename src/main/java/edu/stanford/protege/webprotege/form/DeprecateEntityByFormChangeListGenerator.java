@@ -160,8 +160,8 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
         addChangesToAddDeprecationFormData(context, changeListBuilder);
 
         return OntologyChangeList.<OWLEntity>builder()
-                                 .addAll(changeListBuilder.build())
-                                 .build(entityToBeDeprecated);
+                .addAll(changeListBuilder.build())
+                .build(entityToBeDeprecated);
     }
 
     private void addChangesToReplaceOrDeleteEntity(ChangeGenerationContext context,
@@ -258,7 +258,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                                                                                      .equals(FormFieldDeprecationStrategy.LEAVE_VALUES_INTACT)))
                                                       .collect(toImmutableList());
         var formDataToPreserve = getFormData(preservedFormDescriptors, entityToBeDeprecated);
-        var changes = formChangeListGeneratorFactory.createForAdd(entityToBeDeprecated, formDataToPreserve)
+        var changes = formChangeListGeneratorFactory.createForAdd(entityToBeDeprecated, new FormDataByFormId(formDataToPreserve))
                                                     .generateChanges(context)
                                                     .getChanges();
         changeListBuilder.addAll(changes);
@@ -291,9 +291,9 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
 
         // Generate the changes to remove the deprecated form data from the replacement entity
         changesListBuilder.addAll(formChangeListGeneratorFactory.createForRemove(replacementEntity.get(),
-                                                                      formDataOnReplacementToRemove)
-                                                     .generateChanges(context)
-                                                     .getChanges());
+                                                                                 formDataOnReplacementToRemove)
+                                                                .generateChanges(context)
+                                                                .getChanges());
 
         // Make sure that we have not inadvertently removed any form data from the replacement.  We do
         // this by adding back in all of the fields on the replacement entity.  Changes that add back existing
@@ -302,9 +302,9 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                                                         projectId,
                                                                                         FormPurpose.ENTITY_EDITING);
         var formDataForReplacement = getFormData(formDescriptorsFormReplacementEntity, replacementEntity.get());
-        changesListBuilder.addAll(formChangeListGeneratorFactory.createForAdd(replacementEntity.get(), formDataForReplacement)
-                                                     .generateChanges(context)
-                                                     .getChanges());
+        changesListBuilder.addAll(formChangeListGeneratorFactory.createForAdd(replacementEntity.get(), new FormDataByFormId(formDataForReplacement))
+                                                                .generateChanges(context)
+                                                                .getChanges());
 
 
     }
@@ -315,8 +315,8 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
             return;
         }
         formChangeListGeneratorFactory.createForAdd(entityToBeDeprecated,
-                                                    ImmutableMap.of(deprecationFormData.get().getFormId(),
-                                                                    deprecationFormData.get()))
+                                                    new FormDataByFormId(ImmutableMap.of(deprecationFormData.get().getFormId(),
+                                                                                         deprecationFormData.get())))
                                       .generateChanges(context)
                                       .getChanges()
                                       .forEach(changeBuilder::add);
