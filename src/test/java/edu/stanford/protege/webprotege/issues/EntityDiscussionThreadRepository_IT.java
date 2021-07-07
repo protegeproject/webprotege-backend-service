@@ -79,7 +79,7 @@ public class EntityDiscussionThreadRepository_IT {
 
     @Test
     public void shouldSaveItem() {
-        long count = getCollection().count(new Document("_id", thread.getId().getId()));
+        long count = getCollection().countDocuments(new Document("_id", thread.getId().getId()));
         assertThat(count, is(1L));
     }
 
@@ -98,7 +98,7 @@ public class EntityDiscussionThreadRepository_IT {
     @Test
     public void shouldNotSaveItemTwice() {
         repository.saveThread(thread);
-        long count = getCollection().count(new Document("_id", thread.getId().getId()));
+        long count = getCollection().countDocuments(new Document("_id", thread.getId().getId()));
         assertThat(count, is(1L));
     }
 

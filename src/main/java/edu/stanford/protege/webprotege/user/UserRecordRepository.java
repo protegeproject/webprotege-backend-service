@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.user;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.UpdateOptions;
 import org.bson.Document;
 
@@ -64,7 +65,7 @@ public class UserRecordRepository {
 
     public void save(UserRecord userRecord) {
         Document document = converter.toDocument(userRecord);
-        collection.replaceOne(byUserId(userRecord.getUserId()), document, new UpdateOptions().upsert(true));
+        collection.replaceOne(byUserId(userRecord.getUserId()), document, new ReplaceOptions().upsert(true));
     }
 
     public void delete(UserId userId) {

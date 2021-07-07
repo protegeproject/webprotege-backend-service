@@ -51,21 +51,21 @@ public class ProjectAccessManagerImpl_IT {
     @Test
     public void shouldSaveItem() {
         manager.logProjectAccess(projectId, userId, TIMESTAMP_A);
-        assertThat(getCollection().count(), is(1L));
+        assertThat(getCollection().countDocuments(), is(1L));
     }
 
     @Test
     public void shouldNotSaveDuplicateProjectUserItems() {
         manager.logProjectAccess(projectId, userId, TIMESTAMP_A);
         manager.logProjectAccess(projectId, userId, TIMESTAMP_B);
-        assertThat(getCollection().count(), is(1L));
+        assertThat(getCollection().countDocuments(), is(1L));
     }
 
     @Test
     public void shouldSaveSameProjectDifferentUsers() {
         manager.logProjectAccess(projectId, userId, TIMESTAMP_A);
         manager.logProjectAccess(projectId, otherUserId, TIMESTAMP_B);
-        assertThat(getCollection().count(), is(2L));
+        assertThat(getCollection().countDocuments(), is(2L));
     }
 
     private MongoCollection<Document> getCollection() {

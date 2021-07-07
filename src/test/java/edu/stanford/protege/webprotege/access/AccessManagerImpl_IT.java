@@ -113,7 +113,7 @@ public class AccessManagerImpl_IT {
                 resource,
                 assignedRoles
         );
-        assertThat(collection.count(), is(1L));
+        assertThat(collection.countDocuments(), is(1L));
     }
 
     @Test

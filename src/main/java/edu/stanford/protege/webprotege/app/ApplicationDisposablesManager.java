@@ -3,8 +3,10 @@ package edu.stanford.protege.webprotege.app;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
+import org.springframework.beans.factory.DisposableBean;
 
 import javax.annotation.Nonnull;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -29,7 +31,9 @@ public class ApplicationDisposablesManager {
         disposableObjectManager.register(disposable);
     }
 
+    @PreDestroy
     public void dispose() {
         disposableObjectManager.dispose();
     }
+
 }

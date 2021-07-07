@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.crud.persistence;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.UpdateOptions;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
@@ -51,6 +52,6 @@ public class ProjectEntityCrudKitSettingsRepository {
     public void save(@Nonnull ProjectEntityCrudKitSettings settings) {
         collection.replaceOne(new Document("_id", settings.getProjectId().getId()),
                               objectMapper.convertValue(settings, Document.class),
-                              new UpdateOptions().upsert(true));
+                              new ReplaceOptions().upsert(true));
     }
 }

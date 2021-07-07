@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
 import com.google.common.collect.ImmutableList;
+import dagger.Component;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.project.ProjectManager;

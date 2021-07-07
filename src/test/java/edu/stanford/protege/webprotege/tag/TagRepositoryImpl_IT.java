@@ -101,7 +101,7 @@ public class TagRepositoryImpl_IT {
      * low level Java driver.
      */
     private long getTagsCollectionSize() {
-        return client.getDatabase(getTestDbName()).getCollection("Tags").count();
+        return client.getDatabase(getTestDbName()).getCollection("Tags").countDocuments();
     }
 
     @Test

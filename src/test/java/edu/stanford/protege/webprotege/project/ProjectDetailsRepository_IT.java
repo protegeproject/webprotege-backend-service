@@ -95,13 +95,13 @@ public class ProjectDetailsRepository_IT {
 
     @Test
     public void shouldSaveProjectDetails() {
-        assertThat(getCollection().count(), is(1L));
+        assertThat(getCollection().countDocuments(), is(1L));
     }
 
     @Test
     public void shouldUpdateProjectDetails() {
         repository.save(projectDetails);
-        assertThat(getCollection().count(), is(1L));
+        assertThat(getCollection().countDocuments(), is(1L));
     }
 
     private MongoCollection<Document> getCollection() {
@@ -138,7 +138,7 @@ public class ProjectDetailsRepository_IT {
     @Test
     public void shouldDeleteProject() {
         repository.delete(projectId);
-        assertThat(getCollection().count(), is(0L));
+        assertThat(getCollection().countDocuments(), is(0L));
     }
 
     @Test

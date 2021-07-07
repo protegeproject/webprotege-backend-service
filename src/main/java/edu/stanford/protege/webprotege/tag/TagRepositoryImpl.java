@@ -5,10 +5,7 @@ import com.mongodb.bulk.BulkWriteResult;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.IndexOptions;
-import com.mongodb.client.model.ReplaceOneModel;
-import com.mongodb.client.model.UpdateOptions;
-import com.mongodb.client.model.WriteModel;
+import com.mongodb.client.model.*;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
@@ -71,8 +68,8 @@ public class TagRepositoryImpl implements TagRepository, Repository {
         return toFilter(tag.getTagId());
     }
 
-    private static UpdateOptions upsert() {
-        return new UpdateOptions().upsert(true);
+    private static ReplaceOptions upsert() {
+        return new ReplaceOptions().upsert(true);
     }
 
     @Override

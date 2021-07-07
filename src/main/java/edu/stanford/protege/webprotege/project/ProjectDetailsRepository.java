@@ -6,6 +6,7 @@ import com.github.benmanes.caffeine.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 import edu.stanford.protege.webprotege.api.TimestampSerializer;
@@ -206,7 +207,7 @@ public class ProjectDetailsRepository implements Repository {
             writeLock.lock();
             var document = objectMapper.convertValue(projectRecord, Document.class);
             var projectId = projectRecord.getProjectId();
-            collection.replaceOne(withProjectId(projectId), document, new UpdateOptions().upsert(true));
+            collection.replaceOne(withProjectId(projectId), document, new ReplaceOptions().upsert(true));
             cache.invalidate(projectId);
             cache.get(projectId);
             displayLanguagesCache.invalidate(projectId);
