@@ -3,6 +3,8 @@ package edu.stanford.protege.webprotege.permissions;
 
 
 import edu.stanford.protege.webprotege.app.UserInSession;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.annotation.Nonnull;
 
@@ -18,6 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     permissions to do so.
  * </p>
  */
+@ResponseStatus(value = HttpStatus.FORBIDDEN)
 public class PermissionDeniedException extends RuntimeException {
 
     private UserInSession userInSession;
