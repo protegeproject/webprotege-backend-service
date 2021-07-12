@@ -1,18 +1,15 @@
 package edu.stanford.protege.webprotege.access;
 
-import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +25,8 @@ import static org.hamcrest.Matchers.*;
  * 11 Apr 2017
  */
 @SuppressWarnings("unchecked" )
-@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class AccessManagerImpl_IT {
 
     private static final String THE_USER_NAME = "The User";
@@ -41,9 +39,11 @@ public class AccessManagerImpl_IT {
 
     private static final String ACTION_CLOSURE_FIELD = "actionClosure";
 
+    @Autowired
     private AccessManagerImpl manager;
 
-    private MongoClient mongoClient;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private Subject subject;
 
@@ -51,40 +51,22 @@ public class AccessManagerImpl_IT {
 
     private Set<RoleId> assignedRoles;
 
-    private MongoDatabase database;
-
-    private MongoCollection<Document> collection;
-
-    @Mock
-    private RoleOracle roleOracle;
-
     private Document storedDocument;
-
-    private Document document1;
 
     private Document userQuery;
 
     @Before
     public void setUp() throws Exception {
-        Morphia morphia = MongoTestUtils.createMorphia();
-        mongoClient = MongoTestUtils.createMongoClient();
-        Datastore datastore = morphia.createDatastore(mongoClient, MongoTestUtils.getTestDbName());
-        manager = new AccessManagerImpl(RoleOracleImpl.get(),
-                                        datastore);
-
         subject = Subject.forUser(THE_USER_NAME);
         resource = ApplicationResource.get();
         assignedRoles = Collections.singleton(BuiltInRole.CAN_COMMENT.getRoleId());
-        database = mongoClient.getDatabase(MongoTestUtils.getTestDbName());
-        collection = database.getCollection("RoleAssignments");
+        userQuery = new Document(USER_NAME_FIELD, THE_USER_NAME);
+        storedDocument = getCollection().find(userQuery).first();
         manager.setAssignedRoles(
                 subject,
                 resource,
                 assignedRoles
         );
-
-        userQuery = new Document(USER_NAME_FIELD, THE_USER_NAME);
-        storedDocument = collection.find(userQuery).first();
     }
 
     @Test
@@ -113,30 +95,37 @@ public class AccessManagerImpl_IT {
                 resource,
                 assignedRoles
         );
-        assertThat(collection.countDocuments(), is(1L));
+        assertThat(countDocuments(), is(1L));
+    }
+
+    private long countDocuments() {
+        return getCollection().countDocuments();
+    }
+
+    private MongoCollection<Document> getCollection() {
+        return mongoTemplate.getCollection("RoleAssignments");
     }
 
     @Test
     public void shouldRebuildRoleClosure() {
-        collection.updateOne(userQuery, new Document("$set", new Document("roleClosure", emptyList())));
-        collection.updateOne(userQuery, new Document("$set", new Document("actionClosure", emptyList())));
+        getCollection().updateOne(userQuery, new Document("$set", new Document("roleClosure", emptyList())));
+        getCollection().updateOne(userQuery, new Document("$set", new Document("actionClosure", emptyList())));
         manager.rebuild();
-        Document rebuiltDocument = collection.find().first();
+        Document rebuiltDocument = getCollection().find().first();
         assertThat((List<String>) rebuiltDocument.get(ROLE_CLOSURE_FIELD), hasItems("CanView"));
     }
 
     @Test
     public void shouldRebuildActionClosure() {
-        collection.updateOne(userQuery, new Document("$set", new Document("roleClosure", emptyList())));
-        collection.updateOne(userQuery, new Document("$set", new Document("actionClosure", emptyList())));
+        getCollection().updateOne(userQuery, new Document("$set", new Document("roleClosure", emptyList())));
+        getCollection().updateOne(userQuery, new Document("$set", new Document("actionClosure", emptyList())));
         manager.rebuild();
-        Document rebuiltDocument = collection.find().first();
+        Document rebuiltDocument = getCollection().find().first();
         assertThat((List<String>) rebuiltDocument.get(ACTION_CLOSURE_FIELD), hasItems("ViewProject"));
     }
 
     @After
     public void tearDown() {
-        database.drop();
-        mongoClient.close();
+        getCollection().drop();
     }
 }

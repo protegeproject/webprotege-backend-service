@@ -3,9 +3,9 @@ package edu.stanford.protege.webprotege.tag;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.ErrorCategory;
-import com.mongodb.MongoClient;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteError;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.color.Color;
@@ -92,7 +92,7 @@ public class TagRepositoryImpl_IT {
 
     @After
     public void tearDown() {
-        client.dropDatabase(getTestDbName());
+        client.getDatabase(getTestDbName()).drop();
         client.close();
     }
 

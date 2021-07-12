@@ -3,12 +3,13 @@ package edu.stanford.protege.webprotege.tag;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,6 +22,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.tag.EntityTags.*;
 import static java.util.stream.Collectors.toMap;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Matthew Horridge
@@ -31,10 +34,7 @@ import static java.util.stream.Collectors.toMap;
 public class EntityTagsRepositoryImpl implements EntityTagsRepository, Repository {
 
     @Nonnull
-    private final ProjectId projectId;
-
-    @Nonnull
-    private final Datastore datastore;
+    private final MongoTemplate mongoTemplate;
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
@@ -42,94 +42,75 @@ public class EntityTagsRepositoryImpl implements EntityTagsRepository, Repositor
 
     private final Lock writeLock = readWriteLock.writeLock();
 
-    private boolean empty = false;
-
     @Inject
-    public EntityTagsRepositoryImpl(@Nonnull ProjectId projectId,
-                                    @Nonnull Datastore datastore) {
-        this.projectId = checkNotNull(projectId);
-        this.datastore = checkNotNull(datastore);
+    public EntityTagsRepositoryImpl(@Nonnull MongoTemplate mongoTemplate) {
+        this.mongoTemplate = checkNotNull(mongoTemplate);
     }
 
+    @PostConstruct
     @Override
     public void ensureIndexes() {
-        datastore.ensureIndexes(EntityTags.class);
-        empty = countTaggedEntities() == 0;
     }
 
     @Override
     public void save(@Nonnull EntityTags tag) {
         try {
             writeLock.lock();
-            datastore.delete(tagWithProjectIdAndEntity(tag.getProjectId(), tag.getEntity()));
-            datastore.save(tag);
-            empty = false;
+            mongoTemplate.remove(tagWithProjectIdAndEntity(tag.getProjectId(), tag.getEntity()), EntityTags.class);
+            mongoTemplate.save(tag);
         } finally {
             writeLock.unlock();
         }
     }
 
     @Override
-    public void addTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId) {
+    public void addTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId, ProjectId projectId) {
         try {
             writeLock.lock();
-            Query<EntityTags> query = tagWithProjectIdAndEntity(projectId, entity);
-            UpdateOperations<EntityTags> updateOps = datastore.createUpdateOperations(EntityTags.class);
-            updateOps.addToSet(TAGS, tagId);
-            datastore.update(query, updateOps);
-            empty = false;
+            Query query = tagWithProjectIdAndEntity(projectId, entity);
+            mongoTemplate.updateMulti(query, new Update().addToSet(TAGS, tagId), EntityTags.class);
         } finally {
             writeLock.unlock();
         }
     }
 
     @Override
-    public void removeTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId) {
+    public void removeTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId, ProjectId projectId) {
         try {
             writeLock.lock();
-            Query<EntityTags> query = tagWithProjectIdAndEntity(projectId, entity);
-            UpdateOperations<EntityTags> updateOps = datastore.createUpdateOperations(EntityTags.class);
-            updateOps.removeAll(TAGS, tagId);
-            datastore.update(query, updateOps);
-            empty = countTaggedEntities() == 0;
+            Query query = tagWithProjectIdAndEntity(projectId, entity);
+            mongoTemplate.updateMulti(query, new Update().pull(TAGS, tagId), EntityTags.class);
         } finally {
             writeLock.unlock();
         }
     }
 
     @Override
-    public void removeTag(@Nonnull TagId tagId) {
+    public void removeTag(@Nonnull TagId tagId, ProjectId projectId) {
         try {
             writeLock.lock();
-            Query<EntityTags> query = datastore.createQuery(EntityTags.class)
-                                               .field(PROJECT_ID).equal(projectId);
-            UpdateOperations<EntityTags> updateOps = datastore.createUpdateOperations(EntityTags.class);
-            updateOps.removeAll(TAGS, tagId);
-            datastore.update(query, updateOps);
-            empty = countTaggedEntities() == 0;
+            mongoTemplate.updateMulti(tagWithProjectId(projectId), new Update().pull(TAGS, tagId), EntityTags.class);
         } finally {
             writeLock.unlock();
         }
     }
 
-    private Query<EntityTags> tagWithProjectIdAndEntity(ProjectId projectId, OWLEntity entity) {
-        return datastore.createQuery(EntityTags.class)
-                        .field(PROJECT_ID).equal(projectId)
-                        .field(ENTITY).equal(entity);
+    private static Query tagWithProjectId(ProjectId projectId) {
+        return query(where(PROJECT_ID).is(projectId));
+    }
+
+    private Query tagWithProjectIdAndEntity(ProjectId projectId, OWLEntity entity) {
+        return query(where(PROJECT_ID).is(projectId).and(ENTITY).is(entity));
     }
 
     @Nonnull
-    public Map<OWLEntity, EntityTags> findAll() {
+    @Override
+    public Optional<EntityTags> findByEntity(@Nonnull OWLEntity entity, ProjectId projectId) {
         try {
             readLock.lock();
-            if(empty) {
-                return Collections.emptyMap();
-            }
-            return datastore.createQuery(EntityTags.class)
-                            .field(PROJECT_ID).equal(projectId)
-                            .asList()
-                            .stream()
-                            .collect(toMap(EntityTags::getEntity, tags -> tags));
+            var query = tagWithProjectIdAndEntity(projectId, entity);
+            var result = mongoTemplate.findOne(query, EntityTags.class);
+            return Optional.ofNullable(result);
         } finally {
             readLock.unlock();
         }
@@ -137,40 +118,19 @@ public class EntityTagsRepositoryImpl implements EntityTagsRepository, Repositor
 
     @Nonnull
     @Override
-    public Optional<EntityTags> findByEntity(@Nonnull OWLEntity entity) {
+    public Collection<EntityTags> findByTagId(@Nonnull TagId tagId, ProjectId projectId) {
         try {
             readLock.lock();
-            if(empty) {
-                return Optional.empty();
-            }
-            return Optional.ofNullable(tagWithProjectIdAndEntity(projectId, entity).get());
-        } finally {
-            readLock.unlock();
-        }
-    }
-
-    @Nonnull
-    @Override
-    public Collection<EntityTags> findByTagId(@Nonnull TagId tagId) {
-        try {
-            readLock.lock();
-            if(empty) {
-                return Collections.emptySet();
-            }
-            return datastore.find(EntityTags.class)
-                            .field(TAGS)
-                            .equal(tagId)
-                            .asList();
+            var query = query(where(TAGS).is(tagId));
+            return mongoTemplate.find(query, EntityTags.class);
         } finally {
             readLock.unlock();
         }
     }
 
     @Override
-    public long countTaggedEntities() {
-        return datastore.createQuery(EntityTags.class)
-                .field(PROJECT_ID).equal(projectId)
-                .count();
+    public long countTaggedEntities(ProjectId projectId) {
+        return mongoTemplate.count(tagWithProjectId(projectId), EntityTags.class);
     }
 
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
 
+import edu.stanford.protege.webprotege.ValueObject;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
@@ -19,12 +20,16 @@ import java.io.Serializable;
  */
 @AutoValue
 
-public abstract class PersonId implements Serializable, Comparable<PersonId> {
+public abstract class PersonId implements Serializable, Comparable<PersonId>, ValueObject {
 
     @JsonCreator
     @Nonnull
     public static PersonId get(@Nonnull String id) {
         return new AutoValue_PersonId(id);
+    }
+
+    public static PersonId valueOf(String id) {
+        return get(id);
     }
 
     @Nonnull
@@ -36,7 +41,10 @@ public abstract class PersonId implements Serializable, Comparable<PersonId> {
     @Nonnull
     public abstract String getId();
 
-
+    @Override
+    public String value() {
+        return getId();
+    }
 
     @Override
     public int compareTo(@Nonnull PersonId o) {

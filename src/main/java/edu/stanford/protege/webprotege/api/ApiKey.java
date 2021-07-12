@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 
@@ -23,6 +25,7 @@ public class ApiKey {
         this.key = key;
     }
 
+    @JsonCreator
     public static ApiKey valueOf(@Nonnull String key) {
         return new ApiKey(checkNotNull(key));
     }

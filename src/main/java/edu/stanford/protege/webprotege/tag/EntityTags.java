@@ -1,8 +1,10 @@
 package edu.stanford.protege.webprotege.tag;
 
 import edu.stanford.protege.webprotege.project.ProjectId;
-import org.mongodb.morphia.annotations.*;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -11,18 +13,17 @@ import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.tag.EntityTags.*;
+
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 15 Mar 2018
  */
-@Entity(noClassnameStored = true)
-@Indexes(
-        {
-                @Index(fields = {@Field(value = PROJECT_ID), @Field(ENTITY)}, options = @IndexOptions(unique = true)),
-                @Index(fields = @Field(value = TAGS))
-        })
+@Document(collection = "EntityTags")
+@CompoundIndexes({
+        @CompoundIndex(useGeneratedName = true, def = "{'tags':1}"),
+        @CompoundIndex(useGeneratedName = true, def = "{'projectId':1, 'entity': 1}", unique = true)
+})
 public class EntityTags {
 
     public static final String PROJECT_ID = "projectId";
@@ -37,13 +38,8 @@ public class EntityTags {
 
     private List<TagId> tags;
 
-    // For Morphia
-    private EntityTags() {
-    }
 
-    public EntityTags(@Nonnull ProjectId projectId,
-                      @Nonnull OWLEntity entity,
-                      @Nonnull List<TagId> tags) {
+    public EntityTags(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity, @Nonnull List<TagId> tags) {
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
         this.tags = new ArrayList<>(checkNotNull(tags));
@@ -78,18 +74,12 @@ public class EntityTags {
             return false;
         }
         EntityTags other = (EntityTags) obj;
-        return this.entity.equals(other.entity)
-                && this.projectId.equals(other.projectId)
-                && this.tags.equals(other.tags);
+        return this.entity.equals(other.entity) && this.projectId.equals(other.projectId) && this.tags.equals(other.tags);
     }
 
 
     @Override
     public String toString() {
-        return toStringHelper("EntityTags")
-                .addValue(projectId)
-                .addValue(entity)
-                .addValue(tags)
-                .toString();
+        return toStringHelper("EntityTags").addValue(projectId).addValue(entity).addValue(tags).toString();
     }
 }

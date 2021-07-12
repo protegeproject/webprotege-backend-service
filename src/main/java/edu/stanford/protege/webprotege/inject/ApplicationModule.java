@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.inject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Ticker;
 import com.google.common.collect.ImmutableList;
+import com.mongodb.client.MongoClients;
 import dagger.Module;
 import dagger.Provides;
 import edu.stanford.protege.webprotege.access.AccessManager;
@@ -56,6 +57,7 @@ import edu.stanford.protege.webprotege.webhook.WebhookRepositoryImpl;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntityProvider;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import javax.annotation.Nonnull;
@@ -412,5 +414,10 @@ public class ApplicationModule {
     PerspectiveLayoutRepository providePerspectiveLayoutsRepository(PerspectiveLayoutRepositoryImpl impl) {
         impl.ensureIndexes();
         return impl;
+    }
+
+    @Provides
+    MongoTemplate mongoTemplate() {
+        return new MongoTemplate(MongoClients.create(), "webprotege");
     }
 }

@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.api;
 
-import com.mongodb.MongoClient;
+
+import com.mongodb.client.MongoClient;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -43,10 +43,8 @@ public class UserApiKeyStoreImpl_IT {
 
     @Before
     public void setUp() throws Exception {
-        Morphia morphia = MongoTestUtils.createMorphia();
         mongoClient = MongoTestUtils.createMongoClient();
-        Datastore datastore = morphia.createDatastore(mongoClient, MongoTestUtils.getTestDbName());
-        store = new UserApiKeyStoreImpl(datastore);
+        store = new UserApiKeyStoreImpl(new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName()));
         store.ensureIndexes();
 
         record = new ApiKeyRecord(API_KEY_ID,
@@ -70,7 +68,8 @@ public class UserApiKeyStoreImpl_IT {
 
     @Test
     public void shouldNotFindUserForApiKey() {
-        Optional<UserId> userId = store.getUserIdForApiKey(mock(HashedApiKey.class));
+        var otherHashedKey = HashedApiKey.valueOf("blah");
+        Optional<UserId> userId = store.getUserIdForApiKey(otherHashedKey);
         assertThat(userId, is(Optional.empty()));
     }
 
@@ -138,7 +137,7 @@ public class UserApiKeyStoreImpl_IT {
 
     @After
     public void tearDown() {
-        mongoClient.dropDatabase(MongoTestUtils.getTestDbName());
+        mongoClient.getDatabase(MongoTestUtils.getTestDbName()).drop();
         mongoClient.close();
     }
 

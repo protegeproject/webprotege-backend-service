@@ -3,11 +3,9 @@ package edu.stanford.protege.webprotege.webhook;
 import com.mongodb.DuplicateKeyException;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.InsertOptions;
-import org.mongodb.morphia.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -15,6 +13,8 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.webhook.SlackWebhook.PROJECT_ID;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Matthew Horridge
@@ -26,33 +26,34 @@ public class SlackWebhookRepositoryImpl implements SlackWebhookRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(SlackWebhookRepositoryImpl.class);
 
-    private final Datastore datastore;
+    private final MongoTemplate mongo;
 
     @Inject
-    public SlackWebhookRepositoryImpl(@Nonnull Datastore datastore) {
-        this.datastore = checkNotNull(datastore);
+    public SlackWebhookRepositoryImpl(@Nonnull MongoTemplate mongo) {
+        this.mongo = checkNotNull(mongo);
     }
 
     @Override
     public void ensureIndexes() {
-        datastore.ensureIndexes(SlackWebhook.class);
+
     }
 
     @Override
     public List<SlackWebhook> getWebhooks(@Nonnull ProjectId projectId) {
-        return datastore.find(SlackWebhook.class).field(PROJECT_ID).equal(projectId).asList();
+        var query = query(where(PROJECT_ID).is(projectId));
+        return mongo.find(query, SlackWebhook.class);
     }
 
     @Override
     public void clearWebhooks(@Nonnull ProjectId projectId) {
-        Query<SlackWebhook> query = datastore.createQuery(SlackWebhook.class).field(PROJECT_ID).equal(projectId);
-        datastore.delete(query);
+        var query = query(where(PROJECT_ID).is(projectId));
+        mongo.remove(query, SlackWebhook.class);
     }
 
     @Override
     public void addWebhooks(@Nonnull List<SlackWebhook> webhooks) {
         try {
-            datastore.save(webhooks, new InsertOptions().continueOnError(true));
+            mongo.insert(webhooks, SlackWebhook.class);
         } catch (DuplicateKeyException e) {
             logger.debug("Ignored duplicate webhook", e);
         }

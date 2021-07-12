@@ -1,8 +1,12 @@
 package edu.stanford.protege.webprotege.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.user.UserId;
-import org.mongodb.morphia.annotations.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -16,13 +20,11 @@ import static edu.stanford.protege.webprotege.api.UserApiKeys.API_KEYS__API_KEY_
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
-@Entity(noClassnameStored = true)
-@Indexes(
-        {
-                @Index(fields = @Field(API_KEYS__API_KEY_ID), options = @IndexOptions(unique = true)),
-                @Index(fields = @Field(API_KEYS__API_KEY), options = @IndexOptions(unique = true))
-        }
-)
+@Document(collection = "UserApiKeys")
+@CompoundIndexes({
+        @CompoundIndex(def = "apiKeys.apiKeyId", unique = true),
+        @CompoundIndex(def = "apiKeys.apiKey", unique = true)
+})
 public class UserApiKeys {
 
     public static final String USER_ID = "_id";
@@ -38,15 +40,12 @@ public class UserApiKeys {
 
     private List<ApiKeyRecord> apiKeys;
 
-    // For Morphia
-    private UserApiKeys() {
-    }
-
-    public UserApiKeys(@Nonnull UserId userId, @Nonnull List<ApiKeyRecord> apiKeys) {
+    public UserApiKeys(@Nonnull @JsonProperty("_id") UserId userId, @Nonnull List<ApiKeyRecord> apiKeys) {
         this.userId = checkNotNull(userId);
         this.apiKeys = ImmutableList.copyOf(apiKeys);
     }
 
+    @JsonProperty("_id")
     @Nonnull
     public UserId getUserId() {
         return userId;

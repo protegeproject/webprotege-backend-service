@@ -1,7 +1,5 @@
 package edu.stanford.protege.webprotege;
 
-import dagger.Provides;
-import dagger.multibindings.IntoSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
@@ -32,6 +30,7 @@ import edu.stanford.protege.webprotege.user.CreateUserAccountActionHandler;
 import edu.stanford.protege.webprotege.user.LogOutUserActionHandler;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -114,14 +113,14 @@ public class ApplicationActionHandlerConfiguration {
         return new RemoveProjectsFromTrashActionHandler(projectDetailsManager);
     }
 
-    @UploadsDirectory
+    @Qualifier("uploadsDirectory")
     @Bean
     File getUploadsDirectory() {
         return new File("/tmp/uploads");
     }
 
     @Bean
-    public ApplicationActionHandler provideGetCSVGridActionHandler(@UploadsDirectory File uploadsDirectory) {
+    public ApplicationActionHandler provideGetCSVGridActionHandler(@Qualifier("uploadsDirectory") File uploadsDirectory) {
         return new GetCSVGridActionHandler(uploadsDirectory);
     }
 

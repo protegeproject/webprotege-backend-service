@@ -1,13 +1,10 @@
 package edu.stanford.protege.webprotege.api;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import edu.stanford.protege.webprotege.user.UserId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.UpdateOptions;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -18,6 +15,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.api.ApiKeyRecord.API_KEY_ID;
 import static edu.stanford.protege.webprotege.api.UserApiKeys.*;
 import static java.util.Collections.singletonList;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Matthew Horridge
@@ -29,58 +28,44 @@ public class UserApiKeyStoreImpl implements UserApiKeyStore {
     private static final int INCLUDE = 1;
 
     @Nonnull
-    private final Datastore datastore;
+    private final MongoTemplate mongoTemplate;
 
     @Inject
-    public UserApiKeyStoreImpl(@Nonnull Datastore datastore) {
-        this.datastore = checkNotNull(datastore);
-    }
-
-    private static DBObject object(String key, Object val) {
-        return new BasicDBObject(key, val);
+    public UserApiKeyStoreImpl(@Nonnull MongoTemplate mongoTemplate) {
+        this.mongoTemplate = checkNotNull(mongoTemplate);
     }
 
     @Override
     public void ensureIndexes() {
-        datastore.ensureIndexes(UserApiKeys.class);
     }
 
     @Override
     public void addApiKey(@Nonnull UserId userId, @Nonnull ApiKeyRecord record) {
-        UserApiKeys existingKeys = datastore.createQuery(UserApiKeys.class)
-                                            .field(USER_ID).equal(userId)
-                                            .get();
+        var query = query(where(USER_ID).is(userId));
+        var existingKeys = mongoTemplate.findOne(query, UserApiKeys.class);
         if (existingKeys == null) {
-            datastore.save(new UserApiKeys(userId, singletonList(record)));
+            mongoTemplate.save(new UserApiKeys(userId, singletonList(record)));
         }
         else {
             Optional<ApiKeyRecord> existingKeyRecord = existingKeys.getApiKeys().stream()
                                                                    .filter(r -> r.getApiKeyId().equals(record.getApiKeyId()))
                                                                    .findFirst();
             existingKeyRecord.ifPresent(existing -> dropApiKey(userId, existing.getApiKeyId()));
-            UpdateOperations<UserApiKeys> updateOps = datastore.createUpdateOperations(UserApiKeys.class)
-                                                               .addToSet(API_KEYS, record);
-            datastore.update(existingKeys, updateOps);
+            mongoTemplate.updateFirst(query, new Update().addToSet(API_KEYS, record), UserApiKeys.class);
         }
     }
 
     @Override
     public void dropApiKeys(@Nonnull UserId userId) {
-        datastore.delete(UserApiKeys.class, userId);
+        var query = query(where(USER_ID).is(userId));
+        mongoTemplate.findAndRemove(query, UserApiKeys.class);
     }
 
     @Override
     public void dropApiKey(@Nonnull UserId userId,
                            @Nonnull ApiKeyId apiKeyId) {
-        DBCollection collection = datastore.getCollection(UserApiKeys.class);
-        DBObject ops = object("$pull",
-                              // From
-                              object(API_KEYS,
-                                     // where
-                                     object(API_KEY_ID, apiKeyId.getId())));
-        // Match the UserId
-        DBObject query = object(USER_ID, userId.getUserName());
-        collection.update(query, ops);
+        var query = query(where(USER_ID).is(userId));
+        mongoTemplate.updateMulti(query, new Update().pull(API_KEYS, query(where(API_KEY_ID).is(apiKeyId))), UserApiKeys.class);
     }
 
     @Override
@@ -89,19 +74,15 @@ public class UserApiKeyStoreImpl implements UserApiKeyStore {
         List<ApiKeyRecord> nonDuplicates = records.stream()
                                                   .filter(r -> ids.add(r.getApiKeyId()))
                                                   .collect(Collectors.toList());
-        UpdateOperations<UserApiKeys> ops = datastore.createUpdateOperations(UserApiKeys.class)
-                                                     .set(API_KEYS, nonDuplicates);
-        Query<UserApiKeys> query = datastore.createQuery(UserApiKeys.class)
-                                            .field(USER_ID).equal(userId);
-        datastore.update(query, ops, new UpdateOptions().upsert(true));
+        var query = query(where(USER_ID).is(userId));
+        mongoTemplate.upsert(query, new Update().set(API_KEYS, nonDuplicates), UserApiKeys.class);
     }
 
     @Nonnull
     @Override
     public List<ApiKeyRecord> getApiKeys(@Nonnull UserId userId) {
-        UserApiKeys keys = datastore.createQuery(UserApiKeys.class)
-                                    .field(USER_ID).equal(userId)
-                                    .get();
+        var query = query(where(USER_ID).is(userId));
+        var keys = mongoTemplate.findOne(query, UserApiKeys.class);
         if (keys == null) {
             return Collections.emptyList();
         }
@@ -111,12 +92,9 @@ public class UserApiKeyStoreImpl implements UserApiKeyStore {
     @Nonnull
     @Override
     public Optional<UserId> getUserIdForApiKey(@Nonnull HashedApiKey apiKey) {
-        DBCollection collection = datastore.getCollection(UserApiKeys.class);
-        DBObject query = object(API_KEYS__API_KEY, apiKey.get());
-        DBObject projection = object(USER_ID, INCLUDE);
-        DBObject found = collection.findOne(query, projection);
+        var query = query(where(API_KEYS__API_KEY_ID).is(apiKey));
+        var found = mongoTemplate.findOne(query, UserApiKeys.class);
         return Optional.ofNullable(found)
-                       .map(object -> object.get(USER_ID).toString())
-                       .map(UserId::getUserId);
+                       .map(object -> found.getUserId());
     }
 }

@@ -2,8 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-
+import edu.stanford.protege.webprotege.ValueObject;
 
 
 import javax.annotation.Nonnull;
@@ -17,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 5 Oct 2016
  */
-public class ThreadId {
+public class ThreadId implements ValueObject {
 
     private String id;
 
@@ -31,12 +30,21 @@ public class ThreadId {
         return new ThreadId(UUID.randomUUID().toString());
     }
 
+    public static ThreadId valueOf(String id) {
+        return new ThreadId(id);
+    }
+
 
     private ThreadId() {
     }
 
     @JsonValue
     public String getId() {
+        return id;
+    }
+
+    @Override
+    public String value() {
         return id;
     }
 

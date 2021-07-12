@@ -4,13 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
 import com.google.common.collect.ImmutableList;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.AccessManagerImpl;
 import edu.stanford.protege.webprotege.access.RoleOracle;
 import edu.stanford.protege.webprotege.access.RoleOracleImpl;
-import edu.stanford.protege.webprotege.api.ActionExecutor;
+import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.auth.*;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
@@ -21,6 +21,8 @@ import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
 import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl;
+import edu.stanford.protege.webprotege.filemanager.ConfigDirectorySupplier;
+import edu.stanford.protege.webprotege.filemanager.ConfigInputStreamSupplier;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -35,6 +37,7 @@ import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
+import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
 import edu.stanford.protege.webprotege.upload.DocumentResolver;
 import edu.stanford.protege.webprotege.upload.DocumentResolverImpl;
@@ -46,11 +49,13 @@ import edu.stanford.protege.webprotege.util.TempFileFactoryImpl;
 import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
 import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.webhook.*;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import javax.inject.Provider;
@@ -65,6 +70,7 @@ import java.util.Set;
  * 2021-07-07
  */
 @Configuration
+@EnableMongoRepositories
 public class WebProtegeConfiguration {
 
     private static final String DATABASE_NAME = "webprotege";
@@ -76,6 +82,11 @@ public class WebProtegeConfiguration {
         return provider.get();
     }
 
+
+    @Bean
+    UploadsDirectoryProvider provideUploadsDirectoryProvider() {
+        return new UploadsDirectoryProvider();
+    }
 
     @Bean
     @UploadsDirectory
@@ -96,6 +107,11 @@ public class WebProtegeConfiguration {
     @Bean
     public MustacheFactory providesMustacheFactory() {
         return new DefaultMustacheFactory();
+    }
+
+    @Bean
+    DataDirectoryProvider getDataDirectoryProvider() {
+        return new DataDirectoryProvider();
     }
 
     @Bean
@@ -153,8 +169,8 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    ProjectComponentFactory getProjectComponentFactory(ServerComponent serverComponent) {
-        return new ProjectComponentFactoryImpl(serverComponent);
+    ProjectComponentFactory getProjectComponentFactory(ApplicationContext applicationContext) {
+        return new ProjectComponentFactoryImpl(applicationContext);
     }
 
     @Bean
@@ -249,8 +265,8 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    ProjectAccessManager getProjectAccessManager(MongoDatabase mongoDatabase) {
-        return new ProjectAccessManagerImpl(mongoDatabase);
+    ProjectAccessManager getProjectAccessManager(MongoTemplate mongoTemplate) {
+        return new ProjectAccessManagerImpl(mongoTemplate);
     }
 
 
@@ -268,42 +284,24 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    MongoDatabase getMongoDatabase(MongoClient mongoClient) {
-        return mongoClient.getDatabase(DATABASE_NAME);
-    }
-
-    @Bean
-    @Singleton
     RoleOracle getRoleOracle() {
         return RoleOracleImpl.get();
     }
 
     @Bean
-    Morphia getMorphia() {
-        return new Morphia();
-    }
-
-    @Bean
-    MongoClient getMongoClient() {
-        return new MongoClient();
-    }
-
-
-    @Bean
-    Datastore getDatastore(Morphia morphia, MongoClient mongoClient) {
-        return morphia.createDatastore(mongoClient, DATABASE_NAME);
-    }
-
-    @Bean
     @Singleton
-    AccessManager getAccessManager(RoleOracle roleOracle,
-                                   Datastore datastore) {
-        return new AccessManagerImpl(roleOracle, datastore);
+    AccessManagerImpl getAccessManager(RoleOracle roleOracle, MongoTemplate mongoTemplate) {
+        return new AccessManagerImpl(roleOracle, mongoTemplate);
     }
 
     @Bean
-    UserRecordRepository getUserRecordRepository(MongoDatabase database) {
-        return new UserRecordRepository(database, new UserRecordConverter());
+    UserRecordConverter provideUserRecordConverter() {
+        return new UserRecordConverter();
+    }
+
+    @Bean
+    UserRecordRepository getUserRecordRepository(MongoTemplate mongoTemplate) {
+        return new UserRecordRepository(mongoTemplate, new UserRecordConverter());
     }
 
     @Bean
@@ -319,7 +317,7 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    DispatchServiceExecutor getDispatchServiceExecutorImpl(ApplicationActionHandlerRegistry actionHandlerRegistry,
+    DispatchServiceExecutor getDispatchServiceExecutor(ApplicationActionHandlerRegistry actionHandlerRegistry,
                                                                ProjectManager projectManager,
                                                                UserInSessionFactory userInSessionFactory) {
         return new DispatchServiceExecutorImpl(actionHandlerRegistry,
@@ -342,14 +340,8 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    public ServerComponent getServerComponent() {
-        return DaggerServerComponent.create();
-    }
-
-    @Bean
-    @Singleton
-    public ApplicationDisposablesManager getApplicationDisposablesManager() {
-        return getServerComponent().getApplicationDisposablesManager();
+    public ApplicationDisposablesManager getApplicationDisposablesManager(DisposableObjectManager disposableObjectManager) {
+        return new ApplicationDisposablesManager(disposableObjectManager);
     }
 
     @Bean
@@ -359,21 +351,21 @@ public class WebProtegeConfiguration {
 
     @Singleton
     @Bean
-    ProjectDetailsRepository getProjectDetailsRepository(MongoDatabase mongoDatabase,
+    ProjectDetailsRepository getProjectDetailsRepository(MongoTemplate mongoTemplate,
                                                          ObjectMapper objectMapper) {
-        return new ProjectDetailsRepository(mongoDatabase, objectMapper);
+        return new ProjectDetailsRepository(mongoTemplate, objectMapper);
     }
 
     @Bean
     @Singleton
-    SlackWebhookRepository getSlackWebhookRepository(Datastore datastore) {
-        return new SlackWebhookRepositoryImpl(datastore);
+    SlackWebhookRepository getSlackWebhookRepository(MongoTemplate mongoTemplate) {
+        return new SlackWebhookRepositoryImpl(mongoTemplate);
     }
 
     @Bean
     @Singleton
-    WebhookRepository getWebhookRepository(Datastore datastore) {
-        return new WebhookRepositoryImpl(datastore);
+    WebhookRepository getWebhookRepository(MongoTemplate mongoTemplate) {
+        return new WebhookRepositoryImpl(mongoTemplate);
     }
 
     @Singleton
@@ -406,8 +398,8 @@ public class WebProtegeConfiguration {
     }
 
     @Bean
-    UserActivityManager getUserActivityManager(Datastore datastore) {
-        return new UserActivityManager(datastore);
+    UserActivityManager getUserActivityManager(MongoTemplate mongoTemplate) {
+        return new UserActivityManager(mongoTemplate);
     }
 
     @Bean
@@ -467,8 +459,8 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    ApplicationPreferencesStore getApplicationPreferencesStore(Datastore datastore) {
-        return new ApplicationPreferencesStore(datastore);
+    ApplicationPreferencesStore getApplicationPreferencesStore(MongoTemplate mongoTemplate) {
+        return new ApplicationPreferencesStore(mongoTemplate);
     }
 
     @Bean
@@ -511,15 +503,15 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    PerspectiveDescriptorRepository getPerspectiveDescriptorRepository(MongoDatabase database,
+    PerspectiveDescriptorRepository getPerspectiveDescriptorRepository(MongoTemplate mongoTemplate,
                                                                        ObjectMapper objectMapper) {
-        return new PerspectiveDescriptorRepositoryImpl(database, objectMapper);
+        return new PerspectiveDescriptorRepositoryImpl(mongoTemplate, objectMapper);
     }
 
     @Bean
     @Singleton
-    PerspectiveLayoutRepository getPerspectiveLayoutRepository(MongoDatabase database, ObjectMapper objectMapper) {
-        return new PerspectiveLayoutRepositoryImpl(database, objectMapper);
+    PerspectiveLayoutRepository getPerspectiveLayoutRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
+        return new PerspectiveLayoutRepositoryImpl(mongoTemplate, objectMapper);
     }
 
     @Bean
@@ -548,4 +540,21 @@ public class WebProtegeConfiguration {
                                            perspectiveDescriptorRepository,
                                            perspectiveLayoutRepository);
     }
+
+    @Bean
+    UserApiKeyStore getUserApiKeyStore(MongoTemplate mongoTemplate) {
+        return new UserApiKeyStoreImpl(mongoTemplate);
+    }
+
+    @Bean
+    ApiKeyManager getApiKeyManager(UserApiKeyStore userApiKeyStore) {
+        return new ApiKeyManager(new ApiKeyHasher(),
+                                 userApiKeyStore);
+    }
+
+    @Bean
+    EntityTagsRepositoryImpl getEntityTagsRepository(MongoTemplate mongoTemplate) {
+        return new EntityTagsRepositoryImpl(mongoTemplate);
+    }
+
 }

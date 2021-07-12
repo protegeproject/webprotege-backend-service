@@ -4,7 +4,9 @@ package edu.stanford.protege.webprotege.access;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import org.bson.types.ObjectId;
-import org.mongodb.morphia.annotations.*;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,13 +26,10 @@ import static edu.stanford.protege.webprotege.access.RoleAssignment.USER_NAME;
  * A persistence structure for role assignments.  This assumes the persistence is provided by
  * MongoDb, which is access via Morphia.
  */
-@Entity(noClassnameStored = true, value = "RoleAssignments")
-@Indexes(
-        @Index(fields = {
-                @Field(USER_NAME),
-                @Field(PROJECT_ID)},
-                options = @IndexOptions(unique = true))
-)
+@Document(collection = "RoleAssignments")
+@CompoundIndexes({
+        @CompoundIndex(def = "{'userName':1, 'projectId':1}", unique = true)
+})
 public class RoleAssignment {
 
     public static final String USER_NAME = "userName";
@@ -41,7 +40,6 @@ public class RoleAssignment {
 
     public static final String ROLE_CLOSURE = "roleClosure";
 
-    @Id
     @Nullable
     @SuppressWarnings("unused")
     private ObjectId id;

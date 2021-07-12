@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.inject;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
 import javax.annotation.Nonnull;

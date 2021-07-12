@@ -4,9 +4,12 @@ import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -16,6 +19,9 @@ import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.user.UserActivityRecord.*;
 import static java.util.stream.Collectors.toList;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+import static org.springframework.data.mongodb.core.query.Update.update;
 
 /**
  * Matthew Horridge
@@ -25,38 +31,39 @@ import static java.util.stream.Collectors.toList;
 @ApplicationSingleton
 public class UserActivityManager implements Repository {
 
-    private final Datastore datastore;
+    private static final Logger logger = LoggerFactory.getLogger(UserActivityManager.class);
+
+    private MongoOperations mongoTemplate;
 
     @Inject
-    public UserActivityManager(Datastore datastore) {
-        this.datastore = datastore;
+    public UserActivityManager(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
     }
 
 
     @Override
     public void ensureIndexes() {
-        datastore.ensureIndexes(UserActivityRecord.class);
     }
 
     public void save(UserActivityRecord record) {
         if(record.getUserId().isGuest()) {
             return;
         }
-        datastore.save(record);
+        mongoTemplate.save(record);
     }
 
     public Optional<UserActivityRecord> getUserActivityRecord(UserId userId) {
         if(userId.isGuest()) {
             return Optional.empty();
         }
-        UserActivityRecord record = datastore.get(UserActivityRecord.class, userId);
+        UserActivityRecord record = mongoTemplate.findOne(query(where(USER_ID).is(userId)), UserActivityRecord.class);
         return Optional.ofNullable(record);
     }
 
     private UserActivityRecord getByUserId(UserId userId) {
-        UserActivityRecord record = datastore.get(UserActivityRecord.class, userId);
+        UserActivityRecord record = mongoTemplate.findOne(query(where(USER_ID).is(userId)), UserActivityRecord.class);
         if (record == null) {
-            datastore.save(record = UserActivityRecord.get(userId));
+            mongoTemplate.save(record = UserActivityRecord.get(userId));
         }
         return record;
     }
@@ -65,22 +72,19 @@ public class UserActivityManager implements Repository {
         if(userId.isGuest()) {
             return;
         }
-        getByUserId(userId);
-        Query<UserActivityRecord> query = queryByUserId(userId);
-        UpdateOperations<UserActivityRecord> operations = datastore.createUpdateOperations(UserActivityRecord.class)
-                                                                   .set(LAST_LOGIN, new Date(lastLogin));
-        datastore.update(query, operations);
+        mongoTemplate.updateFirst(query(where(USER_ID).is(userId)),
+                                  update(LAST_LOGIN, new Date(lastLogin)),
+                                  UserActivityRecord.class);
     }
 
     public void setLastLogout(@Nonnull UserId userId, long lastLogout) {
         if(userId.isGuest()) {
             return;
         }
-        getByUserId(userId);
-        Query<UserActivityRecord> query = queryByUserId(userId);
-        UpdateOperations<UserActivityRecord> operations = datastore.createUpdateOperations(UserActivityRecord.class)
-                                                                   .set(LAST_LOGOUT, new Date(lastLogout));
-        datastore.update(query, operations);
+        mongoTemplate.updateFirst(query(where(USER_ID).is(userId)),
+                                  update(LAST_LOGOUT, new Date(lastLogout)),
+                                  UserActivityRecord.class);
+
     }
 
     public void addRecentProject(@Nonnull UserId userId, @Nonnull ProjectId projectId, long timestamp) {
@@ -101,11 +105,5 @@ public class UserActivityManager implements Repository {
                 recentProjects
         );
         save(replacement);
-    }
-
-
-    private Query<UserActivityRecord> queryByUserId(@Nonnull UserId userId) {
-        return datastore.createQuery(UserActivityRecord.class)
-                        .field(USER_ID).equal(userId);
     }
 }

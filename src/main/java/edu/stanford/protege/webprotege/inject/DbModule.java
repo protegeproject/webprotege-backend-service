@@ -1,16 +1,11 @@
 package edu.stanford.protege.webprotege.inject;
 
-import com.mongodb.MongoClient;
 import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoDatabase;
 import dagger.Module;
 import dagger.Provides;
 import edu.stanford.protege.webprotege.app.WebProtegeProperties;
 import edu.stanford.protege.webprotege.persistence.DbName;
-import edu.stanford.protege.webprotege.persistence.MorphiaDatastoreProvider;
-import edu.stanford.protege.webprotege.persistence.MorphiaProvider;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 
 import java.util.Optional;
 
@@ -63,25 +58,10 @@ public class DbModule {
         return credentialsProvider.get();
     }
 
-    @Provides
-    @ApplicationSingleton
-    public MongoClient provideMongoClient(MongoClientProvider provider) {
-        return provider.get();
-    }
 
     @Provides
     @ApplicationSingleton
     public MongoDatabase provideMongoDatabase(MongoDatabaseProvider provider) {
-        return provider.get();
-    }
-
-    @Provides
-    public Morphia providesMorphia(MorphiaProvider provider) {
-        return provider.get();
-    }
-
-    @Provides
-    public Datastore provideDatastore(MorphiaDatastoreProvider provider) {
         return provider.get();
     }
 

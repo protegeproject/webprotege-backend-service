@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.viz;
 
-import com.mongodb.MongoClient;
+
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
@@ -99,7 +100,7 @@ public class EntityGraphSettingsRepositoryImpl_IT {
 
     @After
     public void tearDown() {
-        client.dropDatabase(MongoTestUtils.getTestDbName());
+        client.getDatabase(MongoTestUtils.getTestDbName()).drop();
         client.close();
     }
 }

@@ -3,10 +3,9 @@ package edu.stanford.protege.webprotege.access;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import edu.stanford.protege.webprotege.project.ProjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.CountOptions;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,6 +19,8 @@ import java.util.stream.Collectors;
 import static edu.stanford.protege.webprotege.access.RoleAssignment.*;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Matthew Horridge
@@ -30,7 +31,7 @@ public class AccessManagerImpl implements AccessManager {
 
     private final RoleOracle roleOracle;
 
-    private final Datastore datastore;
+    private final MongoTemplate mongoTemplate;
 
     private final Cache<AccessManagerCacheKey, Boolean> permissionCache = CacheBuilder.newBuilder().build();
 
@@ -38,12 +39,13 @@ public class AccessManagerImpl implements AccessManager {
      * Constructs an {@link AccessManager} that is backed by MongoDb.
      *
      * @param roleOracle An oracle for looking up information about roles.
-     * @param datastore  A Morphia datastore that is used to access MongoDb.
+     * @param mongoTemplate  A {@link MongoTemplate} that is used to access MongoDb.
      */
     @Inject
-    public AccessManagerImpl(RoleOracle roleOracle, Datastore datastore) {
+    public AccessManagerImpl(RoleOracle roleOracle,
+                             MongoTemplate mongoTemplate) {
         this.roleOracle = roleOracle;
-        this.datastore = datastore;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -62,8 +64,8 @@ public class AccessManagerImpl implements AccessManager {
                                                        assignedRoles,
                                                        roleClosure,
                                                        actionClosure);
-        datastore.delete(withUserAndTarget(subject, resource));
-        datastore.save(assignment);
+        mongoTemplate.remove(withUserAndTarget(subject, resource), RoleAssignment.class);
+        mongoTemplate.save(assignment);
     }
 
     private void invalidateCacheOfrSubjectAndResource(@Nonnull Subject subject,
@@ -91,42 +93,35 @@ public class AccessManagerImpl implements AccessManager {
                       .collect(toList());
     }
 
-    private Query<RoleAssignment> withUserAndTarget(Subject subject, Resource resource) {
+    private Query withUserAndTarget(Subject subject, Resource resource) {
         String userName = toUserName(subject);
         String projectId = toProjectId(resource);
-        return datastore.createQuery(RoleAssignment.class)
-                        .field(USER_NAME)
-                        .equal(userName)
-                        .field(PROJECT_ID)
-                        .equal(projectId);
+
+        return query(where(USER_NAME).is(userName))
+                .addCriteria(where(PROJECT_ID).is(projectId));
     }
 
     @Nonnull
     @Override
     public Collection<RoleId> getAssignedRoles(@Nonnull Subject subject, @Nonnull Resource resource) {
-        Query<RoleAssignment> query = withUserAndTarget(subject, resource);
-        return query.asList()
-                    .stream()
-                    .flatMap(ra -> ra.getAssignedRoles().stream())
+        var query = withUserAndTarget(subject, resource);
+        var found = mongoTemplate.find(query, RoleAssignment.class);
+        return found.stream().flatMap(ra -> ra.getAssignedRoles().stream())
                     .map(RoleId::new)
                     .distinct()
                     .collect(toList());
     }
 
-    private Query<RoleAssignment> withUserOrAnyUserAndTarget(Subject subject, Resource resource) {
+    private Query withUserOrAnyUserAndTarget(Subject subject, Resource resource) {
         String userName = toUserName(subject);
         String projectId = toProjectId(resource);
 
-        Query<RoleAssignment> query = datastore.createQuery(RoleAssignment.class)
-                                               .field(PROJECT_ID).equal(projectId);
+        Query query = query(where(PROJECT_ID).is(projectId));
         if (!subject.isGuest()) {
-            query.or(
-                    query.criteria(USER_NAME).equal(userName),
-                    query.criteria(USER_NAME).equal(null)
-            );
+            query.addCriteria(where(USER_NAME).in(userName, null));
         }
         else {
-            query.field(USER_NAME).equal(userName);
+            query.addCriteria(where(USER_NAME).is(userName));
         }
         return query;
     }
@@ -134,10 +129,9 @@ public class AccessManagerImpl implements AccessManager {
     @Nonnull
     @Override
     public Collection<RoleId> getRoleClosure(@Nonnull Subject subject, @Nonnull Resource resource) {
-        Query<RoleAssignment> query = withUserOrAnyUserAndTarget(subject,
-                                                                 resource);
-        return query.asList()
-                    .stream()
+        Query query = withUserOrAnyUserAndTarget(subject, resource);
+        var found = mongoTemplate.find(query, RoleAssignment.class);
+        return found.stream()
                     .flatMap(ra -> ra.getRoleClosure().stream())
                     .distinct()
                     .map(RoleId::new)
@@ -147,13 +141,12 @@ public class AccessManagerImpl implements AccessManager {
     @Nonnull
     @Override
     public Set<ActionId> getActionClosure(@Nonnull Subject subject, @Nonnull Resource resource) {
-        Query<RoleAssignment> query = withUserOrAnyUserAndTarget(subject,
-                                                                 resource);
-        return query.asList()
-                    .stream()
-                    .flatMap(ra -> ra.getActionClosure().stream())
-                    .map(ActionId::new)
-                    .collect(toSet());
+        Query query = withUserOrAnyUserAndTarget(subject, resource);
+        return mongoTemplate.find(query, RoleAssignment.class)
+                            .stream()
+                            .flatMap(ra -> ra.getActionClosure().stream())
+                            .map(ActionId::new)
+                            .collect(toSet());
     }
 
     @Override
@@ -163,9 +156,10 @@ public class AccessManagerImpl implements AccessManager {
         if(permission != null && permission.equals(Boolean.TRUE)) {
             return true;
         }
-        Query<RoleAssignment> query = withUserOrAnyUserAndTarget(subject, resource)
-                .field(ACTION_CLOSURE).equal(actionId.getId());
-        var hasPermission = query.count(new CountOptions().limit(1)) == 1;
+        Query query = withUserOrAnyUserAndTarget(subject, resource)
+                .addCriteria(where(ACTION_CLOSURE).is(actionId.getId()))
+                .limit(1);
+        var hasPermission = mongoTemplate.count(query, RoleAssignment.class) == 1;
         permissionCache.put(cacheKey, hasPermission);
         return hasPermission;
     }
@@ -189,11 +183,11 @@ public class AccessManagerImpl implements AccessManager {
 
     private Collection<Subject> getSubjectsWithAccessToResource(Resource resource, Optional<ActionId> action) {
         String projectId = toProjectId(resource);
-        Query<RoleAssignment> query = datastore.createQuery(RoleAssignment.class)
-                                               .field(PROJECT_ID).equal(projectId);
-        action.ifPresent(a -> query.field(ACTION_CLOSURE).contains(a.toString()));
-        return query.asList().stream()
-                    .map(ra -> {
+        Query query = query(where(PROJECT_ID).is(projectId));
+        action.ifPresent(a -> query.addCriteria(where(ACTION_CLOSURE).in(a.toString())));
+        return mongoTemplate.find(query, RoleAssignment.class)
+                            .stream()
+                            .map(ra -> {
                         Optional<String> userName = ra.getUserName();
                         if (userName.isPresent()) {
                             return Subject.forUser(userName.get());
@@ -202,17 +196,15 @@ public class AccessManagerImpl implements AccessManager {
                             return Subject.forAnySignedInUser();
                         }
                     })
-                    .collect(toList());
+                            .collect(toList());
     }
 
     @Override
     public Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId) {
         String userName = toUserName(subject);
-        Query<RoleAssignment> query = datastore.createQuery(RoleAssignment.class)
-                                               .field(USER_NAME).equal(userName)
-                                               .field(ACTION_CLOSURE).equal(actionId.getId());
-        return query.asList().stream()
-                    .map(ra -> {
+        Query query = query(where(USER_NAME).is(userName).and(ACTION_CLOSURE).is(actionId.getId()));
+        return mongoTemplate.find(query, RoleAssignment.class).stream()
+                            .map(ra -> {
                         Optional<String> projectId = ra.getProjectId();
                         if (projectId.isPresent()) {
                             return new ProjectResource(ProjectId.get(projectId.get()));
@@ -221,23 +213,21 @@ public class AccessManagerImpl implements AccessManager {
                             return ApplicationResource.get();
                         }
                     })
-                    .collect(toList());
+                            .collect(toList());
     }
 
     @Override
     public void rebuild() {
-        Query<RoleAssignment> query = datastore.createQuery(RoleAssignment.class);
-        query.asList()
-             .forEach(roleAssignment -> {
+        mongoTemplate.find(new Query(), RoleAssignment.class)
+                     .forEach(roleAssignment -> {
                  List<RoleId> assignedRoles = roleAssignment.getAssignedRoles().stream()
                          .map(RoleId::new)
                          .collect(Collectors.toList());
                  List<String> roleClosure = getRoleClosure(assignedRoles);
                  List<String> actionClosure = getActionClosure(assignedRoles);
-                 UpdateOperations<RoleAssignment> updateOperations = datastore.createUpdateOperations(RoleAssignment.class);
-                 updateOperations.set(RoleAssignment.ACTION_CLOSURE, actionClosure)
-                         .set(RoleAssignment.ROLE_CLOSURE, roleClosure);
-                 datastore.update(roleAssignment, updateOperations);
+                 var query = query(where(USER_NAME).is(roleAssignment.getUserName().orElse(null))
+                                                   .and(PROJECT_ID).is(roleAssignment.getProjectId().orElse(null)));
+                 mongoTemplate.updateMulti(query, new Update().set(ACTION_CLOSURE, actionClosure).set(ROLE_CLOSURE, roleClosure), RoleAssignment.class);
              });
 
     }

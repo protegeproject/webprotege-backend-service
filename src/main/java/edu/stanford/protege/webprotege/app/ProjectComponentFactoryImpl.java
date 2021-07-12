@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.inject.project.ProjectModule;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import org.springframework.context.ApplicationContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -15,17 +16,16 @@ import javax.inject.Inject;
  */
 public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
 
-    @Nonnull
-    private final ServerComponent serverComponent;
+    private final ApplicationContext applicationContext;
 
     @Inject
-    public ProjectComponentFactoryImpl(@Nonnull ServerComponent serverComponent) {
-        this.serverComponent = serverComponent;
+    public ProjectComponentFactoryImpl(@Nonnull ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     @Nonnull
     @Override
     public ProjectComponent createProjectComponent(@Nonnull ProjectId projectId) {
-        return serverComponent.getProjectComponent(new ProjectModule(projectId));
+        return null;
     }
 }

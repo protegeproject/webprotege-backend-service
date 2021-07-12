@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.user;
 
-import org.mongodb.morphia.Datastore;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -12,16 +12,17 @@ import javax.inject.Provider;
  */
 public class UserActivityManagerProvider implements Provider<UserActivityManager> {
 
-    private Datastore datastore;
+
+    private final MongoTemplate mongoOperations;
 
     @Inject
-    public UserActivityManagerProvider(Datastore datastore) {
-        this.datastore = datastore;
+    public UserActivityManagerProvider(MongoTemplate mongoOperations) {
+        this.mongoOperations = mongoOperations;
     }
 
     @Override
     public UserActivityManager get() {
-        UserActivityManager userActivityManager = new UserActivityManager(datastore);
+        UserActivityManager userActivityManager = new UserActivityManager(mongoOperations);
         userActivityManager.ensureIndexes();
         return userActivityManager;
     }

@@ -113,13 +113,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mongodb.morphia</groupId>
-            <artifactId>morphia-logging-slf4j</artifactId>
-            <version>1.3.2</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
@@ -309,25 +302,13 @@
 
         <!--<dependency>-->
             <!--<groupId>org.mongodb</groupId>-->
-            <!--<artifactId>mongo-java-driver</artifactId>-->
+            <!--<artifactId>mongoTemplate-java-driver</artifactId>-->
             <!--<version>3.11.0</version>-->
         <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mongodb.morphia</groupId>
-            <artifactId>morphia</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>3.3.0</version>
         </dependency>
 
         <dependency>
@@ -616,11 +597,6 @@
                     <version>3.2.0</version>
                 </plugin>
                 <plugin>
-                    <groupId>org.eclipse.jetty</groupId>
-                    <artifactId>jetty-maven-plugin</artifactId>
-                    <version>9.4.12.v20180830</version>
-                </plugin>
-                <plugin>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>3.0.1</version>
                     <executions>
@@ -642,11 +618,6 @@
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.2</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>2.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -691,15 +662,6 @@
                             <extraClasspath>${basedir}/../webprotege-server-common/target/classes/</extraClasspath>
                         </webApp>
                         <contextXml>${basedir}/src/main/jettyconf/context.xml</contextXml>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <configuration>
-                        <addWarDependenciesInClassloader>false</addWarDependenciesInClassloader>
-                        <path>/</path>
-                        <uriEncoding>UTF-8</uriEncoding>
                     </configuration>
                 </plugin>
             </plugins>

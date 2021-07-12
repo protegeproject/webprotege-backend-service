@@ -19,17 +19,17 @@ import org.glassfish.jersey.servlet.ServletContainer;
  * Stanford Center for Biomedical Informatics Research
  * 24 Jan 2018
  */
-@Component(modules = {
-        ApplicationModule.class,
-        SharedApplicationModule.class,
-        FileSystemConfigurationModule.class,
-        ConfigurationTasksModule.class,
-        ActionHandlersModule.class,
-        AuthenticationModule.class,
-        DbModule.class,
-        ServerModule.class,
-        ApiModule.class
-})
+//@Component(modules = {
+//        ApplicationModule.class,
+//        SharedApplicationModule.class,
+//        FileSystemConfigurationModule.class,
+//        ConfigurationTasksModule.class,
+//        ActionHandlersModule.class,
+//        AuthenticationModule.class,
+//        DbModule.class,
+//        ServerModule.class,
+//        ApiModule.class
+//})
 @ApplicationSingleton
 public interface ServerComponent {
 

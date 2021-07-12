@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.auth.Salt;
 import edu.stanford.protege.webprotege.auth.SaltedPasswordDigest;
@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class UserRecordRepository_TestCase {
 
     private MongoClient client;
 
-    private MongoDatabase database;
+    private MongoTemplate mongoTemplate;
 
     private UserRecord userRecord;
 
@@ -40,9 +41,9 @@ public class UserRecordRepository_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        client = new MongoClient();
-        database = client.getDatabase(MongoTestUtils.getTestDbName());
-        recordRepository = new UserRecordRepository(database, new UserRecordConverter());
+        client = MongoClients.create();
+        mongoTemplate = new MongoTemplate(client, MongoTestUtils.getTestDbName());
+        recordRepository = new UserRecordRepository(mongoTemplate, new UserRecordConverter());
         userId = UserId.getUserId("JaneDoe");
         userRecord = new UserRecord(
                 userId,
@@ -56,7 +57,7 @@ public class UserRecordRepository_TestCase {
 
     @After
     public void tearDown() {
-        database.drop();
+        mongoTemplate.getDb().drop();
         client.close();
     }
 

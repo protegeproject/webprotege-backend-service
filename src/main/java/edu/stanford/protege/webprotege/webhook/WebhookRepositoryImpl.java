@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.webhook;
 
 import edu.stanford.protege.webprotege.project.ProjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -11,6 +11,8 @@ import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.webhook.ProjectWebhook.PROJECT_ID;
 import static edu.stanford.protege.webprotege.webhook.ProjectWebhook.SUBSCRIBED_TO_EVENTS;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Matthew Horridge
@@ -19,42 +21,36 @@ import static edu.stanford.protege.webprotege.webhook.ProjectWebhook.SUBSCRIBED_
  */
 public class WebhookRepositoryImpl implements WebhookRepository {
 
-    private final Datastore datastore;
+    private final MongoTemplate mongoTemplate;
 
     @Inject
-    public WebhookRepositoryImpl(@Nonnull Datastore datastore) {
-        this.datastore = checkNotNull(datastore);
+    public WebhookRepositoryImpl(@Nonnull MongoTemplate mongoTemplate) {
+        this.mongoTemplate = checkNotNull(mongoTemplate);
     }
 
     @Override
     public void clearProjectWebhooks(ProjectId projectId) {
-        Query<ProjectWebhook> query = queryByProjectId(projectId);
-        datastore.delete(query);
+        mongoTemplate.remove(queryByProjectId(projectId), ProjectWebhook.class);
     }
 
-    private Query<ProjectWebhook> queryByProjectId(ProjectId projectId) {
-        Query<ProjectWebhook> query = datastore.createQuery(ProjectWebhook.class);
-        query.field(PROJECT_ID).equal(projectId);
-        return query;
+    private Query queryByProjectId(ProjectId projectId) {
+        return query(where(PROJECT_ID).is(projectId));
     }
 
     @Override
     public void addProjectWebhooks(List<ProjectWebhook> projectWebhooks) {
-        datastore.save(projectWebhooks);
+        mongoTemplate.insertAll(projectWebhooks);
     }
 
     @Override
     public List<ProjectWebhook> getProjectWebhooks(@Nonnull ProjectId projectId) {
-        return datastore.find(ProjectWebhook.class)
-                        .field(PROJECT_ID).equal(projectId)
-                        .asList();
+        return mongoTemplate.find(queryByProjectId(projectId), ProjectWebhook.class);
     }
 
     @Override
     public List<ProjectWebhook> getProjectWebhooks(@Nonnull ProjectId projectId, ProjectWebhookEventType event) {
-        return datastore.find(ProjectWebhook.class)
-                .field(PROJECT_ID).equal(projectId)
-                .field(SUBSCRIBED_TO_EVENTS).equal(event)
-                .asList();
+        var query = queryByProjectId(projectId)
+                .addCriteria(where(SUBSCRIBED_TO_EVENTS).is(event));
+        return mongoTemplate.find(query, ProjectWebhook.class);
     }
 }

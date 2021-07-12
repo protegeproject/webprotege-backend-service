@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.base.Objects;
-import org.mongodb.morphia.annotations.Property;
 
 import javax.annotation.Nonnull;
 import java.util.Comparator;
@@ -23,10 +22,8 @@ public class RecentProjectRecord implements Comparable<RecentProjectRecord> {
 
     public static final String TIMESTAMP = "timestamp";
 
-    @Property(value = PROJECT_ID)
     private ProjectId projectId;
 
-    @Property(value = TIMESTAMP)
     private Date timestamp;
 
     private static Comparator<RecentProjectRecord> comparator = Comparator.comparing(RecentProjectRecord::getTimestamp)

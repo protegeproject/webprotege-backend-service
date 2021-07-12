@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 
-
+import edu.stanford.protege.webprotege.ValueObject;
 import edu.stanford.protege.webprotege.util.UUIDUtil;
+import org.springframework.data.annotation.Id;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -18,8 +19,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 14 Mar 2018
  */
-public class TagId {
+public class TagId implements ValueObject {
 
+    @Id
     private String id;
 
     private TagId(@Nonnull String id) {
@@ -37,6 +39,15 @@ public class TagId {
             throw new IllegalArgumentException("Malformed tag id: " + id);
         }
         return new TagId(id);
+    }
+
+    public static TagId valueOf(String id) {
+        return getId(id);
+    }
+
+    @Override
+    public String value() {
+        return id;
     }
 
     /**

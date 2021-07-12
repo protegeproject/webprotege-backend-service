@@ -3,11 +3,12 @@ package edu.stanford.protege.webprotege.issues;
 import com.mongodb.BasicDBObject;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.Query;
-import org.mongodb.morphia.query.UpdateOperations;
-import org.mongodb.morphia.query.UpdateResults;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.query.UpdateDefinition;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -16,6 +17,9 @@ import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.issues.EntityDiscussionThread.*;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+import static org.springframework.data.mongodb.core.query.Update.update;
 
 /**
  * Matthew Horridge
@@ -27,24 +31,17 @@ public class EntityDiscussionThreadRepository {
 
     public static final String MATCHED_COMMENT_PATH = "comments.$";
 
-    @Nonnull
-    private final Datastore datastore;
+    private final MongoTemplate mongoTemplate;
 
     @Inject
-    public EntityDiscussionThreadRepository(@Nonnull Datastore datastore) {
-        this.datastore = checkNotNull(datastore);
-        this.datastore.ensureIndexes();
+    public EntityDiscussionThreadRepository(@Nonnull MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
     }
 
     public List<EntityDiscussionThread> findThreads(@Nonnull ProjectId projectId,
                                                     @Nonnull OWLEntity entity) {
-        datastore.createQuery(EntityDiscussionThread.class);
-        return datastore.find(EntityDiscussionThread.class)
-                        .disableValidation()
-                        .field(PROJECT_ID).equal(projectId)
-                        .field(ENTITY).equal(entity)
-                        .order("-comments.0.createdAt")
-                        .asList();
+        var query = query(where(PROJECT_ID).is(projectId).and(ENTITY).is(entity)).with(Sort.by("comments.0.createdAt"));
+        return mongoTemplate.find(query, EntityDiscussionThread.class);
     }
 
     public int getCommentsCount(@Nonnull ProjectId projectId,
@@ -57,85 +54,65 @@ public class EntityDiscussionThreadRepository {
 
     public int getOpenCommentsCount(@Nonnull ProjectId projectId,
                                     @Nonnull OWLEntity entity) {
-        return datastore.createQuery(EntityDiscussionThread.class)
-                        .disableValidation()
-                        .field(PROJECT_ID).equal(projectId)
-                        .field(ENTITY).equal(entity)
-                        .field(STATUS).equal(Status.OPEN)
-                        .asList()
+        var query = query(where(PROJECT_ID).is(projectId)
+                      .and(ENTITY).is(entity).and(STATUS).is(Status.OPEN));
+        return mongoTemplate.find(query, EntityDiscussionThread.class)
                         .stream().map(thread -> thread.getComments().size())
                         .reduce((left, right) -> left + right)
                         .orElse(0);
     }
 
     public void saveThread(@Nonnull EntityDiscussionThread thread) {
-        datastore.save(thread);
+        mongoTemplate.save(thread);
     }
 
     public void addCommentToThread(@Nonnull ThreadId threadId,
                                    @Nonnull Comment comment) {
-        Query<EntityDiscussionThread> query = createQueryForThread(threadId);
-        UpdateOperations<EntityDiscussionThread> ops = getUpdateOperations().push(COMMENTS, comment);
-        datastore.update(query, ops, false);
+        var query = createQueryForThread(threadId);
+        mongoTemplate.updateFirst(query, new Update().push(COMMENTS, comment), EntityDiscussionThread.class);
     }
 
     public Optional<EntityDiscussionThread> setThreadStatus(@Nonnull ThreadId threadId,
                                                             @Nonnull Status status) {
-        datastore.updateFirst(createQueryForThread(threadId), getUpdateOperations().set(STATUS, status));
-        return Optional.ofNullable(datastore.get(EntityDiscussionThread.class, threadId));
+        var query = createQueryForThread(threadId);
+        mongoTemplate.updateFirst(query, update(STATUS, status), EntityDiscussionThread.class);
+        return Optional.ofNullable(mongoTemplate.findOne(query, EntityDiscussionThread.class));
     }
 
 
     public Optional<EntityDiscussionThread> getThread(@Nonnull ThreadId id) {
-        return Optional.ofNullable(datastore.find(EntityDiscussionThread.class)
-                                            .field("_id").equal(id)
-                                            .get());
+        return Optional.ofNullable(mongoTemplate.findOne(createQueryForThread(id), EntityDiscussionThread.class));
     }
 
     public void replaceEntity(ProjectId projectId, OWLEntity entity, OWLEntity withEntity) {
-        Query<EntityDiscussionThread> query = datastore.find(EntityDiscussionThread.class)
-                                                       .field(PROJECT_ID).equal(projectId)
-                                                       .field(ENTITY).equal(entity);
-        UpdateOperations<EntityDiscussionThread> updateOperations = datastore.createUpdateOperations(EntityDiscussionThread.class);
-        updateOperations.set("entity", withEntity);
-        datastore.update(query, updateOperations);
+        var query = query(where(PROJECT_ID).is(projectId).and(ENTITY).is(entity));
+        mongoTemplate.updateMulti(query, update(ENTITY, withEntity), EntityDiscussionThread.class);
     }
 
-    private UpdateOperations<EntityDiscussionThread> getUpdateOperations() {
-        return datastore.createUpdateOperations(EntityDiscussionThread.class);
-    }
 
-    private Query<EntityDiscussionThread> createQueryForThread(ThreadId threadId) {
-        return datastore.createQuery(EntityDiscussionThread.class)
-                        .field("_id").equal(threadId);
+    private Query createQueryForThread(ThreadId threadId) {
+        return query(where("_id").is(threadId));
     }
 
     public void updateComment(ThreadId id, Comment comment) {
-        Query<EntityDiscussionThread> query = createQueryForThread(id)
-                .field(COMMENTS_ID).equal(comment.getId());
-        UpdateOperations<EntityDiscussionThread> update = getUpdateOperations()
-                .set(MATCHED_COMMENT_PATH, comment);
-        datastore.updateFirst(query, update);
+        var query = createQueryForThread(id)
+                .addCriteria(where(COMMENTS_ID).is(comment.getId()));
+        mongoTemplate.updateFirst(query, update(MATCHED_COMMENT_PATH, comment), EntityDiscussionThread.class);
     }
 
     public Optional<EntityDiscussionThread> findThreadByCommentId(CommentId commentId) {
-        Query<EntityDiscussionThread> query = datastore.createQuery(EntityDiscussionThread.class)
-                                                       .field(COMMENTS_ID).equal(commentId);
-        return Optional.ofNullable(query.get());
+        var query = query(where(COMMENTS_ID).is(commentId));
+        return Optional.ofNullable(mongoTemplate.findOne(query, EntityDiscussionThread.class));
     }
 
     public boolean deleteComment(CommentId commentId) {
-        Query<EntityDiscussionThread> query = datastore.createQuery(EntityDiscussionThread.class)
-                                                       .field(COMMENTS_ID).equal(commentId);
-        UpdateOperations<EntityDiscussionThread> update = getUpdateOperations()
-                .removeAll(COMMENTS, new BasicDBObject("_id", commentId.getId()));
-        UpdateResults updateResults = datastore.updateFirst(query, update);
-        return updateResults.getUpdatedCount() == 1;
+        var query = query(where(COMMENTS_ID).is(commentId));
+        return mongoTemplate.updateFirst(query, new Update().pull(COMMENTS, query(where("_id").is(commentId))),
+                                  EntityDiscussionThread.class).getModifiedCount() == 1;
     }
 
     public List<EntityDiscussionThread> getThreadsInProject(ProjectId projectId) {
-        return datastore.createQuery(EntityDiscussionThread.class)
-                        .field(PROJECT_ID).equal(projectId)
-                        .asList();
+        return mongoTemplate.find(query(where(PROJECT_ID).is(projectId)),
+                                  EntityDiscussionThread.class);
     }
 }

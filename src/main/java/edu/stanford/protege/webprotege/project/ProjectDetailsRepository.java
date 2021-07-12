@@ -17,6 +17,7 @@ import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -60,9 +61,9 @@ public class ProjectDetailsRepository implements Repository {
     private final Lock writeLock = readWriteLock.writeLock();
 
     @Inject
-    public ProjectDetailsRepository(@Nonnull MongoDatabase database,
+    public ProjectDetailsRepository(@Nonnull MongoTemplate mongoTemplate,
                                     @Nonnull ObjectMapper objectMapper) {
-        this.collection = database.getCollection(COLLECTION_NAME);
+        this.collection = mongoTemplate.getCollection(COLLECTION_NAME);
         this.objectMapper = checkNotNull(objectMapper);
         this.cache = Caffeine
                 .newBuilder()

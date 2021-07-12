@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
@@ -12,10 +12,13 @@ import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
+import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +37,8 @@ import static org.hamcrest.core.IsNot.not;
  * An integration test for the repo that stores entity discussion thread.  This test requires
  * a running version of MongoDB.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class EntityDiscussionThreadRepository_IT {
 
@@ -41,7 +46,8 @@ public class EntityDiscussionThreadRepository_IT {
 
     private final OWLClass entity = MockingUtils.mockOWLClass();
 
-    private MongoClient mongoClient;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private EntityDiscussionThread thread;
 
@@ -51,10 +57,7 @@ public class EntityDiscussionThreadRepository_IT {
 
     @Before
     public void setUp() throws Exception {
-        Morphia morphia = MongoTestUtils.createMorphia();
-        mongoClient = MongoTestUtils.createMongoClient();
-        Datastore datastore = morphia.createDatastore(mongoClient, getTestDbName());
-        repository = new EntityDiscussionThreadRepository(datastore);
+        repository = new EntityDiscussionThreadRepository(mongoTemplate);
         comment = new Comment(
                 CommentId.create(),
                 UserId.getUserId("John"),
@@ -72,8 +75,7 @@ public class EntityDiscussionThreadRepository_IT {
 
     @After
     public void tearDown() throws Exception {
-        mongoClient.dropDatabase(getTestDbName());
-        mongoClient.close();
+        mongoTemplate.getDb().drop();
     }
 
 
@@ -180,8 +182,7 @@ public class EntityDiscussionThreadRepository_IT {
     }
 
     private MongoCollection<Document> getCollection() {
-        return mongoClient.getDatabase(getTestDbName())
-                          .getCollection("EntityDiscussionThreads");
+        return mongoTemplate.getCollection("EntityDiscussionThreads");
     }
 
 

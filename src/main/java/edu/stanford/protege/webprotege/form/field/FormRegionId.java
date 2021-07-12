@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.form.field;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import edu.stanford.protege.webprotege.ValueObject;
 
 /**
  * Matthew Horridge
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @Type(GridColumnId.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-public interface FormRegionId {
+public interface FormRegionId extends ValueObject {
 
     String getId();
 }

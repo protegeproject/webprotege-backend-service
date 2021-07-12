@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.tag;
 
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -19,17 +20,17 @@ public interface EntityTagsRepository {
 
     void save(@Nonnull EntityTags tag);
 
-    void addTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId);
+    void addTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId, @Nonnull ProjectId projectId);
 
-    void removeTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId);
+    void removeTag(@Nonnull OWLEntity entity, @Nonnull TagId tagId, ProjectId projectId);
 
-    void removeTag(@Nonnull TagId tagId);
-
-    @Nonnull
-    Optional<EntityTags> findByEntity(@Nonnull OWLEntity entity);
+    void removeTag(@Nonnull TagId tagId, ProjectId projectId);
 
     @Nonnull
-    Collection<EntityTags> findByTagId(@Nonnull TagId tagId);
+    Optional<EntityTags> findByEntity(@Nonnull OWLEntity entity, ProjectId projectId);
 
-    long countTaggedEntities();
+    @Nonnull
+    Collection<EntityTags> findByTagId(@Nonnull TagId tagId, ProjectId projectId);
+
+    long countTaggedEntities(ProjectId projectId);
 }

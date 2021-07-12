@@ -3,8 +3,8 @@ package edu.stanford.protege.webprotege.watches;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
-import org.mongodb.morphia.annotations.*;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 
@@ -18,15 +18,16 @@ import static edu.stanford.protege.webprotege.watches.WatchRecord.USER_ID;
  * Stanford Center for Biomedical Informatics Research
  * 20 Apr 2017
  */
-@Entity(value = "Watches", noClassnameStored = true)
-@Indexes({
-                 @Index(fields = {
-                         @Field(PROJECT_ID),
-                         @Field(USER_ID),
-                         @Field(value = WatchRecord.ENTITY)},
-                        options = @IndexOptions(unique = true))
-         }
-)
+//@Entity(value = "Watches", noClassnameStored = true)
+//@Indexes({
+//                 @Index(fields = {
+//                         @Field(PROJECT_ID),
+//                         @Field(USER_ID),
+//                         @Field(value = WatchRecord.ENTITY)},
+//                        options = @IndexOptions(unique = true))
+//         }
+//)
+@Document("Watches")
 public class WatchRecord {
 
     public static final String PROJECT_ID = "projectId";
@@ -37,16 +38,12 @@ public class WatchRecord {
 
     public static final String TYPE = "type";
 
-    @Property(PROJECT_ID)
     private ProjectId projectId;
 
-    @Property(USER_ID)
     private UserId userId;
 
-    @Property(ENTITY)
     private OWLEntity entity;
 
-    @Property(TYPE)
     private WatchType type;
 
     private WatchRecord() {

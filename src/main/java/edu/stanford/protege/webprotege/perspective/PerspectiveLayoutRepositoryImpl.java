@@ -11,6 +11,7 @@ import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,20 +35,20 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     private static final Logger logger = LoggerFactory.getLogger(PerspectiveLayoutRepositoryImpl.class);
 
     @Nonnull
-    private final MongoDatabase database;
+    private final MongoTemplate mongoTemplate;
 
     @Nonnull
     private final ObjectMapper objectMapper;
 
     @Inject
-    public PerspectiveLayoutRepositoryImpl(@Nonnull MongoDatabase database, @Nonnull ObjectMapper objectMapper) {
-        this.database = checkNotNull(database);
+    public PerspectiveLayoutRepositoryImpl(@Nonnull MongoTemplate mongoTemplate, @Nonnull ObjectMapper objectMapper) {
+        this.mongoTemplate = checkNotNull(mongoTemplate);
         this.objectMapper = checkNotNull(objectMapper);
     }
 
     @Nonnull
     private MongoCollection<Document> getCollection() {
-        return database.getCollection(PERSPECTIVE_LAYOUTS);
+        return mongoTemplate.getCollection(PERSPECTIVE_LAYOUTS);
     }
 
     private Document getQuery(@Nullable String projectId,

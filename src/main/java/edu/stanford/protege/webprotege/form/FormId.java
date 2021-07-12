@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
 
 
-
+import edu.stanford.protege.webprotege.ValueObject;
 import edu.stanford.protege.webprotege.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 
 @AutoValue
-public abstract class FormId implements Serializable {
+public abstract class FormId implements Serializable, ValueObject {
 
     @JsonCreator
     public static FormId get(@Nonnull String id) {
@@ -35,6 +35,10 @@ public abstract class FormId implements Serializable {
         return get(UUID.randomUUID().toString());
     }
 
+    @Override
+    public String value() {
+        return getId();
+    }
 
     public static void checkFormat(@Nonnull String id) {
         if(!UUIDUtil.isWellFormed(id)) {

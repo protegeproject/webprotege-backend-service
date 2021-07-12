@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.api;
 
 import com.google.common.base.Objects;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 import java.util.Date;
@@ -13,6 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
+@Document(collection = "UserApiKeys")
 public class ApiKeyRecord {
 
     public static final String API_KEY_ID = "apiKeyId";

@@ -1,10 +1,8 @@
 package edu.stanford.protege.webprotege.app;
 
 import com.google.common.base.Objects;
-import org.mongodb.morphia.annotations.AlsoLoad;
-import org.mongodb.morphia.annotations.CappedAt;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 
@@ -18,28 +16,24 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * An object that holds application preferences that are stored in the database.
  */
-@Entity(cap = @CappedAt(count = 1L), noClassnameStored = true)
+//@Entity(cap = @CappedAt(count = 1L), noClassnameStored = true)
+@Document(collection = "ApplicationPreferences")
 public class ApplicationPreferences {
 
     public static final String ID = "Preferences";
 
-    @Id
     @SuppressWarnings("unused")
+    @Id
     private String id = ID;
 
     private String applicationName;
 
-    @AlsoLoad("adminEmailAddress")
     private String systemNotificationEmailAddress;
 
     private ApplicationLocation applicationLocation;
 
     private long maxUploadSize;
-
-    // For Morphia
-    private ApplicationPreferences() {
-    }
-
+    
     public ApplicationPreferences(@Nonnull String applicationName,
                                   @Nonnull String systemNotificationEmailAddress,
                                   @Nonnull ApplicationLocation applicationLocation,

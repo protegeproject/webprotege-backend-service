@@ -1,8 +1,11 @@
 package edu.stanford.protege.webprotege.inject;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * Matthew Horridge
@@ -11,17 +14,15 @@ import java.io.File;
  */
 public class UploadsDirectoryProvider implements Provider<File> {
 
-    public static final String UPLOADS_DIRECTORY_NAME = "uploads";
-
-    private final File dataDirectory;
+    @Value("${webprotege.directories.uploads}")
+    private Path uploadsDirectoryPath;
 
     @Inject
-    public UploadsDirectoryProvider(@DataDirectory File dataDirectory) {
-        this.dataDirectory = dataDirectory;
+    public UploadsDirectoryProvider() {
     }
 
     @Override
     public File get() {
-        return new File(dataDirectory, UPLOADS_DIRECTORY_NAME);
+        return uploadsDirectoryPath.toFile();
     }
 }

@@ -19,31 +19,31 @@ public class WebProtegeServletContextListener implements ServletContextListener 
 
     public void contextInitialized(ServletContextEvent sce) {
         logger.info(WebProtegeMarker, "Initializing WebProtege");
-
-        ServerComponent serverComponent = DaggerServerComponent.create();
-
-        ServletContext servletContext = sce.getServletContext();
-
-        servletContext.setAttribute(ServerComponent.class.getName(), serverComponent);
-
-        servletContext.addServlet("ProjectDownloadServlet", serverComponent.getProjectDownloadServlet())
-                      .addMapping("/download");
-
-        servletContext.addServlet("FileUploadServlet", serverComponent.getFileUploadServlet())
-                      .addMapping("/webprotege/submitfile");
-
-        servletContext.addServlet("JerseyContainerServlet", serverComponent.getJerseyServletContainer())
-                      .addMapping("/data/*");
-
-        servletContext.addServlet("JerseyContainerServlet_Rpc", serverComponent.getJerseyServletContainer())
-                      .addMapping("/api/*");
-
-        servletContext.addServlet("AuthenticationServlet", serverComponent.getAuthenticationServlet())
-                      .addMapping("/authenticate");
-
-        servletContext.addListener(serverComponent.getSessionListener());
-        serverComponent.getWebProtegeConfigurationChecker().performConfiguration();
-        serverComponent.getProjectCacheManager().start();
+//
+//        ServerComponent serverComponent = DaggerServerComponent.create();
+//
+//        ServletContext servletContext = sce.getServletContext();
+//
+//        servletContext.setAttribute(ServerComponent.class.getName(), serverComponent);
+//
+//        servletContext.addServlet("ProjectDownloadServlet", serverComponent.getProjectDownloadServlet())
+//                      .addMapping("/download");
+//
+//        servletContext.addServlet("FileUploadServlet", serverComponent.getFileUploadServlet())
+//                      .addMapping("/webprotege/submitfile");
+//
+//        servletContext.addServlet("JerseyContainerServlet", serverComponent.getJerseyServletContainer())
+//                      .addMapping("/data/*");
+//
+//        servletContext.addServlet("JerseyContainerServlet_Rpc", serverComponent.getJerseyServletContainer())
+//                      .addMapping("/api/*");
+//
+//        servletContext.addServlet("AuthenticationServlet", serverComponent.getAuthenticationServlet())
+//                      .addMapping("/authenticate");
+//
+//        servletContext.addListener(serverComponent.getSessionListener());
+//        serverComponent.getWebProtegeConfigurationChecker().performConfiguration();
+//        serverComponent.getProjectCacheManager().start();
 
         Runtime runtime = Runtime.getRuntime();
         logger.info("Max  Memory: {} MB", (runtime.maxMemory() / (1024 * 1024)));

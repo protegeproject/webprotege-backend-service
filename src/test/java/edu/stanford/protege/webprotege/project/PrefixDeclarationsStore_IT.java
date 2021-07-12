@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableMap;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
@@ -49,14 +49,18 @@ public class PrefixDeclarationsStore_IT {
     @Test
     public void shouldSavePrefixes() {
         store.save(prefixDeclarations);
-        assertThat(database.getCollection(COLLECTION_NAME).countDocuments(), is(1L));
+        assertThat(countDocuments(), is(1L));
+    }
+
+    private long countDocuments() {
+        return database.getCollection(COLLECTION_NAME).countDocuments();
     }
 
     @Test
     public void shouldNotCreateDuplicates() {
         store.save(prefixDeclarations);
         store.save(prefixDeclarations);
-        assertThat(database.getCollection(COLLECTION_NAME).countDocuments(), is(1L));
+        assertThat(countDocuments(), is(1L));
     }
 
     @Test

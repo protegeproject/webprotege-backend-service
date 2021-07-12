@@ -1,8 +1,10 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
+import edu.stanford.protege.webprotege.ValueObject;
 
 
 import javax.annotation.Nonnull;
@@ -20,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     Instances of this class are used to refer to a particular user.  Each user has a user name.
  * </p>
  */
-public class UserId implements Serializable, Comparable<UserId> {
+public class UserId implements Serializable, Comparable<UserId>, ValueObject {
 
     /**
      * The distinguished name for the guest user.
@@ -65,6 +67,11 @@ public class UserId implements Serializable, Comparable<UserId> {
         else {
             return new UserId(userName);
         }
+    }
+
+    @JsonIgnore
+    public String value() {
+        return userName;
     }
 
     /**

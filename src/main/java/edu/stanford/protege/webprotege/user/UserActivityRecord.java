@@ -3,9 +3,8 @@ package edu.stanford.protege.webprotege.user;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Property;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -20,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 12 Mar 2017
  */
-@Entity(noClassnameStored = true, value = "UserActivity")
+@Document(collection = "UserActivity")
 public class UserActivityRecord {
 
 
@@ -36,13 +35,10 @@ public class UserActivityRecord {
     public static final long UNKNOWN = 0;
 
     @Id
-    @Property(USER_ID)
     private UserId userId;
 
-    @Property(LAST_LOGIN)
     private Date lastLogin;
 
-    @Property(LAST_LOGOUT)
     private Date lastLogout;
 
     private List<RecentProjectRecord> recentProjects;

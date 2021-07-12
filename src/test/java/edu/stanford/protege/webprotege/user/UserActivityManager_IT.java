@@ -1,28 +1,41 @@
 package edu.stanford.protege.webprotege.user;
 
-import com.mongodb.MongoClient;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
+import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.*;
+import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.shouldSerializeUsingObjectMapper;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 12 Mar 2017
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = MOCK)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class UserActivityManager_IT {
 
@@ -36,11 +49,10 @@ public class UserActivityManager_IT {
 
     public static final long RECENT_PROJECT_TIMESTAMP = 77L;
 
-    private Datastore datastore;
-
-    private MongoClient mongoClient;
-
     private UserActivityManager repository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private UserId userId = UserId.getUserId("John Smith" );
 
@@ -55,22 +67,29 @@ public class UserActivityManager_IT {
 
     @Before
     public void setUp() throws Exception {
-        mongoClient = createMongoClient();
-        Morphia morphia = createMorphia();
-        datastore = morphia.createDatastore(mongoClient, getTestDbName());
-        repository = new UserActivityManager(datastore);
+        repository = new UserActivityManager(mongoTemplate);
     }
 
     @After
     public void tearDown() throws Exception {
-        mongoClient.dropDatabase(getTestDbName());
-        mongoClient.close();
+         mongoTemplate.getDb().drop();
+    }
+
+    private MongoCollection<Document> getCollection() {
+        return mongoTemplate.getCollection("UserActivity");
     }
 
     @Test
     public void shouldSaveUserActivityRecord() {
         repository.save(record);
-        assertThat(datastore.getCount(UserActivityRecord.class), is(1L));
+        assertThat(getCollection().countDocuments(), is(1L));
+    }
+
+    @Test
+    public void shouldNotSaveDuplicateUserActivityRecord() {
+        repository.save(record);
+        repository.save(record);
+        assertThat(getCollection().countDocuments(), is(1L));
     }
 
     @Test
@@ -81,6 +100,7 @@ public class UserActivityManager_IT {
 
     @Test
     public void shouldSetLastLogin() {
+        repository.save(record);
         long lastLogin = NEW_LAST_LOGIN;
         repository.setLastLogin(userId, lastLogin);
         Optional<UserActivityRecord> record = repository.getUserActivityRecord(userId);
@@ -89,6 +109,7 @@ public class UserActivityManager_IT {
 
     @Test
     public void shouldSetLastLogout() {
+        repository.save(record);
         long lastLogOut = NEW_LAST_LOGOUT;
         repository.setLastLogout(userId, lastLogOut);
         Optional<UserActivityRecord> record = repository.getUserActivityRecord(userId);
@@ -97,6 +118,7 @@ public class UserActivityManager_IT {
 
     @Test
     public void shouldAddRecentProject() {
+        repository.save(record);
         long timestamp = RECENT_PROJECT_TIMESTAMP;
         repository.addRecentProject(userId, projectId, timestamp);
         Optional<UserActivityRecord> record = repository.getUserActivityRecord(userId);

@@ -1,9 +1,8 @@
 package edu.stanford.protege.webprotege.perspective;
 
 import com.google.common.collect.ImmutableList;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
@@ -14,6 +13,7 @@ import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -31,30 +31,21 @@ public class PerspectiveDescriptorRepository_TestCase {
 
     private PerspectiveDescriptorRepository repository;
 
-    private MongoDatabase database;
+    private MongoTemplate mongoTemplate;
 
     private MongoClient mongoClient;
 
     @Before
     public void setUp() throws Exception {
         mongoClient = MongoTestUtils.createMongoClient();
-        database = mongoClient.getDatabase(MongoTestUtils.getTestDbName());
+        mongoTemplate = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
         var objectMapper = new ObjectMapperProvider().get();
-        repository = new PerspectiveDescriptorRepositoryImpl(database, objectMapper);
+        repository = new PerspectiveDescriptorRepositoryImpl(mongoTemplate, objectMapper);
         repository.ensureIndexes();
     }
 
-    @Test
-    public void shouldCreateIndexes() {
-        var collection = getCollection();
-        try (var cursor = collection.listIndexes().cursor()) {
-            var index = cursor.tryNext();
-            assertThat(index, not(nullValue()));
-        }
-    }
-
     private MongoCollection<Document> getCollection() {
-        return database.getCollection(PerspectiveDescriptorRepositoryImpl.PERSPECTIVE_DESCRIPTORS);
+        return mongoTemplate.getCollection(PerspectiveDescriptorRepositoryImpl.PERSPECTIVE_DESCRIPTORS);
     }
 
     @Test
@@ -119,7 +110,7 @@ public class PerspectiveDescriptorRepository_TestCase {
 
     @After
     public void tearDown() throws Exception {
-        database.drop();
+        mongoTemplate.getDb().drop();
         mongoClient.close();
     }
 }

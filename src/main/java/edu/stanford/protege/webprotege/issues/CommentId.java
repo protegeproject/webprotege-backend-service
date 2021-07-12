@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-
+import edu.stanford.protege.webprotege.ValueObject;
 
 
 import javax.annotation.Nonnull;
@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 7 Oct 2016
  */
-public class CommentId {
+public class CommentId implements ValueObject {
 
     private String id;
 
@@ -25,7 +25,7 @@ public class CommentId {
         this.id = checkNotNull(id);
     }
 
-    public static CommentId fromString(@Nonnull String idString) {
+    public static CommentId valueOf(@Nonnull String idString) {
         return new CommentId(checkNotNull(idString));
     }
 
@@ -36,6 +36,11 @@ public class CommentId {
 
 
     private CommentId() {
+    }
+
+    @Override
+    public String value() {
+        return id;
     }
 
     @JsonValue

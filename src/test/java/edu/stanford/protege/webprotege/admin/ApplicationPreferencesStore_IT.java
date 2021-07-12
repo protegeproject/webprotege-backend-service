@@ -1,15 +1,14 @@
 package edu.stanford.protege.webprotege.admin;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClients;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
 import edu.stanford.protege.webprotege.app.ApplicationPreferencesStore;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.app.ApplicationLocation;
+import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -35,37 +34,35 @@ public class ApplicationPreferencesStore_IT {
 
     private ApplicationPreferencesStore manager;
 
-    private Morphia morphia;
-
-    private MongoClient mongoClient;
-
-    private Datastore datastore;
+    private MongoTemplate mongoTemplate;
 
     @Before
     public void setUp() throws Exception {
-        mongoClient = MongoTestUtils.createMongoClient();
-        morphia = MongoTestUtils.createMorphia();
-        datastore = morphia.createDatastore(mongoClient, MongoTestUtils.getTestDbName());
-        manager = new ApplicationPreferencesStore(datastore);
+        mongoTemplate = new MongoTemplate(MongoClients.create(), MongoTestUtils.getTestDbName());
+        manager = new ApplicationPreferencesStore(mongoTemplate);
     }
 
     @After
     public void tearDown() {
-        mongoClient.dropDatabase(MongoTestUtils.getTestDbName());
-        mongoClient.close();
+        mongoTemplate.getDb().drop();
     }
 
     @Test
     public void shouldSaveSettings() {
         manager.setApplicationPreferences(applicationPreferences);
-        assertThat(datastore.getCount(ApplicationPreferences.class), is(1L));
+        var count = countDocuments();
+        assertThat(count, is(1L));
+    }
+
+    private long countDocuments() {
+        return mongoTemplate.getCollection("ApplicationPreferences").countDocuments();
     }
 
     @Test
     public void shouldSaveSingleSettings() {
         manager.setApplicationPreferences(applicationPreferences);
         manager.setApplicationPreferences(applicationPreferences);
-        assertThat(datastore.getCount(ApplicationPreferences.class), is(1L));
+        assertThat(countDocuments(), is(1L));
     }
 
     @Test

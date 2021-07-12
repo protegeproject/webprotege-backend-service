@@ -1,13 +1,15 @@
 package edu.stanford.protege.webprotege.webhook;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,21 +34,19 @@ public class WebhookRepositoryImpl_IT {
 
     private MongoClient client;
 
-    private Datastore datastore;
-
     private ProjectId projectId;
 
     private List<ProjectWebhookEventType> subscribedToEvents;
 
     private ProjectWebhook webhook;
 
+    private MongoTemplate mongoTemplate;
+
     @Before
     public void setUp() throws Exception {
-        client = MongoTestUtils.createMongoClient();
-        Morphia morphia = MongoTestUtils.createMorphia();
-        datastore = morphia.createDatastore(client, MongoTestUtils.getTestDbName());
-        repository = new WebhookRepositoryImpl(datastore);
-
+        client = MongoClients.create();
+        mongoTemplate = new MongoTemplate(client, MongoTestUtils.getTestDbName());
+        repository = new WebhookRepositoryImpl(mongoTemplate);
         projectId = ProjectId.get(UUID.randomUUID().toString());
         subscribedToEvents = Collections.singletonList(PROJECT_CHANGED);
         webhook = new ProjectWebhook(projectId,
@@ -56,9 +56,13 @@ public class WebhookRepositoryImpl_IT {
         repository.addProjectWebhooks(Collections.singletonList(webhook));
     }
 
+    private MongoCollection getCollection() {
+        return mongoTemplate.getCollection("ProjectWebhooks");
+    }
+
     @Test
     public void shouldSaveWebhook() {
-        assertThat(datastore.getCount(ProjectWebhook.class), is(1L));
+        assertThat(getCollection().countDocuments(), is(1L));
     }
 
     @Test
@@ -82,12 +86,12 @@ public class WebhookRepositoryImpl_IT {
     @Test
     public void shouldClearProjectWebhooks() {
         repository.clearProjectWebhooks(projectId);
-        assertThat(datastore.getCount(ProjectWebhook.class), is(0L));
+        assertThat(getCollection().countDocuments(), is(0L));
     }
 
     @After
     public void tearDown() throws Exception {
-        datastore.getDB().dropDatabase();
+        mongoTemplate.getDb().drop();
         client.close();
     }
 }

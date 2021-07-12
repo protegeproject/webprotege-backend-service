@@ -1,10 +1,12 @@
 package edu.stanford.protege.webprotege.inject;
 
 import edu.stanford.protege.webprotege.app.WebProtegeProperties;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * Matthew Horridge
@@ -13,15 +15,15 @@ import java.io.File;
  */
 public class DataDirectoryProvider implements Provider<File> {
 
-    private WebProtegeProperties webProtegeProperties;
+    @Value("${webprotege.directories.data}")
+    private Path dataDirectoryPath;
 
     @Inject
-    public DataDirectoryProvider(WebProtegeProperties webProtegeProperties) {
-        this.webProtegeProperties = webProtegeProperties;
+    public DataDirectoryProvider() {
     }
 
     @Override
     public File get() {
-        return webProtegeProperties.getDataDirectory();
+        return dataDirectoryPath.toFile();
     }
 }

@@ -8,6 +8,7 @@ import com.mongodb.client.model.ReplaceOptions;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -28,20 +29,20 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
     public static final String PERSPECTIVE_DESCRIPTORS = "PerspectiveDescriptors";
 
     @Nonnull
-    private final MongoDatabase database;
+    private final MongoTemplate mongoTemplate;
 
     @Nonnull
     private final ObjectMapper objectMapper;
 
     @Inject
-    public PerspectiveDescriptorRepositoryImpl(@Nonnull MongoDatabase database, @Nonnull ObjectMapper objectMapper) {
-        this.database = checkNotNull(database);
+    public PerspectiveDescriptorRepositoryImpl(@Nonnull MongoTemplate mongoTemplate, @Nonnull ObjectMapper objectMapper) {
+        this.mongoTemplate = checkNotNull(mongoTemplate);
         this.objectMapper = checkNotNull(objectMapper);
     }
 
     @Nonnull
     private MongoCollection<Document> getCollection() {
-        return database.getCollection(PERSPECTIVE_DESCRIPTORS);
+        return mongoTemplate.getCollection(PERSPECTIVE_DESCRIPTORS);
     }
 
     @Override

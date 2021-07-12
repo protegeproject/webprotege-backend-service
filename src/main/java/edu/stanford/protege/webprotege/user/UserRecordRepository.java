@@ -6,6 +6,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.UpdateOptions;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -31,9 +32,9 @@ public class UserRecordRepository {
     private final MongoCollection<Document> collection;
 
     @Inject
-    public UserRecordRepository(@Nonnull MongoDatabase database,
+    public UserRecordRepository(@Nonnull MongoTemplate mongoTemplate,
                                 @Nonnull UserRecordConverter converter) {
-        this.collection = checkNotNull(database).getCollection(COLLECTION_NAME);
+        this.collection = checkNotNull(mongoTemplate).getCollection(COLLECTION_NAME);
         this.converter = checkNotNull(converter);
     }
 

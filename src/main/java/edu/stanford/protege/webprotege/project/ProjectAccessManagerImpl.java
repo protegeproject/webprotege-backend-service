@@ -6,6 +6,7 @@ import com.mongodb.client.model.UpdateOptions;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -32,8 +33,8 @@ public class ProjectAccessManagerImpl implements ProjectAccessManager, Repositor
     private final MongoCollection<Document> collection;
 
     @Inject
-    public ProjectAccessManagerImpl(@Nonnull MongoDatabase database) {
-        this.collection = database.getCollection(COLLECTION_NAME);
+    public ProjectAccessManagerImpl(@Nonnull MongoTemplate mongoTemplate) {
+        this.collection = mongoTemplate.getCollection(COLLECTION_NAME);
     }
 
     @Override

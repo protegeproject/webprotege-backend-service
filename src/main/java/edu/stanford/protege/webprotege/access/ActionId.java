@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.access;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-
+import edu.stanford.protege.webprotege.ValueObject;
 
 
 import javax.annotation.Nonnull;
@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 4 Jan 2017
  */
-public class ActionId implements Comparator<ActionId> {
+public class ActionId implements Comparator<ActionId>, ValueObject {
 
     private String id;
 
@@ -29,9 +29,18 @@ public class ActionId implements Comparator<ActionId> {
         this.id = checkNotNull(id);
     }
 
+    public static ActionId valueOf(String id) {
+        return new ActionId(id);
+    }
+
     @Nonnull
     @JsonValue
     public String getId() {
+        return id;
+    }
+
+    @Override
+    public String value() {
         return id;
     }
 

@@ -16,7 +16,6 @@ import javax.ws.rs.core.Context;
  * Stanford Center for Biomedical Informatics Research
  * 2021-07-07
  */
-@RestController
 public class RpcController {
 
     private ActionExecutor actionExecutor;

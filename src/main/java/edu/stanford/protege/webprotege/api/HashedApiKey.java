@@ -1,5 +1,8 @@
 package edu.stanford.protege.webprotege.api;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -18,19 +21,20 @@ public class HashedApiKey {
 
     /**
      * Represents a hashed api key
-     * @param hashedApiKey The API Key
+     * @param apiKey The Hashed API Key
      */
-    private HashedApiKey(@Nonnull String hashedApiKey) {
-        this.apiKey = checkNotNull(hashedApiKey);
+    private HashedApiKey(@Nonnull String apiKey) {
+        this.apiKey = checkNotNull(apiKey);
     }
 
+    @JsonValue
     public String get() {
         return apiKey;
     }
 
     @Nonnull
-    public static HashedApiKey valueOf(@Nonnull String encryptedApiKey) {
-        return new HashedApiKey(encryptedApiKey);
+    public static HashedApiKey valueOf(@Nonnull String apiKey) {
+        return new HashedApiKey(apiKey);
     }
 
     @Override

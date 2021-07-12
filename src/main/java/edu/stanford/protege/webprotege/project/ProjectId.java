@@ -2,8 +2,10 @@ package edu.stanford.protege.webprotege.project;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import edu.stanford.protege.webprotege.ValueObject;
 import edu.stanford.protege.webprotege.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
@@ -23,7 +25,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *      An identifier for a project.  Project identifiers are essentially UUID strings.
  * </p>
  */
-public class ProjectId implements Serializable {
+public class ProjectId implements Serializable, ValueObject {
 
     private String id = "";
 
@@ -98,6 +100,11 @@ public class ProjectId implements Serializable {
     @Nonnull
     @JsonValue
     public String getId() {
+        return id;
+    }
+
+    @JsonIgnore
+    public String value() {
         return id;
     }
 

@@ -1,9 +1,8 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableList;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
@@ -14,6 +13,7 @@ import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -39,7 +39,7 @@ public class ProjectDetailsRepository_IT {
 
     private ProjectDetailsRepository repository;
 
-    private MongoDatabase database;
+    private MongoTemplate mongoTemplate;
 
     private ProjectId projectId = getProjectId();
 
@@ -64,9 +64,9 @@ public class ProjectDetailsRepository_IT {
     @Before
     public void setUp() {
         mongoClient = MongoTestUtils.createMongoClient();
-        database = mongoClient.getDatabase(MongoTestUtils.getTestDbName());
+        mongoTemplate = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
         ObjectMapperProvider mapperProvider = new ObjectMapperProvider();
-        repository = new ProjectDetailsRepository(database, mapperProvider.get());
+        repository = new ProjectDetailsRepository(mongoTemplate, mapperProvider.get());
         projectDetails = ProjectDetails.get(projectId,
                                             "The Display Name",
                                             "The Description",
@@ -89,7 +89,7 @@ public class ProjectDetailsRepository_IT {
 
     @After
     public void cleanUp() {
-        database.drop();
+        mongoTemplate.getDb().drop();
         mongoClient.close();
     }
 
@@ -105,7 +105,7 @@ public class ProjectDetailsRepository_IT {
     }
 
     private MongoCollection<Document> getCollection() {
-        return database.getCollection(COLLECTION_NAME);
+        return mongoTemplate.getCollection(COLLECTION_NAME);
     }
 
     @Test

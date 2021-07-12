@@ -79,7 +79,7 @@ public class TagsManager {
         try {
             readLock.lock();
             Map<TagId, Tag> tagsById = getProjectTagsByTagId();
-            Optional<EntityTags> entityTags = entityTagsRepository.findByEntity(entity);
+            Optional<EntityTags> entityTags = entityTagsRepository.findByEntity(entity, projectId);
             Stream<TagId> explicitTags = entityTags.map(tags -> tags.getTags().stream())
                                                    .orElse(Stream.empty());
 
@@ -118,7 +118,7 @@ public class TagsManager {
         try {
             readLock.lock();
 
-            Stream<OWLEntity> explicitTags = entityTagsRepository.findByTagId(tagId)
+            Stream<OWLEntity> explicitTags = entityTagsRepository.findByTagId(tagId, projectId)
                                                                  .stream()
                                                                  .map(EntityTags::getEntity);
             Stream<OWLEntity> criteriaBasedTags = criteriaBasedTagsManager.getTaggedEntities(tagId);
@@ -165,11 +165,11 @@ public class TagsManager {
                               .peek(tagId -> {
                                   if (!tagIds.contains(tagId)) {
                                       // Record modified entity tags
-                                      entityTagsRepository.findByTagId(tagId).stream()
+                                      entityTagsRepository.findByTagId(tagId, projectId).stream()
                                                           .map(EntityTags::getEntity)
                                                           .forEach(modifiedEntityTags::add);
                                       // Remove tag from entity
-                                      entityTagsRepository.removeTag(tagId);
+                                      entityTagsRepository.removeTag(tagId, projectId);
                                   }
                               })
                               .forEach(tagRepository::deleteTag);
@@ -187,7 +187,7 @@ public class TagsManager {
                                            ))
                                            .peek(tag -> {
                                                // Find the modified entities for this tag
-                                               entityTagsRepository.findByTagId(tag.getTagId()).stream()
+                                               entityTagsRepository.findByTagId(tag.getTagId(), projectId).stream()
                                                                    .map(EntityTags::getEntity)
                                                                    .forEach(modifiedEntityTags::add);
                                            })
@@ -222,7 +222,7 @@ public class TagsManager {
         try {
             writeLock.lock();
             Optional<EntityTags> existingTags = entityTagsRepository.findByEntity(
-                    entity);
+                    entity, projectId);
             Set<TagId> nextTagIds = new HashSet<>();
             existingTags.ifPresent(entityTags -> nextTagIds.addAll(entityTags.getTags()));
             fromTagIds.stream()

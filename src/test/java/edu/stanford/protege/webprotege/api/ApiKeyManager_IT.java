@@ -1,34 +1,40 @@
 package edu.stanford.protege.webprotege.api;
 
-import com.mongodb.MongoClient;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 18 Apr 2018
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = MOCK)
 public class ApiKeyManager_IT {
 
     private static final UserId USER_ID = UserId.getUserId("JaneDoe");
 
     private static final String PURPOSE = "Test key";
 
+    @Autowired
     private ApiKeyManager keyManager;
 
-    private MongoClient mongoClient;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private ApiKey generatedKey;
 
@@ -36,12 +42,6 @@ public class ApiKeyManager_IT {
 
     @Before
     public void setUp() throws Exception {
-        Morphia morphia = MongoTestUtils.createMorphia();
-        mongoClient = MongoTestUtils.createMongoClient();
-        Datastore datastore = morphia.createDatastore(mongoClient, MongoTestUtils.getTestDbName());
-        UserApiKeyStore store = new UserApiKeyStoreImpl(datastore);
-        store.ensureIndexes();
-        keyManager = new ApiKeyManager(new ApiKeyHasher(), store);
         timestamp = System.currentTimeMillis();
         generatedKey = generateApiKey();
 
@@ -81,7 +81,5 @@ public class ApiKeyManager_IT {
 
     @After
     public void tearDown() {
-        mongoClient.dropDatabase(MongoTestUtils.getTestDbName());
-        mongoClient.close();
     }
 }

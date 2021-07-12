@@ -1,7 +1,7 @@
 
 package edu.stanford.protege.webprotege.project;
 
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.getTestDbName;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,14 +38,14 @@ public class ProjectAccessManagerImpl_IT {
     @Before
     public void setUp() throws Exception {
         mongoClient = MongoTestUtils.createMongoClient();
-        MongoDatabase database = mongoClient.getDatabase(getTestDbName());
+        MongoTemplate database = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
         manager = new ProjectAccessManagerImpl(database);
         manager.ensureIndexes();
     }
 
     @After
     public void tearDown() throws Exception {
-        mongoClient.dropDatabase(getTestDbName());
+        mongoClient.getDatabase(getTestDbName()).drop();
         mongoClient.close();
     }
 
