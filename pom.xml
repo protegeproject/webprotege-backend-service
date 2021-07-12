@@ -518,14 +518,6 @@
                     <version>3.0.0</version>
                 </plugin>
                 <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.0</version>
-                    <configuration>
-                        <release>11</release>
-                        <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                    </configuration>
-                </plugin>
-                <plugin>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>3.0.1</version>
                     <executions>
@@ -547,9 +539,6 @@
         </pluginManagement>
 
         <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
