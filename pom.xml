@@ -88,7 +88,7 @@
             <groupId>com.google.dagger</groupId>
             <artifactId>dagger-spi</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
@@ -104,12 +104,6 @@
             <groupId>org.glassfish</groupId>
             <artifactId>javax.json</artifactId>
             <version>1.0.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
         </dependency>
 
         <dependency>
@@ -149,15 +143,6 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-
-        <!-- The org.codehaus.janino:commons-compiler:3.0.6 dependency -->
-        <!-- required for logback' conditional processing of paths -->
-        <dependency>
-            <groupId>org.codehaus.janino</groupId>
-            <artifactId>janino</artifactId>
-            <version>3.0.6</version>
-        </dependency>
-
 
         <dependency>
             <groupId>org.jvnet.mock-javamail</groupId>
