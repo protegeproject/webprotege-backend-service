@@ -11,7 +11,6 @@ import static org.junit.Assert.assertThat;
  * Stanford Center for Biomedical Informatics Research
  * 15 Mar 2017
  */
-@RunWith(MockitoJUnitRunner.class)
 public class ProjectChangesManager_IT {
 
 //    public static final int CHANGE_COUNT = 100;
