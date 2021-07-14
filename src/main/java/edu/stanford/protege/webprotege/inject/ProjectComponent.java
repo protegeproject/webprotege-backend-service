@@ -15,12 +15,6 @@ import edu.stanford.protege.webprotege.revision.RevisionManager;
  * Stanford Center for Biomedical Informatics Research
  * 3 Oct 2016
  */
-//@Subcomponent(
-//        modules = {
-//                ProjectModule.class,
-//        }
-//)
-//@ProjectSingleton
 public interface ProjectComponent {
 
     EagerProjectSingletons init();
