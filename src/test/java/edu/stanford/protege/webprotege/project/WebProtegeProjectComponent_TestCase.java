@@ -72,6 +72,11 @@ public class WebProtegeProjectComponent_TestCase {
         shouldInstantiateSingleton(ProjectComponent::getEventManager);
     }
 
+    @Test
+    public void shouldGetActionHandlerRegistry() {
+        shouldInstantiateSingleton(ProjectComponent::getActionHandlerRegistry);
+    }
+
     private void shouldInstantiateSingleton(Function<ProjectComponent, Object> objectProvider) {
         var projectId = ProjectId.get(UUID.randomUUID().toString());
         var projectComponent = projectComponentFactory.createProjectComponent(projectId);

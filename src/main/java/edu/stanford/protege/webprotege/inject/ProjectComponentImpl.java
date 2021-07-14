@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.inject;
 
+import edu.stanford.protege.webprotege.dispatch.ActionHandlerRegistry;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
@@ -25,13 +26,18 @@ public class ProjectComponentImpl implements ProjectComponent {
 
     private final ProjectDisposablesManager projectDisposablesManager;
 
+    private final ProjectActionHandlerRegistry projectActionHandlerRegistry;
+
     public ProjectComponentImpl(ProjectId projectId,
                                 EventManager<ProjectEvent<?>> eventManager,
-                                RevisionManager revisionManager, ProjectDisposablesManager projectDisposablesManager) {
+                                RevisionManager revisionManager,
+                                ProjectDisposablesManager projectDisposablesManager,
+                                ProjectActionHandlerRegistry projectActionHandlerRegistry) {
         this.projectId = projectId;
         this.eventManager = eventManager;
         this.revisionManager = revisionManager;
         this.projectDisposablesManager = projectDisposablesManager;
+        this.projectActionHandlerRegistry  = projectActionHandlerRegistry;
     }
 
     @Override
@@ -56,7 +62,7 @@ public class ProjectComponentImpl implements ProjectComponent {
 
     @Override
     public ProjectActionHandlerRegistry getActionHandlerRegistry() {
-        return null;
+        return projectActionHandlerRegistry;
     }
 
     @Override

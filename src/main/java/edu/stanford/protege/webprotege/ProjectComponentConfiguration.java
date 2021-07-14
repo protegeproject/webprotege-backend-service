@@ -26,6 +26,8 @@ import edu.stanford.protege.webprotege.crud.supplied.SuppliedNameSuffixKit;
 import edu.stanford.protege.webprotege.crud.uuid.UuidEntityCrudKitHandlerFactory;
 import edu.stanford.protege.webprotege.crud.uuid.UuidEntityCrudKitPlugin;
 import edu.stanford.protege.webprotege.crud.uuid.UuidSuffixKit;
+import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
+import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
@@ -99,11 +101,12 @@ public class ProjectComponentConfiguration {
     ProjectComponent projectComponent(ProjectId projectId,
                                       EventManager<ProjectEvent<?>> eventManager,
                                       RevisionManager revisionManager,
-                                      ProjectDisposablesManager projectDisposablesManager) {
+                                      ProjectDisposablesManager projectDisposablesManager,
+                                      ProjectActionHandlerRegistry actionHandlerRegistry) {
         return new ProjectComponentImpl(projectId,
                                         eventManager,
                                         revisionManager,
-                                        projectDisposablesManager);
+                                        projectDisposablesManager, actionHandlerRegistry);
     }
 
     @Bean
@@ -1197,5 +1200,10 @@ public class ProjectComponentConfiguration {
                                                                     EntitiesInProjectSignatureByIriIndex p2,
                                                                     EntityIriPrefixResolver p3) {
         return new UuidEntityCrudKitHandlerFactory(p1, p2, p3);
+    }
+
+    @Bean
+    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler> actionHandlers) {
+        return new ProjectActionHandlerRegistry(actionHandlers);
     }
 }
