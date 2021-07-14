@@ -2,11 +2,7 @@ package edu.stanford.protege.webprotege.api;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-
-
-
 import javax.annotation.Nonnull;
-
 import java.util.UUID;
 
 import static com.google.common.base.MoreObjects.toStringHelper;

@@ -7,14 +7,9 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
-import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
-import edu.stanford.protege.webprotege.project.ProjectManager;
+import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.util.MemoryMonitor;
-import edu.stanford.protege.webprotege.project.LoadProjectAction;
-import edu.stanford.protege.webprotege.project.LoadProjectResult;
-import edu.stanford.protege.webprotege.project.ProjectDetails;
-import edu.stanford.protege.webprotege.project.ProjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

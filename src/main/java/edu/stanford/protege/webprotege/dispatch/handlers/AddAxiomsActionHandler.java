@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
@@ -9,9 +10,8 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.AddAxiomsAction;
 import edu.stanford.protege.webprotege.dispatch.actions.AddAxiomsResult;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.project.chg.ChangeManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -3,8 +3,8 @@ package edu.stanford.protege.webprotege.index.impl;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.IndividualRendering;
-import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode;
+import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

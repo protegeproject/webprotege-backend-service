@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.renderer;
 
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.entity.*;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.mansyntax.render.HighlightedEntityChecker;
 import edu.stanford.protege.webprotege.mansyntax.render.ManchesterSyntaxObjectRenderer;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
-import edu.stanford.protege.webprotege.DataFactory;
-import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLObjectRendererImpl;
 import org.semanticweb.owlapi.model.*;

@@ -1,8 +1,9 @@
 package edu.stanford.protege.webprotege.form.data;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.form.field.FormFieldDescriptorDto;
 import edu.stanford.protege.webprotege.pagination.Page;
 

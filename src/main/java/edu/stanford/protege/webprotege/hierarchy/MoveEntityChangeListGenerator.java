@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.entity.EntityNode;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -24,7 +24,7 @@ import static java.util.Collections.emptySet;
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
  */
-@AutoFactory
+
 public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolean> {
 
     private final OWLDataFactory dataFactory;
@@ -56,15 +56,15 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
 
     @Inject
     public MoveEntityChangeListGenerator(@Nonnull MoveHierarchyNodeAction action,
-                                         @Provided @Nonnull OWLDataFactory dataFactory,
-                                         @Provided @Nonnull MessageFormatter msg,
-                                         @Provided @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                                         @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
-                                         @Provided @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex,
-                                         @Provided @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex,
-                                         @Provided @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyOfAxiomsIndex,
-                                         @Provided @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyOfAxiomsIndex,
-                                         @Provided @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyOfAxiomsIndex) {
+                                         @Nonnull OWLDataFactory dataFactory,
+                                         @Nonnull MessageFormatter msg,
+                                         @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                         @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                         @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex,
+                                         @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex,
+                                         @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyOfAxiomsIndex,
+                                         @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyOfAxiomsIndex,
+                                         @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyOfAxiomsIndex) {
         this.dataFactory = dataFactory;
         this.action = checkNotNull(action);
         this.msg = msg;

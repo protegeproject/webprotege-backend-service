@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.project.chg;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.ProjectResource;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
@@ -9,6 +10,8 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
+import edu.stanford.protege.webprotege.entity.FreshEntityIri;
+import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.events.EventTranslatorManager;
 import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
@@ -18,30 +21,21 @@ import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyProvider;
 import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyProvider;
 import edu.stanford.protege.webprotege.index.RootIndex;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.owlapi.OWLEntityCreator;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.owlapi.RenameMapFactory;
-import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.project.PrefixDeclarationsStore;
-import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
+import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
+import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryUpdatesProcessor;
+import edu.stanford.protege.webprotege.user.UserId;
 import edu.stanford.protege.webprotege.util.IriReplacer;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
 import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
-import edu.stanford.protege.webprotege.DataFactory;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitSuffixSettings;
-import edu.stanford.protege.webprotege.crud.EntityShortForm;
-import edu.stanford.protege.webprotege.entity.FreshEntityIri;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
-import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
-import edu.stanford.protege.webprotege.project.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -54,8 +48,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.*;
+import static edu.stanford.protege.webprotege.access.Subject.forUser;
 
 /**
  * Matthew Horridge

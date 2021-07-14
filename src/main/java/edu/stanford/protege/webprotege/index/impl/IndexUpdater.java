@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.index.impl;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
@@ -11,10 +11,10 @@ import com.google.common.graph.GraphBuilder;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.index.DependentIndex;
 import edu.stanford.protege.webprotege.index.IndexUpdatingService;
-import edu.stanford.protege.webprotege.revision.Revision;
-import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.revision.Revision;
+import edu.stanford.protege.webprotege.revision.RevisionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,12 +52,12 @@ public class IndexUpdater {
 
     private boolean builtIndexes = false;
 
-    @AutoFactory
+
     @Inject
-    public IndexUpdater(@Provided @Nonnull RevisionManager revisionManager,
-                        @Provided @Nonnull Set<UpdatableIndex> indexes,
-                        @Provided @Nonnull @IndexUpdatingService ExecutorService indexUpdaterService,
-                        @Provided @Nonnull ProjectId projectId) {
+    public IndexUpdater(@Nonnull RevisionManager revisionManager,
+                        @Nonnull Set<UpdatableIndex> indexes,
+                        @Nonnull @IndexUpdatingService ExecutorService indexUpdaterService,
+                        @Nonnull ProjectId projectId) {
         this.revisionManager = checkNotNull(revisionManager);
         this.indexes = checkNotNull(indexes);
         this.indexUpdaterService = checkNotNull(indexUpdaterService);

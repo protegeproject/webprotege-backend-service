@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.issues;
 
-import com.mongodb.BasicDBObject;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -8,14 +7,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.core.query.UpdateDefinition;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.issues.EntityDiscussionThread.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;

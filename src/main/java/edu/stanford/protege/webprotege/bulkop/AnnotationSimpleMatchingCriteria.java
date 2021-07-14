@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.auto.value.AutoValue;
-
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 
 import javax.annotation.Nonnull;

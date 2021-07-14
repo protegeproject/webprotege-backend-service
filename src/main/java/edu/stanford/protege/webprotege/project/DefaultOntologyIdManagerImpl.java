@@ -1,15 +1,14 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.DependentIndex;
 import edu.stanford.protege.webprotege.index.Index;
+import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;

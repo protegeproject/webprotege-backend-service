@@ -2,15 +2,15 @@ package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.Subject;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageHeader;
 import edu.stanford.protege.webprotege.mail.MessageId;
 import edu.stanford.protege.webprotege.mail.SendMail;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
-import edu.stanford.protege.webprotege.user.UserDetailsManager;
-import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserDetails;
+import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
@@ -22,9 +22,9 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_OBJECT_COMMENT;
 import static edu.stanford.protege.webprotege.access.ProjectResource.forProject;
 import static edu.stanford.protege.webprotege.access.Subject.forUser;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_OBJECT_COMMENT;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 

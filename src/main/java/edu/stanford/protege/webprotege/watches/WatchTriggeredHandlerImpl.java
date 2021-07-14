@@ -3,16 +3,16 @@ package edu.stanford.protege.webprotege.watches;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.mail.MessageHeader;
 import edu.stanford.protege.webprotege.mail.SendMail;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
+import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
 import edu.stanford.protege.webprotege.templates.TemplateObjectsBuilder;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
-import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
@@ -25,9 +25,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 import static edu.stanford.protege.webprotege.access.ProjectResource.forProject;
 import static edu.stanford.protege.webprotege.access.Subject.forUser;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 import static java.util.stream.Collectors.toList;
 
 /**

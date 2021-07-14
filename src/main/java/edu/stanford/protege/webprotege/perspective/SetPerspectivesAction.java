@@ -6,19 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.project.HasProjectId;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

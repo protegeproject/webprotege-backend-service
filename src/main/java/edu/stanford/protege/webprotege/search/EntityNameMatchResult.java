@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.search;
 
 import com.google.auto.value.AutoValue;
 
-
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkArgument;

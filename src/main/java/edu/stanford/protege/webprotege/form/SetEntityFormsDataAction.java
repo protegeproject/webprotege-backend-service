@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableMap;
-
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.form.data.FormData;
 import edu.stanford.protege.webprotege.project.ProjectId;

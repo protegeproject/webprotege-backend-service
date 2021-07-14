@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.merge;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.dispatch.ActionExecutionException;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.dispatch.ActionExecutionException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import javax.annotation.Nonnull;

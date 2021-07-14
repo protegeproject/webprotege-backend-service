@@ -9,8 +9,8 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.DeleteAxiomsAction;
 import edu.stanford.protege.webprotege.dispatch.actions.DeleteAxiomsResult;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

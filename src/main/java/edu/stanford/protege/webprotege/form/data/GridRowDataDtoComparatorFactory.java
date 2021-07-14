@@ -8,7 +8,6 @@ import edu.stanford.protege.webprotege.form.field.GridControlDescriptor;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.Comparator;
 import java.util.Objects;
 import java.util.Optional;

@@ -4,13 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**
  * Matthew Horridge

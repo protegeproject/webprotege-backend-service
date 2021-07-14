@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.bulkop;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
@@ -46,15 +46,15 @@ public class SetAnnotationValueActionChangeListGenerator implements ChangeListGe
     @Nonnull
     private final AnnotationAssertionAxiomsBySubjectIndex annotationAssertionBySubject;
 
-    @AutoFactory
-    public SetAnnotationValueActionChangeListGenerator(@Provided @Nonnull OWLDataFactory dataFactory,
+
+    public SetAnnotationValueActionChangeListGenerator(@Nonnull OWLDataFactory dataFactory,
                                                        @Nonnull ImmutableSet<OWLEntity> entities,
                                                        @Nonnull OWLAnnotationProperty property,
                                                        @Nonnull OWLAnnotationValue value,
                                                        @Nonnull String commitMessage,
-                                                       @Provided @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                                                       @Provided @Nonnull EntitiesInOntologySignatureIndex entitiesInSignature,
-                                                       @Provided @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertionBySubject) {
+                                                       @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                       @Nonnull EntitiesInOntologySignatureIndex entitiesInSignature,
+                                                       @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertionBySubject) {
         this.dataFactory = checkNotNull(dataFactory);
         this.entities = checkNotNull(entities);
         this.property = checkNotNull(property);

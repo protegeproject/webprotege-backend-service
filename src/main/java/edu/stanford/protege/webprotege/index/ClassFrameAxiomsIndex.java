@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.index;
 
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
 import java.util.Set;

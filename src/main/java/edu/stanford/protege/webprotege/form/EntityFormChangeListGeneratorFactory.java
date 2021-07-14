@@ -3,13 +3,13 @@ package edu.stanford.protege.webprotege.form;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.change.ReverseEngineeredChangeDescriptionGeneratorFactory;
 import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.form.data.FormData;
 import edu.stanford.protege.webprotege.form.processor.FormDataConverter;
 import edu.stanford.protege.webprotege.frame.EmptyEntityFrameFactory;
 import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.form.data.FormData;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 

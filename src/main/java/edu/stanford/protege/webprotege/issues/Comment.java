@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.base.Objects;
-
-
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;

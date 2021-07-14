@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.form;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
-
 import edu.stanford.protege.webprotege.form.field.FormFieldDescriptor;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 

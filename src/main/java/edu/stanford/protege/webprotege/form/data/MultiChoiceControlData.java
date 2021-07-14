@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.form.data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.form.field.MultiChoiceControlDescriptor;
 

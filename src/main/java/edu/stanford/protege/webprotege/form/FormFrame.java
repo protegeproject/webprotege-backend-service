@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.form.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import javax.annotation.Nonnull;
 

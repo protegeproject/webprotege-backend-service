@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.app;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ApplicationResource;
-import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.access.ActionId;
+import edu.stanford.protege.webprotege.access.ApplicationResource;
 import edu.stanford.protege.webprotege.user.UserDetails;
+import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;

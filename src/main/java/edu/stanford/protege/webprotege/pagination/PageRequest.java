@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.pagination;
 
 import com.google.common.base.MoreObjects;
 
-
 import java.io.Serializable;
 
 import static com.google.common.base.Preconditions.checkArgument;

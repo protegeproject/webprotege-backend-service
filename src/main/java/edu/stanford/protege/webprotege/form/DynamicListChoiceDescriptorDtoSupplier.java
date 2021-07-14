@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.match.HierarchyPositionMatchingEngine;
-import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.form.data.PrimitiveFormControlDataDto;
 import edu.stanford.protege.webprotege.form.field.ChoiceDescriptorDto;
 import edu.stanford.protege.webprotege.form.field.DynamicChoiceListSourceDescriptor;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
+import edu.stanford.protege.webprotege.match.HierarchyPositionMatchingEngine;
+import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.match.criteria.HierarchyPositionCriteria;
 
 import javax.annotation.Nonnull;
@@ -15,7 +15,6 @@ import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
 
 @FormDataBuilderSession
 public class DynamicListChoiceDescriptorDtoSupplier {

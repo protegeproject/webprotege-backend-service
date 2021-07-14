@@ -1,8 +1,9 @@
 package edu.stanford.protege.webprotege.lang;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 
 import javax.annotation.Nonnull;

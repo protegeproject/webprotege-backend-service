@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.permissions;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.ActionId;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import edu.stanford.protege.webprotege.access.ActionId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

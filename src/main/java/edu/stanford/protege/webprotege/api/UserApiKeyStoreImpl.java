@@ -1,7 +1,5 @@
 package edu.stanford.protege.webprotege.api;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;

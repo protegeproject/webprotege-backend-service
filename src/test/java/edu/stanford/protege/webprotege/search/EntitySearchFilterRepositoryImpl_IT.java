@@ -12,29 +12,28 @@ import edu.stanford.protege.webprotege.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class EntitySearchFilterRepositoryImpl_IT {
 
-    private MongoClient mongoClient;
-
-    private MongoDatabase database;
-
+    @Autowired
     private EntitySearchFilterRepositoryImpl repository;
 
     private ProjectId projectId;
 
     @Before
     public void setUp() throws Exception {
-        var objectMapper = new ObjectMapperProvider().get();
-        mongoClient = MongoTestUtils.createMongoClient();
-        database = mongoClient.getDatabase(MongoTestUtils.getTestDbName());
-        repository = new EntitySearchFilterRepositoryImpl(database,
-                                                          objectMapper);
         projectId = ProjectId.get(UUID.randomUUID().toString());
     }
 
@@ -74,8 +73,7 @@ public class EntitySearchFilterRepositoryImpl_IT {
 
     @After
     public void tearDown() throws Exception {
-        database.drop();
-        mongoClient.close();
+
     }
 
     private EntitySearchFilter saveFirstSearchFilter() {

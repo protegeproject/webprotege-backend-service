@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.download;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
+import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
-import edu.stanford.protege.webprotege.util.MemoryMonitor;
-import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.util.MemoryMonitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,15 +50,15 @@ class CreateDownloadTask implements Callable<Void> {
     @Nonnull
     private final ProjectDownloaderFactory projectDownloaderFactory;
 
-    @AutoFactory
-    public CreateDownloadTask(@Provided @Nonnull ProjectManager projectManager,
+
+    public CreateDownloadTask(@Nonnull ProjectManager projectManager,
                               @Nonnull ProjectId projectId,
                               @Nonnull UserId userId,
                               @Nonnull String projectDisplayName,
                               @Nonnull RevisionNumber revisionNumber,
                               @Nonnull DownloadFormat format,
                               @Nonnull Path destinationPath,
-                              @Provided @Nonnull ProjectDownloaderFactory projectDownloaderFactory) {
+                              @Nonnull ProjectDownloaderFactory projectDownloaderFactory) {
         this.projectManager = projectManager;
         this.projectId = projectId;
         this.userId = userId;

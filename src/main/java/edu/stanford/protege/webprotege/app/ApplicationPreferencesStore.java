@@ -1,13 +1,11 @@
 package edu.stanford.protege.webprotege.app;
 
-import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
+import edu.stanford.protege.webprotege.persistence.Repository;
 import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.data.mongodb.core.query.UpdateDefinition;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

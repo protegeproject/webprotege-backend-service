@@ -1,9 +1,8 @@
 package edu.stanford.protege.webprotege.app;
 
-import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
-import org.springframework.beans.factory.DisposableBean;
+import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PreDestroy;

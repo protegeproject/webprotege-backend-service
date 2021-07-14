@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.HasSubject;
+import edu.stanford.protege.webprotege.owlapi.RenameMap;
 
 import javax.annotation.Nonnull;
 import java.util.List;

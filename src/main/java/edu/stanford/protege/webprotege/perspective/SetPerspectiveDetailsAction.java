@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.perspective;
 
 import com.google.common.collect.ImmutableList;
-
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
 

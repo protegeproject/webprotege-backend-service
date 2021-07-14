@@ -2,11 +2,11 @@ package edu.stanford.protege.webprotege.dispatch;
 
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.ActionId;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
-import edu.stanford.protege.webprotege.access.ActionId;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.project.HasProjectId;
 
 import javax.annotation.Nonnull;

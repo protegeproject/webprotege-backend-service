@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.form;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nonnull;

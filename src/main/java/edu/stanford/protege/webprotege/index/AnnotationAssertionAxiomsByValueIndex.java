@@ -1,12 +1,7 @@
 package edu.stanford.protege.webprotege.index;
 
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLAnnotationValue;
-import org.semanticweb.owlapi.model.OWLAnonymousIndividual;
-import org.semanticweb.owlapi.model.OWLLiteral;
-import org.semanticweb.owlapi.model.OWLOntologyID;
+import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import java.util.stream.Stream;

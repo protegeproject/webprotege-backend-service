@@ -1,11 +1,6 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByClassIndex;
-import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import edu.stanford.protege.webprotege.match.Matcher;
-import edu.stanford.protege.webprotege.match.MatcherFactory;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.form.field.OwlBinding;
 import edu.stanford.protege.webprotege.form.field.OwlClassBinding;
 import edu.stanford.protege.webprotege.form.field.OwlInstanceBinding;
@@ -14,6 +9,11 @@ import edu.stanford.protege.webprotege.frame.PlainClassFrame;
 import edu.stanford.protege.webprotege.frame.PlainEntityFrame;
 import edu.stanford.protege.webprotege.frame.PlainNamedIndividualFrame;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
+import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByClassIndex;
+import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
+import edu.stanford.protege.webprotege.match.Matcher;
+import edu.stanford.protege.webprotege.match.MatcherFactory;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLPrimitive;

@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import static dagger.internal.codegen.DaggerStreams.toImmutableList;
+import static com.google.common.collect.ImmutableList.toImmutableList;
 import static edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames.DEPRECATED_FALSE;
 import static edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames.DEPRECATED_TRUE;
 

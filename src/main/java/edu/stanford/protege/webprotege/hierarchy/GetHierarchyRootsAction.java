@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
-
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
 

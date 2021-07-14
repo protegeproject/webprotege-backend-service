@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.frame.translator;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.DataFactory;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

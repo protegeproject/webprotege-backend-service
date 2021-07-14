@@ -2,14 +2,14 @@ package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;

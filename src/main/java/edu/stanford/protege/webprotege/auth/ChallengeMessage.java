@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.auth;
 import com.google.common.base.Objects;
 import com.google.common.io.BaseEncoding;
 
-
 import java.util.Arrays;
 
 import static com.google.common.base.MoreObjects.toStringHelper;

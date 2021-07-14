@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.tag;
 
+import edu.stanford.protege.webprotege.project.ProjectId;
+
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +20,7 @@ public interface TagRepository {
     void deleteTag(@Nonnull TagId tagId);
 
     @Nonnull
-    List<Tag> findTags();
+    List<Tag> findTags(ProjectId projectId);
 
     @Nonnull
     Optional<Tag> findTagByTagId(@Nonnull TagId tagId);

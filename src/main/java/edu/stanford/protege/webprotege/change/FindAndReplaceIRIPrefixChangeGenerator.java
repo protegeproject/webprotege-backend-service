@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -34,11 +34,11 @@ public class FindAndReplaceIRIPrefixChangeGenerator implements ChangeListGenerat
     @Nonnull
     private final EntityRenamer entityRenamer;
 
-    @AutoFactory
+
     public FindAndReplaceIRIPrefixChangeGenerator(@Nonnull String fromPrefix,
                                                   @Nonnull String toPrefix,
-                                                  @Provided @Nonnull ProjectSignatureIndex projectSignatureIndex,
-                                                  @Provided @Nonnull EntityRenamer entityRenamer) {
+                                                  @Nonnull ProjectSignatureIndex projectSignatureIndex,
+                                                  @Nonnull EntityRenamer entityRenamer) {
         this.fromPrefix = checkNotNull(fromPrefix);
         this.toPrefix = checkNotNull(toPrefix);
         this.projectSignatureIndex = checkNotNull(projectSignatureIndex);

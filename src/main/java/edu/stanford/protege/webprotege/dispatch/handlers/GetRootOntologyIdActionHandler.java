@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdAction;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdResult;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 

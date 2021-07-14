@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.entity;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
@@ -73,19 +73,19 @@ public class MergeEntitiesChangeListGenerator implements ChangeListGenerator<OWL
     @Nonnull
     private final AnnotationAssertionAxiomsBySubjectIndex annotationAssertions;
 
-    @AutoFactory
+
     @Inject
     public MergeEntitiesChangeListGenerator(@Nonnull ImmutableSet<OWLEntity> sourceEntities,
                                             @Nonnull OWLEntity targetEntity,
                                             @Nonnull MergedEntityTreatment treatment,
                                             @Nonnull String commitMessage,
-                                            @Provided @Nonnull ProjectId projectId,
-                                            @Provided @Nonnull OWLDataFactory dataFactory,
-                                            @Provided @Nonnull EntityDiscussionThreadRepository discussionThreadRepository,
-                                            @Provided @Nonnull EntityRenamer entityRenamer,
-                                            @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
-                                            @Provided @Nonnull ProjectOntologiesIndex projectOntologies,
-                                            @Provided @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertions) {
+                                            @Nonnull ProjectId projectId,
+                                            @Nonnull OWLDataFactory dataFactory,
+                                            @Nonnull EntityDiscussionThreadRepository discussionThreadRepository,
+                                            @Nonnull EntityRenamer entityRenamer,
+                                            @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                            @Nonnull ProjectOntologiesIndex projectOntologies,
+                                            @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertions) {
         this.projectId = checkNotNull(projectId);
         this.dataFactory = checkNotNull(dataFactory);
         this.sourceEntities = checkNotNull(sourceEntities);

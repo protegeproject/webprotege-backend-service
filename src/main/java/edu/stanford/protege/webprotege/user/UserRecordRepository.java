@@ -2,9 +2,7 @@ package edu.stanford.protege.webprotege.user;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
-import com.mongodb.client.model.UpdateOptions;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

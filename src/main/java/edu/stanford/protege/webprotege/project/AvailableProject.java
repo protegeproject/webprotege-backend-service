@@ -4,14 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.auto.value.AutoValue;
-
-
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
 import java.util.Comparator;
-
-import static java.util.Comparator.comparing;
 
 /**
  * Matthew Horridge

@@ -4,9 +4,9 @@ import edu.stanford.protege.webprotege.change.ReverseEngineeredChangeDescription
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.index.OntologyAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

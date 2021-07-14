@@ -5,13 +5,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.PrimitiveType;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.ShortForm;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotationValue;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;

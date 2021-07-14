@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
+import edu.stanford.protege.webprotege.app.UserInSession;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import edu.stanford.protege.webprotege.app.UserInSession;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionAction;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionResult;
 import edu.stanford.protege.webprotege.user.UserId;

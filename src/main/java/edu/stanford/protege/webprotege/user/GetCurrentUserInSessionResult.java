@@ -7,8 +7,6 @@ import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.app.UserInSession;
 import edu.stanford.protege.webprotege.dispatch.Result;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

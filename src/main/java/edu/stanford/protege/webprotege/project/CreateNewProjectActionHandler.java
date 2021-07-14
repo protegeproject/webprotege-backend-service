@@ -21,11 +21,11 @@ import javax.inject.Inject;
 import java.io.IOException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_EMPTY_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInRole.*;
+import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
+import static edu.stanford.protege.webprotege.access.Subject.forUser;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singleton;
 

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.individuals;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.AbstractCreateEntitiesChangeListGenerator;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
@@ -27,16 +27,16 @@ import static org.semanticweb.owlapi.model.EntityType.NAMED_INDIVIDUAL;
  * Bio-Medical Informatics Research Group<br>
  * Date: 12/09/2013
  */
-@AutoFactory
+
 public class CreateIndividualsChangeListGenerator extends AbstractCreateEntitiesChangeListGenerator<OWLNamedIndividual, OWLClass> {
 
     @Nonnull
     private final OWLDataFactory dataFactory;
 
     @Inject
-    public CreateIndividualsChangeListGenerator(@Provided @Nonnull OWLDataFactory dataFactory,
-                                                @Provided @Nonnull MessageFormatter msg,
-                                                @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+    public CreateIndividualsChangeListGenerator(@Nonnull OWLDataFactory dataFactory,
+                                                @Nonnull MessageFormatter msg,
+                                                @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                                 @Nonnull ImmutableSet<OWLClass> parents,
                                                 @Nonnull String sourceText,
                                                 @Nonnull String langTag) {

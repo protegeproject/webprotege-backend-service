@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.auto.value.extension.memoized.Memoized;
-
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import org.semanticweb.owlapi.model.IRI;
 

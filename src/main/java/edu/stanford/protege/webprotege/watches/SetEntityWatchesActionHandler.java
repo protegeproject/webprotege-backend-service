@@ -3,9 +3,9 @@ package edu.stanford.protege.webprotege.watches;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;

@@ -3,9 +3,7 @@ package edu.stanford.protege.webprotege.projectsettings;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
-
 
 import javax.annotation.Nonnull;
 import java.util.List;

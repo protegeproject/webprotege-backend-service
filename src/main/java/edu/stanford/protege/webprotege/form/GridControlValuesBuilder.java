@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.form.data.*;
 import edu.stanford.protege.webprotege.form.field.*;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
 import edu.stanford.protege.webprotege.lang.LangTagFilter;
 import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.pagination.PageCollector;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 import org.semanticweb.owlapi.model.*;
 
@@ -17,7 +17,6 @@ import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static java.util.stream.Collectors.partitioningBy;
 
 @FormDataBuilderSession
 public class GridControlValuesBuilder {

@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.renderer.ContextRenderer;
 import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 

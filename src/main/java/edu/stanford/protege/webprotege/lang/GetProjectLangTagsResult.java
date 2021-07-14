@@ -1,10 +1,8 @@
 package edu.stanford.protege.webprotege.lang;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
-
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.project.ProjectId;
 

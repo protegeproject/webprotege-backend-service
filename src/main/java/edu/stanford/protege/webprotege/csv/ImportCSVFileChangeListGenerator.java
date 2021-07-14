@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.csv;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.DataFactory;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -41,13 +41,13 @@ public class ImportCSVFileChangeListGenerator implements ChangeListGenerator<Int
     private final DefaultOntologyIdManager defaultOntologyIdManager;
 
 
-    @AutoFactory
+
     @Inject
     public ImportCSVFileChangeListGenerator(@Nonnull OWLClass importRootClass,
                                             @Nonnull CSVGrid csvGrid,
                                             @Nonnull CSVImportDescriptor descriptor,
-                                            @Provided @Nonnull OWLDataFactory dataFactory,
-                                            @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager) {
+                                            @Nonnull OWLDataFactory dataFactory,
+                                            @Nonnull DefaultOntologyIdManager defaultOntologyIdManager) {
         this.importRootClass = checkNotNull(importRootClass);
         this.csvGrid = checkNotNull(csvGrid);
         this.descriptor = checkNotNull(descriptor);

@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.events;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.entity.EntityNode;
+import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -37,12 +37,12 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
     @Nonnull
     private final HierarchyId hierarchyId;
 
-    @AutoFactory
+
     public EntityHierarchyChangedEventProxy(@Nonnull GraphModelChangedEvent<? extends OWLEntity> graphModelChangedEvent,
-                                            @Provided @Nonnull GraphNodeRenderer renderer,
-                                            @Provided @Nonnull EntityNodeRenderer entityNodeRenderer,
+                                            @Nonnull GraphNodeRenderer renderer,
+                                            @Nonnull EntityNodeRenderer entityNodeRenderer,
                                             @Nonnull HierarchyProvider<? extends OWLEntity> classHierarchyProvider,
-                                            @Provided @Nonnull ProjectId projectId,
+                                            @Nonnull ProjectId projectId,
                                             @Nonnull HierarchyId hierarchyId) {
         this.graphModelChangedEvent = (GraphModelChangedEvent) graphModelChangedEvent;
         this.renderer = renderer;

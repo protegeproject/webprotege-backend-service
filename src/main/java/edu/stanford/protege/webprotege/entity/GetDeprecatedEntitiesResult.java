@@ -4,14 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
-
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.pagination.Page;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

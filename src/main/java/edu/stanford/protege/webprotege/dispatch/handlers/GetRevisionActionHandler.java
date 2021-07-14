@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.GetRevisionAction;
@@ -9,7 +10,6 @@ import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionDetails;
 import edu.stanford.protege.webprotege.revision.RevisionDetailsExtractor;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

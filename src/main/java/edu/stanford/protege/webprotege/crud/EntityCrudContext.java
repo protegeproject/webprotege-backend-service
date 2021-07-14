@@ -1,9 +1,7 @@
 package edu.stanford.protege.webprotege.crud;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
-import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
+import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.user.UserId;
@@ -37,11 +35,10 @@ public class EntityCrudContext {
     @Nonnull
     private OWLOntologyID targetOntologyId;
 
-    @AutoFactory
-    public EntityCrudContext(@Provided @Nonnull ProjectId projectId,
+    public EntityCrudContext(@Nonnull ProjectId projectId,
+                             @Nonnull ProjectDetailsRepository projectDetailsRepository,
                              @Nonnull UserId userId,
                              @Nonnull PrefixedNameExpander prefixedNameExpander,
-                             @Provided @Nonnull ProjectDetailsRepository projectDetailsRepository,
                              @Nonnull OWLOntologyID targetOntologyId) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);

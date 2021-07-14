@@ -1,19 +1,18 @@
 package edu.stanford.protege.webprotege.frame.translator;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.frame.PropertyValueMinimiser;
+import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.hierarchy.HasGetAncestors;
-import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex;
 import edu.stanford.protege.webprotege.match.RelationshipMatcherFactory;
-import edu.stanford.protege.webprotege.frame.ClassFrameTranslationOptions;
-import edu.stanford.protege.webprotege.frame.PlainClassFrame;
-import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
-import edu.stanford.protege.webprotege.frame.State;
 import edu.stanford.protege.webprotege.match.criteria.RelationshipCriteria;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -24,10 +23,10 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex.AnnotationsTreatment.EXCLUDE_ANNOTATIONS;
-import static edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex.AnnotationsTreatment.INCLUDE_ANNOTATIONS;
 import static edu.stanford.protege.webprotege.frame.ClassFrameTranslationOptions.AncestorsTreatment.INCLUDE_ANCESTORS;
 import static edu.stanford.protege.webprotege.frame.RelationshipTranslationOptions.RelationshipMinification.MINIMIZED_RELATIONSHIPS;
+import static edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex.AnnotationsTreatment.EXCLUDE_ANNOTATIONS;
+import static edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex.AnnotationsTreatment.INCLUDE_ANNOTATIONS;
 
 /**
  * Author: Matthew Horridge<br>
@@ -58,12 +57,12 @@ public class Class2ClassFrameTranslator {
     @Nonnull
     private final RelationshipMatcherFactory matcherFactory;
 
-    @AutoFactory
-    public Class2ClassFrameTranslator(@Provided @Nonnull ClassFrameAxiomsIndex classFrameAxiomsIndex,
-                                      @Provided @Nonnull HasGetAncestors<OWLClass> ancestorsProvider,
-                                      @Provided @Nonnull PropertyValueMinimiser propertyValueMinimiser,
-                                      @Provided @Nonnull AxiomPropertyValueTranslator axiomPropertyValueTranslator,
-                                      @Nonnull @Provided RelationshipMatcherFactory matcherFactory,
+
+    public Class2ClassFrameTranslator(@Nonnull ClassFrameAxiomsIndex classFrameAxiomsIndex,
+                                      @Nonnull HasGetAncestors<OWLClass> ancestorsProvider,
+                                      @Nonnull PropertyValueMinimiser propertyValueMinimiser,
+                                      @Nonnull AxiomPropertyValueTranslator axiomPropertyValueTranslator,
+                                      @Nonnull RelationshipMatcherFactory matcherFactory,
                                       @Nonnull ClassFrameTranslationOptions options) {
         this.classFrameAxiomsIndex = checkNotNull(classFrameAxiomsIndex);
         this.ancestorsProvider = checkNotNull(ancestorsProvider);

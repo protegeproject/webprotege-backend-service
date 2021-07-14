@@ -12,8 +12,6 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.api.UserApiKeys.API_KEYS__API_KEY;
-import static edu.stanford.protege.webprotege.api.UserApiKeys.API_KEYS__API_KEY_ID;
 
 /**
  * Matthew Horridge

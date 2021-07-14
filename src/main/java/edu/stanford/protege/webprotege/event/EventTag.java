@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.event;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-
 import javax.annotation.concurrent.Immutable;
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -22,7 +22,7 @@ import static java.util.stream.Collectors.toList;
  * Stanford Center for Biomedical Informatics Research
  * 12 Jun 2018
  */
-@AutoFactory
+
 public class AnnotationValuesAreNotDisjointMatcher implements Matcher<OWLEntity> {
 
     @Nonnull
@@ -35,7 +35,7 @@ public class AnnotationValuesAreNotDisjointMatcher implements Matcher<OWLEntity>
     private final Matcher<OWLAnnotationProperty> propertyB;
 
     @Inject
-    public AnnotationValuesAreNotDisjointMatcher(@Nonnull @Provided  AnnotationAssertionAxiomsIndex axioms,
+    public AnnotationValuesAreNotDisjointMatcher(@Nonnull  AnnotationAssertionAxiomsIndex axioms,
                                                  @Nonnull Matcher<OWLAnnotationProperty> propertyA,
                                                  @Nonnull Matcher<OWLAnnotationProperty> propertyB) {
         this.axioms = checkNotNull(axioms);

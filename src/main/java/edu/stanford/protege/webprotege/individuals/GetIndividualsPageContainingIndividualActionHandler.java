@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.index.IndividualsIndex;
 import edu.stanford.protege.webprotege.index.IndividualsQueryResult;
-import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.pagination.Page;
 
 import javax.annotation.Nonnull;

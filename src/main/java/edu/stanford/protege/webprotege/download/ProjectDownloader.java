@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.download;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.project.PrefixDeclarationsStore;
-import edu.stanford.protege.webprotege.revision.RevisionManager;
-import edu.stanford.protege.webprotege.util.MemoryMonitor;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
+import edu.stanford.protege.webprotege.util.MemoryMonitor;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
@@ -61,14 +61,14 @@ public class ProjectDownloader {
      * @param format                  The format which the project should be downloaded in.
      * @param prefixDeclarationsStore The prefix declarations store that is used to retrieve customised prefixes
      */
-    @AutoFactory
+
     @Inject
     public ProjectDownloader(@Nonnull ProjectId projectId,
                              @Nonnull String fileName,
                              @Nonnull RevisionNumber revision,
                              @Nonnull DownloadFormat format,
                              @Nonnull RevisionManager revisionManager,
-                             @Provided @Nonnull PrefixDeclarationsStore prefixDeclarationsStore) {
+                             @Nonnull PrefixDeclarationsStore prefixDeclarationsStore) {
         this.projectId = checkNotNull(projectId);
         this.revision = checkNotNull(revision);
         this.revisionManager = checkNotNull(revisionManager);

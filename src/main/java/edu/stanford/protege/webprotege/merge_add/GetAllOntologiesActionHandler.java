@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.merge_add;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.merge.ProjectOntologiesBuilder;
 import edu.stanford.protege.webprotege.project.Ontology;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

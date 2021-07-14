@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.watches;
 
 import com.google.common.base.Objects;
-
 import edu.stanford.protege.webprotege.HasUserId;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.project.ProjectId;

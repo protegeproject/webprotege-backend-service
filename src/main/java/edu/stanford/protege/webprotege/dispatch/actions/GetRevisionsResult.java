@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.dispatch.actions;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.revision.RevisionDetails;
 import edu.stanford.protege.webprotege.dispatch.Result;
+import edu.stanford.protege.webprotege.revision.RevisionDetails;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 
 import javax.annotation.Nonnull;

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.upload;
 
-import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 import edu.stanford.protege.webprotege.csv.DocumentId;
+import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

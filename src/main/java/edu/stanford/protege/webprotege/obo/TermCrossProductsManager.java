@@ -4,12 +4,12 @@ import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
+import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.index.EquivalentClassesAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.*;
 

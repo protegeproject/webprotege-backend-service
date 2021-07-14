@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
@@ -27,10 +27,10 @@ public class RevisionReverterChangeListGenerator implements ChangeListGenerator<
     @Nonnull
     private final RevisionManager revisionManager;
 
-    @AutoFactory
+
     @Inject
     public RevisionReverterChangeListGenerator(@Nonnull RevisionNumber revisionNumber,
-                                               @Provided @Nonnull RevisionManager revisionManager) {
+                                               @Nonnull RevisionManager revisionManager) {
         this.revisionNumber = checkNotNull(revisionNumber);
         this.revisionManager = checkNotNull(revisionManager);
     }

@@ -17,11 +17,11 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
-import static edu.stanford.protege.webprotege.access.Subject.forGuestUser;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_EMPTY_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInRole.*;
+import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
+import static edu.stanford.protege.webprotege.access.Subject.forGuestUser;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_ALLOWED;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_NOT_ALLOWED;
 import static edu.stanford.protege.webprotege.app.NotificationEmailsSetting.SEND_NOTIFICATION_EMAILS;

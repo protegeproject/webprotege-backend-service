@@ -2,15 +2,12 @@ package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import dagger.Module;
-import dagger.Provides;
 import edu.stanford.protege.webprotege.lang.LangTagFilter;
 
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Module
 public class EntityFrameFormDataModule {
 
     @Nonnull
@@ -42,22 +39,18 @@ public class EntityFrameFormDataModule {
         this.formRegionFilterIndex = FormRegionFilterIndex.get(ImmutableSet.of());
     }
 
-    @Provides
     public FormRegionOrderingIndex provideFormRegionOrderingIndex() {
         return formRegionOrderingIndex;
     }
 
-    @Provides
     public LangTagFilter provideLangTagFilter() {
         return langTagFilter;
     }
 
-    @Provides
     public FormPageRequestIndex providePageRequestIndex() {
         return pageRequestIndex;
     }
 
-    @Provides
     public FormRegionFilterIndex provideFormRegionFilterIndex() {
         return formRegionFilterIndex;
     }

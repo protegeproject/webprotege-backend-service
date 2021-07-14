@@ -3,8 +3,6 @@ package edu.stanford.protege.webprotege.form.field;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
-
 import edu.stanford.protege.webprotege.form.data.PrimitiveFormControlData;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 

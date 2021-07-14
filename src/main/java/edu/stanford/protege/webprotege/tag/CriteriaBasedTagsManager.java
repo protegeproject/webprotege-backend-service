@@ -1,7 +1,8 @@
 package edu.stanford.protege.webprotege.tag;
 
-import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.match.MatchingEngine;
+import edu.stanford.protege.webprotege.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -25,15 +26,19 @@ public class CriteriaBasedTagsManager {
     @Nonnull
     private final MatchingEngine matchingEngine;
 
+    @Nonnull
+    private final ProjectId projectId;
+
     @Inject
     public CriteriaBasedTagsManager(@Nonnull TagRepository tagRepository,
-                                    @Nonnull MatchingEngine matchingEngine) {
+                                    @Nonnull MatchingEngine matchingEngine, @Nonnull ProjectId projectId) {
         this.tagRepository = checkNotNull(tagRepository);
         this.matchingEngine = checkNotNull(matchingEngine);
+        this.projectId = projectId;
     }
 
     public Stream<TagId> getTagsForEntity(@Nonnull OWLEntity entity) {
-        return tagRepository.findTags()
+        return tagRepository.findTags(projectId)
                      .stream()
                      .map(tag -> {
                          if(matchingEngine.matchesAny(entity, tag.getCriteria())) {

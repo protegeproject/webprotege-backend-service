@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.dispatch;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.auth.ChangePasswordAction;

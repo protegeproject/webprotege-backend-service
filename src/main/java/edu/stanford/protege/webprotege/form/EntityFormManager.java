@@ -8,9 +8,8 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static dagger.internal.codegen.DaggerStreams.toImmutableSet;
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
 /**
  * Matthew Horridge

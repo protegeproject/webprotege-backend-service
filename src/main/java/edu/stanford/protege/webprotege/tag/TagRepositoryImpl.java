@@ -4,12 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.bulk.BulkWriteResult;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.*;
-import edu.stanford.protege.webprotege.persistence.Repository;
+import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.ReplaceOneModel;
+import com.mongodb.client.model.ReplaceOptions;
+import com.mongodb.client.model.WriteModel;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -37,10 +40,7 @@ public class TagRepositoryImpl implements TagRepository, Repository {
     private static final String COLLECTION_NAME = "Tags";
 
     @Nonnull
-    private final ProjectId projectId;
-
-    @Nonnull
-    private final MongoDatabase database;
+    private final MongoTemplate database;
 
     @Nonnull
     private final ObjectMapper objectMapper;
@@ -52,10 +52,8 @@ public class TagRepositoryImpl implements TagRepository, Repository {
     private final Lock writeLock = readWriteLock.writeLock();
 
     @Inject
-    public TagRepositoryImpl(@Nonnull ProjectId projectId,
-                             @Nonnull MongoDatabase database,
+    public TagRepositoryImpl(@Nonnull MongoTemplate database,
                              @Nonnull ObjectMapper objectMapper) {
-        this.projectId = checkNotNull(projectId);
         this.database = checkNotNull(database);
         this.objectMapper = checkNotNull(objectMapper);
     }
@@ -131,7 +129,7 @@ public class TagRepositoryImpl implements TagRepository, Repository {
     }
 
     @Nonnull
-    public List<Tag> findTags() {
+    public List<Tag> findTags(ProjectId projectId) {
         readLock.lock();
         try {
             Document filter = new Document(Tag.PROJECT_ID, projectId.getId());

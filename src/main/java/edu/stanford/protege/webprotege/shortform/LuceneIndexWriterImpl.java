@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.base.Stopwatch;
+import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.index.BuiltInOwlEntitiesIndex;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
 import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
-import edu.stanford.protege.webprotege.search.EntitySearchFilterIndexesManager;
-import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.search.EntitySearchFilterIndexesManager;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
@@ -17,9 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.PreDestroy;
 import javax.inject.Inject;
 import javax.inject.Provider;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
@@ -41,7 +41,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     private final Directory luceneDirectory;
 
     @Nonnull
-    private final Provider<LuceneEntityDocumentTranslator> luceneEntityDocumentTranslator;
+    private final LuceneEntityDocumentTranslator luceneEntityDocumentTranslator;
 
     @Nonnull
     private final ProjectSignatureIndex projectSignatureIndex;
@@ -62,7 +62,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     @Inject
     public LuceneIndexWriterImpl(@Nonnull ProjectId projectId,
                                  @Nonnull Directory luceneDirectory,
-                                 @Nonnull Provider<LuceneEntityDocumentTranslator> luceneEntityDocumentTranslator,
+                                 @Nonnull LuceneEntityDocumentTranslator luceneEntityDocumentTranslator,
                                  @Nonnull ProjectSignatureIndex projectSignatureIndex,
                                  @Nonnull EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex,
                                  @Nonnull IndexWriter indexWriter,
@@ -107,14 +107,13 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
         logger.info("{} Building lucene index", projectId);
         var stopwatch = Stopwatch.createStarted();
 
-        var docTranslator = luceneEntityDocumentTranslator.get();
         projectSignatureIndex.getSignature()
                              .peek(this::logProgress)
-                             .map(docTranslator::getLuceneDocument)
+                             .map(luceneEntityDocumentTranslator::getLuceneDocument)
                              .forEach(this::addDocumentToIndex);
         builtInOwlEntitiesIndex.getBuiltInEntities()
                                .filter(entity -> !entitiesInProjectSignatureIndex.containsEntityInSignature(entity))
-                               .map(docTranslator::getLuceneDocument)
+                               .map(luceneEntityDocumentTranslator::getLuceneDocument)
                                .forEach(this::addDocumentToIndex);
         indexWriter.commit();
         searcherManager.maybeRefreshBlocking();
@@ -138,6 +137,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
         }
     }
 
+    @PreDestroy
     @Override
     public void dispose() {
         try {

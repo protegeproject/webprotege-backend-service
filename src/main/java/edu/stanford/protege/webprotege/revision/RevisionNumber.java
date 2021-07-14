@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.revision;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 

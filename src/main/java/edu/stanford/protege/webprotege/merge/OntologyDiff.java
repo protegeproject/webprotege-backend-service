@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.merge;
 
 import com.google.common.base.Objects;
-
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;

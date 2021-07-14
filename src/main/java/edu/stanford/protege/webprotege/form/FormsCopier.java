@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.form;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.project.ProjectId;
 
@@ -31,12 +31,12 @@ public class FormsCopier {
     @Nonnull
     private final EntityFormSelectorRepository entityFormSelectorRepository;
 
-    @AutoFactory
+
     public FormsCopier(@Nonnull ProjectId fromProjectId,
                        @Nonnull ProjectId toProjectId,
                        @Nonnull ImmutableList<FormId> formsToCopy,
-                       @Provided @Nonnull EntityFormRepository entityFormRepository,
-                       @Provided @Nonnull EntityFormSelectorRepository entityFormSelectorRepository) {
+                       @Nonnull EntityFormRepository entityFormRepository,
+                       @Nonnull EntityFormSelectorRepository entityFormSelectorRepository) {
         this.fromProjectId = checkNotNull(fromProjectId);
         this.toProjectId = checkNotNull(toProjectId);
         this.formsToCopy = checkNotNull(formsToCopy);

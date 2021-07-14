@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -24,16 +24,16 @@ import static org.semanticweb.owlapi.model.EntityType.CLASS;
  * Bio-Medical Informatics Research Group<br>
  * Date: 22/02/2013
  */
-@AutoFactory
+
 public class CreateClassesChangeGenerator extends AbstractCreateEntitiesChangeListGenerator<OWLClass, OWLClass> {
 
     @Nonnull
     private final OWLDataFactory dataFactory;
 
     @Inject
-    public CreateClassesChangeGenerator(@Provided @Nonnull OWLDataFactory dataFactory,
-                                        @Provided @Nonnull MessageFormatter msg,
-                                        @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+    public CreateClassesChangeGenerator(@Nonnull OWLDataFactory dataFactory,
+                                        @Nonnull MessageFormatter msg,
+                                        @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                         @Nonnull String sourceText,
                                         @Nonnull String langTag,
                                         @Nonnull ImmutableSet<OWLClass> parent) {

@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
-
-
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;

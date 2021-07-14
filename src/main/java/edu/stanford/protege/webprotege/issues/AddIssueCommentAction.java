@@ -1,8 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
-import edu.stanford.protege.webprotege.project.HasProjectId;
-
 import edu.stanford.protege.webprotege.dispatch.Action;
+import edu.stanford.protege.webprotege.project.HasProjectId;
 import edu.stanford.protege.webprotege.project.ProjectId;
 
 import javax.annotation.Nonnull;

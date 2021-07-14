@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.inject;
 
-import com.mongodb.*;
+import com.mongodb.MongoCredential;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import edu.stanford.protege.webprotege.app.ApplicationDisposablesManager;
@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.inject.Provider;
-import java.util.Collections;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;

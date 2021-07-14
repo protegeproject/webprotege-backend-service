@@ -9,12 +9,12 @@ import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
-import edu.stanford.protege.webprotege.user.UserActivityManager;
-import edu.stanford.protege.webprotege.user.UserActivityRecord;
 import edu.stanford.protege.webprotege.project.AvailableProject;
 import edu.stanford.protege.webprotege.project.GetAvailableProjectsAction;
 import edu.stanford.protege.webprotege.project.GetAvailableProjectsResult;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.user.UserActivityManager;
+import edu.stanford.protege.webprotege.user.UserActivityRecord;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.DOWNLOAD_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.MOVE_ANY_PROJECT_TO_TRASH;
+import static edu.stanford.protege.webprotege.access.Subject.forUser;
 import static java.util.stream.Collectors.toList;
 
 /**

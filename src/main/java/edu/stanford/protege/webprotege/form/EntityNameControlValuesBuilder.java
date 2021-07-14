@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.form.data.EntityNameControlDataDto;
 import edu.stanford.protege.webprotege.form.data.EntityNameControlDataDtoComparator;
 import edu.stanford.protege.webprotege.form.data.FormControlDataDto;
 import edu.stanford.protege.webprotege.form.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.form.field.EntityNameControlDescriptor;
 import edu.stanford.protege.webprotege.form.field.OwlBinding;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 

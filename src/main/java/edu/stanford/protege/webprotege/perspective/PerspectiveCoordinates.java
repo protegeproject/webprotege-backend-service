@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.perspective;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.project.WithProjectId;
 import edu.stanford.protege.webprotege.user.UserId;

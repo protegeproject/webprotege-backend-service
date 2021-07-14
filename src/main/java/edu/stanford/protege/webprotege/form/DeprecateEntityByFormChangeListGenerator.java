@@ -1,30 +1,31 @@
 package edu.stanford.protege.webprotege.form;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
-import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.inject.ProjectComponent;
-import edu.stanford.protege.webprotege.msg.MessageFormatter;
-import edu.stanford.protege.webprotege.owlapi.RenameMap;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.util.EntityDeleter;
-import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.form.data.FormData;
 import edu.stanford.protege.webprotege.form.data.FormDataDto;
 import edu.stanford.protege.webprotege.form.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.form.data.FormSubject;
 import edu.stanford.protege.webprotege.form.field.FormFieldDeprecationStrategy;
+import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.inject.ProjectComponent;
+import edu.stanford.protege.webprotege.msg.MessageFormatter;
+import edu.stanford.protege.webprotege.owlapi.RenameMap;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
+import edu.stanford.protege.webprotege.util.EntityDeleter;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLAxiomVisitorExAdapter;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.Collections;
+import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -96,26 +97,26 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
     private final ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex;
 
 
-    @AutoFactory
+
     public DeprecateEntityByFormChangeListGenerator(@Nonnull OWLEntity entityToBeDeprecated,
                                                     @Nonnull Optional<FormData> deprecationFormData,
                                                     @Nonnull Optional<OWLEntity> replacementEntity,
                                                     @Nonnull EntityDeprecationSettings entityDeprecationSettings,
-                                                    @Provided @Nonnull EntityDeleter entityDeleter,
-                                                    @Provided @Nonnull EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory,
-                                                    @Provided @Nonnull EntityFormManager entityFormManager,
-                                                    @Provided @Nonnull MessageFormatter messageFormatter,
-                                                    @Provided @Nonnull ProjectId projectId,
-                                                    @Provided @Nonnull ProjectComponent projectComponent,
-                                                    @Provided @Nonnull EntityRenamer entityRenamer,
-                                                    @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
-                                                    @Provided @Nonnull OWLDataFactory dataFactory,
-                                                    @Provided @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                                                    @Provided @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex,
-                                                    @Provided @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex,
-                                                    @Provided @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
-                                                    @Provided @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyAxiomsBySubPropertyIndex,
-                                                    @Provided @Nonnull ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex) {
+                                                    @Nonnull EntityDeleter entityDeleter,
+                                                    @Nonnull EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory,
+                                                    @Nonnull EntityFormManager entityFormManager,
+                                                    @Nonnull MessageFormatter messageFormatter,
+                                                    @Nonnull ProjectId projectId,
+                                                    @Nonnull ProjectComponent projectComponent,
+                                                    @Nonnull EntityRenamer entityRenamer,
+                                                    @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                                    @Nonnull OWLDataFactory dataFactory,
+                                                    @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                    @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex,
+                                                    @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex,
+                                                    @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
+                                                    @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyAxiomsBySubPropertyIndex,
+                                                    @Nonnull ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex) {
         this.entityToBeDeprecated = checkNotNull(entityToBeDeprecated);
         this.deprecationFormData = checkNotNull(deprecationFormData);
         this.replacementEntity = checkNotNull(replacementEntity);

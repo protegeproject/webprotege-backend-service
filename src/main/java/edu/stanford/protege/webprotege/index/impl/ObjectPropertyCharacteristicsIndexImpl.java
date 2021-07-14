@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.index.impl;
 
+import edu.stanford.protege.webprotege.frame.ObjectPropertyCharacteristic;
 import edu.stanford.protege.webprotege.index.AxiomsByTypeIndex;
 import edu.stanford.protege.webprotege.index.DependentIndex;
 import edu.stanford.protege.webprotege.index.Index;
 import edu.stanford.protege.webprotege.index.ObjectPropertyCharacteristicsIndex;
-import edu.stanford.protege.webprotege.frame.ObjectPropertyCharacteristic;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyCharacteristicAxiom;

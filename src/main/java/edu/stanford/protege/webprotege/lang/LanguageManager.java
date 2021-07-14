@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.lang;
 
-import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 

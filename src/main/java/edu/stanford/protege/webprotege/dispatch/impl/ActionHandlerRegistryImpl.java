@@ -1,10 +1,6 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
-import edu.stanford.protege.webprotege.dispatch.ActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ActionHandlerNotFoundException;
-import edu.stanford.protege.webprotege.dispatch.ActionHandlerRegistry;
-import edu.stanford.protege.webprotege.dispatch.Action;
-import edu.stanford.protege.webprotege.dispatch.Result;
+import edu.stanford.protege.webprotege.dispatch.*;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;

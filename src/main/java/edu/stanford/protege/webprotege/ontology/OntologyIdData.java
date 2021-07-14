@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.ontology;
 
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.entity.ObjectData;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 

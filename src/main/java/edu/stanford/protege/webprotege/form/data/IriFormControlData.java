@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.form.data;
 
 import com.google.auto.value.AutoValue;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;

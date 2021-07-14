@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.upload;
 
+import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.owlapi.WebProtegeOWLManager;
 import edu.stanford.protege.webprotege.project.Ontology;
 import edu.stanford.protege.webprotege.project.RawProjectSourcesImporter;
 import edu.stanford.protege.webprotege.project.UploadedProjectSourcesExtractor;
-import edu.stanford.protege.webprotege.csv.DocumentId;
 import org.semanticweb.owlapi.model.MissingImportHandlingStrategy;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;

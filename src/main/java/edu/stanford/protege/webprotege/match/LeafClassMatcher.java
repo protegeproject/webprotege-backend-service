@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -15,13 +15,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-12-07
  */
-@AutoFactory
+
 public class LeafClassMatcher implements Matcher<OWLEntity> {
 
     @Nonnegative
     private final ClassHierarchyProvider hierarchyProvider;
 
-    public LeafClassMatcher(@Provided ClassHierarchyProvider hierarchyProvider) {
+    public LeafClassMatcher(ClassHierarchyProvider hierarchyProvider) {
         this.hierarchyProvider = checkNotNull(hierarchyProvider);
     }
 

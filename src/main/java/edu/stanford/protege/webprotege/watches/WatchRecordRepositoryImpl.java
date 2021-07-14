@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.watches;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.ReplaceOptions;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
@@ -10,6 +9,7 @@ import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -36,12 +36,12 @@ public class WatchRecordRepositoryImpl implements WatchRecordRepository {
 
     private static final String $IN = "$in";
 
-    private final MongoDatabase database;
+    private final MongoTemplate database;
 
     private final ObjectMapper objectMapper;
 
     @Inject
-    public WatchRecordRepositoryImpl(@Nonnull MongoDatabase database, @Nonnull ObjectMapper objectMapper) {
+    public WatchRecordRepositoryImpl(@Nonnull MongoTemplate database, @Nonnull ObjectMapper objectMapper) {
         this.database = database;
         this.objectMapper = objectMapper;
     }

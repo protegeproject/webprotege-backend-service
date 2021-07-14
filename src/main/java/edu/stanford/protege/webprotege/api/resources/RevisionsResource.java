@@ -1,22 +1,24 @@
 package edu.stanford.protege.webprotege.api.resources;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.GetRevisionAction;
 import edu.stanford.protege.webprotege.dispatch.actions.GetRevisionsAction;
-import edu.stanford.protege.webprotege.revision.RevisionDetails;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.revision.RevisionDetails;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -35,9 +37,9 @@ public class RevisionsResource {
     private final ActionExecutor executor;
 
     @Inject
-    @AutoFactory
+
     public RevisionsResource(@Nonnull ProjectId projectId,
-                             @Provided @Nonnull ActionExecutor executor) {
+                             @Nonnull ActionExecutor executor) {
         this.projectId = checkNotNull(projectId);
         this.executor = checkNotNull(executor);
     }

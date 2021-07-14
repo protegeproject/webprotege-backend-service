@@ -1,6 +1,9 @@
 package edu.stanford.protege.webprotege.frame;
 
-import edu.stanford.protege.webprotege.frame.translator.*;
+import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

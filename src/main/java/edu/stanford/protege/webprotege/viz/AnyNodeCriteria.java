@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.viz;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 
-
 import javax.annotation.Nonnull;
 
 /**

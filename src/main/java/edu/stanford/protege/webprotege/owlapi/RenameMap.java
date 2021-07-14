@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.owlapi;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
+
+
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -44,10 +44,10 @@ public class RenameMap {
      * @param renderingManager
      * @throws NullPointerException if {@code map} is {@code null}.
      */
-    @AutoFactory
+
     public RenameMap(@Nonnull Map<IRI, IRI> map,
-                     @Provided @Nonnull OWLDataFactory dataFactory,
-                     @Provided @Nonnull RenderingManager renderingManager) {
+                     @Nonnull OWLDataFactory dataFactory,
+                     @Nonnull RenderingManager renderingManager) {
         this.dataFactory = dataFactory;
         this.renderingManager = checkNotNull(renderingManager);
         this.map.putAll(checkNotNull(map));

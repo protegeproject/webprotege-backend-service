@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.inject.project;
 
+import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventLifeTime;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.project.ProjectId;
 
 import javax.inject.Inject;

@@ -1,13 +1,9 @@
 package edu.stanford.protege.webprotege.tag;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteError;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.match.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.match.criteria.RootCriteria;
@@ -15,13 +11,16 @@ import edu.stanford.protege.webprotege.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.createMongoClient;
-import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.getTestDbName;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
@@ -32,6 +31,8 @@ import static org.junit.Assert.fail;
  * Stanford Center for Biomedical Informatics Research
  * 18 Mar 2018
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class TagRepositoryImpl_IT {
 
     private static final String THE_TAG_LABEL = "The tag label";
@@ -42,10 +43,13 @@ public class TagRepositoryImpl_IT {
 
     private static final Color BG_COLOR = Color.getHex("#f0f0f0");
 
+    public static final String COLLECTION_NAME = "Tags";
 
+    @Autowired
     private TagRepositoryImpl repository;
 
-    private MongoClient client;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private Tag tag, tag2;
 
@@ -62,10 +66,6 @@ public class TagRepositoryImpl_IT {
         projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
         projectId2 = ProjectId.get("12345678-1234-1234-1234-123456789def");
 
-        client = createMongoClient();
-        MongoDatabase database = client.getDatabase(getTestDbName());
-        ObjectMapper objectMapper = new ObjectMapperProvider().get();
-        repository = new TagRepositoryImpl(projectId, database, objectMapper);
         repository.ensureIndexes();
 
         RootCriteria rootCriteria = EntityIsDeprecatedCriteria.get();
@@ -92,8 +92,7 @@ public class TagRepositoryImpl_IT {
 
     @After
     public void tearDown() {
-        client.getDatabase(getTestDbName()).drop();
-        client.close();
+        mongoTemplate.getCollection(COLLECTION_NAME).drop();
     }
 
     /**
@@ -101,7 +100,7 @@ public class TagRepositoryImpl_IT {
      * low level Java driver.
      */
     private long getTagsCollectionSize() {
-        return client.getDatabase(getTestDbName()).getCollection("Tags").countDocuments();
+        return mongoTemplate.getCollection(COLLECTION_NAME).countDocuments();
     }
 
     @Test
@@ -124,7 +123,7 @@ public class TagRepositoryImpl_IT {
 
     @Test
     public void shouldFindTagsByProjectId() {
-        List<Tag> theTags = repository.findTags();
+        List<Tag> theTags = repository.findTags(projectId);
         assertThat(theTags, hasItems(tag));
     }
 

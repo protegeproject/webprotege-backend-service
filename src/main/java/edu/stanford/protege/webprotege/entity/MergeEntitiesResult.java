@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.base.Objects;
-
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;

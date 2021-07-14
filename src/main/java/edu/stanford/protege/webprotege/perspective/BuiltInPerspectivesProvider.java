@@ -9,11 +9,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
-
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static dagger.internal.codegen.DaggerStreams.toImmutableList;
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**
  * Matthew Horridge

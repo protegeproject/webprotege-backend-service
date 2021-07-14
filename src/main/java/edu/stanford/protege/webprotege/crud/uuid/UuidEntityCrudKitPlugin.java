@@ -1,10 +1,6 @@
 package edu.stanford.protege.webprotege.crud.uuid;
 
-import edu.stanford.protege.webprotege.crud.ChangeSetEntityCrudSession;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitPlugin;
-import edu.stanford.protege.webprotege.crud.EntityCrudKit;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitSettings;
+import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
 
 import javax.annotation.Nonnull;

@@ -1,10 +1,14 @@
 package edu.stanford.protege.webprotege.app;
 
+import edu.stanford.protege.webprotege.EntityMatcherConfiguration;
+import edu.stanford.protege.webprotege.LuceneConfiguration;
+import edu.stanford.protege.webprotege.ProjectComponentConfiguration;
+import edu.stanford.protege.webprotege.ProjectIndexesConfiguration;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
-import edu.stanford.protege.webprotege.inject.project.ProjectModule;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -26,6 +30,15 @@ public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
     @Nonnull
     @Override
     public ProjectComponent createProjectComponent(@Nonnull ProjectId projectId) {
-        return null;
+        var projectContext = new AnnotationConfigApplicationContext();
+        projectContext.setParent(applicationContext);
+        projectContext.setDisplayName("Project-Context for " + projectId);
+        projectContext.register(ProjectComponentConfiguration.class);
+        projectContext.register(ProjectIndexesConfiguration.class);
+        projectContext.register(LuceneConfiguration.class);
+        projectContext.register(EntityMatcherConfiguration.class);
+        projectContext.registerBean("projectId", ProjectId.class, projectId.getId());
+        projectContext.refresh();
+        return projectContext.getBean(ProjectComponent.class);
     }
 }

@@ -1,15 +1,15 @@
 package edu.stanford.protege.webprotege.viz;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Streams;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
+import edu.stanford.protege.webprotege.entity.OWLNamedIndividualData;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.owlapi.ConjunctSet;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.util.ClassExpression;
-import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.entity.OWLNamedIndividualData;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -61,15 +61,15 @@ public class EntityGraphBuilder {
 
     private boolean edgeLimitReached = false;
 
-    @AutoFactory
+
     @Inject
-    public EntityGraphBuilder(@Nonnull @Provided RenderingManager renderer,
-                              @Nonnull @Provided ProjectOntologiesIndex projectOntologiesIndex,
-                              @Nonnull @Provided ObjectPropertyAssertionAxiomsBySubjectIndex objectPropertyAssertions,
-                              @Nonnull @Provided SubClassOfAxiomsBySubClassIndex subClassOfAxioms,
-                              @Nonnull @Provided ClassAssertionAxiomsByIndividualIndex classAssertionAxioms,
-                              @Nonnull @Provided EquivalentClassesAxiomsIndex equivalentClassesAxioms,
-                              @Provided @EntityGraphEdgeLimit int edgeLimit,
+    public EntityGraphBuilder(@Nonnull RenderingManager renderer,
+                              @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                              @Nonnull ObjectPropertyAssertionAxiomsBySubjectIndex objectPropertyAssertions,
+                              @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxioms,
+                              @Nonnull ClassAssertionAxiomsByIndividualIndex classAssertionAxioms,
+                              @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxioms,
+                              @EntityGraphEdgeLimit int edgeLimit,
                               @Nonnull EdgeMatcher edgeMatcher) {
         this.renderer = checkNotNull(renderer);
         this.projectOntologiesIndex = projectOntologiesIndex;

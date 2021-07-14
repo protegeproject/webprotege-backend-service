@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.api.resources;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.api.axioms.PostedAxiomsActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.AddAxiomsAction;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
@@ -39,8 +39,8 @@ public class AxiomsResource {
     @Nonnull
     private final ProjectId projectId;
 
-    @AutoFactory
-    public AxiomsResource(@Provided @Nonnull PostedAxiomsActionExecutor postedAxiomsActionExecutor,
+
+    public AxiomsResource(@Nonnull PostedAxiomsActionExecutor postedAxiomsActionExecutor,
                           @Nonnull ProjectId projectId) {
         this.postedAxiomsActionExecutor = postedAxiomsActionExecutor;
         this.projectId = checkNotNull(projectId);

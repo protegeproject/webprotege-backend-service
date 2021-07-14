@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.permissions;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.Resource;
-import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
+import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
@@ -13,8 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.Subject.forUser;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 06/02/15

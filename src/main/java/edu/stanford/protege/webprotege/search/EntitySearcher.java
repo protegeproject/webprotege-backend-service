@@ -1,15 +1,15 @@
 package edu.stanford.protege.webprotege.search;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.DataFactory;
+import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
@@ -17,14 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static java.util.Comparator.comparing;
 
 /**
  * Matthew Horridge
@@ -77,15 +76,15 @@ public class EntitySearcher {
 
     private final EntityNodeRenderer entityNodeRenderer;
 
-    @AutoFactory
-    public EntitySearcher(@Provided @Nonnull ProjectId projectId,
-                          @Provided @Nonnull DictionaryManager dictionaryManager,
+
+    public EntitySearcher(@Nonnull ProjectId projectId,
+                          @Nonnull DictionaryManager dictionaryManager,
                           @Nonnull Set<EntityType<?>> entityTypes,
                           @Nonnull String searchString,
                           @Nonnull UserId userId,
                           @Nonnull ImmutableList<DictionaryLanguage> searchLanguages,
                           ImmutableList<EntitySearchFilter> searchFilters,
-                          @Provided @Nonnull EntityNodeRenderer entityNodeRenderer) {
+                          @Nonnull EntityNodeRenderer entityNodeRenderer) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.dictionaryManager = checkNotNull(dictionaryManager);

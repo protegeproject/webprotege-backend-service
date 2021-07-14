@@ -2,29 +2,32 @@ package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.match.Matcher;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
+import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.search.EntityNameMatchResult;
 import edu.stanford.protege.webprotege.search.SearchResultMatch;
 import edu.stanford.protege.webprotege.search.SearchResultMatchPosition;
+import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.SearchString;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
-import edu.stanford.protege.webprotege.project.ProjectId;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import static dagger.internal.codegen.DaggerStreams.toImmutableList;
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**
  * Author: Matthew Horridge<br>

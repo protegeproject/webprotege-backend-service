@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.match.criteria;
 import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
 
-
 import javax.annotation.Nonnull;
 
 /**

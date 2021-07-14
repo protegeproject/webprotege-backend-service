@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -23,16 +23,16 @@ import static org.semanticweb.owlapi.model.EntityType.ANNOTATION_PROPERTY;
  * Bio-Medical Informatics Research Group<br>
  * Date: 25/03/2013
  */
-@AutoFactory
+
 public class CreateAnnotationPropertiesChangeGenerator extends AbstractCreateEntitiesChangeListGenerator<OWLAnnotationProperty, OWLAnnotationProperty> {
 
     @Nonnull
     private final OWLDataFactory dataFactory;
 
     @Inject
-    public CreateAnnotationPropertiesChangeGenerator(@Provided @Nonnull OWLDataFactory dataFactory,
-                                                     @Provided @Nonnull MessageFormatter msg,
-                                                     @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+    public CreateAnnotationPropertiesChangeGenerator(@Nonnull OWLDataFactory dataFactory,
+                                                     @Nonnull MessageFormatter msg,
+                                                     @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                                      @Nonnull String sourceText,
                                                      @Nonnull String langTag,
                                                      @Nonnull ImmutableSet<OWLAnnotationProperty> parents) {

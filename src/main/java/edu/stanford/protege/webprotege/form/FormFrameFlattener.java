@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.form;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.LinkedListMultimap;
 import edu.stanford.protege.webprotege.form.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.form.data.FormSubject;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
@@ -11,7 +13,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
-import static dagger.internal.codegen.DaggerStreams.toImmutableList;
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**
  * Matthew Horridge

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 12 Jun 2018
  */
-@AutoFactory
+
 public class IriAnnotationsMatcher implements Matcher<IRI> {
 
     @Nonnull
@@ -27,7 +27,7 @@ public class IriAnnotationsMatcher implements Matcher<IRI> {
     private final Matcher<OWLAnnotation> annotationMatcher;
 
     @Inject
-    public IriAnnotationsMatcher(@Nonnull @Provided AnnotationAssertionAxiomsIndex axiomProvider,
+    public IriAnnotationsMatcher(@Nonnull AnnotationAssertionAxiomsIndex axiomProvider,
                                  @Nonnull Matcher<OWLAnnotation> annotationMatcher) {
         this.axiomProvider = checkNotNull(axiomProvider);
         this.annotationMatcher = checkNotNull(annotationMatcher);

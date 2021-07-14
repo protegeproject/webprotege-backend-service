@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
-
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 import edu.stanford.protege.webprotege.project.ProjectId;
@@ -13,8 +11,6 @@ import org.semanticweb.owlapi.model.EntityType;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.jackson;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import edu.stanford.protege.webprotege.entity.Entity;
 import org.semanticweb.owlapi.model.EntityType;
 
 import java.io.IOException;

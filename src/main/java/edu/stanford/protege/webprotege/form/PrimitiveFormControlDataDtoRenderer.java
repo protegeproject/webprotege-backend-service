@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.entity.IRIData;
 import edu.stanford.protege.webprotege.entity.OWLLiteralData;
 import edu.stanford.protege.webprotege.form.data.IriFormControlDataDto;
 import edu.stanford.protege.webprotege.form.data.LiteralFormControlDataDto;
 import edu.stanford.protege.webprotege.form.data.PrimitiveFormControlDataDto;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -14,7 +14,6 @@ import org.semanticweb.owlapi.model.OWLPrimitive;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

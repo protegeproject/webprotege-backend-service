@@ -3,13 +3,13 @@ package edu.stanford.protege.webprotege.watches;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.stanford.protege.webprotege.dispatch.Result;
+import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
-import edu.stanford.protege.webprotege.event.EventList;
 
 import java.util.Objects;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Author: Matthew Horridge<br>

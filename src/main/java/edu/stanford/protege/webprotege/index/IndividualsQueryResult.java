@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.index;
 
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode;
 import edu.stanford.protege.webprotege.pagination.Page;
 import org.semanticweb.owlapi.model.OWLClass;

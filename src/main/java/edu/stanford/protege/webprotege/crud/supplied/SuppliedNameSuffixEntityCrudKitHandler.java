@@ -1,18 +1,14 @@
 package edu.stanford.protege.webprotege.crud.supplied;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.crud.*;
-import edu.stanford.protege.webprotege.shortform.LocalNameExtractor;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitId;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitSettings;
-import edu.stanford.protege.webprotege.crud.EntityShortForm;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.protege.webprotege.shortform.LocalNameExtractor;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -45,13 +41,13 @@ public class SuppliedNameSuffixEntityCrudKitHandler implements EntityCrudKitHand
     @Nonnull
     private final EntityIriPrefixResolver entityIriPrefixResolver;
 
-    @AutoFactory
+
     @Inject
     public SuppliedNameSuffixEntityCrudKitHandler(@Nonnull EntityCrudKitPrefixSettings prefixSettings,
                                                   @Nonnull SuppliedNameSuffixSettings settings,
                                                   @Nonnull GeneratedAnnotationsSettings generatedAnnotationsSettings,
-                                                  @Provided @Nonnull OWLDataFactory dataFactory,
-                                                  @Provided @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
+                                                  @Nonnull OWLDataFactory dataFactory,
+                                                  @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
         this.prefixSettings = checkNotNull(prefixSettings);
         this.suffixSettings = checkNotNull(settings);
         this.generatedAnnotationsSettings = checkNotNull(generatedAnnotationsSettings);

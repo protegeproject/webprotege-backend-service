@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.change.matcher;
 
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.description.*;
+import edu.stanford.protege.webprotege.lang.LanguageTagFormatter;
 import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import edu.stanford.protege.webprotege.renderer.LiteralLangTagTransformer;
-import edu.stanford.protege.webprotege.lang.LanguageTagFormatter;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

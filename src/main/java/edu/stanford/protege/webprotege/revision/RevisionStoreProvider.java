@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.revision;
 
-import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -31,7 +31,7 @@ public class RevisionStoreProvider {
         this.disposablesManager = checkNotNull(disposablesManager);
     }
 
-    public synchronized RevisionStore get() {
+    public synchronized RevisionStoreImpl get() {
         if(!loaded) {
             revisionStore.load();
             loaded = true;

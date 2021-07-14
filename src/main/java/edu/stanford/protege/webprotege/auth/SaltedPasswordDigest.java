@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
 import com.google.common.io.BaseEncoding;
 
-
-
 import javax.annotation.Nonnull;
 import java.util.Arrays;
 

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.bulkop;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
@@ -55,10 +55,10 @@ public class EditAnnotationsChangeListGenerator implements ChangeListGenerator<B
     @Nonnull
     private final String commitMessage;
 
-    @AutoFactory
-    public EditAnnotationsChangeListGenerator(@Provided @Nonnull OWLDataFactory dataFactory,
-                                              @Provided @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                                              @Provided @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertionsIndex,
+
+    public EditAnnotationsChangeListGenerator(@Nonnull OWLDataFactory dataFactory,
+                                              @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                              @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertionsIndex,
                                               @Nonnull ImmutableSet<OWLEntity> entities,
                                               @Nonnull Operation operation,
                                               @Nonnull Optional<OWLAnnotationProperty> matchProperty,

@@ -2,13 +2,11 @@ package edu.stanford.protege.webprotege.events;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
-
-
+import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.LargeNumberOfChangesEvent;
 import edu.stanford.protege.webprotege.event.WebProtegeEvent;
-import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
 

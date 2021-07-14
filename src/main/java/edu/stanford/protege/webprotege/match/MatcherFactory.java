@@ -51,7 +51,7 @@ public class MatcherFactory implements RelationshipMatcherFactory, HierarchyPosi
     @Nonnull
     private final IriAnnotationsMatcherFactory iriAnnotationsMatcherFactory;
 
-    private EntityRelationshipMatcherFactory entityRelationshipMatcherFactory;
+    private final EntityRelationshipMatcherFactory entityRelationshipMatcherFactory;
 
     @Inject
     public MatcherFactory(@Nonnull SubClassOfMatcherFactory subClassOfMatcherFactory,

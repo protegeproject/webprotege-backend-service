@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableSetMultimap;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-
 import java.util.Map;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;

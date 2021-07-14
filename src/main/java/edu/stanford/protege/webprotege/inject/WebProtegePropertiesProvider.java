@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.inject;
 
 import edu.stanford.protege.webprotege.app.WebProtegeProperties;
+import edu.stanford.protege.webprotege.app.WebProtegePropertyName;
 import edu.stanford.protege.webprotege.filemanager.ConfigInputStreamSupplier;
 import edu.stanford.protege.webprotege.init.WebProtegeConfigurationException;
-import edu.stanford.protege.webprotege.app.WebProtegePropertyName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

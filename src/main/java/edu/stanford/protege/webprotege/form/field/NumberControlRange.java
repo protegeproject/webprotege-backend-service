@@ -3,8 +3,6 @@ package edu.stanford.protege.webprotege.form.field;
 import com.google.common.base.Objects;
 import com.google.common.collect.Range;
 
-
-
 import static com.google.common.base.MoreObjects.toStringHelper;
 
 /**

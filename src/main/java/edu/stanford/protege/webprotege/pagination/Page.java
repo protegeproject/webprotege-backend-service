@@ -4,18 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
-
-
 import edu.stanford.protege.webprotege.form.data.FormControlDataDto;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**

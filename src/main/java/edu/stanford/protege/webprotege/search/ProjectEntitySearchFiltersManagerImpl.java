@@ -1,11 +1,12 @@
 package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -23,15 +24,15 @@ public class ProjectEntitySearchFiltersManagerImpl implements ProjectEntitySearc
     private final EntitySearchFilterRepository repository;
 
     @Nonnull
-    private final EntitySearchFilterIndexesManager indexesManager;
+    private final Provider<EntitySearchFilterIndexesManager> indexesManagerProvider;
 
     @Inject
     public ProjectEntitySearchFiltersManagerImpl(@Nonnull ProjectId projectId,
                                                  @Nonnull EntitySearchFilterRepository repository,
-                                                 @Nonnull EntitySearchFilterIndexesManager indexesManager) {
+                                                 @Nonnull Provider<EntitySearchFilterIndexesManager> indexesManagerProvider) {
         this.projectId = checkNotNull(projectId);
         this.repository = checkNotNull(repository);
-        this.indexesManager = checkNotNull(indexesManager);
+        this.indexesManagerProvider = checkNotNull(indexesManagerProvider);
     }
 
     @Nonnull
@@ -43,6 +44,6 @@ public class ProjectEntitySearchFiltersManagerImpl implements ProjectEntitySearc
     @Override
     public void setSearchFilters(@Nonnull ImmutableList<EntitySearchFilter> searchFilters) {
         repository.saveSearchFilters(searchFilters);
-        indexesManager.updateEntitySearchFilterIndexes();
+        indexesManagerProvider.get().updateEntitySearchFilterIndexes();
     }
 }

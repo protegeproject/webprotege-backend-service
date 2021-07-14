@@ -4,30 +4,27 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Multimap;
-import dagger.Module;
-import dagger.Provides;
 import edu.stanford.protege.webprotege.app.WebProtegeProperties;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.DataDirectoryProvider;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.inject.WebProtegePropertiesProvider;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
 import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import edu.stanford.protege.webprotege.match.Matcher;
+import edu.stanford.protege.webprotege.match.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
 import edu.stanford.protege.webprotege.project.Ontology;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
+import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.renderer.LiteralLexicalFormTransformer;
 import edu.stanford.protege.webprotege.renderer.ShortFormAdapter;
 import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
-import edu.stanford.protege.webprotege.shortform.LuceneIndexesDirectory;
-import edu.stanford.protege.webprotege.shortform.LuceneModule;
-import edu.stanford.protege.webprotege.util.DisposableObjectManager;
-import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.match.criteria.EntityMatchCriteria;
-import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
+import edu.stanford.protege.webprotege.shortform.LuceneIndexesDirectory;
+import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import org.apache.commons.io.FileUtils;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.*;
@@ -48,7 +45,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-20
  */
-@Module(includes = {LuceneModule.class})
 public class UploadedProjectModule {
 
     private final ProjectId projectId;
@@ -66,37 +62,37 @@ public class UploadedProjectModule {
         this.languagesManager = checkNotNull(languagesManager);
     }
 
-    @Provides
+    
     @ProjectSingleton
     ProjectId providesProjectId() {
         return projectId;
     }
 
-    @Provides
+    
     @ProjectSingleton
     ImmutableSet<Ontology> provideUploadedOntologies() {
         return ontologies;
     }
 
-    @Provides
+    
     @ProjectSingleton
     OWLDataFactoryImpl provideOwlDataFactoryImpl() {
         return new OWLDataFactoryImpl();
     }
 
-    @Provides
+    
     @ProjectSingleton
     OWLDataFactory provideDataFactory(OWLDataFactoryImpl impl) {
         return impl;
     }
 
-    @Provides
+    
     @ProjectSingleton
     OWLEntityProvider provideOwlEntityProvider(OWLDataFactory dataFactory) {
         return dataFactory;
     }
 
-    @Provides
+    
     @ProjectSingleton
     ProjectOntologiesIndex providesProjectOntologiesIndex(ImmutableSet<Ontology> uploadedOntologies) {
         return new ProjectOntologiesIndex() {
@@ -109,7 +105,7 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     @ProjectSingleton
     AxiomsByTypeIndex providesAxiomsByTypeIndex(ImmutableSet<Ontology> uploadedOntologies) {
         return new AxiomsByTypeIndex() {
@@ -127,7 +123,7 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     @ProjectSingleton
     Multimap<IRI, OWLEntity> providesEntitiesByIRIMultimap(ImmutableSet<Ontology> uploadedOntologies) {
         var iri2EntityMap = HashMultimap.<IRI, OWLEntity>create(1000, 1);
@@ -140,7 +136,7 @@ public class UploadedProjectModule {
         return iri2EntityMap;
     }
 
-    @Provides
+    
     @ProjectSingleton
     EntitiesInProjectSignatureByIriIndex providesEntitiesInProjectSignatureByIriIndex(Multimap<IRI, OWLEntity> iri2EntityMap) {
         return new EntitiesInProjectSignatureByIriIndex() {
@@ -153,7 +149,7 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     @ProjectSingleton
     AxiomsByEntityReferenceIndex provideAxiomsByEntityReferenceIndex() {
         return (entity, ontologyId) -> ontologies.stream()
@@ -162,7 +158,7 @@ public class UploadedProjectModule {
                                          .filter(ax -> ax.containsEntityInSignature(entity));
     }
 
-    @Provides
+    
     @ProjectSingleton
     ProjectSignatureIndex provideProjectSignatureIndex(Multimap<IRI, OWLEntity> iri2EntityMap) {
         return new ProjectSignatureIndex() {
@@ -175,7 +171,7 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     @ProjectSingleton
     ProjectAnnotationAssertionAxiomsBySubjectIndex projectAnnotationAssertionAxiomsBySubjectIndex() {
         return new ProjectAnnotationAssertionAxiomsBySubjectIndex() {
@@ -191,17 +187,17 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     ShortFormProvider provideShortFormProvider(ShortFormAdapter shortFormAdapter) {
         return shortFormAdapter;
     }
 
-    @Provides
+    
     OWLObjectRenderer provideOwlObjectRenderer(ManchesterSyntaxObjectRenderer manchesterSyntaxObjectRenderer) {
         return manchesterSyntaxObjectRenderer;
     }
 
-    @Provides
+    
     EntityIRIChecker provideEntityIRIChecker(Multimap<IRI, OWLEntity> iri2EntityMap) {
         return new EntityIRIChecker() {
             @Override
@@ -216,54 +212,54 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     HttpLinkRenderer provideLinkRenderer(NullHttpLinkRenderer impl) {
         return impl;
     }
 
-    @Provides
+    
     edu.stanford.protege.webprotege.mansyntax.render.LiteralRenderer provideLiteralRenderer() {
         return (literal, stringBuilder) -> stringBuilder.append(literal);
     }
 
-    @Provides
+    
     LiteralLexicalFormTransformer provideLiteralLexicalFormTransformer() {
         return lexicalForm -> lexicalForm;
     }
 
-    @Provides
+    
     LanguageManager provideLanguageManager() {
         return languagesManager;
     }
 
-    @Provides
+    
     ImmutableList<DictionaryLanguage> providesDictionaryLanguages() {
         return ImmutableList.copyOf(languagesManager.getActiveLanguages());
     }
 
-    @Provides
+    
     LiteralStyle provideLiteralStyle() {
         return LiteralStyle.REGULAR;
     }
 
-    @Provides
+    
     BuiltInPrefixDeclarations provideBuiltInPrefixDeclarations() {
         return BuiltInPrefixDeclarations.get(ImmutableList.of());
     }
 
-    @Provides
+    
     @ProjectSingleton
     public BuiltInOwlEntitiesIndex provideBuiltInOwlEntitiesIndex(@Nonnull BuiltInOwlEntitiesIndexImpl impl) {
         return impl;
     }
 
-    @Provides
+    
     @ProjectSingleton
     public BuiltInSkosEntitiesIndex provideBuiltInSkosEntitiesIndex(@Nonnull BuiltInSkosEntitiesIndexImpl impl) {
         return impl;
     }
 
-    @Provides
+    
     @ProjectSingleton
     public EntitiesInProjectSignatureIndex provideEntitiesInProjectSignatureIndex() {
         return new EntitiesInProjectSignatureIndex() {
@@ -274,12 +270,12 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     WebProtegeProperties provideWebProtegeProperties(WebProtegePropertiesProvider protegePropertiesProvider) {
         return protegePropertiesProvider.get();
     }
 
-    @Provides
+    
     @LuceneIndexesDirectory
     @ProjectSingleton
     Path provideLuceneIndexesDirectory(DataDirectoryProvider dataDirectoryProvider,
@@ -297,7 +293,7 @@ public class UploadedProjectModule {
         return path;
     }
 
-    @Provides
+    
     @ProjectSingleton
     AnnotationAssertionAxiomsByValueIndex provideAnnotationAssertionAxiomsByValueIndex() {
         return new AnnotationAssertionAxiomsByValueIndex() {
@@ -311,13 +307,13 @@ public class UploadedProjectModule {
         };
     }
 
-    @Provides
+    
     @ProjectSingleton
     ProjectDisposablesManager provideProjectDisposablesManager(DisposableObjectManager disposableObjectManager) {
         return new ProjectDisposablesManager(disposableObjectManager);
     }
 
-    @Provides
+    
     ProjectEntitySearchFiltersManager provideProjectSearchFiltersRepository() {
         return new ProjectEntitySearchFiltersManager() {
             @Nonnull
@@ -335,7 +331,7 @@ public class UploadedProjectModule {
 
 
 
-    @Provides
+    
     EntityMatcherFactory provideEntityMatcherFactory() {
         return new EntityMatcherFactory() {
             @Nonnull

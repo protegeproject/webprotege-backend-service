@@ -1,17 +1,17 @@
 package edu.stanford.protege.webprotege.upload;
 
-import edu.stanford.protege.webprotege.util.FileContentsSizeCalculator;
-import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
-import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.ApplicationResource;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.access.Subject;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
+import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 import edu.stanford.protege.webprotege.session.WebProtegeSession;
 import edu.stanford.protege.webprotege.session.WebProtegeSessionImpl;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.util.FileContentsSizeCalculator;
+import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadBase;

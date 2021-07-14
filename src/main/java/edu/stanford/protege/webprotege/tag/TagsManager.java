@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.tag;
 
 import com.google.common.collect.Streams;
-import edu.stanford.protege.webprotege.events.HasPostEvents;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.events.HasPostEvents;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -99,7 +99,7 @@ public class TagsManager {
         try {
             readLock.lock();
             if (projectTags == null) {
-                projectTags = tagRepository.findTags().stream()
+                projectTags = tagRepository.findTags(projectId).stream()
                                            .collect(toMap(Tag::getTagId, tag -> tag));
             }
             return projectTags;

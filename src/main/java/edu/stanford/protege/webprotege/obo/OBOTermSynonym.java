@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.obo;
 
 import com.google.common.base.Objects;
 
-
 import java.io.Serializable;
 import java.util.List;
 

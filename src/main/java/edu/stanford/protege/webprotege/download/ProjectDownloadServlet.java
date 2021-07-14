@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.download;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.access.ProjectResource;
 import edu.stanford.protege.webprotege.access.Subject;
-import edu.stanford.protege.webprotege.session.WebProtegeSession;
-import edu.stanford.protege.webprotege.session.WebProtegeSessionImpl;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
+import edu.stanford.protege.webprotege.session.WebProtegeSession;
+import edu.stanford.protege.webprotege.session.WebProtegeSessionImpl;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

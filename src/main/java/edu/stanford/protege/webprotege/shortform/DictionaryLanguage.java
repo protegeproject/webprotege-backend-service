@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.fasterxml.jackson.annotation.*;
-
 import org.semanticweb.owlapi.vocab.SKOSVocabulary;
 
 import javax.annotation.Nonnull;

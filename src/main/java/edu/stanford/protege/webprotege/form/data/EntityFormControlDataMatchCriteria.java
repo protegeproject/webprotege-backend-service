@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.form.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.match.criteria.EntityMatchCriteria;
 
 import javax.annotation.Nonnull;

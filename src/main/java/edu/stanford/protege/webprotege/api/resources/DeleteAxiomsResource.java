@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.api.resources;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.api.axioms.PostedAxiomsActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.DeleteAxiomsAction;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.formats.FunctionalSyntaxDocumentFormat;
@@ -38,8 +38,8 @@ public class DeleteAxiomsResource {
     @Nonnull
     private final ProjectId projectId;
 
-    @AutoFactory
-    public DeleteAxiomsResource(@Provided @Nonnull PostedAxiomsActionExecutor postedAxiomsActionExecutor,
+
+    public DeleteAxiomsResource(@Nonnull PostedAxiomsActionExecutor postedAxiomsActionExecutor,
                                 @Nonnull ProjectId projectId) {
         this.postedAxiomsActionExecutor = postedAxiomsActionExecutor;
         this.projectId = projectId;

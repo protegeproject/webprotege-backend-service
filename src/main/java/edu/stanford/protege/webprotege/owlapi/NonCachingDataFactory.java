@@ -8,7 +8,6 @@ import uk.ac.manchester.cs.owl.owlapi.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-
 import java.util.List;
 import java.util.Set;
 

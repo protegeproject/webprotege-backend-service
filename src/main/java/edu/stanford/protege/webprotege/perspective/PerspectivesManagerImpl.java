@@ -7,13 +7,12 @@ import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.Collection;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static dagger.internal.codegen.DaggerStreams.toImmutableSet;
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
 /**
  * Matthew Horridge

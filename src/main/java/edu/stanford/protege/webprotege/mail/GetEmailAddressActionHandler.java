@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.mail;
 
 import edu.stanford.protege.webprotege.dispatch.*;
-import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.user.EmailAddress;
+import edu.stanford.protege.webprotege.user.UserDetailsManager;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

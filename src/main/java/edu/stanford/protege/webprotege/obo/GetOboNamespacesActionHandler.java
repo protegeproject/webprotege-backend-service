@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.obo;
 
-import dagger.Lazy;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -18,11 +17,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class GetOboNamespacesActionHandler extends AbstractProjectActionHandler<GetOboNamespacesAction, GetOboNamespacesResult> {
 
     @Nonnull
-    private final Lazy<OBONamespaceCache> cache;
+    private final OBONamespaceCache cache;
 
     @Inject
     public GetOboNamespacesActionHandler(@Nonnull AccessManager accessManager,
-                                         @Nonnull Lazy<OBONamespaceCache> cache) {
+                                         @Nonnull OBONamespaceCache cache) {
         super(accessManager);
         this.cache = checkNotNull(cache);
     }
@@ -36,6 +35,6 @@ public class GetOboNamespacesActionHandler extends AbstractProjectActionHandler<
     @Nonnull
     @Override
     public GetOboNamespacesResult execute(@Nonnull GetOboNamespacesAction action, @Nonnull ExecutionContext executionContext) {
-        return GetOboNamespacesResult.create(cache.get().getNamespaces());
+        return GetOboNamespacesResult.create(cache.getNamespaces());
     }
 }

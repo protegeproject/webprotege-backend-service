@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguageData;
@@ -22,8 +20,6 @@ import java.io.Serializable;
 import java.util.*;
 
 import static com.google.common.collect.ImmutableMap.toImmutableMap;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.toMap;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017

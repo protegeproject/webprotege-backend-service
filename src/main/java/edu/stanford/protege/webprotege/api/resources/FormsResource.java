@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.api.resources;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.BatchAction;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.form.*;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
@@ -16,11 +16,10 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static dagger.internal.codegen.DaggerStreams.toImmutableList;
+import static com.google.common.collect.ImmutableList.toImmutableList;
 import static java.util.stream.Collectors.toMap;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -40,10 +39,10 @@ public class FormsResource {
     @Nonnull
     private final FormResourceFactory formResourceFactory;
 
-    @AutoFactory
+
     public FormsResource(@Nonnull ProjectId projectId,
-                         @Provided @Nonnull ActionExecutor executor,
-                         @Provided @Nonnull FormResourceFactory formResourceFactory) {
+                         @Nonnull ActionExecutor executor,
+                         @Nonnull FormResourceFactory formResourceFactory) {
         this.projectId = checkNotNull(projectId);
         this.executor = checkNotNull(executor);
         this.formResourceFactory = checkNotNull(formResourceFactory);

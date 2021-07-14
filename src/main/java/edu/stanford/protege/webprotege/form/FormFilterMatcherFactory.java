@@ -1,15 +1,13 @@
 package edu.stanford.protege.webprotege.form;
 
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.form.data.*;
 import edu.stanford.protege.webprotege.match.LiteralMatcherFactory;
 import edu.stanford.protege.webprotege.match.Matcher;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
-import edu.stanford.protege.webprotege.entity.OWLEntityData;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

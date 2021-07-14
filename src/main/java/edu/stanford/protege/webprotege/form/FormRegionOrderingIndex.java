@@ -8,8 +8,6 @@ import edu.stanford.protege.webprotege.form.field.FormRegionOrderingDirection;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
-
 @AutoValue
 public abstract class FormRegionOrderingIndex {
 

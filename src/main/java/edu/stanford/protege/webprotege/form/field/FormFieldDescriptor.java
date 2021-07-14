@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.auto.value.AutoValue;
-
-
 import edu.stanford.protege.webprotege.form.ExpansionState;
 import edu.stanford.protege.webprotege.form.HasFormFieldId;
 import edu.stanford.protege.webprotege.lang.LanguageMap;

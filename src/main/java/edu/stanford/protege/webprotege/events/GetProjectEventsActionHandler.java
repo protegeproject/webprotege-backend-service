@@ -7,21 +7,21 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
 import edu.stanford.protege.webprotege.event.GetProjectEventsResult;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 import static edu.stanford.protege.webprotege.access.ProjectResource.forProject;
 import static edu.stanford.protege.webprotege.access.Subject.forUser;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>

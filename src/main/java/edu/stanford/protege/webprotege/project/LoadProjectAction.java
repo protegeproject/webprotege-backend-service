@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
-
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.MoreObjects.toStringHelper;

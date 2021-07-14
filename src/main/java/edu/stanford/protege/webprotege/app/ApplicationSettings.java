@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.app;
 
 import com.google.common.base.Objects;
-
-
 import edu.stanford.protege.webprotege.user.EmailAddress;
 import edu.stanford.protege.webprotege.user.UserId;
 

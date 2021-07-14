@@ -4,12 +4,13 @@ import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsByValueIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.HashMap;
 import java.util.Map;
 

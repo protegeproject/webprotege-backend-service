@@ -1,16 +1,16 @@
 package edu.stanford.protege.webprotege.entity;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.form.EntityFormChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.form.FormDataByFormId;
+import edu.stanford.protege.webprotege.form.data.FormData;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.form.data.FormData;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -44,14 +44,14 @@ public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGe
     @Nonnull
     private final RenderingManager renderingManager;
 
-    @AutoFactory
-    public CreateEntityFromFormDataChangeListGenerator(@Provided @Nonnull EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory,
-                                                       @Provided @Nonnull OWLDataFactory dataFactory,
+
+    public CreateEntityFromFormDataChangeListGenerator(@Nonnull EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory,
+                                                       @Nonnull OWLDataFactory dataFactory,
                                                        @Nonnull EntityType<?> entityType,
                                                        @Nonnull FreshEntityIri freshEntityIri,
-                                                       @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                                       @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                                        @Nonnull FormData formData,
-                                                       @Provided @Nonnull RenderingManager renderingManager) {
+                                                       @Nonnull RenderingManager renderingManager) {
         this.formChangeListGeneratorFactory = formChangeListGeneratorFactory;
         this.dataFactory = checkNotNull(dataFactory);
         this.entityType = checkNotNull(entityType);

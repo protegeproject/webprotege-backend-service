@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.match.criteria;
 
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nonnull;

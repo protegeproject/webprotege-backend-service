@@ -1,17 +1,17 @@
 package edu.stanford.protege.webprotege.crud.uuid;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.crud.*;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.protege.webprotege.util.IdUtil;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.shortform.AnnotationAssertionDictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguageVisitor;
+import edu.stanford.protege.webprotege.util.IdUtil;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -43,14 +43,14 @@ public class UuidEntityCrudKitHandler implements EntityCrudKitHandler<UuidSuffix
     @Nonnull
     private final EntityIriPrefixResolver entityIriPrefixResolver;
 
-    @AutoFactory
+
     @Inject
     public UuidEntityCrudKitHandler(@Nonnull EntityCrudKitPrefixSettings prefixSettings,
                                     @Nonnull UuidSuffixSettings uuidSuffixKitSettings,
                                     GeneratedAnnotationsSettings generatedAnnotationsSettings,
-                                    @Provided OWLDataFactory dataFactory,
-                                    @Provided @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInSignature,
-                                    @Provided @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
+                                    OWLDataFactory dataFactory,
+                                    @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInSignature,
+                                    @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
         this.prefixSettings = checkNotNull(prefixSettings);
         this.suffixSettings = checkNotNull(uuidSuffixKitSettings);
         this.generatedAnnotationsSettings = checkNotNull(generatedAnnotationsSettings);

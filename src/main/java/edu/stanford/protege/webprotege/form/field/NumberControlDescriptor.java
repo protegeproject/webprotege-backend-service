@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.form.field;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
-
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 
 import javax.annotation.Nonnull;

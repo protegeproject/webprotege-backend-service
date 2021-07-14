@@ -12,7 +12,6 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;

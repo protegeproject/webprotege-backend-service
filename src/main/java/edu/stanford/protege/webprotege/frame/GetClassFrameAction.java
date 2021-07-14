@@ -12,8 +12,6 @@ import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

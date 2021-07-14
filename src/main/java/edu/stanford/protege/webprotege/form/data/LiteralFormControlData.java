@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.form.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
-
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

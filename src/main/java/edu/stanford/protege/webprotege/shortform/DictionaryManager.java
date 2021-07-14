@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;

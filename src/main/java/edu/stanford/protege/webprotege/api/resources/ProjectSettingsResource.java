@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.api.resources;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.crud.GetEntityCrudKitSettingsAction;
 import edu.stanford.protege.webprotege.crud.IRIPrefixUpdateStrategy;
 import edu.stanford.protege.webprotege.crud.SetEntityCrudKitSettingsAction;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.GetProjectPrefixDeclarationsAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.project.SetProjectPrefixDeclarationsAction;
@@ -46,8 +46,8 @@ public class ProjectSettingsResource {
     @Nonnull
     private final ActionExecutor actionExecutor;
 
-    @AutoFactory
-    public ProjectSettingsResource(@Nonnull ProjectId projectId, @Provided @Nonnull ActionExecutor actionExecutor) {
+
+    public ProjectSettingsResource(@Nonnull ProjectId projectId, @Nonnull ActionExecutor actionExecutor) {
         this.projectId = checkNotNull(projectId);
         this.actionExecutor = checkNotNull(actionExecutor);
     }

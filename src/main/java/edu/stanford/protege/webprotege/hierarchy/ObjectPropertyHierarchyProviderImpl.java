@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
@@ -38,15 +38,15 @@ public class ObjectPropertyHierarchyProviderImpl extends AbstractOWLPropertyHier
     @Nonnull
     private final ProjectOntologiesIndex projectOntologiesIndex;
 
-    @AutoFactory
+
     @Inject
-    public ObjectPropertyHierarchyProviderImpl(@Provided @Nonnull ProjectId projectId,
-                                               @Provided @ObjectPropertyHierarchyRoot OWLObjectProperty root,
-                                               @Provided @Nonnull EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex,
-                                               @Provided @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                                               @Provided @Nonnull OntologySignatureByTypeIndex ontologySignatureByTypeIndex,
-                                               @Provided @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex,
-                                               @Provided @Nonnull AxiomsByTypeIndex axiomsByTypeIndex) {
+    public ObjectPropertyHierarchyProviderImpl(@Nonnull ProjectId projectId,
+                                               @ObjectPropertyHierarchyRoot OWLObjectProperty root,
+                                               @Nonnull EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex,
+                                               @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                               @Nonnull OntologySignatureByTypeIndex ontologySignatureByTypeIndex,
+                                               @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex,
+                                               @Nonnull AxiomsByTypeIndex axiomsByTypeIndex) {
         super(projectId, root, entitiesInProjectSignatureIndex, EntityType.OBJECT_PROPERTY, projectOntologiesIndex,
               ontologySignatureByTypeIndex);
         this.entitiesInProjectSignatureIndex = entitiesInProjectSignatureIndex;

@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.frame.translator;
 
-import com.google.auto.factory.AutoFactory;
+
 import edu.stanford.protege.webprotege.frame.PlainPropertyAnnotationValue;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
 import edu.stanford.protege.webprotege.frame.State;
@@ -11,8 +11,6 @@ import javax.inject.Inject;
 import java.util.Collections;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
@@ -20,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class Annotation2PropertyValueTranslator {
 
-    @AutoFactory
+
     @Inject
     public Annotation2PropertyValueTranslator() {
     }

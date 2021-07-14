@@ -2,12 +2,10 @@ package edu.stanford.protege.webprotege.lang;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.project.ProjectId;
 
 import javax.annotation.Nonnull;
-
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;

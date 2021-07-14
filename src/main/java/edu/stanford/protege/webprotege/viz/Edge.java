@@ -3,8 +3,6 @@ package edu.stanford.protege.webprotege.viz;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 
 import javax.annotation.Nonnull;

@@ -1,18 +1,21 @@
 package edu.stanford.protege.webprotege.project;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.change.AddAxiomChange;
+import edu.stanford.protege.webprotege.change.AddImportChange;
+import edu.stanford.protege.webprotege.change.AddOntologyAnnotationChange;
+import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.revision.Revision;
+import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
 import edu.stanford.protege.webprotege.upload.DocumentResolver;
 import edu.stanford.protege.webprotege.upload.UploadedOntologiesProcessor;
-import edu.stanford.protege.webprotege.util.MemoryMonitor;
-import edu.stanford.protege.webprotege.csv.DocumentId;
-import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.util.MemoryMonitor;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,12 +50,12 @@ public class ProjectImporter {
     @Nonnull
     private final RevisionStoreFactory revisionStoreFactory;
 
-    @AutoFactory
+
     @Inject
     public ProjectImporter(ProjectId projectId,
-                           @Provided @Nonnull UploadedOntologiesProcessor uploadedOntologiesProcessor,
-                           @Provided @Nonnull DocumentResolver documentResolver,
-                           @Provided @Nonnull RevisionStoreFactory revisionStoreFactory) {
+                           @Nonnull UploadedOntologiesProcessor uploadedOntologiesProcessor,
+                           @Nonnull DocumentResolver documentResolver,
+                           @Nonnull RevisionStoreFactory revisionStoreFactory) {
         this.projectId = checkNotNull(projectId);
         this.uploadedOntologiesProcessor = checkNotNull(uploadedOntologiesProcessor);
         this.documentResolver = checkNotNull(documentResolver);

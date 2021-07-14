@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.merge;
 
 import com.google.common.collect.ImmutableSet;
 
-
 import java.io.Serializable;
 
 /**

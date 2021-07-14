@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.mansyntax;
 
 import com.google.common.collect.Lists;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.frame.HasFreshEntities;
 import edu.stanford.protege.webprotege.frame.ManchesterSyntaxFrameParseError;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
+import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.semanticweb.owlapi.expression.OWLEntityChecker;
 import org.semanticweb.owlapi.expression.OWLOntologyChecker;
 import org.semanticweb.owlapi.manchestersyntax.parser.ManchesterOWLSyntax;

@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.api;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
 

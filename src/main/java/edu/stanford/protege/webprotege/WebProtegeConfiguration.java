@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
 import com.google.common.collect.ImmutableList;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.AccessManagerImpl;
 import edu.stanford.protege.webprotege.access.RoleOracle;
@@ -21,23 +19,29 @@ import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
 import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl;
-import edu.stanford.protege.webprotege.filemanager.ConfigDirectorySupplier;
-import edu.stanford.protege.webprotege.filemanager.ConfigInputStreamSupplier;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
+import edu.stanford.protege.webprotege.index.BuiltInOwlEntitiesIndexImpl;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
+import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessagingExceptionHandlerImpl;
 import edu.stanford.protege.webprotege.mail.SendMailImpl;
+import edu.stanford.protege.webprotege.mansyntax.render.DefaultHttpLinkRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.HttpLinkRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.LiteralStyle;
+import edu.stanford.protege.webprotege.mansyntax.render.MarkdownLiteralRenderer;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
+import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
+import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
 import edu.stanford.protege.webprotege.upload.DocumentResolver;
 import edu.stanford.protege.webprotege.upload.DocumentResolverImpl;
@@ -48,9 +52,9 @@ import edu.stanford.protege.webprotege.util.TempFileFactory;
 import edu.stanford.protege.webprotege.util.TempFileFactoryImpl;
 import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
 import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
+import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -100,12 +104,12 @@ public class WebProtegeConfiguration {
     }
 
     @Bean
-    public TempFileFactory provideTempFileFactory() {
+    public TempFileFactoryImpl provideTempFileFactory() {
         return new TempFileFactoryImpl();
     }
 
     @Bean
-    public MustacheFactory providesMustacheFactory() {
+    public DefaultMustacheFactory providesMustacheFactory() {
         return new DefaultMustacheFactory();
     }
 
@@ -231,7 +235,7 @@ public class WebProtegeConfiguration {
     }
 
     @Bean
-    OntologyChangeRecordTranslator getOntologyChangeRecordTranslator() {
+    OntologyChangeRecordTranslator ontologyChangeRecordTranslator() {
         return new OntologyChangeRecordTranslatorImpl();
     }
 
@@ -246,12 +250,12 @@ public class WebProtegeConfiguration {
 
     @Bean
     @Singleton
-    ProjectImporterFactory getProjectImporterFactory(Provider<UploadedOntologiesProcessor> uploadedOntologiesProcessorProvider,
-                                                     Provider<DocumentResolver> documentResolverProvider,
-                                                     Provider<RevisionStoreFactory> revisionStoreFactoryProvider) {
-        return new ProjectImporterFactory(uploadedOntologiesProcessorProvider,
-                                          documentResolverProvider,
-                                          revisionStoreFactoryProvider);
+    ProjectImporterFactory getProjectImporterFactory(UploadedOntologiesProcessor p1,
+                                                     DocumentResolver p2,
+                                                     RevisionStoreFactory p3) {
+        return new ProjectImporterFactory(p1,
+                                          p2,
+                                          p3);
     }
 
     @Bean
@@ -555,6 +559,72 @@ public class WebProtegeConfiguration {
     @Bean
     EntityTagsRepositoryImpl getEntityTagsRepository(MongoTemplate mongoTemplate) {
         return new EntityTagsRepositoryImpl(mongoTemplate);
+    }
+
+    @Bean
+    ApplicationExecutorsRegistry applicationExecutorsRegistry(ApplicationDisposablesManager p1) {
+        return new ApplicationExecutorsRegistry(p1);
+    }
+
+    @Bean
+    TagRepositoryImpl tagRepository(MongoTemplate p1, ObjectMapper p2) {
+        return new TagRepositoryImpl(p1, p2);
+    }
+
+    @Bean
+    WatchRecordRepositoryImpl watchRecordRepository(MongoTemplate p1, ObjectMapper p2) {
+        return new WatchRecordRepositoryImpl(p1, p2);
+    }
+
+    @Bean
+    @Singleton
+    BuiltInPrefixDeclarations builtInPrefixDeclarations(BuiltInPrefixDeclarationsLoader builtInPrefixDeclarationsLoader) {
+        return builtInPrefixDeclarationsLoader.getBuiltInPrefixDeclarations();
+    }
+
+    @Bean
+    BuiltInPrefixDeclarationsLoader builtInPrefixDeclarationsLoader(OverridableFileFactory overridableFileFactory) {
+        return new BuiltInPrefixDeclarationsLoader(overridableFileFactory);
+    }
+
+    @Bean
+    @Singleton
+    EntitySearchFilterRepositoryImpl entitySearchFilterRepository(MongoTemplate mongoTemplate,
+                                                                  ObjectMapper objectMapper) {
+        return new EntitySearchFilterRepositoryImpl(mongoTemplate, objectMapper);
+    }
+
+    @Bean
+    @Singleton
+    BuiltInOwlEntitiesIndexImpl builtInOwlEntitiesIndex(OWLDataFactory dataFactory) {
+        return new BuiltInOwlEntitiesIndexImpl(dataFactory);
+    }
+
+
+    @Bean
+    EntityDiscussionThreadRepository entityDiscussionThreadRepository(MongoTemplate p1) {
+        return new EntityDiscussionThreadRepository(p1);
+    }
+
+    @Bean
+    PrefixDeclarationsStore prefixDeclarationsStore(ObjectMapper p1, MongoTemplate p2) {
+        return new PrefixDeclarationsStore(p1, p2);
+    }
+
+    @Bean
+    edu.stanford.protege.webprotege.mansyntax.render.LiteralRenderer literalRenderer() {
+        return new MarkdownLiteralRenderer();
+    }
+
+
+    @Bean
+    LiteralStyle literalStyle() {
+        return LiteralStyle.REGULAR;
+    }
+
+    @Bean
+    HttpLinkRenderer httpLinkRenderer() {
+        return new DefaultHttpLinkRenderer();
     }
 
 }

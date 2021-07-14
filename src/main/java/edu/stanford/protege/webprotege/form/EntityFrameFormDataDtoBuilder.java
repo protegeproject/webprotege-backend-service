@@ -3,14 +3,13 @@ package edu.stanford.protege.webprotege.form;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.form.data.*;
 import edu.stanford.protege.webprotege.form.field.*;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
 import edu.stanford.protege.webprotege.lang.LangTagFilter;
 import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.pagination.PageCollector;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.Optional;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;

@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.permissions;
 
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.HasUserId;
-
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.project.HasProjectId;
 import edu.stanford.protege.webprotege.project.ProjectId;

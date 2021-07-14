@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.base.Objects;
-
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 
 import javax.annotation.Nonnull;

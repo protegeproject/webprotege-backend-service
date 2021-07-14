@@ -38,9 +38,9 @@ public class UuidEntityCrudKitPluginTestCase {
 
     @Before
     public void setUp() {
-        handlerFactory = new UuidEntityCrudKitHandlerFactory(OWLDataFactoryImpl::new,
-                                                             () -> entitiesInProjectSignatureIndex,
-                                                             () -> entityIriPrefixResolver);
+        handlerFactory = new UuidEntityCrudKitHandlerFactory(new OWLDataFactoryImpl(),
+                                                             entitiesInProjectSignatureIndex,
+                                                             entityIriPrefixResolver);
         plugin = new UuidEntityCrudKitPlugin(suffixKit, handlerFactory);
     }
 

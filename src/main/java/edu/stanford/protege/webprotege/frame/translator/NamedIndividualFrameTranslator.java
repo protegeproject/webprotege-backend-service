@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.frame.translator;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Streams;
 import edu.stanford.protege.webprotege.frame.*;
-import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.index.NamedIndividualFrameAxiomIndex;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

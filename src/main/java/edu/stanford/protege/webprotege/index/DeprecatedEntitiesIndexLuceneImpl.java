@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.index;
 
+import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.pagination.PageCollector;
+import edu.stanford.protege.webprotege.pagination.PageRequest;
 import edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames;
 import edu.stanford.protege.webprotege.shortform.LuceneEntityDocumentTranslator;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 import org.semanticweb.owlapi.model.EntityType;
@@ -12,7 +12,6 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Set;

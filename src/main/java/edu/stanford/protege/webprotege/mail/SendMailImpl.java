@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.mail;
 
 import edu.stanford.protege.webprotege.app.ApplicationHostSupplier;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
-import edu.stanford.protege.webprotege.inject.MailProperties;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
+import edu.stanford.protege.webprotege.inject.MailProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

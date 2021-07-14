@@ -2,17 +2,17 @@ package edu.stanford.protege.webprotege.match;
 
 import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.shortform.DictionaryManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.entity.EntityNode;
+import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.match.criteria.Criteria;
 import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
+import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

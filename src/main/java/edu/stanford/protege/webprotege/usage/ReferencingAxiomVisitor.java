@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.usage;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.*;
@@ -35,10 +35,10 @@ public class ReferencingAxiomVisitor implements OWLAxiomVisitorEx<Set<UsageRefer
     private final EntitiesInProjectSignatureByIriIndex entitiesInSignatureIndex;
 
     @Inject
-    @AutoFactory
+
     public ReferencingAxiomVisitor(@Nonnull OWLEntity usageOf,
-                                   @Provided @Nonnull RenderingManager renderingManager,
-                                   @Provided @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInSignatureIndex) {
+                                   @Nonnull RenderingManager renderingManager,
+                                   @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInSignatureIndex) {
         this.usageOf = checkNotNull(usageOf);
         this.renderingManager = checkNotNull(renderingManager);
         this.entitiesInSignatureIndex = checkNotNull(entitiesInSignatureIndex);

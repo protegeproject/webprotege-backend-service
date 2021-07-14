@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
-import edu.stanford.protege.webprotege.shortform.DictionaryManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.pagination.PageCollector;
+import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.obo;
 
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.entity.OWLObjectPropertyData;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLObjectProperty;

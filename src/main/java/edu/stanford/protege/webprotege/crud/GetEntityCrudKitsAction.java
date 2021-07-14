@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.crud;
 
 import com.google.common.base.MoreObjects;
-
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.project.ProjectId;
 

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.renderer;
 
-import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 

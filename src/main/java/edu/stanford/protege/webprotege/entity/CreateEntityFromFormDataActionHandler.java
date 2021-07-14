@@ -2,15 +2,15 @@ package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 

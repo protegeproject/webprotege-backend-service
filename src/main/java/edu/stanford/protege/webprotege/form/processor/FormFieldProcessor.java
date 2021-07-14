@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.form.processor;
 
+import edu.stanford.protege.webprotege.form.FormFieldBindingMissingException;
 import edu.stanford.protege.webprotege.form.FormFrameBuilder;
 import edu.stanford.protege.webprotege.form.data.FormFieldData;
-import edu.stanford.protege.webprotege.form.FormFieldBindingMissingException;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

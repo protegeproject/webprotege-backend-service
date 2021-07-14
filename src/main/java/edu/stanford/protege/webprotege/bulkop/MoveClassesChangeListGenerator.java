@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.bulkop;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
@@ -43,13 +43,13 @@ public class MoveClassesChangeListGenerator implements ChangeListGenerator<Boole
     private final String commitMessage;
 
     @Inject
-    @AutoFactory
+
     public MoveClassesChangeListGenerator(@Nonnull ImmutableSet<OWLClass> childClasses,
                                           @Nonnull OWLClass targetParent,
                                           @Nonnull String commitMessage,
-                                          @Provided @Nonnull ProjectOntologiesIndex projectOntologies,
-                                          @Provided @Nonnull SubClassOfAxiomsBySubClassIndex subClassAxiomIndex,
-                                          @Provided @Nonnull OWLDataFactory dataFactory) {
+                                          @Nonnull ProjectOntologiesIndex projectOntologies,
+                                          @Nonnull SubClassOfAxiomsBySubClassIndex subClassAxiomIndex,
+                                          @Nonnull OWLDataFactory dataFactory) {
         this.childClasses = checkNotNull(childClasses);
         this.targetParent = checkNotNull(targetParent);
         this.projectOntologies = checkNotNull(projectOntologies);

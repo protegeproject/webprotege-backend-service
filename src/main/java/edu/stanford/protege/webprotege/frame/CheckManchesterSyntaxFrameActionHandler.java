@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -9,7 +10,6 @@ import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGenerator
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ParserException;
 
 import javax.annotation.Nonnull;

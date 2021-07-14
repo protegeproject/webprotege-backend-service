@@ -1,23 +1,27 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableSetMultimap;
-import org.apache.lucene.document.*;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.EntityType;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
+import javax.inject.Provider;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames.*;
+import static edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames.ENTITY_TYPE;
 
 /**
  * Matthew Horridge
@@ -45,7 +49,7 @@ public class LuceneEntityDocumentTranslatorImpl implements LuceneEntityDocumentT
     private final EntityAnnotationAssertionsDocumentAugmenter annotationAssertionsDocumentAugmenter;
 
     @Nonnull
-    private final SearchFiltersDocumentAugmenter searchFiltersDocumentAugmenter;
+    private final Provider<SearchFiltersDocumentAugmenter> searchFiltersDocumentAugmenter;
 
     @Nonnull
     private final OWLDataFactory dataFactory;
@@ -57,7 +61,7 @@ public class LuceneEntityDocumentTranslatorImpl implements LuceneEntityDocumentT
                                               @Nonnull EntityPrefixedNameDocumentAugmenter prefixedNameDocumentAugmenter,
                                               @Nonnull EntityOboIdDocumentAugmenter oboIdDocumentAugmenter,
                                               @Nonnull EntityAnnotationAssertionsDocumentAugmenter annotationAssertionsDocumentAugmenter,
-                                              @Nonnull SearchFiltersDocumentAugmenter searchFiltersDocumentAugmenter,
+                                              @Nonnull Provider<SearchFiltersDocumentAugmenter> searchFiltersDocumentAugmenter,
                                               @Nonnull OWLDataFactory dataFactory) {
         this.annotationAssertionsDocumentAugmenter = annotationAssertionsDocumentAugmenter;
         this.fieldNameTranslator = checkNotNull(fieldNameTranslator);
@@ -139,7 +143,7 @@ public class LuceneEntityDocumentTranslatorImpl implements LuceneEntityDocumentT
 
         annotationAssertionsDocumentAugmenter.augmentDocument(entity, document);
 
-        searchFiltersDocumentAugmenter.augmentDocument(entity, document);
+        searchFiltersDocumentAugmenter.get().augmentDocument(entity, document);
 
         return document;
     }

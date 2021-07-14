@@ -11,9 +11,6 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import javax.annotation.Nonnull;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

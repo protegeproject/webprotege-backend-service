@@ -1,13 +1,12 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
 import com.google.common.collect.ImmutableList;
-import dagger.Component;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.dispatch.*;
-import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.project.HasProjectId;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

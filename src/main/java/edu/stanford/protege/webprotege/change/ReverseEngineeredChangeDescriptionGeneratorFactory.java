@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.matcher.ChangeMatcher;
-import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

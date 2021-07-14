@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.project.ProjectId;
 
 import javax.annotation.Nonnull;
 
-import static dagger.internal.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge

@@ -3,8 +3,6 @@ package edu.stanford.protege.webprotege.sharing;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
-
-
 import edu.stanford.protege.webprotege.ValueObject;
 import edu.stanford.protege.webprotege.user.UserId;
 

@@ -6,13 +6,13 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.ProjectMovedToTrashEvent;
 import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 import edu.stanford.protege.webprotege.project.MoveProjectsToTrashAction;
 import edu.stanford.protege.webprotege.project.MoveProjectsToTrashResult;
+import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 import edu.stanford.protege.webprotege.project.ProjectId;
 
 import javax.annotation.Nonnull;

@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,8 +13,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 
 /**
  * Author: Matthew Horridge<br>

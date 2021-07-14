@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame.translator;
 
-import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.DataFactory;
+import edu.stanford.protege.webprotege.frame.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLEntityVisitorExAdapter;
 

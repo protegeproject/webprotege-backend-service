@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.api.resources;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.GetProjectDetailsAction;
@@ -50,15 +50,15 @@ public class ProjectResource {
     private final ProjectSettingsResourceFactory projectSettingsResourceFactory;
 
     @SuppressWarnings("UnnecessaryFullyQualifiedName")
-    @AutoFactory
+
     @Inject
     public ProjectResource(@Nonnull ProjectId projectId,
-                           @Provided @Nonnull ActionExecutor executor,
-                           @Provided @Nonnull AxiomsResourceFactory axiomsResourceFactory,
-                           @Provided @Nonnull DeleteAxiomsResourceFactory deleteAxiomsResourceFactory,
-                           @Provided @Nonnull RevisionsResourceFactory changesResourceFactory,
-                           @Provided @Nonnull FormsResourceFactory formsResourceFactory,
-                           @Provided @Nonnull ProjectSettingsResourceFactory projectSettingsResourceFactory) {
+                           @Nonnull ActionExecutor executor,
+                           @Nonnull AxiomsResourceFactory axiomsResourceFactory,
+                           @Nonnull DeleteAxiomsResourceFactory deleteAxiomsResourceFactory,
+                           @Nonnull RevisionsResourceFactory changesResourceFactory,
+                           @Nonnull FormsResourceFactory formsResourceFactory,
+                           @Nonnull ProjectSettingsResourceFactory projectSettingsResourceFactory) {
         this.projectId = checkNotNull(projectId);
         this.executor = checkNotNull(executor);
         this.axiomsResourceFactory = checkNotNull(axiomsResourceFactory);

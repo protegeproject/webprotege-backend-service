@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.api;
 
 import com.google.common.base.Objects;
 
-
-
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.MoreObjects.toStringHelper;

@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.mansyntax;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.change.*;
-import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.frame.HasFreshEntities;
 import edu.stanford.protege.webprotege.frame.ManchesterSyntaxFrameParseError;
+import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ParserException;
 import org.semanticweb.owlapi.util.OntologyAxiomPair;
 
@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 25/03/2014
  */
-@AutoFactory
+
 public class ManchesterSyntaxChangeGenerator implements ChangeListGenerator<Optional<ManchesterSyntaxFrameParseError>> {
 
     private final ManchesterSyntaxFrameParser parser;
@@ -52,9 +52,9 @@ public class ManchesterSyntaxChangeGenerator implements ChangeListGenerator<Opti
      * @throws ParserException If there was a problem parsing either {@code from} or {@code to}.
      */
     @Inject
-    public ManchesterSyntaxChangeGenerator(@Provided @Nonnull ManchesterSyntaxFrameParser parser,
-                                           @Provided OntologyAxiomPairChangeGenerator changeGenerator,
-                                           @Provided @Nonnull ReverseEngineeredChangeDescriptionGeneratorFactory factory,
+    public ManchesterSyntaxChangeGenerator(@Nonnull ManchesterSyntaxFrameParser parser,
+                                           OntologyAxiomPairChangeGenerator changeGenerator,
+                                           @Nonnull ReverseEngineeredChangeDescriptionGeneratorFactory factory,
                                            @Nonnull OWLEntityData subject,
                                            @Nonnull String from,
                                            @Nonnull String to,

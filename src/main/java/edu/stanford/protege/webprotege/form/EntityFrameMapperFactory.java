@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.form;
 
+import edu.stanford.protege.webprotege.frame.PlainEntityFrame;
 import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByClassIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.frame.PlainEntityFrame;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

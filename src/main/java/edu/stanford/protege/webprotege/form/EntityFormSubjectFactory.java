@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.form;
 
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLEntityByTypeProvider;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.UUID;
 
 import static com.google.common.base.Preconditions.checkNotNull;

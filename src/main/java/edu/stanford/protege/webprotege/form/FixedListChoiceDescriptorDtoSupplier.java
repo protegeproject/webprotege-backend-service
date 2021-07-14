@@ -9,7 +9,6 @@ import edu.stanford.protege.webprotege.form.field.FixedChoiceListSourceDescripto
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;

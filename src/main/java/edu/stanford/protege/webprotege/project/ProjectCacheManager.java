@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.app.ApplicationDisposablesManager;
 import edu.stanford.protege.webprotege.HasDispose;
+import edu.stanford.protege.webprotege.app.ApplicationDisposablesManager;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

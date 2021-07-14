@@ -3,15 +3,14 @@ package edu.stanford.protege.webprotege.search;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOneModel;
 import com.mongodb.client.model.ReplaceOptions;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -37,13 +36,13 @@ public class EntitySearchFilterRepositoryImpl implements EntitySearchFilterRepos
     private final Lock writeLock = readWriteLock.writeLock();
 
     @Nonnull
-    private final MongoDatabase db;
+    private final MongoTemplate db;
 
     @Nonnull
     private final ObjectMapper objectMapper;
 
     @Inject
-    public EntitySearchFilterRepositoryImpl(@Nonnull MongoDatabase mongoDatabase, @Nonnull ObjectMapper objectMapper) {
+    public EntitySearchFilterRepositoryImpl(@Nonnull MongoTemplate mongoDatabase, @Nonnull ObjectMapper objectMapper) {
         this.db = checkNotNull(mongoDatabase);
         this.objectMapper = checkNotNull(objectMapper);
     }

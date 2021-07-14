@@ -9,7 +9,6 @@ import edu.stanford.protege.webprotege.form.field.OwlBinding;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;

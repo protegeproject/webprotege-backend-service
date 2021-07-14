@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.io.IOException;
 
 import static com.google.common.base.Preconditions.checkNotNull;

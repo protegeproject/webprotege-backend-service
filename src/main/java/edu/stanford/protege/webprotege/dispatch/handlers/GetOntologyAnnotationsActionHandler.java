@@ -1,17 +1,17 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.frame.PropertyAnnotationValue;
 import edu.stanford.protege.webprotege.frame.PropertyValueComparator;
+import edu.stanford.protege.webprotege.frame.State;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.ontology.GetOntologyAnnotationsAction;
 import edu.stanford.protege.webprotege.ontology.GetOntologyAnnotationsResult;
-import edu.stanford.protege.webprotege.frame.PropertyAnnotationValue;
-import edu.stanford.protege.webprotege.frame.State;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

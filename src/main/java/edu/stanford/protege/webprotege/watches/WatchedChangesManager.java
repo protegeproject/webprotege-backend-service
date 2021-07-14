@@ -1,14 +1,17 @@
 package edu.stanford.protege.webprotege.watches;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.change.ProjectChange;
+import edu.stanford.protege.webprotege.hierarchy.AnnotationPropertyHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyProvider;
 import edu.stanford.protege.webprotege.index.ProjectClassAssertionAxiomsByIndividualIndex;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.revision.EntitiesByRevisionCache;
 import edu.stanford.protege.webprotege.revision.ProjectChangesManager;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
-import edu.stanford.protege.webprotege.change.ProjectChange;
-import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

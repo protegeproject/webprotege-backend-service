@@ -4,7 +4,6 @@ package edu.stanford.protege.webprotege.form.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import org.semanticweb.owlapi.model.IRI;
 

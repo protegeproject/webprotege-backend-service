@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 
 /**

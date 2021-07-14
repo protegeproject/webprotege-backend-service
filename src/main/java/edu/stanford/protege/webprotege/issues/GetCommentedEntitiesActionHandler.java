@@ -3,11 +3,11 @@ package edu.stanford.protege.webprotege.issues;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.entity.CommentedEntityData;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
-import edu.stanford.protege.webprotege.pagination.Pager;
-import edu.stanford.protege.webprotege.entity.CommentedEntityData;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.pagination.Pager;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 

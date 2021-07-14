@@ -1,11 +1,14 @@
 package edu.stanford.protege.webprotege.frame.translator;
 
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.frame.Mode;
 import edu.stanford.protege.webprotege.frame.PlainAnnotationPropertyFrame;
 import edu.stanford.protege.webprotege.frame.PlainPropertyAnnotationValue;
 import edu.stanford.protege.webprotege.frame.State;
-import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.DataFactory;
+import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
+import edu.stanford.protege.webprotege.index.AnnotationPropertyDomainAxiomsIndex;
+import edu.stanford.protege.webprotege.index.AnnotationPropertyRangeAxiomsIndex;
+import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

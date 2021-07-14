@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.form.data;
 
 import com.google.auto.value.AutoValue;
-
-
 import edu.stanford.protege.webprotege.form.field.FormRegionId;
 
 import javax.annotation.Nonnull;

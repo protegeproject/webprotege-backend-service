@@ -3,10 +3,10 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
 import edu.stanford.protege.webprotege.templates.TemplateObjectsBuilder;
-import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -19,7 +19,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-02
  */
-class EquivalentClassesAxiom2PropertyValuesTranslator {
+public class EquivalentClassesAxiom2PropertyValuesTranslator {
 
     @Inject
     public EquivalentClassesAxiom2PropertyValuesTranslator(@Nonnull ClassExpression2PropertyValuesTranslator classExpression2PropertyValuesTranslator) {

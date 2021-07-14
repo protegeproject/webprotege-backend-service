@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.crud;
 
+import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
 import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSettings;
 import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSettingsRepository;
-import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
 import edu.stanford.protege.webprotege.crud.uuid.UuidSuffixSettings;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;

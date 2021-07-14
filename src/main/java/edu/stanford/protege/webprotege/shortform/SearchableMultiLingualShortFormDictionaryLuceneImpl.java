@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static java.util.stream.Collectors.joining;
 
 /**
  * Matthew Horridge

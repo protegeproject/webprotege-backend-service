@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.form.data;
 
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.form.FilterState;
 import edu.stanford.protege.webprotege.form.HasFilterState;
 import edu.stanford.protege.webprotege.form.field.GridColumnId;

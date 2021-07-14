@@ -5,17 +5,20 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.events.EventTranslator;
 import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
 import edu.stanford.protege.webprotege.events.SimpleHighLevelProjectEventProxy;
-import edu.stanford.protege.webprotege.revision.Revision;
-import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.revision.Revision;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 21/03/2013

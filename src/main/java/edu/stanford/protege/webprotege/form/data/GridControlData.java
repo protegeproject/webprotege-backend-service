@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.form.data;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.form.field.FormRegionOrdering;
 import edu.stanford.protege.webprotege.form.field.GridControlDescriptor;

@@ -1,24 +1,18 @@
 package edu.stanford.protege.webprotege.crud.obo;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
-import edu.stanford.protege.webprotege.crud.EntityCrudContext;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitHandler;
-import edu.stanford.protege.webprotege.crud.EntityIriPrefixResolver;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitId;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitSettings;
-import edu.stanford.protege.webprotege.crud.EntityShortForm;
+import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
 import edu.stanford.protege.webprotege.crud.oboid.OBOIdSuffixKit;
 import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixSettings;
 import edu.stanford.protege.webprotege.crud.oboid.UserIdRange;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.shortform.AnnotationAssertionDictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguageVisitor;
@@ -72,13 +66,13 @@ public class OBOIdSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Obo
     @Nonnull
     private final GeneratedAnnotationsSettings generatedAnnotationsSettings;
 
-    @AutoFactory
+
     public OBOIdSuffixEntityCrudKitHandler(@Nonnull EntityCrudKitPrefixSettings prefixSettings,
                                            @Nonnull OboIdSuffixSettings suffixSettings,
                                            @Nonnull GeneratedAnnotationsSettings generatedAnnotationsSettings,
-                                           @Provided @Nonnull OWLDataFactory dataFactory,
-                                           @Provided @Nonnull EntitiesInProjectSignatureByIriIndex projectSignatureIndex,
-                                           @Provided @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
+                                           @Nonnull OWLDataFactory dataFactory,
+                                           @Nonnull EntitiesInProjectSignatureByIriIndex projectSignatureIndex,
+                                           @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
         this.prefixSettings = checkNotNull(prefixSettings);
         this.suffixSettings = checkNotNull(suffixSettings);
         this.dataFactory = dataFactory;

@@ -1,22 +1,24 @@
 package edu.stanford.protege.webprotege.merge_add;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.merge.ProjectOntologiesBuilder;
 import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.*;
+import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
 
 public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandler<NewOntologyMergeAddAction, NewOntologyMergeAddResult> {
 

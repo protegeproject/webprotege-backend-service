@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.form.field;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.google.common.base.Objects;
 
-
 import java.io.Serializable;
 
 import static com.google.common.base.Preconditions.checkNotNull;

@@ -5,12 +5,12 @@ import com.google.common.collect.SetMultimap;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeSubjectProvider;
-import edu.stanford.protege.webprotege.revision.Revision;
-import edu.stanford.protege.webprotege.tag.TagsManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.tag.EntityTagsChangedEvent;
 import edu.stanford.protege.webprotege.tag.Tag;
+import edu.stanford.protege.webprotege.tag.TagsManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

@@ -1,7 +1,5 @@
 package edu.stanford.protege.webprotege.shortform;
 
-import dagger.Module;
-import dagger.Provides;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 
@@ -10,7 +8,6 @@ import edu.stanford.protege.webprotege.inject.ProjectSingleton;
  * Stanford Center for Biomedical Informatics Research
  * 2020-07-13
  */
-@Module
 public class AnnotationAssertionAxiomsModule {
 
     private ProjectOntologiesIndex projectOntologiesIndex;
@@ -39,37 +36,37 @@ public class AnnotationAssertionAxiomsModule {
         this.annotationAssertionAxiomsByValueIndex = annotationAssertionAxiomsByValueIndex;
     }
 
-    @Provides
+    
     @ProjectSingleton
     ProjectAnnotationAssertionAxiomsBySubjectIndex provideAnnotationAssertionAxiomsBySubjectIndex() {
         return annotationAssertionAxiomsBySubjectIndex;
     }
 
-    @Provides
+    
     @ProjectSingleton
     public ProjectSignatureIndex getProvideProjectSignatureIndex() {
         return provideProjectSignatureIndex;
     }
 
-    @Provides
+    
     @ProjectSingleton
     public EntitiesInProjectSignatureIndex provideEntitiesInProjectSignatureIndex() {
         return entitiesInProjectSignatureIndex;
     }
 
-    @Provides
+    
     @ProjectSingleton
     public AnnotationAssertionAxiomsByValueIndex provideAnnotationAssertionAxiomsByValueIndex() {
         return annotationAssertionAxiomsByValueIndex;
     }
 
-    @Provides
+    
     @ProjectSingleton
     public EntitiesInProjectSignatureByIriIndex provideEntitiesInProjectSignatureByIriIndex() {
         return entitiesInProjectSignatureByIriIndex;
     }
 
-    @Provides
+    
     @ProjectSingleton
     public ProjectOntologiesIndex provideProjectOntologiesIndex() {
         return projectOntologiesIndex;

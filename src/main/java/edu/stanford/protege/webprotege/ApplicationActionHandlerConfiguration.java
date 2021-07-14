@@ -14,7 +14,6 @@ import edu.stanford.protege.webprotege.csv.GetCSVGridActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.events.GetProjectEventsActionHandler;
-import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 import edu.stanford.protege.webprotege.itemlist.GetPersonIdCompletionsActionHandler;
 import edu.stanford.protege.webprotege.itemlist.GetPersonIdItemsActionHandler;
 import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsActionHandler;

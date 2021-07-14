@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.EntityNode;
+import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

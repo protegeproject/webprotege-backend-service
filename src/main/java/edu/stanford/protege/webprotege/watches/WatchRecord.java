@@ -10,8 +10,6 @@ import javax.annotation.Nonnull;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.watches.WatchRecord.PROJECT_ID;
-import static edu.stanford.protege.webprotege.watches.WatchRecord.USER_ID;
 
 /**
  * Matthew Horridge

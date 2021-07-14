@@ -2,24 +2,23 @@ package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
+import edu.stanford.protege.webprotege.form.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.form.field.*;
 import edu.stanford.protege.webprotege.frame.ClassFrameProvider;
+import edu.stanford.protege.webprotege.frame.ClassFrameTranslationOptions;
+import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
-import edu.stanford.protege.webprotege.form.data.FormEntitySubject;
-import edu.stanford.protege.webprotege.frame.ClassFrameTranslationOptions;
-import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-import static dagger.internal.codegen.DaggerStreams.toImmutableList;
+import static com.google.common.collect.ImmutableList.toImmutableList;
 
 /**
  * Matthew Horridge

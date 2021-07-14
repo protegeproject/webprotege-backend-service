@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.crud;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 9 May 2017
  */
-@AutoFactory
+
 public class DeleteEntitiesChangeListGenerator implements ChangeListGenerator<Set<OWLEntity>> {
 
     @Nonnull
@@ -35,8 +35,8 @@ public class DeleteEntitiesChangeListGenerator implements ChangeListGenerator<Se
 
     private String message = "Deleted entities";
 
-    public DeleteEntitiesChangeListGenerator(@Provided @Nonnull MessageFormatter msgFormatter,
-                                             @Provided @Nonnull EntityDeleter entityDeleter,
+    public DeleteEntitiesChangeListGenerator(@Nonnull MessageFormatter msgFormatter,
+                                             @Nonnull EntityDeleter entityDeleter,
                                              @Nonnull Set<OWLEntity> entities) {
         this.entityDeleter = entityDeleter;
         this.entities = ImmutableSet.copyOf(entities);

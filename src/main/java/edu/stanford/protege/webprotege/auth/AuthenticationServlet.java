@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
+import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.session.WebProtegeSessionImpl;
-import edu.stanford.protege.webprotege.dispatch.Action;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

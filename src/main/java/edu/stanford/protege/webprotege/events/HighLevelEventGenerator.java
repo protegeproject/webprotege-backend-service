@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.events;
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.event.*;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
+import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.HasGetRevisionSummary;
 import edu.stanford.protege.webprotege.revision.Revision;
-import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.project.ProjectId;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.AxiomSubjectProvider;
 

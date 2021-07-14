@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;

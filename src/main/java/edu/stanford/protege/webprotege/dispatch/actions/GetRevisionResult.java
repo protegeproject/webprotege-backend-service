@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.actions;
 
-import edu.stanford.protege.webprotege.revision.RevisionDetails;
 import edu.stanford.protege.webprotege.dispatch.Result;
+import edu.stanford.protege.webprotege.revision.RevisionDetails;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

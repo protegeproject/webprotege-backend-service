@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.api;
 
-import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
+import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;

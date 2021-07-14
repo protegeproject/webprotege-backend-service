@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.shortform;
 import com.google.auto.value.AutoValue;
 
 import javax.annotation.Nonnull;
-
 import java.util.Comparator;
 
 import static com.google.common.base.Preconditions.checkArgument;

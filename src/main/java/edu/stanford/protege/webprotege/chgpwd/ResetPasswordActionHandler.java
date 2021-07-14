@@ -1,16 +1,16 @@
 package edu.stanford.protege.webprotege.chgpwd;
 
 import edu.stanford.protege.webprotege.auth.AuthenticationManager;
+import edu.stanford.protege.webprotege.auth.Password;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import edu.stanford.protege.webprotege.user.UserDetailsManager;
-import edu.stanford.protege.webprotege.util.IdUtil;
-import edu.stanford.protege.webprotege.auth.Password;
 import edu.stanford.protege.webprotege.user.UserDetails;
+import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.util.IdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

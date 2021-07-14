@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
-
-
 import edu.stanford.protege.webprotege.issues.events.IssueEvent;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;

@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.shortform;
 
-import com.google.common.collect.ImmutableList;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -18,16 +17,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SearchFiltersDocumentAugmenter implements EntityDocumentAugmenter {
 
-    private ImmutableList<EntitySearchFilterMatcher> searchFilterMatchers;
+    private EntitySearchFilterMatchersFactory searchFilterMatchersFactory;
 
     @Inject
-    public SearchFiltersDocumentAugmenter(@Nonnull ImmutableList<EntitySearchFilterMatcher> searchFilterMatchers) {
-        this.searchFilterMatchers = checkNotNull(searchFilterMatchers);
+    public SearchFiltersDocumentAugmenter(@Nonnull EntitySearchFilterMatchersFactory searchFilterMatchersFactory) {
+        this.searchFilterMatchersFactory = checkNotNull(searchFilterMatchersFactory);
     }
 
 
     @Override
     public void augmentDocument(@Nonnull OWLEntity entity, @Nonnull Document document) {
+        var searchFilterMatchers = searchFilterMatchersFactory.getSearchFilterMatchers();
         if(searchFilterMatchers.isEmpty()) {
             return;
         }

@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.obo;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableSet;
-
 import edu.stanford.protege.webprotege.dispatch.Result;
 
 import java.util.Set;

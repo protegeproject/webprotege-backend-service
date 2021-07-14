@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.crud.oboid;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;

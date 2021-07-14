@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
+import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.pagination.PageCollector;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.entity.EntityNode;
-import edu.stanford.protege.webprotege.pagination.Page;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -18,7 +18,6 @@ import java.util.Comparator;
 import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
-import static java.util.Comparator.comparing;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017

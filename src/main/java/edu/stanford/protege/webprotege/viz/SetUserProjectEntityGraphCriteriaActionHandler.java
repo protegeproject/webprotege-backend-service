@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.viz;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.access.ProjectResource;
 import edu.stanford.protege.webprotege.access.Subject;
 import edu.stanford.protege.webprotege.dispatch.*;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;

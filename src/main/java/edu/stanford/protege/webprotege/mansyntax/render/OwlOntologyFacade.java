@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.mansyntax.render;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.base.MoreObjects;
 import edu.stanford.protege.webprotege.index.*;
 import org.semanticweb.owlapi.io.OWLOntologyDocumentTarget;
@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Matthew Horridge
@@ -54,39 +54,39 @@ public class OwlOntologyFacade implements OWLOntology {
     @Nonnull
     private final OWLDataFactory dataFactory;
 
-    @AutoFactory
+
     public OwlOntologyFacade(@Nonnull OWLOntologyID ontologyID,
-                             @Provided @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex,
-                             @Provided @Nonnull OntologySignatureIndex ontologySignatureIndex,
-                             @Provided @Nonnull OntologyAxiomsIndex ontologyAxiomsIndex,
-                             @Provided @Nonnull EntitiesInOntologySignatureByIriIndex entitiesInOntologySignatureByIriIndex,
-                             @Provided @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertionAxiomsBySubjectIndex,
-                             @Provided @Nonnull OWLDataFactory dataFactory,
-                             @Provided @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyAxiomsBySubPropertyIndex,
-                             @Provided @Nonnull AnnotationPropertyDomainAxiomsIndex annotationPropertyDomainAxiomsIndex,
-                             @Provided @Nonnull AnnotationPropertyRangeAxiomsIndex annotationPropertyRangeAxiomsIndex,
-                             @Provided @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex,
-                             @Provided @Nonnull AxiomsByReferenceIndex axiomsByReferenceIndex,
-                             @Provided @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex,
-                             @Provided @Nonnull DisjointClassesAxiomsIndex disjointClassesAxiomsIndex,
-                             @Provided @Nonnull AxiomsByTypeIndex axiomsByTypeIndex,
-                             @Provided @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex,
-                             @Provided @Nonnull ObjectPropertyDomainAxiomsIndex objectPropertyDomainAxiomsIndex,
-                             @Provided @Nonnull ObjectPropertyRangeAxiomsIndex objectPropertyRangeAxiomsIndex,
-                             @Provided @Nonnull InverseObjectPropertyAxiomsIndex inverseObjectPropertyAxiomsIndex,
-                             @Provided @Nonnull EquivalentObjectPropertiesAxiomsIndex equivalentObjectPropertiesAxiomsIndex,
-                             @Provided @Nonnull DisjointObjectPropertiesAxiomsIndex disjointObjectPropertiesAxiomsIndex,
-                             @Provided @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
-                             @Provided @Nonnull DataPropertyDomainAxiomsIndex dataPropertyDomainAxiomsIndex,
-                             @Provided @Nonnull DataPropertyRangeAxiomsIndex dataPropertyRangeAxiomsIndex,
-                             @Provided @Nonnull EquivalentDataPropertiesAxiomsIndex equivalentDataPropertiesAxiomsIndex,
-                             @Provided @Nonnull DisjointDataPropertiesAxiomsIndex disjointDataPropertiesAxiomsIndex,
-                             @Provided @Nonnull ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex,
-                             @Provided @Nonnull ClassAssertionAxiomsByClassIndex classAssertionAxiomsByClassIndex,
-                             @Provided @Nonnull DataPropertyAssertionAxiomsBySubjectIndex dataPropertyAssertionAxiomsBySubjectIndex,
-                             @Provided @Nonnull ObjectPropertyAssertionAxiomsBySubjectIndex objectPropertyAssertionAxiomsBySubjectIndex,
-                             @Provided @Nonnull SameIndividualAxiomsIndex sameIndividualAxiomsIndex,
-                             @Provided @Nonnull DifferentIndividualsAxiomsIndex differentIndividualsAxiomsIndex) {
+                             @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex,
+                             @Nonnull OntologySignatureIndex ontologySignatureIndex,
+                             @Nonnull OntologyAxiomsIndex ontologyAxiomsIndex,
+                             @Nonnull EntitiesInOntologySignatureByIriIndex entitiesInOntologySignatureByIriIndex,
+                             @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertionAxiomsBySubjectIndex,
+                             @Nonnull OWLDataFactory dataFactory,
+                             @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyAxiomsBySubPropertyIndex,
+                             @Nonnull AnnotationPropertyDomainAxiomsIndex annotationPropertyDomainAxiomsIndex,
+                             @Nonnull AnnotationPropertyRangeAxiomsIndex annotationPropertyRangeAxiomsIndex,
+                             @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex,
+                             @Nonnull AxiomsByReferenceIndex axiomsByReferenceIndex,
+                             @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex,
+                             @Nonnull DisjointClassesAxiomsIndex disjointClassesAxiomsIndex,
+                             @Nonnull AxiomsByTypeIndex axiomsByTypeIndex,
+                             @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex,
+                             @Nonnull ObjectPropertyDomainAxiomsIndex objectPropertyDomainAxiomsIndex,
+                             @Nonnull ObjectPropertyRangeAxiomsIndex objectPropertyRangeAxiomsIndex,
+                             @Nonnull InverseObjectPropertyAxiomsIndex inverseObjectPropertyAxiomsIndex,
+                             @Nonnull EquivalentObjectPropertiesAxiomsIndex equivalentObjectPropertiesAxiomsIndex,
+                             @Nonnull DisjointObjectPropertiesAxiomsIndex disjointObjectPropertiesAxiomsIndex,
+                             @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
+                             @Nonnull DataPropertyDomainAxiomsIndex dataPropertyDomainAxiomsIndex,
+                             @Nonnull DataPropertyRangeAxiomsIndex dataPropertyRangeAxiomsIndex,
+                             @Nonnull EquivalentDataPropertiesAxiomsIndex equivalentDataPropertiesAxiomsIndex,
+                             @Nonnull DisjointDataPropertiesAxiomsIndex disjointDataPropertiesAxiomsIndex,
+                             @Nonnull ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex,
+                             @Nonnull ClassAssertionAxiomsByClassIndex classAssertionAxiomsByClassIndex,
+                             @Nonnull DataPropertyAssertionAxiomsBySubjectIndex dataPropertyAssertionAxiomsBySubjectIndex,
+                             @Nonnull ObjectPropertyAssertionAxiomsBySubjectIndex objectPropertyAssertionAxiomsBySubjectIndex,
+                             @Nonnull SameIndividualAxiomsIndex sameIndividualAxiomsIndex,
+                             @Nonnull DifferentIndividualsAxiomsIndex differentIndividualsAxiomsIndex) {
         this.ontologyID = ontologyID;
         this.ontologyAnnotationsIndex = ontologyAnnotationsIndex;
         this.ontologySignatureIndex = ontologySignatureIndex;

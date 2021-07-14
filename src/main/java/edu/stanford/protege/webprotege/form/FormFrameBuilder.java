@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.form.field.*;
 import edu.stanford.protege.webprotege.form.data.FormEntitySubject;
+import edu.stanford.protege.webprotege.form.field.*;
 import edu.stanford.protege.webprotege.frame.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLEntityVisitorAdapter;

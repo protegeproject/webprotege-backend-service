@@ -2,7 +2,8 @@ package edu.stanford.protege.webprotege.inject.project;
 
 
 
-import javax.inject.Qualifier;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -12,7 +13,6 @@ import java.lang.annotation.RetentionPolicy;
  * 04/03/15
  */
 @Qualifier
-
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ProjectDirectory {
 }

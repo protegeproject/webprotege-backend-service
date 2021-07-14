@@ -4,7 +4,6 @@ package edu.stanford.protege.webprotege.user;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 

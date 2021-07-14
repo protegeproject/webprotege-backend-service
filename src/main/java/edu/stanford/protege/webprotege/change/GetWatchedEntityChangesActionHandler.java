@@ -2,13 +2,13 @@ package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.watches.WatchManager;
-import edu.stanford.protege.webprotege.watches.WatchedChangesManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.watches.Watch;
+import edu.stanford.protege.webprotege.watches.WatchManager;
+import edu.stanford.protege.webprotege.watches.WatchedChangesManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

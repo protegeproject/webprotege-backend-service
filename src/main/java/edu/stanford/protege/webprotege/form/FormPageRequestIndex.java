@@ -8,13 +8,10 @@ import edu.stanford.protege.webprotege.form.field.FormRegionId;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 
 import javax.annotation.Nonnull;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.ImmutableMap.toImmutableMap;
-import static java.util.stream.Collectors.toMap;
 
 /**
  * Matthew Horridge

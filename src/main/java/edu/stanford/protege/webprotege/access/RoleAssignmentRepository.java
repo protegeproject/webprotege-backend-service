@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.access;
 
 import edu.stanford.protege.webprotege.project.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**

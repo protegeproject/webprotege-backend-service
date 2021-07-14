@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.inject;
 
-import edu.stanford.protege.webprotege.app.WebProtegeProperties;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.inject.Inject;

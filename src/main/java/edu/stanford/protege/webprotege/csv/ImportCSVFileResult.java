@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.csv;
 
 import edu.stanford.protege.webprotege.dispatch.Result;
+import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
-import edu.stanford.protege.webprotege.event.EventList;
 
 /**
  * Author: Matthew Horridge<br>

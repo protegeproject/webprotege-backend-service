@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.form;
 
-import edu.stanford.protege.webprotege.match.Matcher;
 import edu.stanford.protege.webprotege.form.data.FormControlDataDto;
 import edu.stanford.protege.webprotege.form.data.FormRegionFilter;
 import edu.stanford.protege.webprotege.form.field.FormRegionId;
+import edu.stanford.protege.webprotege.match.Matcher;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

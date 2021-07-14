@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.form.field;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-
 import org.semanticweb.owlapi.model.OWLProperty;
 
 import javax.annotation.Nonnull;

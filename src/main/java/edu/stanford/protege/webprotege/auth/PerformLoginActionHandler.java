@@ -1,7 +1,10 @@
 package edu.stanford.protege.webprotege.auth;
 
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
-import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.dispatch.RequestContext;
+import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.session.WebProtegeSession;
 import edu.stanford.protege.webprotege.user.UserActivityManager;

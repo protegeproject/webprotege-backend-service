@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.form.field;
 
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.form.data.PrimitiveFormControlDataDto;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 

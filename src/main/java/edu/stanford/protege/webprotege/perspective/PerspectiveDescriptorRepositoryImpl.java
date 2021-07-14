@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.perspective;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.ReplaceOptions;
 import edu.stanford.protege.webprotege.project.ProjectId;

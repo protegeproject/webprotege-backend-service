@@ -1,16 +1,17 @@
 package edu.stanford.protege.webprotege.watches;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import java.util.List;
@@ -26,8 +27,13 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 19 Apr 2017
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class WatchRecordRepository_IT {
 
+    public static final String WATCHES = "Watches";
+
+    @Autowired
     private WatchRecordRepositoryImpl repository;
 
     private UserId userId = UserId.getUserId("The User");
@@ -36,15 +42,11 @@ public class WatchRecordRepository_IT {
 
     private ProjectId projectId = ProjectId.get(UUID.randomUUID().toString());
 
-    private MongoClient client;
-
-    private MongoDatabase database;
+    @Autowired
+    private MongoTemplate database;
 
     @Before
     public void setUp() throws Exception {
-        client = MongoTestUtils.createMongoClient();
-        database = client.getDatabase(MongoTestUtils.getTestDbName());
-        repository = new WatchRecordRepositoryImpl(database, new ObjectMapperProvider().get());
         repository.ensureIndexes();
     }
 
@@ -55,7 +57,7 @@ public class WatchRecordRepository_IT {
     }
 
     private long getDocumentCount() {
-        return database.getCollection("Watches").countDocuments();
+        return database.getCollection(WATCHES).countDocuments();
     }
 
     @Test
@@ -100,7 +102,6 @@ public class WatchRecordRepository_IT {
 
     @After
     public void tearDown() throws Exception {
-        database.drop();
-        client.close();
+        database.getCollection(WATCHES).drop();
     }
 }

@@ -7,9 +7,9 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 

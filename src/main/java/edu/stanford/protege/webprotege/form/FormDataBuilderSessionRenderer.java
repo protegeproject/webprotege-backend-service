@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.form;
 
-import edu.stanford.protege.webprotege.frame.FrameComponentSessionRenderer;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
+import edu.stanford.protege.webprotege.frame.FrameComponentSessionRenderer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 

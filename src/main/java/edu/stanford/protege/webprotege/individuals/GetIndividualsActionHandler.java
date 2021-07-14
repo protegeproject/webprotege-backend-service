@@ -1,19 +1,19 @@
 package edu.stanford.protege.webprotege.individuals;
 
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
+import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.index.IndividualsIndex;
 import edu.stanford.protege.webprotege.index.IndividualsQueryResult;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.DataFactory;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.entity.EntityNode;
-import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.slf4j.Logger;
@@ -24,8 +24,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 
 /**
  * Author: Matthew Horridge<br>

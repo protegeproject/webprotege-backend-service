@@ -1,17 +1,10 @@
 package edu.stanford.protege.webprotege;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.access.ActionId;
-import edu.stanford.protege.webprotege.form.FormId;
-import edu.stanford.protege.webprotege.form.field.FormFieldId;
-import edu.stanford.protege.webprotege.form.field.GridColumnId;
-import edu.stanford.protege.webprotege.issues.CommentId;
-import edu.stanford.protege.webprotege.issues.ThreadId;
-import edu.stanford.protege.webprotege.persistence.*;
-import edu.stanford.protege.webprotege.project.ProjectId;
-import edu.stanford.protege.webprotege.sharing.PersonId;
-import edu.stanford.protege.webprotege.tag.TagId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.persistence.ProjectId2StringConverter;
+import edu.stanford.protege.webprotege.persistence.String2ProjectIdConverter;
+import edu.stanford.protege.webprotege.persistence.String2UserIdConverter;
+import edu.stanford.protege.webprotege.persistence.UserId2StringConverter;
 import org.bson.Document;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
@@ -20,13 +13,8 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
-import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
-import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions.MongoConverterConfigurationAdapter;
-import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 /**

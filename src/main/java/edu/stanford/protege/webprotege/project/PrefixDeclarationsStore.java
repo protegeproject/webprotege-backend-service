@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -24,11 +24,11 @@ public class PrefixDeclarationsStore {
     private final ObjectMapper objectMapper;
 
     @Nonnull
-    private final MongoDatabase database;
+    private final MongoTemplate database;
 
     @Inject
     public PrefixDeclarationsStore(@Nonnull ObjectMapper objectMapper,
-                                   @Nonnull MongoDatabase database) {
+                                   @Nonnull MongoTemplate database) {
         this.objectMapper = checkNotNull(objectMapper);
         this.database = checkNotNull(database);
     }

@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.obo;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.index.AxiomsByEntityReferenceIndex;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.obolibrary.obo2owl.Obo2OWLConstants;
 import org.semanticweb.owlapi.model.*;
 
@@ -52,12 +52,12 @@ public class OBONamespaceCache {
     private final OWLDataFactory dataFactory;
 
 
-    @AutoFactory
-    public OBONamespaceCache(@Provided @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex,
-                              @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
-                              @Provided @Nonnull AxiomsByEntityReferenceIndex axiomsByEntityReferenceIndex,
-                              @Provided @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                              @Provided @Nonnull OWLDataFactory dataFactory) {
+
+    public OBONamespaceCache(@Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex,
+                              @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                              @Nonnull AxiomsByEntityReferenceIndex axiomsByEntityReferenceIndex,
+                              @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                              @Nonnull OWLDataFactory dataFactory) {
         this.ontologyAnnotationsIndex = ontologyAnnotationsIndex;
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.axiomsByEntityReferenceIndex = axiomsByEntityReferenceIndex;

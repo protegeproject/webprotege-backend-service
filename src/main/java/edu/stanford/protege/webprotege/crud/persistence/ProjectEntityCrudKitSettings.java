@@ -3,14 +3,11 @@ package edu.stanford.protege.webprotege.crud.persistence;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.crud.EntityCrudKitSettings;
 import edu.stanford.protege.webprotege.crud.EntityCrudKitSuffixSettings;
 import edu.stanford.protege.webprotege.project.ProjectId;
 
 import javax.annotation.Nonnull;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Author: Matthew Horridge<br>

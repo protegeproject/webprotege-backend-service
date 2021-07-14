@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.event;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-
 import edu.stanford.protege.webprotege.project.ProjectId;
 
 /**

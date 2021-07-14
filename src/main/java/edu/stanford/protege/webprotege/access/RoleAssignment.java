@@ -15,8 +15,6 @@ import java.util.Optional;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.RoleAssignment.PROJECT_ID;
-import static edu.stanford.protege.webprotege.access.RoleAssignment.USER_NAME;
 
 /**
  * Matthew Horridge

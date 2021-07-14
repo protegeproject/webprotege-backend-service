@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.perspective;
 
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 
 import javax.annotation.Nonnull;

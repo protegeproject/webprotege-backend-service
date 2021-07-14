@@ -1,8 +1,5 @@
 package edu.stanford.protege.webprotege.api;
 
-import dagger.Module;
-import dagger.Provides;
-import dagger.multibindings.IntoSet;
 import edu.stanford.protege.webprotege.api.exception.PermissionDeniedExceptionMapper;
 import edu.stanford.protege.webprotege.api.exception.UnknownProjectExceptionMapper;
 import edu.stanford.protege.webprotege.api.resources.ProjectsResource;
@@ -17,15 +14,14 @@ import java.util.Set;
  * Stanford Center for Biomedical Informatics Research
  * 13 Apr 2018
  */
-@Module
 public class ApiModule {
 
-    @Provides
+    
     public ServletContainer provideServletContainer(ResourceConfig resourceConfig) {
         return new ServletContainer(resourceConfig);
     }
 
-    @Provides
+    
     public ResourceConfig provideResourceConfig(ApiKeyManager apiKeyManager,
                                                 Set<ApiRootResource> apiRootResources) {
         ResourceConfig resourceConfig = new ResourceConfig();
@@ -52,14 +48,12 @@ public class ApiModule {
         return resourceConfig;
     }
 
-    @Provides
-    @IntoSet
+    
     ApiRootResource provideProjectsResource(ProjectsResource resource) {
         return resource;
     }
 
-    @Provides
-    @IntoSet
+    
     ApiRootResource provideRpcResource(RpcResource resource) {
         return resource;
     }

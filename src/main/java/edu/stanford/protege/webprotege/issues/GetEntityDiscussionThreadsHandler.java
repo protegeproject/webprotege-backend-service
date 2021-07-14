@@ -7,8 +7,8 @@ import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

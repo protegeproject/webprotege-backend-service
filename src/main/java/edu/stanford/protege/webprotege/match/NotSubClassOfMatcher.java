@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.match.criteria.HierarchyFilterType;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-11-06
  */
-@AutoFactory
+
 public class NotSubClassOfMatcher implements Matcher<OWLEntity> {
 
     @Nonnull
@@ -29,7 +29,7 @@ public class NotSubClassOfMatcher implements Matcher<OWLEntity> {
     private final HierarchyFilterType filterType;
 
     @Inject
-    public NotSubClassOfMatcher(@Provided @Nonnull ClassHierarchyProvider provider,
+    public NotSubClassOfMatcher(@Nonnull ClassHierarchyProvider provider,
                                 @Nonnull OWLClass cls,
                                 @Nonnull HierarchyFilterType filterType) {
         this.provider = checkNotNull(provider);

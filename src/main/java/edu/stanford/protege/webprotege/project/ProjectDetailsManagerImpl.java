@@ -1,15 +1,11 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.projectsettings.*;
-import edu.stanford.protege.webprotege.webhook.SlackWebhookRepository;
-import edu.stanford.protege.webprotege.webhook.WebhookRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
+import edu.stanford.protege.webprotege.projectsettings.*;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.user.UserId;
-import edu.stanford.protege.webprotege.webhook.ProjectWebhook;
-import edu.stanford.protege.webprotege.webhook.ProjectWebhookEventType;
-import edu.stanford.protege.webprotege.webhook.SlackWebhook;
+import edu.stanford.protege.webprotege.webhook.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

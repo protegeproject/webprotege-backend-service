@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.merge;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.project.Ontology;
@@ -29,11 +29,11 @@ public class ModifiedProjectOntologiesCalculator {
 
     private final OntologyDiffCalculator diffCalculator;
 
-    @AutoFactory
+
     @Inject
     public ModifiedProjectOntologiesCalculator(@Nonnull Collection<Ontology> projectOntologies,
                                                @Nonnull Collection<Ontology> editedOntologies,
-                                               @Provided @Nonnull OntologyDiffCalculator diffCalculator) {
+                                               @Nonnull OntologyDiffCalculator diffCalculator) {
         this.projectOntologies = ImmutableSet.copyOf(checkNotNull(projectOntologies));
         this.editedOntologies = ImmutableSet.copyOf(checkNotNull(editedOntologies));
         this.diffCalculator = checkNotNull(diffCalculator);

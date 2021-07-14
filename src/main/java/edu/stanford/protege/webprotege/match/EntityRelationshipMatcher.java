@@ -1,11 +1,13 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
-import edu.stanford.protege.webprotege.frame.translator.AxiomPropertyValueTranslator;
-import edu.stanford.protege.webprotege.index.*;
+
+
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
 import edu.stanford.protege.webprotege.frame.State;
+import edu.stanford.protege.webprotege.frame.translator.AxiomPropertyValueTranslator;
+import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
+import edu.stanford.protege.webprotege.index.PropertyAssertionAxiomsBySubjectIndex;
+import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -13,8 +15,6 @@ import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import javax.annotation.Nonnull;
 import java.util.stream.Stream;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge
@@ -41,13 +41,13 @@ public class EntityRelationshipMatcher implements EntityFrameMatcher {
     @Nonnull
     private final AxiomPropertyValueTranslator translator;
 
-    @AutoFactory
-    public EntityRelationshipMatcher(@Nonnull @Provided ProjectOntologiesIndex projectOntologiesIndex,
+
+    public EntityRelationshipMatcher(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                      @Nonnull RelationshipPresence relationshipPresence,
                                      @Nonnull PropertyValueMatcher propertyValueMatcher,
-                                     @Nonnull @Provided SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex,
-                                     @Nonnull @Provided PropertyAssertionAxiomsBySubjectIndex propertyAssertionAxiomsBySubjectIndex,
-                                     @Nonnull @Provided AxiomPropertyValueTranslator axiomTranslator) {
+                                     @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex,
+                                     @Nonnull PropertyAssertionAxiomsBySubjectIndex propertyAssertionAxiomsBySubjectIndex,
+                                     @Nonnull AxiomPropertyValueTranslator axiomTranslator) {
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.relationshipPresence = relationshipPresence;
         this.propertyValueMatcher = propertyValueMatcher;

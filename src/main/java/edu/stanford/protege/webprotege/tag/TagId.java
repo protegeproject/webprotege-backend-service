@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.tag;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-
 import edu.stanford.protege.webprotege.ValueObject;
 import edu.stanford.protege.webprotege.util.UUIDUtil;
 import org.springframework.data.annotation.Id;

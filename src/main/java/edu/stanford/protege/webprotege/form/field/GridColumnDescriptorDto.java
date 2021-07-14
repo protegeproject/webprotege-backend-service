@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.form.field;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.auto.value.AutoValue;
-
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 
 import javax.annotation.Nonnull;

@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.chgpwd;
 
 import com.google.common.base.MoreObjects;
 
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**

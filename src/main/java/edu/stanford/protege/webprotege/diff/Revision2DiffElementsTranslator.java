@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.diff;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -32,11 +32,11 @@ public class Revision2DiffElementsTranslator {
     @Nonnull
     private final ProjectOntologiesIndex projectOntologiesIndex;
 
-    @AutoFactory
+
     @Inject
-    public Revision2DiffElementsTranslator(@Provided @Nonnull OntologyIRIShortFormProvider ontologyIRIShortFormProvider,
-                                           @Provided @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
-                                           @Provided @Nonnull ProjectOntologiesIndex projectOntologiesIndex) {
+    public Revision2DiffElementsTranslator(@Nonnull OntologyIRIShortFormProvider ontologyIRIShortFormProvider,
+                                           @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                           @Nonnull ProjectOntologiesIndex projectOntologiesIndex) {
         this.ontologyIRIShortFormProvider = checkNotNull(ontologyIRIShortFormProvider);
         this.defaultOntologyIdManager = checkNotNull(defaultOntologyIdManager);
         this.projectOntologiesIndex = checkNotNull(projectOntologiesIndex);

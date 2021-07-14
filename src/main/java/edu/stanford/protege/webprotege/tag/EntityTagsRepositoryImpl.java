@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.tag;
 
-import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -12,8 +12,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -21,7 +19,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.tag.EntityTags.*;
-import static java.util.stream.Collectors.toMap;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 

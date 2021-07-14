@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
 import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.pagination.PageCollector;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterId;
@@ -18,14 +18,15 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.inject.Provider;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static dagger.internal.codegen.DaggerStreams.toImmutableList;
-import static java.util.stream.Collectors.*;
+import static com.google.common.collect.ImmutableList.toImmutableList;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Matthew Horridge

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.util;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableMap;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -25,9 +25,9 @@ public class IriReplacer {
     @Nonnull
     private final OWLObjectDuplicator duplicator;
 
-    @AutoFactory
+
     @Inject
-    public IriReplacer(@Provided @Nonnull OWLDataFactory dataFactory,
+    public IriReplacer(@Nonnull OWLDataFactory dataFactory,
                        @Nonnull ImmutableMap<IRI, IRI> iriMap) {
         this.duplicator = new OWLObjectDuplicator(dataFactory, checkNotNull(iriMap));
     }

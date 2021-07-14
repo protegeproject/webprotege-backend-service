@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.viz;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
@@ -37,10 +37,10 @@ public class DotRenderer {
     @Nonnull
     private final EntityGraph graph;
 
-    @AutoFactory
+
     @Inject
-    public DotRenderer(@Provided @Nonnull ProjectId projectId,
-                       @Provided @Nonnull PlaceUrl placeUrl,
+    public DotRenderer(@Nonnull ProjectId projectId,
+                       @Nonnull PlaceUrl placeUrl,
                        @Nonnull EntityGraph graph) {
         this.projectId = checkNotNull(projectId);
         this.placeUrl = checkNotNull(placeUrl);

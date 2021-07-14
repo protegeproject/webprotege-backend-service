@@ -1,13 +1,16 @@
 package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.msg.MessageFormatter;
-import edu.stanford.protege.webprotege.owlapi.RenameMap;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.entity.EntityShortFormsParser;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
-import org.semanticweb.owlapi.model.*;
+import edu.stanford.protege.webprotege.msg.MessageFormatter;
+import edu.stanford.protege.webprotege.owlapi.RenameMap;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
+import org.semanticweb.owlapi.model.EntityType;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.vocab.Namespaces;
 
 import javax.annotation.Nonnull;

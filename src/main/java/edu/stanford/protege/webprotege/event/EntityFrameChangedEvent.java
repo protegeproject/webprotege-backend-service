@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import edu.stanford.protege.webprotege.HasSignature;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;

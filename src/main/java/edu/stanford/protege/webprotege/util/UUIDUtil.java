@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.util;
 
 import javax.annotation.Nonnull;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

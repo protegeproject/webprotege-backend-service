@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 8 Jun 2018
  */
-@AutoFactory
+
 public class NonUniqueLangTagsMatcher implements EntityFrameMatcher {
 
     private AnnotationAssertionAxiomsIndex axiomsIndex;
@@ -29,7 +29,7 @@ public class NonUniqueLangTagsMatcher implements EntityFrameMatcher {
     private Matcher<OWLAnnotationProperty> propertyMatcher;
 
     @Inject
-    public NonUniqueLangTagsMatcher(@Nonnull @Provided  AnnotationAssertionAxiomsIndex axiomsIndex,
+    public NonUniqueLangTagsMatcher(@Nonnull  AnnotationAssertionAxiomsIndex axiomsIndex,
                                     @Nonnull Matcher<OWLAnnotationProperty> propertyMatcher) {
         this.axiomsIndex = checkNotNull(axiomsIndex);
         this.propertyMatcher = checkNotNull(propertyMatcher);

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
@@ -21,13 +21,13 @@ import static java.util.stream.Collectors.toList;
  * Stanford Center for Biomedical Informatics Research
  * 12 Jun 2018
  */
-@AutoFactory
+
 public class ConflictingBooleanValuesMatcher implements Matcher<OWLEntity> {
 
     private final AnnotationAssertionAxiomsIndex axioms;
 
     @Inject
-    public ConflictingBooleanValuesMatcher(@Provided AnnotationAssertionAxiomsIndex axioms) {
+    public ConflictingBooleanValuesMatcher(AnnotationAssertionAxiomsIndex axioms) {
         this.axioms = checkNotNull(axioms);
     }
 

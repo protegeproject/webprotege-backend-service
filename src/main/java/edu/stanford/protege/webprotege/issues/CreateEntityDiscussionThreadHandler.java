@@ -2,20 +2,20 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
-import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
-import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.events.EventManager;
+import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
+import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

@@ -6,7 +6,8 @@ import javax.annotation.Nonnull;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

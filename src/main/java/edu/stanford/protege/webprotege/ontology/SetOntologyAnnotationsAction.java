@@ -12,8 +12,6 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

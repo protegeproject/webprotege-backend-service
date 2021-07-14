@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByClassIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
@@ -22,7 +22,7 @@ import static java.util.stream.Collectors.toSet;
  * Stanford Center for Biomedical Informatics Research
  * 25 Jun 2018
  */
-@AutoFactory
+
 public class InstanceOfMatcher implements Matcher<OWLEntity> {
 
     @Nonnull
@@ -47,10 +47,10 @@ public class InstanceOfMatcher implements Matcher<OWLEntity> {
 
     private Set<OWLNamedIndividual> instances;
 
-    public InstanceOfMatcher(@Nonnull @Provided ClassHierarchyProvider hierarchyProvider,
-                             @Nonnull @Provided ProjectOntologiesIndex projectOntologiesIndex,
-                             @Nonnull @Provided ClassAssertionAxiomsByClassIndex classAssertionsByClass,
-                             @Nonnull @Provided ProjectSignatureByTypeIndex projectSignatureByType,
+    public InstanceOfMatcher(@Nonnull ClassHierarchyProvider hierarchyProvider,
+                             @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                             @Nonnull ClassAssertionAxiomsByClassIndex classAssertionsByClass,
+                             @Nonnull ProjectSignatureByTypeIndex projectSignatureByType,
                              @Nonnull OWLClass target,
                              @Nonnull HierarchyFilterType filterType) {
         this.hierarchyProvider = checkNotNull(hierarchyProvider);

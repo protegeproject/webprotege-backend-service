@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.api.resources;
 
-import com.google.auto.factory.AutoFactory;
-import com.google.auto.factory.Provided;
+
+
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -39,9 +39,9 @@ public class FormResource {
     @Nonnull
     private final ActionExecutor actionExecutor;
 
-    @AutoFactory
+
     public FormResource(@Nonnull ProjectId projectId, @Nonnull FormId formId,
-                        @Provided @Nonnull ActionExecutor actionExecutor) {
+                        @Nonnull ActionExecutor actionExecutor) {
         this.projectId = projectId;
         this.formId = formId;
         this.actionExecutor = actionExecutor;

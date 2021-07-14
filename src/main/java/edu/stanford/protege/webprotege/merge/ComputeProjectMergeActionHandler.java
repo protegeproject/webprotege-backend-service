@@ -2,17 +2,15 @@ package edu.stanford.protege.webprotege.merge;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.inject.project.DaggerUploadedProjectComponent;
-import edu.stanford.protege.webprotege.inject.project.UploadedProjectModule;
-import edu.stanford.protege.webprotege.lang.LanguageManager;
-import edu.stanford.protege.webprotege.project.Ontology;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.diff.DiffElement;
 import edu.stanford.protege.webprotege.diff.DiffOperation;
+import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.project.Ontology;
 import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,25 +106,26 @@ public class ComputeProjectMergeActionHandler extends AbstractProjectActionHandl
     private List<DiffElement<String, String>> renderDiff(Collection<Ontology> uploadedOntologies,
                                                            Set<OntologyDiff> diffs) {
 
-        var uploadedProjectModule = new UploadedProjectModule(projectId,
-                                                              ImmutableSet.copyOf(uploadedOntologies),
-                                                              languageManager);
-        var uploadedOntologiesComponent = DaggerUploadedProjectComponent.builder()
-                                                                        .uploadedProjectModule(uploadedProjectModule)
-                                                                        .build();
-        var renderer = uploadedOntologiesComponent.getOwlObjectRenderer();
-
-        List<DiffElement<String, OWLAxiom>> diffElements = getDiffElements(diffs);
-        sortDiff(diffElements);
-
-        // Transform from OWLAxiom to String
-        List<DiffElement<String, String>> transformedDiff = new ArrayList<>();
-        for(DiffElement<String, OWLAxiom> element : diffElements) {
-            var html = renderer.render(element.getLineElement());
-            transformedDiff.add(new DiffElement<>(element.getDiffOperation(), element.getSourceDocument(), html));
-        }
-        uploadedOntologiesComponent.getProjectDisposablesManager().dispose();
-        return transformedDiff;
+//        var uploadedProjectModule = new UploadedProjectModule(projectId,
+//                                                              ImmutableSet.copyOf(uploadedOntologies),
+//                                                              languageManager);
+//        var uploadedOntologiesComponent = DaggerUploadedProjectComponent.builder()
+//                                                                        .uploadedProjectModule(uploadedProjectModule)
+//                                                                        .build();
+//        var renderer = uploadedOntologiesComponent.getOwlObjectRenderer();
+//
+//        List<DiffElement<String, OWLAxiom>> diffElements = getDiffElements(diffs);
+//        sortDiff(diffElements);
+//
+//        // Transform from OWLAxiom to String
+//        List<DiffElement<String, String>> transformedDiff = new ArrayList<>();
+//        for(DiffElement<String, OWLAxiom> element : diffElements) {
+//            var html = renderer.render(element.getLineElement());
+//            transformedDiff.add(new DiffElement<>(element.getDiffOperation(), element.getSourceDocument(), html));
+//        }
+//        uploadedOntologiesComponent.getProjectDisposablesManager().dispose();
+//        return transformedDiff;
+        throw new RuntimeException("Requires implementing");
     }
 
     private List<DiffElement<String, OWLAxiom>> getDiffElements(Set<OntologyDiff> diffs) {

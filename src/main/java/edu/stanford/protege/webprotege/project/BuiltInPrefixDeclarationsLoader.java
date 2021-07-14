@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.OverridableFile;
 import edu.stanford.protege.webprotege.inject.OverridableFileFactory;
-import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
