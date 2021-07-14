@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.app;
 
 import edu.stanford.protege.webprotege.EntityMatcherConfiguration;
-import edu.stanford.protege.webprotege.LuceneConfiguration;
-import edu.stanford.protege.webprotege.ProjectComponentConfiguration;
-import edu.stanford.protege.webprotege.ProjectIndexesConfiguration;
+import edu.stanford.protege.webprotege.conf.LuceneConfiguration;
+import edu.stanford.protege.webprotege.conf.ProjectComponentConfiguration;
+import edu.stanford.protege.webprotege.conf.ProjectIndexesConfiguration;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
 import edu.stanford.protege.webprotege.project.ProjectId;

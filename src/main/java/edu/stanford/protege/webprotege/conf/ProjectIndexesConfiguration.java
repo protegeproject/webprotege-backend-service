@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege;
+package edu.stanford.protege.webprotege.conf;
 
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.*;

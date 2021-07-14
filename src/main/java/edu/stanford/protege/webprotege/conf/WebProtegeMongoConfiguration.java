@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege;
+package edu.stanford.protege.webprotege.conf;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.persistence.ProjectId2StringConverter;
