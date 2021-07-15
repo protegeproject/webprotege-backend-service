@@ -311,6 +311,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <dependencyManagement>
@@ -369,6 +375,8 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}-jre</version>
             </dependency>
+
+
             <dependency>
                 <groupId>com.github.ben-manes.caffeine</groupId>
                 <artifactId>caffeine</artifactId>
