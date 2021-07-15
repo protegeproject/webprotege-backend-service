@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * Stanford Center for Biomedical Informatics Research
  * 2021-07-12
  */
-public class ProjectIndexesConfiguration {
+public class ProjectIndexBeansConfiguration {
 
     @Bean
     AnnotationAssertionAxiomsBySubjectIndexImpl AnnotationAssertionAxiomsBySubjectIndex() {

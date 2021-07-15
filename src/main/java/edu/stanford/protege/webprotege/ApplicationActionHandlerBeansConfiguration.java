@@ -37,7 +37,7 @@ import org.springframework.context.annotation.Configuration;
  * 2021-07-14
  */
 @Configuration
-public class ApplicationActionHandlersConfiguration {
+public class ApplicationActionHandlerBeansConfiguration {
 
     @Bean
     GetAvailableProjectsHandler getAvailableProjectsHandler(ProjectPermissionsManager p1,
@@ -157,12 +157,12 @@ public class ApplicationActionHandlersConfiguration {
     }
 
     @Bean
-    RebuildPermissionsActionHandler sRebuildPermissionsActionHandler(AccessManager p1) {
+    RebuildPermissionsActionHandler rebuildPermissionsActionHandler(AccessManager p1) {
         return new RebuildPermissionsActionHandler(p1);
     }
 
     @Bean
-    public GetAvailableProjectsWithPermissionActionHandler GetAvailableProjectsWithPermissionActionHandler(AccessManager p1,
+    public GetAvailableProjectsWithPermissionActionHandler getAvailableProjectsWithPermissionActionHandler(AccessManager p1,
                                                                                      ProjectDetailsManager p2) {
         return new GetAvailableProjectsWithPermissionActionHandler(p1, p2);
     }

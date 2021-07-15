@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ProjectActionHandlersConfiguration_Test {
+public class ProjectActionHandlerBeansConfiguration_Test {
 
     @Autowired
     ProjectComponentFactory projectComponentFactory;

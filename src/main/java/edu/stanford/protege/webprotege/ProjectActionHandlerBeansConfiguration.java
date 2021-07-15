@@ -79,7 +79,7 @@ import java.util.Comparator;
  * Stanford Center for Biomedical Informatics Research
  * 2021-07-14
  */
-public class ProjectActionHandlersConfiguration {
+public class ProjectActionHandlerBeansConfiguration {
 
 
 

@@ -14,7 +14,7 @@ import javax.inject.Provider;
  * Stanford Center for Biomedical Informatics Research
  * 2021-07-13
  */
-public class EntityMatcherConfiguration {
+public class EntityMatcherBeansConfiguration {
 
     @Bean
     SubClassOfMatcherFactory subClassOfMatcherFactory(Provider<ClassHierarchyProvider> p1) {

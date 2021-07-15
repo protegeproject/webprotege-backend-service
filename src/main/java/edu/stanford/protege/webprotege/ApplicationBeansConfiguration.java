@@ -87,7 +87,7 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 @Configuration
 @EnableMongoRepositories
-public class WebProtegeConfiguration {
+public class ApplicationBeansConfiguration {
 
     private static final String DATABASE_NAME = "webprotege";
 

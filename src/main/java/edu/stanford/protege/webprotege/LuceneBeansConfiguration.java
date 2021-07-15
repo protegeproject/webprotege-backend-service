@@ -35,7 +35,7 @@ import java.nio.file.Path;
  * Stanford Center for Biomedical Informatics Research
  * 2021-07-13
  */
-public class LuceneConfiguration {
+public class LuceneBeansConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(LuceneModule.class);
 
