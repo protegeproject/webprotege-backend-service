@@ -21,16 +21,12 @@ public class GetEntityCreationFormsActionHandler extends AbstractProjectActionHa
     @Nonnull
     private final EntityFormManager entityFormManager;
 
-    @Nonnull
-    private final ProjectComponent projectComponent;
 
     @Inject
     public GetEntityCreationFormsActionHandler(@Nonnull AccessManager accessManager,
-                                               @Nonnull EntityFormManager entityFormManager,
-                                               @Nonnull ProjectComponent projectComponent) {
+                                               @Nonnull EntityFormManager entityFormManager) {
         super(accessManager);
         this.entityFormManager = checkNotNull(entityFormManager);
-        this.projectComponent = checkNotNull(projectComponent);
     }
 
     @Nonnull
@@ -43,15 +39,16 @@ public class GetEntityCreationFormsActionHandler extends AbstractProjectActionHa
     @Override
     public GetEntityCreationFormsResult execute(@Nonnull GetEntityCreationFormsAction action,
                                                 @Nonnull ExecutionContext executionContext) {
-        var entityCreationForms = entityFormManager.getFormDescriptors(action.getParentEntity(),
-                                             action.getProjectId(),
-                                             FormPurpose.ENTITY_CREATION);
-
-        var formDtoTranslatorComponent = projectComponent.getFormDescriptorDtoTranslatorComponent(new EntityFrameFormDataModule());
-        var formDtoTranslator = formDtoTranslatorComponent.getFormDescriptorDtoTranslator();
-        var formDtos = entityCreationForms.stream()
-                           .map(formDtoTranslator::toFormDescriptorDto)
-                           .collect(toImmutableList());
-        return GetEntityCreationFormsResult.get(formDtos);
+        throw new RuntimeException("Needs fixing");
+//        var entityCreationForms = entityFormManager.getFormDescriptors(action.getParentEntity(),
+//                                             action.getProjectId(),
+//                                             FormPurpose.ENTITY_CREATION);
+//
+//        var formDtoTranslatorComponent = projectComponent.getFormDescriptorDtoTranslatorComponent(new EntityFrameFormDataModule());
+//        var formDtoTranslator = formDtoTranslatorComponent.getFormDescriptorDtoTranslator();
+//        var formDtos = entityCreationForms.stream()
+//                           .map(formDtoTranslator::toFormDescriptorDto)
+//                           .collect(toImmutableList());
+//        return GetEntityCreationFormsResult.get(formDtos);
     }
 }

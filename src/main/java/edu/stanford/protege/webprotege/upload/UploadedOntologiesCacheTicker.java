@@ -8,9 +8,10 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
- * 2020-07-21
+ * 2021-07-14
  */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UploadedOntologiesCacheService {
+public @interface UploadedOntologiesCacheTicker {
+
 }

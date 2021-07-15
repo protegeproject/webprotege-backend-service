@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,12 +28,12 @@ public class EntityGraphSettingsRepositoryImpl implements EntityGraphSettingsRep
 
     private static final String COLLECTION_NAME = "EntityGraphSettings";
 
-    private final MongoDatabase database;
+    private final MongoTemplate database;
 
     private final ObjectMapper objectMapper;
 
     @Inject
-    public EntityGraphSettingsRepositoryImpl(MongoDatabase database,
+    public EntityGraphSettingsRepositoryImpl(MongoTemplate database,
                                              ObjectMapper objectMapper) {
         this.database = checkNotNull(database);
         this.objectMapper = checkNotNull(objectMapper);

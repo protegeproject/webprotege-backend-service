@@ -255,7 +255,7 @@ public class ApplicationModule {
     
     @UploadedOntologiesCacheService
     @ApplicationSingleton
-    public ScheduledExecutorService provideUploadedOntologiesCacheService(ApplicationExecutorsRegistry executorsRegistry) {
+    public ScheduledExecutorService Annotation(ApplicationExecutorsRegistry executorsRegistry) {
         var executor = Executors.newSingleThreadScheduledExecutor();
         executorsRegistry.registerService(executor, "Uploaded-Ontologies-Cache-Service");
         return executor;

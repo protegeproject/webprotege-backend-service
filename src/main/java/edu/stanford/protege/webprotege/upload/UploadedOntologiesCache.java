@@ -46,7 +46,7 @@ public class UploadedOntologiesCache implements HasDispose {
 
     @Inject
     public UploadedOntologiesCache(@Nonnull UploadedOntologiesProcessor uploadedOntologiesProcessor,
-                                   @Nonnull Ticker ticker,
+                                   @Nonnull @UploadedOntologiesCacheTicker Ticker ticker,
                                    @Nonnull @UploadedOntologiesCacheService ScheduledExecutorService service) {
         this.uploadedOntologiesProcessor = checkNotNull(uploadedOntologiesProcessor);
         this.service = checkNotNull(service);

@@ -1,9 +1,6 @@
-package edu.stanford.protege.webprotege.conf;
+package edu.stanford.protege.webprotege;
 
-import edu.stanford.protege.webprotege.index.BuiltInOwlEntitiesIndex;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
-import edu.stanford.protege.webprotege.index.ProjectAnnotationAssertionAxiomsBySubjectIndex;
-import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
+import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.DataDirectoryProvider;
 import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
@@ -322,6 +319,11 @@ public class LuceneConfiguration {
                                                                             EntitySearchFilterRepository p2,
                                                                             Provider<EntitySearchFilterIndexesManager> p3) {
         return new ProjectEntitySearchFiltersManagerImpl(p1, p2, p3);
+    }
+
+    @Bean
+    DeprecatedEntitiesIndex deprecatedEntitiesIndex(SearcherManager p1, LuceneEntityDocumentTranslator p2) {
+        return new DeprecatedEntitiesIndexLuceneImpl(p1, p2);
     }
 
 }

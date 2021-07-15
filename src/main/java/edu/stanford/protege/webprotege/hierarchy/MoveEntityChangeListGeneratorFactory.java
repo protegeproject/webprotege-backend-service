@@ -13,8 +13,6 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
  */
 public class MoveEntityChangeListGeneratorFactory {
 
-    private final MoveHierarchyNodeAction p1;
-
     private final OWLDataFactory p2;
 
     private final MessageFormatter p3;
@@ -33,8 +31,7 @@ public class MoveEntityChangeListGeneratorFactory {
 
     private final SubAnnotationPropertyAxiomsBySubPropertyIndex p10;
 
-    public MoveEntityChangeListGeneratorFactory(MoveHierarchyNodeAction p1,
-                                                OWLDataFactory p2,
+    public MoveEntityChangeListGeneratorFactory(OWLDataFactory p2,
                                                 MessageFormatter p3,
                                                 ProjectOntologiesIndex p4,
                                                 DefaultOntologyIdManager p5,
@@ -43,7 +40,6 @@ public class MoveEntityChangeListGeneratorFactory {
                                                 SubObjectPropertyAxiomsBySubPropertyIndex p8,
                                                 SubDataPropertyAxiomsBySubPropertyIndex p9,
                                                 SubAnnotationPropertyAxiomsBySubPropertyIndex p10) {
-        this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
         this.p4 = p4;
@@ -56,7 +52,7 @@ public class MoveEntityChangeListGeneratorFactory {
     }
 
     public MoveEntityChangeListGenerator create(MoveHierarchyNodeAction action) {
-        return new MoveEntityChangeListGenerator(p1,
+        return new MoveEntityChangeListGenerator(action,
                                                  p2,
                                                  p3,
                                                  p4,

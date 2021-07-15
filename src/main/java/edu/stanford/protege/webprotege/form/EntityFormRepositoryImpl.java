@@ -11,6 +11,7 @@ import com.mongodb.client.model.Indexes;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -46,7 +47,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
 
     private final ObjectMapper objectMapper;
 
-    private final MongoDatabase database;
+    private final MongoTemplate database;
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
@@ -55,7 +56,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
     private final Lock writeLock = readWriteLock.writeLock();
 
     @Inject
-    public EntityFormRepositoryImpl(ObjectMapper objectMapper, MongoDatabase database) {
+    public EntityFormRepositoryImpl(ObjectMapper objectMapper, MongoTemplate database) {
         this.objectMapper = checkNotNull(objectMapper);
         this.database = checkNotNull(database);
     }

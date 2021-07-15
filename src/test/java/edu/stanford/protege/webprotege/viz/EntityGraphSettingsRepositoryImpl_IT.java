@@ -10,6 +10,11 @@ import edu.stanford.protege.webprotege.user.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -22,15 +27,17 @@ import static org.mockito.Mockito.mock;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-06
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class EntityGraphSettingsRepositoryImpl_IT {
 
     private static final double RANK_SEPARATION = 2.0;
 
+    @Autowired
     private EntityGraphSettingsRepositoryImpl repository;
 
-    private MongoClient client;
-
-    private MongoDatabase database;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private ProjectId projectId;
 
@@ -40,18 +47,13 @@ public class EntityGraphSettingsRepositoryImpl_IT {
     public void setUp() {
         userId = UserId.getUserId("JohnDoe");
         projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
-        client = MongoTestUtils.createMongoClient();
-        database = client.getDatabase(MongoTestUtils.getTestDbName());
-        var objectMapper = new ObjectMapperProvider().get();
-        repository = new EntityGraphSettingsRepositoryImpl(database,
-                                                           objectMapper);
     }
 
     @Test
     public void shouldSaveSettings() {
         var settings = ProjectUserEntityGraphSettings.getDefault(projectId, userId);
         repository.saveSettings(settings);
-        var collection = database.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
+        var collection = mongoTemplate.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
         assertThat(collection.countDocuments(), is(1L));
         ProjectUserEntityGraphSettings savedSettings = repository.getSettingsForUserOrProjectDefault(projectId, userId);
         assertThat(savedSettings, is(settings));
@@ -62,7 +64,7 @@ public class EntityGraphSettingsRepositoryImpl_IT {
         var settings = ProjectUserEntityGraphSettings.getDefault(projectId, userId);
         repository.saveSettings(settings);
         repository.saveSettings(settings);
-        var collection = database.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
+        var collection = mongoTemplate.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
         assertThat(collection.countDocuments(), is(1L));
         ProjectUserEntityGraphSettings savedSettings = repository.getSettingsForUserOrProjectDefault(projectId, userId);
         assertThat(savedSettings, is(settings));
@@ -78,7 +80,7 @@ public class EntityGraphSettingsRepositoryImpl_IT {
 
 
 
-        var collection = database.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
+        var collection = mongoTemplate.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
         assertThat(collection.countDocuments(), is(2L));
 
         var savedUserSettings = repository.getSettingsForUserOrProjectDefault(projectId, userId);
@@ -92,7 +94,7 @@ public class EntityGraphSettingsRepositoryImpl_IT {
     public void shouldSaveSettingsWithoutUserId() {
         var settings = ProjectUserEntityGraphSettings.getDefault(projectId, null);
         repository.saveSettings(settings);
-        var collection = database.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
+        var collection = mongoTemplate.getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName());
         assertThat(collection.countDocuments(), is(1L));
         ProjectUserEntityGraphSettings savedSettings = repository.getSettingsForUserOrProjectDefault(projectId, null);
         assertThat(savedSettings, is(settings));
@@ -100,7 +102,6 @@ public class EntityGraphSettingsRepositoryImpl_IT {
 
     @After
     public void tearDown() {
-        client.getDatabase(MongoTestUtils.getTestDbName()).drop();
-        client.close();
+        mongoTemplate.getDb().getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName()).drop();
     }
 }

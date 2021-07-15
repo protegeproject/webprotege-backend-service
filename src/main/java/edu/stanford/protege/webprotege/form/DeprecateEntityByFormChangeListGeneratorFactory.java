@@ -21,10 +21,6 @@ import javax.inject.Provider;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 
-@Generated(
-  value = "com.google.auto.factory.processor.AutoFactoryProcessor",
-  comments = "https://github.com/google/auto/tree/master/factory"
-)
 public final class DeprecateEntityByFormChangeListGeneratorFactory {
   private final Provider<EntityDeleter> entityDeleterProvider;
 

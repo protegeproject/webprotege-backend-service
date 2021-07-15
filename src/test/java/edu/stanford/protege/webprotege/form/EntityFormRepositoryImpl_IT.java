@@ -9,7 +9,12 @@ import edu.stanford.protege.webprotege.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.util.UUID;
@@ -24,28 +29,26 @@ import static org.mockito.Mockito.mock;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-01
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class EntityFormRepositoryImpl_IT {
 
+    @Autowired
     private EntityFormRepositoryImpl impl;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private ProjectId projectId;
 
-    private MongoDatabase database;
 
     @Before
     public void setUp() {
         projectId = ProjectId.get(UUID.randomUUID().toString());
-        var mongoClient = MongoTestUtils.createMongoClient();
-        database = mongoClient.getDatabase(MongoTestUtils.getTestDbName());
-
-        var objectMapperProvider = new ObjectMapperProvider();
-        var objectMapper = objectMapperProvider.get();
-        impl = new EntityFormRepositoryImpl(objectMapper, database);
     }
 
     @After
     public void tearDown() throws Exception {
-        database.drop();
     }
 
     @Test

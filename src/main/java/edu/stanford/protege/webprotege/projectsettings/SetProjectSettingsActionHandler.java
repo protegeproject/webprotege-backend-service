@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.dispatch.ProjectActionHandlerComponent;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 
 import javax.annotation.Nonnull;
@@ -17,6 +18,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_PROJECT_
  * Stanford Center for Biomedical Informatics Research
  * 25/11/14
  */
+@ProjectActionHandlerComponent
 public class SetProjectSettingsActionHandler extends AbstractProjectActionHandler<SetProjectSettingsAction, SetProjectSettingsResult> {
 
     @Nonnull

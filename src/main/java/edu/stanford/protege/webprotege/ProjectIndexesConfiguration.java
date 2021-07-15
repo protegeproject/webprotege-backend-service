@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.conf;
+package edu.stanford.protege.webprotege;
 
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.*;
@@ -321,4 +321,11 @@ public class ProjectIndexesConfiguration {
         return new ClassFrameAxiomsIndexImpl(p1, p2, p3, p4);
     }
 
+    @Bean
+    NamedIndividualFrameAxiomIndex namedIndividualFrameAxiomIndex(ProjectOntologiesIndex p1,
+                                                                  ClassAssertionAxiomsByIndividualIndex p2,
+                                                                  PropertyAssertionAxiomsBySubjectIndex p3,
+                                                                  SameIndividualAxiomsIndex p4) {
+        return new NamedIndividualFrameAxiomsIndexImpl(p1, p2, p3, p4);
+    }
 }

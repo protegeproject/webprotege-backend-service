@@ -6,6 +6,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.FindOneAndReplaceOptions;
 import edu.stanford.protege.webprotege.project.ProjectId;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -30,13 +31,13 @@ public class EntityFormSelectorRepositoryImpl implements EntityFormSelectorRepos
     private static final String FORM_ID = "formId";
 
     @Nonnull
-    private final MongoDatabase database;
+    private final MongoTemplate database;
 
     @Nonnull
     private final ObjectMapper objectMapper;
 
     @Inject
-    public EntityFormSelectorRepositoryImpl(@Nonnull MongoDatabase database,
+    public EntityFormSelectorRepositoryImpl(@Nonnull MongoTemplate database,
                                             @Nonnull ObjectMapper objectMapper) {
         this.database = checkNotNull(database);
         this.objectMapper = checkNotNull(objectMapper);

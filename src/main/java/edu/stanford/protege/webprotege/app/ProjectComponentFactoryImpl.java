@@ -1,9 +1,6 @@
 package edu.stanford.protege.webprotege.app;
 
-import edu.stanford.protege.webprotege.EntityMatcherConfiguration;
-import edu.stanford.protege.webprotege.conf.LuceneConfiguration;
-import edu.stanford.protege.webprotege.conf.ProjectComponentConfiguration;
-import edu.stanford.protege.webprotege.conf.ProjectIndexesConfiguration;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
 import edu.stanford.protege.webprotege.project.ProjectId;
@@ -37,6 +34,9 @@ public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
         projectContext.register(ProjectIndexesConfiguration.class);
         projectContext.register(LuceneConfiguration.class);
         projectContext.register(EntityMatcherConfiguration.class);
+        projectContext.register(ProjectActionHandlersConfiguration.class);
+        projectContext.register(OboBeansConfiguration.class);
+        projectContext.register(FormBeansConfiguration.class);
         projectContext.registerBean("projectId", ProjectId.class, projectId.getId());
         projectContext.refresh();
         return projectContext.getBean(ProjectComponent.class);

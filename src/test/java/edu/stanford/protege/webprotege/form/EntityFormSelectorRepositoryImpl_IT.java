@@ -12,7 +12,12 @@ import edu.stanford.protege.webprotege.project.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.model.IRI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,18 +30,18 @@ import static org.mockito.Mockito.mock;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-08
  */
+@SpringBootTest
+@RunWith(SpringRunner.class)
 public class EntityFormSelectorRepositoryImpl_IT {
 
+    @Autowired
     private EntityFormSelectorRepositoryImpl repository;
 
-    private MongoClient client;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Before
     public void setUp() {
-        client = MongoTestUtils.createMongoClient();
-        var database = client.getDatabase(MongoTestUtils.getTestDbName());
-        var objectMapper = new ObjectMapperProvider().get();
-        repository = new EntityFormSelectorRepositoryImpl(database, objectMapper);
     }
 
     @Test
@@ -58,6 +63,6 @@ public class EntityFormSelectorRepositoryImpl_IT {
 
     @After
     public void tearDown() throws Exception {
-        client.close();
+        mongoTemplate.getDb().getCollection("FormSelectors").drop();
     }
 }

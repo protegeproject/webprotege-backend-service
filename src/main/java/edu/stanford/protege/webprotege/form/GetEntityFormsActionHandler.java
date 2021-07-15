@@ -33,21 +33,16 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
     private final EntityFormManager formManager;
 
     @Nonnull
-    private final ProjectComponent projectComponent;
-
-    @Nonnull
     private final RenderingManager renderingManager;
 
     @Inject
     public GetEntityFormsActionHandler(@Nonnull AccessManager accessManager,
                                        @Nonnull ProjectId projectId,
                                        @Nonnull EntityFormManager formManager,
-                                       @Nonnull ProjectComponent projectComponent,
                                        @Nonnull RenderingManager renderingManager) {
         super(accessManager);
         this.projectId = projectId;
         this.formManager = formManager;
-        this.projectComponent = projectComponent;
         this.renderingManager = renderingManager;
     }
 
@@ -66,17 +61,18 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
                                                    langTagFilter,
                                                    pageRequestIndex,
                                                    formRegionFilterIndex);
-        var formDataDtoBuilder = projectComponent.getEntityFrameFormDataComponentBuilder(module).formDataBuilder();
-        var formsFilterList = action.getFormFilters();
-        var formSubject = Optional.of(FormEntitySubject.get(entity));
-        var forms = formManager.getFormDescriptors(entity, projectId, FormPurpose.ENTITY_EDITING)
-                               .stream()
-                               .filter(byFormIds(formsFilterList))
-                               .map(formDescriptor -> formDataDtoBuilder.toFormData(formSubject, formDescriptor))
-                               .collect(toImmutableList());
-
-        var entityData = renderingManager.getRendering(entity);
-        return GetEntityFormsResult.create(entityData, ImmutableList.copyOf(action.getFormFilters()), forms);
+        throw new RuntimeException("Needs fixing");
+//        var formDataDtoBuilder = projectComponent.getEntityFrameFormDataComponentBuilder(module).formDataBuilder();
+//        var formsFilterList = action.getFormFilters();
+//        var formSubject = Optional.of(FormEntitySubject.get(entity));
+//        var forms = formManager.getFormDescriptors(entity, projectId, FormPurpose.ENTITY_EDITING)
+//                               .stream()
+//                               .filter(byFormIds(formsFilterList))
+//                               .map(formDescriptor -> formDataDtoBuilder.toFormData(formSubject, formDescriptor))
+//                               .collect(toImmutableList());
+//
+//        var entityData = renderingManager.getRendering(entity);
+//        return GetEntityFormsResult.create(entityData, ImmutableList.copyOf(action.getFormFilters()), forms);
     }
 
     public static Predicate<FormDescriptor> byFormIds(ImmutableSet<FormId> formsFilterList) {

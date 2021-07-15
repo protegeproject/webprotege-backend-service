@@ -33,9 +33,6 @@ public class GetEntityDeprecationFormsActionHandler extends AbstractProjectActio
     private final EntityFormManager entityFormManager;
 
     @Nonnull
-    private final ProjectComponent projectComponent;
-
-    @Nonnull
     private final AxiomsByReferenceIndex axiomsByReferenceIndex;
 
     @Nonnull
@@ -51,7 +48,6 @@ public class GetEntityDeprecationFormsActionHandler extends AbstractProjectActio
     public GetEntityDeprecationFormsActionHandler(@Nonnull ProjectId projectId,
                                                   @Nonnull AccessManager accessManager,
                                                   @Nonnull EntityFormManager entityFormManager,
-                                                  @Nonnull ProjectComponent projectComponent,
                                                   @Nonnull AxiomsByReferenceIndex axiomsByReferenceIndex,
                                                   @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                                   @Nonnull AxiomSubjectProvider axiomSubjectProvider,
@@ -59,7 +55,6 @@ public class GetEntityDeprecationFormsActionHandler extends AbstractProjectActio
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.entityFormManager = checkNotNull(entityFormManager);
-        this.projectComponent = checkNotNull(projectComponent);
         this.axiomsByReferenceIndex = checkNotNull(axiomsByReferenceIndex);
         this.projectOntologiesIndex = checkNotNull(projectOntologiesIndex);
         this.axiomSubjectProvider = checkNotNull(axiomSubjectProvider);
@@ -80,21 +75,22 @@ public class GetEntityDeprecationFormsActionHandler extends AbstractProjectActio
                                                                        action.getProjectId(),
                                                                        FormPurpose.ENTITY_DEPRECATION);
 
-        var formDtoTranslatorComponent = projectComponent.getFormDescriptorDtoTranslatorComponent(new EntityFrameFormDataModule());
-        var formDtoTranslator = formDtoTranslatorComponent.getFormDescriptorDtoTranslator();
-        var formDtos = entityCreationForms.stream()
-                                          .map(formDtoTranslator::toFormDescriptorDto)
-                                          .collect(toImmutableList());
-        var referencesCount = projectOntologiesIndex.getOntologyIds()
-                .flatMap(ontId -> axiomsByReferenceIndex.getReferencingAxioms(Collections.singleton(action.getEntity()),
-                                                                          ontId))
-                .filter(ax -> !hasSubject(action.getEntity(), ax))
-                .count();
-        var criteria = projectDetailsManager.getProjectDetails(projectId)
-                .getEntityDeprecationSettings()
-                .getReplacedByFilter()
-                .orElse(null);
-        return GetEntityDeprecationFormsResult.create(formDtos, referencesCount, criteria);
+        throw new RuntimeException("Needs fixing");
+//        var formDtoTranslatorComponent = projectComponent.getFormDescriptorDtoTranslatorComponent(new EntityFrameFormDataModule());
+//        var formDtoTranslator = formDtoTranslatorComponent.getFormDescriptorDtoTranslator();
+//        var formDtos = entityCreationForms.stream()
+//                                          .map(formDtoTranslator::toFormDescriptorDto)
+//                                          .collect(toImmutableList());
+//        var referencesCount = projectOntologiesIndex.getOntologyIds()
+//                .flatMap(ontId -> axiomsByReferenceIndex.getReferencingAxioms(Collections.singleton(action.getEntity()),
+//                                                                          ontId))
+//                .filter(ax -> !hasSubject(action.getEntity(), ax))
+//                .count();
+//        var criteria = projectDetailsManager.getProjectDetails(projectId)
+//                .getEntityDeprecationSettings()
+//                .getReplacedByFilter()
+//                .orElse(null);
+//        return GetEntityDeprecationFormsResult.create(formDtos, referencesCount, criteria);
     }
 
     private boolean hasSubject(@Nonnull OWLEntity entity, OWLAxiom ax) {

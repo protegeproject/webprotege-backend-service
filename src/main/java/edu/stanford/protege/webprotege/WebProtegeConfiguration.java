@@ -1,8 +1,9 @@
-package edu.stanford.protege.webprotege.conf;
+package edu.stanford.protege.webprotege;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
+import com.google.common.base.Ticker;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.AccessManagerImpl;
@@ -20,7 +21,13 @@ import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
 import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
-import edu.stanford.protege.webprotege.index.BuiltInOwlEntitiesIndexImpl;
+import edu.stanford.protege.webprotege.form.EntityFormRepository;
+import edu.stanford.protege.webprotege.form.EntityFormRepositoryImpl;
+import edu.stanford.protege.webprotege.form.EntityFormSelectorRepository;
+import edu.stanford.protege.webprotege.form.EntityFormSelectorRepositoryImpl;
+import edu.stanford.protege.webprotege.hierarchy.MoveEntityChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.hierarchy.MoveHierarchyNodeAction;
+import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
@@ -34,23 +41,26 @@ import edu.stanford.protege.webprotege.mansyntax.render.DefaultHttpLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.HttpLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.LiteralStyle;
 import edu.stanford.protege.webprotege.mansyntax.render.MarkdownLiteralRenderer;
+import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
+import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
 import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
-import edu.stanford.protege.webprotege.upload.DocumentResolver;
-import edu.stanford.protege.webprotege.upload.DocumentResolverImpl;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesProcessor;
+import edu.stanford.protege.webprotege.upload.*;
 import edu.stanford.protege.webprotege.user.*;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.util.TempFileFactory;
 import edu.stanford.protege.webprotege.util.TempFileFactoryImpl;
 import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
+import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepository;
+import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepositoryImpl;
 import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
@@ -67,6 +77,8 @@ import javax.inject.Singleton;
 import java.io.File;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Matthew Horridge
@@ -476,68 +488,63 @@ public class WebProtegeConfiguration {
     }
 
     @Bean
-    ApplicationNameSupplier getApplicationNameSupplier(ApplicationPreferencesStore preferencesStore) {
-        return new ApplicationNameSupplier(preferencesStore);
-    }
-
-    @Bean
-    ApplicationSchemeSupplier getApplicationSchemeSupplier(ApplicationPreferencesStore preferencesStore) {
+    ApplicationSchemeSupplier applicationSchemeSupplier(ApplicationPreferencesStore preferencesStore) {
         return new ApplicationSchemeSupplier(preferencesStore);
     }
 
     @Bean
-    ApplicationHostSupplier getApplicationHostSupplier(ApplicationPreferencesStore preferencesStore) {
+    ApplicationHostSupplier applicationHostSupplier(ApplicationPreferencesStore preferencesStore) {
         return new ApplicationHostSupplier(preferencesStore);
     }
 
     @Bean
-    ApplicationPortSupplier getApplicationPortSupplier(ApplicationPreferencesStore preferencesStore) {
+    ApplicationPortSupplier applicationPortSupplier(ApplicationPreferencesStore preferencesStore) {
         return new ApplicationPortSupplier(preferencesStore);
     }
 
     @Bean
-    ApplicationPathSupplier getApplicationPathSupplier(ApplicationPreferencesStore preferencesStore) {
+    ApplicationPathSupplier applicationPathSupplier(ApplicationPreferencesStore preferencesStore) {
         return new ApplicationPathSupplier(preferencesStore);
     }
 
     @Bean
-    EntityTypePerspectiveMapper getEntityTypePerspectiveMapper() {
+    EntityTypePerspectiveMapper entityTypePerspectiveMapper() {
         return new EntityTypePerspectiveMapper();
     }
 
     @Bean
     @Singleton
-    PerspectiveDescriptorRepository getPerspectiveDescriptorRepository(MongoTemplate mongoTemplate,
+    PerspectiveDescriptorRepository perspectiveDescriptorRepository(MongoTemplate mongoTemplate,
                                                                        ObjectMapper objectMapper) {
         return new PerspectiveDescriptorRepositoryImpl(mongoTemplate, objectMapper);
     }
 
     @Bean
     @Singleton
-    PerspectiveLayoutRepository getPerspectiveLayoutRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
+    PerspectiveLayoutRepository perspectiveLayoutRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
         return new PerspectiveLayoutRepositoryImpl(mongoTemplate, objectMapper);
     }
 
     @Bean
     @Singleton
-    BuiltInPerspectiveLoader getBuiltInPerspectiveLoader(ObjectMapper objectMapper) {
+    BuiltInPerspectiveLoader builtInPerspectiveLoader(ObjectMapper objectMapper) {
         return new BuiltInPerspectiveLoader(objectMapper);
     }
 
     @Bean
     @Singleton
-    BuiltInPerspectivesProvider getBuiltInPerspectivesProvider(Provider<BuiltInPerspectiveLoader> builtInPerspectiveLoaderProvider) {
+    BuiltInPerspectivesProvider builtInPerspectivesProvider(Provider<BuiltInPerspectiveLoader> builtInPerspectiveLoaderProvider) {
         return new BuiltInPerspectivesProvider(builtInPerspectiveLoaderProvider);
     }
 
     @Bean
     @Singleton
-    ImmutableList<BuiltInPerspective> getBuiltInPerspectives(BuiltInPerspectivesProvider builtInPerspectivesProvider) {
+    ImmutableList<BuiltInPerspective> builtInPerspectives(BuiltInPerspectivesProvider builtInPerspectivesProvider) {
         return builtInPerspectivesProvider.getBuiltInPerspectives();
     }
 
     @Bean
-    PerspectivesManager getPerspectivesManager(ImmutableList<BuiltInPerspective> builtInPerspectives,
+    PerspectivesManager perspectivesManager(ImmutableList<BuiltInPerspective> builtInPerspectives,
                                                PerspectiveDescriptorRepository perspectiveDescriptorRepository,
                                                PerspectiveLayoutRepository perspectiveLayoutRepository) {
         return new PerspectivesManagerImpl(builtInPerspectives,
@@ -546,18 +553,18 @@ public class WebProtegeConfiguration {
     }
 
     @Bean
-    UserApiKeyStore getUserApiKeyStore(MongoTemplate mongoTemplate) {
+    UserApiKeyStore userApiKeyStore(MongoTemplate mongoTemplate) {
         return new UserApiKeyStoreImpl(mongoTemplate);
     }
 
     @Bean
-    ApiKeyManager getApiKeyManager(UserApiKeyStore userApiKeyStore) {
+    ApiKeyManager apiKeyManager(UserApiKeyStore userApiKeyStore) {
         return new ApiKeyManager(new ApiKeyHasher(),
                                  userApiKeyStore);
     }
 
     @Bean
-    EntityTagsRepositoryImpl getEntityTagsRepository(MongoTemplate mongoTemplate) {
+    EntityTagsRepositoryImpl entityTagsRepository(MongoTemplate mongoTemplate) {
         return new EntityTagsRepositoryImpl(mongoTemplate);
     }
 
@@ -627,4 +634,42 @@ public class WebProtegeConfiguration {
         return new DefaultHttpLinkRenderer();
     }
 
+    @Bean
+    UploadedOntologiesCache uploadedOntologiesCache(UploadedOntologiesProcessor p1,
+                                                    @UploadedOntologiesCacheTicker Ticker p2,
+                                                    @UploadedOntologiesCacheService ScheduledExecutorService p3) {
+        return new UploadedOntologiesCache(p1, p2, p3);
+    }
+
+    @Bean
+    @UploadedOntologiesCacheTicker
+    Ticker uploadedOntologiesCacheTicker() {
+        return Ticker.systemTicker();
+    }
+
+    @Bean
+    ApplicationNameSupplier applicationNameSupplier(ApplicationPreferencesStore p1) {
+        return new ApplicationNameSupplier(p1);
+    }
+
+    @Bean
+    ProjectSharingSettingsManagerImpl projectSharingSettingsManager(AccessManager p1, HasGetUserIdByUserIdOrEmail p2) {
+        return new ProjectSharingSettingsManagerImpl(p1, p2);
+    }
+
+
+    @Bean
+    EntityGraphSettingsRepositoryImpl entityGraphSettingsRepository(MongoTemplate p1, ObjectMapper p2) {
+        return new EntityGraphSettingsRepositoryImpl(p1, p2);
+    }
+
+    @Bean
+    EntityFormRepositoryImpl entityFormRepository(ObjectMapper p1, MongoTemplate p2) {
+        return new EntityFormRepositoryImpl(p1, p2);
+    }
+
+    @Bean
+    EntityFormSelectorRepositoryImpl entityFormSelectorRepository(MongoTemplate p1, ObjectMapper p2) {
+        return new EntityFormSelectorRepositoryImpl(p1, p2);
+    }
 }

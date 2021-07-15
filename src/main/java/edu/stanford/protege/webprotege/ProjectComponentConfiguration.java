@@ -1,17 +1,19 @@
-package edu.stanford.protege.webprotege.conf;
+package edu.stanford.protege.webprotege;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.app.ApplicationHostSupplier;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.axiom.*;
-import edu.stanford.protege.webprotege.change.HasGetChangeSubjects;
-import edu.stanford.protege.webprotege.change.OntologyChangeComparator;
-import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
-import edu.stanford.protege.webprotege.change.OntologyChangeSubjectProvider;
+import edu.stanford.protege.webprotege.bulkop.EditAnnotationsChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.MoveClassesChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.change.matcher.*;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
@@ -26,9 +28,13 @@ import edu.stanford.protege.webprotege.crud.supplied.SuppliedNameSuffixKit;
 import edu.stanford.protege.webprotege.crud.uuid.UuidEntityCrudKitHandlerFactory;
 import edu.stanford.protege.webprotege.crud.uuid.UuidEntityCrudKitPlugin;
 import edu.stanford.protege.webprotege.crud.uuid.UuidSuffixKit;
+import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
+import edu.stanford.protege.webprotege.diff.Revision2DiffElementsTranslator;
 import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
+import edu.stanford.protege.webprotege.entity.EntityRenamer;
+import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.*;
@@ -40,16 +46,24 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.RootIndexImpl;
 import edu.stanford.protege.webprotege.index.impl.UpdatableIndex;
+import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.*;
-import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
+import edu.stanford.protege.webprotege.issues.*;
+import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
+import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.SendMail;
+import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
+import edu.stanford.protege.webprotege.mansyntax.OntologyAxiomPairChangeGenerator;
 import edu.stanford.protege.webprotege.mansyntax.ShellOntologyChecker;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
 import edu.stanford.protege.webprotege.match.*;
+import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.object.*;
 import edu.stanford.protege.webprotege.obo.*;
@@ -62,20 +76,27 @@ import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.LiteralRenderer;
 import edu.stanford.protege.webprotege.renderer.*;
 import edu.stanford.protege.webprotege.revision.*;
+import edu.stanford.protege.webprotege.search.EntitySearcherFactory;
 import edu.stanford.protege.webprotege.shortform.*;
-import edu.stanford.protege.webprotege.tag.*;
+import edu.stanford.protege.webprotege.tag.CriteriaBasedTagsManager;
+import edu.stanford.protege.webprotege.tag.EntityTagsRepository;
+import edu.stanford.protege.webprotege.tag.TagRepository;
+import edu.stanford.protege.webprotege.tag.TagsManager;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
+import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
+import edu.stanford.protege.webprotege.util.EntityDeleter;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
+import edu.stanford.protege.webprotege.viz.EdgeMatcherFactory;
+import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
 import edu.stanford.protege.webprotege.watches.*;
-import edu.stanford.protege.webprotege.webhook.JsonPayloadWebhookExecutor;
-import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
-import edu.stanford.protege.webprotege.webhook.WebhookExecutor;
-import edu.stanford.protege.webprotege.webhook.WebhookRepository;
+import edu.stanford.protege.webprotege.webhook.*;
+import org.semanticweb.owlapi.expression.OWLOntologyChecker;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
+import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -106,7 +127,8 @@ public class ProjectComponentConfiguration {
         return new ProjectComponentImpl(projectId,
                                         eventManager,
                                         revisionManager,
-                                        projectDisposablesManager, actionHandlerRegistry);
+                                        projectDisposablesManager,
+                                        actionHandlerRegistry);
     }
 
     @Bean
@@ -297,8 +319,7 @@ public class ProjectComponentConfiguration {
     }
 
     @Bean
-    WatchRecordRepositoryImpl watchRecordRepository(MongoTemplate template,
-                                                    ObjectMapper objectMapper) {
+    WatchRecordRepositoryImpl watchRecordRepository(MongoTemplate template, ObjectMapper objectMapper) {
         return new WatchRecordRepositoryImpl(template, objectMapper);
     }
 
@@ -508,7 +529,8 @@ public class ProjectComponentConfiguration {
 
     @Bean
     ProjectEntityCrudKitHandlerCache projectEntityCrudKitHandlerCache(ProjectEntityCrudKitSettingsRepository p1,
-                                                                      ProjectId p2, EntityCrudKitRegistry p3) {
+                                                                      ProjectId p2,
+                                                                      EntityCrudKitRegistry p3) {
         return new ProjectEntityCrudKitHandlerCache(p1, p2, p3);
     }
 
@@ -528,7 +550,10 @@ public class ProjectComponentConfiguration {
     }
 
     @Bean
-    IndexUpdater indexUpdater(RevisionManager p1, Set<UpdatableIndex> p2, @IndexUpdatingService ExecutorService p3, ProjectId p4) {
+    IndexUpdater indexUpdater(RevisionManager p1,
+                              Set<UpdatableIndex> p2,
+                              @IndexUpdatingService ExecutorService p3,
+                              ProjectId p4) {
         return new IndexUpdater(p1, p2, p3, p4);
     }
 
@@ -553,37 +578,38 @@ public class ProjectComponentConfiguration {
     GeneratedAnnotationsGenerator generatedAnnotationsGenerator(MatcherFactory p1,
                                                                 EntityIriPrefixCriteriaRewriter p2,
                                                                 IncrementingPatternDescriptorValueGenerator p3,
-                                                                OWLDataFactory p4, DefaultOntologyIdManager p5) {
+                                                                OWLDataFactory p4,
+                                                                DefaultOntologyIdManager p5) {
         return new GeneratedAnnotationsGenerator(p1, p2, p3, p4, p5);
     }
 
     @Bean
     ChangeManager changeManager(ProjectId p1,
-                                  OWLDataFactory p2,
-                                  DictionaryUpdatesProcessor p3,
-                                  ActiveLanguagesManager p4,
-                                  AccessManager p5,
-                                  PrefixDeclarationsStore p6,
-                                  ProjectDetailsRepository p7,
-                                  ProjectChangedWebhookInvoker p8,
-                                  EventManager<ProjectEvent<?>> p9,
-                                  Provider<EventTranslatorManager> p10,
-                                  ProjectEntityCrudKitHandlerCache p11,
-                                  RevisionManager p12,
-                                  RootIndex p13,
-                                  DictionaryManager p14,
-                                  ClassHierarchyProvider p15,
-                                  ObjectPropertyHierarchyProvider p16,
-                                  DataPropertyHierarchyProvider p17,
-                                  AnnotationPropertyHierarchyProvider p18,
-                                  UserInSessionFactory p19,
-                                  EntityCrudContextFactory p20,
-                                  RenameMapFactory p21,
-                                  BuiltInPrefixDeclarations p22,
-                                  IndexUpdater p23,
-                                  DefaultOntologyIdManager p24,
-                                  IriReplacerFactory p25,
-                                  GeneratedAnnotationsGenerator p26) {
+                                OWLDataFactory p2,
+                                DictionaryUpdatesProcessor p3,
+                                ActiveLanguagesManager p4,
+                                AccessManager p5,
+                                PrefixDeclarationsStore p6,
+                                ProjectDetailsRepository p7,
+                                ProjectChangedWebhookInvoker p8,
+                                EventManager<ProjectEvent<?>> p9,
+                                Provider<EventTranslatorManager> p10,
+                                ProjectEntityCrudKitHandlerCache p11,
+                                RevisionManager p12,
+                                RootIndex p13,
+                                DictionaryManager p14,
+                                ClassHierarchyProvider p15,
+                                ObjectPropertyHierarchyProvider p16,
+                                DataPropertyHierarchyProvider p17,
+                                AnnotationPropertyHierarchyProvider p18,
+                                UserInSessionFactory p19,
+                                EntityCrudContextFactory p20,
+                                RenameMapFactory p21,
+                                BuiltInPrefixDeclarations p22,
+                                IndexUpdater p23,
+                                DefaultOntologyIdManager p24,
+                                IriReplacerFactory p25,
+                                GeneratedAnnotationsGenerator p26) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -677,7 +703,8 @@ public class ProjectComponentConfiguration {
     AxiomSubjectProvider axiomSubjectProvider(OWLObjectSelector<OWLClassExpression> p1,
                                               OWLObjectSelector<OWLObjectPropertyExpression> p2,
                                               OWLObjectSelector<OWLDataPropertyExpression> p3,
-                                              OWLObjectSelector<OWLIndividual> p4, OWLObjectSelector<SWRLAtom> p5) {
+                                              OWLObjectSelector<OWLIndividual> p4,
+                                              OWLObjectSelector<SWRLAtom> p5) {
         return new AxiomSubjectProvider(p1, p2, p3, p4, p5);
     }
 
@@ -866,7 +893,7 @@ public class ProjectComponentConfiguration {
     @Bean
     OBONamespaceCache oboNamespaceCache(OBONamespaceCacheFactory factory) {
         var namespaceCache = factory.create();
-//        namespaceCache.rebuildNamespaceCache();
+        //        namespaceCache.rebuildNamespaceCache();
         return namespaceCache;
     }
 
@@ -967,21 +994,6 @@ public class ProjectComponentConfiguration {
     }
 
     @Bean
-    XRefConverter xRefConverter() {
-        return new XRefConverter();
-    }
-
-    @Bean
-    XRefExtractor xRefExtractor(AnnotationToXRefConverter p1, ProjectAnnotationAssertionAxiomsBySubjectIndex p2) {
-        return new XRefExtractor(p1, p2);
-    }
-
-    @Bean
-    AnnotationToXRefConverter annotationToXRefConverter(XRefConverter p1, OWLDataFactory p2) {
-        return new AnnotationToXRefConverter(p1, p2);
-    }
-
-    @Bean
     MessageFormatter messageFormatter(RenderingManager p1) {
         return new MessageFormatter(p1);
     }
@@ -1049,10 +1061,17 @@ public class ProjectComponentConfiguration {
     }
 
     @Bean
+    @Primary
     FrameComponentRendererImpl frameComponentRenderer(RenderingManager p1,
                                                       EntitiesInProjectSignatureByIriIndex p2,
                                                       EntitiesInProjectSignatureByIriIndex p3) {
         return new FrameComponentRendererImpl(p1, p2, p3);
+    }
+
+    @Bean
+    @Scope("prototype")
+    FrameComponentSessionRenderer frameComponentSessionRenderer(FrameComponentRenderer p1) {
+        return new FrameComponentSessionRenderer(p1);
     }
 
     @Bean
@@ -1150,9 +1169,7 @@ public class ProjectComponentConfiguration {
     }
 
     @Bean
-    LanguageManager languageManager(ProjectId p1,
-                                    ActiveLanguagesManager p2,
-                                    ProjectDetailsRepository p3) {
+    LanguageManager languageManager(ProjectId p1, ActiveLanguagesManager p2, ProjectDetailsRepository p3) {
         return new LanguageManager(p1, p2, p3);
     }
 
@@ -1206,4 +1223,663 @@ public class ProjectComponentConfiguration {
     ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler> actionHandlers) {
         return new ProjectActionHandlerRegistry(actionHandlers);
     }
+
+    @Bean
+    FrameChangeGeneratorFactory frameChangeGeneratorFactory(ProjectOntologiesIndex p1,
+                                                            ReverseEngineeredChangeDescriptionGeneratorFactory p2,
+                                                            DefaultOntologyIdManager p3,
+                                                            OntologyAxiomsIndex p4,
+                                                            ObjectPropertyFrameTranslator p5,
+                                                            DataPropertyFrameTranslator p6,
+                                                            AnnotationPropertyFrameTranslator p7,
+                                                            NamedIndividualFrameTranslator p8,
+                                                            RenderingManager p9,
+                                                            ClassFrameProvider p10,
+                                                            ClassFrame2FrameAxiomsTranslator p11) {
+        return new FrameChangeGeneratorFactory(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+    }
+
+    @Bean
+    PropertyValue2AxiomTranslator propertyValue2AxiomTranslator() {
+        return new PropertyValue2AxiomTranslator();
+    }
+
+    @Bean
+    ClassFrame2FrameAxiomsTranslator classFrame2FrameAxiomsTranslator(OWLDataFactory p1,
+                                                                      PropertyValue2AxiomTranslator p2) {
+        return new ClassFrame2FrameAxiomsTranslator(p1, p2);
+    }
+
+    @Bean
+    NamedIndividualFrameTranslator namedIndividualFrameTranslator(NamedIndividualFrameAxiomIndex p1,
+                                                                  PropertyValueMinimiser p2,
+                                                                  ClassFrameProvider p3,
+                                                                  Provider<AxiomPropertyValueTranslator> p4,
+                                                                  PropertyValue2AxiomTranslator p5,
+                                                                  OWLDataFactory p6) {
+        return new NamedIndividualFrameTranslator(p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean
+    ObjectPropertyFrameTranslator objectPropertyFrameTranslator(ProjectOntologiesIndex p1,
+                                                                AnnotationAssertionAxiomsBySubjectIndex p2,
+                                                                ObjectPropertyDomainAxiomsIndex p3,
+                                                                ObjectPropertyRangeAxiomsIndex p4,
+                                                                ObjectPropertyCharacteristicsIndex p5,
+                                                                Provider<AxiomPropertyValueTranslator> p6,
+                                                                PropertyValue2AxiomTranslator p7) {
+        return new ObjectPropertyFrameTranslator(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    DataPropertyFrameTranslator dataPropertyFrameTranslator(ProjectOntologiesIndex p1,
+                                                            AnnotationAssertionAxiomsBySubjectIndex p2,
+                                                            DataPropertyDomainAxiomsIndex p3,
+                                                            DataPropertyRangeAxiomsIndex p4,
+                                                            DataPropertyCharacteristicsIndex p5,
+                                                            Provider<AxiomPropertyValueTranslator> p6,
+                                                            PropertyValue2AxiomTranslator p7) {
+        return new DataPropertyFrameTranslator(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    AnnotationPropertyFrameTranslator annotationPropertyFrameTranslator(ProjectOntologiesIndex p1,
+                                                                        AnnotationAssertionAxiomsBySubjectIndex p2,
+                                                                        AnnotationPropertyDomainAxiomsIndex p3,
+                                                                        AnnotationPropertyRangeAxiomsIndex p4) {
+        return new AnnotationPropertyFrameTranslator(p1, p2, p3, p4);
+    }
+
+    @Bean
+    ReverseEngineeredChangeDescriptionGeneratorFactory reverseEngineeredChangeDescriptionGeneratorFactory(Set<ChangeMatcher> p1,
+                                                                                                          OWLObjectStringFormatter p2) {
+        return new ReverseEngineeredChangeDescriptionGeneratorFactory(p1, p2);
+    }
+
+    @Bean
+    FrameComponentSessionRendererFactory frameComponentSessionRendererFactory(FrameComponentRenderer p1) {
+        return new FrameComponentSessionRendererFactory(p1);
+    }
+
+    @Bean
+    @Scope("prototype")
+    ProjectOntologiesBuilder projectOntologiesBuilder(ProjectOntologiesIndex p1,
+                                                      OntologyAnnotationsIndex p2,
+                                                      OntologyAxiomsIndex p3) {
+        return new ProjectOntologiesBuilder(p1, p2, p3);
+    }
+
+    @Bean
+    @Scope("prototype")
+    ContextRenderer contextRenderer(RenderingManager p1) {
+        return new ContextRenderer(p1);
+    }
+
+    @Bean
+    @Scope("prototype")
+    CreateClassesChangeGeneratorFactory createClassesChangeGeneratorFactory(Provider<OWLDataFactory> p1,
+                                                                            Provider<MessageFormatter> p2,
+                                                                            Provider<DefaultOntologyIdManager> p3) {
+        return new CreateClassesChangeGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    @Scope("prototype")
+    CreateObjectPropertiesChangeGeneratorFactory createObjectPropertiesChangeGeneratorFactory(Provider<OWLDataFactory> p1,
+                                                                                              Provider<MessageFormatter> p2,
+                                                                                              Provider<DefaultOntologyIdManager> p3) {
+        return new CreateObjectPropertiesChangeGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    @Scope("prototype")
+    CreateDataPropertiesChangeGeneratorFactory createDataPropertiesChangeGeneratorFactory(Provider<OWLDataFactory> p1,
+                                                                                          Provider<MessageFormatter> p2,
+                                                                                          Provider<DefaultOntologyIdManager> p3) {
+        return new CreateDataPropertiesChangeGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    @Scope("prototype")
+    CreateAnnotationPropertiesChangeGeneratorFactory createAnnotationPropertiesChangeGeneratorFactory(Provider<OWLDataFactory> p1,
+                                                                                                      Provider<MessageFormatter> p2,
+                                                                                                      Provider<DefaultOntologyIdManager> p3) {
+        return new CreateAnnotationPropertiesChangeGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    @Scope("prototype")
+    CreateIndividualsChangeListGeneratorFactory createIndividualsChangeListGeneratorFactory(Provider<OWLDataFactory> p1,
+                                                                                            Provider<MessageFormatter> p2,
+                                                                                            Provider<DefaultOntologyIdManager> p3) {
+        return new CreateIndividualsChangeListGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    ReferencingAxiomVisitorFactory referencingAxiomVisitorFactory(RenderingManager p1,
+                                                                  EntitiesInProjectSignatureByIriIndex p2) {
+        return new ReferencingAxiomVisitorFactory(p1, p2);
+    }
+
+    @Bean
+    FindAndReplaceIRIPrefixChangeGeneratorFactory findAndReplaceIRIPrefixChangeGeneratorFactory(Provider<ProjectSignatureIndex> p1,
+                                                                                                Provider<EntityRenamer> p2) {
+        return new FindAndReplaceIRIPrefixChangeGeneratorFactory(p1, p2);
+    }
+
+    @Bean
+    OwlOntologyFacadeFactory owlOntologyFacadeFactory(OntologyAnnotationsIndex p1,
+                                                      OntologySignatureIndex p2,
+                                                      OntologyAxiomsIndex p3,
+                                                      EntitiesInOntologySignatureByIriIndex p4,
+                                                      AnnotationAssertionAxiomsBySubjectIndex p5,
+                                                      OWLDataFactory p6,
+                                                      SubAnnotationPropertyAxiomsBySubPropertyIndex p7,
+                                                      AnnotationPropertyDomainAxiomsIndex p8,
+                                                      AnnotationPropertyRangeAxiomsIndex p9,
+                                                      SubClassOfAxiomsBySubClassIndex p10,
+                                                      AxiomsByReferenceIndex p11,
+                                                      EquivalentClassesAxiomsIndex p12,
+                                                      DisjointClassesAxiomsIndex p13,
+                                                      AxiomsByTypeIndex p14,
+                                                      SubObjectPropertyAxiomsBySubPropertyIndex p15,
+                                                      ObjectPropertyDomainAxiomsIndex p16,
+                                                      ObjectPropertyRangeAxiomsIndex p17,
+                                                      InverseObjectPropertyAxiomsIndex p18,
+                                                      EquivalentObjectPropertiesAxiomsIndex p19,
+                                                      DisjointObjectPropertiesAxiomsIndex p20,
+                                                      SubDataPropertyAxiomsBySubPropertyIndex p21,
+                                                      DataPropertyDomainAxiomsIndex p22,
+                                                      DataPropertyRangeAxiomsIndex p23,
+                                                      EquivalentDataPropertiesAxiomsIndex p24,
+                                                      DisjointDataPropertiesAxiomsIndex p25,
+                                                      ClassAssertionAxiomsByIndividualIndex p26,
+                                                      ClassAssertionAxiomsByClassIndex p27,
+                                                      DataPropertyAssertionAxiomsBySubjectIndex p28,
+                                                      ObjectPropertyAssertionAxiomsBySubjectIndex p29,
+                                                      SameIndividualAxiomsIndex p30,
+                                                      DifferentIndividualsAxiomsIndex p31) {
+        return new OwlOntologyFacadeFactory(p1,
+                                            p2,
+                                            p3,
+                                            p4,
+                                            p5,
+                                            p6,
+                                            p7,
+                                            p8,
+                                            p9,
+                                            p10,
+                                            p11,
+                                            p12,
+                                            p13,
+                                            p14,
+                                            p15,
+                                            p16,
+                                            p17,
+                                            p18,
+                                            p19,
+                                            p20,
+                                            p21,
+                                            p22,
+                                            p23,
+                                            p24,
+                                            p25,
+                                            p26,
+                                            p27,
+                                            p28,
+                                            p29,
+                                            p30,
+                                            p31);
+    }
+
+    @Bean
+    ManchesterSyntaxChangeGeneratorFactory manchesterSyntaxChangeGeneratorFactory(ManchesterSyntaxFrameParser p1,
+                                                                                  OntologyAxiomPairChangeGenerator p2,
+                                                                                  ReverseEngineeredChangeDescriptionGeneratorFactory p3) {
+        return new ManchesterSyntaxChangeGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    @Scope("prototype")
+    ManchesterSyntaxFrameParser manchesterSyntaxFrameParser(OWLOntologyChecker p1,
+                                                            OWLDataFactory p2,
+                                                            DictionaryManager p3,
+                                                            DefaultOntologyIdManager p4) {
+        return new ManchesterSyntaxFrameParser(p1, p2, p3, p4);
+    }
+
+    @Bean
+    @Scope("prototype")
+    OntologyAxiomPairChangeGenerator ontologyAxiomPairChangeGenerator() {
+        return new OntologyAxiomPairChangeGenerator();
+    }
+
+    @Bean
+    ModifiedProjectOntologiesCalculatorFactory modifiedProjectOntologiesCalculatorFactory(OntologyDiffCalculator p1) {
+        return new ModifiedProjectOntologiesCalculatorFactory(p1);
+    }
+
+    @Bean
+    @Scope("prototype")
+    OntologyPatcher ontologyPatcher(HasApplyChanges p1, OntologyDiff2OntologyChanges p2) {
+        return new OntologyPatcher(p1, p2);
+    }
+
+    @Bean
+    @Scope("prototype")
+    OntologyDiff2OntologyChanges ontologyDiff2OntologyChanges() {
+        return new OntologyDiff2OntologyChanges();
+    }
+
+    @Bean
+    @Scope("prototype")
+    OntologyDiffCalculator ontologyDiffCalculator(AnnotationDiffCalculator p1, AxiomDiffCalculator p2) {
+        return new OntologyDiffCalculator(p1, p2);
+    }
+
+    @Bean
+    @Scope("prototype")
+    AxiomDiffCalculator axiomDiffCalculator() {
+        return new AxiomDiffCalculator();
+    }
+
+    @Bean
+    @Scope("prototype")
+    AnnotationDiffCalculator annotationDiffCalculator() {
+        return new AnnotationDiffCalculator();
+    }
+
+    @Bean
+    ProjectChangesManager projectChangesManager(ProjectId p1,
+                                                RevisionManager p2,
+                                                RenderingManager p3,
+                                                Comparator<OntologyChange> p4,
+                                                Provider<Revision2DiffElementsTranslator> p5) {
+        return new ProjectChangesManager(p1, p2, p3, p4, p5);
+    }
+
+    @Bean
+    @Scope("prototype")
+    Revision2DiffElementsTranslator revision2DiffElementsTranslator(OntologyIRIShortFormProvider p1,
+                                                                    DefaultOntologyIdManager p2,
+                                                                    ProjectOntologiesIndex p3) {
+        return new Revision2DiffElementsTranslator(p1, p2, p3);
+    }
+
+    @Bean
+    WatchedChangesManager watchedChangesManager(ProjectChangesManager p1,
+                                                ClassHierarchyProvider p2,
+                                                ObjectPropertyHierarchyProvider p3,
+                                                DataPropertyHierarchyProvider p4,
+                                                AnnotationPropertyHierarchyProvider p5,
+                                                RevisionManager p6,
+                                                EntitiesByRevisionCache p7,
+                                                ProjectClassAssertionAxiomsByIndividualIndex p8) {
+        return new WatchedChangesManager(p1, p2, p3, p4, p5, p6, p7, p8);
+    }
+
+    @Bean
+    EntitiesByRevisionCache entitiesByRevisionCache(AxiomSubjectProvider p1,
+                                                    HasContainsEntityInSignature p2,
+                                                    OWLDataFactory p3) {
+        return new EntitiesByRevisionCache(p1, p2, p3);
+    }
+
+    @Bean
+    RevisionReverterChangeListGeneratorFactory revisionReverterChangeListGeneratorFactory(Provider<RevisionManager> p1) {
+        return new RevisionReverterChangeListGeneratorFactory(p1);
+    }
+
+    @Bean
+    CommentNotificationEmailer commentNotificationEmailer(ProjectDetailsManager p1,
+                                                          UserDetailsManager p2,
+                                                          AccessManager p3,
+                                                          DiscussionThreadParticipantsExtractor p4,
+                                                          CommentNotificationEmailGenerator p5,
+                                                          SendMail p6,
+                                                          CommentMessageIdGenerator p7) {
+        return new CommentNotificationEmailer(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    DiscussionThreadParticipantsExtractor discussionThreadParticipantsExtractor(CommentParticipantsExtractor p1) {
+        return new DiscussionThreadParticipantsExtractor(p1);
+    }
+
+    @Bean
+    CommentParticipantsExtractor commentParticipantsExtractor(MentionParser p1) {
+        return new CommentParticipantsExtractor(p1);
+    }
+
+    @Bean
+    MentionParser mentionParser() {
+        return new MentionParser();
+    }
+
+    @Bean
+    CommentNotificationEmailGenerator commentNotificationEmailGenerator(@CommentNotificationEmailTemplate FileContents p1,
+                                                                        TemplateEngine p2,
+                                                                        ApplicationNameSupplier p3,
+                                                                        PlaceUrl p4) {
+        return new CommentNotificationEmailGenerator(p1, p2, p3, p4);
+    }
+
+    @Bean
+    CommentMessageIdGenerator commentMessageIdGenerator(MessageIdGenerator p1) {
+        return new CommentMessageIdGenerator(p1);
+    }
+
+    @Bean
+    MessageIdGenerator messageIdGenerator(ApplicationHostSupplier p1) {
+        return new MessageIdGenerator(p1);
+    }
+
+    @Bean
+    CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker(ApplicationNameSupplier p1,
+                                                                      PlaceUrl p2,
+                                                                      WebhookExecutor p3,
+                                                                      SlackWebhookRepository p4,
+                                                                      @CommentNotificationSlackTemplate FileContents p5,
+                                                                      TemplateEngine p6) {
+        return new CommentPostedSlackWebhookInvoker(p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean
+    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3) {
+        return new EntitySearcherFactory(p1, p2, p3);
+    }
+
+    @Bean
+    DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory(Provider<MessageFormatter> p1,
+                                                                                      Provider<EntityDeleter> p2) {
+        return new DeleteEntitiesChangeListGeneratorFactory(p1, p2);
+    }
+
+    @Bean
+    HierarchyProviderMapper hierarchyProviderMapper(ClassHierarchyProvider p1,
+                                                    ObjectPropertyHierarchyProvider p2,
+                                                    DataPropertyHierarchyProvider p3,
+                                                    AnnotationPropertyHierarchyProvider p4) {
+        return new HierarchyProviderMapper(p1, p2, p3, p4);
+    }
+
+
+    @Bean
+    MoveEntityChangeListGeneratorFactory moveEntityChangeListGeneratorFactory(OWLDataFactory p1,
+                                                                              MessageFormatter p2,
+                                                                              ProjectOntologiesIndex p3,
+                                                                              DefaultOntologyIdManager p4,
+                                                                              EquivalentClassesAxiomsIndex p5,
+                                                                              SubClassOfAxiomsBySubClassIndex p6,
+                                                                              SubObjectPropertyAxiomsBySubPropertyIndex p7,
+                                                                              SubDataPropertyAxiomsBySubPropertyIndex p8,
+                                                                              SubAnnotationPropertyAxiomsBySubPropertyIndex p9) {
+        return new MoveEntityChangeListGeneratorFactory(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    MergeEntitiesChangeListGeneratorFactory mergeEntitiesChangeListGeneratorFactory(Provider<ProjectId> p1,
+                                                                                    Provider<OWLDataFactory> p2,
+                                                                                    Provider<EntityDiscussionThreadRepository> p3,
+                                                                                    Provider<EntityRenamer> p4,
+                                                                                    Provider<DefaultOntologyIdManager> p5,
+                                                                                    Provider<ProjectOntologiesIndex> p6,
+                                                                                    Provider<AnnotationAssertionAxiomsBySubjectIndex> p7) {
+        return new MergeEntitiesChangeListGeneratorFactory(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    RevisionDetailsExtractor revisionDetailsExtractor(AxiomSubjectProvider p1) {
+        return new RevisionDetailsExtractor(p1);
+    }
+
+    @Bean
+    SetAnnotationValueActionChangeListGeneratorFactory setAnnotationValueActionChangeListGeneratorFactory(OWLDataFactory p1,
+                                                                                                          ProjectOntologiesIndex p2,
+                                                                                                          EntitiesInOntologySignatureIndex p3,
+                                                                                                          AnnotationAssertionAxiomsBySubjectIndex p4) {
+        return new SetAnnotationValueActionChangeListGeneratorFactory(p1, p2, p3, p4);
+    }
+
+    @Bean
+    EditAnnotationsChangeListGeneratorFactory editAnnotationsChangeListGeneratorFactory(Provider<OWLDataFactory> p1,
+                                                                                        Provider<ProjectOntologiesIndex> p2,
+                                                                                        Provider<AnnotationAssertionAxiomsBySubjectIndex> p3) {
+        return new EditAnnotationsChangeListGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    MoveClassesChangeListGeneratorFactory moveClassesChangeListGeneratorFactory(ProjectOntologiesIndex p1,
+                                                                                SubClassOfAxiomsBySubClassIndex p2,
+                                                                                OWLDataFactory p3) {
+        return new MoveClassesChangeListGeneratorFactory(p1, p2, p3);
+    }
+
+    @Bean
+    EntityGraphBuilderFactory entityGraphBuilderFactory(Provider<RenderingManager> p1,
+                                                        Provider<ProjectOntologiesIndex> p2,
+                                                        Provider<ObjectPropertyAssertionAxiomsBySubjectIndex> p3,
+                                                        Provider<SubClassOfAxiomsBySubClassIndex> p4,
+                                                        Provider<ClassAssertionAxiomsByIndividualIndex> p5,
+                                                        Provider<EquivalentClassesAxiomsIndex> p6,
+                                                        Provider<Integer> p7) {
+        return new EntityGraphBuilderFactory(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    EdgeMatcherFactory edgeMatcherFactory(MatcherFactory p1) {
+        return new EdgeMatcherFactory(p1);
+    }
+
+    @Bean
+    ManchesterSyntaxEntityFrameRenderer manchesterSyntaxEntityFrameRenderer(ShortFormProvider p1,
+                                                                            OntologyIRIShortFormProvider p2,
+                                                                            ManchesterSyntaxObjectRenderer p3,
+                                                                            HighlightedEntityChecker p4,
+                                                                            DeprecatedEntityChecker p5,
+                                                                            ItemStyleProvider p6,
+                                                                            NestedAnnotationStyle p7,
+                                                                            ProjectOntologiesIndex p8,
+                                                                            OntologyAnnotationsSectionRenderer p9,
+                                                                            ClassFrameRenderer p10,
+                                                                            ObjectPropertyFrameRenderer p11,
+                                                                            NamedIndividualFrameRenderer p12,
+                                                                            AnnotationPropertyFrameRenderer p13,
+                                                                            DataPropertyFrameRenderer p14) {
+        return new ManchesterSyntaxEntityFrameRenderer(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
+    }
+
+    @Bean
+    ItemStyleProvider itemStyleProvider() {
+        return new DefaultItemStyleProvider();
+    }
+
+    @Bean
+    NestedAnnotationStyle nestedAnnotationStyle() {
+        return NestedAnnotationStyle.MANCHESTER_SYNTAX;
+    }
+
+    @Bean
+    OntologyAnnotationsSectionRenderer ontologyAnnotationsSectionRenderer(OntologyAnnotationsIndex p1) {
+        return new OntologyAnnotationsSectionRenderer(p1);
+    }
+
+    @Bean
+    ClassFrameRenderer classFrameRenderer(AnnotationsSectionRenderer<OWLClass> p1,
+                                          ClassSubClassOfSectionRenderer p2,
+                                          ClassEquivalentToSectionRenderer p3,
+                                          ClassDisjointWithSectionRenderer p4) {
+        return new ClassFrameRenderer(p1, p2, p3, p4);
+    }
+
+    @Bean
+    ClassSubClassOfSectionRenderer classSubClassOfSectionRenderer(SubClassOfAxiomsBySubClassIndex p1) {
+        return new ClassSubClassOfSectionRenderer(p1);
+    }
+
+    @Bean
+    ClassEquivalentToSectionRenderer classEquivalentToSectionRenderer(EquivalentClassesAxiomsIndex p1) {
+        return new ClassEquivalentToSectionRenderer(p1);
+    }
+
+    @Bean
+    ClassDisjointWithSectionRenderer classDisjointWithSectionRenderer(DisjointClassesAxiomsIndex p1) {
+        return new ClassDisjointWithSectionRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertyFrameRenderer objectPropertyFrameRenderer(AnnotationsSectionRenderer<OWLObjectProperty> p1,
+                                                            ObjectPropertyDomainSectionRenderer p2,
+                                                            ObjectPropertyRangeSectionRenderer p3,
+                                                            ObjectPropertyCharacteristicsSectionRenderer p4,
+                                                            ObjectPropertySubPropertyOfRenderer p5,
+                                                            ObjectPropertyEquivalentToSectionRenderer p6,
+                                                            ObjectPropertyDisjointWithSectionRenderer p7,
+                                                            ObjectPropertyInverseOfSectionRenderer p8,
+                                                            ObjectPropertySubPropertyChainSectionRenderer p9) {
+        return new ObjectPropertyFrameRenderer(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    ObjectPropertyDomainSectionRenderer objectPropertyDomainSectionRenderer(ObjectPropertyDomainAxiomsIndex p1) {
+        return new ObjectPropertyDomainSectionRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertyRangeSectionRenderer objectPropertyRangeSectionRenderer(ObjectPropertyRangeAxiomsIndex p1) {
+        return new ObjectPropertyRangeSectionRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertyCharacteristicsSectionRenderer objectPropertyCharacteristicsSectionRenderer(AxiomsByTypeIndex p1) {
+        return new ObjectPropertyCharacteristicsSectionRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertySubPropertyOfRenderer objectPropertySubPropertyOfRenderer(SubObjectPropertyAxiomsBySubPropertyIndex p1) {
+        return new ObjectPropertySubPropertyOfRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertyEquivalentToSectionRenderer objectPropertyEquivalentToSectionRenderer(
+            EquivalentObjectPropertiesAxiomsIndex p1) {
+        return new ObjectPropertyEquivalentToSectionRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertyDisjointWithSectionRenderer objectPropertyDisjointWithSectionRenderer(
+            DisjointObjectPropertiesAxiomsIndex p1) {
+        return new ObjectPropertyDisjointWithSectionRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertyInverseOfSectionRenderer objectPropertyInverseOfSectionRenderer(InverseObjectPropertyAxiomsIndex p1) {
+        return new ObjectPropertyInverseOfSectionRenderer(p1);
+    }
+
+    @Bean
+    ObjectPropertySubPropertyChainSectionRenderer ObjectPropertySubPropertyChainSectionRenderer(AxiomsByTypeIndex p1) {
+        return new ObjectPropertySubPropertyChainSectionRenderer(p1);
+    }
+
+
+    @Bean
+    DataPropertyFrameRenderer dataPropertyFrameRenderer(AnnotationsSectionRenderer<OWLDataProperty> p1,
+                                                        DataPropertyDomainSectionRenderer p2,
+                                                        DataPropertyRangeSectionRenderer p3,
+                                                        DataPropertyCharacteristicsSectionRenderer p4,
+                                                        DataPropertySubPropertyOfSectionRenderer p5,
+                                                        DataPropertyEquivalentToSectionRenderer p6,
+                                                        DataPropertyDisjointWithSectionRenderer p7) {
+        return new DataPropertyFrameRenderer(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    DataPropertyDomainSectionRenderer DataPropertyDomainSectionRenderer(DataPropertyDomainAxiomsIndex p1) {
+        return new DataPropertyDomainSectionRenderer(p1);
+    }
+
+    @Bean
+    DataPropertyRangeSectionRenderer DataPropertyRangeSectionRenderer(DataPropertyRangeAxiomsIndex p1) {
+        return new DataPropertyRangeSectionRenderer(p1);
+    }
+
+    @Bean
+    DataPropertyCharacteristicsSectionRenderer DataPropertyCharacteristicsSectionRenderer(AxiomsByTypeIndex p1) {
+        return new DataPropertyCharacteristicsSectionRenderer(p1);
+    }
+
+    @Bean
+    DataPropertySubPropertyOfSectionRenderer DataPropertySubPropertyOfSectionRenderer(
+            SubDataPropertyAxiomsBySubPropertyIndex p1) {
+        return new DataPropertySubPropertyOfSectionRenderer(p1);
+    }
+
+    @Bean
+    DataPropertyEquivalentToSectionRenderer DataPropertyEquivalentToSectionRenderer(EquivalentDataPropertiesAxiomsIndex p1) {
+        return new DataPropertyEquivalentToSectionRenderer(p1);
+    }
+
+    @Bean
+    DataPropertyDisjointWithSectionRenderer DataPropertyDisjointWithSectionRenderer(DisjointDataPropertiesAxiomsIndex p1) {
+        return new DataPropertyDisjointWithSectionRenderer(p1);
+    }
+
+    @Bean
+    AnnotationPropertyFrameRenderer annotationPropertyFrameRenderer(AnnotationsSectionRenderer<OWLAnnotationProperty> p1,
+                                                                    AnnotationPropertyDomainSectionRenderer p2,
+                                                                    AnnotationPropertyRangeSectionRenderer p3,
+                                                                    AnnotationPropertySubPropertyOfSectionRenderer p4) {
+        return new AnnotationPropertyFrameRenderer(p1, p2, p3, p4);
+    }
+
+    @Bean
+    AnnotationPropertyDomainSectionRenderer AnnotationPropertyDomainSectionRenderer(AnnotationPropertyDomainAxiomsIndex p1,
+                                                                                    EntitiesInProjectSignatureByIriIndex p2) {
+        return new AnnotationPropertyDomainSectionRenderer(p1, p2);
+    }
+
+    @Bean
+    AnnotationPropertyRangeSectionRenderer AnnotationPropertyRangeSectionRenderer(AnnotationPropertyRangeAxiomsIndex p1,
+                                                                                  EntitiesInProjectSignatureByIriIndex p2) {
+        return new AnnotationPropertyRangeSectionRenderer(p1, p2);
+    }
+
+    @Bean
+    AnnotationPropertySubPropertyOfSectionRenderer AnnotationPropertySubPropertyOfSectionRenderer(
+            SubAnnotationPropertyAxiomsBySubPropertyIndex p1) {
+        return new AnnotationPropertySubPropertyOfSectionRenderer(p1);
+    }
+
+    @Bean
+    NamedIndividualFrameRenderer namedIndividualFrameRenderer(NamedIndividualTypesSectionRenderer p1,
+                                                              AnnotationsSectionRenderer<OWLNamedIndividual> p2,
+                                                              NamedIndividualFactsSectionRenderer p3,
+                                                              NamedIndividualSameAsSectionRenderer p4,
+                                                              NamedIndividualDifferentFromSectionRenderer p5) {
+        return new NamedIndividualFrameRenderer(p1, p2, p3, p4, p5);
+    }
+
+    @Bean
+    NamedIndividualFactsSectionRenderer NamedIndividualFactsSectionRenderer(ObjectPropertyAssertionAxiomsBySubjectIndex p1,
+                                                                            DataPropertyAssertionAxiomsBySubjectIndex p2) {
+        return new NamedIndividualFactsSectionRenderer(p1, p2);
+    }
+
+    @Bean
+    NamedIndividualSameAsSectionRenderer NamedIndividualSameAsSectionRenderer(SameIndividualAxiomsIndex p1) {
+        return new NamedIndividualSameAsSectionRenderer(p1);
+    }
+
+    @Bean
+    NamedIndividualDifferentFromSectionRenderer NamedIndividualDifferentFromSectionRenderer(
+            DifferentIndividualsAxiomsIndex p1) {
+        return new NamedIndividualDifferentFromSectionRenderer(p1);
+    }
+
+    @Bean
+    NamedIndividualTypesSectionRenderer namedIndividualTypesSectionRenderer(ClassAssertionAxiomsByIndividualIndex p1) {
+        return new NamedIndividualTypesSectionRenderer(p1);
+    }
+
 }
