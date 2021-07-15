@@ -116,7 +116,7 @@ import java.util.concurrent.ExecutorService;
  * Stanford Center for Biomedical Informatics Research
  * 2021-07-12
  */
-public class ProjectComponentConfiguration {
+public class ProjectBeansConfiguration {
 
     @Bean
     ProjectComponent projectComponent(ProjectId projectId,

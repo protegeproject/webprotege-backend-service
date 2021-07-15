@@ -30,7 +30,7 @@ public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
         var projectContext = new AnnotationConfigApplicationContext();
         projectContext.setParent(applicationContext);
         projectContext.setDisplayName("Project-Context for " + projectId);
-        projectContext.register(ProjectComponentConfiguration.class);
+        projectContext.register(ProjectBeansConfiguration.class);
         projectContext.register(ProjectIndexesConfiguration.class);
         projectContext.register(LuceneConfiguration.class);
         projectContext.register(EntityMatcherConfiguration.class);
