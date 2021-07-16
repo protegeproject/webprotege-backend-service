@@ -31,7 +31,7 @@ import edu.stanford.protege.webprotege.user.LogOutUserActionHandler;
 public class ActionHandlersModule {
 
     
-    public ApplicationActionHandler provideGetAvailableProjectsHandler(GetAvailableProjectsHandler handler) {
+    public ApplicationActionHandler provideGetAvailableProjectsHandler(GetAvailableProjectsActionHandler handler) {
         return handler;
     }
 

@@ -32,7 +32,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 01/04/2013
  */
-public class GetAvailableProjectsHandler implements ApplicationActionHandler<GetAvailableProjectsAction, GetAvailableProjectsResult> {
+public class GetAvailableProjectsActionHandler implements ApplicationActionHandler<GetAvailableProjectsAction, GetAvailableProjectsResult> {
 
     private final ProjectPermissionsManager projectPermissionsManager;
 
@@ -41,9 +41,9 @@ public class GetAvailableProjectsHandler implements ApplicationActionHandler<Get
     private final UserActivityManager userActivityManager;
 
     @Inject
-    public GetAvailableProjectsHandler(@Nonnull ProjectPermissionsManager projectPermissionsManager,
-                                       @Nonnull AccessManager accessManager,
-                                       @Nonnull UserActivityManager userActivityManager) {
+    public GetAvailableProjectsActionHandler(@Nonnull ProjectPermissionsManager projectPermissionsManager,
+                                             @Nonnull AccessManager accessManager,
+                                             @Nonnull UserActivityManager userActivityManager) {
         this.projectPermissionsManager = projectPermissionsManager;
         this.accessManager = accessManager;
         this.userActivityManager = userActivityManager;

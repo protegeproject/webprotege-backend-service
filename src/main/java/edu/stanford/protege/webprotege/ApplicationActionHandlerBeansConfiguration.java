@@ -40,10 +40,10 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationActionHandlerBeansConfiguration {
 
     @Bean
-    GetAvailableProjectsHandler getAvailableProjectsHandler(ProjectPermissionsManager p1,
-                                                                   AccessManager p2,
-                                                                   UserActivityManager p3) {
-        return new GetAvailableProjectsHandler(p1, p2, p3);
+    GetAvailableProjectsActionHandler getAvailableProjectsHandler(ProjectPermissionsManager p1,
+                                                                  AccessManager p2,
+                                                                  UserActivityManager p3) {
+        return new GetAvailableProjectsActionHandler(p1, p2, p3);
     }
 
 
