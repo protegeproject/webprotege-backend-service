@@ -19,6 +19,10 @@ public class LogOutUserAction implements Action<LogOutUserResult> {
     public LogOutUserAction() {
     }
 
+    public static LogOutUserAction create() {
+        return new LogOutUserAction();
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode("LogOutUserAction");

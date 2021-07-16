@@ -34,6 +34,10 @@ public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectI
         this.projectId = checkNotNull(projectId);
     }
 
+    public static LoadProjectAction create(ProjectId projectId) {
+        return new LoadProjectAction(projectId);
+    }
+
     @Nonnull
     public ProjectId getProjectId() {
         return projectId;

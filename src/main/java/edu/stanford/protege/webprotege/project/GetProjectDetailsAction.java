@@ -26,6 +26,10 @@ public class GetProjectDetailsAction implements Action<GetProjectDetailsResult>,
         this.projectId = checkNotNull(projectId);
     }
 
+    public static GetProjectDetailsAction create(ProjectId projectId) {
+        return new GetProjectDetailsAction(projectId);
+    }
+
     @Nonnull
     @Override
     public ProjectId getProjectId() {

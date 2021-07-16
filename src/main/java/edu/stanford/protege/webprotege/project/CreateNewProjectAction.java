@@ -30,6 +30,10 @@ public class CreateNewProjectAction implements Action<CreateNewProjectResult> {
         this.newProjectSettings = checkNotNull(newProjectSettings);
     }
 
+    public static CreateNewProjectAction create(NewProjectSettings newProjectSettings) {
+        return new CreateNewProjectAction(newProjectSettings);
+    }
+
     public NewProjectSettings getNewProjectSettings() {
         return newProjectSettings;
     }

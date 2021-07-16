@@ -14,14 +14,13 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class GetPersonIdItemsAction extends GetItemsAction<PersonId, GetPersonIdItemsResult> {
 
-    /**
-     * For serialization only
-     */
-    private GetPersonIdItemsAction() {
-    }
 
     public GetPersonIdItemsAction(List<String> itemNames) {
         super(itemNames);
+    }
+
+    public static GetPersonIdItemsAction create(List<String> itemNames) {
+        return new GetPersonIdItemsAction(itemNames);
     }
 
     @Override

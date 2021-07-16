@@ -38,6 +38,10 @@ public class SetEmailAddressAction implements Action<SetEmailAddressResult> {
         this.emailAddress = checkNotNull(emailAddress);
     }
 
+    public static SetEmailAddressAction create(UserId userId, String emailAddress) {
+        return new SetEmailAddressAction(userId, emailAddress);
+    }
+
     /**
      * Gets the {@link UserId} of the user whose email address should be set.
      * @return The {@link UserId}.  Not {@code null}.

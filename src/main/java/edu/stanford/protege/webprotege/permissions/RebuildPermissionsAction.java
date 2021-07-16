@@ -19,4 +19,8 @@ public abstract class RebuildPermissionsAction implements Action<RebuildPermissi
     public static RebuildPermissionsAction get() {
         return new AutoValue_RebuildPermissionsAction();
     }
+
+    public static RebuildPermissionsAction create() {
+        return get();
+    }
 }
