@@ -67,6 +67,6 @@ public class CreateNewProjectAction_TestCase {
 
     @Test
     public void shouldReturnSuppliedSettings() {
-        assertThat(action.getNewProjectSettings(), is(newProjectSettings));
+        assertThat(action.newProjectSettings(), is(newProjectSettings));
     }
 }

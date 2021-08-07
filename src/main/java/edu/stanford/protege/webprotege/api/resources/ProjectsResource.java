@@ -73,7 +73,7 @@ public class ProjectsResource implements ApiRootResource {
         }
         CreateNewProjectAction action = new CreateNewProjectAction(newProjectSettings);
         CreateNewProjectResult result = executor.execute(action, executionContext);
-        ProjectDetails projectDetails = result.getProjectDetails();
+        ProjectDetails projectDetails = result.projectDetails();
         // Respond with HTTP 201 (CREATED) and a location header that points
         // to the freshly created project.
         String projectId = projectDetails.getProjectId().getId();

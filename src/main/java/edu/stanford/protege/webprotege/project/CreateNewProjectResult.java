@@ -13,46 +13,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 21/02/15
  */
 @JsonTypeName("CreateNewProject")
-public class CreateNewProjectResult implements Result {
-
-    private ProjectDetails projectDetails;
-
-    /**
-     * For serialization purposes only
-     */
-    private CreateNewProjectResult() {
-    }
+public record CreateNewProjectResult(ProjectDetails projectDetails) implements Result {
 
     public CreateNewProjectResult(ProjectDetails projectDetails) {
         this.projectDetails = checkNotNull(projectDetails);
-    }
-
-    public ProjectDetails getProjectDetails() {
-        return projectDetails;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(projectDetails);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (!(obj instanceof CreateNewProjectResult)) {
-            return false;
-        }
-        CreateNewProjectResult other = (CreateNewProjectResult) obj;
-        return this.projectDetails.equals(other.projectDetails);
-    }
-
-
-    @Override
-    public String toString() {
-        return toStringHelper("CreateNewProjectResult")
-                .addValue(projectDetails)
-                .toString();
     }
 }

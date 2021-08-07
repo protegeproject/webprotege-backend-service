@@ -67,6 +67,6 @@ public class CreateNewProjectResult_TestCase {
 
     @Test
     public void shouldReturnSuppliedProjectDetails() {
-        assertThat(result.getProjectDetails(), is(projectDetails));
+        assertThat(result.projectDetails(), is(projectDetails));
     }
 }

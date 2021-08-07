@@ -78,19 +78,19 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
     @Override
     public CreateNewProjectResult execute(@Nonnull CreateNewProjectAction action, @Nonnull ExecutionContext executionContext) {
         try {
-            UserId userId = executionContext.getUserId();
+            var userId = executionContext.getUserId();
             if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), CREATE_EMPTY_PROJECT)) {
                 throw new PermissionDeniedException("You do not have permission to create new projects",
                                                     userInSessionFactory.getUserInSession(userId));
             }
-            NewProjectSettings newProjectSettings = action.getNewProjectSettings();
+            var newProjectSettings = action.newProjectSettings();
             if (newProjectSettings.hasSourceDocument()) {
                 if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), UPLOAD_PROJECT)) {
                     throw new PermissionDeniedException("You do not have permission to upload projects",
                                                         userInSessionFactory.getUserInSession(userId));
                 }
             }
-            ProjectId projectId = pm.createNewProject(newProjectSettings);
+            var projectId = pm.createNewProject(newProjectSettings);
             if (!projectDetailsManager.isExistingProject(projectId)) {
                 projectDetailsManager.registerProject(projectId, newProjectSettings);
                 applyDefaultPermissions(projectId, userId);
@@ -102,7 +102,7 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
     }
 
     private void applyDefaultPermissions(ProjectId projectId, UserId userId) {
-        ProjectResource projectResource = new ProjectResource(projectId);
+        var projectResource = new ProjectResource(projectId);
         // Owner is manager
         accessManager.setAssignedRoles(forUser(userId),
                                        projectResource,
