@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.download;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import java.nio.file.Path;
 import javax.annotation.processing.Generated;
 import javax.inject.Inject;

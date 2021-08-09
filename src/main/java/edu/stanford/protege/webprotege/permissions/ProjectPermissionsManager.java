@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.permissions;
 
 import edu.stanford.protege.webprotege.project.ProjectDetails;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import java.util.List;
 

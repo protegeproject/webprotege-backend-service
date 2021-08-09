@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.user;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.ReplaceOptions;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

@@ -1,9 +1,7 @@
 package edu.stanford.protege.webprotege.watches;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.user.UserId;
-import org.hamcrest.Matchers;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;

@@ -4,7 +4,7 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.issues.events.IssueEvent;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

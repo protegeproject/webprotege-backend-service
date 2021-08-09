@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
 

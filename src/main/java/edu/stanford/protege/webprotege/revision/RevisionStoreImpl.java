@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
 import edu.stanford.protege.webprotege.inject.ChangeHistoryFileFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.binaryowl.BinaryOWLOntologyChangeLog;
 import org.semanticweb.binaryowl.chunk.SkipSetting;
 import org.semanticweb.owlapi.model.OWLDataFactory;

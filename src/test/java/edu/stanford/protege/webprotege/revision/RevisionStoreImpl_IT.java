@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslatorImpl;
 import edu.stanford.protege.webprotege.inject.ChangeHistoryFileFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

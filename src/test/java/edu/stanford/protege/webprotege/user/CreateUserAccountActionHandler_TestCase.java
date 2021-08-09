@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.auth.AuthenticationManager;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.auth.Password;
 import org.junit.Before;

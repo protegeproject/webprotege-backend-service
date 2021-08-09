@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.issues.events;
 
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.issues.mention.*;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;

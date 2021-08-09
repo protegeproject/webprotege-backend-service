@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.api;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.session.WebProtegeSession;
 import edu.stanford.protege.webprotege.session.WebProtegeSessionImpl;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

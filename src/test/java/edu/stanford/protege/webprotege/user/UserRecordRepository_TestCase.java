@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.user;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.auth.Salt;
 import edu.stanford.protege.webprotege.auth.SaltedPasswordDigest;

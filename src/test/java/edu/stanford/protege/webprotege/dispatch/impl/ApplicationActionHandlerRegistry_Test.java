@@ -11,6 +11,7 @@ import edu.stanford.protege.webprotege.auth.PerformLoginAction;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordAction;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordData;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
 import edu.stanford.protege.webprotege.itemlist.GetPersonIdCompletionsAction;

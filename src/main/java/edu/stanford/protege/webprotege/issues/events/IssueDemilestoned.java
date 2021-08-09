@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.issues.events;
 
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.issues.Milestone;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 

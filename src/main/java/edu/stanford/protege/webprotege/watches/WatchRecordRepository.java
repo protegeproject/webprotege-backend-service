@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.watches;
 
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

@@ -14,7 +14,7 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.app.UserInSession;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

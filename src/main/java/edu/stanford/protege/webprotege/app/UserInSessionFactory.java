@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.access.ActionId;
 import edu.stanford.protege.webprotege.access.ApplicationResource;
 import edu.stanford.protege.webprotege.user.UserDetails;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

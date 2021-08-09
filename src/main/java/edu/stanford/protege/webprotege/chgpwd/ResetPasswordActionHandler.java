@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.user.UserDetails;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.util.IdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

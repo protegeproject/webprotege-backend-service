@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.perspective;
 
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import java.util.List;

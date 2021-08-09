@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.session;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

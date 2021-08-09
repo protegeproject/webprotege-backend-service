@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.revision.RevisionManagerImpl;
 import edu.stanford.protege.webprotege.revision.RevisionStore;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.revision.RevisionSummary;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

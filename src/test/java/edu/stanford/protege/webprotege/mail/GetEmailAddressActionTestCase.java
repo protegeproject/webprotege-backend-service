@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.mail;
 
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

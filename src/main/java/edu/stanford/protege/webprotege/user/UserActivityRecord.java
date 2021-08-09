@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.user;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

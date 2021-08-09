@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
 import edu.stanford.protege.webprotege.event.GetProjectEventsResult;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.ProjectManager;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

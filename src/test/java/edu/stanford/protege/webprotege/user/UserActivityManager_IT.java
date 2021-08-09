@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;

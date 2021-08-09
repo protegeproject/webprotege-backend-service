@@ -5,7 +5,7 @@ import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.project.ProjectIdFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;

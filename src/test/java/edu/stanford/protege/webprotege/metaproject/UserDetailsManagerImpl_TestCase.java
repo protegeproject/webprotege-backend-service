@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.user.UserDetailsManagerImpl;
 import edu.stanford.protege.webprotege.user.UserRecord;
 import edu.stanford.protege.webprotege.user.UserRecordRepository;
 import edu.stanford.protege.webprotege.user.EmailAddress;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

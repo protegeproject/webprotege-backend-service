@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.dispatch.validators.ApplicationPermission
 import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.UserIsSignedInValidator;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 

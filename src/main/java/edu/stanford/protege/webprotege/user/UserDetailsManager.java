@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
+import edu.stanford.protege.webprotege.common.UserId;
+
 import java.util.List;
 import java.util.Optional;
 

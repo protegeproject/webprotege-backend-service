@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionAction;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionResult;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

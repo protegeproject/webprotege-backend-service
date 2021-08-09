@@ -22,7 +22,7 @@ import edu.stanford.protege.webprotege.sharing.SetProjectSharingSettingsAction;
 import edu.stanford.protege.webprotege.tag.GetProjectTagsAction;
 import edu.stanford.protege.webprotege.tag.SetProjectTagsAction;
 import edu.stanford.protege.webprotege.tag.TagData;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.ws.rs.*;

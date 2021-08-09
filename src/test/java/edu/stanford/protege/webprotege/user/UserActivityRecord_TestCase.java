@@ -1,6 +1,7 @@
 
 package edu.stanford.protege.webprotege.user;
 
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import org.hamcrest.Matchers;
 import org.junit.Before;

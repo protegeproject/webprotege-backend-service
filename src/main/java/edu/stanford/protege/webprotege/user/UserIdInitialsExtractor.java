@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.google.common.base.CaseFormat;
+import edu.stanford.protege.webprotege.common.UserId;
 
 /**
  * Matthew Horridge

@@ -4,7 +4,7 @@ package edu.stanford.protege.webprotege.event;
 
 import edu.stanford.protege.webprotege.HasUserId;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 /**
  * Author: Matthew Horridge<br>

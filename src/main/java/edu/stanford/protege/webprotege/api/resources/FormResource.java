@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.form.GetEntityFormDescriptorAction;
 import edu.stanford.protege.webprotege.match.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.match.criteria.MultiMatchType;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.ws.rs.GET;

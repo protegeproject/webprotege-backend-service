@@ -2,7 +2,7 @@
 package edu.stanford.protege.webprotege.issues.events;
 
 import edu.stanford.protege.webprotege.issues.Milestone;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

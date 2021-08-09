@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.HasUserId;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 

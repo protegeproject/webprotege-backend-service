@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.user;
 
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.common.ProjectId;

@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.access.Subject;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.access.ActionId;
 import edu.stanford.protege.webprotege.user.UserDetails;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

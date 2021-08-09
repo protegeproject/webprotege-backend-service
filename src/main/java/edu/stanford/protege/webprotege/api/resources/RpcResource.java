@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.api.ApiRootResource;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.rpc.JsonRpcRequest;
 import edu.stanford.protege.webprotege.rpc.JsonRpcResponse;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

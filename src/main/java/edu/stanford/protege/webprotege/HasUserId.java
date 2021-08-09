@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege;
 
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 /**
  * Author: Matthew Horridge<br>

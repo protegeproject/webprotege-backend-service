@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.auth;
 
 import edu.stanford.protege.webprotege.user.EmailAddress;
 import edu.stanford.protege.webprotege.user.UserDetails;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.user.UserRegistrationException;
 
 import javax.annotation.Nonnull;

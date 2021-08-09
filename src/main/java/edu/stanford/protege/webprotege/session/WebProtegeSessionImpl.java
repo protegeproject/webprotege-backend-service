@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.session;
 
 import com.google.common.base.MoreObjects;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;

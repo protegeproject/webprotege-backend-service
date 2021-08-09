@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 import edu.stanford.protege.webprotege.session.WebProtegeSession;
 import edu.stanford.protege.webprotege.session.WebProtegeSessionImpl;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.util.FileContentsSizeCalculator;
 import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
 import org.apache.commons.fileupload.FileItem;

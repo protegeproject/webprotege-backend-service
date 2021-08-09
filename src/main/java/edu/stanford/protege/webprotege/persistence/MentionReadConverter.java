@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.issues.mention.EntityMention;
 import edu.stanford.protege.webprotege.issues.mention.IssueMention;
 import edu.stanford.protege.webprotege.issues.mention.RevisionMention;
 import edu.stanford.protege.webprotege.issues.mention.UserIdMention;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 
 /**

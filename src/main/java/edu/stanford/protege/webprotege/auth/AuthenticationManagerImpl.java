@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.auth;
 
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.user.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -7,7 +7,7 @@ import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.HasUserId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.Result;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 

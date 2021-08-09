@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.user;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.auth.Salt;
 import edu.stanford.protege.webprotege.auth.SaltedPasswordDigest;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 

@@ -16,7 +16,7 @@ import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriInde
 import edu.stanford.protege.webprotege.shortform.AnnotationAssertionDictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguageVisitor;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;

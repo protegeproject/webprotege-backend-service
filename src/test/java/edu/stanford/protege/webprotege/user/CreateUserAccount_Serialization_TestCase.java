@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.auth.Password;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.match.JsonSerializationTestUtil;

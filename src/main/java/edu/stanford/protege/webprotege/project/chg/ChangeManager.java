@@ -33,7 +33,7 @@ import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryUpdatesProcessor;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.util.IriReplacer;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
 import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;

@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.user;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.user;
+package edu.stanford.protege.webprotege.common;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;

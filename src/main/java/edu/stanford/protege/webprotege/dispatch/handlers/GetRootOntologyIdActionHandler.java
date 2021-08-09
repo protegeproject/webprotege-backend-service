@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdAction;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdResult;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

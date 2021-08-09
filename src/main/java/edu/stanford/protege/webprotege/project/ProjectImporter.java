@@ -15,7 +15,7 @@ import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
 import edu.stanford.protege.webprotege.upload.DocumentResolver;
 import edu.stanford.protege.webprotege.upload.UploadedOntologiesProcessor;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.util.MemoryMonitor;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.slf4j.Logger;

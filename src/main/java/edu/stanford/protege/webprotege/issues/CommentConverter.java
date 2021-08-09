@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.persistence.DocumentConverter;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 
 import javax.annotation.Nonnull;

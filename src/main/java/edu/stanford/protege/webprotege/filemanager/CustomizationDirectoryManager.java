@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.filemanager;
 
 import com.google.common.io.BaseEncoding;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.inject.Inject;
 import java.io.File;

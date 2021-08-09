@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.access;
 
 
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;

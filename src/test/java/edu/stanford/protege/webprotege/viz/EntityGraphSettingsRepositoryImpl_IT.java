@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.viz;
 
 
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.UserId;
+import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
