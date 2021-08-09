@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.persistence;
 
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 /**
  * Author: Matthew Horridge<br>

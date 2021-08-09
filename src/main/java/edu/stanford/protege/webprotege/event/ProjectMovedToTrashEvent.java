@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.event;
 
 
 import edu.stanford.protege.webprotege.project.HasProjectId;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;

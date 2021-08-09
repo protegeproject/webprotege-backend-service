@@ -1,21 +1,16 @@
 package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 import edu.stanford.protege.webprotege.match.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.match.criteria.EntityIsNotDeprecatedCriteria;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;

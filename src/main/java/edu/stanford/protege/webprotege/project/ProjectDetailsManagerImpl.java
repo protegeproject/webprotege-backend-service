@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
 import edu.stanford.protege.webprotege.projectsettings.*;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;

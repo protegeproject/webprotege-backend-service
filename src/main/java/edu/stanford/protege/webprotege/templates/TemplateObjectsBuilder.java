@@ -5,7 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;

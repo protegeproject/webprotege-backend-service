@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.watches;
 
 import com.google.common.base.Objects;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.data.mongodb.core.mapping.Document;

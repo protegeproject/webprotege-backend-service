@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.event;
 
 import com.google.common.base.MoreObjects;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.revision.RevisionSummary;
 import edu.stanford.protege.webprotege.user.UserId;

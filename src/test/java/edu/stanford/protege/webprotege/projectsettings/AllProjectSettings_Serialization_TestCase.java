@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
 import edu.stanford.protege.webprotege.match.JsonSerializationTestUtil;
 import edu.stanford.protege.webprotege.match.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.project.PrefixDeclaration;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.search.ProjectSearchSettings;
 import edu.stanford.protege.webprotege.sharing.PersonId;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettings;

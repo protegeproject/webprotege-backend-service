@@ -4,6 +4,7 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.Interner;
 import com.google.common.collect.Interners;
 import edu.stanford.protege.webprotege.HasDispose;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.event.ProjectEvent;

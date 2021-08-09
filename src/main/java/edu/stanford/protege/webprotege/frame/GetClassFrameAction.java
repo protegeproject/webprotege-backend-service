@@ -7,7 +7,7 @@ import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.HasSubject;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.project.HasProjectId;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;

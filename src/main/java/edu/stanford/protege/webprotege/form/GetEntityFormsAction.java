@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.form.data.FormRegionFilter;
 import edu.stanford.protege.webprotege.form.field.FormRegionOrdering;
 import edu.stanford.protege.webprotege.lang.LangTagFilter;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

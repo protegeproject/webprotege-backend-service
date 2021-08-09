@@ -1,15 +1,9 @@
 package edu.stanford.protege.webprotege.user;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Optional;
 import java.util.UUID;
 
-import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.shouldSerializeUsingObjectMapper;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

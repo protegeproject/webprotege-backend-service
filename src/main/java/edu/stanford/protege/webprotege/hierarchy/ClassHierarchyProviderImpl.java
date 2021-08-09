@@ -4,7 +4,7 @@ import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.Logger;

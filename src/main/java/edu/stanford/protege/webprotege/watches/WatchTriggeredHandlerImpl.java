@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.mail.MessageHeader;
 import edu.stanford.protege.webprotege.mail.SendMail;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
 import edu.stanford.protege.webprotege.templates.TemplateObjectsBuilder;

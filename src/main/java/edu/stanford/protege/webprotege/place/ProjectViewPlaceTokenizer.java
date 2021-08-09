@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.place;
 
 import com.google.common.collect.Lists;
 import edu.stanford.protege.webprotege.perspective.PerspectiveId;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.vocab.Namespaces;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;

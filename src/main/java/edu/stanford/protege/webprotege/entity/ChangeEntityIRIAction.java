@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.crud.EntityCrudKitSettings;
 import edu.stanford.protege.webprotege.crud.EntityCrudKitSuffixSettings;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 

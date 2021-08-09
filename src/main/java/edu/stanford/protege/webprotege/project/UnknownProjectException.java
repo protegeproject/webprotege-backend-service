@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.project;
 
 
+import edu.stanford.protege.webprotege.common.ProjectId;
+
 import javax.annotation.Nonnull;
 import java.io.Serializable;
 

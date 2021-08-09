@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.place;
 
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.IRI;
 
 /**

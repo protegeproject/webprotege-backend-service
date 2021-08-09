@@ -6,7 +6,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.match.criteria.RootCriteria;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.WithProjectId;
 
 import javax.annotation.Nonnull;

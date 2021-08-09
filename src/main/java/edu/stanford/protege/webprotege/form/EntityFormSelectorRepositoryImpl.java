@@ -1,10 +1,9 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.FindOneAndReplaceOptions;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.app;
 
 import edu.stanford.protege.webprotege.DataFactory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

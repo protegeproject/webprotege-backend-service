@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.api.resources;
 
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.form.FormId;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import javax.annotation.processing.Generated;
 import javax.inject.Inject;
 import javax.inject.Provider;

@@ -2,7 +2,7 @@
 package edu.stanford.protege.webprotege.watches;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.hamcrest.Matchers;
 import org.junit.Before;

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.revision;
 
 import edu.stanford.protege.webprotege.inject.ChangeHistoryFileFactory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.binaryowl.BinaryOWLChangeLogHandler;
 import org.semanticweb.binaryowl.BinaryOWLOntologyChangeLog;
 import org.semanticweb.binaryowl.change.OntologyChangeRecordList;

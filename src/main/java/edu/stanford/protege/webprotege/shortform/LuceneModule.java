@@ -1,22 +1,5 @@
 package edu.stanford.protege.webprotege.shortform;
 
-import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
-import edu.stanford.protege.webprotege.util.DisposableObjectManager;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.search.SearcherFactory;
-import org.apache.lucene.search.SearcherManager;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.UncheckedIOException;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.LargeNumberOfChangesEvent;
 import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;

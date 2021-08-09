@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSett
 import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSettingsRepository;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

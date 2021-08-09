@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.issues.events.*;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.issues.mention.ParsedMention;
 import edu.stanford.protege.webprotege.issues.mention.UserIdMention;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.junit.Before;
 import org.junit.Test;

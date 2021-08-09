@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.crud.persistence;
 
 import edu.stanford.protege.webprotege.crud.EntityCrudKitSettings;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

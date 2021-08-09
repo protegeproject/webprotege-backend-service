@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.issues;
 
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import java.util.Optional;
 import java.util.stream.Stream;

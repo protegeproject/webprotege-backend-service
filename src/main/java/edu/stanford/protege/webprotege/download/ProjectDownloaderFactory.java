@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.download;
 
 import edu.stanford.protege.webprotege.project.PrefixDeclarationsStore;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import javax.annotation.processing.Generated;

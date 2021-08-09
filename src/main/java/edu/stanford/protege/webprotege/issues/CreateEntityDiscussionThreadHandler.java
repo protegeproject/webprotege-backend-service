@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 import org.semanticweb.owlapi.model.OWLEntity;

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.download;
 
 import com.google.common.base.Stopwatch;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

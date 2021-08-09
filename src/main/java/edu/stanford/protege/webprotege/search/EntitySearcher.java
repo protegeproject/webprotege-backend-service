@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.pagination.Page;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.EntityType;

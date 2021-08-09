@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
 import edu.stanford.protege.webprotege.index.OntologySignatureByTypeIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLProperty;

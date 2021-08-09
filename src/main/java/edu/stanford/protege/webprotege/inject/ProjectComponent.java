@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.form.EntityFrameFormDataComponent;
 import edu.stanford.protege.webprotege.form.EntityFrameFormDataModule;
 import edu.stanford.protege.webprotege.form.FormDescriptorDtoTranslatorComponent;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 
 /**

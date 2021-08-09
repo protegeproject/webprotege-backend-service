@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.permissions;
 
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 

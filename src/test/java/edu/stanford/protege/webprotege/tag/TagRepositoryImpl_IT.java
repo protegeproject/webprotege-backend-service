@@ -7,7 +7,7 @@ import com.mongodb.WriteError;
 import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.match.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.match.criteria.RootCriteria;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

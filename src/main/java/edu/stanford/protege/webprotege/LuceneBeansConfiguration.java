@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.inject.DataDirectoryProvider;
 import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterIndexesManager;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepository;
@@ -22,7 +22,6 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Provider;

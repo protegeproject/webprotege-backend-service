@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
 import org.semanticweb.owlapi.model.OWLEntity;
 

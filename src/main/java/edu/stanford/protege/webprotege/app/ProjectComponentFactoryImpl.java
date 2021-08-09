@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.app;
 import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

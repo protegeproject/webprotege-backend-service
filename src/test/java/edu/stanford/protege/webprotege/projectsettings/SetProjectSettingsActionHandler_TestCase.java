@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

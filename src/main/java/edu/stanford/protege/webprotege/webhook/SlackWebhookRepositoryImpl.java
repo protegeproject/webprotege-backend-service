@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.webhook;
 
 import com.mongodb.DuplicateKeyException;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;

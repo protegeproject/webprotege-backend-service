@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.AddAxiomsAction;
 import edu.stanford.protege.webprotege.dispatch.actions.AddAxiomsResult;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 
 import javax.annotation.Nonnull;

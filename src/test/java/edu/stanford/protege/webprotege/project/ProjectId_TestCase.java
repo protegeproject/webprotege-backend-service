@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.util.UUIDUtil;
 import org.junit.Test;
 

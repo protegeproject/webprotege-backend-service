@@ -1,10 +1,8 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableMap;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 

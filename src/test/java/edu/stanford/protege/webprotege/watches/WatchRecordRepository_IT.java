@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.watches;
 
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.junit.After;
 import org.junit.Before;

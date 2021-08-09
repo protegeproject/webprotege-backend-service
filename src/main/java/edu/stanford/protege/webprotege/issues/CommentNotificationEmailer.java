@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.mail.MessageHeader;
 import edu.stanford.protege.webprotege.mail.MessageId;
 import edu.stanford.protege.webprotege.mail.SendMail;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserDetails;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.user.UserId;

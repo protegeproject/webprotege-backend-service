@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.events.EventTranslator;
 import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
 import edu.stanford.protege.webprotege.events.SimpleHighLevelProjectEventProxy;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.Revision;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;

@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.crud.IRIPrefixUpdateStrategy;
 import edu.stanford.protege.webprotege.crud.SetEntityCrudKitSettingsAction;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.GetProjectPrefixDeclarationsAction;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.SetProjectPrefixDeclarationsAction;
 import edu.stanford.protege.webprotege.projectsettings.AllProjectSettings;
 import edu.stanford.protege.webprotege.projectsettings.GetProjectSettingsAction;

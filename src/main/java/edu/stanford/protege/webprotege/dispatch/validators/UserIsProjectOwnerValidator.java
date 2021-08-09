@@ -4,7 +4,7 @@ package edu.stanford.protege.webprotege.dispatch.validators;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.inject.Inject;

@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.project;
 
 
+import edu.stanford.protege.webprotege.common.ProjectId;
+
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

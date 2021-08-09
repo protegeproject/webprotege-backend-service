@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.api.ApiKey;
 import edu.stanford.protege.webprotege.api.ApiRootResource;
 import edu.stanford.protege.webprotege.api.ResponseUtil;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.user.UserId;

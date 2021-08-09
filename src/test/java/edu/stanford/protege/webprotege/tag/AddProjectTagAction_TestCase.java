@@ -1,7 +1,7 @@
 
 package edu.stanford.protege.webprotege.tag;
 
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.color.Color;
 import org.junit.Before;
 import org.junit.Test;

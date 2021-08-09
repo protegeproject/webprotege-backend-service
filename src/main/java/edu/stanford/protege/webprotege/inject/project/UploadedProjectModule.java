@@ -17,7 +17,7 @@ import edu.stanford.protege.webprotege.match.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
 import edu.stanford.protege.webprotege.project.Ontology;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.LiteralLexicalFormTransformer;
 import edu.stanford.protege.webprotege.renderer.ShortFormAdapter;
 import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;

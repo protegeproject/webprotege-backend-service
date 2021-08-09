@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.project;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.model.ReplaceOptions;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
 

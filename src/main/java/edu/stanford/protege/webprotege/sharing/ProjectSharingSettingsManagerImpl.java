@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.ProjectResource;
 import edu.stanford.protege.webprotege.access.RoleId;
 import edu.stanford.protege.webprotege.access.Subject;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.HasGetUserIdByUserIdOrEmail;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.slf4j.Logger;

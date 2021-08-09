@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.mail;
 
 import edu.stanford.protege.webprotege.issues.CommentId;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

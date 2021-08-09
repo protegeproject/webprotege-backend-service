@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.hierarchy.GraphModelChangedEvent;
 import edu.stanford.protege.webprotege.hierarchy.GraphNodeRenderer;
 import edu.stanford.protege.webprotege.hierarchy.HierarchyId;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
 
 /**

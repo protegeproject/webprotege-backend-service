@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.form;
 
 import edu.stanford.protege.webprotege.persistence.Repository;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import java.util.stream.Stream;

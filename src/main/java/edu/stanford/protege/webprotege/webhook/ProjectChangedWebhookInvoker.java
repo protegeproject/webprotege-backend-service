@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.webhook;
 
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.slf4j.Logger;

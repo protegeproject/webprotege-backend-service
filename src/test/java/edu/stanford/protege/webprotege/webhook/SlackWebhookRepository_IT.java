@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.webhook;
 
 import com.mongodb.client.MongoClient;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

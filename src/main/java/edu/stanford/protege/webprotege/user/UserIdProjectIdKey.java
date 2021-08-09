@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.google.common.base.Objects;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;

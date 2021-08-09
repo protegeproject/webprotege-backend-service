@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.ProjectMovedFromTrashEvent;
 import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashAction;
 import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashResult;
 

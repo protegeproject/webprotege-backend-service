@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.access;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;

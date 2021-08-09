@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.access.ProjectResource;
 import edu.stanford.protege.webprotege.access.Subject;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.session.WebProtegeSession;
 import edu.stanford.protege.webprotege.session.WebProtegeSessionImpl;

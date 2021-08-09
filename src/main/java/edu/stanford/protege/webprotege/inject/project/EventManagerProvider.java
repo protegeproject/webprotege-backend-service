@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventLifeTime;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.inject.Inject;
 import javax.inject.Provider;

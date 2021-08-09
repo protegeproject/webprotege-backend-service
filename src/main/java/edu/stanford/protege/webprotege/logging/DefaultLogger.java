@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.logging;
 
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

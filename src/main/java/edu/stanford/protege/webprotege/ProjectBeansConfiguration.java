@@ -15,6 +15,7 @@ import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeList
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.change.matcher.*;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.crud.gen.IncrementingPatternDescriptorValueGenerator;

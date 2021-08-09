@@ -1,11 +1,8 @@
 package edu.stanford.protege.webprotege.form;
 
-import com.mongodb.client.MongoDatabase;
 import edu.stanford.protege.webprotege.form.field.*;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

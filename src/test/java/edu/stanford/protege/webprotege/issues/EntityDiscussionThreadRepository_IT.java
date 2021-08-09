@@ -1,12 +1,10 @@
 package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.project.ProjectIdFactory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
 import org.junit.After;
@@ -23,7 +21,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.getTestDbName;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;

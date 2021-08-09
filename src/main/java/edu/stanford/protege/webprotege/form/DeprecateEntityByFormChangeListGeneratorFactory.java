@@ -11,11 +11,10 @@ import edu.stanford.protege.webprotege.index.SubObjectPropertyAxiomsBySubPropert
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import java.util.Optional;
-import javax.annotation.processing.Generated;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import org.semanticweb.owlapi.model.OWLDataFactory;

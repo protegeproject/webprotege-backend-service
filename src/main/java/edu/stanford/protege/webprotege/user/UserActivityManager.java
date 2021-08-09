@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.persistence.Repository;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.perspective.EntityTypePerspectiveMapper;
 import edu.stanford.protege.webprotege.place.ItemSelection;
 import edu.stanford.protege.webprotege.place.ProjectViewPlace;
 import edu.stanford.protege.webprotege.place.ProjectViewPlaceTokenizer;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

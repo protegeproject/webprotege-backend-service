@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.index.impl;
 
 import edu.stanford.protege.webprotege.index.IndexUpdatingService;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 
 import javax.annotation.Nonnull;

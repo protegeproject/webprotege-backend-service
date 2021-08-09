@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.webhook;
 
 import com.google.common.base.Objects;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;

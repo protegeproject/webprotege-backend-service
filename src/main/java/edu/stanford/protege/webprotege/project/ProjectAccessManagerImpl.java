@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.project;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.UpdateOptions;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;

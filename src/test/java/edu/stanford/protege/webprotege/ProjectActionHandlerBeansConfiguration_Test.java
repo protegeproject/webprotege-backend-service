@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege;
 
 import edu.stanford.protege.webprotege.project.GetAvailableProjectsAction;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;

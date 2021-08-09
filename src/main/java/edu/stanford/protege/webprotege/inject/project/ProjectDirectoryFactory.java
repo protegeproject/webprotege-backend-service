@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.inject.project;
 
 import edu.stanford.protege.webprotege.inject.DataDirectory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.inject.Inject;
 import java.io.File;

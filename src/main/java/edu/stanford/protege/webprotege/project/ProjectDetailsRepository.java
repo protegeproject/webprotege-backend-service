@@ -8,6 +8,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.Updates;
 import edu.stanford.protege.webprotege.api.TimestampSerializer;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;

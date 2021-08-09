@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
 import edu.stanford.protege.webprotege.event.GetProjectEventsResult;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.user.UserId;
 

@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
 import edu.stanford.protege.webprotege.upload.DocumentResolver;
 import edu.stanford.protege.webprotege.upload.UploadedOntologiesProcessor;

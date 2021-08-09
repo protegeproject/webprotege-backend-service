@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.api.axioms;
 
 import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.owlapi.WebProtegeOWLManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.io.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.model.parameters.Imports;

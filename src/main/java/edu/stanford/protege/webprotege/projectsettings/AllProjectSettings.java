@@ -6,7 +6,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.crud.EntityCrudKitSettings;
 import edu.stanford.protege.webprotege.project.PrefixDeclaration;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.WithProjectId;
 import edu.stanford.protege.webprotege.search.ProjectSearchSettings;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettings;

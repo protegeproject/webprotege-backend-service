@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.crud;
 
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 

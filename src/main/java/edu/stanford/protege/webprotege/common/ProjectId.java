@@ -1,10 +1,11 @@
-package edu.stanford.protege.webprotege.project;
+package edu.stanford.protege.webprotege.common;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import edu.stanford.protege.webprotege.ValueObject;
+import edu.stanford.protege.webprotege.project.ProjectIdFormatException;
 import edu.stanford.protege.webprotege.util.UUIDUtil;
 
 import javax.annotation.Nonnull;
@@ -34,7 +35,7 @@ public class ProjectId implements Serializable, ValueObject {
      * to the regular expression for UUIDs.  See {@link UUIDUtil#getIdRegExp()}
      * @throws NullPointerException if the id parameter is <code>null</code>.
      */
-    private ProjectId(@Nonnull String id) throws ProjectIdFormatException{
+    private ProjectId(@Nonnull String id) throws ProjectIdFormatException {
         this.id = checkFormat(checkNotNull(id));
     }
 

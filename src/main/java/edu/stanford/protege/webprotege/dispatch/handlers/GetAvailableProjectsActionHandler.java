@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.project.AvailableProject;
 import edu.stanford.protege.webprotege.project.GetAvailableProjectsAction;
 import edu.stanford.protege.webprotege.project.GetAvailableProjectsResult;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserActivityRecord;
 import edu.stanford.protege.webprotege.user.UserId;

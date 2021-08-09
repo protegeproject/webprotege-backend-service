@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 import edu.stanford.protege.webprotege.project.MoveProjectsToTrashAction;
 import edu.stanford.protege.webprotege.project.MoveProjectsToTrashResult;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

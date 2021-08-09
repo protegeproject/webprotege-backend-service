@@ -1,14 +1,11 @@
 package edu.stanford.protege.webprotege.form;
 
 import com.google.common.collect.ImmutableList;
-import com.mongodb.client.MongoClient;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.match.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.match.criteria.HierarchyFilterType;
 import edu.stanford.protege.webprotege.match.criteria.MultiMatchType;
 import edu.stanford.protege.webprotege.match.criteria.SubClassOfCriteria;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

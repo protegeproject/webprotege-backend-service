@@ -2,10 +2,9 @@ package edu.stanford.protege.webprotege.viz;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;

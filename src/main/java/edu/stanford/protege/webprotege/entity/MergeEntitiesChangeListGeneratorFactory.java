@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectI
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import javax.annotation.processing.Generated;
 import javax.inject.Inject;
 import javax.inject.Provider;

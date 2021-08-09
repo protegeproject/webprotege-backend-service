@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.app.ApplicationScheme;
 import edu.stanford.protege.webprotege.perspective.EntityTypePerspectiveMapper;
 import edu.stanford.protege.webprotege.perspective.PerspectiveId;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

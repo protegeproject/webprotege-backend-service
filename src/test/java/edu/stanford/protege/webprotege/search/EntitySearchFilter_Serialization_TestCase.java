@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.search;
 import edu.stanford.protege.webprotege.lang.LanguageMap;
 import edu.stanford.protege.webprotege.match.JsonSerializationTestUtil;
 import edu.stanford.protege.webprotege.match.criteria.EntityIsDeprecatedCriteria;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.Test;
 
 import java.io.IOException;

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.inject;
 
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

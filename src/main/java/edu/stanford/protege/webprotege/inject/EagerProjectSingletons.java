@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.inject;
 
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 
 import javax.inject.Inject;

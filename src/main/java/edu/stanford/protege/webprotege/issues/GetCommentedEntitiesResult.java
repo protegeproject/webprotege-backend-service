@@ -7,7 +7,7 @@ import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.entity.CommentedEntityData;
 import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 /**
  * Matthew Horridge

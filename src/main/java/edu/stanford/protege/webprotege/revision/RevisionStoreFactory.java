@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.revision;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
 import edu.stanford.protege.webprotege.inject.ApplicationDataFactory;
 import edu.stanford.protege.webprotege.inject.ChangeHistoryFileFactory;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
 import javax.annotation.Nonnull;

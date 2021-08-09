@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.match.Matcher;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.pagination.PageRequest;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.search.EntityNameMatchResult;
 import edu.stanford.protege.webprotege.search.SearchResultMatch;
 import edu.stanford.protege.webprotege.search.SearchResultMatchPosition;

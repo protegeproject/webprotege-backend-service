@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 

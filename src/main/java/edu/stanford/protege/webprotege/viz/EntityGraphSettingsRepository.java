@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.viz;
 
 import edu.stanford.protege.webprotege.persistence.Repository;
-import edu.stanford.protege.webprotege.project.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserId;
 
 import javax.annotation.Nonnull;
