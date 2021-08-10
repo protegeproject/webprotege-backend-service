@@ -27,8 +27,7 @@ public class GetProjectPermissionsAction_TestCase {
 
     private GetProjectPermissionsAction otherAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private UserId userId;

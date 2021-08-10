@@ -19,7 +19,7 @@ public class GetProjectPrefixDeclarationsAction implements ProjectAction<GetProj
     private String projectId;
 
     private GetProjectPrefixDeclarationsAction(@Nonnull ProjectId projectId) {
-        this.projectId = checkNotNull(projectId.getId());
+        this.projectId = checkNotNull(projectId.id());
     }
 
 
@@ -33,7 +33,7 @@ public class GetProjectPrefixDeclarationsAction implements ProjectAction<GetProj
     @Nonnull
     @Override
     public ProjectId getProjectId() {
-        return ProjectId.get(projectId);
+        return ProjectId.valueOf(projectId);
     }
 
     @Override

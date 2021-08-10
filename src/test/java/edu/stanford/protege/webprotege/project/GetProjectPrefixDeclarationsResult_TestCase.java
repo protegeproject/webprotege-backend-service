@@ -23,8 +23,7 @@ public class GetProjectPrefixDeclarationsResult_TestCase {
 
     private GetProjectPrefixDeclarationsResult result;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private List<PrefixDeclaration> prefixDeclarations;
 
@@ -75,7 +74,7 @@ public class GetProjectPrefixDeclarationsResult_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(result, is(not(GetProjectPrefixDeclarationsResult.create(mock(ProjectId.class), prefixDeclarations))));
+        assertThat(result, is(not(GetProjectPrefixDeclarationsResult.create(ProjectId.generate(), prefixDeclarations))));
     }
 
     @Test

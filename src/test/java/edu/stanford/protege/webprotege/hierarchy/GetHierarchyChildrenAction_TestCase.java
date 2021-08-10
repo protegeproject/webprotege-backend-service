@@ -18,8 +18,7 @@ public class GetHierarchyChildrenAction_TestCase {
 
     private GetHierarchyChildrenAction action;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private OWLEntity entity;
@@ -83,7 +82,7 @@ public class GetHierarchyChildrenAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(GetHierarchyChildrenAction.create(mock(ProjectId.class), entity, hierarchyId))));
+        assertThat(action, is(not(GetHierarchyChildrenAction.create(ProjectId.generate(), entity, hierarchyId))));
     }
 
     @Test

@@ -28,8 +28,7 @@ public class GetWatchedEntityChangesAction_TestCase {
 
     private GetWatchedEntityChangesAction otherAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private UserId userId;

@@ -29,7 +29,7 @@ public class EntitySearchFilterRepositoryImpl_IT {
 
     @Before
     public void setUp() throws Exception {
-        projectId = ProjectId.get(UUID.randomUUID().toString());
+        projectId = ProjectId.valueOf(UUID.randomUUID().toString());
     }
 
     @Test

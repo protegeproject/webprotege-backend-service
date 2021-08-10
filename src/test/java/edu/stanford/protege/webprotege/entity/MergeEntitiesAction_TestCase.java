@@ -19,8 +19,7 @@ public class MergeEntitiesAction_TestCase {
 
     private MergeEntitiesAction action;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private ImmutableSet<OWLEntity> sourceEntities = ImmutableSet.of(mock(OWLEntity.class));
 
@@ -98,7 +97,7 @@ public class MergeEntitiesAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(MergeEntitiesAction.create(mock(ProjectId.class), sourceEntities, targetEntity, treatment, commitMessage))));
+        assertThat(action, is(not(MergeEntitiesAction.create(ProjectId.generate(), sourceEntities, targetEntity, treatment, commitMessage))));
     }
 
     @Test

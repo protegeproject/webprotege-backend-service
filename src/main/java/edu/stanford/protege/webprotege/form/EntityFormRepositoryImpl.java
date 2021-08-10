@@ -64,7 +64,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
     public void deleteFormDescriptor(@Nonnull ProjectId projectId, @Nonnull FormId formId) {
         try {
             writeLock.lock();
-            var query = new Document(PROJECT_ID, projectId.getId()).append(FORM_DESCRIPTOR__FORM_ID, formId.getId());
+            var query = new Document(PROJECT_ID, projectId.id()).append(FORM_DESCRIPTOR__FORM_ID, formId.getId());
             getCollection().findOneAndDelete(query);
         } finally {
             writeLock.unlock();
@@ -106,7 +106,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
         try {
             readLock.lock();
             return StreamSupport.stream(getCollection()
-                                                .find(new Document(PROJECT_ID, projectId.getId())).spliterator(),
+                                                .find(new Document(PROJECT_ID, projectId.id())).spliterator(),
                                         false
                                         )
                     .map(doc -> objectMapper.convertValue(doc, FormDescriptorRecord.class))
@@ -131,7 +131,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
         try {
             writeLock.lock();
             var collection = getCollection();
-            collection.deleteMany(new Document(PROJECT_ID, projectId.getId()));
+            collection.deleteMany(new Document(PROJECT_ID, projectId.id()));
             if (!formDescriptors.isEmpty()) {
                 var docs = new ArrayList<Document>();
                 for (int ordinal = 0; ordinal < formDescriptors.size(); ordinal++) {
@@ -173,7 +173,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
 
     public static Bson getProjectIdFormIdFilter(@Nonnull ProjectId projectId,
                                          @Nonnull FormId formId) {
-        var projectIdFilter = Filters.eq(PROJECT_ID, projectId.getId());
+        var projectIdFilter = Filters.eq(PROJECT_ID, projectId.id());
         var formIdFilter = Filters.eq(FORM_DESCRIPTOR__FORM_ID, formId.getId());
         return Filters.and(projectIdFilter, formIdFilter);
     }

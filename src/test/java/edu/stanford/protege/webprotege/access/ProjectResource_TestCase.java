@@ -19,8 +19,7 @@ public class ProjectResource_TestCase {
 
     private ProjectResource projectResource;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp() {
@@ -56,7 +55,7 @@ public class ProjectResource_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(projectResource, is(not(new ProjectResource(mock(ProjectId.class)))));
+        assertThat(projectResource, is(not(new ProjectResource(ProjectId.generate()))));
     }
 
     @Test
@@ -76,7 +75,7 @@ public class ProjectResource_TestCase {
 
     @Test
     public void shouldReturn_false_For_isProjectTarget() {
-        assertThat(projectResource.isProject(mock(ProjectId.class)), is(false));
+        assertThat(projectResource.isProject(ProjectId.generate()), is(false));
     }
 
     @Test

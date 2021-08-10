@@ -31,8 +31,7 @@ public class GetProjectChangesAction_TestCase {
 
     private GetProjectChangesAction otherAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private PageRequest pageRequest;

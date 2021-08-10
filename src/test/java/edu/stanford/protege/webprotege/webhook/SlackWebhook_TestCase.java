@@ -17,8 +17,7 @@ public class SlackWebhook_TestCase {
 
     private SlackWebhook slackWebhook;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private String payloadUrl = "The payloadUrl";
 
@@ -67,7 +66,7 @@ public class SlackWebhook_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(slackWebhook, is(not(new SlackWebhook(mock(ProjectId.class), payloadUrl))));
+        assertThat(slackWebhook, is(not(new SlackWebhook(ProjectId.generate(), payloadUrl))));
     }
 
     @Test

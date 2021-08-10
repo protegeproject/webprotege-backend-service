@@ -34,7 +34,7 @@ public class Tag_Serialization_TestCase {
     @Test
     public void shouldSerializeTag() throws Exception {
         Tag tag = Tag.get(TagId.createTagId(),
-                          ProjectId.get("12345678-1234-1234-1234-123456789abc"),
+                          ProjectId.valueOf("12345678-1234-1234-1234-123456789abc"),
                           "The label",
                           "The description",
                           Color.getRGB(10, 20, 30),
@@ -53,7 +53,7 @@ public class Tag_Serialization_TestCase {
     @Test
     public void shouldDeserializeTagWithMissingCriteriaField() throws Exception {
         Tag tag = Tag.get(TagId.getId("605bc497-fd7f-4338-b7c9-81cc3559c470"),
-                          ProjectId.get("12345678-1234-1234-1234-123456789abc"),
+                          ProjectId.valueOf("12345678-1234-1234-1234-123456789abc"),
                           "The label",
                           "The description",
                           Color.getRGB(10, 20, 30),

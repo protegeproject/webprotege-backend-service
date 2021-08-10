@@ -18,8 +18,7 @@ public class EntitySearchFilter_TestCase {
     @Mock
     private EntitySearchFilterId id;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private LanguageMap label;

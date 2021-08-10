@@ -19,8 +19,7 @@ public class ProjectSettings_TestCase {
 
     private ProjectSettings projectSettings;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private String projectDisplayName = "The projectDisplayName";
 
@@ -119,7 +118,7 @@ public class ProjectSettings_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(projectSettings, is(not(ProjectSettings.get(mock(ProjectId.class), projectDisplayName, projectDescription, defaultLanguage, defaultDisplayNameSettings, slackIntegrationSettings, webhookSettings, entityDeprecationSettings))));
+        assertThat(projectSettings, is(not(ProjectSettings.get(ProjectId.generate(), projectDisplayName, projectDescription, defaultLanguage, defaultDisplayNameSettings, slackIntegrationSettings, webhookSettings, entityDeprecationSettings))));
     }
 
     @Test

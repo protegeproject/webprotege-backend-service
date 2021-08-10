@@ -32,8 +32,7 @@ public class ClassHierarchyProviderImpl_TestCase {
 
     private OWLClass owlThing = dataFactory.getOWLThing();
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private ProjectOntologiesIndex projectOntologiesIndex;

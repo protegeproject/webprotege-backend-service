@@ -116,7 +116,7 @@ public class DefaultLogger implements WebProtegeLogger {
         if(!logger.isInfoEnabled()) {
             return;
         }
-        String formattedMessage = String.format("ProjectId: %s    %s", projectId.getId(), formatMessage(message, args));
+        String formattedMessage = String.format("ProjectId: %s    %s", projectId.id(), formatMessage(message, args));
         logger.info(WebProtegeMarker, formattedMessage);
     }
 

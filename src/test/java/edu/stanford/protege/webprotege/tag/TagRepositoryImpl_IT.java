@@ -63,8 +63,8 @@ public class TagRepositoryImpl_IT {
     public void setUp() throws Exception {
         tagId = TagId.getId("12345678-1234-1234-1234-123456789abc");
         tagId2 = TagId.getId("12345678-1234-1234-1234-123456789def");
-        projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
-        projectId2 = ProjectId.get("12345678-1234-1234-1234-123456789def");
+        projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
+        projectId2 = ProjectId.valueOf("12345678-1234-1234-1234-123456789def");
 
         repository.ensureIndexes();
 

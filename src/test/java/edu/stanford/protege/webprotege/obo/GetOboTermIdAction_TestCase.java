@@ -16,8 +16,7 @@ import static org.mockito.Mockito.mock;
 public class GetOboTermIdAction_TestCase {
 
     private GetOboTermIdAction getOboTermIdAction;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
     @Mock
     private OWLEntity term;
 
@@ -66,7 +65,7 @@ public class GetOboTermIdAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboTermIdAction, is(not(GetOboTermIdAction.create(mock(ProjectId.class), term))));
+        assertThat(getOboTermIdAction, is(not(GetOboTermIdAction.create(ProjectId.generate(), term))));
     }
 
     @Test

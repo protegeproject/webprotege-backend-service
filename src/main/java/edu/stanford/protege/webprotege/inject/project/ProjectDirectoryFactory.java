@@ -21,7 +21,7 @@ public class ProjectDirectoryFactory {
     }
 
     public File getProjectDirectory(ProjectId projectId) {
-        return new File(getProjectDataDirectory(), projectId.getId());
+        return new File(getProjectDataDirectory(), projectId.id());
     }
 
     private File getProjectDataDirectory() {

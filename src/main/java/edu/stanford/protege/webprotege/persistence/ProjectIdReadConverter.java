@@ -14,6 +14,6 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 public class ProjectIdReadConverter implements Converter<String, ProjectId> {
 
     public ProjectId convert(String id) {
-        return ProjectId.get(id);
+        return ProjectId.valueOf(id);
     }
 }

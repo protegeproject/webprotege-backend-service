@@ -25,12 +25,12 @@ public class ProjectEntityCrudKitSettingsTestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionForNullEntityCrudKitSettings() {
-        ProjectEntityCrudKitSettings.get(mock(ProjectId.class), null);
+        ProjectEntityCrudKitSettings.get(ProjectId.generate(), null);
     }
 
     @Test
     public void getProjectIdShouldReturnValueEqualToProjectIdSuppliedInConstructor() {
-        ProjectId projectId = mock(ProjectId.class);
+        ProjectId projectId = ProjectId.generate();
         ProjectEntityCrudKitSettings settings = ProjectEntityCrudKitSettings.get(projectId, mock(EntityCrudKitSettings.class));
         assertEquals(projectId, settings.getProjectId());
     }
@@ -38,13 +38,13 @@ public class ProjectEntityCrudKitSettingsTestCase {
     @Test
     public void getSettingsShouldReturnValueEqualToSettingsSuppliedInConstructor() {
         EntityCrudKitSettings<?> entityCrudKitSettings = mock(EntityCrudKitSettings.class);
-        ProjectEntityCrudKitSettings settings = ProjectEntityCrudKitSettings.get(mock(ProjectId.class), entityCrudKitSettings);
+        ProjectEntityCrudKitSettings settings = ProjectEntityCrudKitSettings.get(ProjectId.generate(), entityCrudKitSettings);
         assertEquals(entityCrudKitSettings, settings.getSettings());
     }
 
     @Test
     public void hashCodeShouldBeEqualForSameProjectIdAndSettings() {
-        ProjectId projectId = mock(ProjectId.class);
+        ProjectId projectId = ProjectId.generate();
         EntityCrudKitSettings<?> settings = mock(EntityCrudKitSettings.class);
         ProjectEntityCrudKitSettings settingsA = ProjectEntityCrudKitSettings.get(projectId, settings);
         ProjectEntityCrudKitSettings settingsB = ProjectEntityCrudKitSettings.get(projectId, settings);
@@ -53,7 +53,7 @@ public class ProjectEntityCrudKitSettingsTestCase {
 
     @Test
     public void equalsShouldReturnTrueForEqualProjectIdAndEqualSettings() {
-        ProjectId projectId = mock(ProjectId.class);
+        ProjectId projectId = ProjectId.generate();
         EntityCrudKitSettings<?> settings = mock(EntityCrudKitSettings.class);
         ProjectEntityCrudKitSettings settingsA = ProjectEntityCrudKitSettings.get(projectId, settings);
         ProjectEntityCrudKitSettings settingsB = ProjectEntityCrudKitSettings.get(projectId, settings);

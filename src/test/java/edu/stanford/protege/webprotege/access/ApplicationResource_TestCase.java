@@ -61,7 +61,7 @@ public class ApplicationResource_TestCase {
 
     @Test
     public void shouldReturn_false_For_isProjectTarget() {
-        assertThat(applicationResource.isProject(mock(ProjectId.class)), is(false));
+        assertThat(applicationResource.isProject(ProjectId.generate()), is(false));
     }
 
 }

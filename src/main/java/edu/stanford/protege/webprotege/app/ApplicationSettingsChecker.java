@@ -68,12 +68,12 @@ public class ApplicationSettingsChecker {
             configurationErrors.add(String.format("Cannot construct well-formed application URL. (%s)", e.getMessage()));
         }
         try {
-            placeUrl.getProjectUrl(ProjectId.get(UUID.randomUUID().toString()));
+            placeUrl.getProjectUrl(ProjectId.valueOf(UUID.randomUUID().toString()));
         } catch (Exception e) {
             configurationErrors.add(String.format("Cannot construct well-formed project URLs. (%s)", e.getMessage()));
         }
         try {
-            placeUrl.getEntityUrl(ProjectId.get(UUID.randomUUID().toString()),
+            placeUrl.getEntityUrl(ProjectId.valueOf(UUID.randomUUID().toString()),
                                   DataFactory.getOWLThing());
         } catch (Exception e) {
             configurationErrors.add(String.format("Cannot construct well-formed OWL Entity URLs. (%s)", e.getMessage()));

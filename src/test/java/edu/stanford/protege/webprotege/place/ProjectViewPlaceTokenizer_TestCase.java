@@ -10,7 +10,7 @@ import org.semanticweb.owlapi.model.IRI;
  */
 public class ProjectViewPlaceTokenizer_TestCase {
 
-    private final ProjectId projectId = ProjectId.get("aaaabbbb-cccc-dddd-eeee-ffffffffffffffff");
+    private final ProjectId projectId = ProjectId.valueOf("aaaabbbb-cccc-dddd-eeee-ffffffffffffffff");
 
     private final IRI entityIri = IRI.create("http://stuff.com#A");
 

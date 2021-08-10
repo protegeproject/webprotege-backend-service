@@ -49,7 +49,7 @@ public class ProjectDetailsRepository_IT {
     private MongoClient mongoClient;
 
     private static ProjectId getProjectId() {
-        return ProjectId.get(UUID.randomUUID().toString());
+        return ProjectId.valueOf(UUID.randomUUID().toString());
     }
 
     private UserId owner = UserId.getUserId("The Owner");

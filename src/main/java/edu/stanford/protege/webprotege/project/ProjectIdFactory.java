@@ -14,7 +14,7 @@ public class ProjectIdFactory {
 
     public static ProjectId getFreshProjectId() {
         UUID uuid = UUID.randomUUID();
-        return ProjectId.get(uuid.toString());
+        return ProjectId.valueOf(uuid.toString());
     }
 
 }

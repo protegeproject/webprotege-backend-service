@@ -37,7 +37,7 @@ public class SlackWebhookRepository_IT {
 
     private SlackWebhook slackWebhookA, slackWebhookB;
 
-    private ProjectId projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
+    private ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
     @Before
     public void setUp() {

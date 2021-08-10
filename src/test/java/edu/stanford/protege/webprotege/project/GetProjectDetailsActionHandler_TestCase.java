@@ -32,8 +32,7 @@ public class GetProjectDetailsActionHandler_TestCase {
     @Mock
     private GetProjectDetailsResult result;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private ProjectDetails projectDetails;

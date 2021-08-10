@@ -17,8 +17,7 @@ public class GetOntologyFramesAction_TestCase {
 
     private GetOntologyFramesAction action;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp()
@@ -49,7 +48,7 @@ public class GetOntologyFramesAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(GetOntologyFramesAction.create(mock(ProjectId.class)))));
+        assertThat(action, is(not(GetOntologyFramesAction.create(ProjectId.generate()))));
     }
 
     @Test

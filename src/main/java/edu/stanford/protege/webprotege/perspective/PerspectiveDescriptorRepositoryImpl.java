@@ -60,7 +60,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
             projectId = null;
         }
         else {
-            projectId = record.getProjectId().getId();
+            projectId = record.getProjectId().id();
         }
         document.append(PROJECT_ID, projectId);
 
@@ -87,7 +87,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
     @Override
     public Optional<PerspectiveDescriptorsRecord> findDescriptors(@Nonnull ProjectId projectId,
                                                                   @Nonnull UserId userId) {
-        var query = new Document(PROJECT_ID, projectId.getId())
+        var query = new Document(PROJECT_ID, projectId.id())
                 .append(USER_ID, userId.getUserName());
         return getPerspectiveDescriptorRecord(query);
     }
@@ -95,7 +95,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
     @Nonnull
     @Override
     public Optional<PerspectiveDescriptorsRecord> findDescriptors(@Nonnull ProjectId projectId) {
-        var query = new Document(PROJECT_ID, projectId.getId())
+        var query = new Document(PROJECT_ID, projectId.id())
                 .append(USER_ID, null);
         return getPerspectiveDescriptorRecord(query);
     }
@@ -113,7 +113,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
     public Stream<PerspectiveDescriptorsRecord> findProjectAndSystemDescriptors(@Nonnull ProjectId projectId) {
         var projectIdQueries = Arrays.asList(
                 new Document(PROJECT_ID, null),
-                new Document(PROJECT_ID, projectId.getId()));
+                new Document(PROJECT_ID, projectId.id()));
         var query = new Document(new Document("$or", projectIdQueries))
                 .append(USER_ID, null);
         var resultBuilder = Stream.<PerspectiveDescriptorsRecord>builder();
@@ -130,7 +130,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
 
     @Override
     public void dropAllDescriptors(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
-        var query = new Document(PROJECT_ID, projectId.getId())
+        var query = new Document(PROJECT_ID, projectId.id())
                 .append(USER_ID, userId.getUserName());
         getCollection().deleteMany(query);
     }

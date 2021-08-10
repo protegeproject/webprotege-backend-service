@@ -26,8 +26,7 @@ public class GetRevisionSummariesAction_TestCase {
 
     private GetRevisionSummariesAction otherAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
 
     @Before

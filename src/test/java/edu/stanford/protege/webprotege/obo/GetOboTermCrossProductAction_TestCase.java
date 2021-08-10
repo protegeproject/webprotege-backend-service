@@ -17,8 +17,7 @@ import static org.hamcrest.Matchers.*;
 public class GetOboTermCrossProductAction_TestCase {
 
     private GetOboTermCrossProductAction getOboTermCrossProductAction;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
     @Mock
     private OWLClass entity;
 
@@ -67,7 +66,7 @@ public class GetOboTermCrossProductAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboTermCrossProductAction, is(not(GetOboTermCrossProductAction.create(Mockito.mock(ProjectId.class), entity))));
+        assertThat(getOboTermCrossProductAction, is(not(GetOboTermCrossProductAction.create(ProjectId.generate(), entity))));
     }
 
     @Test

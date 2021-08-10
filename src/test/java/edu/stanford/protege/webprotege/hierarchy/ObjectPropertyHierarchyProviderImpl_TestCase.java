@@ -30,8 +30,7 @@ public class ObjectPropertyHierarchyProviderImpl_TestCase {
 
     private ObjectPropertyHierarchyProviderImpl provider;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private ProjectOntologiesIndex projectOntologiesIndex;

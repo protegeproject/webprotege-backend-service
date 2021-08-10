@@ -50,7 +50,7 @@ public class UserActivityManager_IT {
 
     private UserId userId = UserId.getUserId("John Smith" );
 
-    private ProjectId projectId = ProjectId.get(UUID.randomUUID().toString());
+    private ProjectId projectId = ProjectId.valueOf(UUID.randomUUID().toString());
 
     private UserActivityRecord record = new UserActivityRecord(userId,
                                                            LAST_LOGIN,

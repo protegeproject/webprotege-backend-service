@@ -26,7 +26,7 @@ public class ProjectCache_Test {
 
     @Test
     public void shouldInstantiateAndCacheAndPurgeProjectComponent() {
-        var projectId = ProjectId.get(UUID.randomUUID().toString());
+        var projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         var revisionManager = projectCache.getRevisionManager(projectId);
         assertThat(revisionManager, is(notNullValue()));
         var revisionManagerSecond = projectCache.getRevisionManager(projectId);
@@ -35,7 +35,7 @@ public class ProjectCache_Test {
 
     @Test
     public void shouldPurgeProject() {
-        var projectId = ProjectId.get(UUID.randomUUID().toString());
+        var projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         projectCache.getRevisionManager(projectId);
         assertThat(projectCache.isActive(projectId), is(true));
         projectCache.purge(projectId);
@@ -44,7 +44,7 @@ public class ProjectCache_Test {
 
     @Test
     public void shouldPurgeAllProjects() {
-        var projectId = ProjectId.get(UUID.randomUUID().toString());
+        var projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         projectCache.getRevisionManager(projectId);
         assertThat(projectCache.isActive(projectId), is(true));
         projectCache.purgeAllProjects();

@@ -168,7 +168,7 @@ public class ProjectCache implements HasDispose {
     private ProjectComponent getProjectInjector(ProjectId projectId, InstantiationMode instantiationMode) {
         ProjectComponent projectComponent = projectId2ProjectComponent.get(projectId);
         if (projectComponent == null) {
-            logger.info("Request for unloaded project {}.", projectId.getId());
+            logger.info("Request for unloaded project {}.", projectId.id());
             Stopwatch stopwatch = Stopwatch.createStarted();
             projectComponent = projectComponentFactory.createProjectComponent(projectId);
             if(instantiationMode == InstantiationMode.EAGER) {
@@ -220,7 +220,7 @@ public class ProjectCache implements HasDispose {
             final int projectsBeingAccessed = lastAccessMap.size();
             lastAccessLock.writeLock().unlock();
             writeLock.unlock();
-            logger.info("Purged project: {}.  {} projects are now being accessed.", projectId.getId(), projectsBeingAccessed);
+            logger.info("Purged project: {}.  {} projects are now being accessed.", projectId.id(), projectsBeingAccessed);
         }
     }
 

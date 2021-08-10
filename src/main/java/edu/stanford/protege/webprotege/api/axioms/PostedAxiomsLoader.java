@@ -60,7 +60,7 @@ public class PostedAxiomsLoader {
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream)) {
             OWLOntologyManager manager = WebProtegeOWLManager.createOWLOntologyManager();
             IRI tempDocumentIri = IRI.create(String.format(ONTOLOGY_IRI_TEMPLATE,
-                                                           projectId.getId()));
+                                                           projectId.id()));
             OWLOntologyDocumentSource source = new StreamDocumentSource(bufferedInputStream,
                                                                         tempDocumentIri,
                                                                         documentFormat,

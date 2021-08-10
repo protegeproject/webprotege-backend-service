@@ -37,7 +37,7 @@ public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
         projectContext.register(ProjectActionHandlerBeansConfiguration.class);
         projectContext.register(OboBeansConfiguration.class);
         projectContext.register(FormBeansConfiguration.class);
-        projectContext.registerBean("projectId", ProjectId.class, projectId.getId());
+        projectContext.registerBean("projectId", ProjectId.class, projectId.id());
         projectContext.refresh();
         return projectContext.getBean(ProjectComponent.class);
     }

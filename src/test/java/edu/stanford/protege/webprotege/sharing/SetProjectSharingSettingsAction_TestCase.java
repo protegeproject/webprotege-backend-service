@@ -30,8 +30,7 @@ public class SetProjectSharingSettingsAction_TestCase {
     @Mock
     private ProjectSharingSettings projectSharingSettings;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp() throws Exception {

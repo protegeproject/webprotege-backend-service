@@ -26,7 +26,7 @@ public class PrefixDeclarations_TestCase {
 
     private static final String PREFIX_B = "http://ont.org/b/";
 
-    private ProjectId projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
+    private ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
     private Map<String, String> prefixes;
 

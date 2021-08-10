@@ -20,6 +20,6 @@ public class ProjectIdReadConverterTestCase {
         ProjectIdReadConverter converter = new ProjectIdReadConverter();
         String suppliedId = UUID.randomUUID().toString();
         ProjectId projectId = converter.convert(suppliedId);
-        assertEquals(suppliedId, projectId.getId());
+        assertEquals(suppliedId, projectId.id());
     }
 }

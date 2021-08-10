@@ -21,8 +21,7 @@ public class ProjectSharingSettings_TestCase {
 
     private ProjectSharingSettings projectSharingSettings;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private Optional<SharingPermission> linkSharingPermission = Optional.of(SharingPermission.EDIT);
 
@@ -80,7 +79,7 @@ public class ProjectSharingSettings_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(projectSharingSettings, is(not(new ProjectSharingSettings(mock(ProjectId.class), linkSharingPermission, sharingSettings))));
+        assertThat(projectSharingSettings, is(not(new ProjectSharingSettings(ProjectId.generate(), linkSharingPermission, sharingSettings))));
     }
 
     @Test

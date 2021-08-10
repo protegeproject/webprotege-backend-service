@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
-import edu.stanford.protege.webprotege.ValueObject;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

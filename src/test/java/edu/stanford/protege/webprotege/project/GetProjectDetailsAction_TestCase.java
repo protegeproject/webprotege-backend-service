@@ -16,8 +16,7 @@ import static org.mockito.Mockito.mock;
 public class GetProjectDetailsAction_TestCase {
 
     private GetProjectDetailsAction action;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp()
@@ -52,7 +51,7 @@ public class GetProjectDetailsAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(new GetProjectDetailsAction(mock(ProjectId.class)))));
+        assertThat(action, is(not(new GetProjectDetailsAction(ProjectId.generate()))));
     }
 
     @Test

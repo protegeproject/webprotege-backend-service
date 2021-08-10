@@ -30,8 +30,7 @@ public class AvailableProject_TestCase {
 
     private boolean trashable = true;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private UserId modifiedBy, owner, createdBy;

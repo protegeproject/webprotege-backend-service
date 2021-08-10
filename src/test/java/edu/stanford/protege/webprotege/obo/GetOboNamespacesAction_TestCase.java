@@ -18,8 +18,7 @@ import static org.mockito.Mockito.mock;
 public class GetOboNamespacesAction_TestCase {
 
     private GetOboNamespacesAction getOboNamespacesAction;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp() {
@@ -55,7 +54,7 @@ public class GetOboNamespacesAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getOboNamespacesAction, is(not(GetOboNamespacesAction.create(mock(ProjectId.class)))));
+        assertThat(getOboNamespacesAction, is(not(GetOboNamespacesAction.create(ProjectId.generate()))));
     }
 
     @Test

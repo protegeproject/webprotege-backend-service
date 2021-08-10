@@ -18,8 +18,7 @@ public class PermissionsChangedEvent_TestCase {
 
     private PermissionsChangedEvent permissionsChangedEvent;
 
-    @Mock
-    private ProjectId source;
+    private ProjectId source = ProjectId.generate();
 
     @Before
     public void setUp() {
@@ -55,7 +54,7 @@ public class PermissionsChangedEvent_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_source() {
-        assertThat(permissionsChangedEvent, is(not(new PermissionsChangedEvent(mock(ProjectId.class)))));
+        assertThat(permissionsChangedEvent, is(not(new PermissionsChangedEvent(ProjectId.generate()))));
     }
 
     @Test

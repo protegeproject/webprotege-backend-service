@@ -66,7 +66,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     public Optional<PerspectiveLayoutRecord> findLayout(@Nonnull ProjectId projectId,
                                                         @Nonnull UserId userId,
                                                         @Nonnull PerspectiveId perspectiveId) {
-        var query = getQuery(projectId.getId(), userId.getUserName(), perspectiveId);
+        var query = getQuery(projectId.id(), userId.getUserName(), perspectiveId);
         return findLayout(query);
     }
 
@@ -86,7 +86,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     @Override
     public Optional<PerspectiveLayoutRecord> findLayout(@Nonnull ProjectId projectId,
                                                         @Nonnull PerspectiveId perspectiveId) {
-        var query = getQuery(projectId.getId(), null, perspectiveId);
+        var query = getQuery(projectId.id(), null, perspectiveId);
         return findLayout(query);
     }
 
@@ -103,7 +103,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     }
 
     private Document getQuery(PerspectiveLayoutRecord record) {
-        return getQuery(Optional.ofNullable(record.getProjectId()).map(ProjectId::getId).orElse(null),
+        return getQuery(Optional.ofNullable(record.getProjectId()).map(ProjectId::id).orElse(null),
                         Optional.ofNullable(record.getUserId()).map(UserId::getUserName).orElse(null),
                         record.getPerspectiveId());
     }
@@ -127,7 +127,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     @Override
     public void dropLayout(@Nonnull ProjectId projectId, @Nonnull UserId userId, @Nonnull PerspectiveId perspectiveId) {
         try {
-            var query = getQuery(projectId.getId(), userId.getUserName(), perspectiveId);
+            var query = getQuery(projectId.id(), userId.getUserName(), perspectiveId);
             getCollection().deleteOne(query);
         } catch (MongoException e) {
             logger.error("An error occurred when dropping the perspective layout for a user", e);
@@ -137,7 +137,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     @Override
     public void dropAllLayouts(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
         try {
-            var query = new Document(PROJECT_ID, projectId.getId())
+            var query = new Document(PROJECT_ID, projectId.id())
                     .append(USER_ID, userId.getUserName());
             getCollection().deleteMany(query);
         } catch (MongoException e) {

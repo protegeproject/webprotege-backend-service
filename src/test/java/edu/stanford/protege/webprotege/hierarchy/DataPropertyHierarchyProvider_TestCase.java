@@ -30,8 +30,7 @@ public class DataPropertyHierarchyProvider_TestCase {
 
     private DataPropertyHierarchyProviderImpl provider;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private OWLDataPropertyProvider dataPropertyProvider;

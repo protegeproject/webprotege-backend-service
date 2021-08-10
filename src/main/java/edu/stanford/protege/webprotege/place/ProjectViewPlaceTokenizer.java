@@ -41,7 +41,7 @@ public class ProjectViewPlaceTokenizer {
         String perspectiveId = matcher.group(2);
         String selectionString = matcher.group(4);
 
-        ProjectViewPlace.Builder builder = new ProjectViewPlace.Builder(ProjectId.get(projectId), PerspectiveId.get(perspectiveId));
+        ProjectViewPlace.Builder builder = new ProjectViewPlace.Builder(ProjectId.valueOf(projectId), PerspectiveId.get(perspectiveId));
 
         if(selectionString != null) {
             ItemTokenizer tokenizer = new ItemTokenizer();
@@ -67,7 +67,7 @@ public class ProjectViewPlaceTokenizer {
     public String getToken(ProjectViewPlace place) {
         StringBuilder sb = new StringBuilder();
         sb.append(PROJECTS);
-        sb.append(place.getProjectId().getId());
+        sb.append(place.getProjectId().id());
         sb.append(PERSPECTIVES);
         sb.append(place.getPerspectiveId().getId());
 

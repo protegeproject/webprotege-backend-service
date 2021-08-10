@@ -18,8 +18,7 @@ public class RevertRevisionResult_TestCase {
 
     private RevertRevisionResult revertRevisionResult;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private EventList<ProjectEvent<?>> eventList;
@@ -69,7 +68,7 @@ public class RevertRevisionResult_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(Matchers.not(RevertRevisionResult.create(Mockito.mock(ProjectId.class), revisionNumber, eventList))));
+        MatcherAssert.assertThat(revertRevisionResult, Matchers.is(Matchers.not(RevertRevisionResult.create(ProjectId.generate(), revisionNumber, eventList))));
     }
 
     @Test

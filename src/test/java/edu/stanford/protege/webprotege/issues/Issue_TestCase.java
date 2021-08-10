@@ -30,8 +30,7 @@ public class Issue_TestCase {
 
     private Issue issue;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private int number = 1;
 
@@ -479,7 +478,7 @@ public class Issue_TestCase {
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
         assertThat(issue,
-                   is(not(new Issue(mock(ProjectId.class),
+                   is(not(new Issue(ProjectId.generate(),
                                     number,
                                     creator,
                                     createdAt,

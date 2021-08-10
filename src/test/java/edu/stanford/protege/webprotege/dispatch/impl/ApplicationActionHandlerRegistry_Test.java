@@ -113,27 +113,27 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainGetPerspectivesActionHandler() {
-        var handler = registry.getActionHandler(GetPerspectivesAction.create(mock(ProjectId.class),
+        var handler = registry.getActionHandler(GetPerspectivesAction.create(ProjectId.generate(),
                                                                              mock(UserId.class)));
         assertThat(handler, is(notNullValue()));
     }
 
     @Test
     public void shouldContainGetProjectDetailsActionHandler() {
-        var handler = registry.getActionHandler(GetProjectDetailsAction.create(mock(ProjectId.class)));
+        var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 
     @Test
     public void shouldContainGetProjectEventsActionHandler() {
         var handler = registry.getActionHandler(GetProjectEventsAction.create(mock(EventTag.class),
-                                                                              mock(ProjectId.class)));
+                                                                              ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 
     @Test
     public void shouldContainGetProjectPermissionsActionHandler() {
-        var handler = registry.getActionHandler(GetProjectPermissionsAction.create(mock(ProjectId.class),
+        var handler = registry.getActionHandler(GetProjectPermissionsAction.create(ProjectId.generate(),
                                                                                    mock(UserId.class)));
         assertThat(handler, is(notNullValue()));
     }
@@ -146,7 +146,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainLoadProjectActionHandler() {
-        var handler = registry.getActionHandler(LoadProjectAction.create(mock(ProjectId.class)));
+        var handler = registry.getActionHandler(LoadProjectAction.create(ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 
@@ -158,7 +158,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainMoveProjectsToTrashActionHandler() {
-        var handler = registry.getActionHandler(MoveProjectsToTrashAction.create(mock(ProjectId.class)));
+        var handler = registry.getActionHandler(MoveProjectsToTrashAction.create(ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 
@@ -177,7 +177,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainRemoveProjectsFromTrashActionHandler() {
-        var handler = registry.getActionHandler(RemoveProjectFromTrashAction.create(mock(ProjectId.class)));
+        var handler = registry.getActionHandler(RemoveProjectFromTrashAction.create(ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 

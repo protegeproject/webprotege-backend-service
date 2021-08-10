@@ -28,7 +28,7 @@ public class MessageIdGenerator_TestCase {
 
     private final String projectIdString = UUID.randomUUID().toString();
 
-    private final ProjectId projectId = ProjectId.get(projectIdString);
+    private final ProjectId projectId = ProjectId.valueOf(projectIdString);
 
     private MessageIdGenerator generator;
 

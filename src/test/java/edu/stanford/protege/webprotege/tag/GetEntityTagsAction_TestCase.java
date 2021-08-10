@@ -18,8 +18,7 @@ public class GetEntityTagsAction_TestCase {
 
     private GetEntityTagsAction action;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private OWLEntity entity;
@@ -69,7 +68,7 @@ public class GetEntityTagsAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(GetEntityTagsAction.create(mock(ProjectId.class), entity))));
+        assertThat(action, is(not(GetEntityTagsAction.create(ProjectId.generate(), entity))));
     }
 
     @Test

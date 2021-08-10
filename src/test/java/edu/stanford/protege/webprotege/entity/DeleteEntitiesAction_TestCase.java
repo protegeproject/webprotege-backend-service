@@ -20,8 +20,7 @@ public class DeleteEntitiesAction_TestCase {
 
     private DeleteEntitiesAction deleteEntitiesAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private Set<OWLEntity> entities = new HashSet<>();
 
@@ -71,7 +70,7 @@ public class DeleteEntitiesAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(deleteEntitiesAction, is(not(new DeleteEntitiesAction(mock(ProjectId.class), entities))));
+        assertThat(deleteEntitiesAction, is(not(new DeleteEntitiesAction(ProjectId.generate(), entities))));
     }
 
     @Test

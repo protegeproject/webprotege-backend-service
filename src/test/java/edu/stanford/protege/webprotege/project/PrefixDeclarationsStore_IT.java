@@ -26,7 +26,7 @@ public class PrefixDeclarationsStore_IT {
 
     public static final String COLLECTION_NAME = "PrefixDeclarations";
     
-    private final ProjectId projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
+    private final ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
     @Autowired
     private PrefixDeclarationsStore store;

@@ -39,7 +39,7 @@ import static org.hamcrest.core.IsNot.not;
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class EntityDiscussionThreadRepository_IT {
 
-    private final ProjectId projectId = ProjectIdFactory.getFreshProjectId();
+    private final ProjectId projectId = ProjectId.generate();
 
     private final OWLClass entity = MockingUtils.mockOWLClass();
 

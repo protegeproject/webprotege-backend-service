@@ -20,8 +20,7 @@ public class UserIdProjectIdKey_TestCase {
     private UserIdProjectIdKey userIdProjectIdKey;
     @Mock
     private UserId userId;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp()
@@ -72,7 +71,7 @@ public class UserIdProjectIdKey_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(userIdProjectIdKey, is(Matchers.not(new UserIdProjectIdKey(userId, mock(ProjectId.class)))));
+        assertThat(userIdProjectIdKey, is(Matchers.not(new UserIdProjectIdKey(userId, ProjectId.generate()))));
     }
 
     @Test

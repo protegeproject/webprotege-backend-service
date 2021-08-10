@@ -16,7 +16,7 @@ public class ProjectDocumentExistsException extends ProjectAlreadyExistsExceptio
     }
 
     public ProjectDocumentExistsException(ProjectId projectId) {
-        super(projectId, "Project document already exists: " + projectId.getId());
+        super(projectId, "Project document already exists: " + projectId.id());
     }
 
 }

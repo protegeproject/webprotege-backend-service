@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.form;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.ValueObject;
+import edu.stanford.protege.webprotege.common.ValueObject;
 import edu.stanford.protege.webprotege.util.UUIDUtil;
 
 import javax.annotation.Nonnull;

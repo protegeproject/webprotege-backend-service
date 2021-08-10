@@ -52,8 +52,7 @@ public class ActiveLanguagesManagerImpl_TestCase {
 
     private ActiveLanguagesManagerImpl impl;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private AxiomsByEntityReferenceIndex axiomsByEntityReference;

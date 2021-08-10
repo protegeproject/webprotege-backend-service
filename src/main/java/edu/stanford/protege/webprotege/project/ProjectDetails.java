@@ -380,6 +380,6 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
         if (descriptionDiff != 0) {
             return descriptionDiff;
         }
-        return getProjectId().getId().compareTo(o.getProjectId().getId());
+        return getProjectId().id().compareTo(o.getProjectId().id());
     }
 }

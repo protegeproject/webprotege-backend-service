@@ -43,7 +43,7 @@ public class EntityTagsRepositoryImpl_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        projectId = ProjectId.get(UUID);
+        projectId = ProjectId.valueOf(UUID);
         repository.ensureIndexes();
         entity = new OWLClassImpl(IRI.create("http://stuff.com/entities/A"));
         tagIdA = TagId.getId("12345678-1234-1234-1234-123456789abc");

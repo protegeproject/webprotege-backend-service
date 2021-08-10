@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.persistence;
 
-import edu.stanford.protege.webprotege.ValueObject;
+import edu.stanford.protege.webprotege.common.ValueObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.convert.converter.Converter;

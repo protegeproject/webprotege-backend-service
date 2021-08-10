@@ -4,11 +4,9 @@ import edu.stanford.protege.webprotege.project.GetAvailableProjectsAction;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.hamcrest.Matchers;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
 
@@ -21,7 +19,6 @@ import static org.hamcrest.Matchers.is;
  * 2021-07-12
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class ProjectActionHandlerBeansConfiguration_Test {
 
     @Autowired
@@ -29,7 +26,7 @@ public class ProjectActionHandlerBeansConfiguration_Test {
 
     @Test
     public void shouldProvideProjectActionHandlers() {
-        var projectId = ProjectId.get(UUID.randomUUID().toString());
+        var projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         var projectComponent = projectComponentFactory.createProjectComponent(projectId);
         var actionHandlerRegistry = projectComponent.getActionHandlerRegistry();
         var handler = actionHandlerRegistry.getActionHandler(GetAvailableProjectsAction.create());

@@ -16,8 +16,7 @@ import static org.mockito.Mockito.mock;
 public class GetHierarchyRootsAction_TestCase {
 
     private GetHierarchyRootsAction action;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
     @Mock
     private HierarchyId hierarchyId;
 
@@ -66,7 +65,7 @@ public class GetHierarchyRootsAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(GetHierarchyRootsAction.create(mock(ProjectId.class), hierarchyId))));
+        assertThat(action, is(not(GetHierarchyRootsAction.create(ProjectId.generate(), hierarchyId))));
     }
 
     @Test

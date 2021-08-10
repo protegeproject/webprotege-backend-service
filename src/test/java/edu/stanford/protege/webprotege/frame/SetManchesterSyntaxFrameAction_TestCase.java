@@ -32,8 +32,7 @@ public class SetManchesterSyntaxFrameAction_TestCase {
 
     private SetManchesterSyntaxFrameAction otherSetManchesterSyntaxFrameAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private OWLEntity subject;

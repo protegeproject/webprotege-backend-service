@@ -23,8 +23,7 @@ public class Tag_TestCase {
     @Mock
     private TagId tagId;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private String tagLabel = "The label";
 
@@ -129,7 +128,7 @@ public class Tag_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(tag, is(not(Tag.get(tagId, mock(ProjectId.class), tagLabel, description, color, backgroundColor, criteria))));
+        assertThat(tag, is(not(Tag.get(tagId, ProjectId.generate(), tagLabel, description, color, backgroundColor, criteria))));
     }
 
     @Test

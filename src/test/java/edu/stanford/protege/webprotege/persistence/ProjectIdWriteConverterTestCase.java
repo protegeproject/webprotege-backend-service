@@ -19,7 +19,7 @@ public class ProjectIdWriteConverterTestCase {
     public void convertShouldReturnSuppliedId() {
         ProjectIdWriteConverter converter = new ProjectIdWriteConverter();
         String suppliedId = UUID.randomUUID().toString();
-        ProjectId projectId = ProjectId.get(suppliedId);
+        ProjectId projectId = ProjectId.valueOf(suppliedId);
         String convertedId = converter.convert(projectId);
         assertEquals(suppliedId, convertedId);
     }

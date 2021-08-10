@@ -68,8 +68,7 @@ public class CommentNotificationEmailGenerator_TestCase {
     @Mock
     private ApplicationNameSupplier applicationNameSupplier;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp() throws Exception {

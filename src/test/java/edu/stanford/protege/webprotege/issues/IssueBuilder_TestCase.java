@@ -36,8 +36,7 @@ public class IssueBuilder_TestCase {
 
     public static final long TIMESTAMP = 55L;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private int number = ISSUE_NUMBER;
 

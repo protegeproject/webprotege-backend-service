@@ -39,7 +39,7 @@ public class MockingUtils {
     }
 
     public static ProjectId mockProjectId() {
-        return ProjectId.get(UUID.randomUUID().toString());
+        return ProjectId.valueOf(UUID.randomUUID().toString());
     }
 
     public static DocumentId mockDocumentId() {

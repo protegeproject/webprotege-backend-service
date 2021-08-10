@@ -32,8 +32,7 @@ public class ProjectDownloadCache_TestCase {
     @Mock
     private ProjectDownloadCacheDirectorySupplier directorySupplier;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private RevisionNumber revisionNumber;
@@ -44,7 +43,6 @@ public class ProjectDownloadCache_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        when(projectId.getId()).thenReturn(THE_PROJECT_ID);
         when(revisionNumber.getValue()).thenReturn(REVISION_NUMBER);
         downloadFormat = DownloadFormat.RDF_XML;
         root = Paths.get("tmp");

@@ -43,7 +43,7 @@ public class EntityFormSelectorRepositoryImpl_IT {
 
     @Test
     public void shouldSaveFormTrigger() {
-        var projectId = ProjectId.get("609767c5-e12a-43b8-beba-b9f250b35a3a");
+        var projectId = ProjectId.valueOf("609767c5-e12a-43b8-beba-b9f250b35a3a");
         var criteria = CompositeRootCriteria.get(
                 ImmutableList.of(SubClassOfCriteria.get(new OWLClassImpl(IRI.create("http://www.co-ode.org/ontologies/amino-acid/2006/05/18/amino-acid.owl#SpecificAminoAcid")), HierarchyFilterType.DIRECT)),
                 MultiMatchType.ALL

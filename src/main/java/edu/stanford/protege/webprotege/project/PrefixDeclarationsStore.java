@@ -38,7 +38,7 @@ public class PrefixDeclarationsStore {
         checkNotNull(prefixDeclarations);
         var collection = database.getCollection(PREFIX_DECLARATIONS);
         var doc = objectMapper.convertValue(prefixDeclarations, Document.class);
-        collection.replaceOne(new Document(PROJECT_ID, prefixDeclarations.getProjectId().getId()),
+        collection.replaceOne(new Document(PROJECT_ID, prefixDeclarations.getProjectId().id()),
                               doc,
                               new ReplaceOptions().upsert(true));
     }
@@ -46,7 +46,7 @@ public class PrefixDeclarationsStore {
     @Nonnull
     public PrefixDeclarations find(@Nonnull ProjectId projectId) {
         var collection = database.getCollection(PREFIX_DECLARATIONS);
-        var doc = collection.find(new Document(PROJECT_ID, projectId.getId()))
+        var doc = collection.find(new Document(PROJECT_ID, projectId.id()))
                   .first();
         if(doc == null) {
             return PrefixDeclarations.get(projectId);

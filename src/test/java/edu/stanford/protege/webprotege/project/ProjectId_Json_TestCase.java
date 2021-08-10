@@ -22,7 +22,7 @@ public class ProjectId_Json_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        projectId = ProjectId.get(THE_UUID);
+        projectId = ProjectId.valueOf(THE_UUID);
     }
 
     @Test

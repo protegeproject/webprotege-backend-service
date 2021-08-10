@@ -17,8 +17,7 @@ public class RecentProjectRecord_TestCase {
 
     private RecentProjectRecord recentProjectRecord;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     private long timestamp = 1L;
 
@@ -61,7 +60,7 @@ public class RecentProjectRecord_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(recentProjectRecord, is(not(new RecentProjectRecord(mock(ProjectId.class), timestamp))));
+        assertThat(recentProjectRecord, is(not(new RecentProjectRecord(ProjectId.generate(), timestamp))));
     }
 
     @Test
@@ -81,13 +80,13 @@ public class RecentProjectRecord_TestCase {
 
     @Test
     public void shouldComeBefore() {
-        RecentProjectRecord other = new RecentProjectRecord(mock(ProjectId.class), 0L);
+        RecentProjectRecord other = new RecentProjectRecord(ProjectId.generate(), 0L);
         assertThat(recentProjectRecord.compareTo(other), is(lessThan(0)));
     }
 
     @Test
     public void shouldComeAfter() {
-        RecentProjectRecord other = new RecentProjectRecord(mock(ProjectId.class), 2L);
+        RecentProjectRecord other = new RecentProjectRecord(ProjectId.generate(), 2L);
         assertThat(recentProjectRecord.compareTo(other), is(greaterThan(0)));
     }
 }

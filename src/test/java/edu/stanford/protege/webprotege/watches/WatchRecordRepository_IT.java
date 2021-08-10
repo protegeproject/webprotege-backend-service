@@ -40,7 +40,7 @@ public class WatchRecordRepository_IT {
 
     private OWLEntity entity = new OWLClassImpl(IRI.create("http://the.ontology/ClsA"));
 
-    private ProjectId projectId = ProjectId.get(UUID.randomUUID().toString());
+    private ProjectId projectId = ProjectId.valueOf(UUID.randomUUID().toString());
 
     @Autowired
     private MongoTemplate database;

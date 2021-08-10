@@ -18,8 +18,7 @@ import static org.mockito.Mockito.mock;
 public class SetPerspectiveLayoutAction_TestCase {
 
     private SetPerspectiveLayoutAction setPerspectiveLayoutAction;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
     @Mock
     private UserId userId;
     @Mock
@@ -79,7 +78,7 @@ public class SetPerspectiveLayoutAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(setPerspectiveLayoutAction, is(Matchers.not(SetPerspectiveLayoutAction.create(mock(ProjectId.class), userId, layout))));
+        assertThat(setPerspectiveLayoutAction, is(Matchers.not(SetPerspectiveLayoutAction.create(ProjectId.generate(), userId, layout))));
     }
 
     @Test

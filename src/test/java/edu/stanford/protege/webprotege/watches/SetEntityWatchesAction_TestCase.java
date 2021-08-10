@@ -21,8 +21,7 @@ import static org.mockito.Mockito.mock;
 public class SetEntityWatchesAction_TestCase {
 
     private SetEntityWatchesAction setEntityWatchesAction;
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
     @Mock
     private UserId userId;
     @Mock
@@ -93,7 +92,7 @@ public class SetEntityWatchesAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(setEntityWatchesAction, is(not(SetEntityWatchesAction.create(mock(ProjectId.class), userId, entity, watches))));
+        assertThat(setEntityWatchesAction, is(not(SetEntityWatchesAction.create(ProjectId.generate(), userId, entity, watches))));
     }
 
     @Test

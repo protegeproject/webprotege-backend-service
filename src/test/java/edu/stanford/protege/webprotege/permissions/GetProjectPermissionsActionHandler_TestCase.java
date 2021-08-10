@@ -32,8 +32,7 @@ public class GetProjectPermissionsActionHandler_TestCase {
     @Mock
     private UserId userId;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private GetProjectPermissionsAction action;

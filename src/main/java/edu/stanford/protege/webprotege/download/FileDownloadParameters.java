@@ -37,9 +37,9 @@ public class FileDownloadParameters {
             return false;
         }
         try {
-            ProjectId.get(rawProjectNameParameter);
+            ProjectId.valueOf(rawProjectNameParameter);
             return true;
-        } catch (ProjectIdFormatException e) {
+        } catch (IllegalArgumentException e) {
             return false;
         }
     }
@@ -50,7 +50,7 @@ public class FileDownloadParameters {
         if(projectName == null) {
             throw new UnsupportedOperationException("getProjectId can only be called if the request is for a project download (isProjectDownload() returns true)");
         }
-        return ProjectId.get(projectName);
+        return ProjectId.valueOf(projectName);
     }
 
     /**

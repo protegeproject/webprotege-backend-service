@@ -30,8 +30,7 @@ public class GetProjectSharingSettingsActionHandler_TestCase {
     @Mock
     private ProjectSharingSettings projectSharingSettings;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private GetProjectSharingSettingsAction action;

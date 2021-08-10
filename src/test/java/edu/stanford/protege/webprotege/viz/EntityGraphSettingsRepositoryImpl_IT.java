@@ -42,7 +42,7 @@ public class EntityGraphSettingsRepositoryImpl_IT {
     @Before
     public void setUp() {
         userId = UserId.getUserId("JohnDoe");
-        projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
+        projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
     }
 
     @Test

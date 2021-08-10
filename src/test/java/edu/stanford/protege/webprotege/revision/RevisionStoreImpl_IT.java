@@ -62,7 +62,7 @@ public class RevisionStoreImpl_IT {
     @Before
     public void setUp() throws IOException {
         temporaryFolder.create();
-        projectId = ProjectId.get(UUID.randomUUID()
+        projectId = ProjectId.valueOf(UUID.randomUUID()
                                           .toString());
         changeHistoryFile = temporaryFolder.newFile();
         when(changeHistoryFileFactory.getChangeHistoryFile(projectId))

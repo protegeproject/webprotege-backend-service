@@ -22,8 +22,7 @@ public class GetProjectEventsAction_TestCase {
     @Mock
     private EventTag sinceTag;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp() {
@@ -75,7 +74,7 @@ public class GetProjectEventsAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(action, is(not(GetProjectEventsAction.create(sinceTag, mock(ProjectId.class)))));
+        assertThat(action, is(not(GetProjectEventsAction.create(sinceTag, ProjectId.generate()))));
     }
 
     @Test

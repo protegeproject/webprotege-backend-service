@@ -19,7 +19,7 @@ import java.io.IOException;
 public class ProjectEntityCrudKitSettings_SerializationTestCase {
 
 
-    private final ProjectId projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
+    private final ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
     private ProjectEntityCrudKitSettings settings;
 

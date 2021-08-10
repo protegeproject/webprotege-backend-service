@@ -19,7 +19,7 @@ public class EntitySearchFilter_Serialization_TestCase {
     @Test
     public void shouldSerializeAsJson() throws IOException {
         EntitySearchFilter in = EntitySearchFilter.get(EntitySearchFilterId.createFilterId(),
-                                                       ProjectId.get(UUID.randomUUID().toString()),
+                                                       ProjectId.valueOf(UUID.randomUUID().toString()),
                                                        LanguageMap.of("en", "Hello"),
                                                        EntityIsDeprecatedCriteria.get());
 

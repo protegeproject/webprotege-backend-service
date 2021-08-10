@@ -31,7 +31,7 @@ public class GetProjectDetails_Serialization_TestCase {
 
     @Before
     public void setUp() {
-        projectDetails = ProjectDetails.get(ProjectId.get("12345678-1234-1234-1234-123456789abc"),
+        projectDetails = ProjectDetails.get(ProjectId.valueOf("12345678-1234-1234-1234-123456789abc"),
                                             "The display name",
                                             "The description",
                                             UserId.getUserId("The Owner"),

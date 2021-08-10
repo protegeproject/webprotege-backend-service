@@ -16,8 +16,7 @@ public class ProjectViewPlace_TestCase {
 
     private ProjectViewPlace projectViewPlace;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private PerspectiveId perspectiveId;
@@ -67,7 +66,7 @@ public class ProjectViewPlace_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        MatcherAssert.assertThat(projectViewPlace, Matchers.is(Matchers.not(new ProjectViewPlace(Mockito.mock(ProjectId.class), perspectiveId, itemSelection))));
+        MatcherAssert.assertThat(projectViewPlace, Matchers.is(Matchers.not(new ProjectViewPlace(ProjectId.generate(), perspectiveId, itemSelection))));
     }
 
     @Test

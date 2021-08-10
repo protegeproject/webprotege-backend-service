@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import edu.stanford.protege.webprotege.ValueObject;
+import edu.stanford.protege.webprotege.common.ValueObject;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;

@@ -27,8 +27,7 @@ public class CommentMessageIdGenerator_TestCase {
     @Mock
     private MessageIdGenerator messageIdGenerator;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private CommentId commentId;

@@ -19,8 +19,7 @@ public class GetIssuesAction_TestCase {
 
     private GetIssuesAction getIssuesAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp() {
@@ -54,7 +53,7 @@ public class GetIssuesAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_projectId() {
-        assertThat(getIssuesAction, is(not(new GetIssuesAction(mock(ProjectId.class)))));
+        assertThat(getIssuesAction, is(not(new GetIssuesAction(ProjectId.generate()))));
     }
 
     @Test

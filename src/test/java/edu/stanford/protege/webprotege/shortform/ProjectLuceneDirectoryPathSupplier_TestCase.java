@@ -16,7 +16,7 @@ public class ProjectLuceneDirectoryPathSupplier_TestCase {
 
     private Path baseDirectoryPath = Path.of("/tmp", "lucene");
 
-    private ProjectId projectId = ProjectId.get("12345678-1234-1234-1234-123456789abc");
+    private ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
     @Before
     public void setUp() throws Exception {
@@ -26,6 +26,6 @@ public class ProjectLuceneDirectoryPathSupplier_TestCase {
     @Test
     public void shouldGetPathForProject() {
         Path path = pathSupplier.get();
-        assertThat(path, is(equalTo(Path.of("/tmp", "lucene", projectId.getId()))));
+        assertThat(path, is(equalTo(Path.of("/tmp", "lucene", projectId.id()))));
     }
 }

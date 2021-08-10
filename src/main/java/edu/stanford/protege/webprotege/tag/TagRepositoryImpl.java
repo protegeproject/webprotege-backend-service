@@ -132,7 +132,7 @@ public class TagRepositoryImpl implements TagRepository, Repository {
     public List<Tag> findTags(ProjectId projectId) {
         readLock.lock();
         try {
-            Document filter = new Document(Tag.PROJECT_ID, projectId.getId());
+            Document filter = new Document(Tag.PROJECT_ID, projectId.id());
             FindIterable<Document> documents = getCollection().find(filter);
             Stream<Document> docs = stream(documents.spliterator(), false);
             return docs.map(doc -> objectMapper.convertValue(doc, Tag.class))

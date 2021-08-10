@@ -114,7 +114,7 @@ public class ProjectDetailsRepository implements Repository {
     }
 
     private static Document withProjectId(@Nonnull ProjectId projectId) {
-        return new Document(PROJECT_ID, projectId.getId());
+        return new Document(PROJECT_ID, projectId.id());
     }
 
     @Override
@@ -147,7 +147,7 @@ public class ProjectDetailsRepository implements Repository {
 
     private static Document withProjectIdAndWithOwner(@Nonnull ProjectId projectId,
                                                       @Nonnull UserId owner) {
-        return new Document(PROJECT_ID, projectId.getId()).append(OWNER, owner.getUserName());
+        return new Document(PROJECT_ID, projectId.id()).append(OWNER, owner.getUserName());
     }
 
     public void setInTrash(ProjectId projectId,

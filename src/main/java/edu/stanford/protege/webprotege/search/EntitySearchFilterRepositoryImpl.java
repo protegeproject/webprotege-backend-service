@@ -72,7 +72,7 @@ public class EntitySearchFilterRepositoryImpl implements EntitySearchFilterRepos
     public ImmutableList<EntitySearchFilter> getSearchFilters(@Nonnull ProjectId projectId) {
         try {
             readLock.lock();
-            var filtersByProjectId = new Document(EntitySearchFilter.PROJECT_ID, projectId.getId());
+            var filtersByProjectId = new Document(EntitySearchFilter.PROJECT_ID, projectId.id());
             try (var iterator = getCollection().find(filtersByProjectId).iterator()) {
                 var resultBuilder = ImmutableList.<EntitySearchFilter>builder();
                 while (iterator.hasNext()) {

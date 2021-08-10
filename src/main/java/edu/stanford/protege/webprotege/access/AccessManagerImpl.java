@@ -207,7 +207,7 @@ public class AccessManagerImpl implements AccessManager {
                             .map(ra -> {
                         Optional<String> projectId = ra.getProjectId();
                         if (projectId.isPresent()) {
-                            return new ProjectResource(ProjectId.get(projectId.get()));
+                            return new ProjectResource(ProjectId.valueOf(projectId.get()));
                         }
                         else {
                             return ApplicationResource.get();
@@ -246,7 +246,7 @@ public class AccessManagerImpl implements AccessManager {
 
     @Nullable
     private static String toProjectId(Resource resource) {
-        return resource.getProjectId().map(ProjectId::getId).orElse(null);
+        return resource.getProjectId().map(ProjectId::id).orElse(null);
     }
 
 }

@@ -120,7 +120,7 @@ public class WatchTriggeredHandlerImpl implements WatchTriggeredHandler {
         String emailBody = templateEngine.populateTemplate(watchTemplate.getContents(), templateObjects);
         logger.info("{} Watch triggered by {} on {}.  Notifying {}", projectId, byUser, modifiedEntity, usersToNotify);
         sendMail.sendMail(emailAddresses, emailSubject, emailBody,
-                          MessageHeader.inReplyTo(projectId.getId()),
-                          MessageHeader.references(projectId.getId()));
+                          MessageHeader.inReplyTo(projectId.id()),
+                          MessageHeader.references(projectId.id()));
     }
 }

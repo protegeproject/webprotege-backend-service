@@ -41,7 +41,7 @@ public class EntityFormRepositoryImpl_IT {
 
     @Before
     public void setUp() {
-        projectId = ProjectId.get(UUID.randomUUID().toString());
+        projectId = ProjectId.valueOf(UUID.randomUUID().toString());
     }
 
     @After

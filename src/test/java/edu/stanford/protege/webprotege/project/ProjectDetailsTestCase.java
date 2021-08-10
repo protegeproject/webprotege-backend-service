@@ -24,8 +24,7 @@ public class ProjectDetailsTestCase {
 
     public static final boolean IN_TRASH = true;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private UserId owner;

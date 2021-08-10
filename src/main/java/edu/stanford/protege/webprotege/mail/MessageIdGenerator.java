@@ -48,7 +48,7 @@ public class MessageIdGenerator {
                                            @Nonnull String objectCategory,
                                            @Nonnull String objectId) {
         String id = String.format("<projects/%s/%s/%s@%s>" ,
-                                      checkNotNull(projectId).getId(),
+                                      checkNotNull(projectId).id(),
                                       checkNotNull(objectCategory),
                                       checkNotNull(objectId),
                                       applicationHostSupplier.get());

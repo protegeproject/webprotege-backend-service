@@ -27,8 +27,7 @@ public class GetProjectSettingsActionHandler_TestCase {
     private GetProjectSettingsActionHandler actionHandler;
 
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private ProjectSettings projectSettings;

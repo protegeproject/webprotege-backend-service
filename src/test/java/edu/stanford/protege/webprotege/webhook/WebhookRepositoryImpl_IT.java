@@ -46,7 +46,7 @@ public class WebhookRepositoryImpl_IT {
         client = MongoClients.create();
         mongoTemplate = new MongoTemplate(client, MongoTestUtils.getTestDbName());
         repository = new WebhookRepositoryImpl(mongoTemplate);
-        projectId = ProjectId.get(UUID.randomUUID().toString());
+        projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         subscribedToEvents = Collections.singletonList(PROJECT_CHANGED);
         webhook = new ProjectWebhook(projectId,
                                      PAYLOAD_URL,

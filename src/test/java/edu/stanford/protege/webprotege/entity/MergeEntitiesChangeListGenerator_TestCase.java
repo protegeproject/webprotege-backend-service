@@ -36,8 +36,7 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
 @RunWith(MockitoJUnitRunner.class)
 public class MergeEntitiesChangeListGenerator_TestCase {
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Mock
     private EntityDiscussionThreadRepository discussionThreadRepo;

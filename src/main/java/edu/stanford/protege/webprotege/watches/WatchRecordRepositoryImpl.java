@@ -81,7 +81,7 @@ public class WatchRecordRepositoryImpl implements WatchRecordRepository {
     public List<WatchRecord> findWatchRecords(@Nonnull ProjectId projectId,
                                               @Nonnull Collection<? extends OWLEntity> entities) {
         var query = new Document()
-                .append(PROJECT_ID, projectId.getId())
+                .append(PROJECT_ID, projectId.id())
                 .append(ENTITY, new Document("$in", getEntityDocuments(entities)));
         return getWatchRecords(query);
     }
@@ -159,7 +159,7 @@ public class WatchRecordRepositoryImpl implements WatchRecordRepository {
     }
 
     private static Document getProjectAndUserQuery(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
-        return new Document().append(PROJECT_ID, projectId.getId()).append(USER_ID, userId.getUserName());
+        return new Document().append(PROJECT_ID, projectId.id()).append(USER_ID, userId.getUserName());
     }
 
 
@@ -169,7 +169,7 @@ public class WatchRecordRepositoryImpl implements WatchRecordRepository {
      */
     private static Document convertToDocument(@Nonnull WatchRecord watch) {
         return new Document()
-                .append(PROJECT_ID, watch.getProjectId().getId())
+                .append(PROJECT_ID, watch.getProjectId().id())
                 .append(USER_ID, watch.getUserId().getUserName())
                 .append(ENTITY, getEntityDocument(watch.getEntity()))
                 .append(TYPE, watch.getType().name());

@@ -47,7 +47,7 @@ public class ProjectAccessManagerImpl implements ProjectAccessManager, Repositor
     @Override
     public void logProjectAccess(ProjectId projectId, UserId userId, long timestamp) {
         collection.updateOne(
-                and(eq(PROJECT_ID, projectId.getId()),
+                and(eq(PROJECT_ID, projectId.id()),
                     eq(USER_ID, userId.getUserName())),
                 new Document()
                         .append("$inc", new Document("count", 1))

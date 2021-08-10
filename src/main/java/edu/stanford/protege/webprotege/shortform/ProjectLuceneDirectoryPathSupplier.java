@@ -31,6 +31,6 @@ public class ProjectLuceneDirectoryPathSupplier implements Supplier<Path> {
 
     @Override
     public Path get() {
-        return luceneIndexesDirectory.resolve(projectId.getId());
+        return luceneIndexesDirectory.resolve(projectId.id());
     }
 }

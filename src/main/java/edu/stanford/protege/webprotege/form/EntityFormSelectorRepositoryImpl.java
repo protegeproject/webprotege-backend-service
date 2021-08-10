@@ -50,7 +50,7 @@ public class EntityFormSelectorRepositoryImpl implements EntityFormSelectorRepos
     @Override
     public Stream<EntityFormSelector> findFormSelectors(@Nonnull ProjectId projectId) {
         var collection = database.getCollection(COLLECTION_NAME);
-        var filter = new Document(PROJECT_ID, projectId.getId());
+        var filter = new Document(PROJECT_ID, projectId.id());
         List<EntityFormSelector> resultList = new ArrayList<>();
         collection.find(filter).forEach((Consumer<Document>) doc -> resultList.add(toEntityFormSelector(doc)));
         return resultList.stream();
@@ -64,7 +64,7 @@ public class EntityFormSelectorRepositoryImpl implements EntityFormSelectorRepos
     public void save(EntityFormSelector entityFormSelector) {
         var triggerDocument = objectMapper.convertValue(entityFormSelector, Document.class);
         var collection = database.getCollection(COLLECTION_NAME);
-        var projectIdFilter = Filters.eq(PROJECT_ID, entityFormSelector.getProjectId().getId());
+        var projectIdFilter = Filters.eq(PROJECT_ID, entityFormSelector.getProjectId().id());
         var formIdFilter = Filters.eq(FORM_ID, entityFormSelector.getFormId().getId());
         var filter = Filters.and(projectIdFilter, formIdFilter);
         collection.findOneAndReplace(filter, triggerDocument, new FindOneAndReplaceOptions().upsert(true));

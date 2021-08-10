@@ -43,13 +43,13 @@ public class ProjectEntityCrudKitSettingsRepository {
 
     @Nonnull
     public Optional<ProjectEntityCrudKitSettings> findOne(@Nonnull ProjectId projectId) {
-        return Optional.ofNullable(collection.find(new Document("_id", projectId.getId()))
+        return Optional.ofNullable(collection.find(new Document("_id", projectId.id()))
                                              .limit(1).first())
                        .map(d -> objectMapper.convertValue(d, ProjectEntityCrudKitSettings.class));
     }
 
     public void save(@Nonnull ProjectEntityCrudKitSettings settings) {
-        collection.replaceOne(new Document("_id", settings.getProjectId().getId()),
+        collection.replaceOne(new Document("_id", settings.getProjectId().id()),
                               objectMapper.convertValue(settings, Document.class),
                               new ReplaceOptions().upsert(true));
     }

@@ -29,7 +29,7 @@ public class RecentProjectRecord implements Comparable<RecentProjectRecord> {
 
     private static Comparator<RecentProjectRecord> comparator = Comparator.comparing(RecentProjectRecord::getTimestamp)
                                                                .reversed()
-                                                               .thenComparing(r -> r.getProjectId().getId());
+                                                               .thenComparing(r -> r.getProjectId().id());
 
     // For Morphia
     private RecentProjectRecord() {

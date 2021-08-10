@@ -26,8 +26,7 @@ public class GetProjectSharingSettingsAction_TestCase {
 
     private GetProjectSharingSettingsAction otherAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
     @Before
     public void setUp() throws Exception {

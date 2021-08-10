@@ -29,7 +29,7 @@ public class WebProtegeProjectComponent_TestCase {
 
     @Test
     public void shouldInstantiateProjectComponentFactory() {
-        var projectIdIn = ProjectId.get(UUID.randomUUID().toString());
+        var projectIdIn = ProjectId.valueOf(UUID.randomUUID().toString());
         var projectComponent = projectComponentFactory.createProjectComponent(projectIdIn);
         var projectIdOut = projectComponent.getProjectId();
         assertThat(projectIdOut, is(projectIdIn));
@@ -38,7 +38,7 @@ public class WebProtegeProjectComponent_TestCase {
 
     @Test
     public void shouldInstantiateAndDestroyProjectComponentFactory() {
-        var projectIdIn = ProjectId.get(UUID.randomUUID().toString());
+        var projectIdIn = ProjectId.valueOf(UUID.randomUUID().toString());
         var projectComponent = projectComponentFactory.createProjectComponent(projectIdIn);
         var projectIdOut = projectComponent.getProjectId();
         assertThat(projectIdOut, is(projectIdIn));
@@ -51,8 +51,8 @@ public class WebProtegeProjectComponent_TestCase {
 
     @Test
     public void shouldInstantiateFreshProjectComponentFactory() {
-        var projectIdA = ProjectId.get(UUID.randomUUID().toString());
-        var projectIdB = ProjectId.get(UUID.randomUUID().toString());
+        var projectIdA = ProjectId.valueOf(UUID.randomUUID().toString());
+        var projectIdB = ProjectId.valueOf(UUID.randomUUID().toString());
         var projectComponentA = projectComponentFactory.createProjectComponent(projectIdA);
         var projectComponentB = projectComponentFactory.createProjectComponent(projectIdB);
         assertThat(projectComponentA, is(not(projectComponentB)));
@@ -78,7 +78,7 @@ public class WebProtegeProjectComponent_TestCase {
     }
 
     private void shouldInstantiateSingleton(Function<ProjectComponent, Object> objectProvider) {
-        var projectId = ProjectId.get(UUID.randomUUID().toString());
+        var projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         var projectComponent = projectComponentFactory.createProjectComponent(projectId);
         var object = objectProvider.apply(projectComponent);
         assertThat(object, is(not(nullValue())));

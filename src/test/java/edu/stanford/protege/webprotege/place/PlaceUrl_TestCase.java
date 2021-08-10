@@ -42,7 +42,7 @@ public class PlaceUrl_TestCase {
 
     private PlaceUrl placeUrl;
 
-    private ProjectId projectId = ProjectId.get(UUID.randomUUID().toString());
+    private ProjectId projectId = ProjectId.valueOf(UUID.randomUUID().toString());
 
     private IRI entityIri = IRI.create("http://the.ontology/entity");
 
@@ -103,7 +103,7 @@ public class PlaceUrl_TestCase {
     public void shouldBuildProjectUrl() {
         String url = placeUrl.getProjectUrl(projectId);
         assertThat(url, is(EXPECTED_URL_BASE + "#projects/"
-                                   + projectId.getId()
+                                   + projectId.id()
                                    + "/perspectives/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"));
     }
 
@@ -112,7 +112,7 @@ public class PlaceUrl_TestCase {
 
         String url = placeUrl.getEntityUrl(projectId, entity);
         assertThat(url, is(EXPECTED_URL_BASE + "#projects/"
-                                   + projectId.getId()
+                                   + projectId.id()
                                    + "/perspectives/12345678-1234-1234-1234-123456789abc?selection=Class(%3C" + entityIri.toString() + "%3E)"));
     }
 }

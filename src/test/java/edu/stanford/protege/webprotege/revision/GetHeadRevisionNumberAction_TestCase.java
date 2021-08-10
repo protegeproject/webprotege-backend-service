@@ -26,8 +26,7 @@ public class GetHeadRevisionNumberAction_TestCase {
 
     private GetHeadRevisionNumberAction otherAction;
 
-    @Mock
-    private ProjectId projectId;
+    private ProjectId projectId = ProjectId.generate();
 
 
     @Before

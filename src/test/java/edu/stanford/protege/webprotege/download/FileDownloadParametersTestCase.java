@@ -73,8 +73,8 @@ public class FileDownloadParametersTestCase {
 
     @Test
     public void shouldParseOntologyId() {
-        ProjectId projectId = ProjectId.get("00000000-0000-0000-0000-000000000000");
-        when(servletRequest.getParameter(ProjectDownloadConstants.PROJECT)).thenReturn(projectId.getId());
+        ProjectId projectId = ProjectId.valueOf("00000000-0000-0000-0000-000000000000");
+        when(servletRequest.getParameter(ProjectDownloadConstants.PROJECT)).thenReturn(projectId.id());
         assertThat(parameters.getProjectId(), is(equalTo(projectId)));
     }
 
