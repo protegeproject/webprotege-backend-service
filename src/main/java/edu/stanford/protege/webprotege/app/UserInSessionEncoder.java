@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.app;
 
+import edu.stanford.protege.webprotege.authorization.api.ActionId;
 import edu.stanford.protege.webprotege.user.UserDetails;
 
 import javax.json.Json;
@@ -19,7 +20,7 @@ public class UserInSessionEncoder implements ClientObjectEncoder<UserInSession> 
     public JsonObject encode(UserInSession object) {
         UserDetails userDetails = object.getUserDetails();
         JsonArrayBuilder actionArray = Json.createArrayBuilder();
-        object.getAllowedApplicationActions().stream().map(a -> a.getId()).forEach(a -> actionArray.add(a));
+        object.getAllowedApplicationActions().stream().map(ActionId::id).forEach(actionArray::add);
         return Json.createObjectBuilder()
                    .add(USER_NAME, userDetails.getUserId().id())
                    .add(DISPLAY_NAME, userDetails.getDisplayName())

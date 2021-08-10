@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.access;
 
 
+import edu.stanford.protege.webprotege.authorization.api.ActionId;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class ActionId_TestCase {
 
     @Test
     public void shouldReturnSupplied_id() {
-        assertThat(actionId.getId(), is(this.id));
+        assertThat(actionId.id(), is(this.id));
     }
 
     @Test

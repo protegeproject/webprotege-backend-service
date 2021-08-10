@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.dispatch.validators;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ActionId;
-import edu.stanford.protege.webprotege.access.ProjectResource;
+import edu.stanford.protege.webprotege.authorization.api.ActionId;
+import edu.stanford.protege.webprotege.authorization.api.ProjectResource;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -10,7 +10,8 @@ import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
+
 
 /**
  * Matthew Horridge
@@ -44,7 +45,7 @@ public class ProjectPermissionValidator implements RequestValidator {
             return RequestValidationResult.getValid();
         }
         else {
-            return RequestValidationResult.getInvalid("Permission denied for " + actionId.getId());
+            return RequestValidationResult.getInvalid("Permission denied for " + actionId.id());
         }
     }
 }

@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.Resource;
-import edu.stanford.protege.webprotege.access.Subject;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
+import edu.stanford.protege.webprotege.authorization.api.Resource;
+import edu.stanford.protege.webprotege.authorization.api.Subject;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;

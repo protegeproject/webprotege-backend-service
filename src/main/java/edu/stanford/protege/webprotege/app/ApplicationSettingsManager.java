@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.app;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ApplicationResource;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.access.RoleId;
+import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.api.RoleId;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.user.EmailAddress;
 
@@ -20,8 +20,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_EMPTY_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInRole.*;
-import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
-import static edu.stanford.protege.webprotege.access.Subject.forGuestUser;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_ALLOWED;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_NOT_ALLOWED;
 import static edu.stanford.protege.webprotege.app.NotificationEmailsSetting.SEND_NOTIFICATION_EMAILS;
@@ -29,6 +27,8 @@ import static edu.stanford.protege.webprotege.app.ProjectCreationSetting.EMPTY_P
 import static edu.stanford.protege.webprotege.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_NOT_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectUploadSetting.PROJECT_UPLOAD_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectUploadSetting.PROJECT_UPLOAD_NOT_ALLOWED;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forAnySignedInUser;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forGuestUser;
 
 /**
  * Matthew Horridge

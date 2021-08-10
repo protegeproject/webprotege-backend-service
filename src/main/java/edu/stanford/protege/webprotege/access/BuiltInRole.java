@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.access;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.authorization.api.RoleId;
 
 import java.util.Arrays;
 

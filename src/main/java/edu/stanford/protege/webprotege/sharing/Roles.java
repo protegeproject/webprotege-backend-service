@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.sharing;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.access.RoleId;
+import edu.stanford.protege.webprotege.authorization.api.RoleId;
 
 import java.util.Collection;
 import java.util.Optional;

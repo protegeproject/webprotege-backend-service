@@ -306,8 +306,8 @@ public class ApplicationBeansConfiguration {
 
     @Bean
     @Singleton
-    AccessManagerImpl getAccessManager(RoleOracle roleOracle, MongoTemplate mongoTemplate) {
-        return new AccessManagerImpl(roleOracle, mongoTemplate);
+    AccessManagerImpl getAccessManager() {
+        return new AccessManagerImpl();
     }
 
     @Bean

@@ -1,27 +1,27 @@
 package edu.stanford.protege.webprotege.admin;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ApplicationResource;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
 import edu.stanford.protege.webprotege.app.ApplicationPreferencesStore;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.app.ApplicationLocation;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
+import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
-import static edu.stanford.protege.webprotege.access.Subject.forGuestUser;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_ALLOWED;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_NOT_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_NOT_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectUploadSetting.PROJECT_UPLOAD_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectUploadSetting.PROJECT_UPLOAD_NOT_ALLOWED;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forAnySignedInUser;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forGuestUser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;

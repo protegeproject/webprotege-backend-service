@@ -1,10 +1,10 @@
 package edu.stanford.protege.webprotege.upload;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ApplicationResource;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.access.Subject;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
+import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.api.Subject;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 import edu.stanford.protege.webprotege.session.WebProtegeSession;
@@ -93,8 +93,8 @@ public class FileUploadServlet extends HttpServlet {
         WebProtegeSession webProtegeSession = new WebProtegeSessionImpl(req.getSession());
         UserId userId = webProtegeSession.getUserInSession();
         if(!accessManager.hasPermission(Subject.forUser(userId),
-                                    ApplicationResource.get(),
-                                    BuiltInAction.UPLOAD_PROJECT)) {
+                                        ApplicationResource.get(),
+                                        BuiltInAction.UPLOAD_PROJECT)) {
             sendErrorMessage(resp, "You do not have permission to upload files to " + applicationNameSupplier.get());
         }
 

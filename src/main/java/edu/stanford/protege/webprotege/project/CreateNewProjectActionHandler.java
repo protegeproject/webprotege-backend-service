@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ApplicationResource;
-import edu.stanford.protege.webprotege.access.ProjectResource;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
+import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.api.ProjectResource;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -25,8 +25,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_EMPTY_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInRole.*;
-import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forAnySignedInUser;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singleton;
 

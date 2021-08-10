@@ -1,6 +1,9 @@
 package edu.stanford.protege.webprotege.access;
 
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.api.RoleId;
+import edu.stanford.protege.webprotege.authorization.api.Subject;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;

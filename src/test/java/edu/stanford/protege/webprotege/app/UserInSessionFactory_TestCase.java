@@ -2,10 +2,10 @@ package edu.stanford.protege.webprotege.app;
 
 import com.google.common.collect.Sets;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ApplicationResource;
-import edu.stanford.protege.webprotege.access.Subject;
+import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.api.Subject;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
-import edu.stanford.protege.webprotege.access.ActionId;
+import edu.stanford.protege.webprotege.authorization.api.ActionId;
 import edu.stanford.protege.webprotege.user.UserDetails;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;

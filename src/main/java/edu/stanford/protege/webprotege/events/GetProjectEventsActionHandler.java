@@ -20,8 +20,8 @@ import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
-import static edu.stanford.protege.webprotege.access.ProjectResource.forProject;
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.api.ProjectResource.forProject;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
 
 /**
  * Author: Matthew Horridge<br>

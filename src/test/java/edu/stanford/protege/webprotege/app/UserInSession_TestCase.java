@@ -2,7 +2,7 @@
 package edu.stanford.protege.webprotege.app;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.access.ActionId;
+import edu.stanford.protege.webprotege.authorization.api.ActionId;
 import edu.stanford.protege.webprotege.user.UserDetails;
 import org.hamcrest.Matchers;
 import org.junit.Before;

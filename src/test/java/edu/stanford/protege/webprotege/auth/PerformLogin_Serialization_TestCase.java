@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.auth;
 
-import edu.stanford.protege.webprotege.access.ActionId;
+import edu.stanford.protege.webprotege.authorization.api.ActionId;
 import edu.stanford.protege.webprotege.app.UserInSession;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.Result;

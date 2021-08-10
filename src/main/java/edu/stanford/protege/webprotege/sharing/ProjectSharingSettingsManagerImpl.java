@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.sharing;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.ProjectResource;
-import edu.stanford.protege.webprotege.access.RoleId;
-import edu.stanford.protege.webprotege.access.Subject;
+import edu.stanford.protege.webprotege.authorization.api.ProjectResource;
+import edu.stanford.protege.webprotege.authorization.api.RoleId;
+import edu.stanford.protege.webprotege.authorization.api.Subject;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.HasGetUserIdByUserIdOrEmail;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.util.*;
 
-import static edu.stanford.protege.webprotege.access.Subject.forAnySignedInUser;
-import static edu.stanford.protege.webprotege.access.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forAnySignedInUser;
+import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toMap;
 
@@ -49,7 +49,7 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
                 .filter(s -> s.getUserName().isPresent())
                 .map(s -> UserId.valueOf(s.getUserName().get()))
                 .forEach(u -> {
-                    Collection<RoleId> roles = accessManager.getAssignedRoles(Subject.forUser(u), projectResource);
+                    Collection<RoleId> roles = accessManager.getAssignedRoles(forUser(u), projectResource);
                     Roles.toSharingPermission(roles).ifPresent(
                             p -> sharingSettings.add(new SharingSetting(PersonId.of(u), p)));
 

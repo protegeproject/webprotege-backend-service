@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.access;
 
 
+import edu.stanford.protege.webprotege.authorization.api.RoleId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +29,7 @@ public class RoleId_TestCase {
 
     @Test
     public void shouldReturnSupplied_id() {
-        assertThat(roleId.getId(), is(this.id));
+        assertThat(roleId.id(), is(this.id));
     }
 
     @Test
