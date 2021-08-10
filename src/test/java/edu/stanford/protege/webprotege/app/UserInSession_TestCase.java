@@ -25,7 +25,7 @@ public class UserInSession_TestCase {
     @Mock
     private UserDetails userDetails;
 
-    private Set<ActionId> allowedActions = ImmutableSet.of(mock(ActionId.class));
+    private Set<ActionId> allowedActions = ImmutableSet.of(new ActionId("TheAction"));
 
     @Before
     public void setUp() {
@@ -77,7 +77,7 @@ public class UserInSession_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_allowedActions() {
-        assertThat(userInSession, is(not(new UserInSession(userDetails, ImmutableSet.of(mock(ActionId.class))))));
+        assertThat(userInSession, is(not(new UserInSession(userDetails, ImmutableSet.of(new ActionId("OtherAction"))))));
     }
 
     @Test

@@ -1,15 +1,15 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.WebProtegeMongoConfiguration;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -28,8 +28,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * Stanford Center for Biomedical Informatics Research
  * 12 Mar 2017
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = MOCK)
+@SpringBootTest
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class UserActivityManager_IT {
 
@@ -59,12 +58,12 @@ public class UserActivityManager_IT {
                                                                    new RecentProjectRecord(projectId, 55L)));
 
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         repository = new UserActivityManager(mongoTemplate);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
          mongoTemplate.getDb().drop();
     }

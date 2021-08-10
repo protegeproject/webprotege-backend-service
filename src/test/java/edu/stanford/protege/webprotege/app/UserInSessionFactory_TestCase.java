@@ -49,7 +49,7 @@ public class UserInSessionFactory_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        appActions = Sets.newHashSet(mock(ActionId.class));
+        appActions = Sets.newHashSet(new ActionId("OtherAction"));
         factory = new UserInSessionFactory(accessManager, userDetailsManager);
         // By default, unrecognized user
         when(userDetailsManager.getUserDetails(any())).thenReturn(Optional.empty());

@@ -23,11 +23,9 @@ public class Role_TestCase {
 
     private Role role;
 
-    @Mock
-    private RoleId roleId, parentRoleId;
+    private RoleId roleId = new RoleId("Role"), parentRoleId = new RoleId("ParentRole");
 
-    @Mock
-    private ActionId actionId;
+    private ActionId actionId = new ActionId("SomeAction");
 
     private List<RoleId> parents;
 
@@ -91,17 +89,17 @@ public class Role_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_roleId() {
-        assertThat(role, is(not(new Role(mock(RoleId.class), parents, actions))));
+        assertThat(role, is(not(new Role(new RoleId("AnotherRole"), parents, actions))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_parents() {
-        assertThat(role, is(not(new Role(roleId, singletonList(mock(RoleId.class)), actions))));
+        assertThat(role, is(not(new Role(roleId, singletonList(new RoleId("OtherRole")), actions))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_actions() {
-        assertThat(role, is(not(new Role(roleId, parents, singletonList(mock(ActionId.class))))));
+        assertThat(role, is(not(new Role(roleId, parents, singletonList(new ActionId("AnotherAction"))))));
     }
 
     @Test

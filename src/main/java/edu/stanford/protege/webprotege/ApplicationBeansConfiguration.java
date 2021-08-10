@@ -12,6 +12,7 @@ import edu.stanford.protege.webprotege.access.RoleOracleImpl;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.auth.*;
+import edu.stanford.protege.webprotege.authorization.api.*;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslatorImpl;
 import edu.stanford.protege.webprotege.chgpwd.PasswordResetEmailTemplate;
@@ -21,15 +22,12 @@ import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
 import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
-import edu.stanford.protege.webprotege.form.EntityFormRepository;
 import edu.stanford.protege.webprotege.form.EntityFormRepositoryImpl;
-import edu.stanford.protege.webprotege.form.EntityFormSelectorRepository;
 import edu.stanford.protege.webprotege.form.EntityFormSelectorRepositoryImpl;
-import edu.stanford.protege.webprotege.hierarchy.MoveEntityChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.hierarchy.MoveHierarchyNodeAction;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
@@ -41,12 +39,10 @@ import edu.stanford.protege.webprotege.mansyntax.render.DefaultHttpLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.HttpLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.LiteralStyle;
 import edu.stanford.protege.webprotege.mansyntax.render.MarkdownLiteralRenderer;
-import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl;
@@ -59,7 +55,6 @@ import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.util.TempFileFactory;
 import edu.stanford.protege.webprotege.util.TempFileFactoryImpl;
 import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
-import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepository;
 import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepositoryImpl;
 import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
@@ -77,7 +72,6 @@ import javax.inject.Singleton;
 import java.io.File;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 /**
@@ -302,12 +296,6 @@ public class ApplicationBeansConfiguration {
     @Singleton
     RoleOracle getRoleOracle() {
         return RoleOracleImpl.get();
-    }
-
-    @Bean
-    @Singleton
-    AccessManagerImpl getAccessManager() {
-        return new AccessManagerImpl();
     }
 
     @Bean

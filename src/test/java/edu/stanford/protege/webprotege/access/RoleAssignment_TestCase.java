@@ -24,8 +24,7 @@ public class RoleAssignment_TestCase {
 
     private String projectId = "The projectId";
 
-    @Mock
-    private RoleId assignedRoleId, parentRoleId;
+    private RoleId assignedRoleId = new RoleId("ChildRole"), parentRoleId = new RoleId("ParentRole") ;
 
     private List<String> assignedRoles;
 

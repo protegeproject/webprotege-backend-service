@@ -84,7 +84,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainGetAvailableProjectsWithPermissionActionHandler() {
-        var handler = registry.getActionHandler(GetAvailableProjectsWithPermissionAction.create(mock(ActionId.class)));
+        var handler = registry.getActionHandler(GetAvailableProjectsWithPermissionAction.create(new ActionId("OtherAction")));
         assertThat(handler, is(notNullValue()));
     }
     @Test
