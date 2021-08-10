@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.issues.events.*;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.issues.mention.ParsedMention;
@@ -40,8 +41,7 @@ public class IssueBuilder_TestCase {
 
     private int number = ISSUE_NUMBER;
 
-    @Mock
-    private UserId creator, userId;
+    private UserId creator = MockingUtils.mockUserId(), userId = MockingUtils.mockUserId();
 
     private long createdAt = CREATED_AT;
 
@@ -182,14 +182,14 @@ public class IssueBuilder_TestCase {
 
     @Test
     public void shouldBuildIssueWithClosedStatus() {
-        builder.close(mock(UserId.class), TIMESTAMP);
+        builder.close(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), TIMESTAMP);
         Issue issue = builder.build(mentionParser);
         assertThat(issue.getStatus(), is(Status.CLOSED));
     }
 
     @Test
     public void shouldBuildIssueWithUpdatedTimestampOnClose() {
-        builder.close(mock(UserId.class), TIMESTAMP);
+        builder.close(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), TIMESTAMP);
         Issue issue = builder.build(mentionParser);
         assertThat(issue.getStatus(), is(Status.CLOSED));
         assertThatIssueUpdatedTimestampWasUpdated(issue);
@@ -210,7 +210,7 @@ public class IssueBuilder_TestCase {
 
     @Test
     public void shouldBuildIssueWithSpecifiedAssignees() {
-        UserId assignee = mock(UserId.class);
+        UserId assignee = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
         builder.assignTo(assignee, userId, TIMESTAMP);
         Issue issue = builder.build(mentionParser);
         assertThat(issue.getAssignees(), hasItem(assignee));
@@ -218,7 +218,7 @@ public class IssueBuilder_TestCase {
 
     @Test
     public void shouldUpdateTimestampOnAssign() {
-        UserId assignee = mock(UserId.class);
+        UserId assignee = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
         builder.assignTo(assignee, userId, TIMESTAMP);
         Issue issue = builder.build(mentionParser);
         assertThatIssueUpdatedTimestampWasUpdated(issue);
@@ -226,7 +226,7 @@ public class IssueBuilder_TestCase {
 
     @Test
     public void shouldBuildIssueWithAssignedEvent() {
-        UserId assignee = mock(UserId.class);
+        UserId assignee = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
         builder.assignTo(assignee, userId, TIMESTAMP);
         Issue issue = builder.build(mentionParser);
         assertThat(issue.getEvents(), hasItem(new IssueAssigned(userId, TIMESTAMP, assignee)));
@@ -384,7 +384,7 @@ public class IssueBuilder_TestCase {
 
     @Test
     public void shouldUpdateParticipantsOnBuild() {
-        UserId participant = mock(UserId.class);
+        UserId participant = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
         UserIdMention userIdMention = mock(UserIdMention.class);
         when(userIdMention.getMentionedUserId()).thenReturn(Optional.of(participant));
         when(parsedMention.getParsedMention()).thenReturn(userIdMention);

@@ -48,7 +48,7 @@ public class UserActivityManager_IT {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    private UserId userId = UserId.getUserId("John Smith" );
+    private UserId userId = UserId.valueOf("John Smith" );
 
     private ProjectId projectId = ProjectId.valueOf(UUID.randomUUID().toString());
 

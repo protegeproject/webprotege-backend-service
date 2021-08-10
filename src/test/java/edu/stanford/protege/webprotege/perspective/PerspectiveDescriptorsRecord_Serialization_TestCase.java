@@ -18,7 +18,7 @@ public class PerspectiveDescriptorsRecord_Serialization_TestCase {
     @Test
     public void shouldSerialize() throws IOException {
         var record = PerspectiveDescriptorsRecord.get(ProjectId.getNil(),
-                                                      UserId.getUserId("Matthew"), ImmutableList.of());
+                                                      UserId.valueOf("Matthew"), ImmutableList.of());
         JsonSerializationTestUtil.testSerialization(record, PerspectiveDescriptorsRecord.class);
     }
 }

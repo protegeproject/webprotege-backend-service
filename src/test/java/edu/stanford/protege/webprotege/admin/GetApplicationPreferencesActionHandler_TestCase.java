@@ -41,8 +41,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     @Mock
     private ExecutionContext executionContext;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private RequestValidator requestValidator;

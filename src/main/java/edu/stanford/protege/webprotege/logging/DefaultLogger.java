@@ -60,7 +60,7 @@ public class DefaultLogger implements WebProtegeLogger {
         if (userId.isPresent()) {
             pw.println();
             pw.print("User: ");
-            pw.println(userId.get().getUserName());
+            pw.println(userId.get().id());
         }
         if(request.isPresent()) {
             HttpServletRequest req = request.get();

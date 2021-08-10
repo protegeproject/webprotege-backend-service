@@ -33,7 +33,7 @@ public class UserApiKeyStoreImpl_IT {
 
     private static final ApiKeyId API_KEY_ID = ApiKeyId.valueOf("abcd");
 
-    private static final UserId USER_ID = UserId.getUserId("JaneDoe");
+    private static final UserId USER_ID = UserId.valueOf("JaneDoe");
 
     private UserApiKeyStoreImpl store;
 

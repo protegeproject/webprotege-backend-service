@@ -17,7 +17,7 @@ public class CannotGenerateFreshEntityIdForUserException extends CannotGenerateF
 
     public CannotGenerateFreshEntityIdForUserException(UserIdRange userIdRange) {
         super("Cannot generate fresh entity id for user "
-                      + userIdRange.getUserId().getUserName()
+                      + userIdRange.getUserId().id()
                       + ".  Allocated id range (" + userIdRange.getStart() + " - " + userIdRange.getEnd() + ") has been exhausted.");
         this.userIdRange = checkNotNull(userIdRange);
     }

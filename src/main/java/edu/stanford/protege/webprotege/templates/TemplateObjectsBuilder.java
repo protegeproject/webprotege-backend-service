@@ -43,7 +43,7 @@ public class TemplateObjectsBuilder {
     }
 
     public TemplateObjectsBuilder withUserId(UserId userId) {
-        builder.put("userId", userId.getUserName());
+        builder.put("userId", userId.id());
         return this;
     }
 

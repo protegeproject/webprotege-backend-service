@@ -92,7 +92,7 @@ public class EntityGraphSettingsRepositoryImpl implements EntityGraphSettingsRep
             doc.append(USER_ID, null);
         }
         else {
-            doc.append(USER_ID, userId.getUserName());
+            doc.append(USER_ID, userId.id());
         }
         return doc;
     }
@@ -100,7 +100,7 @@ public class EntityGraphSettingsRepositoryImpl implements EntityGraphSettingsRep
     public static Document getUpsertFilter(@Nonnull ProjectId projectId,
                                            @Nullable UserId userId) {
         var doc = new Document(PROJECT_ID, projectId.id());
-        doc.append(USER_ID, userId == null ? null : userId.getUserName());
+        doc.append(USER_ID, userId == null ? null : userId.id());
         return doc;
     }
 

@@ -22,8 +22,7 @@ public class SetEntityWatchesAction_TestCase {
 
     private SetEntityWatchesAction setEntityWatchesAction;
     private ProjectId projectId = ProjectId.generate();
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
     @Mock
     private OWLEntity entity;
     @Mock
@@ -97,7 +96,7 @@ public class SetEntityWatchesAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(setEntityWatchesAction, is(not(SetEntityWatchesAction.create(projectId, mock(UserId.class), entity, watches))));
+        assertThat(setEntityWatchesAction, is(not(SetEntityWatchesAction.create(projectId, edu.stanford.protege.webprotege.MockingUtils.mockUserId(), entity, watches))));
     }
 
     @Test

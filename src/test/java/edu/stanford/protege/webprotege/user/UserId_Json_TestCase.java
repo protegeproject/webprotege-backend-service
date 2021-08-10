@@ -21,7 +21,7 @@ public class UserId_Json_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        userId = UserId.getUserId(THE_USER_NAME);
+        userId = UserId.valueOf(THE_USER_NAME);
     }
 
     @Test

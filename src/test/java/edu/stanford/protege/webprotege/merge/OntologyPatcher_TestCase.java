@@ -47,8 +47,7 @@ public class OntologyPatcher_TestCase {
     @Mock
     private OntologyChange ontologyChange;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Captor
     private ArgumentCaptor<UserId> userIdCaptor;

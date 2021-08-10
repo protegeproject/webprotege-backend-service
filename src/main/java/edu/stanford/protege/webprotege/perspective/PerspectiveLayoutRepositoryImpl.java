@@ -66,7 +66,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     public Optional<PerspectiveLayoutRecord> findLayout(@Nonnull ProjectId projectId,
                                                         @Nonnull UserId userId,
                                                         @Nonnull PerspectiveId perspectiveId) {
-        var query = getQuery(projectId.id(), userId.getUserName(), perspectiveId);
+        var query = getQuery(projectId.id(), userId.id(), perspectiveId);
         return findLayout(query);
     }
 
@@ -104,7 +104,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
 
     private Document getQuery(PerspectiveLayoutRecord record) {
         return getQuery(Optional.ofNullable(record.getProjectId()).map(ProjectId::id).orElse(null),
-                        Optional.ofNullable(record.getUserId()).map(UserId::getUserName).orElse(null),
+                        Optional.ofNullable(record.getUserId()).map(UserId::id).orElse(null),
                         record.getPerspectiveId());
     }
 
@@ -127,7 +127,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     @Override
     public void dropLayout(@Nonnull ProjectId projectId, @Nonnull UserId userId, @Nonnull PerspectiveId perspectiveId) {
         try {
-            var query = getQuery(projectId.id(), userId.getUserName(), perspectiveId);
+            var query = getQuery(projectId.id(), userId.id(), perspectiveId);
             getCollection().deleteOne(query);
         } catch (MongoException e) {
             logger.error("An error occurred when dropping the perspective layout for a user", e);
@@ -138,7 +138,7 @@ public class PerspectiveLayoutRepositoryImpl implements PerspectiveLayoutReposit
     public void dropAllLayouts(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
         try {
             var query = new Document(PROJECT_ID, projectId.id())
-                    .append(USER_ID, userId.getUserName());
+                    .append(USER_ID, userId.id());
             getCollection().deleteMany(query);
         } catch (MongoException e) {
             logger.error("An error occurred when dropping all project layouts for a user", e);

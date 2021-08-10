@@ -36,8 +36,7 @@ public class WebProtegeSessionListener_TestCase {
     @Mock
     private HttpSession session;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Before
     public void setUp() throws Exception {

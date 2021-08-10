@@ -19,8 +19,7 @@ public class RevisionSummary_TestCase {
     private RevisionSummary revisionSummary;
     @Mock
     private RevisionNumber revisionNumber;
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private long timestamp = 1L;
 
@@ -92,7 +91,7 @@ public class RevisionSummary_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_usedId() {
-        assertThat(revisionSummary, is(not(new RevisionSummary(revisionNumber, mock(UserId.class), timestamp, changeCount, description))));
+        assertThat(revisionSummary, is(not(new RevisionSummary(revisionNumber, edu.stanford.protege.webprotege.MockingUtils.mockUserId(), timestamp, changeCount, description))));
     }
 
     @Test

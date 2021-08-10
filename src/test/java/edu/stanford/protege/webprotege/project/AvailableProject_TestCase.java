@@ -1,6 +1,7 @@
 
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
@@ -32,8 +33,7 @@ public class AvailableProject_TestCase {
 
     private ProjectId projectId = ProjectId.generate();
 
-    @Mock
-    private UserId modifiedBy, owner, createdBy;
+    private UserId modifiedBy = MockingUtils.mockUserId(), owner = MockingUtils.mockUserId(), createdBy = MockingUtils.mockUserId();
 
     private long lastOpenedTimestamp = 11L;
 

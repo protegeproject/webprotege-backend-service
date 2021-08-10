@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
@@ -26,18 +27,15 @@ public class ProjectDetailsTestCase {
 
     private ProjectId projectId = ProjectId.generate();
 
-    @Mock
-    private UserId owner;
+    private UserId owner = MockingUtils.mockUserId();
 
     private long createdAt = 22L;
 
-    @Mock
-    private UserId createdBy;
+    private UserId createdBy = MockingUtils.mockUserId();
 
     private long modifiedAt = 33L;
 
-    @Mock
-    private UserId modifiedBy;
+    private UserId modifiedBy = MockingUtils.mockUserId();
 
 
     private String displayName;

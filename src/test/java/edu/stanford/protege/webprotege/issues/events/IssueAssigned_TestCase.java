@@ -1,6 +1,7 @@
 
 package edu.stanford.protege.webprotege.issues.events;
 
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -19,13 +20,11 @@ public class IssueAssigned_TestCase {
 
     private IssueAssigned issueAssigned;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private long timestamp = 1L;
 
-    @Mock
-    private UserId assignee;
+    private UserId assignee = MockingUtils.mockUserId();
 
     @Before
     public void setUp() {
@@ -64,7 +63,7 @@ public class IssueAssigned_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        MatcherAssert.assertThat(issueAssigned, Matchers.is(Matchers.not(new IssueAssigned(Mockito.mock(UserId.class), timestamp, assignee))));
+        MatcherAssert.assertThat(issueAssigned, Matchers.is(Matchers.not(new IssueAssigned(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), timestamp, assignee))));
     }
 
     @Test
@@ -74,7 +73,7 @@ public class IssueAssigned_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_assignee() {
-        MatcherAssert.assertThat(issueAssigned, Matchers.is(Matchers.not(new IssueAssigned(userId, timestamp, Mockito.mock(UserId.class)))));
+        MatcherAssert.assertThat(issueAssigned, Matchers.is(Matchers.not(new IssueAssigned(userId, timestamp, edu.stanford.protege.webprotege.MockingUtils.mockUserId()))));
     }
 
     @Test

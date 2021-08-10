@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.issues;
 
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.issues.mention.ParsedMention;
 import edu.stanford.protege.webprotege.issues.mention.UserIdMention;
@@ -38,8 +39,7 @@ public class CommentParticipantsExtractor_TestCase {
     @Mock
     private UserIdMention userMention;
 
-    @Mock
-    private UserId creatorId, mentionedUserId;
+    private UserId creatorId = MockingUtils.mockUserId(), mentionedUserId = MockingUtils.mockUserId();
 
     @Mock
     private Comment comment;

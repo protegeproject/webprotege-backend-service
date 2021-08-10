@@ -49,7 +49,7 @@ public class PasswordResetMailer_IT {
 
     private static final String TEMPLATE_PATH = "templates/password-reset-email-template.html";
 
-    private final UserId userId = UserId.getUserId("John Smith" );
+    private final UserId userId = UserId.valueOf("John Smith" );
 
     private final String emailAddress = "john.smith@somewhere.com";
 
@@ -79,7 +79,7 @@ public class PasswordResetMailer_IT {
 
     @Test
     public void shouldSendEmailContainingUserName() {
-        assertThat(bodyCaptor.getValue(), containsString(userId.getUserName()));
+        assertThat(bodyCaptor.getValue(), containsString(userId.id()));
     }
 
     @Test

@@ -17,8 +17,7 @@ public class IssueReferenced_TestCase {
 
     private IssueReferenced issueReferenced;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private long timestamp = 1L;
 
@@ -76,7 +75,7 @@ public class IssueReferenced_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(issueReferenced, is(not(new IssueReferenced(mock(UserId.class), timestamp, issueNumber, referencedByIssueNumber))));
+        assertThat(issueReferenced, is(not(new IssueReferenced(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), timestamp, issueNumber, referencedByIssueNumber))));
     }
 
     @Test

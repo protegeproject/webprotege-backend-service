@@ -55,7 +55,7 @@ public abstract class Subject {
     }
 
     public static Subject forUser(@Nonnull String userId) {
-        return forUser(UserId.getUserId(userId));
+        return forUser(UserId.valueOf(userId));
     }
 
     public static Subject forGuestUser() {
@@ -125,7 +125,7 @@ public abstract class Subject {
         @Nonnull
         @Override
         public Optional<String> getUserName() {
-            return Optional.of(userId.getUserName());
+            return Optional.of(userId.id());
         }
 
         @Override

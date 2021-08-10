@@ -42,7 +42,7 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
         checkNotNull(password);
         var existingRecord = repository.findOne(userId);
         if(existingRecord.isPresent()) {
-            throw new UserNameAlreadyExistsException(userId.getUserName());
+            throw new UserNameAlreadyExistsException(userId.id());
         }
         var existingRecordByEmail = repository.findOneByEmailAddress(email.getEmailAddress());
         if(existingRecordByEmail.isPresent()) {
@@ -54,14 +54,14 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
                                                                                  salt);
         var newUserRecord = new UserRecord(
                 userId,
-                userId.getUserName(),
+                userId.id(),
                 email.getEmailAddress(),
                 "",
                 salt,
                 digestedPassword
         );
         repository.save(newUserRecord);
-        return UserDetails.getUserDetails(userId, userId.getUserName(), email.getEmailAddress());
+        return UserDetails.getUserDetails(userId, userId.id(), email.getEmailAddress());
     }
 
     private void setDigestedPassword(UserId userId, SaltedPasswordDigest saltedPasswordDigest, Salt salt) {

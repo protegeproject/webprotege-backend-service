@@ -102,7 +102,7 @@ public class MockingUtils {
     }
 
     public static UserId mockUserId() {
-        return UserId.getUserId("User" + nextInt());
+        return UserId.valueOf("User" + nextInt());
     }
 
     public static OWLClassData mockOWLClassData() {

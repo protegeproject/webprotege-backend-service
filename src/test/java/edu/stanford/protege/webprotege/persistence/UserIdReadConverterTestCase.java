@@ -18,6 +18,6 @@ public class UserIdReadConverterTestCase {
         UserIdReadConverter converter = new UserIdReadConverter();
         String suppliedName = "janedoe";
         UserId UserId = converter.convert(suppliedName);
-        assertEquals(suppliedName, UserId.getUserName());
+        assertEquals(suppliedName, UserId.id());
     }
 }

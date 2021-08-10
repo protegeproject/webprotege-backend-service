@@ -36,7 +36,7 @@ public class AddEntityComment_TestCase {
     public void shouldSerializeResult() throws IOException {
         var result = AddEntityCommentResult.create(projectId,
                                                    threadId,
-                                                   new Comment(CommentId.create(), UserId.getUserId("TheUser"),
+                                                   new Comment(CommentId.create(), UserId.valueOf("TheUser"),
                                                                1000, Optional.empty(),
                                                                THE_COMMENT,
                                                                THE_COMMENT),

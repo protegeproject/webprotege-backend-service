@@ -147,7 +147,7 @@ public class ProjectDetailsRepository implements Repository {
 
     private static Document withProjectIdAndWithOwner(@Nonnull ProjectId projectId,
                                                       @Nonnull UserId owner) {
-        return new Document(PROJECT_ID, projectId.id()).append(OWNER, owner.getUserName());
+        return new Document(PROJECT_ID, projectId.id()).append(OWNER, owner.id());
     }
 
     public void setInTrash(ProjectId projectId,
@@ -184,7 +184,7 @@ public class ProjectDetailsRepository implements Repository {
     public static Bson updateModified(UserId userId,
                                       long timestamp) {
         return Updates.combine(Updates.set(MODIFIED_AT, TimestampSerializer.toIsoDateTime(timestamp)), Updates.set(MODIFIED_BY, userId
-                .getUserName()));
+                .id()));
     }
 
     public List<ProjectDetails> findByOwner(UserId owner) {
@@ -199,7 +199,7 @@ public class ProjectDetailsRepository implements Repository {
     }
 
     private static Document withOwner(@Nonnull UserId owner) {
-        return new Document(OWNER, owner.getUserName());
+        return new Document(OWNER, owner.id());
     }
 
     public void save(@Nonnull ProjectDetails projectRecord) {

@@ -27,7 +27,7 @@ public class Watch_JsonDocument_Regression_TestCase {
     public void shouldDeserializeDocument() throws IOException {
         var objectMapper = new ObjectMapperProvider().get();
         var watch = objectMapper.readValue(document, Watch.class);
-        assertThat(watch.getUserId(), is(UserId.getUserId("The User")));
+        assertThat(watch.getUserId(), is(UserId.valueOf("The User")));
         assertThat(watch.getEntity().getEntityType(), is(EntityType.CLASS));
         assertThat(watch.getEntity().getIRI(), is(IRI.create("http://the.ontology/ClsA")));
         assertThat(watch.getType(), is(WatchType.ENTITY));

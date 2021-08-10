@@ -36,7 +36,7 @@ public class UserRecordConverter implements DocumentConverter<UserRecord> {
     @Override
     public Document toDocument(@Nonnull UserRecord object) {
         Document document = new Document();
-        document.append(USER_ID, object.getUserId().getUserName());
+        document.append(USER_ID, object.getUserId().id());
         document.append(REAL_NAME, object.getRealName());
         document.append(EMAIL_ADDRESS, object.getEmailAddress());
         if (!object.getAvatarUrl().isEmpty()) {
@@ -56,7 +56,7 @@ public class UserRecordConverter implements DocumentConverter<UserRecord> {
         Salt salt = new SaltReadConverter().convert(document.getString(SALT));
         SaltedPasswordDigest password = new SaltedPasswordDigestReadConverter().convert(document.getString(SALTED_PASSWORD_DIGEST));
         return new UserRecord(
-                UserId.getUserId(userId),
+                UserId.valueOf(userId),
                 realName,
                 email,
                 avatar,
@@ -65,7 +65,7 @@ public class UserRecordConverter implements DocumentConverter<UserRecord> {
     }
 
     public UserId getUserId(Document document) {
-        return UserId.getUserId(document.getString(USER_ID));
+        return UserId.valueOf(document.getString(USER_ID));
     }
 
     @Nonnull
@@ -79,7 +79,7 @@ public class UserRecordConverter implements DocumentConverter<UserRecord> {
     }
 
     public static Document byUserId(@Nonnull UserId userId) {
-        return new Document(USER_ID, userId.getUserName());
+        return new Document(USER_ID, userId.id());
     }
 
     public static Document byEmailAddress(@Nonnull String emailAddress) {

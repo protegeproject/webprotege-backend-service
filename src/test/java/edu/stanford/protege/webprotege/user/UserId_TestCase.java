@@ -28,13 +28,13 @@ public class UserId_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        userId = UserId.getUserId(THE_USER_NAME);
-        otherUserId = UserId.getUserId(THE_USER_NAME);
+        userId = UserId.valueOf(THE_USER_NAME);
+        otherUserId = UserId.valueOf(THE_USER_NAME);
     }
 
     @Test
     public void shouldReturnGuestUser() {
-        assertThat(UserId.getUserId(null), is(UserId.getGuest()));
+        assertThat(UserId.valueOf(null), is(UserId.getGuest()));
     }
 
     @Test
@@ -74,29 +74,29 @@ public class UserId_TestCase {
 
     @Test
     public void shouldReturnSuppliedUserName() {
-        assertThat(userId.getUserName(), is(THE_USER_NAME));
+        assertThat(userId.id(), is(THE_USER_NAME));
     }
 
     @Test
     public void shouldCompareByUserName() {
-        UserId userIdA = UserId.getUserId("a");
-        UserId userIdB = UserId.getUserId("b");
+        UserId userIdA = UserId.valueOf("a");
+        UserId userIdB = UserId.valueOf("b");
         assertThat(userIdA.compareTo(userIdB), is(lessThan(0)));
     }
 
     @Test
     public void shouldCompareIgnoringCase() {
         // 'a' should come before 'B' even though the ASCII code for 'B' is smaller than 'a'
-        UserId userIdA = UserId.getUserId("a");
-        UserId userIdB = UserId.getUserId("B");
+        UserId userIdA = UserId.valueOf("a");
+        UserId userIdB = UserId.valueOf("B");
         assertThat(userIdA.compareTo(userIdB), is(lessThan(0)));
     }
 
     @Test
     public void shouldCompareWithCaseIfCompareIgnoreCaseIsEqual() {
         // 'a' should come after 'A'
-        UserId userIdA = UserId.getUserId("a");
-        UserId userIdB = UserId.getUserId("A");
+        UserId userIdA = UserId.valueOf("a");
+        UserId userIdB = UserId.valueOf("A");
         assertThat(userIdA.compareTo(userIdB), is(greaterThan(0)));
     }
 }

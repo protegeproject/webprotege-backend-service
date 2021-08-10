@@ -18,8 +18,7 @@ public class IssueTargetAdded_TestCase {
 
     private IssueTargetAdded issueTargetAdded;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private long timestamp = 1L;
 
@@ -78,7 +77,7 @@ public class IssueTargetAdded_TestCase {
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
         assertThat(issueTargetAdded,
-                   is(not(new IssueTargetAdded(Mockito.mock(UserId.class), timestamp, targetEntity))));
+                   is(not(new IssueTargetAdded(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), timestamp, targetEntity))));
     }
 
     @Test

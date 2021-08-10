@@ -21,7 +21,7 @@ public class UserInSessionEncoder implements ClientObjectEncoder<UserInSession> 
         JsonArrayBuilder actionArray = Json.createArrayBuilder();
         object.getAllowedApplicationActions().stream().map(a -> a.getId()).forEach(a -> actionArray.add(a));
         return Json.createObjectBuilder()
-                   .add(USER_NAME, userDetails.getUserId().getUserName())
+                   .add(USER_NAME, userDetails.getUserId().id())
                    .add(DISPLAY_NAME, userDetails.getDisplayName())
                    .add(USER_EMAIL, userDetails.getEmailAddress().orElse(""))
                    .add(APPLICATION_ACTIONS, actionArray)

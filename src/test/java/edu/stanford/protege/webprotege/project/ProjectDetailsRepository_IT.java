@@ -52,13 +52,13 @@ public class ProjectDetailsRepository_IT {
         return ProjectId.valueOf(UUID.randomUUID().toString());
     }
 
-    private UserId owner = UserId.getUserId("The Owner");
+    private UserId owner = UserId.valueOf("The Owner");
 
-    private UserId createdBy = UserId.getUserId("The Creator");
+    private UserId createdBy = UserId.valueOf("The Creator");
 
-    private UserId lastModifiedBy = UserId.getUserId("The Editor");
+    private UserId lastModifiedBy = UserId.valueOf("The Editor");
 
-    private UserId otherUser = UserId.getUserId("Other User");
+    private UserId otherUser = UserId.valueOf("Other User");
 
     private ProjectDetails projectDetails;
 

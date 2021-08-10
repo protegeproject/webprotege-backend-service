@@ -20,14 +20,14 @@ public class IssueEventReadConverter implements Converter<BasicDBObject, IssueEv
     @Override
     public IssueEvent convert(BasicDBObject dbObject) {
         String eventClass = dbObject.getString("_class");
-        UserId userId = UserId.getUserId(dbObject.getString("userId"));
+        UserId userId = UserId.valueOf(dbObject.getString("userId"));
         long timestamp = dbObject.getLong("timestamp");
         if("IssueAssigned".equals(eventClass)) {
-            UserId assignee = UserId.getUserId(dbObject.getString("assignee"));
+            UserId assignee = UserId.valueOf(dbObject.getString("assignee"));
             return new IssueAssigned(userId, timestamp, assignee);
         }
         else if("IssueUnassigned".equals(eventClass)) {
-            UserId assignee = UserId.getUserId(dbObject.getString("assignee"));
+            UserId assignee = UserId.valueOf(dbObject.getString("assignee"));
             return new IssueUnassigned(userId, timestamp, assignee);
         }
         else if("IssueLabelled".equals(eventClass)) {

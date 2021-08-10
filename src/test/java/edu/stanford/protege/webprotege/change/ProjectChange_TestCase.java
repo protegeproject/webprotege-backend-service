@@ -34,8 +34,7 @@ public class ProjectChange_TestCase {
     @Mock
     private RevisionNumber revisionNumber;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private int changeCount = 3;
 

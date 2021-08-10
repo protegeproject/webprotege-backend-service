@@ -146,7 +146,7 @@ public class MergeEntitiesChangeListGenerator_TestCase {
                                                                                     defaultOntologyIdManager,
                                                                                     projectOntologiesIndex,
                                                                                     annotationAssertionsIndex);
-        OntologyChangeList<?> changeList = gen.generateChanges(new ChangeGenerationContext(UserId.getUserId("Bob")));
+        OntologyChangeList<?> changeList = gen.generateChanges(new ChangeGenerationContext(UserId.valueOf("Bob")));
         applyChanges(ImmutableList.copyOf(changeList.getChanges()));
     }
 

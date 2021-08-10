@@ -25,14 +25,14 @@ public class GetEmailAddressActionTestCase {
 
     @Test
     public void getUserIdReturnsSuppliedUserId() {
-        UserId userId = UserId.getUserId("UserA");
+        UserId userId = UserId.valueOf("UserA");
         GetEmailAddressAction action = GetEmailAddressAction.create(userId);
         assertEquals(userId, action.getUserId());
     }
 
     @Test
     public void equalsReturnsTrueForSameUserId() {
-        UserId userId = UserId.getUserId("UserB");
+        UserId userId = UserId.valueOf("UserB");
         GetEmailAddressAction actionA = GetEmailAddressAction.create(userId);
         GetEmailAddressAction actionB = GetEmailAddressAction.create(userId);
         assertEquals(actionA, actionB);
@@ -40,7 +40,7 @@ public class GetEmailAddressActionTestCase {
 
     @Test
     public void hashCodeReturnsSameValueForSameUserId() {
-        UserId userId = UserId.getUserId("UserC");
+        UserId userId = UserId.valueOf("UserC");
         GetEmailAddressAction actionA = GetEmailAddressAction.create(userId);
         GetEmailAddressAction actionB = GetEmailAddressAction.create(userId);
         assertEquals(actionA.hashCode(), actionB.hashCode());

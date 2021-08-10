@@ -28,8 +28,7 @@ public class UserDetails_TestCase {
 
     private UserDetails otherUserDetails;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private String displayName = "Display name";
 

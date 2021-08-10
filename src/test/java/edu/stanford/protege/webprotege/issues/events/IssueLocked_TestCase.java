@@ -17,8 +17,7 @@ public class IssueLocked_TestCase {
 
     private IssueLocked issueLocked;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private long timestamp = 1L;
 
@@ -61,7 +60,7 @@ public class IssueLocked_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(issueLocked, is(not(new IssueLocked(mock(UserId.class), timestamp))));
+        assertThat(issueLocked, is(not(new IssueLocked(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), timestamp))));
     }
 
     @Test

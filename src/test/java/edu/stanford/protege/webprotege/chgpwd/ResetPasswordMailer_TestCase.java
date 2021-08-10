@@ -48,8 +48,7 @@ public class ResetPasswordMailer_TestCase {
     @Mock
     private SendMailImpl sendMailImpl;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = UserId.valueOf(THE_USER_NAME);
 
     @Mock
     private TemplateEngine templateEngine;
@@ -72,8 +71,6 @@ public class ResetPasswordMailer_TestCase {
         mailer = new ResetPasswordMailer(sendMailImpl, templateEngine, templateFile, placeUrl, appNameSupplier);
         when(templateFile.getContents())
                 .thenReturn(TEMPLATE);
-        when(userId.getUserName())
-                .thenReturn(THE_USER_NAME);
         when(placeUrl.getApplicationUrl())
                 .thenReturn(THE_APPLICATION_URL);
         when(templateEngine.populateTemplate(anyString(), anyMap()))

@@ -24,7 +24,7 @@ public class UserIdInitialsExtractor {
     }
 
     private static String getCleanUserName(UserId userId) {
-        String withoutQuotes = userId.getUserName().replaceAll("\"", "");
+        String withoutQuotes = userId.id().replaceAll("\"", "");
         String withoutAtSymbol = extractFromAtSymbol(withoutQuotes);
         return getConvertedUserName(withoutAtSymbol);
     }

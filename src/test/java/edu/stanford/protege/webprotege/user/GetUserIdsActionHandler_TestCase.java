@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.user;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Sets;
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import org.junit.Before;
@@ -30,8 +31,7 @@ public class GetUserIdsActionHandler_TestCase {
     @Mock
     private HasUserIds hasUserIds;
 
-    @Mock
-    private UserId userA, userB, userC, nullUser;
+    private UserId userA = MockingUtils.mockUserId(), userB = MockingUtils.mockUserId(), userC = MockingUtils.mockUserId(), nullUser;
 
     @Mock
     private ExecutionContext executionContext;

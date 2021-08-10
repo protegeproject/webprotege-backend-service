@@ -33,8 +33,7 @@ public class PerformLoginActionHandler_TestCase {
     @Mock
     private PerformLoginAction action;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private ExecutionContext executionContext;
@@ -59,7 +58,6 @@ public class PerformLoginActionHandler_TestCase {
         handler = new PerformLoginActionHandler(activityManager,
                                                 userInSessionFactory, authenticationManager);
         when(action.getUserId()).thenReturn(userId);
-        when(userId.isGuest()).thenReturn(false);
         when(action.getPassword()).thenReturn(password);
         when(userInSessionFactory.getUserInSession(any())).thenReturn(userInSession);
         when(executionContext.getSession()).thenReturn(webProtegeSession);

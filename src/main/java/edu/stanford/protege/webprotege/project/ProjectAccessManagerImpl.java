@@ -48,7 +48,7 @@ public class ProjectAccessManagerImpl implements ProjectAccessManager, Repositor
     public void logProjectAccess(ProjectId projectId, UserId userId, long timestamp) {
         collection.updateOne(
                 and(eq(PROJECT_ID, projectId.id()),
-                    eq(USER_ID, userId.getUserName())),
+                    eq(USER_ID, userId.id())),
                 new Document()
                         .append("$inc", new Document("count", 1))
                         .append("$set", new Document(ACCESSED, new Date(timestamp))),

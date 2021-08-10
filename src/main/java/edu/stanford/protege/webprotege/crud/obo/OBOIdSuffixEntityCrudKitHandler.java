@@ -144,7 +144,7 @@ public class OBOIdSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Obo
         OWLAnnotationAssertionAxiom createdByAx = dataFactory.getOWLAnnotationAssertionAxiom(
                 dataFactory.getOWLAnnotationProperty(CREATED_BY),
                 entity.getIRI(),
-                dataFactory.getOWLLiteral(context.getUserId().getUserName())
+                dataFactory.getOWLLiteral(context.getUserId().id())
         );
         builder.add(AddAxiomChange.of(targetOntology, createdByAx));
         ZonedDateTime now = ZonedDateTime.now(ZoneOffset.UTC);

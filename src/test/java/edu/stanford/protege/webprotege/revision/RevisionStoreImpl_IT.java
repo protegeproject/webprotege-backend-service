@@ -173,7 +173,7 @@ public class RevisionStoreImpl_IT {
         var changes = ImmutableList.<OntologyChange>of(
                 AddAxiomChange.of(ontologyId, axiom)
         );
-        var userId = UserId.getUserId("The User");
+        var userId = UserId.valueOf("The User");
         var timestamp = System.currentTimeMillis();
         var highLevelDescription = "A change that was mad";
         return new Revision(userId,

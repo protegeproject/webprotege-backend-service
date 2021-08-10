@@ -15,6 +15,6 @@ import edu.stanford.protege.webprotege.common.UserId;
 public class UserIdReadConverter implements Converter<String, UserId> {
 
     public UserId convert(String userId) {
-        return UserId.getUserId(userId);
+        return UserId.valueOf(userId);
     }
 }

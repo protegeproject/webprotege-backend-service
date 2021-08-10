@@ -1,6 +1,7 @@
 
 package edu.stanford.protege.webprotege.itemlist;
 
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -29,8 +30,7 @@ public class GetUserIdCompletionsActionHandler_TestCase {
 
     private List<UserId> userIds;
 
-    @Mock
-    private UserId johnSmith, janeDoe;
+    private UserId johnSmith = MockingUtils.mockUserId(), janeDoe = MockingUtils.mockUserId();
 
     @Mock
     private GetUserIdCompletionsAction action;

@@ -40,7 +40,7 @@ public class UserInSessionFactory_TestCase {
     @Mock
     private UserDetails userDetails;
 
-    private UserId userId = UserId.getUserId("TheUser");
+    private UserId userId = UserId.valueOf("TheUser");
 
     private UserInSessionFactory factory;
 
@@ -83,7 +83,7 @@ public class UserInSessionFactory_TestCase {
 
     @Test
     public void shouldProvideUserInSessionForUnknownUser() {
-        UserInSession userInSession = factory.getUserInSession(UserId.getUserId("SomeOtherUserId"));
+        UserInSession userInSession = factory.getUserInSession(UserId.valueOf("SomeOtherUserId"));
         assertThat(userInSession.getUserDetails(), is(UserDetails.getGuestUserDetails()));
         assertThat(userInSession.getAllowedApplicationActions(), is(Collections.emptySet()));
     }

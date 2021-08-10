@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,8 +35,7 @@ public class DiscussionThreadParticipantsExtractor_TestCase {
     @Mock
     private Comment commentA, commentB;
 
-    @Mock
-    private UserId participantA, participantB;
+    private UserId participantA = MockingUtils.mockUserId(), participantB = MockingUtils.mockUserId();
 
     @Before
     public void setUp() throws Exception {

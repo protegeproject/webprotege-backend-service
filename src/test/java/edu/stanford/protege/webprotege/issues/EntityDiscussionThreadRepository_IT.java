@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
-import edu.stanford.protege.webprotege.project.ProjectIdFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
@@ -57,7 +56,7 @@ public class EntityDiscussionThreadRepository_IT {
         repository = new EntityDiscussionThreadRepository(mongoTemplate);
         comment = new Comment(
                 CommentId.create(),
-                UserId.getUserId("John"),
+                UserId.valueOf("John"),
                 System.currentTimeMillis(),
                 Optional.of(33L),
                 "The body", "The rendered body");
@@ -107,7 +106,7 @@ public class EntityDiscussionThreadRepository_IT {
         long createdAt = System.currentTimeMillis();
         Comment theComment = new Comment(
                 CommentId.create(),
-                UserId.getUserId("Matthew"),
+                UserId.valueOf("Matthew"),
                                       createdAt,
                                       Optional.empty(),
                                       "The body", "The rendered body");

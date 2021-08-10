@@ -21,8 +21,7 @@ public class UserRecord_TestCase {
 
     private UserRecord userRecord;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private String realName = "The realName";
 
@@ -118,7 +117,7 @@ public class UserRecord_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(userRecord, is(not(new UserRecord(Mockito.mock(UserId.class), realName, emailAddress, avatarUrl, salt, saltedPasswordDigest))));
+        assertThat(userRecord, is(not(new UserRecord(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), realName, emailAddress, avatarUrl, salt, saltedPasswordDigest))));
     }
 
     @Test

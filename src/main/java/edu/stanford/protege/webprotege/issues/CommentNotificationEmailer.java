@@ -152,7 +152,7 @@ public class CommentNotificationEmailer {
                                      @Nonnull Comment postedComment) {
         return String.format("[%s] Comment posted by %s",
                              projectDetailsManager.getProjectDetails(projectId).getDisplayName(),
-                             postedComment.getCreatedBy().getUserName());
+                             postedComment.getCreatedBy().id());
     }
 
     private String formatMessage(@Nonnull ProjectId projectId,

@@ -45,7 +45,7 @@ public class UserRecordRepository_TestCase {
         client = MongoClients.create();
         mongoTemplate = new MongoTemplate(client, MongoTestUtils.getTestDbName());
         recordRepository = new UserRecordRepository(mongoTemplate, new UserRecordConverter());
-        userId = UserId.getUserId("JaneDoe");
+        userId = UserId.valueOf("JaneDoe");
         userRecord = new UserRecord(
                 userId,
                 "Jane Doe" ,

@@ -69,7 +69,7 @@ public class ResetPasswordMailer {
                               emailBody,
                               ex -> {
                                   logger.info("A password reset email could not be sent to user {} at {}.",
-                                              userId.getUserName(),
+                                              userId.id(),
                                               emailAddress);
                                   messagingExceptionHandler.handleMessagingException(ex);
                               });

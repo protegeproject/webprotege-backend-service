@@ -36,7 +36,7 @@ public class WatchRecordRepository_IT {
     @Autowired
     private WatchRecordRepositoryImpl repository;
 
-    private UserId userId = UserId.getUserId("The User");
+    private UserId userId = UserId.valueOf("The User");
 
     private OWLEntity entity = new OWLClassImpl(IRI.create("http://the.ontology/ClsA"));
 

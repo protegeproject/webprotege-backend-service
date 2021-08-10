@@ -29,9 +29,9 @@ public class ProjectAccessManagerImpl_IT {
 
     private final ProjectId projectId = ProjectIdFactory.getFreshProjectId();
 
-    private final UserId userId = UserId.getUserId("Jane Doe");
+    private final UserId userId = UserId.valueOf("Jane Doe");
 
-    private final UserId otherUserId = UserId.getUserId("John Smith");
+    private final UserId otherUserId = UserId.valueOf("John Smith");
 
     private MongoClient mongoClient;
 

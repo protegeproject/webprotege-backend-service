@@ -34,7 +34,7 @@ public class ProjectDetails_Serialization_TestCase {
         projectDetails = ProjectDetails.get(ProjectId.valueOf("12345678-1234-1234-1234-123456789abc"),
                                             "The display name",
                                             "The description",
-                                            UserId.getUserId("The Owner"),
+                                            UserId.valueOf("The Owner"),
                                             true,
                                             DictionaryLanguage.rdfsLabel("en-GB"),
                                             DisplayNameSettings.get(ImmutableList.of(DictionaryLanguage.rdfsLabel("en-GB"),
@@ -42,9 +42,9 @@ public class ProjectDetails_Serialization_TestCase {
                                                                                      DictionaryLanguage.rdfsLabel("")),
                                                                     ImmutableList.of(DictionaryLanguage.rdfsLabel("de"))),
                                             2L,
-                                            UserId.getUserId("The creator"),
+                                            UserId.valueOf("The creator"),
                                             3L,
-                                            UserId.getUserId("The modifier"),
+                                            UserId.valueOf("The modifier"),
                                             EntityDeprecationSettings.empty());
         ObjectMapperProvider objectMapperProvider = new ObjectMapperProvider();
         objectMapper = objectMapperProvider.get();

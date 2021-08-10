@@ -53,7 +53,7 @@ public class ProjectCache_Test {
 
     @Test
     public void shouldCreateNewEmptyProject() throws OWLOntologyCreationException, IOException {
-        var projectId = projectCache.getProject(NewProjectSettings.get(UserId.getUserId("Matthew"),
+        var projectId = projectCache.getProject(NewProjectSettings.get(UserId.valueOf("Matthew"),
                                                        "A project",
                                                        "en",
                                                        "A project description"

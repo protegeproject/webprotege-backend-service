@@ -2,6 +2,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.issues.events.IssueEvent;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -34,8 +35,7 @@ public class Issue_TestCase {
 
     private int number = 1;
 
-    @Mock
-    private UserId creator;
+    private UserId creator = MockingUtils.mockUserId();
 
     private long createdAt = 1L;
 
@@ -51,7 +51,7 @@ public class Issue_TestCase {
 
     private LockSetting lockSetting = LockSetting.UNLOCKED;
 
-    private ImmutableList<UserId> assignees = ImmutableList.of(mock(UserId.class));
+    private ImmutableList<UserId> assignees = ImmutableList.of(edu.stanford.protege.webprotege.MockingUtils.mockUserId());
 
     private Optional<Milestone> milestone = Optional.of(mock(Milestone.class));
 
@@ -65,7 +65,7 @@ public class Issue_TestCase {
     private ImmutableList<Mention> mentions = ImmutableList.of(mock(Mention.class));
 
     @Mock
-    private ImmutableList<UserId> participants = ImmutableList.of(mock(UserId.class));
+    private ImmutableList<UserId> participants = ImmutableList.of(edu.stanford.protege.webprotege.MockingUtils.mockUserId());
 
     @Mock
     private ImmutableList<IssueEvent> events = ImmutableList.of(mock(IssueEvent.class));
@@ -516,7 +516,7 @@ public class Issue_TestCase {
         assertThat(issue,
                    is(not(new Issue(projectId,
                                     number,
-                                    mock(UserId.class),
+                                    edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
                                     createdAt,
                                     updatedAt, targetEntities,
                                     title,
@@ -649,7 +649,7 @@ public class Issue_TestCase {
                                     title,
                                     body,
                                     status,
-                                    ImmutableList.of(mock(UserId.class)), milestone,
+                                    ImmutableList.of(edu.stanford.protege.webprotege.MockingUtils.mockUserId()), milestone,
                                     lockSetting,
                                     labels,
                                     comments,
@@ -743,7 +743,7 @@ public class Issue_TestCase {
                                     lockSetting,
                                     labels,
                                     comments,
-                                    mentions, ImmutableList.of(mock(UserId.class)), events))));
+                                    mentions, ImmutableList.of(edu.stanford.protege.webprotege.MockingUtils.mockUserId()), events))));
     }
 
     @Test

@@ -12,6 +12,6 @@ public class UserId2StringConverter implements Converter<UserId, String> {
 
     @Override
     public String convert(UserId source) {
-        return source.getUserName();
+        return source.id();
     }
 }

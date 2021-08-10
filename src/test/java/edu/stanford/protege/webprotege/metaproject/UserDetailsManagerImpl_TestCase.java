@@ -35,8 +35,7 @@ public class UserDetailsManagerImpl_TestCase {
     @Mock
     private UserRecord userRecord;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Before
     public void setUp()

@@ -28,7 +28,7 @@ public class UserRecordConverter_TestCase {
     public void setUp() {
         converter = new UserRecordConverter();
         record = new UserRecord(
-                UserId.getUserId("TheUserId"),
+                UserId.valueOf("TheUserId"),
                 "The Real Name",
                 "user@email.com",
                 "",

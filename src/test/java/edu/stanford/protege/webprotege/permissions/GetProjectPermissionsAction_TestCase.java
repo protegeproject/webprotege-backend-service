@@ -29,8 +29,7 @@ public class GetProjectPermissionsAction_TestCase {
 
     private ProjectId projectId = ProjectId.generate();
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
 
     @Before

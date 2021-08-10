@@ -11,11 +11,11 @@ public class UserIdItemRenderer implements ItemRenderer<UserId> {
 
     @Override
     public String getDisplayString(UserId item) {
-        return item.getUserName();
+        return item.id();
     }
 
     @Override
     public String getReplacementString(UserId item) {
-        return item.getUserName();
+        return item.id();
     }
 }

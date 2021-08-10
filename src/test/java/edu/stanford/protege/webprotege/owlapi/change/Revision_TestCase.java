@@ -21,8 +21,7 @@ public class Revision_TestCase {
 
     private Revision revision;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private RevisionNumber revisionNumber;
@@ -96,7 +95,7 @@ public class Revision_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        MatcherAssert.assertThat(revision, Matchers.is(Matchers.not(new Revision(mock(UserId.class), revisionNumber, changes, timestamp, highLevelDescription))));
+        MatcherAssert.assertThat(revision, Matchers.is(Matchers.not(new Revision(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), revisionNumber, changes, timestamp, highLevelDescription))));
     }
 
     @Test

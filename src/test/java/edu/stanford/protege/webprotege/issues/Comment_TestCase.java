@@ -1,6 +1,7 @@
 
 package edu.stanford.protege.webprotege.issues;
 
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -21,8 +22,8 @@ public class Comment_TestCase {
     private Comment comment;
     @Mock
     private CommentId id;
-    @Mock
-    private UserId createdBy;
+
+    private UserId createdBy = MockingUtils.mockUserId();
     private long createdAt = 1L;
     private Optional updatedAt = Optional.of(33L);
     private String body = "The body";
@@ -118,7 +119,7 @@ public class Comment_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_createdBy() {
-        assertThat(comment, is(not(new Comment(id, Mockito.mock(UserId.class), createdAt, updatedAt, body, renderedBody))));
+        assertThat(comment, is(not(new Comment(id, edu.stanford.protege.webprotege.MockingUtils.mockUserId(), createdAt, updatedAt, body, renderedBody))));
     }
 
     @Test

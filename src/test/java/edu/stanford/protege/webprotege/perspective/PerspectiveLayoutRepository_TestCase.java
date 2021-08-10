@@ -91,7 +91,7 @@ public class PerspectiveLayoutRepository_TestCase {
 
     private static PerspectiveLayoutRecord createTestRecord() {
         return PerspectiveLayoutRecord.get(ProjectId.getNil(),
-                                           UserId.getUserId("Matthew"),
+                                           UserId.valueOf("Matthew"),
                                            PerspectiveId.generate(),
                                            null);
     }

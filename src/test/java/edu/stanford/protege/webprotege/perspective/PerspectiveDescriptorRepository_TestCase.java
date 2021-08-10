@@ -73,7 +73,7 @@ public class PerspectiveDescriptorRepository_TestCase {
 
     @Test
     public void shouldGetLessSpecficDescriptors() {
-        var userId = UserId.getUserId("TheUserName");
+        var userId = UserId.valueOf("TheUserName");
         var projectId = ProjectId.getNil();
 
         var userProjectRecord = PerspectiveDescriptorsRecord.get(projectId,
@@ -104,7 +104,7 @@ public class PerspectiveDescriptorRepository_TestCase {
 
     private static PerspectiveDescriptorsRecord createTestRecord() {
         return PerspectiveDescriptorsRecord.get(ProjectId.getNil(),
-                                                UserId.getUserId("Matthew"),
+                                                UserId.valueOf("Matthew"),
                                                 createPerspectivesList(PerspectiveId.generate()));
     }
 

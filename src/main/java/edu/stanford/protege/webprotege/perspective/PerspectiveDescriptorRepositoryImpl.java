@@ -69,7 +69,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
             userId = null;
         }
         else {
-            userId = record.getUserId().getUserName();
+            userId = record.getUserId().id();
         }
         document.append(USER_ID, userId);
         return document;
@@ -88,7 +88,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
     public Optional<PerspectiveDescriptorsRecord> findDescriptors(@Nonnull ProjectId projectId,
                                                                   @Nonnull UserId userId) {
         var query = new Document(PROJECT_ID, projectId.id())
-                .append(USER_ID, userId.getUserName());
+                .append(USER_ID, userId.id());
         return getPerspectiveDescriptorRecord(query);
     }
 
@@ -131,7 +131,7 @@ public class PerspectiveDescriptorRepositoryImpl implements PerspectiveDescripto
     @Override
     public void dropAllDescriptors(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
         var query = new Document(PROJECT_ID, projectId.id())
-                .append(USER_ID, userId.getUserName());
+                .append(USER_ID, userId.id());
         getCollection().deleteMany(query);
     }
 

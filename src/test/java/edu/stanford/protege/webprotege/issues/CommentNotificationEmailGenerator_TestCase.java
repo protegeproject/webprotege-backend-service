@@ -31,7 +31,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CommentNotificationEmailGenerator_TestCase {
 
-    public static final String TEMPLATE_FILE_CONTENTS = "{{project.displayName}} {{comment.createdBy.userName}}";
+    public static final String TEMPLATE_FILE_CONTENTS = "{{project.displayName}} {{comment.createdBy.id}}";
 
     public static final String USER_NAME = "John Smith";
 
@@ -56,8 +56,7 @@ public class CommentNotificationEmailGenerator_TestCase {
     @Mock
     private Comment comment;
 
-    @Mock
-    private UserId creator;
+    private UserId creator = UserId.valueOf(USER_NAME);
 
     @Mock
     private File file;
@@ -89,8 +88,6 @@ public class CommentNotificationEmailGenerator_TestCase {
 
         when(comment.getCreatedBy())
                 .thenReturn(creator);
-        when(creator.getUserName())
-                .thenReturn(USER_NAME);
 
         when(entityData.getBrowserText()).thenReturn("TheBrowserText");
         templateEngine = new TemplateEngine(DefaultMustacheFactory::new);

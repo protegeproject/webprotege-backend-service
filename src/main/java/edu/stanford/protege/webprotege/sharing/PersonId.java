@@ -32,7 +32,7 @@ public abstract class PersonId implements Serializable, Comparable<PersonId>, Va
 
     @Nonnull
     public static PersonId of(UserId userId) {
-        return get(userId.getUserName());
+        return get(userId.id());
     }
 
     @JsonValue

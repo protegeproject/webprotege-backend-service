@@ -29,7 +29,7 @@ public class MentionReadConverter implements Converter<BasicDBObject, Mention> {
             return new RevisionMention(dbObject.getLong("revisionNumber"));
         }
         else if("UserIdMention".equals(mentionClass)) {
-            return new UserIdMention(UserId.getUserId(dbObject.get("userId").toString()));
+            return new UserIdMention(UserId.valueOf(dbObject.get("userId").toString()));
         }
         else if("EntityMention".equals(mentionClass)) {
             DBObject entityObject = (DBObject) dbObject.get("entity");

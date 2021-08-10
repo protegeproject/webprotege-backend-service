@@ -18,8 +18,7 @@ public class Watch_TestCase {
 
     private Watch watch;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private OWLEntity entity;
@@ -84,7 +83,7 @@ public class Watch_TestCase {
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
         assertThat(watch,
-                   is(not(Watch.create(mock(UserId.class), entity, type))));
+                   is(not(Watch.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), entity, type))));
     }
 
     @Test

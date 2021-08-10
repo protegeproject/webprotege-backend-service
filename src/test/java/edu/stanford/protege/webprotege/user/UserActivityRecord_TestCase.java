@@ -23,8 +23,7 @@ public class UserActivityRecord_TestCase {
 
     private UserActivityRecord userActivityRecord;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private long lastLogin = 1L;
 
@@ -91,7 +90,7 @@ public class UserActivityRecord_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(userActivityRecord, is(not(new UserActivityRecord(mock(UserId.class), lastLogin, lastLogout, recentProjects))));
+        assertThat(userActivityRecord, is(not(new UserActivityRecord(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), lastLogin, lastLogout, recentProjects))));
     }
 
     @Test

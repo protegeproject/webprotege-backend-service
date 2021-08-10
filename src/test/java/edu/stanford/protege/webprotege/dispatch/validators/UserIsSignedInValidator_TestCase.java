@@ -30,24 +30,19 @@ public class UserIsSignedInValidator_TestCase<A extends Action<?>> {
     @Mock
     private RequestContext requestContext;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
-    @Before
-    public void setUp() throws Exception {
-        validator = new UserIsSignedInValidator(userId);
-    }
 
     @Test
     public void shouldValidateUserThatIsNotGuest() {
-        when(userId.isGuest()).thenReturn(false);
+        validator = new UserIsSignedInValidator(userId);
         RequestValidationResult result = validator.validateAction();
         assertThat(result.isValid(), is(true));
     }
 
     @Test
     public void shouldNoValidateUserThatIsGuest() {
-        when(userId.isGuest()).thenReturn(true);
+        validator = new UserIsSignedInValidator(UserId.getGuest());
         RequestValidationResult result = validator.validateAction();
         assertThat(result.isValid(), is(false));
     }

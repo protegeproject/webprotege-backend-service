@@ -22,8 +22,7 @@ public class ChangeGenerationContext_TestCase {
 
     private ChangeGenerationContext context;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Before
     public void setUp() {

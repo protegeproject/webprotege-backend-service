@@ -22,7 +22,7 @@ public class PerspectiveLayoutRecord_Serialization_TestCase {
 
     @Test
     public void shouldSerializeRecordWithUserId() throws IOException {
-        var record = PerspectiveLayoutRecord.get(ProjectId.getNil(), UserId.getUserId("Matthew"), PerspectiveId.generate(), null);
+        var record = PerspectiveLayoutRecord.get(ProjectId.getNil(), UserId.valueOf("Matthew"), PerspectiveId.generate(), null);
         JsonSerializationTestUtil.testSerialization(record, PerspectiveLayoutRecord.class);
     }
 }

@@ -28,8 +28,8 @@ public class GetPersonIdItemsActionHandler_TestCase {
     private UserDetailsManager userDetailsManager;
 
     private UserId
-            johnSmith_UpperCase = UserId.getUserId("John Smith"),
-            johnSmith_LowerCase = UserId.getUserId("john smith");
+            johnSmith_UpperCase = UserId.valueOf("John Smith"),
+            johnSmith_LowerCase = UserId.valueOf("john smith");
 
     @Mock
     private GetPersonIdItemsAction action;
@@ -51,7 +51,7 @@ public class GetPersonIdItemsActionHandler_TestCase {
     public void shouldOnlyMatchExact() {
         when(action.getItemNames()).thenReturn(Arrays.asList("John Smith"));
         GetPersonIdItemsResult result = actionHandler.execute(action, mock(ExecutionContext.class));
-        assertThat(result.getItems(), hasItems(PersonId.get(johnSmith_UpperCase.getUserName())));
+        assertThat(result.getItems(), hasItems(PersonId.get(johnSmith_UpperCase.id())));
     }
 
 }

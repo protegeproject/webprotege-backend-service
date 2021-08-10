@@ -30,7 +30,7 @@ public class CommentConverter implements DocumentConverter<Comment> {
     @Override
     public Document toDocument(@Nonnull Comment object) {
         Document document = new Document();
-        document.append(CREATED_BY, object.getCreatedBy().getUserName());
+        document.append(CREATED_BY, object.getCreatedBy().id());
         document.append(CREATED_AT, object.getCreatedAt());
         object.getUpdatedAt().ifPresent(l -> document.append(UPDATED_AT, l));
         document.append(BODY, object.getBody());
@@ -39,7 +39,7 @@ public class CommentConverter implements DocumentConverter<Comment> {
 
     @Override
     public Comment fromDocument(@Nonnull Document document) {
-        UserId createdBy = UserId.getUserId(document.getString(CREATED_BY));
+        UserId createdBy = UserId.valueOf(document.getString(CREATED_BY));
         long createdAt = document.getLong(CREATED_AT);
         Optional<Long> updatedAt = Optional.ofNullable(document.getLong(UPDATED_AT));
         String body = document.getString(BODY);

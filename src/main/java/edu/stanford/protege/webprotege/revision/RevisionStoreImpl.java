@@ -218,7 +218,7 @@ public class RevisionStoreImpl implements RevisionStore, HasDispose {
                     var revisionNumberValue = metadata.getLongAttribute(REVISION_META_DATA_ATTRIBUTE.getVocabularyName(), 0L);
                     var revisionNumber = RevisionNumber.getRevisionNumber(revisionNumberValue);
                     var description = metadata.getStringAttribute(DESCRIPTION_META_DATA_ATTRIBUTE.getVocabularyName(), "");
-                    var userId = userIdInterner.intern(UserId.getUserId(userName));
+                    var userId = userIdInterner.intern(UserId.valueOf(userName));
 
                     var internedChangeRecords = changeRecordList.getChangeRecords()
                             .stream()

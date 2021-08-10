@@ -19,8 +19,7 @@ public class GetUserIdCompletionsResult_TestCase {
 
     private GetUserIdCompletionsResult result;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private List<UserId> possibleItemCompletions;
 
@@ -54,7 +53,7 @@ public class GetUserIdCompletionsResult_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_possibleItemCompletions() {
-        MatcherAssert.assertThat(result, Matchers.is(Matchers.not(GetUserIdCompletionsResult.create(Arrays.asList(mock(UserId.class))))));
+        MatcherAssert.assertThat(result, Matchers.is(Matchers.not(GetUserIdCompletionsResult.create(Arrays.asList(edu.stanford.protege.webprotege.MockingUtils.mockUserId())))));
     }
 
     @Test

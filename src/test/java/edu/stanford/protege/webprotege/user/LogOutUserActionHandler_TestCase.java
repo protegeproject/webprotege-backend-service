@@ -35,7 +35,7 @@ public class LogOutUserActionHandler_TestCase {
     @Mock
     private UserActivityManager activityManager;
 
-    private UserId userId = UserId.getUserId("OtherUserId");
+    private UserId userId = UserId.valueOf("OtherUserId");
 
     @Mock
     private UserInSessionFactory userInSessionFactory;

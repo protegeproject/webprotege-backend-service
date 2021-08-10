@@ -23,8 +23,7 @@ public class ExecutionContext_TestCase {
     @Mock
     private WebProtegeSession session;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private ExecutionContext context;
 

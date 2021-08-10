@@ -43,8 +43,7 @@ public class ResetPasswordActionHandler_TestCase {
 
     private ResetPasswordActionHandler handler;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private UserDetailsManager userDetailsManager;

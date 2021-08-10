@@ -40,7 +40,7 @@ public class CustomizationDirectoryManager {
     private String getHashedUserId(UserId userId) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte [] digest = messageDigest.digest(userId.getUserName().getBytes(Charset.forName("UTF-8")));
+            byte [] digest = messageDigest.digest(userId.id().getBytes(Charset.forName("UTF-8")));
             return BaseEncoding.base16().lowerCase().encode(digest);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);

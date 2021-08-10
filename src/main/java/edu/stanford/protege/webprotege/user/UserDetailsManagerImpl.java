@@ -46,7 +46,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
         Optional<UserRecord> record = repository.findOne(userId);
         return record.map(userRecord ->
                                   UserDetails.getUserDetails(userId,
-                                                             userId.getUserName(),
+                                                             userId.id(),
                                                              Optional.of(userRecord.getEmailAddress())));
     }
 
@@ -70,14 +70,14 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     public void setEmail(UserId userId, String email) {
         checkNotNull(userId);
         checkNotNull(email);
-        logger.info("Received request to set email address ({}) for user ({})", email, userId.getUserName());
+        logger.info("Received request to set email address ({}) for user ({})", email, userId.id());
         if (userId.isGuest()) {
             logger.info("Specified user is the guest user.  Not setting email address.");
             return;
         }
         Optional<UserRecord> record = repository.findOne(userId);
         if (!record.isPresent()) {
-            logger.info("Specified user ({}) does not exist.", userId.getUserName());
+            logger.info("Specified user ({}) does not exist.", userId.id());
             return;
         }
         Optional<UserRecord> recordByEmail = repository.findOneByEmailAddress(email);
@@ -96,12 +96,12 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
         );
         repository.delete(userId);
         repository.save(replacement);
-        logger.info("Email address for {} changed to {}", userId.getUserName(), email);
+        logger.info("Email address for {} changed to {}", userId.id(), email);
     }
 
     @Override
     public Optional<UserId> getUserByUserIdOrEmail(String userNameOrEmail) {
-        Optional<UserRecord> byUserId = repository.findOne(UserId.getUserId(userNameOrEmail));
+        Optional<UserRecord> byUserId = repository.findOne(UserId.valueOf(userNameOrEmail));
         if (byUserId.isPresent()) {
             return Optional.of(byUserId.get().getUserId());
         }

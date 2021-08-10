@@ -84,7 +84,7 @@ public class ResetPasswordActionHandler implements ApplicationActionHandler<Rese
             });
             logger.info("The password for {} has been reset.  " +
                             "An email has been sent to {} that contains the new password.",
-                    userId.get().getUserName(),
+                    userId.get().id(),
                     emailAddress
             );
             return ResetPasswordResult.create(SUCCESS);

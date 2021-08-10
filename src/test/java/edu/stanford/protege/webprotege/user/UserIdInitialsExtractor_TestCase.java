@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.user;
 
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,8 +19,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserIdInitialsExtractor_TestCase {
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Test
     public void shouldExtractFirstAndLastNameInitials() {
@@ -97,7 +97,7 @@ public class UserIdInitialsExtractor_TestCase {
     }
 
     private void extractInitials(String name, String expectedInitials) {
-        when(userId.getUserName()).thenReturn(name);
+        userId = UserId.valueOf(expectedInitials);
         String initials = UserIdInitialsExtractor.getInitials(userId);
         assertThat(initials, is(expectedInitials));
     }

@@ -22,8 +22,7 @@ public class ChangePasswordAction_TestCase {
 
     private ChangePasswordAction action;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private Password currentPassword, newPassword;

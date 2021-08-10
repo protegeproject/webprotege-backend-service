@@ -423,12 +423,12 @@ public class MentionParser_TestCase {
                 return false;
             }
             UserIdMention parsedMention = (UserIdMention) item.getParsedMention();
-            return parsedMention.getUserId().getUserName().equals(expectedUserId);
+            return parsedMention.getUserId().id().equals(expectedUserId);
         }
 
         @Override
         public void describeTo(Description description) {
-            description.appendValue(new ParsedMention(new UserIdMention(UserId.getUserId(expectedUserId)), expectedStartIndex, expectedEndIndex));
+            description.appendValue(new ParsedMention(new UserIdMention(UserId.valueOf(expectedUserId)), expectedStartIndex, expectedEndIndex));
         }
 
         public static ParsedUserIdMentionMatcher mentionedUserId(int startIndex, int endIndex, String userId) {

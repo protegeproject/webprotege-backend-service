@@ -39,8 +39,7 @@ public class WebProtegeSessionImpl_TestCase<T> {
     @Mock
     private WebProtegeSessionAttribute<T> attribute;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private T value;

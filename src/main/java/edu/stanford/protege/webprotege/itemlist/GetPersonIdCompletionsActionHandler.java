@@ -46,7 +46,7 @@ public class GetPersonIdCompletionsActionHandler implements ApplicationActionHan
     @Override
     public GetPersonIdCompletionsResult execute(@Nonnull GetPersonIdCompletionsAction action, @Nonnull ExecutionContext executionContext) {
         List<PersonId> matches = userDetailsManager.getUserIdsContainingIgnoreCase(action.getCompletionText(), 7).stream()
-                .map(u -> PersonId.get(u.getUserName()))
+                .map(u -> PersonId.get(u.id()))
                 .collect(toList());
         return GetPersonIdCompletionsResult.create(matches);
     }

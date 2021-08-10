@@ -26,7 +26,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = MOCK)
 public class ApiKeyManager_IT {
 
-    private static final UserId USER_ID = UserId.getUserId("JaneDoe");
+    private static final UserId USER_ID = UserId.valueOf("JaneDoe");
 
     private static final String PURPOSE = "Test key";
 

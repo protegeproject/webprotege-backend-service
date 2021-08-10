@@ -50,8 +50,7 @@ public class CreateNewProjectActionHandler_TestCase {
     @Mock
     private ExecutionContext executionContext;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private ProjectId projectId = ProjectId.generate();
 
@@ -77,7 +76,7 @@ public class CreateNewProjectActionHandler_TestCase {
     @Before
     public void setUp() throws Exception {
         displayNameSettingsFactory = new DefaultDisplayNameSettingsFactory();
-        newProjectSettings = NewProjectSettings.get(UserId.getUserId("The Owner"),
+        newProjectSettings = NewProjectSettings.get(UserId.valueOf("The Owner"),
                                                     "The display name",
                                                     langTag,
                                                     "The Project Description");
@@ -133,7 +132,7 @@ public class CreateNewProjectActionHandler_TestCase {
 
     @Test
     public void shouldNotAllowGuestsToCreateProjects() {
-        when(userId.isGuest()).thenReturn(true);
+        userId = UserId.getGuest();
         CreateNewProjectAction action = new CreateNewProjectAction(newProjectSettings);
         RequestValidator validator = handler.getRequestValidator(action, requestContext);
         RequestValidationResult validationResult = validator.validateAction();

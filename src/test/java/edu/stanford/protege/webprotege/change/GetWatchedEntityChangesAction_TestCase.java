@@ -30,8 +30,7 @@ public class GetWatchedEntityChangesAction_TestCase {
 
     private ProjectId projectId = ProjectId.generate();
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private PageRequest pageRequest;

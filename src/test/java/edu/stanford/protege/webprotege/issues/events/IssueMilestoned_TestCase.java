@@ -18,8 +18,7 @@ public class IssueMilestoned_TestCase {
 
     private IssueMilestoned issueMilestoned;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private long timestamp = 1L;
 
@@ -63,7 +62,7 @@ public class IssueMilestoned_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(issueMilestoned, is(not(new IssueMilestoned(mock(UserId.class), timestamp, milestone))));
+        assertThat(issueMilestoned, is(not(new IssueMilestoned(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), timestamp, milestone))));
     }
 
     @Test

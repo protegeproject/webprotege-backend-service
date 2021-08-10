@@ -29,7 +29,7 @@ public class OboIdSuffixSettings_SerializationTestCase {
 
     public static final int END = 203;
 
-    public static final UserId THE_USER = UserId.getUserId("TheUser");
+    public static final UserId THE_USER = UserId.valueOf("TheUser");
 
     private OboIdSuffixSettings settings;
 

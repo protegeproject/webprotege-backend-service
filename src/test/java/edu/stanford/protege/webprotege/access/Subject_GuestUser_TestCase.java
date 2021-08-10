@@ -31,7 +31,7 @@ public class Subject_GuestUser_TestCase {
 
     @Test
     public void shouldReturnGuestUserName() {
-        assertThat(subject.getUserName(), is(Optional.of(UserId.getGuest().getUserName())));
+        assertThat(subject.getUserName(), is(Optional.of(UserId.getGuest().id())));
     }
 
     @Test

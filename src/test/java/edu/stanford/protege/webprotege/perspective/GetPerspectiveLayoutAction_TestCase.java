@@ -19,8 +19,7 @@ public class GetPerspectiveLayoutAction_TestCase {
 
     private ProjectId projectId = ProjectId.generate();
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private PerspectiveId perspectiveId;
@@ -82,7 +81,7 @@ public class GetPerspectiveLayoutAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(getPerspectiveLayoutAction, is(not(GetPerspectiveLayoutAction.create(projectId, Mockito.mock(UserId.class), perspectiveId))));
+        assertThat(getPerspectiveLayoutAction, is(not(GetPerspectiveLayoutAction.create(projectId, edu.stanford.protege.webprotege.MockingUtils.mockUserId(), perspectiveId))));
     }
 
     @Test

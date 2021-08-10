@@ -47,7 +47,7 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
         subjects.stream()
                 .filter(s -> !s.isGuest())
                 .filter(s -> s.getUserName().isPresent())
-                .map(s -> UserId.getUserId(s.getUserName().get()))
+                .map(s -> UserId.valueOf(s.getUserName().get()))
                 .forEach(u -> {
                     Collection<RoleId> roles = accessManager.getAssignedRoles(Subject.forUser(u), projectResource);
                     Roles.toSharingPermission(roles).ifPresent(

@@ -55,7 +55,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainChangePasswordActionHandler() {
-        var handler = registry.getActionHandler(ChangePasswordAction.create(mock(UserId.class),
+        var handler = registry.getActionHandler(ChangePasswordAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
                                                                             mock(Password.class),
                                                                             mock(Password.class)));
         assertThat(handler, is(notNullValue()));
@@ -69,7 +69,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainCreateUserAccountActionHandler() {
-        var handler = registry.getActionHandler(CreateUserAccountAction.create(mock(UserId.class),
+        var handler = registry.getActionHandler(CreateUserAccountAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
                                                                                     mock(EmailAddress.class),
                                                                                     mock(Password.class)));
         assertThat(handler, is(notNullValue()));
@@ -95,7 +95,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainGetEmailAddressActionHandler() {
-        var handler = registry.getActionHandler(GetEmailAddressAction.create(mock(UserId.class)));
+        var handler = registry.getActionHandler(GetEmailAddressAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId()));
         assertThat(handler, is(notNullValue()));
     }
 
@@ -114,7 +114,7 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetPerspectivesActionHandler() {
         var handler = registry.getActionHandler(GetPerspectivesAction.create(ProjectId.generate(),
-                                                                             mock(UserId.class)));
+                                                                             edu.stanford.protege.webprotege.MockingUtils.mockUserId()));
         assertThat(handler, is(notNullValue()));
     }
 
@@ -134,7 +134,7 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetProjectPermissionsActionHandler() {
         var handler = registry.getActionHandler(GetProjectPermissionsAction.create(ProjectId.generate(),
-                                                                                   mock(UserId.class)));
+                                                                                   edu.stanford.protege.webprotege.MockingUtils.mockUserId()));
         assertThat(handler, is(notNullValue()));
     }
 
@@ -164,7 +164,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainPerformLoginActionHandler() {
-        var handler = registry.getActionHandler(PerformLoginAction.create(mock(UserId.class),
+        var handler = registry.getActionHandler(PerformLoginAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
                                                                           mock(Password.class)));
         assertThat(handler, is(notNullValue()));
     }
@@ -195,7 +195,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainSetEmailAddressActionHandler() {
-        var handler = registry.getActionHandler(SetEmailAddressAction.create(mock(UserId.class),
+        var handler = registry.getActionHandler(SetEmailAddressAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
                                                                              "abc"));
         assertThat(handler, is(notNullValue()));
     }

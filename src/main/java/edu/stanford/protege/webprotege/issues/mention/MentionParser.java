@@ -134,7 +134,7 @@ public class MentionParser {
         if (plainUserIdMatchGroup != null) {
             return new ParsedMention(
                     new UserIdMention(
-                            UserId.getUserId(plainUserIdMatchGroup)),
+                            UserId.valueOf(plainUserIdMatchGroup)),
                     startIndex,
                     startIndex + userIdMatchGroup.length());
         }
@@ -143,7 +143,7 @@ public class MentionParser {
             if (bracketedUserIdMatchGroup != null) {
                 return new ParsedMention(
                         new UserIdMention(
-                                UserId.getUserId(bracketedUserIdMatchGroup)),
+                                UserId.valueOf(bracketedUserIdMatchGroup)),
                         startIndex,
                         endIndex
                 );

@@ -40,8 +40,7 @@ public class RevisionManagerImpl_TestCase {
     @Mock
     private RevisionStore revisionStore;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Mock
     private Revision revision;
@@ -128,7 +127,7 @@ public class RevisionManagerImpl_TestCase {
 
     @Test
     public void should_addRevision() {
-        UserId userId = mock(UserId.class);
+        UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
         List<OntologyChange> changes = Collections.singletonList(AddAxiomChange.of(new OWLOntologyID(),
                                                                                    mock(OWLAxiom.class)));
         manager.addRevision(userId, changes, HIGHLEVEL_DESC);

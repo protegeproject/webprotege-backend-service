@@ -17,7 +17,7 @@ public class UserIdWriteConverterTestCase {
     public void convertShouldReturnSuppliedUserName() {
         UserIdWriteConverter converter = new UserIdWriteConverter();
         String suppliedUserName = "janedoe";
-        UserId userId = UserId.getUserId(suppliedUserName);
+        UserId userId = UserId.valueOf(suppliedUserName);
         String convertedUserName = converter.convert(userId);
         assertEquals(suppliedUserName, convertedUserName);
     }

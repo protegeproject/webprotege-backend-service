@@ -19,8 +19,7 @@ public class SetPerspectiveLayoutAction_TestCase {
 
     private SetPerspectiveLayoutAction setPerspectiveLayoutAction;
     private ProjectId projectId = ProjectId.generate();
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
     @Mock
     private PerspectiveLayout layout;
 
@@ -83,7 +82,7 @@ public class SetPerspectiveLayoutAction_TestCase {
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(setPerspectiveLayoutAction, is(Matchers.not(SetPerspectiveLayoutAction.create(projectId, mock(UserId.class), layout))));
+        assertThat(setPerspectiveLayoutAction, is(Matchers.not(SetPerspectiveLayoutAction.create(projectId, edu.stanford.protege.webprotege.MockingUtils.mockUserId(), layout))));
     }
 
     @Test

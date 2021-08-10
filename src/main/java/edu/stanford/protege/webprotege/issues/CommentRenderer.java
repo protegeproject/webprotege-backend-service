@@ -34,7 +34,7 @@ public class CommentRenderer {
             Mention mention = pm.getParsedMention();
             if(mention.getMentionedUserId().isPresent()) {
                 rendering.append("<span class=\"wp-comment__user-mention\">");
-                rendering.append(mention.getMentionedUserId().get().getUserName());
+                rendering.append(mention.getMentionedUserId().get().id());
                 rendering.append("</span>");
             }
             else {

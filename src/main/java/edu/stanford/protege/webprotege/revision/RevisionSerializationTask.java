@@ -37,7 +37,7 @@ public class RevisionSerializationTask implements Callable<Integer> {
 
     public Integer call() throws IOException {
         BinaryOWLMetadata metadata = new BinaryOWLMetadata();
-        metadata.setStringAttribute(RevisionSerializationVocabulary.USERNAME_METADATA_ATTRIBUTE.getVocabularyName(), revision.getUserId().getUserName());
+        metadata.setStringAttribute(RevisionSerializationVocabulary.USERNAME_METADATA_ATTRIBUTE.getVocabularyName(), revision.getUserId().id());
         metadata.setLongAttribute(RevisionSerializationVocabulary.REVISION_META_DATA_ATTRIBUTE.getVocabularyName(), revision.getRevisionNumber().getValue());
         metadata.setStringAttribute(RevisionSerializationVocabulary.DESCRIPTION_META_DATA_ATTRIBUTE.getVocabularyName(), revision.getHighLevelDescription());
         metadata.setStringAttribute(RevisionSerializationVocabulary.REVISION_TYPE_META_DATA_ATTRIBUTE.getVocabularyName(), RevisionType.EDIT.name());

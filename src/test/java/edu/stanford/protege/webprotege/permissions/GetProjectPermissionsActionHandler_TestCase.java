@@ -29,8 +29,7 @@ public class GetProjectPermissionsActionHandler_TestCase {
     @Mock
     private AccessManager accessManager;
 
-    @Mock
-    private UserId userId;
+    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     private ProjectId projectId = ProjectId.generate();
 
