@@ -56,15 +56,15 @@ public class ProjectSettingsResource {
     @GET
     @Produces(APPLICATION_JSON)
     public Response getProjectSettings(@Context UserId userId, @Context ExecutionContext executionContext) {
-        var projectSettingsResult = actionExecutor.execute(GetProjectSettingsAction.create(projectId), executionContext);
+        var projectSettingsResult = actionExecutor.execute(GetProjectSettingsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var entityCreationSettingsResult = actionExecutor.execute(new GetEntityCrudKitSettingsAction(projectId),
-                                                                  executionContext);
+                                                                  new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var prefixDeclarationSettingsResult = actionExecutor.execute(GetProjectPrefixDeclarationsAction.create(projectId),
-                                                                     executionContext);
+                                                                     new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
 
-        var tagsResult = actionExecutor.execute(GetProjectTagsAction.create(projectId), executionContext);
-        var sharingSettings = actionExecutor.execute(GetProjectSharingSettingsAction.create(projectId), executionContext);
-        var searchSettingsResult = actionExecutor.execute(GetSearchSettingsAction.create(projectId), executionContext);
+        var tagsResult = actionExecutor.execute(GetProjectTagsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        var sharingSettings = actionExecutor.execute(GetProjectSharingSettingsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        var searchSettingsResult = actionExecutor.execute(GetSearchSettingsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var projectSettings = AllProjectSettings.get(projectSettingsResult.getSettings(),
                                                      entityCreationSettingsResult.getSettings(),
                                                      ImmutableList.copyOf(prefixDeclarationSettingsResult.getPrefixDeclarations()),
@@ -80,16 +80,16 @@ public class ProjectSettingsResource {
     @Consumes(APPLICATION_JSON)
     public Response setProjectSettings(@Context UserId userId, @Context ExecutionContext executionContext, AllProjectSettings allProjectSettings) {
         var projectSettings = allProjectSettings.getProjectSettings().withProjectId(projectId);
-        actionExecutor.execute(SetProjectSettingsAction.create(projectSettings), executionContext);
+        actionExecutor.execute(SetProjectSettingsAction.create(projectSettings), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
 
         var entityCreationSettings = allProjectSettings.getEntityCreationSettings();
-        var currentSettingsResult = actionExecutor.execute(new GetEntityCrudKitSettingsAction(projectId), executionContext);
+        var currentSettingsResult = actionExecutor.execute(new GetEntityCrudKitSettingsAction(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         actionExecutor.execute(new SetEntityCrudKitSettingsAction(projectId,
                                                                   currentSettingsResult.getSettings(),
                                                                   entityCreationSettings,
-                                                                  IRIPrefixUpdateStrategy.LEAVE_INTACT), executionContext);
+                                                                  IRIPrefixUpdateStrategy.LEAVE_INTACT), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var prefixDeclarations = allProjectSettings.getPrefixDeclarations();
-        actionExecutor.execute(SetProjectPrefixDeclarationsAction.create(projectId, prefixDeclarations), executionContext);
+        actionExecutor.execute(SetProjectPrefixDeclarationsAction.create(projectId, prefixDeclarations), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
 
         var projectTags = allProjectSettings.getProjectTags();
         var projectTagsData = projectTags.stream()
@@ -102,11 +102,11 @@ public class ProjectSettingsResource {
                                                                  tag.getCriteria(),
                                                                  0))
                                          .collect(toImmutableList());
-        actionExecutor.execute(SetProjectTagsAction.create(projectId, projectTagsData), executionContext);
+        actionExecutor.execute(SetProjectTagsAction.create(projectId, projectTagsData), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var sharingSettings = allProjectSettings.getSharingSettings();
-        actionExecutor.execute(SetProjectSharingSettingsAction.create(sharingSettings), executionContext);
+        actionExecutor.execute(SetProjectSharingSettingsAction.create(sharingSettings), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var searchSettings = allProjectSettings.getSearchSettings();
-        actionExecutor.execute(SetSearchSettingsAction.create(projectId, ImmutableList.of(), searchSettings.getSearchFilters()), executionContext);
+        actionExecutor.execute(SetSearchSettingsAction.create(projectId, ImmutableList.of(), searchSettings.getSearchFilters()), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         return Response.ok().build();
     }
 }

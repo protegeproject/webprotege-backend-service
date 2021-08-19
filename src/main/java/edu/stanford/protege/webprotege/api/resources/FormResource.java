@@ -52,7 +52,7 @@ public class FormResource {
     @Path("/")
     public Response getForm(@Context UserId userId, @Context ExecutionContext executionContext) {
         var actionResult = actionExecutor.execute(GetEntityFormDescriptorAction.create(projectId, formId),
-                                                  executionContext);
+                                                  new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var formDescriptor = actionResult.getFormDescriptor().orElse(FormDescriptor.empty(formId));
         var criteria = actionResult.getFormSelectorCriteria().orElse(CompositeRootCriteria.get(ImmutableList.of(), MultiMatchType.ANY));
         var purpose = actionResult.getPurpose();

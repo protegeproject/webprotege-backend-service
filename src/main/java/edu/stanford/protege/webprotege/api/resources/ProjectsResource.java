@@ -73,7 +73,7 @@ public class ProjectsResource implements ApiRootResource {
             return ResponseUtil.badRequest("Missing new project details in body of POST");
         }
         CreateNewProjectAction action = new CreateNewProjectAction(newProjectSettings);
-        CreateNewProjectResult result = executor.execute(action, executionContext);
+        CreateNewProjectResult result = executor.execute(action, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         ProjectDetails projectDetails = result.projectDetails();
         // Respond with HTTP 201 (CREATED) and a location header that points
         // to the freshly created project.
@@ -94,7 +94,7 @@ public class ProjectsResource implements ApiRootResource {
                                 @Nonnull @Context UriInfo uriInfo,
                                 @Context ExecutionContext executionContext) {
         GetAvailableProjectsResult result = executor.execute(GetAvailableProjectsAction.create(),
-                                                             executionContext);
+                                                             new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         return Response.ok().entity(result.getAvailableProjects()).build();
     }
 }

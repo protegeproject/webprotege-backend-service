@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.projectsettings;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.common.ProjectId;
 
@@ -14,15 +15,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 25/11/14
  */
-public class GetProjectSettingsAction implements ProjectAction<GetProjectSettingsResult> {
+public class GetProjectSettingsAction implements ProjectAction<GetProjectSettingsResult>, Request<GetProjectSettingsResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "project.GetProjectSettings";
 
-    /**
-     * For serialization purposes only
-     */
-    public GetProjectSettingsAction() {
-    }
+    private final ProjectId projectId;
 
     private GetProjectSettingsAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
@@ -30,6 +27,11 @@ public class GetProjectSettingsAction implements ProjectAction<GetProjectSetting
 
     public static GetProjectSettingsAction create(ProjectId projectId) {
         return new GetProjectSettingsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

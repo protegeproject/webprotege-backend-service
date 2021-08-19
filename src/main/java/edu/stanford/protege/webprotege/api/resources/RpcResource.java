@@ -47,7 +47,7 @@ public class RpcResource implements ApiRootResource {
                                          @Context UriInfo uriInfo,
                                          @Context ExecutionContext executionContext,
                                          JsonRpcRequest request) {
-        var result = actionExecutor.execute(request.getParams().getAction(), executionContext);
+        var result = actionExecutor.execute(request.getParams().getAction(), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var response = JsonRpcResponse.create(request.getId(),
                                result);
 

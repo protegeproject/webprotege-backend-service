@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.api;
 
 import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -28,8 +29,8 @@ public class ActionExecutor {
     @SuppressWarnings("unchecked")
     public   <A extends Action<R>,  R extends Result> R execute(A action, ExecutionContext executionContext) {
         try {
-            RequestContext requestContext = new RequestContext(executionContext.getUserId());
-            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, executionContext);
+            RequestContext requestContext = new RequestContext(executionContext.userId());
+            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));
             return (R) resultContainer.getResult();
         } catch (ActionExecutionException e) {
             Throwable throwable = e.getCause();

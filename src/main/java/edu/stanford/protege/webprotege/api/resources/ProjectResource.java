@@ -72,7 +72,7 @@ public class ProjectResource {
     @Produces(APPLICATION_JSON)
     @Path("/")
     public Response getProjectDetails(@Context UserId userId, @Context UriInfo uriInfo, @Context ExecutionContext executionContext) {
-        ProjectDetails projectDetails = executor.execute(new GetProjectDetailsAction(projectId), executionContext)
+        ProjectDetails projectDetails = executor.execute(new GetProjectDetailsAction(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()))
                                                 .getProjectDetails();
         return Response.ok(projectDetails).build();
     }

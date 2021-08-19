@@ -61,7 +61,7 @@ public class RevisionsResource {
                                                            from,
                                                            to,
                                                            author);
-        return executor.execute(action, executionContext).getRevisions();
+        return executor.execute(action, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId())).getRevisions();
     }
 
     @GET
@@ -71,7 +71,7 @@ public class RevisionsResource {
                                 @Context ExecutionContext executionContext,
                                 @Context UriInfo uriInfo,
                                 @PathParam("revisionNumber") RevisionNumber revisionNumber) {
-            Optional<RevisionDetails> revisionDetails = executor.execute(new GetRevisionAction(projectId, revisionNumber), executionContext)
+            Optional<RevisionDetails> revisionDetails = executor.execute(new GetRevisionAction(projectId, revisionNumber), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()))
                                                                 .getRevisionDetails();
             if(revisionDetails.isPresent()) {
                 return Response.ok(revisionDetails.get())

@@ -52,7 +52,7 @@ public class FormsResource {
     @Produces(APPLICATION_JSON)
     @Path("/")
     public Response getForms(@Context UserId userId, @Context ExecutionContext executionContext) {
-        var formsResult = executor.execute(GetProjectFormDescriptorsAction.create(projectId), executionContext);
+        var formsResult = executor.execute(GetProjectFormDescriptorsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var formDescriptors = formsResult.getFormDescriptors();
         var formSelectorsMap = formsResult.getFormSelectors().stream().collect(toMap(EntityFormSelector::getFormId,
                                                                                      EntityFormSelector::getCriteria,
@@ -88,7 +88,7 @@ public class FormsResource {
             actionListBuilder.add(action);
         }
         var batchAction = BatchAction.create(actionListBuilder.build());
-        executor.execute(batchAction, executionContext);
+        executor.execute(batchAction, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         return Response.created(uriInfo.getRequestUri()).build();
     }
 

@@ -66,7 +66,7 @@ public class PostedAxiomsActionExecutor {
         PostedAxiomsLoadResponse loadResponse = axiomsLoader.loadAxioms(inputStream);
         if(loadResponse.isSuccess()) {
             Action<?> action = actionFactory.createAction(loadResponse.axioms(), commitMessage);
-            Result result = executor.execute(action, executionContext);
+            Result result = executor.execute(action, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
             return Response.created(uriInfo.getAbsolutePath())
                            .entity(result)
                            .build();
