@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.HasUserId;
+import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -21,13 +22,20 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("GetWatches")
-public abstract class GetWatchesAction implements ProjectAction<GetWatchesResult>, HasUserId {
+public abstract class GetWatchesAction implements ProjectAction<GetWatchesResult>, HasUserId, Request<GetWatchesResult> {
+
+    public static final String CHANNEL = "watches.GetWatches";
 
     @JsonCreator
     public static GetWatchesAction create(@JsonProperty("projectId") ProjectId projectId,
                                           @JsonProperty("userId") UserId userId,
                                           @JsonProperty("entity") OWLEntity entity) {
         return new AutoValue_GetWatchesAction(projectId, userId, entity);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     /**

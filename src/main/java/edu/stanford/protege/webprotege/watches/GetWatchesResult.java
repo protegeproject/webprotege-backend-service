@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.Result;
 
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
 @AutoValue
 
 @JsonTypeName("GetWatches")
-public abstract class GetWatchesResult implements Result {
+public abstract class GetWatchesResult implements Result, Response {
 
     @JsonCreator
     public static GetWatchesResult create(@JsonProperty("watches") Set<Watch> watches) {
