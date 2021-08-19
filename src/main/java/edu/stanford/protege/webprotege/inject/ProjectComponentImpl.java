@@ -38,11 +38,7 @@ public class ProjectComponentImpl implements ProjectComponent {
         this.projectDisposablesManager = projectDisposablesManager;
         this.projectActionHandlerRegistry  = projectActionHandlerRegistry;
     }
-
-    @Override
-    public EagerProjectSingletons init() {
-        return null;
-    }
+    
 
     @Override
     public ProjectId getProjectId() {

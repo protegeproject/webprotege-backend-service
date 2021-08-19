@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.app;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.auth.AuthenticationServlet;
 import edu.stanford.protege.webprotege.download.ProjectDownloadServlet;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
@@ -43,8 +42,6 @@ public interface ServerComponent {
     ServletContainer getJerseyServletContainer();
 
     ProjectDownloadServlet getProjectDownloadServlet();
-
-    AuthenticationServlet getAuthenticationServlet();
 
     WebProtegeSessionListener getSessionListener();
 

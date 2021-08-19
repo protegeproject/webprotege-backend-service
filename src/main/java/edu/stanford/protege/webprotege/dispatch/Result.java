@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsResult;
 import edu.stanford.protege.webprotege.auth.ChangePasswordResult;
-import edu.stanford.protege.webprotege.auth.PerformLoginResult;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsResult;
 import edu.stanford.protege.webprotege.bulkop.MoveEntitiesToParentResult;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueResult;
@@ -59,7 +58,6 @@ import edu.stanford.protege.webprotege.tag.*;
 import edu.stanford.protege.webprotege.usage.GetUsageResult;
 import edu.stanford.protege.webprotege.user.CreateUserAccountResult;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionResult;
-import edu.stanford.protege.webprotege.user.LogOutUserResult;
 import edu.stanford.protege.webprotege.viz.GetEntityGraphResult;
 import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaResult;
 import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersResult;
@@ -95,7 +93,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(CreateEntityFromFormDataResult.class),
         @Type(CreateNewProjectResult.class),
         @Type(LoadProjectResult.class),
-        @Type(LogOutUserResult.class),
         @Type(RebuildPermissionsResult.class),
         @Type(CreateUserAccountResult.class),
         @Type(DeleteEntitiesResult.class),
@@ -173,7 +170,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(GetWatchesResult.class),
         @Type(GetWatchedEntityChangesResult.class),
         @Type(LoadProjectResult.class),
-        @Type(LogOutUserResult.class),
         @Type(LookupEntitiesResult.class),
         @Type(MergeEntitiesResult.class),
         @Type(MergeUploadedProjectResult.class),
@@ -182,7 +178,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(MoveProjectsToTrashResult.class),
         @Type(NewOntologyMergeAddResult.class),
         @Type(PerformEntitySearchResult.class),
-        @Type(PerformLoginResult.class),
         @Type(RebuildPermissionsResult.class),
         @Type(RemoveProjectFromTrashResult.class),
         @Type(ResetPasswordResult.class),

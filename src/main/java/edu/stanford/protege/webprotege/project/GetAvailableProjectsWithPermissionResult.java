@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.Result;
 
 import javax.annotation.Nonnull;
@@ -17,7 +18,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName(value = "GetAvailableProjectsWithPermission")
-public abstract class GetAvailableProjectsWithPermissionResult implements Result {
+public abstract class GetAvailableProjectsWithPermissionResult implements Result, Response {
 
     @JsonCreator
     public static GetAvailableProjectsWithPermissionResult create(@JsonProperty("projects") @Nonnull ImmutableList<ProjectDetails> projects) {

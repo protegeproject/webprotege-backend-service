@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.auth.ChangePasswordAction;
-import edu.stanford.protege.webprotege.auth.PerformLoginAction;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsAction;
 import edu.stanford.protege.webprotege.bulkop.MoveEntitiesToParentAction;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueAction;
@@ -59,7 +58,6 @@ import edu.stanford.protege.webprotege.tag.*;
 import edu.stanford.protege.webprotege.usage.GetUsageAction;
 import edu.stanford.protege.webprotege.user.CreateUserAccountAction;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionAction;
-import edu.stanford.protege.webprotege.user.LogOutUserAction;
 import edu.stanford.protege.webprotege.viz.GetEntityGraphAction;
 import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaAction;
 import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersAction;
@@ -96,7 +94,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = GetAnnotationPropertyFrameAction.class),
         @Type(value = CreateNewProjectAction.class),
         @Type(value = LoadProjectAction.class),
-        @Type(value = LogOutUserAction.class),
         @Type(value = RebuildPermissionsAction.class),
         @Type(value = CreateUserAccountAction.class),
         @Type(value = DeleteEntitiesAction.class),
@@ -172,7 +169,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = GetWatchesAction.class),
         @Type(value = GetWatchedEntityChangesAction.class),
         @Type(value = LoadProjectAction.class),
-        @Type(value = LogOutUserAction.class),
         @Type(value = LookupEntitiesAction.class),
         @Type(value = MergeEntitiesAction.class),
         @Type(value = MergeUploadedProjectAction.class),
@@ -181,7 +177,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = MoveProjectsToTrashAction.class),
         @Type(value = NewOntologyMergeAddAction.class),
         @Type(value = PerformEntitySearchAction.class),
-        @Type(value = PerformLoginAction.class),
         @Type(value = RebuildPermissionsAction.class),
         @Type(value = RemoveProjectFromTrashAction.class),
         @Type(value = ResetPasswordAction.class),

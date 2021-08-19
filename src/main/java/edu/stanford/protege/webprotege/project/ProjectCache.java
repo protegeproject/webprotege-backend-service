@@ -174,7 +174,7 @@ public class ProjectCache implements HasDispose {
             if(instantiationMode == InstantiationMode.EAGER) {
                 // Force instantiation of certain objects in the project graph.
                 // This needs to be done in a nicer way, but this approach works for now.
-                projectComponent.init();
+//                projectComponent.init();
             }
             stopwatch.stop();
             logger.info("{} Instantiated project component in {} ms",

@@ -11,9 +11,11 @@ import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings
 import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Optional;
@@ -28,6 +30,7 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 6 Mar 2017
  */
+@SpringBootTest
 public class ProjectDetailsRepository_IT {
 
     public static final String COLLECTION_NAME = "ProjectDetails";
@@ -38,15 +41,16 @@ public class ProjectDetailsRepository_IT {
 
     public static final boolean IN_TRASH = true;
 
+    @Autowired
     private ProjectDetailsRepository repository;
 
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     private ProjectId projectId = getProjectId();
 
     private ProjectId otherProjectId = getProjectId();
-
-    private MongoClient mongoClient;
+    
 
     private static ProjectId getProjectId() {
         return ProjectId.valueOf(UUID.randomUUID().toString());
@@ -62,12 +66,8 @@ public class ProjectDetailsRepository_IT {
 
     private ProjectDetails projectDetails;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        mongoClient = MongoTestUtils.createMongoClient();
-        mongoTemplate = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
-        ObjectMapperProvider mapperProvider = new ObjectMapperProvider();
-        repository = new ProjectDetailsRepository(mongoTemplate, mapperProvider.get());
         projectDetails = ProjectDetails.get(projectId,
                                             "The Display Name",
                                             "The Description",
@@ -88,10 +88,9 @@ public class ProjectDetailsRepository_IT {
         repository.save(projectDetails);
     }
 
-    @After
+    @AfterEach
     public void cleanUp() {
-        mongoTemplate.getDb().drop();
-        mongoClient.close();
+        getCollection().drop();
     }
 
     @Test

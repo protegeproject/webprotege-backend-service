@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.inject;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.auth.ChangePasswordActionHandler;
-import edu.stanford.protege.webprotege.auth.PerformLoginActionHandler;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordActionHandler;
 import edu.stanford.protege.webprotege.csv.GetCSVGridActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
@@ -18,10 +17,10 @@ import edu.stanford.protege.webprotege.permissions.GetProjectPermissionsActionHa
 import edu.stanford.protege.webprotege.permissions.RebuildPermissionsActionHandler;
 import edu.stanford.protege.webprotege.perspective.GetPerspectivesActionHandler;
 import edu.stanford.protege.webprotege.project.CreateNewProjectActionHandler;
+import edu.stanford.protege.webprotege.project.GetAvailableProjectsActionHandler;
 import edu.stanford.protege.webprotege.project.GetAvailableProjectsWithPermissionActionHandler;
 import edu.stanford.protege.webprotege.project.GetProjectDetailsActionHandler;
 import edu.stanford.protege.webprotege.user.CreateUserAccountActionHandler;
-import edu.stanford.protege.webprotege.user.LogOutUserActionHandler;
 
 /**
  * Matthew Horridge
@@ -89,16 +88,6 @@ public class ActionHandlersModule {
 
     
     public ApplicationActionHandler provideResetPasswordActionHandler(ResetPasswordActionHandler handler) {
-        return handler;
-    }
-
-    
-    public ApplicationActionHandler provideLogOutUserActionHandler(LogOutUserActionHandler handler) {
-        return handler;
-    }
-
-    
-    public ApplicationActionHandler providePerformLoginActionHandler(PerformLoginActionHandler handler) {
         return handler;
     }
 

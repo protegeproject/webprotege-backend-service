@@ -10,9 +10,11 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Collection;
@@ -27,20 +29,17 @@ import static org.hamcrest.Matchers.*;
  * Stanford Center for Biomedical Informatics Research
  * 2020-09-01
  */
+@SpringBootTest
 public class PerspectiveDescriptorRepository_TestCase {
 
+    @Autowired
     private PerspectiveDescriptorRepository repository;
 
+    @Autowired
     private MongoTemplate mongoTemplate;
 
-    private MongoClient mongoClient;
-
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        mongoClient = MongoTestUtils.createMongoClient();
-        mongoTemplate = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
-        var objectMapper = new ObjectMapperProvider().get();
-        repository = new PerspectiveDescriptorRepositoryImpl(mongoTemplate, objectMapper);
         repository.ensureIndexes();
     }
 
@@ -108,9 +107,8 @@ public class PerspectiveDescriptorRepository_TestCase {
                                                 createPerspectivesList(PerspectiveId.generate()));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        mongoTemplate.getDb().drop();
-        mongoClient.close();
+        getCollection().drop();
     }
 }

@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.project;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
+import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
 /**
@@ -14,10 +15,15 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @AutoValue
 
 @JsonTypeName("GetAvailableProjects")
-public abstract class GetAvailableProjectsAction implements Action<GetAvailableProjectsResult> {
+public abstract class GetAvailableProjectsAction implements Action<GetAvailableProjectsResult>, Request<GetAvailableProjectsResult> {
 
     @JsonCreator
     public static GetAvailableProjectsAction create() {
         return new AutoValue_GetAvailableProjectsAction();
+    }
+
+    @Override
+    public String getChannel() {
+        return "projects.GetAvailableProjects";
     }
 }

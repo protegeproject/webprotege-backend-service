@@ -7,46 +7,45 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static edu.stanford.protege.webprotege.persistence.MongoTestUtils.getTestDbName;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@SuppressWarnings("OptionalGetWithoutIsPresent")
-@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
+@SpringBootTest
 public class ProjectAccessManagerImpl_IT {
 
     public static final long TIMESTAMP_A = 33L;
 
     public static final long TIMESTAMP_B = 44L;
 
+    @Autowired
     private ProjectAccessManagerImpl manager;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private final ProjectId projectId = ProjectIdFactory.getFreshProjectId();
 
     private final UserId userId = UserId.valueOf("Jane Doe");
 
     private final UserId otherUserId = UserId.valueOf("John Smith");
-
-    private MongoClient mongoClient;
-
-    @Before
+    
+    @BeforeEach
     public void setUp() throws Exception {
-        mongoClient = MongoTestUtils.createMongoClient();
-        MongoTemplate database = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
-        manager = new ProjectAccessManagerImpl(database);
         manager.ensureIndexes();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        mongoClient.getDatabase(getTestDbName()).drop();
-        mongoClient.close();
+        getCollection().drop();
     }
 
     @Test
@@ -70,7 +69,7 @@ public class ProjectAccessManagerImpl_IT {
     }
 
     private MongoCollection<Document> getCollection() {
-        return mongoClient.getDatabase(getTestDbName())
+        return mongoTemplate.getDb()
                           .getCollection("ProjectAccess");
     }
 

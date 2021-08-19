@@ -5,6 +5,7 @@ import com.google.common.cache.CacheBuilder;
 import edu.stanford.protege.webprotege.authorization.api.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +74,8 @@ public class AccessManagerImpl implements AccessManager {
 
         try {
             return getAssignedRolesExecutor.execute(new GetAssignedRolesRequest(subject,
-                                                                                resource))
+                                                                                resource),
+                                                    new ExecutionContext())
                     .get()
                     .roles();
         } catch (InterruptedException | ExecutionException e) {
@@ -87,7 +89,8 @@ public class AccessManagerImpl implements AccessManager {
                                  @NotNull Resource resource,
                                  @NotNull Collection<RoleId> roleIds) {
         try {
-            var response = setAssignedRolesExecutor.execute(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)));
+            var response = setAssignedRolesExecutor.execute(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)),
+                                                            new ExecutionContext());
             response.get();
         } catch (ExecutionException | InterruptedException e) {
             logger.error("Error when setting assigned roles", e);
@@ -98,7 +101,8 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public Collection<RoleId> getRoleClosure(@NotNull Subject subject, @NotNull Resource resource) {
         try {
-            return getRolesRequestExecutor.execute(new GetRolesRequest(subject, resource))
+            return getRolesRequestExecutor.execute(new GetRolesRequest(subject, resource),
+                                                   new ExecutionContext())
                     .get()
                     .roles();
         } catch (InterruptedException | ExecutionException e) {
@@ -111,7 +115,8 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public Set<ActionId> getActionClosure(@NotNull Subject subject, @NotNull Resource resource) {
         try {
-            return getAuthorizedActionsExecutor.execute(new GetAuthorizedActionsRequest(resource, subject))
+            return getAuthorizedActionsExecutor.execute(new GetAuthorizedActionsRequest(resource, subject),
+                                                        new ExecutionContext())
                     .get()
                     .actionIds();
         } catch (InterruptedException | ExecutionException e) {
@@ -123,7 +128,8 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public boolean hasPermission(@NotNull Subject subject, @NotNull Resource resource, @NotNull ActionId actionId) {
         try {
-            return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId))
+            return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
+                                                          new ExecutionContext())
                     .get()
                     .authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
         } catch (InterruptedException | ExecutionException e) {
@@ -144,7 +150,8 @@ public class AccessManagerImpl implements AccessManager {
     public Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInAction action) {
         try {
             return getAuthorizedSubjectsExecutor.execute(new GetAuthorizedSubjectsRequest(resource,
-                                                                                          action.getActionId()))
+                                                                                          action.getActionId()),
+                                                         new ExecutionContext())
                     .get()
                                                 .subjects();
         } catch (InterruptedException | ExecutionException e) {
@@ -161,7 +168,8 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId) {
         try {
-            return getAuthorizedResourcesExecutor.execute(new GetAuthorizedResourcesRequest(subject, actionId))
+            return getAuthorizedResourcesExecutor.execute(new GetAuthorizedResourcesRequest(subject, actionId),
+                                                          new ExecutionContext())
                     .get()
                     .resources();
         } catch (InterruptedException | ExecutionException e) {

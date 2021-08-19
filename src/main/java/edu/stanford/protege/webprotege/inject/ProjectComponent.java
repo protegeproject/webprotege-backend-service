@@ -16,8 +16,7 @@ import edu.stanford.protege.webprotege.revision.RevisionManager;
  * 3 Oct 2016
  */
 public interface ProjectComponent {
-
-    EagerProjectSingletons init();
+    
 
     ProjectId getProjectId();
 

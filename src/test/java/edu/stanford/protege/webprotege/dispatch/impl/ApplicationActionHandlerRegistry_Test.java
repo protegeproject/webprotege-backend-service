@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.auth.ChangePasswordAction;
 import edu.stanford.protege.webprotege.auth.Password;
-import edu.stanford.protege.webprotege.auth.PerformLoginAction;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordAction;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordData;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -151,21 +150,8 @@ public class ApplicationActionHandlerRegistry_Test {
     }
 
     @Test
-    public void shouldContainLogOutUserActionHandler() {
-        var handler = registry.getActionHandler(LogOutUserAction.create());
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
     public void shouldContainMoveProjectsToTrashActionHandler() {
         var handler = registry.getActionHandler(MoveProjectsToTrashAction.create(ProjectId.generate()));
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainPerformLoginActionHandler() {
-        var handler = registry.getActionHandler(PerformLoginAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
-                                                                          mock(Password.class)));
         assertThat(handler, is(notNullValue()));
     }
 

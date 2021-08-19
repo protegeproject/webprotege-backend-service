@@ -1,12 +1,16 @@
 package edu.stanford.protege.webprotege.webhook;
 
 import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.bson.Document;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Collections;
@@ -22,6 +26,7 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 8 Jun 2017
  */
+@SpringBootTest
 public class SlackWebhookRepository_IT {
 
     private static final String PAYLOAD_URL_A = "payloadurlA";
@@ -31,19 +36,15 @@ public class SlackWebhookRepository_IT {
     @Autowired
     private SlackWebhookRepositoryImpl repository;
 
-    private MongoClient mongoClient;
-
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     private SlackWebhook slackWebhookA, slackWebhookB;
 
     private ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        mongoClient = MongoTestUtils.createMongoClient();
-        mongoTemplate = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
-        repository = new SlackWebhookRepositoryImpl(mongoTemplate);
         repository.ensureIndexes();
         slackWebhookA = new SlackWebhook(projectId, PAYLOAD_URL_A);
         slackWebhookB = new SlackWebhook(projectId, PAYLOAD_URL_B);
@@ -56,7 +57,12 @@ public class SlackWebhookRepository_IT {
     }
 
     private long countDocuments() {
-        return mongoTemplate.getCollection("SlackWebhooks").countDocuments();
+        return getCollection().countDocuments();
+    }
+
+    @NotNull
+    private MongoCollection<Document> getCollection() {
+        return mongoTemplate.getCollection("SlackWebhooks");
     }
 
     @Test
@@ -86,9 +92,8 @@ public class SlackWebhookRepository_IT {
         assertThat(countDocuments(), is(0L));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        mongoTemplate.getDb().drop();
-        mongoClient.close();
+        getCollection().drop();
     }
 }

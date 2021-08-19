@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.api;
 
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,8 +22,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
  * Stanford Center for Biomedical Informatics Research
  * 18 Apr 2018
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = MOCK)
+@SpringBootTest
 public class ApiKeyManager_IT {
 
     private static final UserId USER_ID = UserId.valueOf("JaneDoe");
@@ -40,7 +39,7 @@ public class ApiKeyManager_IT {
 
     private long timestamp;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         timestamp = System.currentTimeMillis();
         generatedKey = generateApiKey();
@@ -79,7 +78,7 @@ public class ApiKeyManager_IT {
         assertThat(info.getPurpose(), is(PURPOSE));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 }

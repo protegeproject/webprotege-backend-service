@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.persistence;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import edu.stanford.protege.webprotege.app.ApplicationDisposablesManager;
-import edu.stanford.protege.webprotege.inject.MongoClientProvider;
 import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import org.bson.Document;
@@ -26,13 +25,6 @@ public class MongoTestUtils {
 
     private static final String TEST_DB_NAME = "webprotege-test";
 
-    public static MongoClient createMongoClient() {
-        return new MongoClientProvider(Optional.of("localhost"),
-                                       Optional.of(27017),
-                                       Optional.empty(),
-                                       Optional.empty(),
-                                       new ApplicationDisposablesManager(new DisposableObjectManager())).get();
-    }
 
 
     public static String getTestDbName() {

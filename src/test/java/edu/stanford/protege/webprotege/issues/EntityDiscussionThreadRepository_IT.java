@@ -6,9 +6,9 @@ import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -33,7 +33,6 @@ import static org.hamcrest.core.IsNot.not;
  * An integration test for the repo that stores entity discussion thread.  This test requires
  * a running version of MongoDB.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class EntityDiscussionThreadRepository_IT {
@@ -51,7 +50,7 @@ public class EntityDiscussionThreadRepository_IT {
 
     private Comment comment;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         repository = new EntityDiscussionThreadRepository(mongoTemplate);
         comment = new Comment(
@@ -69,7 +68,7 @@ public class EntityDiscussionThreadRepository_IT {
         repository.saveThread(thread);
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         mongoTemplate.getDb().drop();
     }

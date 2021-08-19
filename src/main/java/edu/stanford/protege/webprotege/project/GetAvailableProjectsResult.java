@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.Result;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @AutoValue
 
 @JsonTypeName("GetAvailableProjects")
-public abstract class GetAvailableProjectsResult implements Result {
+public abstract class GetAvailableProjectsResult implements Result, Response {
 
     @JsonCreator
     public static GetAvailableProjectsResult create(@JsonProperty("availableProjects") List<AvailableProject> availableProjects) {

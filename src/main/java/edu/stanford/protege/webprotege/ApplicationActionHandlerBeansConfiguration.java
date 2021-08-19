@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.auth.AuthenticationManager;
 import edu.stanford.protege.webprotege.auth.ChangePasswordActionHandler;
-import edu.stanford.protege.webprotege.auth.PerformLoginActionHandler;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordActionHandler;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordMailer;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
@@ -25,7 +24,6 @@ import edu.stanford.protege.webprotege.perspective.GetPerspectivesActionHandler;
 import edu.stanford.protege.webprotege.perspective.PerspectivesManager;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.user.CreateUserAccountActionHandler;
-import edu.stanford.protege.webprotege.user.LogOutUserActionHandler;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import org.springframework.context.annotation.Bean;
@@ -38,13 +36,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ApplicationActionHandlerBeansConfiguration {
-
-    @Bean
-    GetAvailableProjectsActionHandler getAvailableProjectsHandler(ProjectPermissionsManager p1,
-                                                                  AccessManager p2,
-                                                                  UserActivityManager p3) {
-        return new GetAvailableProjectsActionHandler(p1, p2, p3);
-    }
 
 
     @Bean
@@ -102,18 +93,6 @@ public class ApplicationActionHandlerBeansConfiguration {
                                                           AuthenticationManager p2,
                                                           ResetPasswordMailer p3) {
         return new ResetPasswordActionHandler(p1, p2, p3);
-    }
-
-    @Bean
-    LogOutUserActionHandler logOutUserActionHandler(UserActivityManager p1, UserInSessionFactory p2) {
-        return new LogOutUserActionHandler(p1, p2);
-    }
-
-    @Bean
-    PerformLoginActionHandler performLoginActionHandler(UserActivityManager p1,
-                                                        UserInSessionFactory p2,
-                                                        AuthenticationManager p3) {
-        return new PerformLoginActionHandler(p1, p2, p3);
     }
 
     @Bean

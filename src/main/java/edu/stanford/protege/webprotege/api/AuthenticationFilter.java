@@ -78,8 +78,9 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     @Nonnull
     private ExecutionContext getExecutionContext() {
-        HttpSession session = servletRequest.getSession(true);
-        return new ExecutionContext(new WebProtegeSessionImpl(session));
+//        HttpSession session = servletRequest.getSession(true);
+//        return new ExecutionContext();
+        throw new RuntimeException();
     }
 
     private Optional<ApiKey> parseApiKeyFromHeaders(ContainerRequestContext requestContext) {

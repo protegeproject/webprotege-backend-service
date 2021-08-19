@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.dispatch.handlers;
+package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.api.ProjectResource;
@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
+import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.project.AvailableProject;
 import edu.stanford.protege.webprotege.project.GetAvailableProjectsAction;
@@ -32,6 +33,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 01/04/2013
  */
+@WebProtegeHandler
 public class GetAvailableProjectsActionHandler implements ApplicationActionHandler<GetAvailableProjectsAction, GetAvailableProjectsResult> {
 
     private final ProjectPermissionsManager projectPermissionsManager;

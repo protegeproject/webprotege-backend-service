@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.authorization.api.ActionId;
+import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
 import javax.annotation.Nonnull;
@@ -17,7 +18,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("GetAvailableProjectsWithPermission")
-public abstract class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult> {
+public abstract class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult>, Request<GetAvailableProjectsWithPermissionResult> {
 
     @JsonCreator
     public static GetAvailableProjectsWithPermissionAction create(@JsonProperty("permission") @Nonnull ActionId permission) {
@@ -26,4 +27,9 @@ public abstract class GetAvailableProjectsWithPermissionAction implements Action
 
     @Nonnull
     public abstract ActionId getPermission();
+
+    @Override
+    public String getChannel() {
+        return "projects.GetAvailableProjectsWithPermission";
+    }
 }

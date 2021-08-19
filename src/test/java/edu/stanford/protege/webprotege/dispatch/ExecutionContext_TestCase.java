@@ -31,7 +31,7 @@ public class ExecutionContext_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        context = new ExecutionContext(session);
+        context = new ExecutionContext(UserId.valueOf("TheUser"));
     }
 
     @Test(expected = NullPointerException.class)
@@ -39,10 +39,6 @@ public class ExecutionContext_TestCase {
         new ExecutionContext(null);
     }
 
-    @Test
-    public void shouldReturnSuppliedSession() {
-        assertThat(context.getSession(), is(session));
-    }
 
     @Test
     public void shouldReturnGuestUser() {

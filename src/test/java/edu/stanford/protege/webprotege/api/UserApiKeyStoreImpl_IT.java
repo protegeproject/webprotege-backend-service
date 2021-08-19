@@ -4,9 +4,11 @@ package edu.stanford.protege.webprotege.api;
 import com.mongodb.client.MongoClient;
 import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Arrays;
@@ -23,6 +25,7 @@ import static org.mockito.Mockito.mock;
  * Stanford Center for Biomedical Informatics Research
  * 18 Apr 2018
  */
+@SpringBootTest
 public class UserApiKeyStoreImpl_IT {
 
     private static final String TESTING_PURPOSE = "Testing purpose";
@@ -35,16 +38,16 @@ public class UserApiKeyStoreImpl_IT {
 
     private static final UserId USER_ID = UserId.valueOf("JaneDoe");
 
+    @Autowired
     private UserApiKeyStoreImpl store;
 
+    @Autowired
     private MongoClient mongoClient;
 
     private ApiKeyRecord record;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        mongoClient = MongoTestUtils.createMongoClient();
-        store = new UserApiKeyStoreImpl(new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName()));
         store.ensureIndexes();
 
         record = new ApiKeyRecord(API_KEY_ID,
@@ -135,7 +138,7 @@ public class UserApiKeyStoreImpl_IT {
     }
 
 
-    @After
+    @AfterEach
     public void tearDown() {
         mongoClient.getDatabase(MongoTestUtils.getTestDbName()).drop();
         mongoClient.close();

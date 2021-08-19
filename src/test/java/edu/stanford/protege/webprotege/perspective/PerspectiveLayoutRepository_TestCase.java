@@ -2,15 +2,14 @@ package edu.stanford.protege.webprotege.perspective;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Optional;
@@ -23,35 +22,19 @@ import static org.hamcrest.Matchers.*;
  * Stanford Center for Biomedical Informatics Research
  * 2020-09-01
  */
+@SpringBootTest
 public class PerspectiveLayoutRepository_TestCase {
 
+    @Autowired
     private PerspectiveLayoutRepository repository;
 
+    @Autowired
     private MongoTemplate mongoTemplate;
 
-    private MongoClient mongoClient;
-
-    @Before
-    public void setUp() throws Exception {
-        mongoClient = MongoTestUtils.createMongoClient();
-        mongoTemplate = new MongoTemplate(mongoClient, MongoTestUtils.getTestDbName());
-        var objectMapper = new ObjectMapperProvider().get();
-        repository = new PerspectiveLayoutRepositoryImpl(mongoTemplate, objectMapper);
-        repository.ensureIndexes();
-    }
 
     private MongoCollection<Document> getCollection() {
         return mongoTemplate.getCollection(PerspectiveLayoutRepositoryImpl.PERSPECTIVE_LAYOUTS);
     }
-
-//    @Test
-//    public void shouldCreateIndexes() {
-//        var collection = getCollection();
-//        try (var cursor = collection.listIndexes().cursor()) {
-//            var index = cursor.tryNext();
-//            assertThat(index, not(nullValue()));
-//        }
-//    }
 
     @Test
     public void shouldSave() {
@@ -97,9 +80,8 @@ public class PerspectiveLayoutRepository_TestCase {
     }
 
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        mongoTemplate.getDb().drop();
-        mongoClient.close();
+        getCollection().drop();
     }
 }
