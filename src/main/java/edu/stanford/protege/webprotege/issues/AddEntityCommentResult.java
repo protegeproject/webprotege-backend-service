@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;
@@ -21,7 +23,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("AddEntityComment")
-public abstract class AddEntityCommentResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>> {
+public abstract class AddEntityCommentResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>>, Response {
 
     @Nonnull
     @Override

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
+import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.project.HasProjectId;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -18,13 +19,20 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("AddEntityComment")
-public abstract class AddEntityCommentAction implements ProjectAction<AddEntityCommentResult>, HasProjectId {
+public abstract class AddEntityCommentAction implements ProjectAction<AddEntityCommentResult>, HasProjectId, Request<AddEntityCommentResult> {
+
+    public static final String CHANNEL = "issues.AddEntityComment";
 
     @JsonCreator
     public static AddEntityCommentAction addComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                     @JsonProperty("threadId") @Nonnull ThreadId threadId,
                                                     @JsonProperty("comment") @Nonnull String comment) {
         return new AutoValue_AddEntityCommentAction(projectId, threadId, comment);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull
