@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.chgpwd.ResetPasswordMailer;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.events.GetProjectEventsActionHandler;
-import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsActionHandler;
+import edu.stanford.protege.webprotege.user.GetUserIdCompletionsActionHandler;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.permissions.GetProjectPermissionsActionHandler;

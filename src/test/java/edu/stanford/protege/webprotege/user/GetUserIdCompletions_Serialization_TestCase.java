@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.itemlist;
+package edu.stanford.protege.webprotege.user;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.dispatch.Action;

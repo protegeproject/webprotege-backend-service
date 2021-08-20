@@ -1,9 +1,8 @@
 
-package edu.stanford.protege.webprotege.itemlist;
+package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;

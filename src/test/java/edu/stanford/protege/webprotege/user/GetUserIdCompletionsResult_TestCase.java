@@ -1,5 +1,5 @@
 
-package edu.stanford.protege.webprotege.itemlist;
+package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.MatcherAssert;
@@ -7,7 +7,6 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 
 import java.util.Arrays;
 import java.util.List;

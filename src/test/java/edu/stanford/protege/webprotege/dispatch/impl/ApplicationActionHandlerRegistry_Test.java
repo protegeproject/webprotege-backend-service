@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.chgpwd.ResetPasswordData;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
-import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsAction;
+import edu.stanford.protege.webprotege.user.GetUserIdCompletionsAction;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressAction;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressAction;
 import edu.stanford.protege.webprotege.permissions.GetProjectPermissionsAction;

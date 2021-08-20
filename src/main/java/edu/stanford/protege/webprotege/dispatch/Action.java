@@ -23,7 +23,7 @@ import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsAction;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualAction;
 import edu.stanford.protege.webprotege.issues.*;
-import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsAction;
+import edu.stanford.protege.webprotege.user.GetUserIdCompletionsAction;
 import edu.stanford.protege.webprotege.lang.GetProjectLangTagsAction;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressAction;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressAction;

@@ -1,5 +1,5 @@
 
-package edu.stanford.protege.webprotege.itemlist;
+package edu.stanford.protege.webprotege.user;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;

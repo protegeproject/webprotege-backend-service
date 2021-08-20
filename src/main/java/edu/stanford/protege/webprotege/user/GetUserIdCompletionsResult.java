@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.itemlist;
+package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.Result;
