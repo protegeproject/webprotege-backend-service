@@ -22,15 +22,15 @@ public class GetUsage_Serialization_TestCase {
 
     @Test
     public void shouldSerializeAction() throws IOException {
-        var action = GetUsageAction.create(mockOWLClass(), mockProjectId());
+        var action = GetEntityUsageAction.create(mockOWLClass(), mockProjectId());
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 
     @Test
     public void shouldSerializeResult() throws IOException {
-        var result = GetUsageResult.create(mockProjectId(),
-                                           mockOWLClassNode(),
-                                           ImmutableList.of(
+        var result = GetEntityUsageResult.create(mockProjectId(),
+                                                 mockOWLClassNode(),
+                                                 ImmutableList.of(
                                                    new UsageReference(AxiomType.DECLARATION,
                                                                       "Declaration(Class(http://example.org/A))",
                                                                       Optional.empty(),

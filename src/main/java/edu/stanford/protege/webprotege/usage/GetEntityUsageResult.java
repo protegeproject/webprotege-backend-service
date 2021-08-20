@@ -20,15 +20,15 @@ import java.util.List;
  */
 @AutoValue
 
-@JsonTypeName("GetUsage")
-public abstract class GetUsageResult implements Result, HasProjectId {
+@JsonTypeName("GetEntityUsage")
+public abstract class GetEntityUsageResult implements Result, HasProjectId {
 
     @JsonCreator
-    public static GetUsageResult create(@JsonProperty("projectId") ProjectId projectId,
-                                        @JsonProperty("entityNode") EntityNode entityNode,
-                                        @JsonProperty("usageReferences") List<UsageReference> usageReferences,
-                                        @JsonProperty("totalUsageCount") int totalUsageCount) {
-        return new AutoValue_GetUsageResult(projectId, entityNode, usageReferences, totalUsageCount);
+    public static GetEntityUsageResult create(@JsonProperty("projectId") ProjectId projectId,
+                                              @JsonProperty("entityNode") EntityNode entityNode,
+                                              @JsonProperty("usageReferences") List<UsageReference> usageReferences,
+                                              @JsonProperty("totalUsageCount") int totalUsageCount) {
+        return new AutoValue_GetEntityUsageResult(projectId, entityNode, usageReferences, totalUsageCount);
     }
 
     @Nonnull

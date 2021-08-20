@@ -21,27 +21,27 @@ import static edu.stanford.protege.webprotege.pagination.PageRequest.DEFAULT_PAG
  */
 @AutoValue
 
-@JsonTypeName("GetUsage")
-public abstract class GetUsageAction implements ProjectAction<GetUsageResult> {
+@JsonTypeName("GetEntityUsage")
+public abstract class GetEntityUsageAction implements ProjectAction<GetEntityUsageResult> {
 
-    public static final String CHANNEL = "entities.GetUsage";
+    public static final String CHANNEL = "entities.GetEntityUsage";
 
-    public static GetUsageAction create(OWLEntity subject,
-                                        ProjectId projectId) {
-        return new AutoValue_GetUsageAction(projectId, subject, null);
+    public static GetEntityUsageAction create(OWLEntity subject,
+                                              ProjectId projectId) {
+        return new AutoValue_GetEntityUsageAction(projectId, subject, null);
     }
 
-    public static GetUsageAction create(OWLEntity subject,
-                                        ProjectId projectId,
-                                        Optional<UsageFilter> usageFilter) {
-        return new AutoValue_GetUsageAction(projectId, subject, usageFilter.orElse(null));
+    public static GetEntityUsageAction create(OWLEntity subject,
+                                              ProjectId projectId,
+                                              Optional<UsageFilter> usageFilter) {
+        return new AutoValue_GetEntityUsageAction(projectId, subject, usageFilter.orElse(null));
     }
 
     @JsonCreator
-    public static GetUsageAction create(@JsonProperty("subject") OWLEntity subject,
-                                        @JsonProperty("projectId") ProjectId projectId,
-                                        @JsonProperty("usageFilter") @Nullable UsageFilter usageFilter) {
-        return new AutoValue_GetUsageAction(projectId, subject, usageFilter);
+    public static GetEntityUsageAction create(@JsonProperty("subject") OWLEntity subject,
+                                              @JsonProperty("projectId") ProjectId projectId,
+                                              @JsonProperty("usageFilter") @Nullable UsageFilter usageFilter) {
+        return new AutoValue_GetEntityUsageAction(projectId, subject, usageFilter);
     }
 
     @Override

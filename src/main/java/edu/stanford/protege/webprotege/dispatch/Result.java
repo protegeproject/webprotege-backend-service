@@ -54,7 +54,7 @@ import edu.stanford.protege.webprotege.search.SetSearchSettingsResult;
 import edu.stanford.protege.webprotege.sharing.GetProjectSharingSettingsResult;
 import edu.stanford.protege.webprotege.sharing.SetProjectSharingSettingsResult;
 import edu.stanford.protege.webprotege.tag.*;
-import edu.stanford.protege.webprotege.usage.GetUsageResult;
+import edu.stanford.protege.webprotege.usage.GetEntityUsageResult;
 import edu.stanford.protege.webprotege.user.CreateUserAccountResult;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionResult;
 import edu.stanford.protege.webprotege.viz.GetEntityGraphResult;
@@ -163,7 +163,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(GetSearchSettingsResult.class),
         @Type(GetUserIdCompletionsResult.class),
         @Type(GetUserProjectEntityGraphCriteriaResult.class),
-        @Type(GetUsageResult.class),
+        @Type(GetEntityUsageResult.class),
         @Type(GetWatchesResult.class),
         @Type(GetWatchedEntityChangesResult.class),
         @Type(LoadProjectResult.class),

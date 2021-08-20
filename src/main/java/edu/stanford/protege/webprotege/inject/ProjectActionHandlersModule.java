@@ -50,7 +50,7 @@ import edu.stanford.protege.webprotege.tag.GetEntityTagsActionHandler;
 import edu.stanford.protege.webprotege.tag.GetProjectTagsActionHandler;
 import edu.stanford.protege.webprotege.tag.SetProjectTagsActionHandler;
 import edu.stanford.protege.webprotege.tag.UpdateEntityTagsActionHandler;
-import edu.stanford.protege.webprotege.usage.GetUsageActionHandler;
+import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
 import edu.stanford.protege.webprotege.viz.GetEntityGraphActionHandler;
 import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaActionHandler;
 import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersActionHandler;
@@ -205,7 +205,7 @@ public class ProjectActionHandlersModule {
     }
 
      
-    public ProjectActionHandler provideGetUsageActionHandler(GetUsageActionHandler handler) {
+    public ProjectActionHandler provideGetUsageActionHandler(GetEntityUsageActionHandler handler) {
         return handler;
     }
 

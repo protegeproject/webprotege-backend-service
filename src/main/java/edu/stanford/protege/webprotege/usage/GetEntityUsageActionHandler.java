@@ -24,7 +24,7 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  * Bio-Medical Informatics Research Group<br>
  * Date: 11/07/2013
  */
-public class GetUsageActionHandler extends AbstractProjectActionHandler<GetUsageAction, GetUsageResult> {
+public class GetEntityUsageActionHandler extends AbstractProjectActionHandler<GetEntityUsageAction, GetEntityUsageResult> {
 
     @Nonnull
     private final ProjectId projectId;
@@ -41,15 +41,13 @@ public class GetUsageActionHandler extends AbstractProjectActionHandler<GetUsage
     @Nonnull
     private final ReferencingAxiomVisitorFactory referencingAxiomVisitorFactory;
 
-    @Nonnull
-
     @Inject
-    public GetUsageActionHandler(@Nonnull AccessManager accessManager,
-                                 @Nonnull ProjectId projectId,
-                                 @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                                 @Nonnull AxiomsByReferenceIndex axiomsByReferenceIndex,
-                                 @Nonnull EntityNodeRenderer entityNodeRenderer,
-                                 @Nonnull ReferencingAxiomVisitorFactory referencingAxiomVisitorFactory) {
+    public GetEntityUsageActionHandler(@Nonnull AccessManager accessManager,
+                                       @Nonnull ProjectId projectId,
+                                       @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                       @Nonnull AxiomsByReferenceIndex axiomsByReferenceIndex,
+                                       @Nonnull EntityNodeRenderer entityNodeRenderer,
+                                       @Nonnull ReferencingAxiomVisitorFactory referencingAxiomVisitorFactory) {
         super(accessManager);
         this.projectId = projectId;
         this.projectOntologiesIndex = projectOntologiesIndex;
@@ -60,19 +58,19 @@ public class GetUsageActionHandler extends AbstractProjectActionHandler<GetUsage
 
     @Nonnull
     @Override
-    public Class<GetUsageAction> getActionClass() {
-        return GetUsageAction.class;
+    public Class<GetEntityUsageAction> getActionClass() {
+        return GetEntityUsageAction.class;
     }
 
     @Nonnull
     @Override
-    protected RequestValidator getAdditionalRequestValidator(GetUsageAction action, RequestContext requestContext) {
+    protected RequestValidator getAdditionalRequestValidator(GetEntityUsageAction action, RequestContext requestContext) {
         return NullValidator.get();
     }
 
     @Nonnull
     @Override
-    public GetUsageResult execute(@Nonnull GetUsageAction action, @Nonnull ExecutionContext executionContext){
+    public GetEntityUsageResult execute(@Nonnull GetEntityUsageAction action, @Nonnull ExecutionContext executionContext){
         var subject = action.getSubject();
         var referencingAxiomVisitor = referencingAxiomVisitorFactory.create(subject);
         var usageFilter = action.getUsageFilter();
@@ -90,7 +88,7 @@ public class GetUsageActionHandler extends AbstractProjectActionHandler<GetUsage
                 .collect(toImmutableList());
 
         var entityNode = entityNodeRenderer.render(subject);
-        return GetUsageResult.create(projectId, entityNode, usageReferences, referencingAxioms.size());
+        return GetEntityUsageResult.create(projectId, entityNode, usageReferences, referencingAxioms.size());
     }
 
     private boolean isIncludedBySubject(UsageFilter usageFilter, OWLEntity subject, UsageReference ref) {

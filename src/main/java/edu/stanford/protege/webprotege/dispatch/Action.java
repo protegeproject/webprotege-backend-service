@@ -23,7 +23,6 @@ import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsAction;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualAction;
 import edu.stanford.protege.webprotege.issues.*;
-import edu.stanford.protege.webprotege.itemlist.GetPossibleItemCompletionsAction;
 import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsAction;
 import edu.stanford.protege.webprotege.lang.GetProjectLangTagsAction;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressAction;
@@ -54,7 +53,7 @@ import edu.stanford.protege.webprotege.search.SetSearchSettingsAction;
 import edu.stanford.protege.webprotege.sharing.GetProjectSharingSettingsAction;
 import edu.stanford.protege.webprotege.sharing.SetProjectSharingSettingsAction;
 import edu.stanford.protege.webprotege.tag.*;
-import edu.stanford.protege.webprotege.usage.GetUsageAction;
+import edu.stanford.protege.webprotege.usage.GetEntityUsageAction;
 import edu.stanford.protege.webprotege.user.CreateUserAccountAction;
 import edu.stanford.protege.webprotege.user.GetCurrentUserInSessionAction;
 import edu.stanford.protege.webprotege.viz.GetEntityGraphAction;
@@ -160,7 +159,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = GetSearchSettingsAction.class),
         @Type(value = GetUserIdCompletionsAction.class),
         @Type(value = GetUserProjectEntityGraphCriteriaAction.class),
-        @Type(value = GetUsageAction.class),
+        @Type(value = GetEntityUsageAction.class),
         @Type(value = GetWatchesAction.class),
         @Type(value = GetWatchedEntityChangesAction.class),
         @Type(value = LoadProjectAction.class),

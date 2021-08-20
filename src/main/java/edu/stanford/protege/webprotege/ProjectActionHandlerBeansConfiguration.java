@@ -59,7 +59,7 @@ import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
 import edu.stanford.protege.webprotege.tag.*;
 import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
-import edu.stanford.protege.webprotege.usage.GetUsageActionHandler;
+import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
 import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
 import edu.stanford.protege.webprotege.viz.*;
 import edu.stanford.protege.webprotege.watches.*;
@@ -315,13 +315,13 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    GetUsageActionHandler getUsageActionHandler(AccessManager p1,
-                                                ProjectId p2,
-                                                ProjectOntologiesIndex p3,
-                                                AxiomsByReferenceIndex p4,
-                                                EntityNodeRenderer p5,
-                                                ReferencingAxiomVisitorFactory p6) {
-        return new GetUsageActionHandler(p1, p2, p3, p4, p5, p6);
+    GetEntityUsageActionHandler getUsageActionHandler(AccessManager p1,
+                                                      ProjectId p2,
+                                                      ProjectOntologiesIndex p3,
+                                                      AxiomsByReferenceIndex p4,
+                                                      EntityNodeRenderer p5,
+                                                      ReferencingAxiomVisitorFactory p6) {
+        return new GetEntityUsageActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
 
