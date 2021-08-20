@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.dispatch.Result;
  * 19/02/15
  */
 @AutoValue
-
+@Deprecated
 @JsonTypeName("CreateUserAccount")
 public abstract class CreateUserAccountResult implements Result {
 
