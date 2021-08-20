@@ -4,8 +4,6 @@ import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
-import edu.stanford.protege.webprotege.project.MoveProjectsToTrashAction;
-import edu.stanford.protege.webprotege.project.MoveProjectsToTrashResult;
 import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Mono;
 
@@ -15,28 +13,28 @@ import reactor.core.publisher.Mono;
  * 2021-08-19
  */
 @WebProtegeHandler
-public class MoveProjectsToTrashCommandHandler implements CommandHandler<MoveProjectsToTrashAction, MoveProjectsToTrashResult> {
+public class MoveProjectToTrashCommandHandler implements CommandHandler<MoveProjectToTrashAction, MoveProjectToTrashResult> {
 
     private final ActionExecutor executor;
 
-    public MoveProjectsToTrashCommandHandler(ActionExecutor executor) {
+    public MoveProjectToTrashCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 
     @NotNull
     @Override
     public String getChannelName() {
-        return MoveProjectsToTrashAction.CHANNEL;
+        return MoveProjectToTrashAction.CHANNEL;
     }
 
     @Override
-    public Class<MoveProjectsToTrashAction> getRequestClass() {
-        return MoveProjectsToTrashAction.class;
+    public Class<MoveProjectToTrashAction> getRequestClass() {
+        return MoveProjectToTrashAction.class;
     }
 
     @Override
-    public Mono<MoveProjectsToTrashResult> handleRequest(MoveProjectsToTrashAction request,
-                                                         ExecutionContext executionContext) {
+    public Mono<MoveProjectToTrashResult> handleRequest(MoveProjectToTrashAction request,
+                                                        ExecutionContext executionContext) {
         return Mono.just(executor.execute(request, executionContext));
     }
 }

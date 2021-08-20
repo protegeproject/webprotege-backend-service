@@ -15,17 +15,17 @@ import static edu.stanford.protege.webprotege.MockingUtils.*;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-07
  */
-public class MoveProjectsToTrash_Serialization_TestCase {
+public class MoveProjectToTrash_Serialization_TestCase {
 
     @Test
     public void shouldSerializeAction() throws IOException {
-        var action = MoveProjectsToTrashAction.create(mockProjectId());
+        var action = MoveProjectToTrashAction.create(mockProjectId());
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 
     @Test
     public void shouldSerializeResult() throws IOException {
-        var result = MoveProjectsToTrashResult.create();
+        var result = MoveProjectToTrashResult.create();
         JsonSerializationTestUtil.testSerialization(result, Result.class);
     }
 }

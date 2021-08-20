@@ -10,9 +10,6 @@ import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.ProjectMovedToTrashEvent;
 import edu.stanford.protege.webprotege.event.WebProtegeEvent;
-import edu.stanford.protege.webprotege.project.MoveProjectsToTrashAction;
-import edu.stanford.protege.webprotege.project.MoveProjectsToTrashResult;
-import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
@@ -26,30 +23,30 @@ import java.util.List;
  * Bio-Medical Informatics Research Group<br>
  * Date: 19/04/2013
  */
-public class MoveProjectsToTrashActionHandler implements ApplicationActionHandler<MoveProjectsToTrashAction, MoveProjectsToTrashResult> {
+public class MoveProjectToTrashActionHandler implements ApplicationActionHandler<MoveProjectToTrashAction, MoveProjectToTrashResult> {
 
     private ProjectDetailsManager projectDetailsManager;
 
     @Inject
-    public MoveProjectsToTrashActionHandler(ProjectDetailsManager projectDetailsManager) {
+    public MoveProjectToTrashActionHandler(ProjectDetailsManager projectDetailsManager) {
         this.projectDetailsManager = projectDetailsManager;
     }
 
     @Nonnull
     @Override
-    public Class<MoveProjectsToTrashAction> getActionClass() {
-        return MoveProjectsToTrashAction.class;
+    public Class<MoveProjectToTrashAction> getActionClass() {
+        return MoveProjectToTrashAction.class;
     }
 
     @Nonnull
     @Override
-    public RequestValidator getRequestValidator(@Nonnull MoveProjectsToTrashAction action, @Nonnull RequestContext requestContext) {
+    public RequestValidator getRequestValidator(@Nonnull MoveProjectToTrashAction action, @Nonnull RequestContext requestContext) {
         return NullValidator.get();
     }
 
     @Nonnull
     @Override
-    public MoveProjectsToTrashResult execute(@Nonnull MoveProjectsToTrashAction action, @Nonnull ExecutionContext executionContext) {
+    public MoveProjectToTrashResult execute(@Nonnull MoveProjectToTrashAction action, @Nonnull ExecutionContext executionContext) {
         List<ProjectMovedToTrashEvent> events = new ArrayList<>();
         ProjectId projectId = action.getProjectId();
             projectDetailsManager.setInTrash(projectId, true);
@@ -58,6 +55,6 @@ public class MoveProjectsToTrashActionHandler implements ApplicationActionHandle
         EventList<WebProtegeEvent<?>> eventList = EventList.create(EventTag.getFirst(),
                                                                 ImmutableList.copyOf(events),
                                                                 EventTag.getFirst());
-        return MoveProjectsToTrashResult.create();
+        return MoveProjectToTrashResult.create();
     }
 }

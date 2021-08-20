@@ -16,14 +16,14 @@ import edu.stanford.protege.webprotege.dispatch.Action;
  */
 @AutoValue
 
-@JsonTypeName("MoveProjectsToTrash")
-public abstract class MoveProjectsToTrashAction implements Action<MoveProjectsToTrashResult>, Request<MoveProjectsToTrashResult> {
+@JsonTypeName("MoveProjectToTrash")
+public abstract class MoveProjectToTrashAction implements Action<MoveProjectToTrashResult>, Request<MoveProjectToTrashResult> {
 
-    public static final String CHANNEL = "project-management.MoveProjectsToTrash";
+    public static final String CHANNEL = "project-management.MoveProjectToTrash";
 
     @JsonCreator
-    public static MoveProjectsToTrashAction create(@JsonProperty("projectId") ProjectId projectId) {
-        return new AutoValue_MoveProjectsToTrashAction(projectId);
+    public static MoveProjectToTrashAction create(@JsonProperty("projectId") ProjectId projectId) {
+        return new AutoValue_MoveProjectToTrashAction(projectId);
     }
 
     @Override

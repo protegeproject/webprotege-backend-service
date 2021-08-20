@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.authorization.api.ActionId;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
@@ -127,7 +126,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainMoveProjectsToTrashActionHandler() {
-        var handler = registry.getActionHandler(MoveProjectsToTrashAction.create(ProjectId.generate()));
+        var handler = registry.getActionHandler(MoveProjectToTrashAction.create(ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 

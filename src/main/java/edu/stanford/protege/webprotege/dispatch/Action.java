@@ -166,7 +166,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = MergeUploadedProjectAction.class),
         @Type(value = MoveEntitiesToParentAction.class),
         @Type(value = MoveHierarchyNodeAction.class),
-        @Type(value = MoveProjectsToTrashAction.class),
+        @Type(value = MoveProjectToTrashAction.class),
         @Type(value = NewOntologyMergeAddAction.class),
         @Type(value = PerformEntitySearchAction.class),
         @Type(value = RebuildPermissionsAction.class),

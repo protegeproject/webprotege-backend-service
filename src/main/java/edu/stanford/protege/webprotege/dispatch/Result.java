@@ -170,7 +170,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(MergeUploadedProjectResult.class),
         @Type(MoveEntitiesToParentResult.class),
         @Type(MoveHierarchyNodeResult.class),
-        @Type(MoveProjectsToTrashResult.class),
+        @Type(MoveProjectToTrashResult.class),
         @Type(NewOntologyMergeAddResult.class),
         @Type(PerformEntitySearchResult.class),
         @Type(RebuildPermissionsResult.class),

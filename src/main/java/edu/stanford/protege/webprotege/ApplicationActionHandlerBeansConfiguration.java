@@ -75,8 +75,8 @@ public class ApplicationActionHandlerBeansConfiguration {
     }
 
     @Bean
-    MoveProjectsToTrashActionHandler moveProjectsToTrashActionHandler(ProjectDetailsManager p1) {
-        return new MoveProjectsToTrashActionHandler(p1);
+    MoveProjectToTrashActionHandler moveProjectsToTrashActionHandler(ProjectDetailsManager p1) {
+        return new MoveProjectToTrashActionHandler(p1);
     }
 
     @Bean
