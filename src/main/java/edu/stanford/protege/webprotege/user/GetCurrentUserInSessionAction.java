@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.dispatch.Action;
  * Date: 04/04/2013
  */
 @AutoValue
-
+@Deprecated
 @JsonTypeName("GetCurrentUserInSession")
 public abstract class GetCurrentUserInSessionAction implements Action<GetCurrentUserInSessionResult> {
 

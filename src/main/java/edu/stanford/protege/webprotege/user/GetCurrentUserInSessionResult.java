@@ -14,7 +14,7 @@ import edu.stanford.protege.webprotege.dispatch.Result;
  * Date: 04/04/2013
  */
 @AutoValue
-
+@Deprecated
 @JsonTypeName("GetCurrentUserInSession")
 public abstract class GetCurrentUserInSessionResult implements Result {
 
