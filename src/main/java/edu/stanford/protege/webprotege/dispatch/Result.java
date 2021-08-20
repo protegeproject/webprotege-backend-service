@@ -32,7 +32,7 @@ import edu.stanford.protege.webprotege.match.GetMatchingEntitiesResult;
 import edu.stanford.protege.webprotege.merge.ComputeProjectMergeResult;
 import edu.stanford.protege.webprotege.merge.MergeUploadedProjectResult;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddResult;
-import edu.stanford.protege.webprotege.merge_add.GetAllOntologiesResult;
+import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsResult;
 import edu.stanford.protege.webprotege.merge_add.NewOntologyMergeAddResult;
 import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.ontology.GetOntologyAnnotationsResult;
@@ -97,7 +97,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(EditAnnotationsResult.class),
         @Type(EditCommentResult.class),
         @Type(ExistingOntologyMergeAddResult.class),
-        @Type(GetAllOntologiesResult.class),
+        @Type(GetUploadedAndProjectOntologyIdsResult.class),
         @Type(GetApplicationSettingsResult.class),
         @Type(GetCommentedEntitiesResult.class),
         @Type(GetAvailableProjectsResult.class),

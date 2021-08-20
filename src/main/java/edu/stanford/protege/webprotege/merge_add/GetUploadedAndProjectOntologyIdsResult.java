@@ -12,11 +12,11 @@ import java.util.List;
 @AutoValue
 
 @JsonTypeName("GetAllOntologies")
-public abstract class GetAllOntologiesResult implements Result {
+public abstract class GetUploadedAndProjectOntologyIdsResult implements Result {
 
     @JsonCreator
-    public static GetAllOntologiesResult create(@JsonProperty("ontologies") List<OWLOntologyID> ontologies) {
-        return new AutoValue_GetAllOntologiesResult(ontologies);
+    public static GetUploadedAndProjectOntologyIdsResult create(@JsonProperty("ontologies") List<OWLOntologyID> ontologies) {
+        return new AutoValue_GetUploadedAndProjectOntologyIdsResult(ontologies);
     }
 
     public abstract List<OWLOntologyID> getOntologies();

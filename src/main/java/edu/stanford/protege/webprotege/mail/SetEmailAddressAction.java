@@ -14,6 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     An action that sets the email address of a user.
  * </p>
  */
+@Deprecated
 public class SetEmailAddressAction implements Action<SetEmailAddressResult> {
 
     public static final String CHANNEL = "users.SetEmailAddress";

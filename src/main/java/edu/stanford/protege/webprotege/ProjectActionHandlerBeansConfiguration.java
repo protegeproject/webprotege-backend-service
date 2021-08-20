@@ -39,7 +39,7 @@ import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddActionHandler;
-import edu.stanford.protege.webprotege.merge_add.GetAllOntologiesActionHandler;
+import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsActionHandler;
 import edu.stanford.protege.webprotege.merge_add.NewOntologyMergeAddActionHandler;
 import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.perspective.*;
@@ -159,11 +159,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    GetAllOntologiesActionHandler getAllOntologiesActionHandler(AccessManager p1,
-                                                                ProjectId p2,
-                                                                UploadedOntologiesCache p3,
-                                                                ProjectOntologiesBuilder p4) {
-        return new GetAllOntologiesActionHandler(p1, p2, p3, p4);
+    GetUploadedAndProjectOntologyIdsActionHandler getAllOntologiesActionHandler(AccessManager p1,
+                                                                                ProjectId p2,
+                                                                                UploadedOntologiesCache p3,
+                                                                                ProjectOntologiesBuilder p4) {
+        return new GetUploadedAndProjectOntologyIdsActionHandler(p1, p2, p3, p4);
     }
 
 

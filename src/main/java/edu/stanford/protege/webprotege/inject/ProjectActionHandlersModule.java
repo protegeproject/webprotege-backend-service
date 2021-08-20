@@ -30,7 +30,7 @@ import edu.stanford.protege.webprotege.match.GetMatchingEntitiesActionHandler;
 import edu.stanford.protege.webprotege.merge.ComputeProjectMergeActionHandler;
 import edu.stanford.protege.webprotege.merge.MergeUploadedProjectActionHandler;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddActionHandler;
-import edu.stanford.protege.webprotege.merge_add.GetAllOntologiesActionHandler;
+import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsActionHandler;
 import edu.stanford.protege.webprotege.merge_add.NewOntologyMergeAddActionHandler;
 import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.perspective.*;
@@ -116,7 +116,7 @@ public class ProjectActionHandlersModule {
     }
 
      
-    public ProjectActionHandler provideGetAllOntologiesActionHandler(GetAllOntologiesActionHandler handler) {
+    public ProjectActionHandler provideGetAllOntologiesActionHandler(GetUploadedAndProjectOntologyIdsActionHandler handler) {
         return handler;
     }
 

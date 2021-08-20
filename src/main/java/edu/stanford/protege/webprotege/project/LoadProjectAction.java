@@ -18,6 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 05/04/2013
  */
+@Deprecated
 @JsonTypeName("LoadProject")
 public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectId {
 

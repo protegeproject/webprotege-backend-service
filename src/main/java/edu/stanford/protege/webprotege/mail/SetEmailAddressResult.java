@@ -12,6 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 06/11/2013
  */
+@Deprecated
 public class SetEmailAddressResult implements Result {
 
     public enum Result {

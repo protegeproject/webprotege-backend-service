@@ -15,19 +15,19 @@ import java.util.Collections;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-06
  */
-public class GetAllOntologies_Serialization_TestCase {
+public class GetUploadedAndProjectOntologyIds_Serialization_TestCase {
 
 
     @Test
     public void shouldSerializeAction() throws IOException {
-        var action = GetAllOntologiesAction.create(ProjectId.getNil(),
-                                                   new DocumentId("abc"));
+        var action = GetUploadedAndProjectOntologyIds.create(ProjectId.getNil(),
+                                                             new DocumentId("abc"));
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 
     @Test
     public void shouldSerializeResult() throws IOException {
-        var result = GetAllOntologiesResult.create(Collections.emptyList());
+        var result = GetUploadedAndProjectOntologyIdsResult.create(Collections.emptyList());
         JsonSerializationTestUtil.testSerialization(result, Result.class);
     }
 }
