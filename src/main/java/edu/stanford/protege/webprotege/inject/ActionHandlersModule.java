@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.csv.GetCSVGridActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.events.GetProjectEventsActionHandler;
-import edu.stanford.protege.webprotege.itemlist.GetPersonIdItemsActionHandler;
 import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsActionHandler;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressActionHandler;
@@ -95,16 +94,6 @@ public class ActionHandlersModule {
     public ApplicationActionHandler provideGetPermissionsActionHandler(GetProjectPermissionsActionHandler handler) {
         return handler;
     }
-
-    public ApplicationActionHandler provideGetUserIdCompletionsActionHandler(GetUserIdCompletionsActionHandler handler) {
-        return handler;
-    }
-
-    
-    public ApplicationActionHandler provideGetPersonIdItemsActionHandler(GetPersonIdItemsActionHandler handler) {
-        return handler;
-    }
-
     
     public ApplicationActionHandler provideGetSystemSettingsActionHandler(GetApplicationSettingsActionHandler handler) {
         return handler;

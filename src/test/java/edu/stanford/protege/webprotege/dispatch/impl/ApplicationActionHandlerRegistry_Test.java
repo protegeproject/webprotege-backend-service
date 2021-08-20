@@ -9,10 +9,8 @@ import edu.stanford.protege.webprotege.auth.Password;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordAction;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordData;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
-import edu.stanford.protege.webprotege.itemlist.GetPersonIdItemsAction;
 import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsAction;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressAction;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressAction;
@@ -85,12 +83,6 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetEmailAddressActionHandler() {
         var handler = registry.getActionHandler(GetEmailAddressAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId()));
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainGetPersonIdItemsActionHandler() {
-        var handler = registry.getActionHandler(GetPersonIdItemsAction.create(ImmutableList.of("A")));
         assertThat(handler, is(notNullValue()));
     }
 

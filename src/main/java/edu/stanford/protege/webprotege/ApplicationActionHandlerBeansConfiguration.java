@@ -11,7 +11,6 @@ import edu.stanford.protege.webprotege.chgpwd.ResetPasswordMailer;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.events.GetProjectEventsActionHandler;
-import edu.stanford.protege.webprotege.itemlist.GetPersonIdItemsActionHandler;
 import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsActionHandler;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressActionHandler;
@@ -105,11 +104,6 @@ public class ApplicationActionHandlerBeansConfiguration {
     @Bean
     GetUserIdCompletionsActionHandler getUserIdCompletionsActionHandler(UserDetailsManager p1) {
         return new GetUserIdCompletionsActionHandler(p1);
-    }
-
-    @Bean
-    GetPersonIdItemsActionHandler getPersonIdItemsActionHandler(UserDetailsManager p1) {
-        return new GetPersonIdItemsActionHandler(p1);
     }
 
     @Bean

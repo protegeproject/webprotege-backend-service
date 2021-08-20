@@ -144,7 +144,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = GetPerspectiveDetailsAction.class),
         @Type(value = GetPerspectiveLayoutAction.class),
         @Type(value = GetPerspectivesAction.class),
-        @Type(value = GetPossibleItemCompletionsAction.class),
         @Type(value = GetProjectChangesAction.class),
         @Type(value = GetProjectDetailsAction.class),
         @Type(value = GetProjectEventsAction.class),
