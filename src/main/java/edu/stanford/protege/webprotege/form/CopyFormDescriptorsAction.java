@@ -27,18 +27,18 @@ public abstract class CopyFormDescriptorsAction implements ProjectAction<CopyFor
     public abstract ProjectId getProjectId();
 
     @Nonnull
-    public abstract ProjectId getProjectIdToCopyFrom();
+    public abstract ProjectId getToProjectId();
 
     @Nonnull
-    public abstract ImmutableList<FormId> getFormIdsToCopy();
+    public abstract ImmutableList<FormId> getFormIds();
 
     @JsonCreator
-    public static CopyFormDescriptorsAction create(@JsonProperty("projectId") ProjectId newProjectId,
-                                                   @JsonProperty("projectIdToCopyFrom") ProjectId newProjectIdToCopyFrom,
-                                                   @JsonProperty("formIdsToCopy") ImmutableList<FormId> newFormIdsToCopy) {
-        return new AutoValue_CopyFormDescriptorsAction(newProjectId,
-                                                       newProjectIdToCopyFrom,
-                                                       newFormIdsToCopy);
+    public static CopyFormDescriptorsAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                   @JsonProperty("toProjectId") ProjectId toProjectId,
+                                                   @JsonProperty("formIds") ImmutableList<FormId> formIds) {
+        return new AutoValue_CopyFormDescriptorsAction(projectId,
+                                                       toProjectId,
+                                                       formIds);
     }
 
     @Override
