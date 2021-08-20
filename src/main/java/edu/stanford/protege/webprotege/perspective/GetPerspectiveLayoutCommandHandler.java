@@ -1,4 +1,5 @@
 package edu.stanford.protege.webprotege.perspective;
+
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -33,7 +34,7 @@ public class GetPerspectiveLayoutCommandHandler implements CommandHandler<GetPer
 
     @Override
     public Mono<GetPerspectiveLayoutResult> handleRequest(GetPerspectiveLayoutAction request,
-                                             ExecutionContext executionContext) {
+                                                          ExecutionContext executionContext) {
         return Mono.just(executor.execute(request, executionContext));
     }
 }
