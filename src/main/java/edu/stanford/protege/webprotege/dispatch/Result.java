@@ -23,7 +23,6 @@ import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualResult;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsResult;
 import edu.stanford.protege.webprotege.issues.*;
-import edu.stanford.protege.webprotege.itemlist.GetPersonIdCompletionsResult;
 import edu.stanford.protege.webprotege.itemlist.GetPossibleItemCompletionsResult;
 import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsResult;
 import edu.stanford.protege.webprotege.lang.GetProjectLangTagsResult;
@@ -143,7 +142,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(GetOboTermXRefsResult.class),
         @Type(GetOntologyAnnotationsResult.class),
         @Type(GetOntologyFramesResult.class),
-        @Type(GetPersonIdCompletionsResult.class),
         @Type(GetPerspectiveDetailsResult.class),
         @Type(GetPerspectiveLayoutResult.class),
         @Type(GetPerspectivesResult.class),

@@ -12,7 +12,6 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
-import edu.stanford.protege.webprotege.itemlist.GetPersonIdCompletionsAction;
 import edu.stanford.protege.webprotege.itemlist.GetPersonIdItemsAction;
 import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsAction;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressAction;
@@ -86,12 +85,6 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetEmailAddressActionHandler() {
         var handler = registry.getActionHandler(GetEmailAddressAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId()));
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainGetPersonIdCompletionsActionHandler() {
-        var handler = registry.getActionHandler(GetPersonIdCompletionsAction.create("abc"));
         assertThat(handler, is(notNullValue()));
     }
 
