@@ -22,12 +22,19 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MoveEntitiesToParent")
 public abstract class MoveEntitiesToParentAction implements ProjectAction<MoveEntitiesToParentResult>, HasCommitMessage {
 
+    public static final String CHANNEL = "entities.MoveEntitiesToParent";
+
     @JsonCreator
     public static MoveEntitiesToParentAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                     @JsonProperty("entities") @Nonnull ImmutableSet<OWLClass> entities,
                                                     @JsonProperty("parentEntity") @Nonnull OWLClass entity,
                                                     @JsonProperty("commitMessage") @Nonnull String commitMessage) {
         return new AutoValue_MoveEntitiesToParentAction(projectId, entities, entity, commitMessage);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

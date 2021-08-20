@@ -20,11 +20,18 @@ import javax.annotation.Nonnull;
 @JsonTypeName("UpdateDataPropertyFrame")
 public abstract class UpdateDataPropertyFrameAction extends UpdateFrameAction implements HasProjectId {
 
+    public static final String CHANNEL = "entities.UpdateDataPropertyFrame";
+
     @JsonCreator
     public static UpdateDataPropertyFrameAction create(@JsonProperty("projectId") ProjectId projectId,
                                                 @JsonProperty("from") PlainDataPropertyFrame from,
                                                 @JsonProperty("to") PlainDataPropertyFrame to) {
         return new AutoValue_UpdateDataPropertyFrameAction(projectId, from, to);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

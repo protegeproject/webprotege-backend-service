@@ -20,10 +20,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetEntityDeprecationForms")
 public abstract class GetEntityDeprecationFormsAction implements ProjectAction<GetEntityDeprecationFormsResult> {
 
+    public static final String CHANNEL = "forms.GetEntityDeprecationForms";
+
     @JsonCreator
     public static GetEntityDeprecationFormsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                          @JsonProperty("entity") @Nonnull OWLEntity entity) {
         return new AutoValue_GetEntityDeprecationFormsAction(projectId, entity);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

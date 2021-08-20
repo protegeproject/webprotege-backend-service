@@ -19,6 +19,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetHierarchyChildren")
 public abstract class GetHierarchyChildrenAction implements ProjectAction<GetHierarchyChildrenResult> {
 
+    public static final String CHANNEL = "hierarchies.GetHierarchyChildren";
+
     @JsonCreator
     public static GetHierarchyChildrenAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                     @JsonProperty("entity") @Nonnull OWLEntity entity,
@@ -31,6 +33,11 @@ public abstract class GetHierarchyChildrenAction implements ProjectAction<GetHie
                                                     @Nonnull OWLEntity entity,
                                                     @Nonnull HierarchyId hierarchyId) {
         return create(projectId, entity, hierarchyId, PageRequest.requestFirstPage());
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

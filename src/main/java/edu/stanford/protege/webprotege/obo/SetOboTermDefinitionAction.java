@@ -19,6 +19,8 @@ public class SetOboTermDefinitionAction implements ProjectAction<SetOboTermDefin
 
     public static final String TERM = "term";
 
+    public static final String CHANNEL = "obo.SetOboTermDefinition";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -33,8 +35,9 @@ public class SetOboTermDefinitionAction implements ProjectAction<SetOboTermDefin
         this.def = def;
     }
 
-
-    private SetOboTermDefinitionAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetOboTermDefinitionAction create(@Nonnull ProjectId projectId,

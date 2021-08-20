@@ -15,6 +15,8 @@ import javax.annotation.Nonnull;
  */
 public class AddWatchAction implements ProjectAction<AddWatchResult>, HasUserId {
 
+    public static final String CHANNEL = "watches.AddWatch";
+
     private Watch watch;
 
     private ProjectId projectId;
@@ -27,7 +29,9 @@ public class AddWatchAction implements ProjectAction<AddWatchResult>, HasUserId 
         this.userId = userId;
     }
 
-    private AddWatchAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

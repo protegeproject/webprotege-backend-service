@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboTermCrossProductAction implements ProjectAction<GetOboTermCrossProductResult> {
 
+    public static final String CHANNEL = "obo.GetOboTermCrossProduct";
+
     private ProjectId projectId;
 
     private OWLClass entity;
@@ -26,6 +28,10 @@ public class GetOboTermCrossProductAction implements ProjectAction<GetOboTermCro
         this.entity = checkNotNull(entity);
     }
 
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 
     private GetOboTermCrossProductAction() {
     }

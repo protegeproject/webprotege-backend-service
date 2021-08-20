@@ -21,14 +21,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("LoadProject")
 public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectId {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "project-management.LoadProject";
 
-    /**
-     * For serialization purposes onlu
-     */
-    private LoadProjectAction() {
-
-    }
+    private final ProjectId projectId;
 
     @JsonCreator
     public LoadProjectAction(@JsonProperty("projectId") ProjectId projectId) {
@@ -37,6 +32,11 @@ public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectI
 
     public static LoadProjectAction create(ProjectId projectId) {
         return new LoadProjectAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

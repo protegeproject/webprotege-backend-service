@@ -21,14 +21,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("RevertRevision")
 public class RevertRevisionAction implements ProjectAction<RevertRevisionResult> {
 
+    public static final String CHANNEL = "revisions.RevertRevision";
+
     private RevisionNumber revisionNumber;
 
     private ProjectId projectId;
 
-    /**
-     * For serialization
-     */
-    private RevertRevisionAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     private RevertRevisionAction(ProjectId projectId, RevisionNumber revisionNumber) {

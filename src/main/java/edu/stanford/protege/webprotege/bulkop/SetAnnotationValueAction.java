@@ -24,6 +24,8 @@ import javax.annotation.Nonnull;
 public abstract class SetAnnotationValueAction implements ProjectAction<SetAnnotationValueResult>, HasCommitMessage {
 
 
+    public static final String CHANNELS = "annotations.SetAnnotationValue";
+
     @JsonCreator
     public static SetAnnotationValueAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                   @JsonProperty("entities") @Nonnull ImmutableSet<OWLEntity> entities,
@@ -31,6 +33,11 @@ public abstract class SetAnnotationValueAction implements ProjectAction<SetAnnot
                                                   @JsonProperty("value") @Nonnull OWLAnnotationValue value,
                                                   @JsonProperty("commitMessage") @Nonnull String commitMessage) {
         return new AutoValue_SetAnnotationValueAction(projectId, entities, property, value, commitMessage);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNELS;
     }
 
     @Nonnull

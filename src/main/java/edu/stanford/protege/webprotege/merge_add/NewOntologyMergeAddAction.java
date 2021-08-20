@@ -17,12 +17,19 @@ import java.util.List;
 @JsonTypeName("NewOntologyMergeAdd")
 public abstract class NewOntologyMergeAddAction implements ProjectAction<NewOntologyMergeAddResult> {
 
+    public static final String CHANNEL = "ontologies.NewOntologyMergeAdd";
+
     @JsonCreator
     public static NewOntologyMergeAddAction create(@JsonProperty("projectId") ProjectId projectId,
                                                    @JsonProperty("documentId") DocumentId documentId,
                                                    @JsonProperty("iri") String iri,
                                                    @JsonProperty("ontologyList") List<OWLOntologyID> ontologyList) {
         return new AutoValue_NewOntologyMergeAddAction(projectId, documentId, iri, ontologyList);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

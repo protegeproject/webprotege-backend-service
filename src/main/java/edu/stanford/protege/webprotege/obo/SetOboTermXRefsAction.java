@@ -18,6 +18,8 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 public class SetOboTermXRefsAction implements ProjectAction<SetOboTermXRefsResult> {
 
 
+    public static final String CHANNEL = "obo.SetOboTermXRefs";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -30,8 +32,9 @@ public class SetOboTermXRefsAction implements ProjectAction<SetOboTermXRefsResul
         this.xrefs = xrefs;
     }
 
-
-    private SetOboTermXRefsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetOboTermXRefsAction create(@Nonnull ProjectId projectId,

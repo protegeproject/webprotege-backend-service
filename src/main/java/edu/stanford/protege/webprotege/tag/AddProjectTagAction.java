@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 
 public abstract class AddProjectTagAction implements ProjectAction<AddProjectTagResult> {
 
+    public static final String CHANNEL = "tags.AddProjectTag";
+
     /**
      * Creates an {@link AddProjectTagAction}.
      * @param projectId The project id which the tag should be added to.
@@ -39,6 +41,11 @@ public abstract class AddProjectTagAction implements ProjectAction<AddProjectTag
                                                  label,
                                                  description,
                                        color, backgroundColor);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

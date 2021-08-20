@@ -23,10 +23,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetClassFrame")
 public abstract class GetClassFrameAction implements ProjectAction<GetClassFrameResult>, HasProjectId, HasSubject<OWLClass> {
 
+    public static final String CHANNEL = "entities.GetClassFrame";
+
     @JsonCreator
     public static GetClassFrameAction create(@JsonProperty("subject") OWLClass subject,
                                              @JsonProperty("projectId") ProjectId projectId) {
         return new AutoValue_GetClassFrameAction(projectId, subject);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

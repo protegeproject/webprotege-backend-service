@@ -21,6 +21,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateEntityFromFormData")
 public abstract class CreateEntityFromFormDataAction implements ProjectAction<CreateEntityFromFormDataResult> {
 
+    public static final String CHANNEL = "forms.CreateEntityFromFormData";
+
     @JsonCreator
     public static CreateEntityFromFormDataAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                           @JsonProperty("entityType") @Nonnull EntityType<?> entityType,
@@ -38,4 +40,9 @@ public abstract class CreateEntityFromFormDataAction implements ProjectAction<Cr
     public abstract FreshEntityIri getFreshEntityIri();
 
     public abstract FormData getFormData();
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 }

@@ -13,14 +13,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetCSVGridAction implements Action<GetCSVGridResult> {
 
+    public static final String CHANNEL = "csv.GetCsvGrid";
+
     private DocumentId csvDocumentId;
 
     private int rowLimit;
 
-    /**
-     * For serialization purposes only
-     */
-    private GetCSVGridAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     /**

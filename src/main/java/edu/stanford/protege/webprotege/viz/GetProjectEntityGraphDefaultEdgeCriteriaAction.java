@@ -14,10 +14,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectEntityGraphDefaultEdgeCriteriaAction implements ProjectAction<GetProjectEntityGraphDefaultEdgeCriteriaResult> {
 
+    public static final String CHANNEL = "graph.GetProjectEntityGraphDefaultEdgeCriteria";
+
     private ProjectId projectId;
 
     public GetProjectEntityGraphDefaultEdgeCriteriaAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

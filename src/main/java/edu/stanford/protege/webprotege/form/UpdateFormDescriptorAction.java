@@ -19,10 +19,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("UpdateFormDescriptor")
 public abstract class UpdateFormDescriptorAction implements ProjectAction<UpdateFormDescriptorResult> {
 
+    public static final String CHANNEL = "forms.UpdateFormDescriptors";
+
     @JsonCreator
     public static UpdateFormDescriptorAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                     @JsonProperty("formDescriptor") @Nonnull FormDescriptor descriptor) {
         return new AutoValue_UpdateFormDescriptorAction(projectId, descriptor);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

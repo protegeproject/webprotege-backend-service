@@ -16,10 +16,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetHeadRevisionNumberAction implements ProjectAction<GetHeadRevisionNumberResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "revisions.GetHeadRevisionNumber";
 
-    private GetHeadRevisionNumberAction() {
-    }
+    private final ProjectId projectId;
 
     private GetHeadRevisionNumberAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
@@ -27,6 +26,11 @@ public class GetHeadRevisionNumberAction implements ProjectAction<GetHeadRevisio
 
     public static GetHeadRevisionNumberAction create(ProjectId projectId) {
         return new GetHeadRevisionNumberAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

@@ -19,6 +19,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DeprecateEntityByFormAction implements ProjectAction<DeprecateEntityByFormResult> {
 
+    public static final String CHANNEL = "forms.DeprecateEntitiesByForm";
+
     private OWLEntity entity;
 
     @Nullable
@@ -28,9 +30,6 @@ public class DeprecateEntityByFormAction implements ProjectAction<DeprecateEntit
 
     private ProjectId projectId;
 
-
-    private DeprecateEntityByFormAction() {
-    }
 
     public DeprecateEntityByFormAction(OWLEntity entity,
                                        Optional<FormData> deprecationFormData,
@@ -48,6 +47,11 @@ public class DeprecateEntityByFormAction implements ProjectAction<DeprecateEntit
                 throw new IllegalArgumentException("Entity types for the entity being deprecated and the replacement entity must be the same");
             }
         }
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

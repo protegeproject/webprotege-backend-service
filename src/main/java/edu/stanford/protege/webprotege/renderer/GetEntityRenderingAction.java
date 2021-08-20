@@ -18,10 +18,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetEntityRendering")
 public abstract class GetEntityRenderingAction implements ProjectAction<GetEntityRenderingResult> {
 
+    public static final String CHANNEL = "entities.GetRendering";
+
     @JsonCreator
     public static GetEntityRenderingAction create(@JsonProperty("projectId") ProjectId projectId,
                                                   @JsonProperty("entity") OWLEntity entity) {
         return new AutoValue_GetEntityRenderingAction(projectId, entity);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

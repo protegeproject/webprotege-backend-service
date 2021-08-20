@@ -16,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectTagsAction implements ProjectAction<GetProjectTagsResult> {
 
+    public static final String CHANNEL = "tags.GetProjectTags";
+
     private ProjectId projectId;
 
     private GetProjectTagsAction(@Nonnull ProjectId projectId) {
@@ -28,6 +30,11 @@ public class GetProjectTagsAction implements ProjectAction<GetProjectTagsResult>
 
     public static GetProjectTagsAction create(@Nonnull ProjectId projectId) {
         return new GetProjectTagsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

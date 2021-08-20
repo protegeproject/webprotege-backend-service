@@ -15,12 +15,19 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 public class GetPersonIdItemsAction extends GetItemsAction<PersonId, GetPersonIdItemsResult> {
 
 
+    public static final String CHANNEL = "users.GetPersonIdItems";
+
     public GetPersonIdItemsAction(List<String> itemNames) {
         super(itemNames);
     }
 
     public static GetPersonIdItemsAction create(List<String> itemNames) {
         return new GetPersonIdItemsAction(itemNames);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Override

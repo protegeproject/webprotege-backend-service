@@ -20,7 +20,9 @@ import javax.annotation.Nonnull;
 @JsonTypeName("ComputeProjectMerge")
 public abstract class ComputeProjectMergeAction implements ProjectAction<ComputeProjectMergeResult> {
 
-    
+
+    public static final String CHANNEL = "projects.ComputeProjectMerge";
+
     @Nonnull
     @Override
     public abstract ProjectId getProjectId();
@@ -32,6 +34,11 @@ public abstract class ComputeProjectMergeAction implements ProjectAction<Compute
     public static ComputeProjectMergeAction create(@JsonProperty("projectId") ProjectId projectId,
                                                    @JsonProperty("projectDocumentId") DocumentId projectDocumentId) {
         return new AutoValue_ComputeProjectMergeAction(projectId, projectDocumentId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 }
 

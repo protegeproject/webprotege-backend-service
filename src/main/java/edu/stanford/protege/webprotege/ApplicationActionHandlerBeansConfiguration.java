@@ -6,7 +6,6 @@ import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.auth.AuthenticationManager;
-import edu.stanford.protege.webprotege.auth.ChangePasswordActionHandler;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordActionHandler;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordMailer;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
@@ -92,11 +91,6 @@ public class ApplicationActionHandlerBeansConfiguration {
                                                           AuthenticationManager p2,
                                                           ResetPasswordMailer p3) {
         return new ResetPasswordActionHandler(p1, p2, p3);
-    }
-
-    @Bean
-    ChangePasswordActionHandler changePasswordActionHandler(AuthenticationManager p1) {
-        return new ChangePasswordActionHandler(p1);
     }
 
     @Bean

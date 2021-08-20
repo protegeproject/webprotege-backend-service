@@ -16,13 +16,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetIssuesAction implements ProjectAction<GetIssuesResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "issues.GetIssues";
 
-    private GetIssuesAction() {
-    }
+    private ProjectId projectId;
 
     public GetIssuesAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

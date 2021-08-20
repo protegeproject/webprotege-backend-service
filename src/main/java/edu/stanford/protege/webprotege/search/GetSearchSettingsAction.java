@@ -19,9 +19,16 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetSearchSettings")
 public abstract class GetSearchSettingsAction implements ProjectAction<GetSearchSettingsResult> {
 
+    public static final String CHANNEL = "search.GetSearchSettings";
+
     @JsonCreator
     public static GetSearchSettingsAction create(@JsonProperty("projectId") ProjectId projectId) {
         return new AutoValue_GetSearchSettingsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

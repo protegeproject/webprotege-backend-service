@@ -15,12 +15,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetEmailAddress")
 public class GetEmailAddressAction implements Action<GetEmailAddressResult> {
 
+    public static final String CHANNEL = "users.GetEmailAddress";
+
     private UserId userId;
 
-    /**
-     * For serialization purposes only
-     */
-    private GetEmailAddressAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     /**

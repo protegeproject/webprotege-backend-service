@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateNamedIndividuals")
 public abstract class CreateNamedIndividualsAction implements AbstractCreateEntitiesAction<CreateNamedIndividualsResult, OWLNamedIndividual> {
 
+    public static final String CHANNEL = "entities.CreateNamedIndividuals";
+
     /**
      * Constructs a CreateNamedIndividualsAction.
      * @param projectId The project identifier which identifies the project to create the individuals in.
@@ -43,4 +45,8 @@ public abstract class CreateNamedIndividualsAction implements AbstractCreateEnti
      */
     public abstract ImmutableSet<OWLClass> getTypes();
 
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 }

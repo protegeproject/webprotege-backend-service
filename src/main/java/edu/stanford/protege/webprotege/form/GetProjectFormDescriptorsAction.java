@@ -21,12 +21,13 @@ public class GetProjectFormDescriptorsAction implements ProjectAction<GetProject
         this.projectId = checkNotNull(projectId);
     }
 
-
-    private GetProjectFormDescriptorsAction() {
-    }
-
     public static GetProjectFormDescriptorsAction create(ProjectId projectId) {
         return new GetProjectFormDescriptorsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return "forms.GetProjectFormDescriptors";
     }
 
     @Nonnull

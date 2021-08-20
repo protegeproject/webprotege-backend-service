@@ -15,6 +15,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetPerspectiveDetailsAction implements ProjectAction<SetPerspectiveDetailsResult> {
 
+    public static final String CHANNEL = "perspectives.SetPerspectiveDetails";
+
     private ProjectId projectId;
 
     private ImmutableList<PerspectiveDetails> perspectiveDetails;
@@ -25,8 +27,9 @@ public class SetPerspectiveDetailsAction implements ProjectAction<SetPerspective
         this.perspectiveDetails = checkNotNull(perspectiveDetails);
     }
 
-
-    private SetPerspectiveDetailsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

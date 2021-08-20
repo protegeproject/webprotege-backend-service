@@ -22,16 +22,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetWatchedEntityChanges")
 public class GetWatchedEntityChangesAction implements ProjectAction<GetWatchedEntityChangesResult>, HasProjectId {
 
+    public static final String CHANNEL = "watches.GetWatchedEntityChanges";
+
     private ProjectId projectId;
 
     private UserId userId;
 
-    private GetWatchedEntityChangesAction() {
-    }
-
     private GetWatchedEntityChangesAction(ProjectId projectId, UserId userId) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @JsonCreator

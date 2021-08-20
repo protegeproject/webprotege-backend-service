@@ -22,6 +22,8 @@ import java.util.Set;
 @JsonTypeName("GetCommentedEntities")
 public abstract class GetCommentedEntitiesAction implements ProjectAction<GetCommentedEntitiesResult> {
 
+    public static final String CHANNEL = "issues.GetCommentedEntities";
+
     @JsonCreator
     public static GetCommentedEntitiesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                       @JsonProperty("userIdFilter") @Nonnull String userIdFilter,
@@ -29,6 +31,11 @@ public abstract class GetCommentedEntitiesAction implements ProjectAction<GetCom
                                       @JsonProperty("sortingKey") @Nonnull SortingKey sortingKey,
                                       @JsonProperty("pageRequest") @Nonnull PageRequest pageRequest) {
         return new AutoValue_GetCommentedEntitiesAction(projectId, sortingKey, pageRequest, userIdFilter, statusFilter);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

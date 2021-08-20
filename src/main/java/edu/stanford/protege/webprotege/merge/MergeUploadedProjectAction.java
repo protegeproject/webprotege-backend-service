@@ -20,6 +20,13 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MergeUploadedProject")
 public abstract class MergeUploadedProjectAction implements ProjectAction<MergeUploadedProjectResult> {
 
+    public static final String CHANNEL = "projects.MergeUploadedProject";
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
+
     @JsonCreator
     public static MergeUploadedProjectAction create(@JsonProperty("projectId") ProjectId projectId,
                                                     @JsonProperty("documentId") DocumentId uploadedDocumentId,

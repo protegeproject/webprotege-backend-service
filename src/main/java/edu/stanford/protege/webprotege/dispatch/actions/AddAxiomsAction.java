@@ -18,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class AddAxiomsAction implements ProjectAction<AddAxiomsResult> {
 
+    public static final String CHANNEL = "axioms.AddAxioms";
+
     @Nonnull
     private final ProjectId projectId;
 
@@ -35,6 +37,10 @@ public class AddAxiomsAction implements ProjectAction<AddAxiomsResult> {
         this.commitMessage = checkNotNull(commitMessage);
     }
 
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 
     @Nonnull
     @Override

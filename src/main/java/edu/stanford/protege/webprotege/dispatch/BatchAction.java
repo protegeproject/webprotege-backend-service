@@ -18,6 +18,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("Batch")
 public abstract class BatchAction implements Action<BatchResult> {
 
+    public static final String CHANNEL = "batch.Batch";
+
     /**
      * Create an action that batches together the specified actions.
      * @param actions The actions.
@@ -28,6 +30,10 @@ public abstract class BatchAction implements Action<BatchResult> {
         return new AutoValue_BatchAction(actions);
     }
 
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 
     @Nonnull
     public abstract ImmutableList<Action<?>> getActions();

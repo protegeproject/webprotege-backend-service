@@ -22,10 +22,17 @@ import java.util.Optional;
 @JsonTypeName("GetOntologyAnnotations")
 public abstract class GetOntologyAnnotationsAction implements ProjectAction<GetOntologyAnnotationsResult> {
 
+    public static final String CHANNEL = "ontologies.GetOntologyAnnotations";
+
     @JsonCreator
     public static GetOntologyAnnotationsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                       @JsonProperty("ontologyId") @Nonnull Optional<OWLOntologyID> ontologyId) {
         return new AutoValue_GetOntologyAnnotationsAction(projectId, ontologyId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

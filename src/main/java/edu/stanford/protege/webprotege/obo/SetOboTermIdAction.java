@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetOboTermIdAction implements ProjectAction<SetOboTermIdResult> {
 
+    public static final String CHANNEL = "obo.SetOboTermId";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -29,8 +31,9 @@ public class SetOboTermIdAction implements ProjectAction<SetOboTermIdResult> {
         this.oboTermId = checkNotNull(oboTermId);
     }
 
-
-    private SetOboTermIdAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetOboTermIdAction create(@Nonnull ProjectId projectId,

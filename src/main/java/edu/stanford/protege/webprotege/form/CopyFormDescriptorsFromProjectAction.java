@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CopyFormDescriptorsFromProject")
 public abstract class CopyFormDescriptorsFromProjectAction implements ProjectAction<CopyFormDescriptorsFromProjectResult> {
 
+    public static final String CHANNEL = "forms.CopyFormDescriptorsFromProject";
+
     @Nonnull
     @Override
     public abstract ProjectId getProjectId();
@@ -39,5 +41,8 @@ public abstract class CopyFormDescriptorsFromProjectAction implements ProjectAct
                                                                   newFormIdsToCopy);
     }
 
-
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 }

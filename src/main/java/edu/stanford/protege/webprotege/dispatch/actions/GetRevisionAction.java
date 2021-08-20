@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetRevisionAction implements ProjectAction<GetRevisionResult> {
 
+    public static final String CHANNEL = "revisions.GetRevision";
+
     private final ProjectId projectId;
 
     private final RevisionNumber revisionNumber;
@@ -25,6 +27,11 @@ public class GetRevisionAction implements ProjectAction<GetRevisionResult> {
                              @Nonnull RevisionNumber revisionNumber) {
         this.projectId = checkNotNull(projectId);
         this.revisionNumber = checkNotNull(revisionNumber);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

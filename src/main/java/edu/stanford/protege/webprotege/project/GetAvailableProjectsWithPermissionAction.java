@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetAvailableProjectsWithPermission")
 public abstract class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult>, Request<GetAvailableProjectsWithPermissionResult> {
 
+    public static final String CHANNEL = "project-management.GetAvailableProjectsWithPermission";
+
     @JsonCreator
     public static GetAvailableProjectsWithPermissionAction create(@JsonProperty("permission") @Nonnull ActionId permission) {
         return new AutoValue_GetAvailableProjectsWithPermissionAction(permission);
@@ -30,6 +32,6 @@ public abstract class GetAvailableProjectsWithPermissionAction implements Action
 
     @Override
     public String getChannel() {
-        return "projects.GetAvailableProjectsWithPermission";
+        return CHANNEL;
     }
 }

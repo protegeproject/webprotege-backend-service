@@ -22,6 +22,8 @@ import javax.annotation.Nonnull;
 public abstract class CheckManchesterSyntaxFrameAction implements ProjectAction<CheckManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
 
+    public static final String CHANNEL = "manchester-syntax.CheckManchesterSyntaxFrame";
+
     @JsonCreator
     public static CheckManchesterSyntaxFrameAction create(@JsonProperty("projectId") ProjectId projectId,
                                                    @JsonProperty("subject") OWLEntity subject,
@@ -29,6 +31,11 @@ public abstract class CheckManchesterSyntaxFrameAction implements ProjectAction<
                                                    @JsonProperty("to") String to,
                                                    @JsonProperty("freshEntities") ImmutableSet<OWLEntityData> freshEntities) {
         return new AutoValue_CheckManchesterSyntaxFrameAction(projectId, subject, from, to, freshEntities);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

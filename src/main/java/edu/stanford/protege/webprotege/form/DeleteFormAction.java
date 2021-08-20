@@ -19,10 +19,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("DeleteForm")
 public abstract class DeleteFormAction implements ProjectAction<DeleteFormResult> {
 
+    public static final String CHANNEL = "forms.DeleteForm";
+
     @JsonCreator
     public static DeleteFormAction get(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                             @JsonProperty("formId") @Nonnull FormId formId) {
         return new AutoValue_DeleteFormAction(projectId, formId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

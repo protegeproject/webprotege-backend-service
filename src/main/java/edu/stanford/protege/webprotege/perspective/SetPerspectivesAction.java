@@ -27,6 +27,8 @@ import java.util.Optional;
 public abstract class SetPerspectivesAction implements ProjectAction<SetPerspectivesResult>, HasProjectId {
 
 
+    public static final String CHANNEL = "perspectives.SetPerspectives";
+
     public static SetPerspectivesAction create(@Nonnull ProjectId projectId,
                                                @Nonnull ImmutableList<PerspectiveDescriptor> perspectiveIds) {
         return new AutoValue_SetPerspectivesAction(projectId, null, perspectiveIds);
@@ -45,6 +47,11 @@ public abstract class SetPerspectivesAction implements ProjectAction<SetPerspect
                                                @JsonProperty("userId") @Nullable UserId userId,
                                                @JsonProperty("perspectiveDescriptors") @Nonnull ImmutableList<PerspectiveDescriptor> perspectiveIds) {
         return new AutoValue_SetPerspectivesAction(projectId, userId, perspectiveIds);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

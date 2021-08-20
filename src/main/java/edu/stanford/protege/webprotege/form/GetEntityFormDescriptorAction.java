@@ -19,10 +19,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetEntityFormDescriptor")
 public abstract class GetEntityFormDescriptorAction implements ProjectAction<GetEntityFormDescriptorResult> {
 
+    public static final String CHANNEL = "forms.GetEntityFormDescriptor";
+
     @JsonCreator
     public static GetEntityFormDescriptorAction create(@JsonProperty("projectId") ProjectId projectId,
                                                        @JsonProperty("formId") FormId formId) {
         return new AutoValue_GetEntityFormDescriptorAction(projectId, formId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

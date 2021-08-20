@@ -20,10 +20,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetEntityGraph")
 public abstract class GetEntityGraphAction implements ProjectAction<GetEntityGraphResult> {
 
+    public static final String CHANNEL = "entities.GetEntityGraph";
+
     @JsonCreator
     public static GetEntityGraphAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                               @JsonProperty("entity") @Nonnull OWLEntity entity) {
         return new AutoValue_GetEntityGraphAction(projectId, entity);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

@@ -21,12 +21,19 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetHierarchySiblings")
 public abstract class GetHierarchySiblingsAction implements ProjectAction<GetHierarchySiblingsResult> {
 
+    public static final String CHANNEL = "hierarchies.GetHierarchySiblings";
+
     @JsonCreator
     public static GetHierarchySiblingsAction create(@JsonProperty("projectId") ProjectId projectId,
                                                     @JsonProperty("entity") OWLEntity entity,
                                                     @JsonProperty("hierarchyId") HierarchyId hierarchyId,
                                                     @JsonProperty("pageRequest") PageRequest pageRequest) {
         return new AutoValue_GetHierarchySiblingsAction(projectId, entity, hierarchyId, pageRequest);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

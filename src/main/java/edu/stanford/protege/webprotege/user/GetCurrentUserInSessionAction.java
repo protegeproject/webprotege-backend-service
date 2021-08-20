@@ -16,8 +16,15 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @JsonTypeName("GetCurrentUserInSession")
 public abstract class GetCurrentUserInSessionAction implements Action<GetCurrentUserInSessionResult> {
 
+    public static final String CHANNEL = "users.GetCurrentUserInSession";
+
     @JsonCreator
     public static GetCurrentUserInSessionAction create() {
         return new AutoValue_GetCurrentUserInSessionAction();
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 }

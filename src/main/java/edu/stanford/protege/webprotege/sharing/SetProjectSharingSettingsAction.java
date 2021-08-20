@@ -16,13 +16,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetProjectSharingSettingsAction implements ProjectAction<SetProjectSharingSettingsResult> {
 
-    private ProjectSharingSettings projectSharingSettings;
+    public static final String CHANNEL = "project.SetProjectSharingSettings";
 
-    private SetProjectSharingSettingsAction() {
-    }
+    private ProjectSharingSettings projectSharingSettings;
 
     private SetProjectSharingSettingsAction(ProjectSharingSettings projectSharingSettings) {
         this.projectSharingSettings = checkNotNull(projectSharingSettings);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetProjectSharingSettingsAction create(ProjectSharingSettings projectSharingSettings) {

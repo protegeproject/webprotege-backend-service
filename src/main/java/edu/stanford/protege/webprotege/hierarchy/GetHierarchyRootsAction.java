@@ -16,17 +16,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetHierarchyRoots")
 public class GetHierarchyRootsAction implements ProjectAction<GetHierarchyRootsResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "hierarchies.GetHierarchyRoots";
 
-    private HierarchyId hierarchyId;
+    private final ProjectId projectId;
+
+    private final HierarchyId hierarchyId;
 
     private GetHierarchyRootsAction(@Nonnull ProjectId projectId, @Nonnull HierarchyId hierarchyId) {
         this.projectId = checkNotNull(projectId);
         this.hierarchyId = checkNotNull(hierarchyId);
     }
 
-
-    private GetHierarchyRootsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetHierarchyRootsAction create(@Nonnull ProjectId projectId, @Nonnull HierarchyId hierarchyId) {

@@ -16,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DeleteAxiomsAction implements ProjectAction<DeleteAxiomsResult> {
 
+    public static final String CHANNEL = "axioms.DeleteAxioms";
+
     @Nonnull
     private final ProjectId projectId;
 
@@ -32,6 +34,11 @@ public class DeleteAxiomsAction implements ProjectAction<DeleteAxiomsResult> {
         this.projectId = checkNotNull(projectId);
         this.axioms = checkNotNull(axioms);
         this.commitMessage = checkNotNull(commitMessage);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

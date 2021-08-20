@@ -20,6 +20,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectChangesAction implements ProjectAction<GetProjectChangesResult> {
 
+    public static final String CHANNEL = "projects.GetProjectChanges";
+
     private ProjectId projectId;
 
     @Nullable
@@ -27,16 +29,17 @@ public class GetProjectChangesAction implements ProjectAction<GetProjectChangesR
 
     private PageRequest pageRequest;
 
-
-    private GetProjectChangesAction() {
-    }
-
     private GetProjectChangesAction(@Nonnull ProjectId projectId,
                                     @Nonnull Optional<OWLEntity> subject,
                                     @Nonnull PageRequest pageRequest) {
         this.projectId = checkNotNull(projectId);
         this.subject = checkNotNull(subject).orElse(null);
         this.pageRequest = checkNotNull(pageRequest);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetProjectChangesAction create(@Nonnull ProjectId projectId,

@@ -13,13 +13,17 @@ import javax.annotation.Nonnull;
  */
 public class GetEntityCrudKitSettingsAction implements ProjectAction<GetEntityCrudKitSettingsResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "entities.GetEntityCrudKitSetings";
 
-    private GetEntityCrudKitSettingsAction() {
-    }
+    private ProjectId projectId;
 
     public GetEntityCrudKitSettingsAction(ProjectId projectId) {
         this.projectId = projectId;
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

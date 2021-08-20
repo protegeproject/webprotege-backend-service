@@ -24,12 +24,19 @@ import java.util.Optional;
 public abstract class GetIndividualsPageContainingIndividualAction implements ProjectAction<GetIndividualsPageContainingIndividualResult> {
 
 
+    public static final String CHANNEL = "entities.GetIndividualsPageContainingIndividual";
+
     @JsonCreator
     public static GetIndividualsPageContainingIndividualAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                                       @JsonProperty("individual") @Nonnull OWLNamedIndividual individual,
                                                                       @JsonProperty("preferredType") @Nonnull Optional<OWLClass> preferredType,
                                                                       @JsonProperty("preferredMode") @Nullable InstanceRetrievalMode preferredMode) {
         return new AutoValue_GetIndividualsPageContainingIndividualAction(projectId, individual, preferredType, preferredMode);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

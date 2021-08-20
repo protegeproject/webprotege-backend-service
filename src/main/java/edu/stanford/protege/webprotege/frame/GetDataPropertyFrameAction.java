@@ -22,10 +22,17 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetDataPropertyFrame")
 public abstract class GetDataPropertyFrameAction implements ProjectAction<GetDataPropertyFrameResult>, HasSubject<OWLDataProperty> {
 
+    public static final String CHANNEL = "frames.GetDataPropertyFrame";
+
     @JsonCreator
     public static GetDataPropertyFrameAction create(@JsonProperty("projectId") ProjectId projectId,
                                                     @JsonProperty("subject") OWLDataProperty subject) {
         return new AutoValue_GetDataPropertyFrameAction(subject, projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public abstract OWLDataProperty getSubject();

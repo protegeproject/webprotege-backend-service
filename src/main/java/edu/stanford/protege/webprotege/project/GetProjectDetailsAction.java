@@ -18,10 +18,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetProjectDetails")
 public class GetProjectDetailsAction implements Action<GetProjectDetailsResult>, HasProjectId {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "projects.GetProjectDetails";
 
-    private GetProjectDetailsAction() {
-    }
+    private ProjectId projectId;
 
     public GetProjectDetailsAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
@@ -29,6 +28,11 @@ public class GetProjectDetailsAction implements Action<GetProjectDetailsResult>,
 
     public static GetProjectDetailsAction create(ProjectId projectId) {
         return new GetProjectDetailsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

@@ -5,7 +5,6 @@ import edu.stanford.protege.webprotege.authorization.api.ActionId;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
-import edu.stanford.protege.webprotege.auth.ChangePasswordAction;
 import edu.stanford.protege.webprotege.auth.Password;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordAction;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordData;
@@ -49,14 +48,6 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetAvailableProjectsActions() {
         var handler = registry.getActionHandler(GetAvailableProjectsAction.create());
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainChangePasswordActionHandler() {
-        var handler = registry.getActionHandler(ChangePasswordAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
-                                                                            mock(Password.class),
-                                                                            mock(Password.class)));
         assertThat(handler, is(notNullValue()));
     }
 

@@ -17,13 +17,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboTermDefinitionAction implements ProjectAction<GetOboTermDefinitionResult> {
 
+    public static final String CHANNEL = "obo.GetOboTermDefinition";
+
     private ProjectId projectId;
 
     private OWLEntity term;
-
-
-    private GetOboTermDefinitionAction() {
-    }
 
     private GetOboTermDefinitionAction(ProjectId projectId, OWLEntity term) {
         this.projectId = checkNotNull(projectId);
@@ -32,6 +30,11 @@ public class GetOboTermDefinitionAction implements ProjectAction<GetOboTermDefin
 
     public static GetOboTermDefinitionAction create(ProjectId projectId, OWLEntity term) {
         return new GetOboTermDefinitionAction(projectId, term);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

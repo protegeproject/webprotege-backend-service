@@ -20,6 +20,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
+    public static final String CHANNEL = "manchester-syntax.SetManchesterSyntaxFrame";
+
     private ProjectId projectId;
 
     private OWLEntity subject;
@@ -31,9 +33,6 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
     private Set<OWLEntityData> freshEntities;
 
     private String commitMessage;
-
-    private SetManchesterSyntaxFrameAction() {
-    }
 
     private SetManchesterSyntaxFrameAction(ProjectId projectId,
                                            OWLEntity subject,
@@ -47,6 +46,11 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
         this.toRendering = checkNotNull(toRendering);
         this.freshEntities = new HashSet<>(freshEntities);
         this.commitMessage = checkNotNull(commitMessage).orElse(null);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetManchesterSyntaxFrameAction create(ProjectId projectId,

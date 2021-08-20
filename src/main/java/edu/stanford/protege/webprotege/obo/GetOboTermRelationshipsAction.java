@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboTermRelationshipsAction implements ProjectAction<GetOboTermRelationshipsResult> {
 
+    public static final String CHANNEL = "obo.GetOboTermRelationships";
+
     private ProjectId projectId;
 
     private OWLClass entity;
@@ -26,8 +28,9 @@ public class GetOboTermRelationshipsAction implements ProjectAction<GetOboTermRe
         this.entity = checkNotNull(entity);
     }
 
-
-    private GetOboTermRelationshipsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetOboTermRelationshipsAction create(@Nonnull ProjectId projectId, @Nonnull OWLClass entity) {

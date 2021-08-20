@@ -14,6 +14,8 @@ import javax.annotation.Nonnull;
 public class AddIssueCommentAction implements Action<AddIssueCommentResult>, HasProjectId {
 
 
+    public static final String CHANNEL = "issues.AddIssueComment";
+
     private ProjectId projectId;
 
     private int issueNumber;
@@ -26,8 +28,9 @@ public class AddIssueCommentAction implements Action<AddIssueCommentResult>, Has
         this.comment = comment;
     }
 
-
-    private AddIssueCommentAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public Comment getComment() {

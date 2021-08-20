@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Deprecated
 public class DeleteAnnotationsAction implements ProjectAction<DeleteAnnotationsResult> {
 
+    public static final String CHANNEL = "annotations.DeleteAnnotations";
+
     private ProjectId projectId;
 
     private ImmutableSet<OWLEntity> entities;
@@ -31,8 +33,9 @@ public class DeleteAnnotationsAction implements ProjectAction<DeleteAnnotationsR
         this.criteria = checkNotNull(criteria);
     }
 
-
-    private DeleteAnnotationsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

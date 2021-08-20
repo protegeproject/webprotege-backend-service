@@ -19,6 +19,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class UpdateEntityTagsAction implements ProjectAction<UpdateEntityTagsResult> {
 
+    public static final String CHANNEL = "tags.UpdateEntityTags";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -37,8 +39,9 @@ public class UpdateEntityTagsAction implements ProjectAction<UpdateEntityTagsRes
         this.toTagIds = ImmutableSet.copyOf(toTagIds);
     }
 
-
-    private UpdateEntityTagsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static UpdateEntityTagsAction create(@Nonnull ProjectId projectId,

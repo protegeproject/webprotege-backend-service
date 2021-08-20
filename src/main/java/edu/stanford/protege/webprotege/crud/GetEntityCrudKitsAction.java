@@ -16,14 +16,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetEntityCrudKitsAction implements ProjectAction<GetEntityCrudKitsResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "entities.GetEntityCrudKits";
 
-
-    private GetEntityCrudKitsAction() {
-    }
+    private final ProjectId projectId;
 
     private GetEntityCrudKitsAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetEntityCrudKitsAction create(@Nonnull ProjectId projectId) {

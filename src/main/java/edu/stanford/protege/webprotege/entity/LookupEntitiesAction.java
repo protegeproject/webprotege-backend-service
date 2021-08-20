@@ -16,12 +16,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class LookupEntitiesAction implements ProjectAction<LookupEntitiesResult> {
 
+    public static final String CHANNEL = "entities.LookupEntities";
+
     private ProjectId projectId;
 
     private EntityLookupRequest entityLookupRequest;
 
-    @SuppressWarnings("unused")
-    private LookupEntitiesAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     /**

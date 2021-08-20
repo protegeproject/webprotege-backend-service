@@ -19,6 +19,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetEntityWatchesAction implements ProjectAction<SetEntityWatchesResult> {
 
+    public static final String CHANNEL = "watches.SetEntityWatches";
+
     private ProjectId projectId;
 
     private UserId userId;
@@ -27,17 +29,16 @@ public class SetEntityWatchesAction implements ProjectAction<SetEntityWatchesRes
 
     private ImmutableSet<Watch> watches;
 
-    /**
-     * For serialization only
-     */
-    private SetEntityWatchesAction() {
-    }
-
     private SetEntityWatchesAction(ProjectId projectId, UserId userId, OWLEntity entity, ImmutableSet<Watch> watches) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.entity = checkNotNull(entity);
         this.watches = checkNotNull(watches);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetEntityWatchesAction create(ProjectId projectId,

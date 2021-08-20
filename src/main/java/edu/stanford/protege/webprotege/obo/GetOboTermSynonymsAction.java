@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboTermSynonymsAction implements ProjectAction<GetOboTermSynonymsResult> {
 
+    public static final String CHANNEL = "obo.GetOboTermSynonyms";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -27,8 +29,9 @@ public class GetOboTermSynonymsAction implements ProjectAction<GetOboTermSynonym
         this.entity = checkNotNull(entity);
     }
 
-
-    private GetOboTermSynonymsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetOboTermSynonymsAction create(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {

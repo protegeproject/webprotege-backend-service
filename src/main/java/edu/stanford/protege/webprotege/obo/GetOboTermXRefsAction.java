@@ -16,6 +16,8 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class GetOboTermXRefsAction implements ProjectAction<GetOboTermXRefsResult> {
 
+    public static final String CHANNEL = "obo.GetOboTermXRefs";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -25,8 +27,9 @@ public class GetOboTermXRefsAction implements ProjectAction<GetOboTermXRefsResul
         this.entity = entity;
     }
 
-
-    private GetOboTermXRefsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetOboTermXRefsAction create(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {

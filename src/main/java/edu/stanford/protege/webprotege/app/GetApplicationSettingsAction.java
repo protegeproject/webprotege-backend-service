@@ -15,8 +15,15 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @JsonTypeName("GetApplicationSettings")
 public abstract class GetApplicationSettingsAction implements Action<GetApplicationSettingsResult> {
 
+    public static final String CHANNEL = "application.GetApplicationSettings";
+
     @JsonCreator
     public static GetApplicationSettingsAction create() {
         return new AutoValue_GetApplicationSettingsAction();
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 }

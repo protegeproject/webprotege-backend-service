@@ -14,13 +14,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("ResetPassword")
 public class ResetPasswordAction implements Action<ResetPasswordResult> {
 
-    private ResetPasswordData resetPasswordData;
+    public static final String CHANNEL = "users.ResetPassword";
 
-    /**
-     * For serialization purposes only
-     */
-    private ResetPasswordAction() {
-    }
+    private ResetPasswordData resetPasswordData;
 
     private ResetPasswordAction(ResetPasswordData resetPasswordData) {
         this.resetPasswordData = checkNotNull(resetPasswordData);
@@ -29,6 +25,11 @@ public class ResetPasswordAction implements Action<ResetPasswordResult> {
     @JsonCreator
     public static ResetPasswordAction create(@JsonProperty("resetPasswordData") ResetPasswordData resetPasswordData) {
         return new ResetPasswordAction(resetPasswordData);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public ResetPasswordData getResetPasswordData() {

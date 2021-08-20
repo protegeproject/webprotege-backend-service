@@ -18,6 +18,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MoveHierarchyNode")
 public abstract class MoveHierarchyNodeAction implements ProjectAction<MoveHierarchyNodeResult> {
 
+    public static final String CHANNEL = "hierarchies.MoveHierarchyNode";
+
     @JsonCreator
     public static MoveHierarchyNodeAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                  @JsonProperty("hierarchyId") @Nonnull HierarchyId hierarchyId,
@@ -25,6 +27,11 @@ public abstract class MoveHierarchyNodeAction implements ProjectAction<MoveHiera
                                                  @JsonProperty("toNodeParentPath") @Nonnull Path<EntityNode> toNodeParentPath,
                                                  @JsonProperty("dropType") @Nonnull DropType dropType) {
         return new AutoValue_MoveHierarchyNodeAction(projectId, hierarchyId, fromNodePath, toNodeParentPath, dropType);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

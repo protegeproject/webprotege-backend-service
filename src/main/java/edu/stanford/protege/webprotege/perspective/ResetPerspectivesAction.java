@@ -20,9 +20,16 @@ import javax.annotation.Nonnull;
 public abstract class ResetPerspectivesAction implements ProjectAction<ResetPerspectivesResult> {
 
 
+    public static final String CHANNEL = "perspectives.ResetPerspectives";
+
     @JsonCreator
     public static ResetPerspectivesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId) {
         return new AutoValue_ResetPerspectivesAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

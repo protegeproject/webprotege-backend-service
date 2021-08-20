@@ -15,6 +15,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetFreshFormIdAction implements ProjectAction<GetFreshFormIdResult> {
 
+    public static final String CHANNEL = "forms.GetFreshFormId";
+
     private ProjectId projectId;
 
     public GetFreshFormIdAction(@Nonnull ProjectId projectId) {
@@ -23,6 +25,11 @@ public class GetFreshFormIdAction implements ProjectAction<GetFreshFormIdResult>
 
 
     private GetFreshFormIdAction() {
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

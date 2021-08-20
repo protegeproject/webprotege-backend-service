@@ -24,6 +24,8 @@ import static edu.stanford.protege.webprotege.pagination.PageRequest.DEFAULT_PAG
 @JsonTypeName("GetUsage")
 public abstract class GetUsageAction implements ProjectAction<GetUsageResult> {
 
+    public static final String CHANNEL = "entities.GetUsage";
+
     public static GetUsageAction create(OWLEntity subject,
                                         ProjectId projectId) {
         return new AutoValue_GetUsageAction(projectId, subject, null);
@@ -40,6 +42,11 @@ public abstract class GetUsageAction implements ProjectAction<GetUsageResult> {
                                         @JsonProperty("projectId") ProjectId projectId,
                                         @JsonProperty("usageFilter") @Nullable UsageFilter usageFilter) {
         return new AutoValue_GetUsageAction(projectId, subject, usageFilter);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Override

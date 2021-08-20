@@ -16,18 +16,21 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectPrefixDeclarationsAction implements ProjectAction<GetProjectPrefixDeclarationsResult> {
 
+    public static final String CHANNEL = "projects.GetProjectPrefixDeclarations";
+
     private String projectId;
 
     private GetProjectPrefixDeclarationsAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId.id());
     }
 
-
-    private GetProjectPrefixDeclarationsAction() {
-    }
-
     public static GetProjectPrefixDeclarationsAction create(@Nonnull ProjectId projectId) {
         return new GetProjectPrefixDeclarationsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

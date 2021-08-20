@@ -17,9 +17,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetEntityDiscussionThreadsAction implements ProjectAction<GetEntityDiscussionThreadsResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "issues.GetEntityDiscussionThreads";
 
-    private OWLEntity entity;
+    private final ProjectId projectId;
+
+    private final OWLEntity entity;
 
     public GetEntityDiscussionThreadsAction(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity) {
         this.projectId = checkNotNull(projectId);
@@ -31,8 +33,9 @@ public class GetEntityDiscussionThreadsAction implements ProjectAction<GetEntity
         return new GetEntityDiscussionThreadsAction(projectId, entity);
     }
 
-
-    private GetEntityDiscussionThreadsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

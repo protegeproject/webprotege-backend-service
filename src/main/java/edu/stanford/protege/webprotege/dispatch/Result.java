@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsResult;
-import edu.stanford.protege.webprotege.auth.ChangePasswordResult;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsResult;
 import edu.stanford.protege.webprotege.bulkop.MoveEntitiesToParentResult;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueResult;
@@ -13,6 +12,7 @@ import edu.stanford.protege.webprotege.change.GetProjectChangesResult;
 import edu.stanford.protege.webprotege.change.GetWatchedEntityChangesResult;
 import edu.stanford.protege.webprotege.change.RevertRevisionResult;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordResult;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.crud.GetEntityCrudKitsResult;
 import edu.stanford.protege.webprotege.crud.SetEntityCrudKitSettingsResult;
 import edu.stanford.protege.webprotege.entity.*;
@@ -80,7 +80,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(AddEntityCommentResult.class),
         @Type(AddProjectTagResult.class),
         @Type(BatchResult.class),
-        @Type(ChangePasswordResult.class),
         @Type(CheckManchesterSyntaxFrameResult.class),
         @Type(ComputeProjectMergeResult.class),
         @Type(CopyFormDescriptorsFromProjectResult.class),
@@ -214,6 +213,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(UpdateEntityTagsResult.class),
         @Type(UpdateFormDescriptorResult.class),
 })
-public interface Result {
+public interface Result extends Response {
 
 }

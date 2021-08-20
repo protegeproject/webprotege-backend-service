@@ -18,6 +18,8 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class SetOboTermSynonymsAction implements ProjectAction<SetOboTermSynonymsResult> {
 
+    public static final String CHANNEL = "obo.SetOboTermSynonyms";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -32,8 +34,9 @@ public class SetOboTermSynonymsAction implements ProjectAction<SetOboTermSynonym
         this.synonyms = ImmutableList.copyOf(synonyms);
     }
 
-
-    private SetOboTermSynonymsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetOboTermSynonymsAction create(@Nonnull ProjectId projectId,

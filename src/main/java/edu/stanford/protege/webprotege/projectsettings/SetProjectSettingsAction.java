@@ -16,12 +16,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetProjectSettingsAction implements ProjectAction<SetProjectSettingsResult> {
 
+    public static final String CHANNEL = "project.SetProjectSettings";
+
     private ProjectSettings projectSettings;
 
-    /**
-     * For serialization purposes only
-     */
-    private SetProjectSettingsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     private SetProjectSettingsAction(ProjectSettings projectSettings) {

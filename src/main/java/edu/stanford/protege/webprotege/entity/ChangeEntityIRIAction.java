@@ -18,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ChangeEntityIRIAction implements ProjectAction<ChangeEntityIRIResult> {
 
+    public static final String CHANNEL = "entities.ChangeEntityIri";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -34,6 +36,11 @@ public class ChangeEntityIRIAction implements ProjectAction<ChangeEntityIRIResul
         this.projectId = checkNotNull(projectId);
         this.entity = checkNotNull(entity);
         this.theNewIri = checkNotNull(theNewIri);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public OWLEntity getEntity() {

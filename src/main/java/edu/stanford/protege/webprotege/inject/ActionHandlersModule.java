@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.inject;
 
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
-import edu.stanford.protege.webprotege.auth.ChangePasswordActionHandler;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordActionHandler;
 import edu.stanford.protege.webprotege.csv.GetCSVGridActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
@@ -85,11 +84,6 @@ public class ActionHandlersModule {
 
     
     public ApplicationActionHandler provideResetPasswordActionHandler(ResetPasswordActionHandler handler) {
-        return handler;
-    }
-
-    
-    public ApplicationActionHandler provideChangePasswordActionHandler(ChangePasswordActionHandler handler) {
         return handler;
     }
 

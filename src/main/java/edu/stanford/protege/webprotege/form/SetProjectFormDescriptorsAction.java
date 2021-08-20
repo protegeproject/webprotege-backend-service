@@ -15,6 +15,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetProjectFormDescriptorsAction implements ProjectAction<SetProjectFormDescriptorsResult> {
 
+    public static final String CHANNEL = "forms.SetProjectFormDescriptors";
+
     private ProjectId projectId;
 
     private ImmutableList<FormDescriptor> formDescriptors;
@@ -25,7 +27,9 @@ public class SetProjectFormDescriptorsAction implements ProjectAction<SetProject
         this.formDescriptors = checkNotNull(formDescriptors);
     }
 
-    private SetProjectFormDescriptorsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

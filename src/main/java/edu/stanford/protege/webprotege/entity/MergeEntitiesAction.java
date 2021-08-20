@@ -21,6 +21,12 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MergeEntities")
 public abstract class MergeEntitiesAction implements ProjectAction<MergeEntitiesResult>, HasCommitMessage {
 
+    public static final String CHANNEL = "entities.MergeEntities";
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 
     /**
      * Creates a {@link MergeEntitiesAction}.  An entity merge is directional – one entity is merged into

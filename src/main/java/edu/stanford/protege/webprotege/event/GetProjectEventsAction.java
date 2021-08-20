@@ -18,19 +18,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectEventsAction implements Action<GetProjectEventsResult>, HasProjectId {
 
+    public static final String CHANNEL = "projects.GetProjectEvents";
+
     private ProjectId projectId;
 
     private EventTag sinceTag;
 
-    /**
-     * For serialization purposes only.
-     */
-    private GetProjectEventsAction() {
-    }
-
     private GetProjectEventsAction(@Nonnull EventTag sinceTag, @Nonnull ProjectId projectId) {
         this.sinceTag = checkNotNull(sinceTag);
         this.projectId = checkNotNull(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetProjectEventsAction create(@Nonnull EventTag sinceTag, @Nonnull ProjectId projectId) {

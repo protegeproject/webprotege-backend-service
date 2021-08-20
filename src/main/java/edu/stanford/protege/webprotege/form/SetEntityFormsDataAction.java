@@ -18,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetEntityFormsDataAction implements ProjectAction<SetEntityFormDataResult> {
 
+    public static final String CHANNEL = "forms.SetEntityFormsData";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -38,7 +40,9 @@ public class SetEntityFormsDataAction implements ProjectAction<SetEntityFormData
                       "Missing pristine forms data");
     }
 
-    private SetEntityFormsDataAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

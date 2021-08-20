@@ -21,11 +21,18 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateDataProperties")
 public abstract class CreateDataPropertiesAction implements CreateEntitiesInHierarchyAction<CreateDataPropertiesResult, OWLDataProperty> {
 
+    public static final String CHANNEL = "entities.CreateDataProperties";
+
     @JsonCreator
     public static CreateDataPropertiesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                       @JsonProperty("sourceText") @Nonnull String sourceText,
                                       @JsonProperty("langTag") @Nonnull String langTag,
                                       @JsonProperty("parents") @Nonnull ImmutableSet<OWLDataProperty> parents) {
         return new AutoValue_CreateDataPropertiesAction(projectId, sourceText, langTag, parents);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 }

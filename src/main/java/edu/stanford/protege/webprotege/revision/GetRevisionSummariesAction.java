@@ -16,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetRevisionSummariesAction implements ProjectAction<GetRevisionSummariesResult> {
 
+    public static final String CHANNEL = "revisions.GetRevisionSummaries";
+
     private ProjectId projectId;
 
     /**
@@ -30,6 +32,11 @@ public class GetRevisionSummariesAction implements ProjectAction<GetRevisionSumm
 
     public static GetRevisionSummariesAction create(ProjectId projectId) {
         return new GetRevisionSummariesAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

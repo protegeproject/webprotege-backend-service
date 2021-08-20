@@ -15,6 +15,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetDiscussionThreadStatusAction implements ProjectAction<SetDiscussionThreadStatusResult> {
 
+    public static final String CHANNEL = "issues.SetDiscussionThreadStatus";
+
     private ProjectId projectId;
 
     private ThreadId threadId;
@@ -29,8 +31,9 @@ public class SetDiscussionThreadStatusAction implements ProjectAction<SetDiscuss
         this.status = checkNotNull(status);
     }
 
-
-    private SetDiscussionThreadStatusAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetDiscussionThreadStatusAction setDiscussionThreadStatus(@Nonnull ProjectId projectId,

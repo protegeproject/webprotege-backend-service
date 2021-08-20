@@ -22,11 +22,18 @@ import javax.annotation.Nonnull;
 public abstract class CreateClassesAction implements CreateEntitiesInHierarchyAction<CreateClassesResult, OWLClass> {
 
 
+    public static final String CHANNEL = "entities.CreateClasses";
+
     @JsonCreator
     public static CreateClassesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                @JsonProperty("sourceText") @Nonnull String sourceText,
                                @JsonProperty("langTag") @Nonnull String langTag,
                                @JsonProperty("parents") @Nonnull ImmutableSet<OWLClass> parents) {
         return new AutoValue_CreateClassesAction(projectId, sourceText, langTag, parents);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 }

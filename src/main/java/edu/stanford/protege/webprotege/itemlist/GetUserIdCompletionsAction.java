@@ -12,11 +12,8 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class GetUserIdCompletionsAction extends GetPossibleItemCompletionsAction<UserId> {
 
-    /**
-     * For serialization only
-     */
-    private GetUserIdCompletionsAction() {
-    }
+
+    public static final String CHANNEL = "users.GetUserIdCompletions";
 
     private GetUserIdCompletionsAction(String completionText) {
         super(completionText);
@@ -24,6 +21,11 @@ public class GetUserIdCompletionsAction extends GetPossibleItemCompletionsAction
 
     public static GetUserIdCompletionsAction create(String completionText) {
         return new GetUserIdCompletionsAction(completionText);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Override

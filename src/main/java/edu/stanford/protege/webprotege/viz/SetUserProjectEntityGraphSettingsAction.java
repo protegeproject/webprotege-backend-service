@@ -22,11 +22,18 @@ import java.util.Optional;
 @JsonTypeName("SetUserProjectEntityGraphSettings")
 public abstract class SetUserProjectEntityGraphSettingsAction implements ProjectAction<SetUserProjectEntityGraphSettingsResult> {
 
+    public static final String CHANNEL = "graph.SetUserProjectEntityGraphSettings";
+
     @JsonCreator
     public static SetUserProjectEntityGraphSettingsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                                  @JsonProperty("userId") @Nullable UserId userId,
                                                                  @JsonProperty("settings") @Nonnull EntityGraphSettings settings) {
         return new AutoValue_SetUserProjectEntityGraphSettingsAction(projectId, settings, userId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

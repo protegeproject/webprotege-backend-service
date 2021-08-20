@@ -19,10 +19,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "tags.GetEntityTags";
 
-    private OWLEntity entity;
+    private final ProjectId projectId;
 
+    private final OWLEntity entity;
 
     private GetEntityTagsAction(@Nonnull ProjectId projectId,
                                 @Nonnull OWLEntity entity) {
@@ -30,8 +31,9 @@ public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
         this.entity = checkNotNull(entity);
     }
 
-
-    private GetEntityTagsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     /**

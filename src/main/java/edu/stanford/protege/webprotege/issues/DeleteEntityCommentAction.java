@@ -19,6 +19,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("DeleteEntityComment")
 public class DeleteEntityCommentAction implements ProjectAction<DeleteEntityCommentResult> {
 
+    public static final String CHANNEL = "issues.DeleteEntityComment";
+
     private ProjectId projectId;
 
     private CommentId commentId;
@@ -35,6 +37,10 @@ public class DeleteEntityCommentAction implements ProjectAction<DeleteEntityComm
         this.projectId = checkNotNull(projectId);
     }
 
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 
     private DeleteEntityCommentAction() {
     }

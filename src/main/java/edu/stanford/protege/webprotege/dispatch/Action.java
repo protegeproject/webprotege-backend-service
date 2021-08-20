@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
-import edu.stanford.protege.webprotege.auth.ChangePasswordAction;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsAction;
 import edu.stanford.protege.webprotege.bulkop.MoveEntitiesToParentAction;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueAction;
@@ -13,6 +12,7 @@ import edu.stanford.protege.webprotege.change.GetProjectChangesAction;
 import edu.stanford.protege.webprotege.change.GetWatchedEntityChangesAction;
 import edu.stanford.protege.webprotege.change.RevertRevisionAction;
 import edu.stanford.protege.webprotege.chgpwd.ResetPasswordAction;
+import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.crud.GetEntityCrudKitsAction;
 import edu.stanford.protege.webprotege.crud.SetEntityCrudKitSettingsAction;
 import edu.stanford.protege.webprotege.entity.*;
@@ -80,7 +80,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = AddEntityCommentAction.class),
         @Type(value = AddProjectTagAction.class),
         @Type(value = BatchAction.class),
-        @Type(value = ChangePasswordAction.class),
         @Type(value = CheckManchesterSyntaxFrameAction.class),
         @Type(value = ComputeProjectMergeAction.class),
         @Type(value = CopyFormDescriptorsFromProjectAction.class),
@@ -153,7 +152,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = GetProjectEventsAction.class),
         @Type(value = GetProjectFormDescriptorsAction.class),
         @Type(value = GetProjectInfoAction.class),
-        @Type(value = GetPerspectiveLayoutAction.class),
         @Type(value = GetProjectPermissionsAction.class),
         @Type(value = GetProjectPrefixDeclarationsAction.class),
         @Type(value = GetProjectSettingsAction.class),
@@ -219,5 +217,5 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = UpdateNamedIndividualFrameAction.class),
         @Type(value = UpdateObjectPropertyFrameAction.class)
 })
-public interface Action<R extends Result> {
+public interface Action<R extends Result> extends Request<R> {
 }

@@ -18,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetProjectPrefixDeclarationsAction implements ProjectAction<SetProjectPrefixDeclarationsResult> {
 
+    public static final String CHANNEL = "projects.SetProjectPrefixDeclarations";
+
     private ProjectId projectId;
 
     private List<PrefixDeclaration> prefixDeclarations;
@@ -28,8 +30,9 @@ public class SetProjectPrefixDeclarationsAction implements ProjectAction<SetProj
         this.prefixDeclarations = new ArrayList<>(checkNotNull(prefixDeclarations));
     }
 
-
-    private SetProjectPrefixDeclarationsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetProjectPrefixDeclarationsAction create(@Nonnull ProjectId projectId,

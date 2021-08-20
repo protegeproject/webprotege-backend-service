@@ -22,11 +22,18 @@ import java.util.Set;
 @JsonTypeName("GetDeprecatedEntities")
 public abstract class GetDeprecatedEntitiesAction implements ProjectAction<GetDeprecatedEntitiesResult> {
 
+    public static final String CHANNEL = "entities.GetDeprecatedEntities";
+
     @JsonCreator
     public static GetDeprecatedEntitiesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                        @JsonProperty("pageRequest") @Nonnull PageRequest pageRequest,
                                        @JsonProperty("entityTypes") @Nonnull Set<EntityType<?>> entityTypes) {
         return new AutoValue_GetDeprecatedEntitiesAction(projectId, pageRequest, entityTypes);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

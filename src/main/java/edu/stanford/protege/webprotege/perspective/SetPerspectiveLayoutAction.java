@@ -17,22 +17,23 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetPerspectiveLayoutAction implements ProjectAction<SetPerspectiveLayoutResult> {
 
+    public static final String CHANNEL = "perspectives.SetPerspectiveLayout";
+
     private ProjectId projectId;
 
     private UserId userId;
 
     private PerspectiveLayout layout;
 
-    /**
-     * For serialization only
-     */
-    private SetPerspectiveLayoutAction() {
-    }
-
     private SetPerspectiveLayoutAction(ProjectId projectId, UserId userId, PerspectiveLayout layout) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.layout = checkNotNull(layout);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetPerspectiveLayoutAction create(ProjectId projectId, UserId userId, PerspectiveLayout layout) {

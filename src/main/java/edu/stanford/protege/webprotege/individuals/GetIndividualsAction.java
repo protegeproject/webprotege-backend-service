@@ -21,6 +21,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetIndividualsAction implements ProjectAction<GetIndividualsResult> {
 
+    public static final String CHANNEL = "entities.GetIndividuals";
+
     private ProjectId projectId;
 
     @Nullable
@@ -33,10 +35,6 @@ public class GetIndividualsAction implements ProjectAction<GetIndividualsResult>
 
     private InstanceRetrievalMode instanceRetrievalMode;
 
-
-
-    private GetIndividualsAction() {
-    }
 
     /**
      * Specifies that the individuals of the specified type should be retrieved from the specified project.  The range
@@ -69,6 +67,11 @@ public class GetIndividualsAction implements ProjectAction<GetIndividualsResult>
                                               @Nonnull InstanceRetrievalMode instanceRetrievalMode,
                                               @Nonnull Optional<PageRequest> pageRequest) {
         return new GetIndividualsAction(projectId, type, filterString, instanceRetrievalMode, pageRequest);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

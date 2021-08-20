@@ -13,6 +13,8 @@ import javax.annotation.Nonnull;
  */
 public class SetEntityCrudKitSettingsAction implements ProjectAction<SetEntityCrudKitSettingsResult> {
 
+    public static final String CHANNEL = "entities.SetEntityCrudKitSettings";
+
     private ProjectId projectId;
 
     private EntityCrudKitSettings<? extends EntityCrudKitSuffixSettings> fromSettings;
@@ -21,17 +23,16 @@ public class SetEntityCrudKitSettingsAction implements ProjectAction<SetEntityCr
 
     private IRIPrefixUpdateStrategy prefixUpdateStrategy;
 
-    /**
-     * For serialization purposes only
-     */
-    private SetEntityCrudKitSettingsAction() {
-    }
-
     public SetEntityCrudKitSettingsAction(ProjectId projectId, EntityCrudKitSettings<?> fromSettings, EntityCrudKitSettings<?> toSettings, IRIPrefixUpdateStrategy prefixUpdateStrategy) {
         this.projectId = projectId;
         this.toSettings = toSettings;
         this.fromSettings = fromSettings;
         this.prefixUpdateStrategy = prefixUpdateStrategy;
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

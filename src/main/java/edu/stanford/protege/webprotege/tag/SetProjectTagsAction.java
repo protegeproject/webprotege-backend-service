@@ -20,10 +20,17 @@ import java.util.List;
 @JsonTypeName("SetProjectTags")
 public abstract class SetProjectTagsAction implements ProjectAction<SetProjectTagsResult> {
 
+    public static final String CHANNEL = "tags.SetProjectTags";
+
     @JsonCreator
     public static SetProjectTagsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                               @JsonProperty("tagData") @Nonnull List<TagData> tagData) {
         return new AutoValue_SetProjectTagsAction(projectId, tagData);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

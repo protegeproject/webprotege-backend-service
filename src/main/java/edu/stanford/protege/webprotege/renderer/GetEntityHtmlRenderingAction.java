@@ -21,10 +21,17 @@ import javax.annotation.Nonnull;
 public abstract class GetEntityHtmlRenderingAction implements ProjectAction<GetEntityHtmlRenderingResult> {
 
 
+    public static final String CHANNEL = "entities.GetEntityHtmlRendering";
+
     @JsonCreator
     public static GetEntityHtmlRenderingAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                       @JsonProperty("entity") @Nonnull OWLEntity entity) {
         return new AutoValue_GetEntityHtmlRenderingAction(projectId, entity);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

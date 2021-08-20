@@ -18,6 +18,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetEntityFormDescriptorAction implements ProjectAction<SetEntityFormDescriptorResult> {
 
+    public static final String CHANNEL = "forms.SetEntityFormDescriptor";
+
     private ProjectId projectId;
 
     private FormDescriptor formDescriptor;
@@ -37,8 +39,9 @@ public class SetEntityFormDescriptorAction implements ProjectAction<SetEntityFor
         this.selectorCriteria = checkNotNull(selectorCriteria);
     }
 
-
-    private SetEntityFormDescriptorAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

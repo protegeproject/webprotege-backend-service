@@ -16,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectSharingSettingsAction implements ProjectAction<GetProjectSharingSettingsResult> {
 
+    public static final String CHANNEL = "projects.GetProjectSharingSettings";
+
     private ProjectId projectId;
 
     private GetProjectSharingSettingsAction() {
@@ -27,6 +29,11 @@ public class GetProjectSharingSettingsAction implements ProjectAction<GetProject
 
     public static GetProjectSharingSettingsAction create(ProjectId projectId) {
         return new GetProjectSharingSettingsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

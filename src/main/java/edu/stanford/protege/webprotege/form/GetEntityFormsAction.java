@@ -39,6 +39,8 @@ public abstract class GetEntityFormsAction implements ProjectAction<GetEntityFor
 
     private static final String FORM_FILTERS = "formFilters";
 
+    public static final String CHANNEL = "forms.GetEntityForms";
+
     /**
      * Get the forms for an entity
      *
@@ -67,6 +69,11 @@ public abstract class GetEntityFormsAction implements ProjectAction<GetEntityFor
                                                   orderings,
                                                   filters,
                                                   formRegionFilters);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

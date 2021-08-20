@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateEntityDiscussionThread")
 public abstract class CreateEntityDiscussionThreadAction implements ProjectAction<CreateEntityDiscussionThreadResult> {
 
+    public static final String CHANNEL = "issues.CreateEntityDiscussionThread";
+
     @Nonnull
     public abstract ProjectId getProjectId();
 
@@ -35,5 +37,8 @@ public abstract class CreateEntityDiscussionThreadAction implements ProjectActio
         return new AutoValue_CreateEntityDiscussionThreadAction(projectId, entity, comment);
     }
 
-
+    @Override
+    public String getChannel() {
+        return CHANNEL;
+    }
 }

@@ -19,6 +19,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class RemoveWatchesAction implements ProjectAction<RemoveWatchesResult>, HasUserId {
 
+    public static final String CHANNEL = "watches.RemoveWatchesAction";
+
     private ProjectId projectId;
 
     private UserId userId;
@@ -32,10 +34,9 @@ public class RemoveWatchesAction implements ProjectAction<RemoveWatchesResult>, 
         this.userId = checkNotNull(userId);
     }
 
-    /**
-     * For serialization only
-     */
-    private RemoveWatchesAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

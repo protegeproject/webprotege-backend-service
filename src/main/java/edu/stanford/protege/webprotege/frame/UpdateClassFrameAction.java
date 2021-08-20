@@ -19,11 +19,18 @@ import javax.annotation.Nonnull;
 @JsonTypeName("UpdateClassFrame")
 public abstract class UpdateClassFrameAction extends UpdateFrameAction {
 
+    public static final String CHANNEL = "entities.UpdateClassFrame";
+
     @JsonCreator
     public static UpdateClassFrameAction create(@JsonProperty("projectId") ProjectId projectId,
                                                 @JsonProperty("from") PlainClassFrame from,
                                                 @JsonProperty("to") PlainClassFrame to) {
         return new AutoValue_UpdateClassFrameAction(projectId, from, to);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

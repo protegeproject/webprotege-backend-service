@@ -22,6 +22,8 @@ import java.util.Set;
 @JsonTypeName("GetManchesterSyntaxFrameCompletions")
 public abstract class GetManchesterSyntaxFrameCompletionsAction implements ProjectAction<GetManchesterSyntaxFrameCompletionsResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
+    public static final String CHANNEL = "manchester-syntax.GetManchesterSyntaxFrameCompletions";
+
     @JsonCreator
     public static GetManchesterSyntaxFrameCompletionsAction create(@JsonProperty("projectId") ProjectId projectId,
                                                                    @JsonProperty("subject") OWLEntity subject,
@@ -37,6 +39,11 @@ public abstract class GetManchesterSyntaxFrameCompletionsAction implements Proje
                                                              from,
                                                              freshEntities,
                                                              entityTypeSuggestLimit);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

@@ -16,12 +16,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ResetPerspectiveLayoutAction implements ProjectAction<ResetPerspectiveLayoutResult> {
 
+    public static final String CHANNEL = "perspectives.ResetPerspectiveLayout";
+
     private ProjectId projectId;
 
     private PerspectiveId perspectiveId;
 
-
-    private ResetPerspectiveLayoutAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     /**

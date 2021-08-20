@@ -16,12 +16,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetEmailAddressAction implements Action<SetEmailAddressResult> {
 
+    public static final String CHANNEL = "users.SetEmailAddress";
+
     private UserId userId;
 
     private String emailAddress;
-
-    private SetEmailAddressAction() {
-    }
 
     /**
      * Constructs a {@link SetEmailAddressAction} object using the specified email address.
@@ -36,6 +35,11 @@ public class SetEmailAddressAction implements Action<SetEmailAddressResult> {
             throw new IllegalArgumentException("userId cannot be guest");
         }
         this.emailAddress = checkNotNull(emailAddress);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetEmailAddressAction create(UserId userId, String emailAddress) {

@@ -25,6 +25,8 @@ import java.util.Set;
 @JsonTypeName("PerformEntitySearch")
 public abstract class PerformEntitySearchAction implements ProjectAction<PerformEntitySearchResult>, HasProjectId {
 
+    public static final String CHANNEL = "search.PerformEntitySearch";
+
     @JsonCreator
     public static PerformEntitySearchAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                    @JsonProperty("searchString") @Nonnull String searchString,
@@ -38,6 +40,11 @@ public abstract class PerformEntitySearchAction implements ProjectAction<Perform
                                                        langTagFilter,
                                              searchFilters,
                                              pageRequest);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

@@ -16,6 +16,8 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRelationshipsResult> {
 
+    public static final String CHANNEL = "obo.SetOboTermRelationships";
+
     private ProjectId projectId;
 
     private OWLEntity entity;
@@ -30,8 +32,9 @@ public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRe
         this.oboTermRelationships = oboTermRelationships;
     }
 
-
-    private SetOboTermRelationshipsAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static SetOboTermRelationshipsAction create(@Nonnull ProjectId projectId,

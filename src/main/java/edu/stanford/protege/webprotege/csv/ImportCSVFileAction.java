@@ -16,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ImportCSVFileAction implements ProjectAction<ImportCSVFileResult> {
 
+    public static final String CHANNEL = "csv.ImportCsvFile";
+
     private ProjectId projectId;
 
     private OWLClass importRootClass;
@@ -24,10 +26,9 @@ public class ImportCSVFileAction implements ProjectAction<ImportCSVFileResult> {
 
     private CSVImportDescriptor descriptor;
 
-    /**
-     * For serialization only
-     */
-    private ImportCSVFileAction() {
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public ImportCSVFileAction(ProjectId projectId, DocumentId csvDocumentId, OWLClass importRootClass, CSVImportDescriptor descriptor) {

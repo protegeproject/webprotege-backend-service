@@ -23,19 +23,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("DeleteEntities")
 public class DeleteEntitiesAction implements ProjectAction<DeleteEntitiesResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "entities.DeleteEntities";
 
-    private Set<OWLEntity> entities;
+    private final ProjectId projectId;
 
-
-    private DeleteEntitiesAction() {
-    }
+    private final Set<OWLEntity> entities;
 
     @JsonCreator
     public DeleteEntitiesAction(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                 @JsonProperty("entities") @Nonnull Set<OWLEntity> entities) {
         this.entities = new HashSet<>(entities);
         this.projectId = checkNotNull(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

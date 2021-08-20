@@ -23,6 +23,8 @@ import java.util.Optional;
 @JsonTypeName("EditAnnotations")
 public abstract class EditAnnotationsAction implements ProjectAction<EditAnnotationsResult>, HasCommitMessage {
 
+    public static final String CHANNEL = "annotations.EditAnnotations";
+
     @JsonCreator
     public static EditAnnotationsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                             @JsonProperty("entities") @Nonnull ImmutableSet<OWLEntity> entities,
@@ -34,6 +36,11 @@ public abstract class EditAnnotationsAction implements ProjectAction<EditAnnotat
                                             @JsonProperty("newAnnotationData") @Nonnull NewAnnotationData newAnnotationData,
                                             @JsonProperty("commitMessage") @Nonnull String commitMessage) {
         return new AutoValue_EditAnnotationsAction(projectId, entities, operation, property, lexicalValueExpression, lexicalValueExpressionIsRegEx, langTagExpression, newAnnotationData, commitMessage);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

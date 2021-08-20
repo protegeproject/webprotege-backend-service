@@ -32,6 +32,11 @@ public abstract class SetOntologyAnnotationsAction implements ProjectAction<SetO
         return new AutoValue_SetOntologyAnnotationsAction(projectId, ontologyID, fromAnnotations, toAnnotations);
     }
 
+    @Override
+    public String getChannel() {
+        return "ontology.SetOntologyAnnotations";
+    }
+
     @Nonnull
     @Override
     public abstract ProjectId getProjectId();

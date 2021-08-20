@@ -16,6 +16,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboNamespacesAction implements ProjectAction<GetOboNamespacesResult> {
 
+    public static final String CHANNEL = "obo.GetOboNamespaces";
+
     private ProjectId projectId;
 
 
@@ -32,6 +34,11 @@ public class GetOboNamespacesAction implements ProjectAction<GetOboNamespacesRes
 
     public static GetOboNamespacesAction create(@Nonnull ProjectId projectId) {
         return new GetOboNamespacesAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

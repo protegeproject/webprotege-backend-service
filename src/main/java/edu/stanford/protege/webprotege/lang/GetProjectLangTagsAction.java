@@ -17,6 +17,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetProjectLangTags")
 public class GetProjectLangTagsAction implements ProjectAction<GetProjectLangTagsResult> {
 
+    public static final String CHANNEL = "projects.GetProjectLangTags";
+
     private ProjectId projectId;
 
     private GetProjectLangTagsAction(@Nonnull ProjectId projectId) {
@@ -29,6 +31,11 @@ public class GetProjectLangTagsAction implements ProjectAction<GetProjectLangTag
 
     public static GetProjectLangTagsAction create(@Nonnull ProjectId projectId) {
         return new GetProjectLangTagsAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

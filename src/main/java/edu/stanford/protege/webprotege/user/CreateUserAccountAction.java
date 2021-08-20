@@ -18,11 +18,18 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @JsonTypeName("CreateUserAccount")
 public abstract class CreateUserAccountAction implements Action<CreateUserAccountResult> {
 
+    public static final String CHANNEL = "accounts.CreateUserAccount";
+
     @JsonCreator
     public static CreateUserAccountAction create(@JsonProperty("userId") UserId userId,
                                                  @JsonProperty("emailAddress") EmailAddress emailAddress,
                                                  @JsonProperty("password") Password password) {
         return new AutoValue_CreateUserAccountAction(userId, emailAddress, password);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public abstract UserId getUserId();

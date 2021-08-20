@@ -20,11 +20,18 @@ import javax.annotation.Nonnull;
 @JsonTypeName("SetSearchSettings")
 public abstract class SetSearchSettingsAction implements ProjectAction<SetSearchSettingsResult> {
 
+    public static final String CHANNEL = "search.SetSearchSettings";
+
     @JsonCreator
     public static SetSearchSettingsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                  @JsonProperty("from") @Nonnull ImmutableList<EntitySearchFilter> from,
                                                  @JsonProperty("to") @Nonnull ImmutableList<EntitySearchFilter> to) {
         return new AutoValue_SetSearchSettingsAction(projectId, from, to);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

@@ -19,12 +19,19 @@ import javax.annotation.Nonnull;
 @JsonTypeName("EditComment")
 public abstract class EditCommentAction implements ProjectAction<EditCommentResult> {
 
+    public static final String CHANNEL = "issues.EditComment";
+
     @JsonCreator
     public static EditCommentAction editComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,
                                                 @JsonProperty("threadId") @Nonnull ThreadId threadId,
                                                 @JsonProperty("commentId") @Nonnull CommentId commentId,
                                                 @JsonProperty("body") @Nonnull String body) {
         return new AutoValue_EditCommentAction(projectId, threadId, commentId, body);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull

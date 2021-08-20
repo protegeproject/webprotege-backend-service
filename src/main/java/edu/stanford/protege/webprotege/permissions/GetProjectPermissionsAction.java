@@ -19,17 +19,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectPermissionsAction implements Action<GetProjectPermissionsResult>, HasProjectId, HasUserId {
 
+    public static final String CHANNEL = "auth.GetProjectPermissions";
+
     private ProjectId projectId;
 
     private UserId userId;
 
-
-    private GetProjectPermissionsAction() {
-    }
-
     private GetProjectPermissionsAction(@Nonnull ProjectId projectId, @Nonnull UserId userId) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public static GetProjectPermissionsAction create(@Nonnull ProjectId projectId, @Nonnull UserId userId) {

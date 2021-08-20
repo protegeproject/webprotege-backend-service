@@ -16,10 +16,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOntologyFramesAction implements ProjectAction<GetOntologyFramesResult> {
 
-    private ProjectId projectId;
+    public static final String CHANNEL = "ontologies.GetOntologyFrames";
 
-    private GetOntologyFramesAction() {
-    }
+    private ProjectId projectId;
 
     private GetOntologyFramesAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
@@ -27,6 +26,11 @@ public class GetOntologyFramesAction implements ProjectAction<GetOntologyFramesR
 
     public static GetOntologyFramesAction create(ProjectId projectId) {
         return new GetOntologyFramesAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     @Nonnull
