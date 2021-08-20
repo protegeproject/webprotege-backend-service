@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectChangesAction implements ProjectAction<GetProjectChangesResult> {
 
-    public static final String CHANNEL = "projects.GetProjectChanges";
+    public static final String CHANNEL = "change.GetProjectChanges";
 
     private ProjectId projectId;
 
