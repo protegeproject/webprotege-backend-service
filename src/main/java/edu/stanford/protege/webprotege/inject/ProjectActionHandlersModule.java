@@ -56,7 +56,7 @@ import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaActi
 import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersActionHandler;
 import edu.stanford.protege.webprotege.viz.SetUserProjectEntityGraphCriteriaActionHandler;
 import edu.stanford.protege.webprotege.watches.AddWatchActionHandler;
-import edu.stanford.protege.webprotege.watches.GetWatchesActionHandler;
+import edu.stanford.protege.webprotege.watches.GetEntityWatchesActionHandler;
 import edu.stanford.protege.webprotege.watches.RemoveWatchActionHandler;
 import edu.stanford.protege.webprotege.watches.SetEntityWatchesActionHandler;
 
@@ -195,7 +195,7 @@ public class ProjectActionHandlersModule {
     }
 
      
-    public ProjectActionHandler provideGetWatchesActionHandler(GetWatchesActionHandler handler) {
+    public ProjectActionHandler provideGetWatchesActionHandler(GetEntityWatchesActionHandler handler) {
         return handler;
     }
 

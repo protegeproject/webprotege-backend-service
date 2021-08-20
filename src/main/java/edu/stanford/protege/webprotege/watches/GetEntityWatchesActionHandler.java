@@ -18,34 +18,34 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.WATCH_CHANGES
  * Stanford Center for Biomedical Informatics Research
  * 29/02/16
  */
-public class GetWatchesActionHandler extends AbstractProjectActionHandler<GetWatchesAction, GetWatchesResult> {
+public class GetEntityWatchesActionHandler extends AbstractProjectActionHandler<GetEntityWatchesAction, GetEntityWatchesResult> {
 
     @Nonnull
     private final WatchManager watchManager;
 
     @Inject
-    public GetWatchesActionHandler(@Nonnull AccessManager accessManager,
-                                   @Nonnull WatchManager watchManager) {
+    public GetEntityWatchesActionHandler(@Nonnull AccessManager accessManager,
+                                         @Nonnull WatchManager watchManager) {
         super(accessManager);
         this.watchManager = watchManager;
     }
 
     @Nonnull
     @Override
-    public Class<GetWatchesAction> getActionClass() {
-        return GetWatchesAction.class;
+    public Class<GetEntityWatchesAction> getActionClass() {
+        return GetEntityWatchesAction.class;
     }
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(GetWatchesAction action) {
+    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(GetEntityWatchesAction action) {
         return Arrays.asList(WATCH_CHANGES, VIEW_PROJECT);
     }
 
     @Nonnull
     @Override
-    public GetWatchesResult execute(@Nonnull GetWatchesAction action, @Nonnull ExecutionContext executionContext) {
+    public GetEntityWatchesResult execute(@Nonnull GetEntityWatchesAction action, @Nonnull ExecutionContext executionContext) {
         Set<Watch> watches = watchManager.getDirectWatches(action.getEntity(), action.getUserId());
-        return GetWatchesResult.create(watches);
+        return GetEntityWatchesResult.create(watches);
     }
 }

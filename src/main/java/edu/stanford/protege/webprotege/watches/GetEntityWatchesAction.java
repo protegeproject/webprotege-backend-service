@@ -21,16 +21,16 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-@JsonTypeName("GetWatches")
-public abstract class GetWatchesAction implements ProjectAction<GetWatchesResult>, HasUserId, Request<GetWatchesResult> {
+@JsonTypeName("GetEntityWatches")
+public abstract class GetEntityWatchesAction implements ProjectAction<GetEntityWatchesResult>, HasUserId, Request<GetEntityWatchesResult> {
 
-    public static final String CHANNEL = "watches.GetWatches";
+    public static final String CHANNEL = "watches.GetEntityWatches";
 
     @JsonCreator
-    public static GetWatchesAction create(@JsonProperty("projectId") ProjectId projectId,
-                                          @JsonProperty("userId") UserId userId,
-                                          @JsonProperty("entity") OWLEntity entity) {
-        return new AutoValue_GetWatchesAction(projectId, userId, entity);
+    public static GetEntityWatchesAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                @JsonProperty("userId") UserId userId,
+                                                @JsonProperty("entity") OWLEntity entity) {
+        return new AutoValue_GetEntityWatchesAction(projectId, userId, entity);
     }
 
     @Override

@@ -60,7 +60,7 @@ import edu.stanford.protege.webprotege.viz.GetEntityGraphAction;
 import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaAction;
 import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersAction;
 import edu.stanford.protege.webprotege.viz.SetUserProjectEntityGraphSettingsAction;
-import edu.stanford.protege.webprotege.watches.GetWatchesAction;
+import edu.stanford.protege.webprotege.watches.GetEntityWatchesAction;
 import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
 
 
@@ -158,7 +158,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = GetUserIdCompletionsAction.class),
         @Type(value = GetUserProjectEntityGraphCriteriaAction.class),
         @Type(value = GetEntityUsageAction.class),
-        @Type(value = GetWatchesAction.class),
+        @Type(value = GetEntityWatchesAction.class),
         @Type(value = GetWatchedEntityChangesAction.class),
         @Type(value = LoadProjectAction.class),
         @Type(value = LookupEntitiesAction.class),

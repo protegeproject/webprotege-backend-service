@@ -303,8 +303,8 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    GetWatchesActionHandler getWatchesActionHandler(AccessManager p1, WatchManager p2) {
-        return new GetWatchesActionHandler(p1, p2);
+    GetEntityWatchesActionHandler getWatchesActionHandler(AccessManager p1, WatchManager p2) {
+        return new GetEntityWatchesActionHandler(p1, p2);
     }
 
 

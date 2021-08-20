@@ -61,7 +61,7 @@ import edu.stanford.protege.webprotege.viz.GetEntityGraphResult;
 import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaResult;
 import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersResult;
 import edu.stanford.protege.webprotege.viz.SetUserProjectEntityGraphSettingsResult;
-import edu.stanford.protege.webprotege.watches.GetWatchesResult;
+import edu.stanford.protege.webprotege.watches.GetEntityWatchesResult;
 import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
 
 
@@ -162,7 +162,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(GetUserIdCompletionsResult.class),
         @Type(GetUserProjectEntityGraphCriteriaResult.class),
         @Type(GetEntityUsageResult.class),
-        @Type(GetWatchesResult.class),
+        @Type(GetEntityWatchesResult.class),
         @Type(GetWatchedEntityChangesResult.class),
         @Type(LoadProjectResult.class),
         @Type(LookupEntitiesResult.class),

@@ -17,12 +17,12 @@ import java.util.Set;
  */
 @AutoValue
 
-@JsonTypeName("GetWatches")
-public abstract class GetWatchesResult implements Result, Response {
+@JsonTypeName("GetEntityWatches")
+public abstract class GetEntityWatchesResult implements Result, Response {
 
     @JsonCreator
-    public static GetWatchesResult create(@JsonProperty("watches") Set<Watch> watches) {
-        return new AutoValue_GetWatchesResult(watches);
+    public static GetEntityWatchesResult create(@JsonProperty("watches") Set<Watch> watches) {
+        return new AutoValue_GetEntityWatchesResult(watches);
     }
 
     public abstract Set<Watch> getWatches();

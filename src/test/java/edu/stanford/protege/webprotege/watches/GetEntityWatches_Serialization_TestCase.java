@@ -16,19 +16,19 @@ import static edu.stanford.protege.webprotege.MockingUtils.*;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-07
  */
-public class GetWatches_Serialization_TestCase {
+public class GetEntityWatches_Serialization_TestCase {
 
     @Test
     public void shouldSerializeAction() throws IOException {
-        var action = GetWatchesAction.create(mockProjectId(),
-                                             mockUserId(),
-                                             mockOWLClass());
+        var action = GetEntityWatchesAction.create(mockProjectId(),
+                                                   mockUserId(),
+                                                   mockOWLClass());
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 
     @Test
     public void shouldSerializeResult() throws IOException {
-        var result = GetWatchesResult.create(ImmutableSet.of());
+        var result = GetEntityWatchesResult.create(ImmutableSet.of());
         JsonSerializationTestUtil.testSerialization(result, Result.class);
     }
 }
