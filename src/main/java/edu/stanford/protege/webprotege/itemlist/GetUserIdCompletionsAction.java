@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.itemlist;
 
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.Action;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
@@ -10,13 +11,15 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 12/05/15
  */
-public class GetUserIdCompletionsAction extends GetPossibleItemCompletionsAction<UserId> {
+public class GetUserIdCompletionsAction implements Action<GetUserIdCompletionsResult> {
 
 
     public static final String CHANNEL = "users.GetUserIdCompletions";
 
+    private final String completionText;
+
     private GetUserIdCompletionsAction(String completionText) {
-        super(completionText);
+        this.completionText = completionText;
     }
 
     public static GetUserIdCompletionsAction create(String completionText) {
@@ -26,6 +29,10 @@ public class GetUserIdCompletionsAction extends GetPossibleItemCompletionsAction
     @Override
     public String getChannel() {
         return CHANNEL;
+    }
+
+    public String getCompletionText() {
+        return completionText;
     }
 
     @Override

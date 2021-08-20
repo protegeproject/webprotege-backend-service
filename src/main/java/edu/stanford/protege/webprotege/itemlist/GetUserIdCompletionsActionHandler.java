@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 12/05/15
  */
-public class GetUserIdCompletionsActionHandler implements ApplicationActionHandler<GetUserIdCompletionsAction, GetPossibleItemCompletionsResult<UserId>> {
+public class GetUserIdCompletionsActionHandler implements ApplicationActionHandler<GetUserIdCompletionsAction, GetUserIdCompletionsResult> {
 
     private final UserDetailsManager userDetailsManager;
 
@@ -43,7 +43,7 @@ public class GetUserIdCompletionsActionHandler implements ApplicationActionHandl
 
     @Nonnull
     @Override
-    public GetPossibleItemCompletionsResult<UserId> execute(@Nonnull GetUserIdCompletionsAction action, @Nonnull ExecutionContext executionContext) {
+    public GetUserIdCompletionsResult execute(@Nonnull GetUserIdCompletionsAction action, @Nonnull ExecutionContext executionContext) {
         String completionText = action.getCompletionText();
         List<UserId> result = userDetailsManager.getUserIdsContainingIgnoreCase(completionText, 10);
         Collections.sort(result);
