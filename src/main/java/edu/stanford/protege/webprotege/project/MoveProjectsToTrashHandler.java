@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.dispatch.handlers;
+package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;

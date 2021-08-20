@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.dispatch.handlers;
+package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;

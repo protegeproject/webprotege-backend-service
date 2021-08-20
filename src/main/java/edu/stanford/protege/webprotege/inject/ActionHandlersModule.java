@@ -16,10 +16,7 @@ import edu.stanford.protege.webprotege.mail.SetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.permissions.GetProjectPermissionsActionHandler;
 import edu.stanford.protege.webprotege.permissions.RebuildPermissionsActionHandler;
 import edu.stanford.protege.webprotege.perspective.GetPerspectivesActionHandler;
-import edu.stanford.protege.webprotege.project.CreateNewProjectActionHandler;
-import edu.stanford.protege.webprotege.project.GetAvailableProjectsActionHandler;
-import edu.stanford.protege.webprotege.project.GetAvailableProjectsWithPermissionActionHandler;
-import edu.stanford.protege.webprotege.project.GetProjectDetailsActionHandler;
+import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.user.CreateUserAccountActionHandler;
 
 /**

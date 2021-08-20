@@ -18,7 +18,6 @@ import edu.stanford.protege.webprotege.itemlist.GetUserIdCompletionsActionHandle
 import edu.stanford.protege.webprotege.mail.GetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.permissions.GetProjectPermissionsActionHandler;
-import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.RebuildPermissionsActionHandler;
 import edu.stanford.protege.webprotege.perspective.GetPerspectivesActionHandler;
 import edu.stanford.protege.webprotege.perspective.PerspectivesManager;
