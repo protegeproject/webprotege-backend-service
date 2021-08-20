@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
@@ -80,32 +79,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
 
     @Override
     public <A extends Action<R>, R extends Result> DispatchServiceResultContainer execute(A action, RequestContext requestContext, ExecutionContext executionContext) throws ActionExecutionException, PermissionDeniedException {
-        if (action instanceof BatchAction) {
-            BatchAction batchAction = (BatchAction) action;
-            return execBatchAction(batchAction, requestContext, executionContext);
-        }
-        else {
-            return execAction(action, requestContext, executionContext);
-        }
-    }
-
-    private DispatchServiceResultContainer execBatchAction(BatchAction batchAction, RequestContext requestContext, ExecutionContext executionContext) {
-        ImmutableList.Builder<ActionExecutionResult> executionResultBuilder = ImmutableList.builder();
-        for (Action<?> action : batchAction.getActions()) {
-            ActionExecutionResult executionResult;
-            try {
-                DispatchServiceResultContainer container = execAction(action, requestContext, executionContext);
-                Result result = container.getResult();
-                executionResult = ActionExecutionResult.get(DispatchServiceResultContainer.create(result));
-            } catch (ActionExecutionException e) {
-                executionResult = ActionExecutionResult.get(e);
-            } catch (PermissionDeniedException e) {
-                executionResult = ActionExecutionResult.get(e);
-            }
-            executionResultBuilder.add(executionResult);
-        }
-        ImmutableList<ActionExecutionResult> results = executionResultBuilder.build();
-        return DispatchServiceResultContainer.create(BatchResult.get(results));
+        return execAction(action, requestContext, executionContext);
     }
 
     private <A extends Action<R>, R extends Result> DispatchServiceResultContainer execAction(A action, RequestContext requestContext, ExecutionContext executionContext) {

@@ -5,7 +5,6 @@ package edu.stanford.protege.webprotege.api.resources;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.Action;
-import edu.stanford.protege.webprotege.dispatch.BatchAction;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.form.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -86,9 +85,8 @@ public class FormsResource {
             var purpose = entityFormDescriptor.getPurpose();
             var action = new SetEntityFormDescriptorAction(projectId, formDescriptor, purpose, selectionCriteria);
             actionListBuilder.add(action);
+            executor.execute(action, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         }
-        var batchAction = BatchAction.create(actionListBuilder.build());
-        executor.execute(batchAction, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         return Response.created(uriInfo.getRequestUri()).build();
     }
 
