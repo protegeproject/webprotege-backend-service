@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
 /**
@@ -16,11 +17,18 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @AutoValue
 
 @JsonTypeName("MoveProjectsToTrash")
-public abstract class MoveProjectsToTrashAction implements Action<MoveProjectsToTrashResult> {
+public abstract class MoveProjectsToTrashAction implements Action<MoveProjectsToTrashResult>, Request<MoveProjectsToTrashResult> {
+
+    public static final String CHANNEL = "project-management.MoveProjectsToTrash";
 
     @JsonCreator
     public static MoveProjectsToTrashAction create(@JsonProperty("projectId") ProjectId projectId) {
         return new AutoValue_MoveProjectsToTrashAction(projectId);
+    }
+
+    @Override
+    public String getChannel() {
+        return CHANNEL;
     }
 
     public abstract ProjectId getProjectId();

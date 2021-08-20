@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;
@@ -18,10 +19,10 @@ import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 @AutoValue
 
 @JsonTypeName("MoveProjectsToTrash")
-public abstract class MoveProjectsToTrashResult implements Result, HasEventList<WebProtegeEvent<?>> {
+public abstract class MoveProjectsToTrashResult implements Result, Response {
 
     @JsonCreator
-    public static MoveProjectsToTrashResult create(@JsonProperty("eventList") EventList<WebProtegeEvent<?>> eventList) {
-        return new AutoValue_MoveProjectsToTrashResult(eventList);
+    public static MoveProjectsToTrashResult create() {
+        return new AutoValue_MoveProjectsToTrashResult();
     }
 }

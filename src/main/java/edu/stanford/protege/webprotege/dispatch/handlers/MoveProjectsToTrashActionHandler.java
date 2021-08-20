@@ -58,6 +58,6 @@ public class MoveProjectsToTrashActionHandler implements ApplicationActionHandle
         EventList<WebProtegeEvent<?>> eventList = EventList.create(EventTag.getFirst(),
                                                                 ImmutableList.copyOf(events),
                                                                 EventTag.getFirst());
-        return MoveProjectsToTrashResult.create(eventList);
+        return MoveProjectsToTrashResult.create();
     }
 }

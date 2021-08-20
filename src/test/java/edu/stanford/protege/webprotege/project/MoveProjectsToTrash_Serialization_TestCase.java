@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.project;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.match.JsonSerializationTestUtil;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ public class MoveProjectsToTrash_Serialization_TestCase {
 
     @Test
     public void shouldSerializeResult() throws IOException {
-        var result = MoveProjectsToTrashResult.create(mockEventList());
+        var result = MoveProjectsToTrashResult.create();
         JsonSerializationTestUtil.testSerialization(result, Result.class);
     }
 }
