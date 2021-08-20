@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("CopyFormDescriptorsFromProject")
-public abstract class CopyFormDescriptorsFromProjectAction implements ProjectAction<CopyFormDescriptorsFromProjectResult> {
+public abstract class CopyFormDescriptorsAction implements ProjectAction<CopyFormDescriptorsResult> {
 
     public static final String CHANNEL = "forms.CopyFormDescriptorsFromProject";
 
@@ -33,12 +33,12 @@ public abstract class CopyFormDescriptorsFromProjectAction implements ProjectAct
     public abstract ImmutableList<FormId> getFormIdsToCopy();
 
     @JsonCreator
-    public static CopyFormDescriptorsFromProjectAction create(@JsonProperty("projectId") ProjectId newProjectId,
-                                                              @JsonProperty("projectIdToCopyFrom") ProjectId newProjectIdToCopyFrom,
-                                                              @JsonProperty("formIdsToCopy") ImmutableList<FormId> newFormIdsToCopy) {
-        return new AutoValue_CopyFormDescriptorsFromProjectAction(newProjectId,
-                                                                  newProjectIdToCopyFrom,
-                                                                  newFormIdsToCopy);
+    public static CopyFormDescriptorsAction create(@JsonProperty("projectId") ProjectId newProjectId,
+                                                   @JsonProperty("projectIdToCopyFrom") ProjectId newProjectIdToCopyFrom,
+                                                   @JsonProperty("formIdsToCopy") ImmutableList<FormId> newFormIdsToCopy) {
+        return new AutoValue_CopyFormDescriptorsAction(newProjectId,
+                                                       newProjectIdToCopyFrom,
+                                                       newFormIdsToCopy);
     }
 
     @Override

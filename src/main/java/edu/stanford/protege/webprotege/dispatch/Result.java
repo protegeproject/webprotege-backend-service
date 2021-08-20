@@ -79,7 +79,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(AddEntityCommentResult.class),
         @Type(CheckManchesterSyntaxFrameResult.class),
         @Type(ComputeProjectMergeResult.class),
-        @Type(CopyFormDescriptorsFromProjectResult.class),
+        @Type(CopyFormDescriptorsResult.class),
         @Type(CreateAnnotationPropertiesResult.class),
         @Type(CreateClassesResult.class),
         @Type(CreateDataPropertiesResult.class),

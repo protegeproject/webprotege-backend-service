@@ -971,9 +971,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    CopyFormDescriptorsFromProjectActionHandler copyFormDescriptorsFromProjectActionHandler(AccessManager p1,
-                                                                                            FormsCopierFactory p2) {
-        return new CopyFormDescriptorsFromProjectActionHandler(p1, p2);
+    CopyFormDescriptorsActionHandler copyFormDescriptorsFromProjectActionHandler(AccessManager p1,
+                                                                                 FormsCopierFactory p2) {
+        return new CopyFormDescriptorsActionHandler(p1, p2);
     }
 
 

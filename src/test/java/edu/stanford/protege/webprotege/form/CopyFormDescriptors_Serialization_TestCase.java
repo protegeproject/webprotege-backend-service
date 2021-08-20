@@ -14,19 +14,19 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-06
  */
-public class CopyFormDescriptorsFromProject_Serialization_TestCase {
+public class CopyFormDescriptors_Serialization_TestCase {
 
     @Test
     public void shouldSerializeAction() throws IOException {
-        var action = CopyFormDescriptorsFromProjectAction.create(ProjectId.getNil(),
-                                                                 ProjectId.getNil(),
-                                                                 ImmutableList.of());
+        var action = CopyFormDescriptorsAction.create(ProjectId.getNil(),
+                                                      ProjectId.getNil(),
+                                                      ImmutableList.of());
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 
     @Test
     public void shouldSerializeResult() throws IOException {
-        var result = CopyFormDescriptorsFromProjectResult.create(ImmutableList.of());
+        var result = CopyFormDescriptorsResult.create(ImmutableList.of());
         JsonSerializationTestUtil.testSerialization(result, Result.class);
     }
 }

@@ -16,39 +16,39 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-14
  */
-public class CopyFormDescriptorsFromProjectActionHandler extends AbstractProjectActionHandler<CopyFormDescriptorsFromProjectAction, CopyFormDescriptorsFromProjectResult> {
+public class CopyFormDescriptorsActionHandler extends AbstractProjectActionHandler<CopyFormDescriptorsAction, CopyFormDescriptorsResult> {
 
     @Nonnull
     private final FormsCopierFactory formsCopierFactory;
 
     @Inject
-    public CopyFormDescriptorsFromProjectActionHandler(@Nonnull AccessManager accessManager,
-                                                       @Nonnull FormsCopierFactory formsCopierFactory) {
+    public CopyFormDescriptorsActionHandler(@Nonnull AccessManager accessManager,
+                                            @Nonnull FormsCopierFactory formsCopierFactory) {
         super(accessManager);
         this.formsCopierFactory = checkNotNull(formsCopierFactory);
     }
 
     @Nonnull
     @Override
-    public Class<CopyFormDescriptorsFromProjectAction> getActionClass() {
-        return CopyFormDescriptorsFromProjectAction.class;
+    public Class<CopyFormDescriptorsAction> getActionClass() {
+        return CopyFormDescriptorsAction.class;
     }
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(CopyFormDescriptorsFromProjectAction action) {
+    protected BuiltInAction getRequiredExecutableBuiltInAction(CopyFormDescriptorsAction action) {
         return BuiltInAction.EDIT_FORMS;
     }
 
     @Nonnull
     @Override
-    public CopyFormDescriptorsFromProjectResult execute(@Nonnull CopyFormDescriptorsFromProjectAction action,
-                                                        @Nonnull ExecutionContext executionContext) {
+    public CopyFormDescriptorsResult execute(@Nonnull CopyFormDescriptorsAction action,
+                                             @Nonnull ExecutionContext executionContext) {
         var copyFromProjectId = action.getProjectIdToCopyFrom();
         var copyToProjectId = action.getProjectId();
         var formsToCopy = action.getFormIdsToCopy();
         var copier = formsCopierFactory.create(copyFromProjectId, copyToProjectId, formsToCopy);
         var copiedFormDescriptors = copier.copyForms();
-        return CopyFormDescriptorsFromProjectResult.create(copiedFormDescriptors);
+        return CopyFormDescriptorsResult.create(copiedFormDescriptors);
     }
 }

@@ -15,12 +15,12 @@ import edu.stanford.protege.webprotege.dispatch.Result;
 @AutoValue
 
 @JsonTypeName("CopyFormDescriptorsFromProject")
-public abstract class CopyFormDescriptorsFromProjectResult implements Result {
+public abstract class CopyFormDescriptorsResult implements Result {
 
     public abstract ImmutableList<FormDescriptor> getCopiedFormDescriptors();
 
     @JsonCreator
-    public static CopyFormDescriptorsFromProjectResult create(@JsonProperty("copiedFormDescriptors") ImmutableList<FormDescriptor> copiedFormDescriptors) {
+    public static CopyFormDescriptorsResult create(@JsonProperty("copiedFormDescriptors") ImmutableList<FormDescriptor> copiedFormDescriptors) {
         return new AutoValue_CopyFormDescriptorsFromProjectResult(copiedFormDescriptors);
     }
 

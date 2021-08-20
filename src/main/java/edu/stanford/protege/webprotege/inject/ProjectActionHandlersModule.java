@@ -636,7 +636,7 @@ public class ProjectActionHandlersModule {
     }
 
      
-    public ProjectActionHandler provideCopyFormDescriptorsFromProjectActionHandler(CopyFormDescriptorsFromProjectActionHandler handler) {
+    public ProjectActionHandler provideCopyFormDescriptorsFromProjectActionHandler(CopyFormDescriptorsActionHandler handler) {
         return handler;
     }
 

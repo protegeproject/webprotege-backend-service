@@ -78,7 +78,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = AddEntityCommentAction.class),
         @Type(value = CheckManchesterSyntaxFrameAction.class),
         @Type(value = ComputeProjectMergeAction.class),
-        @Type(value = CopyFormDescriptorsFromProjectAction.class),
+        @Type(value = CopyFormDescriptorsAction.class),
         @Type(value = CreateAnnotationPropertiesAction.class),
         @Type(value = CreateClassesAction.class),
         @Type(value = CreateDataPropertiesAction.class),
