@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Mono;
 
@@ -9,11 +10,11 @@ import reactor.core.publisher.Mono;
  * Stanford Center for Biomedical Informatics Research
  * 2021-08-19
  */
-public class GetAvailableProjectsWithPermissionHandler implements edu.stanford.protege.webprotege.ipc.CommandHandler<GetAvailableProjectsWithPermissionAction, GetAvailableProjectsWithPermissionResult> {
+public class GetAvailableProjectsWithPermissionCommandHandler implements CommandHandler<GetAvailableProjectsWithPermissionAction, GetAvailableProjectsWithPermissionResult> {
 
     private GetAvailableProjectsWithPermissionActionHandler delegate;
 
-    public GetAvailableProjectsWithPermissionHandler(GetAvailableProjectsWithPermissionActionHandler delegate) {
+    public GetAvailableProjectsWithPermissionCommandHandler(GetAvailableProjectsWithPermissionActionHandler delegate) {
         this.delegate = delegate;
     }
 

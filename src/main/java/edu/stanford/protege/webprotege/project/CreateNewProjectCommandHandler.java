@@ -4,39 +4,37 @@ import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
-import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashAction;
-import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashResult;
 import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Mono;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
- * 2021-08-20
+ * 2021-08-19
  */
 @WebProtegeHandler
-public class RemoveProjectFromTrashHandler implements CommandHandler<RemoveProjectFromTrashAction, RemoveProjectFromTrashResult> {
+public class CreateNewProjectCommandHandler implements CommandHandler<CreateNewProjectAction, CreateNewProjectResult> {
 
     private final ActionExecutor executor;
 
-    public RemoveProjectFromTrashHandler(ActionExecutor executor) {
+    public CreateNewProjectCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 
     @NotNull
     @Override
     public String getChannelName() {
-        return RemoveProjectFromTrashAction.CHANNEL;
+        return CreateNewProjectAction.CHANNEL;
     }
 
     @Override
-    public Class<RemoveProjectFromTrashAction> getRequestClass() {
-        return RemoveProjectFromTrashAction.class;
+    public Class<CreateNewProjectAction> getRequestClass() {
+        return CreateNewProjectAction.class;
     }
 
     @Override
-    public Mono<RemoveProjectFromTrashResult> handleRequest(RemoveProjectFromTrashAction request,
-                                                            ExecutionContext executionContext) {
+    public Mono<CreateNewProjectResult> handleRequest(CreateNewProjectAction request,
+                                                      ExecutionContext executionContext) {
         return Mono.just(executor.execute(request, executionContext));
     }
 }

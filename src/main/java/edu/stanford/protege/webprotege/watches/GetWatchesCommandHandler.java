@@ -13,11 +13,11 @@ import reactor.core.publisher.Mono;
  * 2021-08-19
  */
 @WebProtegeHandler
-public class GetWatchesHandler implements CommandHandler<GetWatchesAction, GetWatchesResult> {
+public class GetWatchesCommandHandler implements CommandHandler<GetWatchesAction, GetWatchesResult> {
 
     private final ActionExecutor executor;
 
-    public GetWatchesHandler(ActionExecutor executor) {
+    public GetWatchesCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 

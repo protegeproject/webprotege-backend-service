@@ -14,12 +14,12 @@ import reactor.core.publisher.Mono;
  * 2021-08-19
  */
 @WebProtegeHandler
-public class GetAvailableProjectsHandler implements CommandHandler<GetAvailableProjectsAction, GetAvailableProjectsResult> {
+public class GetAvailableProjectsCommandHandler implements CommandHandler<GetAvailableProjectsAction, GetAvailableProjectsResult> {
 
 
     private final ActionExecutor executor;
 
-    public GetAvailableProjectsHandler(ActionExecutor executor) {
+    public GetAvailableProjectsCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 

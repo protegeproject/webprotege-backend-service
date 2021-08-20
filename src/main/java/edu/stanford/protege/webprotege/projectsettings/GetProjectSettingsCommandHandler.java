@@ -14,11 +14,11 @@ import reactor.core.publisher.Mono;
  * 2021-08-19
  */
 @WebProtegeHandler
-public class GetProjectSettingsHandler implements CommandHandler<GetProjectSettingsAction, GetProjectSettingsResult> {
+public class GetProjectSettingsCommandHandler implements CommandHandler<GetProjectSettingsAction, GetProjectSettingsResult> {
 
     private final ActionExecutor executor;
 
-    public GetProjectSettingsHandler(ActionExecutor executor) {
+    public GetProjectSettingsCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 

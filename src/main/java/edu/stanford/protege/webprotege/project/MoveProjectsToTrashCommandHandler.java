@@ -15,11 +15,11 @@ import reactor.core.publisher.Mono;
  * 2021-08-19
  */
 @WebProtegeHandler
-public class MoveProjectsToTrashHandler implements CommandHandler<MoveProjectsToTrashAction, MoveProjectsToTrashResult> {
+public class MoveProjectsToTrashCommandHandler implements CommandHandler<MoveProjectsToTrashAction, MoveProjectsToTrashResult> {
 
     private final ActionExecutor executor;
 
-    public MoveProjectsToTrashHandler(ActionExecutor executor) {
+    public MoveProjectsToTrashCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 
