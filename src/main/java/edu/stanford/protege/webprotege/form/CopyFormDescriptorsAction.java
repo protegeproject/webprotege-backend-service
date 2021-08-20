@@ -17,10 +17,10 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-@JsonTypeName("CopyFormDescriptorsFromProject")
+@JsonTypeName("CopyFormDescriptors")
 public abstract class CopyFormDescriptorsAction implements ProjectAction<CopyFormDescriptorsResult> {
 
-    public static final String CHANNEL = "forms.CopyFormDescriptorsFromProject";
+    public static final String CHANNEL = "forms.CopyFormDescriptors";
 
     @Nonnull
     @Override
