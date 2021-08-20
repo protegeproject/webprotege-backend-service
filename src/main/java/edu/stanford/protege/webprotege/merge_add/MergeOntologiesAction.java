@@ -14,17 +14,17 @@ import java.util.List;
 
 @AutoValue
 
-@JsonTypeName("NewOntologyMergeAdd")
-public abstract class NewOntologyMergeAddAction implements ProjectAction<NewOntologyMergeAddResult> {
+@JsonTypeName("MergeOntologies")
+public abstract class MergeOntologiesAction implements ProjectAction<MergeOntologiesResult> {
 
-    public static final String CHANNEL = "ontologies.NewOntologyMergeAdd";
+    public static final String CHANNEL = "ontologies.MergeOntologies";
 
     @JsonCreator
-    public static NewOntologyMergeAddAction create(@JsonProperty("projectId") ProjectId projectId,
-                                                   @JsonProperty("documentId") DocumentId documentId,
-                                                   @JsonProperty("iri") String iri,
-                                                   @JsonProperty("ontologyList") List<OWLOntologyID> ontologyList) {
-        return new AutoValue_NewOntologyMergeAddAction(projectId, documentId, iri, ontologyList);
+    public static MergeOntologiesAction create(@JsonProperty("projectId") ProjectId projectId,
+                                               @JsonProperty("documentId") DocumentId documentId,
+                                               @JsonProperty("iri") String iri,
+                                               @JsonProperty("ontologyList") List<OWLOntologyID> ontologyList) {
+        return new AutoValue_MergeOntologiesAction(projectId, documentId, iri, ontologyList);
     }
 
     @Override

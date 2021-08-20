@@ -33,7 +33,7 @@ import edu.stanford.protege.webprotege.merge.ComputeProjectMergeResult;
 import edu.stanford.protege.webprotege.merge.MergeUploadedProjectResult;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddResult;
 import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsResult;
-import edu.stanford.protege.webprotege.merge_add.NewOntologyMergeAddResult;
+import edu.stanford.protege.webprotege.merge_add.MergeOntologiesResult;
 import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.ontology.GetOntologyAnnotationsResult;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdResult;
@@ -171,7 +171,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(MoveEntitiesToParentResult.class),
         @Type(MoveHierarchyNodeResult.class),
         @Type(MoveProjectToTrashResult.class),
-        @Type(NewOntologyMergeAddResult.class),
+        @Type(MergeOntologiesResult.class),
         @Type(PerformEntitySearchResult.class),
         @Type(RebuildPermissionsResult.class),
         @Type(RemoveProjectFromTrashResult.class),

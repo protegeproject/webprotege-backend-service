@@ -20,9 +20,9 @@ import java.util.List;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
 
-public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandler<NewOntologyMergeAddAction, NewOntologyMergeAddResult> {
+public class MergeOntologiesActionHandler extends AbstractProjectActionHandler<MergeOntologiesAction, MergeOntologiesResult> {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewOntologyMergeAddActionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(MergeOntologiesActionHandler.class);
 
     @Nonnull
     private final UploadedOntologiesCache uploadedOntologiesCache;
@@ -37,10 +37,10 @@ public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandl
     private final OntologyMergeAddPatcher patcher;
 
     @Inject
-    public NewOntologyMergeAddActionHandler(@Nonnull AccessManager accessManager,
-                                            @Nonnull UploadedOntologiesCache uploadedOntologiesCache,
-                                            @Nonnull ProjectOntologiesBuilder projectOntologiesBuilder,
-                                            @Nonnull HasApplyChanges changeManager) {
+    public MergeOntologiesActionHandler(@Nonnull AccessManager accessManager,
+                                        @Nonnull UploadedOntologiesCache uploadedOntologiesCache,
+                                        @Nonnull ProjectOntologiesBuilder projectOntologiesBuilder,
+                                        @Nonnull HasApplyChanges changeManager) {
         super(accessManager);
         this.uploadedOntologiesCache = uploadedOntologiesCache;
         this.projectOntologiesBuilder = projectOntologiesBuilder;
@@ -50,8 +50,8 @@ public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandl
 
     @Nonnull
     @Override
-    public NewOntologyMergeAddResult execute(@Nonnull NewOntologyMergeAddAction action,
-                                             @Nonnull ExecutionContext executionContext){
+    public MergeOntologiesResult execute(@Nonnull MergeOntologiesAction action,
+                                         @Nonnull ExecutionContext executionContext){
         try{
             var documentId = action.getDocumentId();
 
@@ -69,7 +69,7 @@ public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandl
 
             patcher.applyChanges(changes, executionContext);
 
-            return NewOntologyMergeAddResult.create();
+            return MergeOntologiesResult.create();
         }
         catch (Exception e){
             logger.info("An error occurred while merging(adding axioms) ontologies", e);
@@ -80,13 +80,13 @@ public class NewOntologyMergeAddActionHandler extends AbstractProjectActionHandl
 
     @Nonnull
     @Override
-    public Class<NewOntologyMergeAddAction> getActionClass(){
-        return NewOntologyMergeAddAction.class;
+    public Class<MergeOntologiesAction> getActionClass(){
+        return MergeOntologiesAction.class;
     }
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(NewOntologyMergeAddAction action) {
+    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(MergeOntologiesAction action) {
         return Arrays.asList(EDIT_ONTOLOGY, UPLOAD_AND_MERGE_ADDITIONS);
     }
 }

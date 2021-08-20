@@ -32,7 +32,7 @@ import edu.stanford.protege.webprotege.merge.ComputeProjectMergeAction;
 import edu.stanford.protege.webprotege.merge.MergeUploadedProjectAction;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddAction;
 import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIds;
-import edu.stanford.protege.webprotege.merge_add.NewOntologyMergeAddAction;
+import edu.stanford.protege.webprotege.merge_add.MergeOntologiesAction;
 import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.ontology.GetOntologyAnnotationsAction;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdAction;
@@ -167,7 +167,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = MoveEntitiesToParentAction.class),
         @Type(value = MoveHierarchyNodeAction.class),
         @Type(value = MoveProjectToTrashAction.class),
-        @Type(value = NewOntologyMergeAddAction.class),
+        @Type(value = MergeOntologiesAction.class),
         @Type(value = PerformEntitySearchAction.class),
         @Type(value = RebuildPermissionsAction.class),
         @Type(value = RemoveProjectFromTrashAction.class),

@@ -22,7 +22,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY
 import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
 
 public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProjectActionHandler<GetUploadedAndProjectOntologyIds, GetUploadedAndProjectOntologyIdsResult> {
-    private static final Logger logger = LoggerFactory.getLogger(NewOntologyMergeAddActionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(MergeOntologiesActionHandler.class);
 
     @Nonnull
     private final ProjectId projectId;

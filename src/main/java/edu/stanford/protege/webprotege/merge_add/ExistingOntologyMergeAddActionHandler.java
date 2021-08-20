@@ -23,7 +23,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_ME
 
 public class ExistingOntologyMergeAddActionHandler extends AbstractProjectActionHandler<ExistingOntologyMergeAddAction, ExistingOntologyMergeAddResult> {
 
-    private static final Logger logger = LoggerFactory.getLogger(NewOntologyMergeAddActionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(MergeOntologiesActionHandler.class);
 
     @Nonnull
     private final ProjectId projectId;

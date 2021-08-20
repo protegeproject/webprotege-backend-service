@@ -8,11 +8,11 @@ import edu.stanford.protege.webprotege.dispatch.Result;
 
 @AutoValue
 
-@JsonTypeName("NewOntologyMergeAdd")
-public abstract class NewOntologyMergeAddResult implements Result {
+@JsonTypeName("MergeOntologies")
+public abstract class MergeOntologiesResult implements Result {
 
     @JsonCreator
-    public static NewOntologyMergeAddResult create() {
-        return new AutoValue_NewOntologyMergeAddResult();
+    public static MergeOntologiesResult create() {
+        return new AutoValue_MergeOntologiesResult();
     }
 }

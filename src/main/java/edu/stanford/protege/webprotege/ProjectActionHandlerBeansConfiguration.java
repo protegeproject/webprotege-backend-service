@@ -40,7 +40,7 @@ import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddActionHandler;
 import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsActionHandler;
-import edu.stanford.protege.webprotege.merge_add.NewOntologyMergeAddActionHandler;
+import edu.stanford.protege.webprotege.merge_add.MergeOntologiesActionHandler;
 import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
@@ -444,10 +444,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    NewOntologyMergeAddActionHandler newOntologyMergeAddActionHandler(AccessManager p1,
-                                                                      UploadedOntologiesCache p2,
-                                                                      ProjectOntologiesBuilder p3, HasApplyChanges p4) {
-        return new NewOntologyMergeAddActionHandler(p1, p2, p3, p4);
+    MergeOntologiesActionHandler newOntologyMergeAddActionHandler(AccessManager p1,
+                                                                  UploadedOntologiesCache p2,
+                                                                  ProjectOntologiesBuilder p3, HasApplyChanges p4) {
+        return new MergeOntologiesActionHandler(p1, p2, p3, p4);
     }
 
 
