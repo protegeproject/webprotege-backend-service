@@ -81,7 +81,7 @@ public class ApplicationActionHandlerBeansConfiguration {
 
     @Bean
     public ApplicationActionHandler removeProjectsFromTrashActionHandler(ProjectDetailsManager p1) {
-        return new RemoveProjectsFromTrashActionHandler(p1);
+        return new RemoveProjectFromTrashActionHandler(p1);
     }
 
     @Bean

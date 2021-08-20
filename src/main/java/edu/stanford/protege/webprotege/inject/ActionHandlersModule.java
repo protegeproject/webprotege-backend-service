@@ -70,7 +70,7 @@ public class ActionHandlersModule {
 
     
     public ApplicationActionHandler provideRemoveProjectsFromTrashActionHandler(
-            RemoveProjectsFromTrashActionHandler handler) {
+            RemoveProjectFromTrashActionHandler handler) {
         return handler;
     }
 

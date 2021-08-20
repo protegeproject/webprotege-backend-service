@@ -13,7 +13,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-07
  */
-public class RemoveProjectsFromTrash_Serialization_TestCase {
+public class RemoveProjectFromTrash_Serialization_TestCase {
 
     @Test
     public void shouldSerializeAction() throws IOException {

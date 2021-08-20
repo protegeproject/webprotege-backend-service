@@ -26,12 +26,12 @@ import java.util.List;
  * Bio-Medical Informatics Research Group<br>
  * Date: 19/04/2013
  */
-public class RemoveProjectsFromTrashActionHandler implements ApplicationActionHandler<RemoveProjectFromTrashAction, RemoveProjectFromTrashResult> {
+public class RemoveProjectFromTrashActionHandler implements ApplicationActionHandler<RemoveProjectFromTrashAction, RemoveProjectFromTrashResult> {
 
     private final ProjectDetailsManager projectDetailsManager;
 
     @Inject
-    public RemoveProjectsFromTrashActionHandler(ProjectDetailsManager projectDetailsManager) {
+    public RemoveProjectFromTrashActionHandler(ProjectDetailsManager projectDetailsManager) {
         this.projectDetailsManager = projectDetailsManager;
     }
 
