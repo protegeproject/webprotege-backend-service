@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.entity;
+package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
