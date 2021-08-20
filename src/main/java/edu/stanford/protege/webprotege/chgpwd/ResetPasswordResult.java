@@ -9,6 +9,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 01/10/2014
  */
+@Deprecated
 @JsonTypeName("ResetPassword")
 public class ResetPasswordResult implements Result {
 
