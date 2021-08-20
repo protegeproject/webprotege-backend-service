@@ -15,13 +15,13 @@ import java.util.Collections;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-06
  */
-public class GetUploadedAndProjectOntologyIds_Serialization_TestCase {
+public class GetUploadedAndProjectOntologyIds_Action_Serialization_TestCase {
 
 
     @Test
     public void shouldSerializeAction() throws IOException {
-        var action = GetUploadedAndProjectOntologyIds.create(ProjectId.getNil(),
-                                                             new DocumentId("abc"));
+        var action = GetUploadedAndProjectOntologyIdsAction.create(ProjectId.getNil(),
+                                                                   new DocumentId("abc"));
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 

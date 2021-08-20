@@ -21,7 +21,7 @@ import java.util.List;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
 
-public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProjectActionHandler<GetUploadedAndProjectOntologyIds, GetUploadedAndProjectOntologyIdsResult> {
+public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProjectActionHandler<GetUploadedAndProjectOntologyIdsAction, GetUploadedAndProjectOntologyIdsResult> {
     private static final Logger logger = LoggerFactory.getLogger(MergeOntologiesActionHandler.class);
 
     @Nonnull
@@ -43,7 +43,7 @@ public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProje
 
     @Nonnull
     @Override
-    public GetUploadedAndProjectOntologyIdsResult execute(@Nonnull GetUploadedAndProjectOntologyIds action, @Nonnull ExecutionContext executionContext){
+    public GetUploadedAndProjectOntologyIdsResult execute(@Nonnull GetUploadedAndProjectOntologyIdsAction action, @Nonnull ExecutionContext executionContext){
         try{
             var documentId = action.getDocumentId();
 
@@ -70,13 +70,13 @@ public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProje
 
     @Nonnull
     @Override
-    public Class<GetUploadedAndProjectOntologyIds> getActionClass(){
-        return GetUploadedAndProjectOntologyIds.class;
+    public Class<GetUploadedAndProjectOntologyIdsAction> getActionClass(){
+        return GetUploadedAndProjectOntologyIdsAction.class;
     }
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(GetUploadedAndProjectOntologyIds action) {
+    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(GetUploadedAndProjectOntologyIdsAction action) {
         return Arrays.asList(EDIT_ONTOLOGY, UPLOAD_AND_MERGE_ADDITIONS);
     }
 }
