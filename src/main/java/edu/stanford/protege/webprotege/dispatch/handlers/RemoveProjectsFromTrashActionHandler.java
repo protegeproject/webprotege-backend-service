@@ -52,11 +52,8 @@ public class RemoveProjectsFromTrashActionHandler implements ApplicationActionHa
     @Nonnull
     @Override
     public RemoveProjectFromTrashResult execute(@Nonnull RemoveProjectFromTrashAction action, @Nonnull ExecutionContext executionContext) {
-        List<WebProtegeEvent<?>> events = new ArrayList<>();
         ProjectId projectId = action.getProjectId();
         projectDetailsManager.setInTrash(projectId, false);
-        events.add(new ProjectMovedFromTrashEvent(projectId));
-        EventList<WebProtegeEvent<?>> eventList = EventList.create(EventTag.getFirst(), ImmutableList.copyOf(events), EventTag.getFirst());
-        return RemoveProjectFromTrashResult.create(eventList);
+        return RemoveProjectFromTrashResult.create();
     }
 }
