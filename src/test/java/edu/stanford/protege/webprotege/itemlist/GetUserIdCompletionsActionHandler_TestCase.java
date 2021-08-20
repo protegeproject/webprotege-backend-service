@@ -50,7 +50,7 @@ public class GetUserIdCompletionsActionHandler_TestCase {
     @Test
     public void shouldReturnFoundUserIds() {
         when(action.getCompletionText()).thenReturn("j");
-        GetPossibleItemCompletionsResult<UserId> result = actionHandler.execute(action, mock(ExecutionContext.class));
-        assertThat(result.getPossibleItemCompletions(), hasItems(janeDoe, johnSmith));
+        GetUserIdCompletionsResult result = actionHandler.execute(action, mock(ExecutionContext.class));
+        assertThat(result.getCompletions(), hasItems(janeDoe, johnSmith));
     }
 }

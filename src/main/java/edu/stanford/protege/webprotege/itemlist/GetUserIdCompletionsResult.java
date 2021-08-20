@@ -1,9 +1,10 @@
 package edu.stanford.protege.webprotege.itemlist;
 
-import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.Result;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 
@@ -12,44 +13,36 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  * Stanford Center for Biomedical Informatics Research
  * 12/05/15
  */
-public class GetUserIdCompletionsResult extends GetPossibleItemCompletionsResult<UserId> {
+public class GetUserIdCompletionsResult implements Result {
 
-    /**
-     * For serialization only
-     */
-    private GetUserIdCompletionsResult() {
-    }
+    private final List<UserId> completions;
 
     private GetUserIdCompletionsResult(List<UserId> possibleItemCompletions) {
-        super(possibleItemCompletions);
+        completions = List.copyOf(possibleItemCompletions);
     }
 
     public static GetUserIdCompletionsResult create(List<UserId> possibleItemCompletions) {
         return new GetUserIdCompletionsResult(possibleItemCompletions);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getPossibleItemCompletions());
+    public List<UserId> getCompletions() {
+        return completions;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (!(obj instanceof GetUserIdCompletionsResult)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        GetUserIdCompletionsResult other = (GetUserIdCompletionsResult) obj;
-        return this.getPossibleItemCompletions().equals(other.getPossibleItemCompletions());
+        GetUserIdCompletionsResult that = (GetUserIdCompletionsResult) o;
+        return Objects.equals(completions, that.completions);
     }
 
-
     @Override
-    public String toString() {
-        return toStringHelper("GetUserIdCompletionsResult")
-                .addValue(getPossibleItemCompletions())
-                .toString();
+    public int hashCode() {
+        return Objects.hash(completions);
     }
 }
