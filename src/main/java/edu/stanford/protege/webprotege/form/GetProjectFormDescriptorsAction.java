@@ -15,6 +15,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectFormDescriptorsAction implements ProjectAction<GetProjectFormDescriptorsResult> {
 
+    public static final String CHANNEL = "forms.GetProjectFormDescriptors";
+
     private ProjectId projectId;
 
     private GetProjectFormDescriptorsAction(ProjectId projectId) {
@@ -27,7 +29,7 @@ public class GetProjectFormDescriptorsAction implements ProjectAction<GetProject
 
     @Override
     public String getChannel() {
-        return "forms.GetProjectFormDescriptors";
+        return CHANNEL;
     }
 
     @Nonnull
