@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetHeadRevisionNumberAction implements ProjectAction<GetHeadRevisionNumberResult> {
 
-    public static final String CHANNEL = "webprotege.revisions.GetHeadRevisionNumber";
+    public static final String CHANNEL = "webprotege.history.GetHeadRevisionNumber";
 
     private final ProjectId projectId;
 
