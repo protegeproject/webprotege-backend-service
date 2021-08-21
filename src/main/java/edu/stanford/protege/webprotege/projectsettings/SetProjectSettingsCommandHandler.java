@@ -1,4 +1,5 @@
 package edu.stanford.protege.webprotege.projectsettings;
+
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -33,7 +34,7 @@ public class SetProjectSettingsCommandHandler implements CommandHandler<SetProje
 
     @Override
     public Mono<SetProjectSettingsResult> handleRequest(SetProjectSettingsAction request,
-                                             ExecutionContext executionContext) {
+                                                        ExecutionContext executionContext) {
         return Mono.just(executor.execute(request, executionContext));
     }
 }
