@@ -530,14 +530,14 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    AddEntityCommentHandler addEntityCommentActionHandler(ProjectId p1,
-                                                          HasGetRendering p2,
-                                                          EventManager<ProjectEvent<?>> p3,
-                                                          EntityDiscussionThreadRepository p4,
-                                                          CommentNotificationEmailer p5,
-                                                          CommentPostedSlackWebhookInvoker p6,
-                                                          ProjectDetailsRepository p7, AccessManager p8) {
-        return new AddEntityCommentHandler(p1, p2, p3, p4, p5, p6, p7, p8);
+    AddCommentHandler addEntityCommentActionHandler(ProjectId p1,
+                                                    HasGetRendering p2,
+                                                    EventManager<ProjectEvent<?>> p3,
+                                                    EntityDiscussionThreadRepository p4,
+                                                    CommentNotificationEmailer p5,
+                                                    CommentPostedSlackWebhookInvoker p6,
+                                                    ProjectDetailsRepository p7, AccessManager p8) {
+        return new AddCommentHandler(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
 

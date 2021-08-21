@@ -75,7 +75,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "action")
 @JsonSubTypes({
-        @Type(AddEntityCommentResult.class),
+        @Type(AddCommentResult.class),
         @Type(CheckManchesterSyntaxFrameResult.class),
         @Type(ComputeProjectMergeResult.class),
         @Type(CopyFormDescriptorsResult.class),

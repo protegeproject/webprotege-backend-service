@@ -13,28 +13,28 @@ import reactor.core.publisher.Mono;
  * 2021-08-20
  */
 @WebProtegeHandler
-public class AddEntityCommentCommandHandler implements CommandHandler<AddEntityCommentAction, AddEntityCommentResult> {
+public class AddCommentCommandHandler implements CommandHandler<AddCommentAction, AddCommentResult> {
 
     private final ActionExecutor executor;
 
-    public AddEntityCommentCommandHandler(ActionExecutor executor) {
+    public AddCommentCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 
     @NotNull
     @Override
     public String getChannelName() {
-        return AddEntityCommentAction.CHANNEL;
+        return AddCommentAction.CHANNEL;
     }
 
     @Override
-    public Class<AddEntityCommentAction> getRequestClass() {
-        return AddEntityCommentAction.class;
+    public Class<AddCommentAction> getRequestClass() {
+        return AddCommentAction.class;
     }
 
     @Override
-    public Mono<AddEntityCommentResult> handleRequest(AddEntityCommentAction request,
-                                                      ExecutionContext executionContext) {
+    public Mono<AddCommentResult> handleRequest(AddCommentAction request,
+                                                ExecutionContext executionContext) {
         return Mono.just(executor.execute(request, executionContext));
     }
 }

@@ -18,7 +18,7 @@ import java.util.Optional;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-05
  */
-public class AddEntityComment_TestCase {
+public class AddComment_TestCase {
 
     private static final String THE_COMMENT = "The comment";
 
@@ -28,20 +28,20 @@ public class AddEntityComment_TestCase {
 
     @Test
     public void shouldSerializeAction() throws IOException {
-        var action = AddEntityCommentAction.addComment(projectId, threadId, THE_COMMENT);
+        var action = AddCommentAction.addComment(projectId, threadId, THE_COMMENT);
         JsonSerializationTestUtil.testSerialization(action, Action.class);
     }
 
     @Test
     public void shouldSerializeResult() throws IOException {
-        var result = AddEntityCommentResult.create(projectId,
-                                                   threadId,
-                                                   new Comment(CommentId.create(), UserId.valueOf("TheUser"),
+        var result = AddCommentResult.create(projectId,
+                                             threadId,
+                                             new Comment(CommentId.create(), UserId.valueOf("TheUser"),
                                                                1000, Optional.empty(),
                                                                THE_COMMENT,
                                                                THE_COMMENT),
-                                                   THE_COMMENT,
-                                                   EventList.create(EventTag.get(3),
+                                             THE_COMMENT,
+                                             EventList.create(EventTag.get(3),
                                                        ImmutableList.of(),
                                                        EventTag.get(3)));
         JsonSerializationTestUtil.testSerialization(result, Result.class);

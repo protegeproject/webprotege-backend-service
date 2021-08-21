@@ -29,7 +29,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_OBJECT
  * Stanford Center for Biomedical Informatics Research
  * 7 Oct 2016
  */
-public class AddEntityCommentHandler implements ProjectActionHandler<AddEntityCommentAction, AddEntityCommentResult> {
+public class AddCommentHandler implements ProjectActionHandler<AddCommentAction, AddCommentResult> {
 
     @Nonnull
     private final ProjectId projectId;
@@ -56,14 +56,14 @@ public class AddEntityCommentHandler implements ProjectActionHandler<AddEntityCo
     private final AccessManager accessManager;
 
     @Inject
-    public AddEntityCommentHandler(@Nonnull ProjectId projectId,
-                                   @Nonnull HasGetRendering renderer,
-                                   @Nonnull EventManager<ProjectEvent<?>> eventManager,
-                                   @Nonnull EntityDiscussionThreadRepository repository,
-                                   @Nonnull CommentNotificationEmailer notificationsEmailer,
-                                   @Nonnull CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker,
-                                   @Nonnull ProjectDetailsRepository projectDetailsRepository,
-                                   @Nonnull AccessManager accessManager) {
+    public AddCommentHandler(@Nonnull ProjectId projectId,
+                             @Nonnull HasGetRendering renderer,
+                             @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                             @Nonnull EntityDiscussionThreadRepository repository,
+                             @Nonnull CommentNotificationEmailer notificationsEmailer,
+                             @Nonnull CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker,
+                             @Nonnull ProjectDetailsRepository projectDetailsRepository,
+                             @Nonnull AccessManager accessManager) {
         this.projectId = projectId;
         this.renderer = renderer;
         this.eventManager = eventManager;
@@ -76,13 +76,13 @@ public class AddEntityCommentHandler implements ProjectActionHandler<AddEntityCo
 
     @Nonnull
     @Override
-    public Class<AddEntityCommentAction> getActionClass() {
-        return AddEntityCommentAction.class;
+    public Class<AddCommentAction> getActionClass() {
+        return AddCommentAction.class;
     }
 
     @Nonnull
     @Override
-    public RequestValidator getRequestValidator(@Nonnull AddEntityCommentAction action, @Nonnull RequestContext requestContext) {
+    public RequestValidator getRequestValidator(@Nonnull AddCommentAction action, @Nonnull RequestContext requestContext) {
         return new ProjectPermissionValidator(accessManager,
                                               projectId,
                                               requestContext.getUserId(),
@@ -92,8 +92,8 @@ public class AddEntityCommentHandler implements ProjectActionHandler<AddEntityCo
 
     @Nonnull
     @Override
-    public AddEntityCommentResult execute(@Nonnull AddEntityCommentAction action,
-                                             @Nonnull ExecutionContext executionContext) {
+    public AddCommentResult execute(@Nonnull AddCommentAction action,
+                                    @Nonnull ExecutionContext executionContext) {
         UserId createdBy = executionContext.getUserId();
         long createdAt = System.currentTimeMillis();
         CommentRenderer r = new CommentRenderer();
@@ -111,7 +111,7 @@ public class AddEntityCommentHandler implements ProjectActionHandler<AddEntityCo
         postCommentPostedEvent(threadId, comment);
         EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(startTag);
         sendOutNotifications(threadId, comment);
-        return AddEntityCommentResult.create(action.getProjectId(), threadId, comment, renderedComment, eventList);
+        return AddCommentResult.create(action.getProjectId(), threadId, comment, renderedComment, eventList);
 
     }
 

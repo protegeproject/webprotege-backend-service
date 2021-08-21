@@ -345,7 +345,7 @@ public class ProjectActionHandlersModule {
     }
 
      
-    public ProjectActionHandler provideAddEntityCommentActionHandler(AddEntityCommentHandler handler) {
+    public ProjectActionHandler provideAddEntityCommentActionHandler(AddCommentHandler handler) {
         return handler;
     }
 

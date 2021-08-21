@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.event.EventList;
@@ -22,8 +21,8 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-@JsonTypeName("AddEntityComment")
-public abstract class AddEntityCommentResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>>, Response {
+@JsonTypeName("AddComment")
+public abstract class AddCommentResult implements Result, HasProjectId, HasEventList<ProjectEvent<?>>, Response {
 
     @Nonnull
     @Override
@@ -39,15 +38,15 @@ public abstract class AddEntityCommentResult implements Result, HasProjectId, Ha
     public abstract EventList<ProjectEvent<?>> getEventList();
 
     @JsonCreator
-    public static AddEntityCommentResult create(@JsonProperty("projectId") ProjectId newProjectId,
-                                                @JsonProperty("threadId") ThreadId newThreadId,
-                                                @JsonProperty("comment") Comment newComment,
-                                                @JsonProperty("commentRendering") String newCommentRendering,
-                                                @JsonProperty("eventList") EventList<ProjectEvent<?>> newEventList) {
-        return new AutoValue_AddEntityCommentResult(newProjectId,
-                                                    newThreadId,
-                                                    newComment,
-                                                    newCommentRendering,
-                                                    newEventList);
+    public static AddCommentResult create(@JsonProperty("projectId") ProjectId newProjectId,
+                                          @JsonProperty("threadId") ThreadId newThreadId,
+                                          @JsonProperty("comment") Comment newComment,
+                                          @JsonProperty("commentRendering") String newCommentRendering,
+                                          @JsonProperty("eventList") EventList<ProjectEvent<?>> newEventList) {
+        return new AutoValue_AddCommentResult(newProjectId,
+                                              newThreadId,
+                                              newComment,
+                                              newCommentRendering,
+                                              newEventList);
     }
 }

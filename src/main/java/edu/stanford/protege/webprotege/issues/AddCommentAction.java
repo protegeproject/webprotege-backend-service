@@ -18,16 +18,16 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-@JsonTypeName("AddEntityComment")
-public abstract class AddEntityCommentAction implements ProjectAction<AddEntityCommentResult>, HasProjectId, Request<AddEntityCommentResult> {
+@JsonTypeName("AddComment")
+public abstract class AddCommentAction implements ProjectAction<AddCommentResult>, HasProjectId, Request<AddCommentResult> {
 
-    public static final String CHANNEL = "webprotege.issues.AddEntityComment";
+    public static final String CHANNEL = "webprotege.issues.AddComment";
 
     @JsonCreator
-    public static AddEntityCommentAction addComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,
-                                                    @JsonProperty("threadId") @Nonnull ThreadId threadId,
-                                                    @JsonProperty("comment") @Nonnull String comment) {
-        return new AutoValue_AddEntityCommentAction(projectId, threadId, comment);
+    public static AddCommentAction addComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,
+                                              @JsonProperty("threadId") @Nonnull ThreadId threadId,
+                                              @JsonProperty("comment") @Nonnull String comment) {
+        return new AutoValue_AddCommentAction(projectId, threadId, comment);
     }
 
     @Override
