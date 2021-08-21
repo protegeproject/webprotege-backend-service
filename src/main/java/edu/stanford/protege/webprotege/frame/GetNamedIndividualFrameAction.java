@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 public abstract class GetNamedIndividualFrameAction implements ProjectAction<GetNamedIndividualFrameResult>, HasSubject<OWLNamedIndividual> {
 
 
-    public static final String CHANNEL = "entities.GetNamedIndividualFrame";
+    public static final String CHANNEL = "frames.GetNamedIndividualFrame";
 
     @JsonCreator
     public static GetNamedIndividualFrameAction create(@JsonProperty("projectId") ProjectId projectId,

@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOntologyFramesAction implements ProjectAction<GetOntologyFramesResult> {
 
-    public static final String CHANNEL = "ontologies.GetOntologyFrames";
+    public static final String CHANNEL = "frames.GetOntologyFrames";
 
     private ProjectId projectId;
 

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetAnnotationPropertyFrame")
 public abstract class GetAnnotationPropertyFrameAction implements ProjectAction<GetAnnotationPropertyFrameResult> {
 
-    public static final String CHANNEL = "entities.GetAnnotationPropertyFrame";
+    public static final String CHANNEL = "frames.GetAnnotationPropertyFrame";
 
     @JsonCreator
     public static GetAnnotationPropertyFrameAction create(@JsonProperty("subject") OWLAnnotationProperty subject,

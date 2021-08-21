@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 public abstract class UpdateNamedIndividualFrameAction implements UpdateFrameAction, ProjectAction<UpdateNamedIndividualFrameResult> {
 
 
-    public static final String CHANNEL = "entities.UpdateNamedIndividualFrame";
+    public static final String CHANNEL = "frames.UpdateNamedIndividualFrame";
 
     @JsonCreator
     public static UpdateNamedIndividualFrameAction create(@JsonProperty("projectId") ProjectId projectId,

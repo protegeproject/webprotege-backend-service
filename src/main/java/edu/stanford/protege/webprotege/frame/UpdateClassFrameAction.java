@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("UpdateClassFrame")
 public abstract class UpdateClassFrameAction implements UpdateFrameAction, ProjectAction<UpdateClassFrameResult> {
 
-    public static final String CHANNEL = "entities.UpdateClassFrame";
+    public static final String CHANNEL = "frames.UpdateClassFrame";
 
     @JsonCreator
     public static UpdateClassFrameAction create(@JsonProperty("projectId") ProjectId projectId,
