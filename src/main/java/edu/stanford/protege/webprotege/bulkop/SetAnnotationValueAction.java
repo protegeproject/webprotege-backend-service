@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 public abstract class SetAnnotationValueAction implements ProjectAction<SetAnnotationValueResult>, HasCommitMessage {
 
 
-    public static final String CHANNELS = "annotations.SetAnnotationValue";
+    public static final String CHANNEL = "annotations.SetAnnotationValue";
 
     @JsonCreator
     public static SetAnnotationValueAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,
@@ -37,7 +37,7 @@ public abstract class SetAnnotationValueAction implements ProjectAction<SetAnnot
 
     @Override
     public String getChannel() {
-        return CHANNELS;
+        return CHANNEL;
     }
 
     @Nonnull
