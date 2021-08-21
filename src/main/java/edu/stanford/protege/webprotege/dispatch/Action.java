@@ -175,7 +175,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = ResetPerspectivesAction.class),
         @Type(value = ResetPerspectiveLayoutAction.class),
         @Type(value = SetPerspectivesAction.class),
-        @Type(value = ResetPerspectivesAction.class),
         @Type(value = RevertRevisionAction.class),
         @Type(value = SetAnnotationValueAction.class),
         @Type(value = SetApplicationSettingsAction.class),
