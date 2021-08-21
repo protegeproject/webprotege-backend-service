@@ -206,7 +206,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
         @Type(value = UpdateDataPropertyFrameAction.class),
         @Type(value = UpdateEntityTagsAction.class),
         @Type(value = UpdateFormDescriptorAction.class),
-        @Type(value = UpdateFrameAction.class),
         @Type(value = UpdateNamedIndividualFrameAction.class),
         @Type(value = UpdateObjectPropertyFrameAction.class)
 })
