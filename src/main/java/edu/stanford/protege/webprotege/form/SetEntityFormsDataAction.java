@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-01
  */
-public class SetEntityFormsDataAction implements ProjectAction<SetEntityFormDataResult> {
+public class SetEntityFormsDataAction implements ProjectAction<SetEntityFormsDataResult> {
 
     public static final String CHANNEL = "forms.SetEntityFormsData";
 

@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-01
  */
-public class SetEntityFormsDataActionHandler extends AbstractProjectChangeHandler<OWLEntity, SetEntityFormsDataAction, SetEntityFormDataResult> {
+public class SetEntityFormsDataActionHandler extends AbstractProjectChangeHandler<OWLEntity, SetEntityFormsDataAction, SetEntityFormsDataResult> {
 
     @Nonnull
     private final EntityFormChangeListGeneratorFactory changeListGeneratorFactory;
@@ -44,11 +44,11 @@ public class SetEntityFormsDataActionHandler extends AbstractProjectChangeHandle
     }
 
     @Override
-    protected SetEntityFormDataResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult,
-                                                         SetEntityFormsDataAction action,
-                                                         ExecutionContext executionContext,
-                                                         EventList<ProjectEvent<?>> eventList) {
-        return new SetEntityFormDataResult(eventList);
+    protected SetEntityFormsDataResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult,
+                                                          SetEntityFormsDataAction action,
+                                                          ExecutionContext executionContext,
+                                                          EventList<ProjectEvent<?>> eventList) {
+        return new SetEntityFormsDataResult(eventList);
     }
 
     @Nonnull

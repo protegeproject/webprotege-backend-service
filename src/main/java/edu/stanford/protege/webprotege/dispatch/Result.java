@@ -185,7 +185,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(SetEmailAddressResult.class),
         @Type(SetEntityCrudKitSettingsResult.class),
         @Type(SetEntityFormDescriptorResult.class),
-        @Type(SetEntityFormDataResult.class),
+        @Type(SetEntityFormsDataResult.class),
         @Type(SetEntityGraphActiveFiltersResult.class),
         @Type(SetEntityWatchesResult.class),
         @Type(SetManchesterSyntaxFrameResult.class),

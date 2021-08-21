@@ -13,16 +13,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-01
  */
-public class SetEntityFormDataResult implements Result, HasEventList<ProjectEvent<?>> {
+public class SetEntityFormsDataResult implements Result, HasEventList<ProjectEvent<?>> {
 
     private EventList<ProjectEvent<?>> eventList;
 
-    public SetEntityFormDataResult(EventList<ProjectEvent<?>> eventList) {
+    public SetEntityFormsDataResult(EventList<ProjectEvent<?>> eventList) {
         this.eventList = checkNotNull(eventList);
     }
 
 
-    private SetEntityFormDataResult() {
+    private SetEntityFormsDataResult() {
     }
 
     @Override
