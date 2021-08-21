@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetUserProjectEntityGraphCriteria")
 public abstract class GetUserProjectEntityGraphCriteriaAction implements ProjectAction<GetUserProjectEntityGraphCriteriaResult> {
 
-    public static final String CHANNEL = "entities.GetUserProjectEntityGraphCriteria";
+    public static final String CHANNEL = "graph.GetUserProjectEntityGraphCriteria";
 
     @JsonCreator
     public static GetUserProjectEntityGraphCriteriaAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId) {
