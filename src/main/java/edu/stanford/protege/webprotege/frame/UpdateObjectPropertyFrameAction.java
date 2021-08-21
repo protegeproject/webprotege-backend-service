@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 
 import javax.annotation.Nonnull;
 
@@ -17,7 +18,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("UpdateObjectPropertyFrame")
-public abstract class UpdateObjectPropertyFrameAction extends UpdateFrameAction {
+public abstract class UpdateObjectPropertyFrameAction implements UpdateFrameAction, ProjectAction<UpdateObjectPropertyFrameResult> {
 
 
     public static final String CHANNEL = "entities.UpdateObjectPropertyFrame";

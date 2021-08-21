@@ -9,9 +9,9 @@ import edu.stanford.protege.webprotege.dispatch.Result;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/02/2013
  */
-public abstract class UpdateFrameAction implements ProjectAction<Result> {
+public interface UpdateFrameAction {
 
-    public abstract PlainEntityFrame getFrom();
+    PlainEntityFrame getFrom();
 
-    public abstract PlainEntityFrame getTo();
+    PlainEntityFrame getTo();
 }
