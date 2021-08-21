@@ -22,7 +22,7 @@ import java.util.Optional;
 @JsonTypeName("SetUserProjectEntityGraphSettings")
 public abstract class SetUserProjectEntityGraphSettingsAction implements ProjectAction<SetUserProjectEntityGraphSettingsResult> {
 
-    public static final String CHANNEL = "graph.SetUserProjectEntityGraphSettings";
+    public static final String CHANNEL = "webprotege.graph.SetUserProjectEntityGraphSettings";
 
     @JsonCreator
     public static SetUserProjectEntityGraphSettingsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

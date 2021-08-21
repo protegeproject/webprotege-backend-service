@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetHierarchyRoots")
 public class GetHierarchyRootsAction implements ProjectAction<GetHierarchyRootsResult> {
 
-    public static final String CHANNEL = "hierarchies.GetHierarchyRoots";
+    public static final String CHANNEL = "webprotege.hierarchies.GetHierarchyRoots";
 
     private final ProjectId projectId;
 

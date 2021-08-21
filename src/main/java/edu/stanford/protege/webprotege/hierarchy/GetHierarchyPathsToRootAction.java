@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetHierarchyPathsToRoot")
 public abstract class GetHierarchyPathsToRootAction implements ProjectAction<GetHierarchyPathsToRootResult> {
 
-    public static final String CHANNEL = "hierarchies.GetHierarchyPathsToRoot";
+    public static final String CHANNEL = "webprotege.hierarchies.GetHierarchyPathsToRoot";
 
     @JsonCreator
     public static GetHierarchyPathsToRootAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

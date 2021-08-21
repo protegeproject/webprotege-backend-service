@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 public abstract class ComputeProjectMergeAction implements ProjectAction<ComputeProjectMergeResult> {
 
 
-    public static final String CHANNEL = "projects.ComputeProjectMerge";
+    public static final String CHANNEL = "webprotege.projects.ComputeProjectMerge";
 
     @Nonnull
     @Override

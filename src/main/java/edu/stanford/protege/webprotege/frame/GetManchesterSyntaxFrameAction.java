@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetManchesterSyntaxFrameAction implements ProjectAction<GetManchesterSyntaxFrameResult>, HasSubject<OWLEntity> {
 
-    public static final String CHANNEL = "manchester-syntax.GetManchesterSyntaxFrame";
+    public static final String CHANNEL = "webprotege.manchester-syntax.GetManchesterSyntaxFrame";
 
     private ProjectId projectId;
 

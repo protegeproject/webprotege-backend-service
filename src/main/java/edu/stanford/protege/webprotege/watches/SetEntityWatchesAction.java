@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetEntityWatchesAction implements ProjectAction<SetEntityWatchesResult> {
 
-    public static final String CHANNEL = "watches.SetEntityWatches";
+    public static final String CHANNEL = "webprotege.watches.SetEntityWatches";
 
     private ProjectId projectId;
 

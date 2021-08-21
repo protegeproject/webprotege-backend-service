@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetEntityFormsDataAction implements ProjectAction<SetEntityFormsDataResult> {
 
-    public static final String CHANNEL = "forms.SetEntityFormsData";
+    public static final String CHANNEL = "webprotege.forms.SetEntityFormsData";
 
     private ProjectId projectId;
 

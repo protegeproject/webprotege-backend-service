@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("CreateNewProject")
 public record CreateNewProjectAction(NewProjectSettings newProjectSettings) implements Action<CreateNewProjectResult>, Request<CreateNewProjectResult> {
 
-    public static final String CHANNEL = "project-management.CreateNewProject";
+    public static final String CHANNEL = "webprotege.project-management.CreateNewProject";
 
     @JsonCreator
     public CreateNewProjectAction(@JsonProperty("newProjectSettings") NewProjectSettings newProjectSettings) {

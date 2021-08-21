@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetPerspectiveLayoutAction implements ProjectAction<GetPerspectiveLayoutResult>, HasProjectId {
 
-    public static final String CHANNEL = "perspectives.GetPerspectiveLayout";
+    public static final String CHANNEL = "webprotege.perspectives.GetPerspectiveLayout";
 
     private ProjectId projectId;
 

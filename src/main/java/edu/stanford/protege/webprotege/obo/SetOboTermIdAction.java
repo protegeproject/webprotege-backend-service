@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetOboTermIdAction implements ProjectAction<SetOboTermIdResult> {
 
-    public static final String CHANNEL = "obo.SetOboTermId";
+    public static final String CHANNEL = "webprotege.obo.SetOboTermId";
 
     private ProjectId projectId;
 

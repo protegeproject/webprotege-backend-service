@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("UpdateFormDescriptor")
 public abstract class UpdateFormDescriptorAction implements ProjectAction<UpdateFormDescriptorResult> {
 
-    public static final String CHANNEL = "forms.UpdateFormDescriptors";
+    public static final String CHANNEL = "webprotege.forms.UpdateFormDescriptors";
 
     @JsonCreator
     public static UpdateFormDescriptorAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

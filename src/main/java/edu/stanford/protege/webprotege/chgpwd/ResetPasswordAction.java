@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("ResetPassword")
 public class ResetPasswordAction implements Action<ResetPasswordResult> {
 
-    public static final String CHANNEL = "users.ResetPassword";
+    public static final String CHANNEL = "webprotege.users.ResetPassword";
 
     private ResetPasswordData resetPasswordData;
 

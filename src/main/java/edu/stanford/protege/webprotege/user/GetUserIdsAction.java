@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.dispatch.Action;
  */
 public class GetUserIdsAction implements Action<GetUserIdsResult> {
 
-    public static final String CHANNEL = "users.GetUserIds";
+    public static final String CHANNEL = "webprotege.users.GetUserIds";
 
     public GetUserIdsAction() {
     }

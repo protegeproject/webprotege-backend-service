@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetWatchedEntityChanges")
 public class GetWatchedEntityChangesAction implements ProjectAction<GetWatchedEntityChangesResult>, HasProjectId {
 
-    public static final String CHANNEL = "watches.GetWatchedEntityChanges";
+    public static final String CHANNEL = "webprotege.watches.GetWatchedEntityChanges";
 
     private ProjectId projectId;
 

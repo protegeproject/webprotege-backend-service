@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MergeEntities")
 public abstract class MergeEntitiesAction implements ProjectAction<MergeEntitiesResult>, HasCommitMessage {
 
-    public static final String CHANNEL = "entities.MergeEntities";
+    public static final String CHANNEL = "webprotege.entities.MergeEntities";
 
     @Override
     public String getChannel() {

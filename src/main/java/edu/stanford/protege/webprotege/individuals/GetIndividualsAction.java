@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetIndividualsAction implements ProjectAction<GetIndividualsResult> {
 
-    public static final String CHANNEL = "entities.GetIndividuals";
+    public static final String CHANNEL = "webprotege.entities.GetIndividuals";
 
     private ProjectId projectId;
 

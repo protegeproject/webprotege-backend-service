@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetMatchingEntities")
 public abstract class GetMatchingEntitiesAction implements ProjectAction<GetMatchingEntitiesResult> {
 
-    public static final String CHANNEL = "entities.GetMatchingEntities";
+    public static final String CHANNEL = "webprotege.entities.GetMatchingEntities";
 
     @JsonCreator
     public static GetMatchingEntitiesAction create(@JsonProperty("projectId") ProjectId projectId,

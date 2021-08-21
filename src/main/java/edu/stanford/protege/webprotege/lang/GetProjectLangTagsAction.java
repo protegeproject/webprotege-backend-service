@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetProjectLangTags")
 public class GetProjectLangTagsAction implements ProjectAction<GetProjectLangTagsResult> {
 
-    public static final String CHANNEL = "projects.GetProjectLangTags";
+    public static final String CHANNEL = "webprotege.projects.GetProjectLangTags";
 
     private ProjectId projectId;
 

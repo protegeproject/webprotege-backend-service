@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetProjectDetails")
 public class GetProjectDetailsAction implements Action<GetProjectDetailsResult>, HasProjectId {
 
-    public static final String CHANNEL = "projects.GetProjectDetails";
+    public static final String CHANNEL = "webprotege.projects.GetProjectDetails";
 
     private ProjectId projectId;
 

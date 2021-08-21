@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetEntityTagsAction implements ProjectAction<GetEntityTagsResult> {
 
-    public static final String CHANNEL = "tags.GetEntityTags";
+    public static final String CHANNEL = "webprotege.tags.GetEntityTags";
 
     private final ProjectId projectId;
 

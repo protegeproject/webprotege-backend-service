@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 public abstract class CreateClassesAction implements CreateEntitiesInHierarchyAction<CreateClassesResult, OWLClass> {
 
 
-    public static final String CHANNEL = "entities.CreateClasses";
+    public static final String CHANNEL = "webprotege.entities.CreateClasses";
 
     @JsonCreator
     public static CreateClassesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

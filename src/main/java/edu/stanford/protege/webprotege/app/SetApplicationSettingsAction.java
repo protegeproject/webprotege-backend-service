@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("SetApplicationSettings")
 public abstract class SetApplicationSettingsAction implements Action<SetApplicationSettingsResult> {
 
-    public static final String CHANNEL = "application.SetApplicationSettings";
+    public static final String CHANNEL = "webprotege.application.SetApplicationSettings";
 
     @JsonCreator
     public static SetApplicationSettingsAction create(@JsonProperty("applicationSettings") @Nonnull ApplicationSettings applicationSettings) {

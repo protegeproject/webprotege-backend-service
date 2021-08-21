@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Deprecated
 public class SetEmailAddressAction implements Action<SetEmailAddressResult> {
 
-    public static final String CHANNEL = "users.SetEmailAddress";
+    public static final String CHANNEL = "webprotege.users.SetEmailAddress";
 
     private UserId userId;
 

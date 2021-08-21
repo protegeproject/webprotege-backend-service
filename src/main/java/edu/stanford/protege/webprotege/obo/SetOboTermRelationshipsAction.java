@@ -16,7 +16,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRelationshipsResult> {
 
-    public static final String CHANNEL = "obo.SetOboTermRelationships";
+    public static final String CHANNEL = "webprotege.obo.SetOboTermRelationships";
 
     private ProjectId projectId;
 

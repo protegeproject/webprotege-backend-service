@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 public abstract class ResetPerspectivesAction implements ProjectAction<ResetPerspectivesResult> {
 
 
-    public static final String CHANNEL = "perspectives.ResetPerspectives";
+    public static final String CHANNEL = "webprotege.perspectives.ResetPerspectives";
 
     @JsonCreator
     public static ResetPerspectivesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId) {

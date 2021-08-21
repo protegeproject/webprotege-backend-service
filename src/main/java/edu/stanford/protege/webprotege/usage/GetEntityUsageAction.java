@@ -24,7 +24,7 @@ import static edu.stanford.protege.webprotege.pagination.PageRequest.DEFAULT_PAG
 @JsonTypeName("GetEntityUsage")
 public abstract class GetEntityUsageAction implements ProjectAction<GetEntityUsageResult> {
 
-    public static final String CHANNEL = "entities.GetEntityUsage";
+    public static final String CHANNEL = "webprotege.entities.GetEntityUsage";
 
     public static GetEntityUsageAction create(OWLEntity subject,
                                               ProjectId projectId) {

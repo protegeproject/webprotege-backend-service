@@ -25,7 +25,7 @@ import java.util.Set;
 @JsonTypeName("PerformEntitySearch")
 public abstract class PerformEntitySearchAction implements ProjectAction<PerformEntitySearchResult>, HasProjectId {
 
-    public static final String CHANNEL = "search.PerformEntitySearch";
+    public static final String CHANNEL = "webprotege.search.PerformEntitySearch";
 
     @JsonCreator
     public static PerformEntitySearchAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 @JsonTypeName("GetAllOntologies")
 public abstract class GetUploadedAndProjectOntologyIdsAction implements ProjectAction<GetUploadedAndProjectOntologyIdsResult> {
 
-    public static final String CHANNEL = "ontologies.GetAllOntologies";
+    public static final String CHANNEL = "webprotege.ontologies.GetAllOntologies";
 
     /**
      * Gets a {@link GetUploadedAndProjectOntologyIdsAction} action that retrieves the ontology Ids of an uploaded set of

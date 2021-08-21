@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("EditComment")
 public abstract class EditCommentAction implements ProjectAction<EditCommentResult> {
 
-    public static final String CHANNEL = "issues.EditComment";
+    public static final String CHANNEL = "webprotege.issues.EditComment";
 
     @JsonCreator
     public static EditCommentAction editComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,

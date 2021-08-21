@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectEntityGraphDefaultEdgeCriteriaAction implements ProjectAction<GetProjectEntityGraphDefaultEdgeCriteriaResult> {
 
-    public static final String CHANNEL = "graph.GetProjectEntityGraphDefaultEdgeCriteria";
+    public static final String CHANNEL = "webprotege.graph.GetProjectEntityGraphDefaultEdgeCriteria";
 
     private ProjectId projectId;
 

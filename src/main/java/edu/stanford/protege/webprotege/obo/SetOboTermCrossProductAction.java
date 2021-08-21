@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetOboTermCrossProductAction implements ProjectAction<SetOboTermCrossProductResult> {
 
-    public static final String CHANNEL = "obo.SetOboTermCrossProduct";
+    public static final String CHANNEL = "webprotege.obo.SetOboTermCrossProduct";
 
     private final ProjectId projectId;
 

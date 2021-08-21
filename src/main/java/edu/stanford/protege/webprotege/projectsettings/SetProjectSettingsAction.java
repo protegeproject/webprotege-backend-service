@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetProjectSettingsAction implements ProjectAction<SetProjectSettingsResult> {
 
-    public static final String CHANNEL = "project.SetProjectSettings";
+    public static final String CHANNEL = "webprotege.project.SetProjectSettings";
 
     private ProjectSettings projectSettings;
 

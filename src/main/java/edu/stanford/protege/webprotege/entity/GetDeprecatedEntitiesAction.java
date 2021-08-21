@@ -22,7 +22,7 @@ import java.util.Set;
 @JsonTypeName("GetDeprecatedEntities")
 public abstract class GetDeprecatedEntitiesAction implements ProjectAction<GetDeprecatedEntitiesResult> {
 
-    public static final String CHANNEL = "entities.GetDeprecatedEntities";
+    public static final String CHANNEL = "webprotege.entities.GetDeprecatedEntities";
 
     @JsonCreator
     public static GetDeprecatedEntitiesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

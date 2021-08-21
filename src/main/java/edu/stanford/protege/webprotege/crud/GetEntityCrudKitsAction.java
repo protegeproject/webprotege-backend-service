@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetEntityCrudKitsAction implements ProjectAction<GetEntityCrudKitsResult> {
 
-    public static final String CHANNEL = "entities.GetEntityCrudKits";
+    public static final String CHANNEL = "webprotege.entities.GetEntityCrudKits";
 
     private final ProjectId projectId;
 

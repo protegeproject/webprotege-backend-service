@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetRevisionSummariesAction implements ProjectAction<GetRevisionSummariesResult> {
 
-    public static final String CHANNEL = "revisions.GetRevisionSummaries";
+    public static final String CHANNEL = "webprotege.revisions.GetRevisionSummaries";
 
     private ProjectId projectId;
 

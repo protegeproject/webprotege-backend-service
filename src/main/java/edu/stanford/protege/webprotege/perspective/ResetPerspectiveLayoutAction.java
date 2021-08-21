@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ResetPerspectiveLayoutAction implements ProjectAction<ResetPerspectiveLayoutResult> {
 
-    public static final String CHANNEL = "perspectives.ResetPerspectiveLayout";
+    public static final String CHANNEL = "webprotege.perspectives.ResetPerspectiveLayout";
 
     private ProjectId projectId;
 

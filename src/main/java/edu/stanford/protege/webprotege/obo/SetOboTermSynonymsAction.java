@@ -18,7 +18,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class SetOboTermSynonymsAction implements ProjectAction<SetOboTermSynonymsResult> {
 
-    public static final String CHANNEL = "obo.SetOboTermSynonyms";
+    public static final String CHANNEL = "webprotege.obo.SetOboTermSynonyms";
 
     private ProjectId projectId;
 

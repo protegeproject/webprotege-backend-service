@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetPerspectiveDetails")
 public abstract class GetPerspectiveDetailsAction implements ProjectAction<GetPerspectiveDetailsResult> {
 
-    public static final String CHANNEL = "perspectives.GetPerspectiveDetails";
+    public static final String CHANNEL = "webprotege.perspectives.GetPerspectiveDetails";
 
     @JsonCreator
     public static GetPerspectiveDetailsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId) {

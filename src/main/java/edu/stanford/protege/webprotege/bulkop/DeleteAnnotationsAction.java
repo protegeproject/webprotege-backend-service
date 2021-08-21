@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Deprecated
 public class DeleteAnnotationsAction implements ProjectAction<DeleteAnnotationsResult> {
 
-    public static final String CHANNEL = "annotations.DeleteAnnotations";
+    public static final String CHANNEL = "webprotege.annotations.DeleteAnnotations";
 
     private ProjectId projectId;
 

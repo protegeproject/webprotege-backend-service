@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetEntityDeprecationForms")
 public abstract class GetEntityDeprecationFormsAction implements ProjectAction<GetEntityDeprecationFormsResult> {
 
-    public static final String CHANNEL = "forms.GetEntityDeprecationForms";
+    public static final String CHANNEL = "webprotege.forms.GetEntityDeprecationForms";
 
     @JsonCreator
     public static GetEntityDeprecationFormsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

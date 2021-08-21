@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ImportCSVFileAction implements ProjectAction<ImportCSVFileResult> {
 
-    public static final String CHANNEL = "csv.ImportCsvFile";
+    public static final String CHANNEL = "webprotege.csv.ImportCsvFile";
 
     private ProjectId projectId;
 

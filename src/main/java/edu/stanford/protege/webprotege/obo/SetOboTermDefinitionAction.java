@@ -19,7 +19,7 @@ public class SetOboTermDefinitionAction implements ProjectAction<SetOboTermDefin
 
     public static final String TERM = "term";
 
-    public static final String CHANNEL = "obo.SetOboTermDefinition";
+    public static final String CHANNEL = "webprotege.obo.SetOboTermDefinition";
 
     private ProjectId projectId;
 

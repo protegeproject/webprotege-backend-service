@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("DeleteForm")
 public abstract class DeleteFormAction implements ProjectAction<DeleteFormResult> {
 
-    public static final String CHANNEL = "forms.DeleteForm";
+    public static final String CHANNEL = "webprotege.forms.DeleteForm";
 
     @JsonCreator
     public static DeleteFormAction get(@JsonProperty("projectId") @Nonnull ProjectId projectId,

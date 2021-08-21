@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetEntityRendering")
 public abstract class GetEntityRenderingAction implements ProjectAction<GetEntityRenderingResult> {
 
-    public static final String CHANNEL = "entities.GetEntityRendering";
+    public static final String CHANNEL = "webprotege.entities.GetEntityRendering";
 
     @JsonCreator
     public static GetEntityRenderingAction create(@JsonProperty("projectId") ProjectId projectId,

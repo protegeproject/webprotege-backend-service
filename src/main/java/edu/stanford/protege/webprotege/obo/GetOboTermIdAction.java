@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetOboTermId")
 public abstract class GetOboTermIdAction implements ProjectAction<GetOboTermIdResult> {
 
-    public static final String CHANNEL = "obo.GetOboTermId";
+    public static final String CHANNEL = "webprotege.obo.GetOboTermId";
 
     @JsonCreator
     public static GetOboTermIdAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

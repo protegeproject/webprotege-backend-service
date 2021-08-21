@@ -18,7 +18,7 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @JsonTypeName("RemoveProjectFromTrash")
 public abstract class RemoveProjectFromTrashAction implements Action<RemoveProjectFromTrashResult>, Request<RemoveProjectFromTrashResult> {
 
-    public static final String CHANNEL = "project-management.RemoveProjectFromTrash";
+    public static final String CHANNEL = "webprotege.project-management.RemoveProjectFromTrash";
 
     @JsonCreator
     public static RemoveProjectFromTrashAction create(@JsonProperty("projectId") ProjectId projectId) {

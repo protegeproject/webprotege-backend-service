@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CopyFormDescriptors")
 public abstract class CopyFormDescriptorsAction implements ProjectAction<CopyFormDescriptorsResult> {
 
-    public static final String CHANNEL = "forms.CopyFormDescriptors";
+    public static final String CHANNEL = "webprotege.forms.CopyFormDescriptors";
 
     @Nonnull
     @Override

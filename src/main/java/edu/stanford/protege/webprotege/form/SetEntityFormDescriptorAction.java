@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetEntityFormDescriptorAction implements ProjectAction<SetEntityFormDescriptorResult> {
 
-    public static final String CHANNEL = "forms.SetEntityFormDescriptor";
+    public static final String CHANNEL = "webprotege.forms.SetEntityFormDescriptor";
 
     private ProjectId projectId;
 

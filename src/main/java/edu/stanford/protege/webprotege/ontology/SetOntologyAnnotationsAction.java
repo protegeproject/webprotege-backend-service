@@ -24,7 +24,7 @@ import java.util.Set;
 public abstract class SetOntologyAnnotationsAction implements ProjectAction<SetOntologyAnnotationsResult> {
 
 
-    public static final String CHANNEL = "ontology.SetOntologyAnnotations";
+    public static final String CHANNEL = "webprotege.ontology.SetOntologyAnnotations";
 
     @JsonCreator
     public static SetOntologyAnnotationsAction create(@JsonProperty("projectId") ProjectId projectId,

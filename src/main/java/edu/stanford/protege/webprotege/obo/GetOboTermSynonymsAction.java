@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboTermSynonymsAction implements ProjectAction<GetOboTermSynonymsResult> {
 
-    public static final String CHANNEL = "obo.GetOboTermSynonyms";
+    public static final String CHANNEL = "webprotege.obo.GetOboTermSynonyms";
 
     private ProjectId projectId;
 

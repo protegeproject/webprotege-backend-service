@@ -22,7 +22,7 @@ import java.util.Set;
 @JsonTypeName("GetCommentedEntities")
 public abstract class GetCommentedEntitiesAction implements ProjectAction<GetCommentedEntitiesResult> {
 
-    public static final String CHANNEL = "issues.GetCommentedEntities";
+    public static final String CHANNEL = "webprotege.issues.GetCommentedEntities";
 
     @JsonCreator
     public static GetCommentedEntitiesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

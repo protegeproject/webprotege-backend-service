@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectInfoAction implements ProjectAction<GetProjectInfoResult> {
 
-    public static final String CHANNEL = "projects.GetProjectInfo";
+    public static final String CHANNEL = "webprotege.projects.GetProjectInfo";
 
     private ProjectId projectId;
 

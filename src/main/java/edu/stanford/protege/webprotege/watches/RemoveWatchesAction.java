@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class RemoveWatchesAction implements ProjectAction<RemoveWatchesResult>, HasUserId {
 
-    public static final String CHANNEL = "watches.RemoveWatchesAction";
+    public static final String CHANNEL = "webprotege.watches.RemoveWatchesAction";
 
     private ProjectId projectId;
 

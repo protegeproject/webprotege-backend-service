@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateObjectProperties")
 public abstract class CreateObjectPropertiesAction implements CreateEntitiesInHierarchyAction<CreateObjectPropertiesResult, OWLObjectProperty> {
 
-    public static final String CHANNEL = "entities.CreateObjectProperties";
+    public static final String CHANNEL = "webprotege.entities.CreateObjectProperties";
 
     @JsonCreator
     public static CreateObjectPropertiesAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

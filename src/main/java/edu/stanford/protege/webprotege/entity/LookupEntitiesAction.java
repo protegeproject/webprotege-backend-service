@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class LookupEntitiesAction implements ProjectAction<LookupEntitiesResult> {
 
-    public static final String CHANNEL = "entities.LookupEntities";
+    public static final String CHANNEL = "webprotege.entities.LookupEntities";
 
     private ProjectId projectId;
 

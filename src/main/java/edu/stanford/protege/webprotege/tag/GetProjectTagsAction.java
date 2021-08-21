@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectTagsAction implements ProjectAction<GetProjectTagsResult> {
 
-    public static final String CHANNEL = "tags.GetProjectTags";
+    public static final String CHANNEL = "webprotege.tags.GetProjectTags";
 
     private ProjectId projectId;
 

@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
  */
 public class AddWatchAction implements ProjectAction<AddWatchResult>, HasUserId {
 
-    public static final String CHANNEL = "watches.AddWatch";
+    public static final String CHANNEL = "webprotege.watches.AddWatch";
 
     private Watch watch;
 

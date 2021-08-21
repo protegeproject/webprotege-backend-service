@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboTermRelationshipsAction implements ProjectAction<GetOboTermRelationshipsResult> {
 
-    public static final String CHANNEL = "obo.GetOboTermRelationships";
+    public static final String CHANNEL = "webprotege.obo.GetOboTermRelationships";
 
     private ProjectId projectId;
 

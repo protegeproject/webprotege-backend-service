@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MoveHierarchyNode")
 public abstract class MoveHierarchyNodeAction implements ProjectAction<MoveHierarchyNodeResult> {
 
-    public static final String CHANNEL = "hierarchies.MoveHierarchyNode";
+    public static final String CHANNEL = "webprotege.hierarchies.MoveHierarchyNode";
 
     @JsonCreator
     public static MoveHierarchyNodeAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

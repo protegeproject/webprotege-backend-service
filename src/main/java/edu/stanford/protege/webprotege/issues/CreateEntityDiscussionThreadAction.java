@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateEntityDiscussionThread")
 public abstract class CreateEntityDiscussionThreadAction implements ProjectAction<CreateEntityDiscussionThreadResult> {
 
-    public static final String CHANNEL = "issues.CreateEntityDiscussionThread";
+    public static final String CHANNEL = "webprotege.issues.CreateEntityDiscussionThread";
 
     @Nonnull
     public abstract ProjectId getProjectId();

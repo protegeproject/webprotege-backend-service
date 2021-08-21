@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DeleteAxiomsAction implements ProjectAction<DeleteAxiomsResult> {
 
-    public static final String CHANNEL = "axioms.DeleteAxioms";
+    public static final String CHANNEL = "webprotege.axioms.DeleteAxioms";
 
     @Nonnull
     private final ProjectId projectId;

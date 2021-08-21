@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetAvailableProjectsWithPermission")
 public abstract class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult>, Request<GetAvailableProjectsWithPermissionResult> {
 
-    public static final String CHANNEL = "project-management.GetAvailableProjectsWithPermission";
+    public static final String CHANNEL = "webprotege.project-management.GetAvailableProjectsWithPermission";
 
     @JsonCreator
     public static GetAvailableProjectsWithPermissionAction create(@JsonProperty("permission") @Nonnull ActionId permission) {

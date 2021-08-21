@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("DeleteEntities")
 public class DeleteEntitiesAction implements ProjectAction<DeleteEntitiesResult> {
 
-    public static final String CHANNEL = "entities.DeleteEntities";
+    public static final String CHANNEL = "webprotege.entities.DeleteEntities";
 
     private final ProjectId projectId;
 

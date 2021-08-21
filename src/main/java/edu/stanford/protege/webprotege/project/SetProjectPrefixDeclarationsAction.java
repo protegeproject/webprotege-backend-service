@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetProjectPrefixDeclarationsAction implements ProjectAction<SetProjectPrefixDeclarationsResult> {
 
-    public static final String CHANNEL = "projects.SetProjectPrefixDeclarations";
+    public static final String CHANNEL = "webprotege.projects.SetProjectPrefixDeclarations";
 
     private ProjectId projectId;
 

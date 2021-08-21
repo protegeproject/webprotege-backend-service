@@ -17,7 +17,7 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @JsonTypeName("GetAvailableProjects")
 public abstract class GetAvailableProjectsAction implements Action<GetAvailableProjectsResult>, Request<GetAvailableProjectsResult> {
 
-    public static final String CHANNEL = "projects.GetAvailableProjects";
+    public static final String CHANNEL = "webprotege.projects.GetAvailableProjects";
 
     @JsonCreator
     public static GetAvailableProjectsAction create() {

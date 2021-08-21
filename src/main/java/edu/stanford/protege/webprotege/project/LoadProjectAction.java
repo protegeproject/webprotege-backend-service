@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("LoadProject")
 public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectId {
 
-    public static final String CHANNEL = "project-management.LoadProject";
+    public static final String CHANNEL = "webprotege.project-management.LoadProject";
 
     private final ProjectId projectId;
 

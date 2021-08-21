@@ -15,7 +15,7 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @JsonTypeName("RebuildPermissions")
 public abstract class RebuildPermissionsAction implements Action<RebuildPermissionsResult> {
 
-    public static final String CHANNEL = "application.RebuildPermissions";
+    public static final String CHANNEL = "webprotege.application.RebuildPermissions";
 
     @JsonCreator
     public static RebuildPermissionsAction get() {

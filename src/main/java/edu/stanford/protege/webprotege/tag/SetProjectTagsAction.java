@@ -20,7 +20,7 @@ import java.util.List;
 @JsonTypeName("SetProjectTags")
 public abstract class SetProjectTagsAction implements ProjectAction<SetProjectTagsResult> {
 
-    public static final String CHANNEL = "tags.SetProjectTags";
+    public static final String CHANNEL = "webprotege.tags.SetProjectTags";
 
     @JsonCreator
     public static SetProjectTagsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

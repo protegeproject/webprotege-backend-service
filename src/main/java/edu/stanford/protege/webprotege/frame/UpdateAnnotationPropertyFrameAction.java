@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("UpdateAnnotationPropertyFrame")
 public abstract class UpdateAnnotationPropertyFrameAction implements UpdateFrame, ProjectAction<UpdateAnnotationPropertyFrameResult> {
 
-    public static final String CHANNEL = "frames.UpdateAnnotationPropertyFrame";
+    public static final String CHANNEL = "webprotege.frames.UpdateAnnotationPropertyFrame";
 
     @JsonCreator
     public static UpdateAnnotationPropertyFrameAction create(@JsonProperty("projectId") ProjectId projectId,

@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetCSVGridAction implements Action<GetCSVGridResult> {
 
-    public static final String CHANNEL = "csv.GetCsvGrid";
+    public static final String CHANNEL = "webprotege.csv.GetCsvGrid";
 
     private DocumentId csvDocumentId;
 

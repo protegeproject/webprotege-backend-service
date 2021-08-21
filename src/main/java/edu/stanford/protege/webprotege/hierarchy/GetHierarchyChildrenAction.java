@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetHierarchyChildren")
 public abstract class GetHierarchyChildrenAction implements ProjectAction<GetHierarchyChildrenResult> {
 
-    public static final String CHANNEL = "hierarchies.GetHierarchyChildren";
+    public static final String CHANNEL = "webprotege.hierarchies.GetHierarchyChildren";
 
     @JsonCreator
     public static GetHierarchyChildrenAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectEventsAction implements Action<GetProjectEventsResult>, HasProjectId {
 
-    public static final String CHANNEL = "projects.GetProjectEvents";
+    public static final String CHANNEL = "webprotege.projects.GetProjectEvents";
 
     private ProjectId projectId;
 

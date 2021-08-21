@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 public class AddIssueCommentAction implements Action<AddIssueCommentResult>, HasProjectId {
 
 
-    public static final String CHANNEL = "issues.AddIssueComment";
+    public static final String CHANNEL = "webprotege.issues.AddIssueComment";
 
     private ProjectId projectId;
 

@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetPerspectiveDetailsAction implements ProjectAction<SetPerspectiveDetailsResult> {
 
-    public static final String CHANNEL = "perspectives.SetPerspectiveDetails";
+    public static final String CHANNEL = "webprotege.perspectives.SetPerspectiveDetails";
 
     private ProjectId projectId;
 

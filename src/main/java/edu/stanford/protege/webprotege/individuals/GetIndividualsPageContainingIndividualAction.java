@@ -24,7 +24,7 @@ import java.util.Optional;
 public abstract class GetIndividualsPageContainingIndividualAction implements ProjectAction<GetIndividualsPageContainingIndividualResult> {
 
 
-    public static final String CHANNEL = "entities.GetIndividualsPageContainingIndividual";
+    public static final String CHANNEL = "webprotege.entities.GetIndividualsPageContainingIndividual";
 
     @JsonCreator
     public static GetIndividualsPageContainingIndividualAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

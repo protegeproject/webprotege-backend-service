@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetEntityDiscussionThreadsAction implements ProjectAction<GetEntityDiscussionThreadsResult> {
 
-    public static final String CHANNEL = "issues.GetEntityDiscussionThreads";
+    public static final String CHANNEL = "webprotege.issues.GetEntityDiscussionThreads";
 
     private final ProjectId projectId;
 

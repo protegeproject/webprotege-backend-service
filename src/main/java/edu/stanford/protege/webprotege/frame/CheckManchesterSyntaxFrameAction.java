@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 public abstract class CheckManchesterSyntaxFrameAction implements ProjectAction<CheckManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
 
-    public static final String CHANNEL = "manchester-syntax.CheckManchesterSyntaxFrame";
+    public static final String CHANNEL = "webprotege.manchester-syntax.CheckManchesterSyntaxFrame";
 
     @JsonCreator
     public static CheckManchesterSyntaxFrameAction create(@JsonProperty("projectId") ProjectId projectId,

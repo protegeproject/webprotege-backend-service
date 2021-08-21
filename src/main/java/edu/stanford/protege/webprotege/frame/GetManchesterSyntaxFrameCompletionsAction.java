@@ -22,7 +22,7 @@ import java.util.Set;
 @JsonTypeName("GetManchesterSyntaxFrameCompletions")
 public abstract class GetManchesterSyntaxFrameCompletionsAction implements ProjectAction<GetManchesterSyntaxFrameCompletionsResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
-    public static final String CHANNEL = "manchester-syntax.GetManchesterSyntaxFrameCompletions";
+    public static final String CHANNEL = "webprotege.manchester-syntax.GetManchesterSyntaxFrameCompletions";
 
     @JsonCreator
     public static GetManchesterSyntaxFrameCompletionsAction create(@JsonProperty("projectId") ProjectId projectId,

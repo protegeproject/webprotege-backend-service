@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class AddAxiomsAction implements ProjectAction<AddAxiomsResult> {
 
-    public static final String CHANNEL = "axioms.AddAxioms";
+    public static final String CHANNEL = "webprotege.axioms.AddAxioms";
 
     @Nonnull
     private final ProjectId projectId;

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 public abstract class GetEntityHtmlRenderingAction implements ProjectAction<GetEntityHtmlRenderingResult> {
 
 
-    public static final String CHANNEL = "entities.GetEntityHtmlRendering";
+    public static final String CHANNEL = "webprotege.entities.GetEntityHtmlRendering";
 
     @JsonCreator
     public static GetEntityHtmlRenderingAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

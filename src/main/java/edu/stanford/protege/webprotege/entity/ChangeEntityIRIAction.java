@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ChangeEntityIRIAction implements ProjectAction<ChangeEntityIRIResult> {
 
-    public static final String CHANNEL = "entities.ChangeEntityIri";
+    public static final String CHANNEL = "webprotege.entities.ChangeEntityIri";
 
     private ProjectId projectId;
 

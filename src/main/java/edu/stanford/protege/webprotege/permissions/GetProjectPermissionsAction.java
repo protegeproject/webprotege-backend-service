@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectPermissionsAction implements Action<GetProjectPermissionsResult>, HasProjectId, HasUserId {
 
-    public static final String CHANNEL = "auth.GetProjectPermissions";
+    public static final String CHANNEL = "webprotege.auth.GetProjectPermissions";
 
     private ProjectId projectId;
 

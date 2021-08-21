@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetEntityWatches")
 public abstract class GetEntityWatchesAction implements ProjectAction<GetEntityWatchesResult>, HasUserId, Request<GetEntityWatchesResult> {
 
-    public static final String CHANNEL = "watches.GetEntityWatches";
+    public static final String CHANNEL = "webprotege.watches.GetEntityWatches";
 
     @JsonCreator
     public static GetEntityWatchesAction create(@JsonProperty("projectId") ProjectId projectId,

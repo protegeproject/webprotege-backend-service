@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetClassFrame")
 public abstract class GetClassFrameAction implements ProjectAction<GetClassFrameResult>, HasProjectId, HasSubject<OWLClass> {
 
-    public static final String CHANNEL = "frames.GetClassFrame";
+    public static final String CHANNEL = "webprotege.frames.GetClassFrame";
 
     @JsonCreator
     public static GetClassFrameAction create(@JsonProperty("subject") OWLClass subject,

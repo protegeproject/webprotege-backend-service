@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MoveEntitiesToParent")
 public abstract class MoveEntitiesToParentAction implements ProjectAction<MoveEntitiesToParentResult>, HasCommitMessage {
 
-    public static final String CHANNEL = "entities.MoveEntitiesToParent";
+    public static final String CHANNEL = "webprotege.entities.MoveEntitiesToParent";
 
     @JsonCreator
     public static MoveEntitiesToParentAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

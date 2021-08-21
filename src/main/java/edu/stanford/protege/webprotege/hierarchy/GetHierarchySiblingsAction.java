@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetHierarchySiblings")
 public abstract class GetHierarchySiblingsAction implements ProjectAction<GetHierarchySiblingsResult> {
 
-    public static final String CHANNEL = "hierarchies.GetHierarchySiblings";
+    public static final String CHANNEL = "webprotege.hierarchies.GetHierarchySiblings";
 
     @JsonCreator
     public static GetHierarchySiblingsAction create(@JsonProperty("projectId") ProjectId projectId,

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 public abstract class SetEntityGraphActiveFiltersAction implements ProjectAction<SetEntityGraphActiveFiltersResult> {
 
 
-    public static final String CHANNEL = "graph.SetEntityGraphActiveFilters";
+    public static final String CHANNEL = "webprotege.graph.SetEntityGraphActiveFilters";
 
     @JsonCreator
     public static SetEntityGraphActiveFiltersAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

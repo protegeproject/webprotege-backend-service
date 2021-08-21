@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DeprecateEntityByFormAction implements ProjectAction<DeprecateEntityByFormResult> {
 
-    public static final String CHANNEL = "forms.DeprecateEntitiesByForm";
+    public static final String CHANNEL = "webprotege.forms.DeprecateEntitiesByForm";
 
     private OWLEntity entity;
 

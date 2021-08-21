@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateNamedIndividuals")
 public abstract class CreateNamedIndividualsAction implements AbstractCreateEntitiesAction<CreateNamedIndividualsResult, OWLNamedIndividual> {
 
-    public static final String CHANNEL = "entities.CreateNamedIndividuals";
+    public static final String CHANNEL = "webprotege.entities.CreateNamedIndividuals";
 
     /**
      * Constructs a CreateNamedIndividualsAction.

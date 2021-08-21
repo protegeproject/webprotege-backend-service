@@ -22,7 +22,7 @@ import java.util.Optional;
 @JsonTypeName("GetOntologyAnnotations")
 public abstract class GetOntologyAnnotationsAction implements ProjectAction<GetOntologyAnnotationsResult> {
 
-    public static final String CHANNEL = "ontologies.GetOntologyAnnotations";
+    public static final String CHANNEL = "webprotege.ontologies.GetOntologyAnnotations";
 
     @JsonCreator
     public static GetOntologyAnnotationsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

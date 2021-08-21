@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetFreshFormIdAction implements ProjectAction<GetFreshFormIdResult> {
 
-    public static final String CHANNEL = "forms.GetFreshFormId";
+    public static final String CHANNEL = "webprotege.forms.GetFreshFormId";
 
     private ProjectId projectId;
 

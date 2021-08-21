@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetProjectFormDescriptorsAction implements ProjectAction<GetProjectFormDescriptorsResult> {
 
-    public static final String CHANNEL = "forms.GetProjectFormDescriptors";
+    public static final String CHANNEL = "webprotege.forms.GetProjectFormDescriptors";
 
     private ProjectId projectId;
 

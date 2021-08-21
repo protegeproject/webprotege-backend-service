@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("RevertRevision")
 public class RevertRevisionAction implements ProjectAction<RevertRevisionResult> {
 
-    public static final String CHANNEL = "revisions.RevertRevision";
+    public static final String CHANNEL = "webprotege.revisions.RevertRevision";
 
     private RevisionNumber revisionNumber;
 

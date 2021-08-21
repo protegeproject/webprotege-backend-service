@@ -13,7 +13,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
 public class GetUserIdCompletionsAction implements Action<GetUserIdCompletionsResult> {
 
 
-    public static final String CHANNEL = "users.GetUserIdCompletions";
+    public static final String CHANNEL = "webprotege.users.GetUserIdCompletions";
 
     private final String completionText;
 

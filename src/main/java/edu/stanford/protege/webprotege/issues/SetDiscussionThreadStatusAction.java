@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetDiscussionThreadStatusAction implements ProjectAction<SetDiscussionThreadStatusResult> {
 
-    public static final String CHANNEL = "issues.SetDiscussionThreadStatus";
+    public static final String CHANNEL = "webprotege.issues.SetDiscussionThreadStatus";
 
     private ProjectId projectId;
 

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("AddEntityComment")
 public abstract class AddEntityCommentAction implements ProjectAction<AddEntityCommentResult>, HasProjectId, Request<AddEntityCommentResult> {
 
-    public static final String CHANNEL = "issues.AddEntityComment";
+    public static final String CHANNEL = "webprotege.issues.AddEntityComment";
 
     @JsonCreator
     public static AddEntityCommentAction addComment(@JsonProperty("projectId") @Nonnull ProjectId projectId,

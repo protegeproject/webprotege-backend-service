@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetOboNamespacesAction implements ProjectAction<GetOboNamespacesResult> {
 
-    public static final String CHANNEL = "obo.GetOboNamespaces";
+    public static final String CHANNEL = "webprotege.obo.GetOboNamespaces";
 
     private ProjectId projectId;
 

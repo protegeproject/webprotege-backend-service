@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("MergeUploadedProject")
 public abstract class MergeUploadedProjectAction implements ProjectAction<MergeUploadedProjectResult> {
 
-    public static final String CHANNEL = "projects.MergeUploadedProject";
+    public static final String CHANNEL = "webprotege.projects.MergeUploadedProject";
 
     @Override
     public String getChannel() {

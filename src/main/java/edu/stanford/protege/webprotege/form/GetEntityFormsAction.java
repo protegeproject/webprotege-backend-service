@@ -39,7 +39,7 @@ public abstract class GetEntityFormsAction implements ProjectAction<GetEntityFor
 
     private static final String FORM_FILTERS = "formFilters";
 
-    public static final String CHANNEL = "forms.GetEntityForms";
+    public static final String CHANNEL = "webprotege.forms.GetEntityForms";
 
     /**
      * Get the forms for an entity

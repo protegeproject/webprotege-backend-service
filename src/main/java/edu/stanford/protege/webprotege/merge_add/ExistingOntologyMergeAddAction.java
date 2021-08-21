@@ -16,7 +16,7 @@ import java.util.List;
 @JsonTypeName("ExistingOntologyMergeAdd")
 public abstract class ExistingOntologyMergeAddAction implements ProjectAction<ExistingOntologyMergeAddResult> {
 
-    public static final String CHANNEL = "projects.MergeExistingOntology";
+    public static final String CHANNEL = "webprotege.projects.MergeExistingOntology";
 
     @JsonCreator
     public static ExistingOntologyMergeAddAction create(@JsonProperty("projectId") ProjectId projectId,

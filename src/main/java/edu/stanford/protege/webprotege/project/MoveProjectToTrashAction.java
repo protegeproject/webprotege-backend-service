@@ -19,7 +19,7 @@ import edu.stanford.protege.webprotege.dispatch.Action;
 @JsonTypeName("MoveProjectToTrash")
 public abstract class MoveProjectToTrashAction implements Action<MoveProjectToTrashResult>, Request<MoveProjectToTrashResult> {
 
-    public static final String CHANNEL = "project-management.MoveProjectToTrash";
+    public static final String CHANNEL = "webprotege.project-management.MoveProjectToTrash";
 
     @JsonCreator
     public static MoveProjectToTrashAction create(@JsonProperty("projectId") ProjectId projectId) {

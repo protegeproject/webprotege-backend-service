@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("UpdateClassFrame")
 public abstract class UpdateClassFrameAction implements UpdateFrame, ProjectAction<UpdateClassFrameResult> {
 
-    public static final String CHANNEL = "frames.UpdateClassFrame";
+    public static final String CHANNEL = "webprotege.frames.UpdateClassFrame";
 
     @JsonCreator
     public static UpdateClassFrameAction create(@JsonProperty("projectId") ProjectId projectId,

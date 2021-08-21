@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetProjectSharingSettingsAction implements ProjectAction<SetProjectSharingSettingsResult> {
 
-    public static final String CHANNEL = "project.SetProjectSharingSettings";
+    public static final String CHANNEL = "webprotege.project.SetProjectSharingSettings";
 
     private ProjectSharingSettings projectSharingSettings;
 

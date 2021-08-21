@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetSearchSettings")
 public abstract class GetSearchSettingsAction implements ProjectAction<GetSearchSettingsResult> {
 
-    public static final String CHANNEL = "search.GetSearchSettings";
+    public static final String CHANNEL = "webprotege.search.GetSearchSettings";
 
     @JsonCreator
     public static GetSearchSettingsAction create(@JsonProperty("projectId") ProjectId projectId) {

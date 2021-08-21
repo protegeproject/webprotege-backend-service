@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("CreateEntityFromFormData")
 public abstract class CreateEntityFromFormDataAction implements ProjectAction<CreateEntityFromFormDataResult> {
 
-    public static final String CHANNEL = "forms.CreateEntityFromFormData";
+    public static final String CHANNEL = "webprotege.forms.CreateEntityFromFormData";
 
     @JsonCreator
     public static CreateEntityFromFormDataAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

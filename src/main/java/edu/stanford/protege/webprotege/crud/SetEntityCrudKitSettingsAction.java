@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
  */
 public class SetEntityCrudKitSettingsAction implements ProjectAction<SetEntityCrudKitSettingsResult> {
 
-    public static final String CHANNEL = "entities.SetEntityCrudKitSettings";
+    public static final String CHANNEL = "webprotege.entities.SetEntityCrudKitSettings";
 
     private ProjectId projectId;
 

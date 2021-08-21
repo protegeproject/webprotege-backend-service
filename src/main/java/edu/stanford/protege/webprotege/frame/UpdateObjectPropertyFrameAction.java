@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 public abstract class UpdateObjectPropertyFrameAction implements UpdateFrame, ProjectAction<UpdateObjectPropertyFrameResult> {
 
 
-    public static final String CHANNEL = "frames.UpdateObjectPropertyFrame";
+    public static final String CHANNEL = "webprotege.frames.UpdateObjectPropertyFrame";
 
     @JsonCreator
     public static UpdateObjectPropertyFrameAction create(@JsonProperty("projectId") ProjectId projectId,

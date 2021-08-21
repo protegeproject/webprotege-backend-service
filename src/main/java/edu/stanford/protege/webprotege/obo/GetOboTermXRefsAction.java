@@ -16,7 +16,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class GetOboTermXRefsAction implements ProjectAction<GetOboTermXRefsResult> {
 
-    public static final String CHANNEL = "obo.GetOboTermXRefs";
+    public static final String CHANNEL = "webprotege.obo.GetOboTermXRefs";
 
     private ProjectId projectId;
 

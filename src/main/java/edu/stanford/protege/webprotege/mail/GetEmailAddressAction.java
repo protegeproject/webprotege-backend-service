@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @JsonTypeName("GetEmailAddress")
 public class GetEmailAddressAction implements Action<GetEmailAddressResult> {
 
-    public static final String CHANNEL = "users.GetEmailAddress";
+    public static final String CHANNEL = "webprotege.users.GetEmailAddress";
 
     private UserId userId;
 

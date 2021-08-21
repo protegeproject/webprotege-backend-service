@@ -27,7 +27,7 @@ import java.util.Optional;
 public abstract class SetPerspectivesAction implements ProjectAction<SetPerspectivesResult>, HasProjectId {
 
 
-    public static final String CHANNEL = "perspectives.SetPerspectives";
+    public static final String CHANNEL = "webprotege.perspectives.SetPerspectives";
 
     public static SetPerspectivesAction create(@Nonnull ProjectId projectId,
                                                @Nonnull ImmutableList<PerspectiveDescriptor> perspectiveIds) {
