@@ -24,6 +24,8 @@ import java.util.Set;
 public abstract class SetOntologyAnnotationsAction implements ProjectAction<SetOntologyAnnotationsResult> {
 
 
+    public static final String CHANNEL = "ontology.SetOntologyAnnotations";
+
     @JsonCreator
     public static SetOntologyAnnotationsAction create(@JsonProperty("projectId") ProjectId projectId,
                                                       @JsonProperty("ontologyId") OWLOntologyID ontologyID,
@@ -34,7 +36,7 @@ public abstract class SetOntologyAnnotationsAction implements ProjectAction<SetO
 
     @Override
     public String getChannel() {
-        return "ontology.SetOntologyAnnotations";
+        return CHANNEL;
     }
 
     @Nonnull
