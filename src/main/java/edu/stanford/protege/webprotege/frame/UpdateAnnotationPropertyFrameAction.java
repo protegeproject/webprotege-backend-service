@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 
 @JsonTypeName("UpdateAnnotationPropertyFrame")
-public abstract class UpdateAnnotationPropertyFrameAction implements UpdateFrameAction, ProjectAction<UpdateAnnotationPropertyFrameResult> {
+public abstract class UpdateAnnotationPropertyFrameAction implements UpdateFrame, ProjectAction<UpdateAnnotationPropertyFrameResult> {
 
     public static final String CHANNEL = "frames.UpdateAnnotationPropertyFrame";
 

@@ -3,10 +3,7 @@ package edu.stanford.protege.webprotege.frame;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
-import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.dispatch.Result;
+import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
@@ -22,7 +19,7 @@ import javax.annotation.Nullable;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/02/2013
  */
-public abstract class AbstractUpdateFrameHandler<A extends UpdateFrameAction, F extends EntityFrame> extends AbstractProjectActionHandler<A, Result> implements ActionHandler<A, Result> {
+public abstract class AbstractUpdateFrameHandler<A extends ProjectAction<R> & UpdateFrame, R extends Result> extends AbstractProjectActionHandler<A, R> {
 
     @Nonnull
     private final EventManager<ProjectEvent<?>> eventManager;
@@ -59,7 +56,7 @@ public abstract class AbstractUpdateFrameHandler<A extends UpdateFrameAction, F 
      */
     @Nonnull
     @Override
-    public Result execute(@Nonnull A action, @Nonnull ExecutionContext executionContext) {
+    public R execute(@Nonnull A action, @Nonnull ExecutionContext executionContext) {
         var from = action.getFrom();
         var to = action.getTo();
         final EventTag startTag = eventManager.getCurrentTag();
@@ -74,5 +71,5 @@ public abstract class AbstractUpdateFrameHandler<A extends UpdateFrameAction, F 
         return createResponse(action.getTo(), events);
     }
 
-    protected abstract Result createResponse(PlainEntityFrame to, EventList<ProjectEvent<?>> events);
+    protected abstract R createResponse(PlainEntityFrame to, EventList<ProjectEvent<?>> events);
 }

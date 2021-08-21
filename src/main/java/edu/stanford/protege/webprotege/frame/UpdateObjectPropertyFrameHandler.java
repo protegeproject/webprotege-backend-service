@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
-import edu.stanford.protege.webprotege.dispatch.Result;
-import edu.stanford.protege.webprotege.dispatch.UpdateObjectResult;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
@@ -17,7 +15,7 @@ import javax.inject.Inject;
  * Bio-Medical Informatics Research Group<br>
  * Date: 23/04/2013
  */
-public class UpdateObjectPropertyFrameHandler extends AbstractUpdateFrameHandler<UpdateObjectPropertyFrameAction, ObjectPropertyFrame> {
+public class UpdateObjectPropertyFrameHandler extends AbstractUpdateFrameHandler<UpdateObjectPropertyFrameAction, UpdateObjectPropertyFrameResult> {
 
     @Inject
     public UpdateObjectPropertyFrameHandler(@Nonnull AccessManager accessManager,
@@ -28,8 +26,8 @@ public class UpdateObjectPropertyFrameHandler extends AbstractUpdateFrameHandler
     }
 
     @Override
-    protected Result createResponse(PlainEntityFrame to, EventList<ProjectEvent<?>> events) {
-        return new UpdateObjectResult(events);
+    protected UpdateObjectPropertyFrameResult createResponse(PlainEntityFrame to, EventList<ProjectEvent<?>> events) {
+        return new UpdateObjectPropertyFrameResult();
     }
 
     @Nonnull

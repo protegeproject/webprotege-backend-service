@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.dispatch.Result;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/02/2013
  */
-public interface UpdateFrameAction {
+public interface UpdateFrame {
 
     PlainEntityFrame getFrom();
 
