@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.match.JsonSerializationTestUtil;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Optional;
