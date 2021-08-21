@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities {
 
-    public static final String CHANNEL = "webprotege.manchester-syntax.SetManchesterSyntaxFrame";
+    public static final String CHANNEL = "webprotege.mansyntax.SetManchesterSyntaxFrame";
 
     private ProjectId projectId;
 

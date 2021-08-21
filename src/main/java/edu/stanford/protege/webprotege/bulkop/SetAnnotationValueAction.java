@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 public abstract class SetAnnotationValueAction implements ProjectAction<SetAnnotationValueResult>, HasCommitMessage {
 
 
-    public static final String CHANNEL = "webprotege.annotations.SetAnnotationValue";
+    public static final String CHANNEL = "webprotege.bulkop.SetAnnotationValue";
 
     @JsonCreator
     public static SetAnnotationValueAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

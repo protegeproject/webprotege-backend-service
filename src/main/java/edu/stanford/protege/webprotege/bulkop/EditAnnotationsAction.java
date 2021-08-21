@@ -23,7 +23,7 @@ import java.util.Optional;
 @JsonTypeName("EditAnnotations")
 public abstract class EditAnnotationsAction implements ProjectAction<EditAnnotationsResult>, HasCommitMessage {
 
-    public static final String CHANNEL = "webprotege.annotations.EditAnnotations";
+    public static final String CHANNEL = "webprotege.bulkop.EditAnnotations";
 
     @JsonCreator
     public static EditAnnotationsAction create(@JsonProperty("projectId") @Nonnull ProjectId projectId,

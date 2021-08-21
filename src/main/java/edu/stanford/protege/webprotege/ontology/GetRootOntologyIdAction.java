@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 @JsonTypeName("GetRootOntologyId")
 public abstract class GetRootOntologyIdAction implements ProjectAction<GetRootOntologyIdResult> {
 
-    public static final String CHANNEL = "webprotege.projects.GetRootOntologyId";
+    public static final String CHANNEL = "webprotege.ontologies.GetRootOntologyId";
 
     @JsonCreator
     public static GetRootOntologyIdAction create(@JsonProperty("projectId") ProjectId projectId) {

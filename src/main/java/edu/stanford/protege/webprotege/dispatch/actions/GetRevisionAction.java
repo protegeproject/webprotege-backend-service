@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetRevisionAction implements ProjectAction<GetRevisionResult> {
 
-    public static final String CHANNEL = "webprotege.revisions.GetRevision";
+    public static final String CHANNEL = "webprotege.history.GetRevision";
 
     private final ProjectId projectId;
 
