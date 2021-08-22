@@ -9,7 +9,6 @@ import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntityProvider;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * Matthew Horridge
@@ -29,16 +28,20 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    AnnotationAssertionAxiomsIndexWrapperImpl AnnotationAssertionAxiomsIndex(ProjectOntologiesIndex projectOntologiesIndex) {
+    AnnotationAssertionAxiomsIndexWrapperImpl AnnotationAssertionAxiomsIndex(ProjectOntologiesIndex projectOntologiesIndex,
+                                                                             AxiomsByTypeIndex axiomsByTypeIndex,
+                                                                             ProjectAnnotationAssertionAxiomsBySubjectIndex projectAnnotationAssertionAxiomsBySubjectIndex) {
         return new AnnotationAssertionAxiomsIndexWrapperImpl(projectOntologiesIndex,
-                                                             AxiomsByTypeIndex(),
-                                                             ProjectAnnotationAssertionAxiomsBySubjectIndexImpl(projectOntologiesIndex));
+                                                             axiomsByTypeIndex,
+                                                             projectAnnotationAssertionAxiomsBySubjectIndex);
     }
 
     @Bean
-    ProjectAnnotationAssertionAxiomsBySubjectIndexImpl ProjectAnnotationAssertionAxiomsBySubjectIndexImpl(ProjectOntologiesIndex projectOntologiesIndex) {
+    ProjectAnnotationAssertionAxiomsBySubjectIndexImpl ProjectAnnotationAssertionAxiomsBySubjectIndexImpl(
+            ProjectOntologiesIndex projectOntologiesIndex,
+            AnnotationAssertionAxiomsBySubjectIndex annotationAssertionAxiomsBySubjectIndex) {
         return new ProjectAnnotationAssertionAxiomsBySubjectIndexImpl(projectOntologiesIndex,
-                                                                      AnnotationAssertionAxiomsBySubjectIndex());
+                                                                      annotationAssertionAxiomsBySubjectIndex);
     }
 
     @Bean
@@ -47,13 +50,13 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    AnnotationPropertyDomainAxiomsIndexImpl AnnotationPropertyDomainAxiomsIndex() {
-        return new AnnotationPropertyDomainAxiomsIndexImpl(AxiomsByTypeIndex());
+    AnnotationPropertyDomainAxiomsIndexImpl AnnotationPropertyDomainAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new AnnotationPropertyDomainAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    AnnotationPropertyRangeAxiomsIndexImpl AnnotationPropertyRangeAxiomsIndex() {
-        return new AnnotationPropertyRangeAxiomsIndexImpl(AxiomsByTypeIndex());
+    AnnotationPropertyRangeAxiomsIndexImpl AnnotationPropertyRangeAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new AnnotationPropertyRangeAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
@@ -62,9 +65,10 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    AxiomsByReferenceIndexImpl AxiomsByReferenceIndex(OWLEntityProvider entityProvider) {
-        return new AxiomsByReferenceIndexImpl(AxiomsByEntityReferenceIndex(entityProvider),
-                                              AnnotationAxiomsByIriReferenceIndex());
+    AxiomsByReferenceIndexImpl AxiomsByReferenceIndex(AxiomsByEntityReferenceIndex axiomsByEntityReferenceIndex,
+                                                      AnnotationAxiomsByIriReferenceIndex annotationAxiomsByIriReferenceIndex) {
+        return new AxiomsByReferenceIndexImpl(axiomsByEntityReferenceIndex,
+                                              annotationAxiomsByIriReferenceIndex);
     }
 
     @Bean
@@ -93,18 +97,18 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    DataPropertyCharacteristicsIndexImpl DataPropertyCharacteristicsIndex() {
-        return new DataPropertyCharacteristicsIndexImpl(AxiomsByTypeIndex());
+    DataPropertyCharacteristicsIndexImpl DataPropertyCharacteristicsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new DataPropertyCharacteristicsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    DataPropertyDomainAxiomsIndexImpl DataPropertyDomainAxiomsIndex() {
-        return new DataPropertyDomainAxiomsIndexImpl(AxiomsByTypeIndex());
+    DataPropertyDomainAxiomsIndexImpl DataPropertyDomainAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new DataPropertyDomainAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    DataPropertyRangeAxiomsIndexImpl DataPropertyRangeAxiomsIndex() {
-        return new DataPropertyRangeAxiomsIndexImpl(AxiomsByTypeIndex());
+    DataPropertyRangeAxiomsIndexImpl DataPropertyRangeAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new DataPropertyRangeAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
@@ -123,38 +127,41 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    DisjointDataPropertiesAxiomsIndexImpl DisjointDataPropertiesAxiomsIndex() {
-        return new DisjointDataPropertiesAxiomsIndexImpl(AxiomsByTypeIndex());
+    DisjointDataPropertiesAxiomsIndexImpl DisjointDataPropertiesAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new DisjointDataPropertiesAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    DisjointObjectPropertiesAxiomsIndexImpl DisjointObjectPropertiesAxiomsIndex() {
-        return new DisjointObjectPropertiesAxiomsIndexImpl(AxiomsByTypeIndex());
+    DisjointObjectPropertiesAxiomsIndexImpl DisjointObjectPropertiesAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new DisjointObjectPropertiesAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    EntitiesInOntologySignatureByIriIndexImpl EntitiesInOntologySignatureByIriIndex(OWLEntityProvider entityProvider) {
-        return new EntitiesInOntologySignatureByIriIndexImpl(AxiomsByEntityReferenceIndex(entityProvider),
-                                                             OntologyAnnotationsIndex());
+    EntitiesInOntologySignatureByIriIndexImpl EntitiesInOntologySignatureByIriIndex(AxiomsByEntityReferenceIndexImpl axiomsByEntityReferenceIndex,
+                                                                                    OntologyAnnotationsSignatureIndex ontologyAnnotationsIndex) {
+        return new EntitiesInOntologySignatureByIriIndexImpl(axiomsByEntityReferenceIndex,
+                                                             ontologyAnnotationsIndex);
     }
 
     @Bean
-    EntitiesInOntologySignatureIndexImpl EntitiesInOntologySignatureIndex(OWLEntityProvider entityProvider) {
-        return new EntitiesInOntologySignatureIndexImpl(AxiomsByEntityReferenceIndex(entityProvider),
-                                                        OntologyAnnotationsIndex());
+    EntitiesInOntologySignatureIndexImpl EntitiesInOntologySignatureIndex(OntologyAnnotationsSignatureIndex ontologyAnnotationsIndex,
+                                                                          OntologyAxiomsSignatureIndex axiomsByEntityReferenceIndex) {
+        return new EntitiesInOntologySignatureIndexImpl(axiomsByEntityReferenceIndex,
+                                                        ontologyAnnotationsIndex);
     }
 
     @Bean
-    EntitiesInProjectSignatureByIriIndexImpl EntitiesInProjectSignatureByIriIndex(OWLEntityProvider entityProvider,
-                                                                                  ProjectOntologiesIndex projectOntologiesIndex) {
+    EntitiesInProjectSignatureByIriIndexImpl EntitiesInProjectSignatureByIriIndex(ProjectOntologiesIndex projectOntologiesIndex,
+                                                                                  EntitiesInOntologySignatureByIriIndex entitiesInOntologySignatureByIriIndex) {
         return new EntitiesInProjectSignatureByIriIndexImpl(projectOntologiesIndex,
-                                                            EntitiesInOntologySignatureByIriIndex(entityProvider));
+                                                            entitiesInOntologySignatureByIriIndex);
     }
 
     @Bean
-    EntitiesInProjectSignatureIndexImpl EntitiesInProjectSignatureIndex(OWLEntityProvider entityProvider, ProjectOntologiesIndex projectOntologiesIndex) {
+    EntitiesInProjectSignatureIndexImpl EntitiesInProjectSignatureIndex(ProjectOntologiesIndex projectOntologiesIndex,
+                                                                        EntitiesInOntologySignatureIndex entitiesInOntologySignatureIndex) {
         return new EntitiesInProjectSignatureIndexImpl(projectOntologiesIndex,
-                                                       EntitiesInOntologySignatureIndex(entityProvider));
+                                                       entitiesInOntologySignatureIndex);
     }
 
     @Bean
@@ -163,25 +170,27 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    EquivalentDataPropertiesAxiomsIndexImpl EquivalentDataPropertiesAxiomsIndex() {
-        return new EquivalentDataPropertiesAxiomsIndexImpl(AxiomsByTypeIndex());
+    EquivalentDataPropertiesAxiomsIndexImpl EquivalentDataPropertiesAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new EquivalentDataPropertiesAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    EquivalentObjectPropertiesAxiomsIndexImpl EquivalentObjectPropertiesAxiomsIndex() {
-        return new EquivalentObjectPropertiesAxiomsIndexImpl(AxiomsByTypeIndex());
+    EquivalentObjectPropertiesAxiomsIndexImpl EquivalentObjectPropertiesAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new EquivalentObjectPropertiesAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
     IndividualsByTypeIndexImpl IndividualsByTypeIndex(ClassHierarchyProvider classHierarchyProvider,
                                                       DictionaryManager dictionaryManager,
                                                       OWLDataFactory dataFactory,
-                                                      OWLEntityProvider entityProvider,
-                                                      ProjectOntologiesIndex projectOntologiesIndex) {
+                                                      ProjectOntologiesIndex projectOntologiesIndex,
+                                                      ProjectSignatureByTypeIndex projectSignatureByTypeIndex,
+                                                      ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex,
+                                                      ClassAssertionAxiomsByClassIndex classAssertionAxiomsByClassIndex) {
         return new IndividualsByTypeIndexImpl(projectOntologiesIndex,
-                                              ProjectSignatureByTypeIndex(entityProvider),
-                                              ClassAssertionAxiomsByIndividualIndex(),
-                                              ClassAssertionAxiomsByClassIndex(),
+                                              projectSignatureByTypeIndex,
+                                              classAssertionAxiomsByIndividualIndex,
+                                              classAssertionAxiomsByClassIndex,
                                               classHierarchyProvider,
                                               dictionaryManager,
                                               dataFactory);
@@ -191,23 +200,20 @@ public class ProjectIndexBeansConfiguration {
     IndividualsIndexImpl IndividualsIndex(DictionaryManager dictionaryManager,
                                           ClassHierarchyProvider classHierarchyProvider,
                                           OWLDataFactory dataFactory,
-                                          OWLEntityProvider entityProvider,
-                                          ProjectOntologiesIndex projectOntologiesIndex) {
+                                          ProjectOntologiesIndex projectOntologiesIndex,
+                                          ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex,
+                                          IndividualsByTypeIndex individualsByTypeIndex) {
         return new IndividualsIndexImpl(projectOntologiesIndex,
-                                        ClassAssertionAxiomsByIndividualIndex(),
+                                        classAssertionAxiomsByIndividualIndex,
                                         dictionaryManager,
                                         classHierarchyProvider,
                                         dataFactory,
-                                        IndividualsByTypeIndex(classHierarchyProvider,
-                                                               dictionaryManager,
-                                                               dataFactory,
-                                                               entityProvider,
-                                                               projectOntologiesIndex));
+                                        individualsByTypeIndex);
     }
 
     @Bean
-    InverseObjectPropertyAxiomsIndexImpl InverseObjectPropertyAxiomsIndex() {
-        return new InverseObjectPropertyAxiomsIndexImpl(AxiomsByTypeIndex());
+    InverseObjectPropertyAxiomsIndexImpl InverseObjectPropertyAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new InverseObjectPropertyAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
@@ -216,18 +222,18 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    ObjectPropertyCharacteristicsIndexImpl ObjectPropertyCharacteristicsIndex() {
-        return new ObjectPropertyCharacteristicsIndexImpl(AxiomsByTypeIndex());
+    ObjectPropertyCharacteristicsIndexImpl ObjectPropertyCharacteristicsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new ObjectPropertyCharacteristicsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    ObjectPropertyDomainAxiomsIndexImpl ObjectPropertyDomainAxiomsIndex() {
-        return new ObjectPropertyDomainAxiomsIndexImpl(AxiomsByTypeIndex());
+    ObjectPropertyDomainAxiomsIndexImpl ObjectPropertyDomainAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new ObjectPropertyDomainAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    ObjectPropertyRangeAxiomsIndexImpl ObjectPropertyRangeAxiomsIndex() {
-        return new ObjectPropertyRangeAxiomsIndexImpl(AxiomsByTypeIndex());
+    ObjectPropertyRangeAxiomsIndexImpl ObjectPropertyRangeAxiomsIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new ObjectPropertyRangeAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
@@ -236,25 +242,27 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    OntologyAxiomsIndexImpl OntologyAxiomsIndex() {
-        return new OntologyAxiomsIndexImpl(AxiomsByTypeIndex());
+    OntologyAxiomsIndexImpl OntologyAxiomsIndex(AxiomsByTypeIndexImpl axiomsByTypeIndex) {
+        return new OntologyAxiomsIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    OntologySignatureByTypeIndexImpl OntologySignatureByTypeIndex(OWLEntityProvider entityProvider) {
-        return new OntologySignatureByTypeIndexImpl(AxiomsByEntityReferenceIndex(entityProvider),
-                                                    OntologyAnnotationsIndex());
+    OntologySignatureByTypeIndexImpl OntologySignatureByTypeIndex(OntologyAxiomsSignatureIndex axiomsByEntityReferenceIndex,
+                                                                  OntologyAnnotationsSignatureIndex ontologyAnnotationsIndex) {
+        return new OntologySignatureByTypeIndexImpl(axiomsByEntityReferenceIndex,
+                                                    ontologyAnnotationsIndex);
     }
 
     @Bean
-    OntologySignatureIndexImpl OntologySignatureIndex(OWLEntityProvider entityProvider) {
-        return new OntologySignatureIndexImpl(AxiomsByEntityReferenceIndex(entityProvider));
+    OntologySignatureIndexImpl OntologySignatureIndex(AxiomsByEntityReferenceIndexImpl axiomsByEntityReferenceIndex) {
+        return new OntologySignatureIndexImpl(axiomsByEntityReferenceIndex);
     }
 
     @Bean
-    ProjectClassAssertionAxiomsByIndividualIndexImpl ProjectClassAssertionAxiomsByIndividualIndex(ProjectOntologiesIndex projectOntologiesIndex) {
+    ProjectClassAssertionAxiomsByIndividualIndexImpl ProjectClassAssertionAxiomsByIndividualIndex(ProjectOntologiesIndex projectOntologiesIndex,
+                                                                                                  ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex) {
         return new ProjectClassAssertionAxiomsByIndividualIndexImpl(projectOntologiesIndex,
-                                                                    ClassAssertionAxiomsByIndividualIndex());
+                                                                    classAssertionAxiomsByIndividualIndex);
     }
 
     @Bean
@@ -265,22 +273,25 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    ProjectSignatureByTypeIndexImpl ProjectSignatureByTypeIndex(OWLEntityProvider entityProvider) {
-        return new ProjectSignatureByTypeIndexImpl(AxiomsByEntityReferenceIndex(entityProvider));
+    ProjectSignatureByTypeIndexImpl ProjectSignatureByTypeIndex(AxiomsByEntityReferenceIndexImpl axiomsByEntityReferenceIndex) {
+        return new ProjectSignatureByTypeIndexImpl(axiomsByEntityReferenceIndex);
     }
 
     @Bean
-    ProjectSignatureIndexImpl ProjectSignatureIndex(OWLEntityProvider entityProvider,
-                                                    ProjectOntologiesIndex projectOntologiesIndex) {
+    ProjectSignatureIndexImpl ProjectSignatureIndex(ProjectOntologiesIndex projectOntologiesIndex,
+                                                    OntologySignatureIndex ontologySignatureIndex) {
         return new ProjectSignatureIndexImpl(projectOntologiesIndex,
-                                             OntologySignatureIndex(entityProvider));
+                                             ontologySignatureIndex);
     }
 
     @Bean
-    PropertyAssertionAxiomsBySubjectIndexImpl PropertyAssertionAxiomsBySubjectIndex() {
-        return new PropertyAssertionAxiomsBySubjectIndexImpl(AnnotationAssertionAxiomsBySubjectIndex(),
-                                                             ObjectPropertyAssertionAxiomsBySubjectIndex(),
-                                                             DataPropertyAssertionAxiomsBySubjectIndex());
+    PropertyAssertionAxiomsBySubjectIndexImpl PropertyAssertionAxiomsBySubjectIndex(
+            AnnotationAssertionAxiomsBySubjectIndex annotationAssertionAxiomsBySubjectIndex,
+            ObjectPropertyAssertionAxiomsBySubjectIndex objectPropertyAssertionAxiomsBySubjectIndex,
+            DataPropertyAssertionAxiomsBySubjectIndex dataPropertyAssertionAxiomsBySubjectIndex) {
+        return new PropertyAssertionAxiomsBySubjectIndexImpl(annotationAssertionAxiomsBySubjectIndex,
+                                                             objectPropertyAssertionAxiomsBySubjectIndex,
+                                                             dataPropertyAssertionAxiomsBySubjectIndex);
     }
 
     @Bean
@@ -289,8 +300,8 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    SubAnnotationPropertyAxiomsBySubPropertyIndexImpl SubAnnotationPropertyAxiomsBySubPropertyIndex() {
-        return new SubAnnotationPropertyAxiomsBySubPropertyIndexImpl(AxiomsByTypeIndex());
+    SubAnnotationPropertyAxiomsBySubPropertyIndexImpl SubAnnotationPropertyAxiomsBySubPropertyIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new SubAnnotationPropertyAxiomsBySubPropertyIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
@@ -304,13 +315,13 @@ public class ProjectIndexBeansConfiguration {
     }
 
     @Bean
-    SubDataPropertyAxiomsBySubPropertyIndexImpl SubDataPropertyAxiomsBySubPropertyIndex() {
-        return new SubDataPropertyAxiomsBySubPropertyIndexImpl(AxiomsByTypeIndex());
+    SubDataPropertyAxiomsBySubPropertyIndexImpl SubDataPropertyAxiomsBySubPropertyIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new SubDataPropertyAxiomsBySubPropertyIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
-    SubObjectPropertyAxiomsBySubPropertyIndexImpl SubObjectPropertyAxiomsBySubPropertyIndex() {
-        return new SubObjectPropertyAxiomsBySubPropertyIndexImpl(AxiomsByTypeIndex());
+    SubObjectPropertyAxiomsBySubPropertyIndexImpl SubObjectPropertyAxiomsBySubPropertyIndex(AxiomsByTypeIndex axiomsByTypeIndex) {
+        return new SubObjectPropertyAxiomsBySubPropertyIndexImpl(axiomsByTypeIndex);
     }
 
     @Bean
