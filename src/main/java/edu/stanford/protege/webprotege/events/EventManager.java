@@ -128,7 +128,7 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
             writeLock.unlock();
         }
         for(E event : new LinkedHashSet<>(events)) {
-            throw new RuntimeException("Needs reimplementing");
+//            throw new RuntimeException("Needs reimplementing");
 //            eventBus.fireEvent((WebProtegeEvent) event);
         }
         return currentTag;
