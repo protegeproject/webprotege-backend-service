@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -26,7 +28,7 @@ public class ProjectOntologiesIndexImpl implements ProjectOntologiesIndex, Updat
     private static Logger logger = LoggerFactory.getLogger(ProjectOntologiesIndexImpl.class);
 
     @Nonnull
-    private final Multiset<OWLOntologyID> ontologyIds = HashMultiset.create();
+    private final Set<OWLOntologyID> ontologyIds = new HashSet<>();
 
     @Nonnull
     private ImmutableList<OWLOntologyID> cache = ImmutableList.of();
@@ -65,7 +67,7 @@ public class ProjectOntologiesIndexImpl implements ProjectOntologiesIndex, Updat
                 ontologyIds.remove(ontologyChange.getOntologyId());
             }
         }
-        cache = ImmutableList.copyOf(ontologyIds.elementSet());
+        cache = ImmutableList.copyOf(ontologyIds);
         initialized = true;
     }
 }
