@@ -45,6 +45,7 @@ import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
+import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
 import edu.stanford.protege.webprotege.index.impl.RootIndexImpl;
 import edu.stanford.protege.webprotege.index.impl.UpdatableIndex;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
@@ -458,7 +459,8 @@ public class ProjectBeansConfiguration {
 
     @Bean
     public RevisionManagerImpl getRevisionSummary(RevisionStore revisionStore) {
-        return new RevisionManagerImpl(revisionStore);
+        var revisionManager = new RevisionManagerImpl(revisionStore);
+        return revisionManager;
     }
 
     @Bean
@@ -466,7 +468,9 @@ public class ProjectBeansConfiguration {
                                            ChangeHistoryFileFactory p2,
                                            OWLDataFactory p3,
                                            OntologyChangeRecordTranslator p4) {
-        return new RevisionStoreImpl(p1, p2, p3, p4);
+        var revisionStore = new RevisionStoreImpl(p1, p2, p3, p4);
+        revisionStore.load();
+        return revisionStore;
     }
 
     @Bean
@@ -551,11 +555,18 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    IndexUpdater indexUpdater(RevisionManager p1,
-                              Set<UpdatableIndex> p2,
-                              @IndexUpdatingService ExecutorService p3,
-                              ProjectId p4) {
-        return new IndexUpdater(p1, p2, p3, p4);
+    IndexUpdater indexUpdater(IndexUpdaterFactory indexUpdaterFactory) {
+        var indexUpdater = indexUpdaterFactory.create();
+        indexUpdater.buildIndexes();
+        return indexUpdater;
+    }
+
+    @Bean
+    IndexUpdaterFactory indexUpdaterFactory(ProjectId p1,
+                                            RevisionManager p2,
+                                            Set<UpdatableIndex> p3,
+                                            @IndexUpdatingService ExecutorService p4) {
+        return new IndexUpdaterFactory(p1, p2, p3, p4);
     }
 
     @Bean
