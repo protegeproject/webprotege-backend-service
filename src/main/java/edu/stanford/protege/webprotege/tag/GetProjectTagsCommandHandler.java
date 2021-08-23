@@ -34,6 +34,6 @@ public class GetProjectTagsCommandHandler implements CommandHandler<GetProjectTa
 
     @Override
     public Mono<GetProjectTagsResult> handleRequest(GetProjectTagsAction request, ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

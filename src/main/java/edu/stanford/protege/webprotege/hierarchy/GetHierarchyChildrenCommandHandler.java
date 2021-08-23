@@ -35,6 +35,6 @@ public class GetHierarchyChildrenCommandHandler implements CommandHandler<GetHie
     @Override
     public Mono<GetHierarchyChildrenResult> handleRequest(GetHierarchyChildrenAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

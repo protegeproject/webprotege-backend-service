@@ -37,6 +37,6 @@ public class RemoveProjectFromTrashCommandHandler implements CommandHandler<Remo
     @Override
     public Mono<RemoveProjectFromTrashResult> handleRequest(RemoveProjectFromTrashAction request,
                                                             ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

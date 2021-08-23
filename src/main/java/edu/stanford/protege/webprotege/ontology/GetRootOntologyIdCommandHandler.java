@@ -35,6 +35,6 @@ public class GetRootOntologyIdCommandHandler implements CommandHandler<GetRootOn
     @Override
     public Mono<GetRootOntologyIdResult> handleRequest(GetRootOntologyIdAction request,
                                                        ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

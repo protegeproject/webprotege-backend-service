@@ -35,6 +35,6 @@ public class GetPerspectiveDetailsCommandHandler implements CommandHandler<GetPe
     @Override
     public Mono<GetPerspectiveDetailsResult> handleRequest(GetPerspectiveDetailsAction request,
                                                            ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

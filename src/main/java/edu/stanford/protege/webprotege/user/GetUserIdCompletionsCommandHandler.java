@@ -35,6 +35,6 @@ public class GetUserIdCompletionsCommandHandler implements CommandHandler<GetUse
     @Override
     public Mono<GetUserIdCompletionsResult> handleRequest(GetUserIdCompletionsAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

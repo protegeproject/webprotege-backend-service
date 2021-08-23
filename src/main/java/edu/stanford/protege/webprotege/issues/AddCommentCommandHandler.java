@@ -35,6 +35,6 @@ public class AddCommentCommandHandler implements CommandHandler<AddCommentAction
     @Override
     public Mono<AddCommentResult> handleRequest(AddCommentAction request,
                                                 ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

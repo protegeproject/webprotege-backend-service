@@ -35,6 +35,6 @@ public class MoveEntitiesToParentCommandHandler implements CommandHandler<MoveEn
     @Override
     public Mono<MoveEntitiesToParentResult> handleRequest(MoveEntitiesToParentAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

@@ -35,6 +35,6 @@ public class SetProjectFormDescriptorsCommandHandler implements CommandHandler<S
     @Override
     public Mono<SetProjectFormDescriptorsResult> handleRequest(SetProjectFormDescriptorsAction request,
                                                                ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

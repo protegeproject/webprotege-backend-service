@@ -1,7 +1,11 @@
 package edu.stanford.protege.webprotege.api;
 
 import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
+import org.springframework.http.HttpStatus;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -42,4 +46,19 @@ public class ActionExecutor {
             }
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public <A extends Action<R>,  R extends Result> Mono<R> executeRequest(A request, ExecutionContext executionContext) {
+        try {
+            var requestContext = new RequestContext(executionContext.userId());
+            var resultContainer = executor.execute(request, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));
+            var result = (R) resultContainer.getResult();
+            return Mono.just(result);
+        } catch (PermissionDeniedException e) {
+            return Mono.error(new CommandExecutionException(HttpStatus.FORBIDDEN));
+        } catch (ActionExecutionException e) {
+            return Mono.error(new CommandExecutionException(HttpStatus.INTERNAL_SERVER_ERROR));
+        }
+    }
+
 }

@@ -35,6 +35,6 @@ public class GetProjectChangesCommandHandler implements CommandHandler<GetProjec
     @Override
     public Mono<GetProjectChangesResult> handleRequest(GetProjectChangesAction request,
                                                        ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

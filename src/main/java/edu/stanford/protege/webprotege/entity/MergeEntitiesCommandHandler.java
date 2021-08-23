@@ -34,6 +34,6 @@ public class MergeEntitiesCommandHandler implements CommandHandler<MergeEntities
 
     @Override
     public Mono<MergeEntitiesResult> handleRequest(MergeEntitiesAction request, ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

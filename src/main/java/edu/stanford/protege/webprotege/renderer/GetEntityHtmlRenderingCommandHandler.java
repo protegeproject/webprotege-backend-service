@@ -35,6 +35,6 @@ public class GetEntityHtmlRenderingCommandHandler implements CommandHandler<GetE
     @Override
     public Mono<GetEntityHtmlRenderingResult> handleRequest(GetEntityHtmlRenderingAction request,
                                                             ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

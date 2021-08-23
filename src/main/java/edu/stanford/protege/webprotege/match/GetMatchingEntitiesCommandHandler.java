@@ -35,6 +35,6 @@ public class GetMatchingEntitiesCommandHandler implements CommandHandler<GetMatc
     @Override
     public Mono<GetMatchingEntitiesResult> handleRequest(GetMatchingEntitiesAction request,
                                                          ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

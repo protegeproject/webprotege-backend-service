@@ -35,6 +35,6 @@ public class GetRevisionSummariesCommandHandler implements CommandHandler<GetRev
     @Override
     public Mono<GetRevisionSummariesResult> handleRequest(GetRevisionSummariesAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

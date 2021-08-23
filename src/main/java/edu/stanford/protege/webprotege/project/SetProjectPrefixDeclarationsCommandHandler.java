@@ -35,6 +35,6 @@ public class SetProjectPrefixDeclarationsCommandHandler implements CommandHandle
     @Override
     public Mono<SetProjectPrefixDeclarationsResult> handleRequest(SetProjectPrefixDeclarationsAction request,
                                                                   ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

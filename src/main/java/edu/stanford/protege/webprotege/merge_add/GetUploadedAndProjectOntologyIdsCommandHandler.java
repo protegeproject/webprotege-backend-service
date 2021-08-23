@@ -35,6 +35,6 @@ public class GetUploadedAndProjectOntologyIdsCommandHandler implements CommandHa
     @Override
     public Mono<GetUploadedAndProjectOntologyIdsResult> handleRequest(GetUploadedAndProjectOntologyIdsAction request,
                                                                       ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

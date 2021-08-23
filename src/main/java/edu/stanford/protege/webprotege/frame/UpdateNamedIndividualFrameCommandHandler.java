@@ -35,6 +35,6 @@ public class UpdateNamedIndividualFrameCommandHandler implements CommandHandler<
     @Override
     public Mono<UpdateNamedIndividualFrameResult> handleRequest(UpdateNamedIndividualFrameAction request,
                                                                 ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

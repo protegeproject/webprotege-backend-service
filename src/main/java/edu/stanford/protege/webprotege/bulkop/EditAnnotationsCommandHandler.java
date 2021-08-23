@@ -34,6 +34,6 @@ public class EditAnnotationsCommandHandler implements CommandHandler<EditAnnotat
 
     @Override
     public Mono<EditAnnotationsResult> handleRequest(EditAnnotationsAction request, ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

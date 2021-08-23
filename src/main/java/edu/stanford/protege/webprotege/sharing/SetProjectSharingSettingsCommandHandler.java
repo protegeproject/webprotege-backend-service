@@ -35,6 +35,6 @@ public class SetProjectSharingSettingsCommandHandler implements CommandHandler<S
     @Override
     public Mono<SetProjectSharingSettingsResult> handleRequest(SetProjectSharingSettingsAction request,
                                                                ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

@@ -35,6 +35,6 @@ public class SetOboTermCrossProductCommandHandler implements CommandHandler<SetO
     @Override
     public Mono<SetOboTermCrossProductResult> handleRequest(SetOboTermCrossProductAction request,
                                                             ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

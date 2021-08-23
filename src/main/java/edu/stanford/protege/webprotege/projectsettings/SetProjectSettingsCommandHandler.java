@@ -35,6 +35,6 @@ public class SetProjectSettingsCommandHandler implements CommandHandler<SetProje
     @Override
     public Mono<SetProjectSettingsResult> handleRequest(SetProjectSettingsAction request,
                                                         ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

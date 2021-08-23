@@ -35,6 +35,6 @@ public class SetApplicationSettingsCommandHandler implements CommandHandler<SetA
     @Override
     public Mono<SetApplicationSettingsResult> handleRequest(SetApplicationSettingsAction request,
                                                             ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

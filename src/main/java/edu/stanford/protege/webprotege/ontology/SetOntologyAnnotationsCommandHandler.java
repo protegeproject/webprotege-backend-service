@@ -35,6 +35,6 @@ public class SetOntologyAnnotationsCommandHandler implements CommandHandler<SetO
     @Override
     public Mono<SetOntologyAnnotationsResult> handleRequest(SetOntologyAnnotationsAction request,
                                                             ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

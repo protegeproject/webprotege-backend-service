@@ -35,6 +35,6 @@ public class GetManchesterSyntaxFrameCompletionsCommandHandler implements Comman
     @Override
     public Mono<GetManchesterSyntaxFrameCompletionsResult> handleRequest(GetManchesterSyntaxFrameCompletionsAction request,
                                                                          ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

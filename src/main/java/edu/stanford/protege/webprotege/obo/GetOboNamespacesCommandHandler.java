@@ -35,6 +35,6 @@ public class GetOboNamespacesCommandHandler implements CommandHandler<GetOboName
     @Override
     public Mono<GetOboNamespacesResult> handleRequest(GetOboNamespacesAction request,
                                                       ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

@@ -35,6 +35,6 @@ public class CreateDataPropertiesCommandHandler implements CommandHandler<Create
     @Override
     public Mono<CreateDataPropertiesResult> handleRequest(CreateDataPropertiesAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

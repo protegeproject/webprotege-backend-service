@@ -35,6 +35,6 @@ public class GetPerspectiveLayoutCommandHandler implements CommandHandler<GetPer
     @Override
     public Mono<GetPerspectiveLayoutResult> handleRequest(GetPerspectiveLayoutAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

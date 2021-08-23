@@ -35,6 +35,6 @@ public class GetEntityFormDescriptorCommandHandler implements CommandHandler<Get
     @Override
     public Mono<GetEntityFormDescriptorResult> handleRequest(GetEntityFormDescriptorAction request,
                                                              ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

@@ -35,6 +35,6 @@ public class SetOboTermRelationshipsCommandHandler implements CommandHandler<Set
     @Override
     public Mono<SetOboTermRelationshipsResult> handleRequest(SetOboTermRelationshipsAction request,
                                                              ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

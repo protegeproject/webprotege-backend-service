@@ -35,6 +35,6 @@ public class GetOboTermDefinitionCommandHandler implements CommandHandler<GetObo
     @Override
     public Mono<GetOboTermDefinitionResult> handleRequest(GetOboTermDefinitionAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

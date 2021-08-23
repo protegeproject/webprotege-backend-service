@@ -34,6 +34,6 @@ public class GetClassFrameCommandHandler implements CommandHandler<GetClassFrame
 
     @Override
     public Mono<GetClassFrameResult> handleRequest(GetClassFrameAction request, ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

@@ -35,6 +35,6 @@ public class GetCommentedEntitiesCommandHandler implements CommandHandler<GetCom
     @Override
     public Mono<GetCommentedEntitiesResult> handleRequest(GetCommentedEntitiesAction request,
                                                           ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

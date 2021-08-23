@@ -35,6 +35,6 @@ public class MoveHierarchyNodeCommandHandler implements CommandHandler<MoveHiera
     @Override
     public Mono<MoveHierarchyNodeResult> handleRequest(MoveHierarchyNodeAction request,
                                                        ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

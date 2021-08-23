@@ -35,6 +35,6 @@ public class CopyFormDescriptorsCommandHandler implements CommandHandler<CopyFor
     @Override
     public Mono<CopyFormDescriptorsResult> handleRequest(CopyFormDescriptorsAction request,
                                                          ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

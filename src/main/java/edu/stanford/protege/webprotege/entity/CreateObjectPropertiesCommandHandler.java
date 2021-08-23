@@ -35,6 +35,6 @@ public class CreateObjectPropertiesCommandHandler implements CommandHandler<Crea
     @Override
     public Mono<CreateObjectPropertiesResult> handleRequest(CreateObjectPropertiesAction request,
                                                             ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

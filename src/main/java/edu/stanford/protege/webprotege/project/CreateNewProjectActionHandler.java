@@ -11,6 +11,7 @@ import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ApplicationPermissionValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValidator;
+import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.UserIsSignedInValidator;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -79,6 +80,7 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
     @Override
     public CreateNewProjectResult execute(@Nonnull CreateNewProjectAction action, @Nonnull ExecutionContext executionContext) {
         try {
+
             var userId = executionContext.getUserId();
             if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), CREATE_EMPTY_PROJECT)) {
                 throw new PermissionDeniedException("You do not have permission to create new projects",

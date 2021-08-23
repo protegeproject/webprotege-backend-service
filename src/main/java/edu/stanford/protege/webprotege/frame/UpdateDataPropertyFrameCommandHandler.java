@@ -35,6 +35,6 @@ public class UpdateDataPropertyFrameCommandHandler implements CommandHandler<Upd
     @Override
     public Mono<UpdateDataPropertyFrameResult> handleRequest(UpdateDataPropertyFrameAction request,
                                                              ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }

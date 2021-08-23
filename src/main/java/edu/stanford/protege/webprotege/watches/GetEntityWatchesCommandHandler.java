@@ -34,6 +34,6 @@ public class GetEntityWatchesCommandHandler implements CommandHandler<GetEntityW
 
     @Override
     public Mono<GetEntityWatchesResult> handleRequest(GetEntityWatchesAction request, ExecutionContext executionContext) {
-        return Mono.just(executor.execute(request, executionContext));
+        return executor.executeRequest(request, executionContext);
     }
 }
