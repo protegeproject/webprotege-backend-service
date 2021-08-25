@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.access;
 
-import edu.stanford.protege.webprotege.authorization.api.ActionId;
-import edu.stanford.protege.webprotege.authorization.api.RoleId;
+import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.RoleId;
 
 import javax.annotation.Nonnull;
 import java.util.*;

@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.access;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.authorization.api.ActionId;
-import edu.stanford.protege.webprotege.authorization.api.RoleId;
+import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.RoleId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;

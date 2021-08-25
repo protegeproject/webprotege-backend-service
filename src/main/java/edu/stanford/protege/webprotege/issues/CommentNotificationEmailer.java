@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.authorization.api.Subject;
+import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageHeader;
@@ -23,8 +23,8 @@ import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_OBJECT_COMMENT;
-import static edu.stanford.protege.webprotege.authorization.api.ProjectResource.forProject;
-import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.ProjectResource.forProject;
+import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 

@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.dispatch.validators;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.authorization.api.ActionId;
-import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.common.UserId;
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 
 /**
  * Matthew Horridge

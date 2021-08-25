@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.access;
 
-import edu.stanford.protege.webprotege.authorization.api.*;
+import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

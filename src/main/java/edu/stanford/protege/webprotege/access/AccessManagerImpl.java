@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.access;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import edu.stanford.protege.webprotege.authorization.api.*;
+import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;

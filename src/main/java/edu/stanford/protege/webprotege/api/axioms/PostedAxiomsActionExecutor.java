@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.api.axioms;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
-import edu.stanford.protege.webprotege.authorization.api.ActionId;
-import edu.stanford.protege.webprotege.authorization.api.ProjectResource;
-import edu.stanford.protege.webprotege.authorization.api.Subject;
+import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.ProjectResource;
+import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.Result;

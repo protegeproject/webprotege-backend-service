@@ -3,8 +3,8 @@ package edu.stanford.protege.webprotege.app;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
-import edu.stanford.protege.webprotege.authorization.api.RoleId;
+import edu.stanford.protege.webprotege.authorization.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.RoleId;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.user.EmailAddress;
 
@@ -27,8 +27,8 @@ import static edu.stanford.protege.webprotege.app.ProjectCreationSetting.EMPTY_P
 import static edu.stanford.protege.webprotege.app.ProjectCreationSetting.EMPTY_PROJECT_CREATION_NOT_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectUploadSetting.PROJECT_UPLOAD_ALLOWED;
 import static edu.stanford.protege.webprotege.app.ProjectUploadSetting.PROJECT_UPLOAD_NOT_ALLOWED;
-import static edu.stanford.protege.webprotege.authorization.api.Subject.forAnySignedInUser;
-import static edu.stanford.protege.webprotege.authorization.api.Subject.forGuestUser;
+import static edu.stanford.protege.webprotege.authorization.Subject.forAnySignedInUser;
+import static edu.stanford.protege.webprotege.authorization.Subject.forGuestUser;
 
 /**
  * Matthew Horridge

@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.app;
 
-import edu.stanford.protege.webprotege.authorization.api.ActionId;
+import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.user.UserDetails;
 
 import javax.json.Json;

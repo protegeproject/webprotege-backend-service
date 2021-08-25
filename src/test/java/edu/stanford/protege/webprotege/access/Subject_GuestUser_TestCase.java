@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.access;
 
-import edu.stanford.protege.webprotege.authorization.api.Subject;
+import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;

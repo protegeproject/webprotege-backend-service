@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.viz;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.authorization.api.ProjectResource;
-import edu.stanford.protege.webprotege.authorization.api.Subject;
+import edu.stanford.protege.webprotege.authorization.ProjectResource;
+import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.common.UserId;
 

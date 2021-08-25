@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.app;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.authorization.api.ActionId;
-import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.user.UserDetails;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 22 Dec 2017

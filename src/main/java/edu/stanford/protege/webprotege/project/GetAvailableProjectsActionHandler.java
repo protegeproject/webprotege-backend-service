@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.authorization.api.ProjectResource;
-import edu.stanford.protege.webprotege.authorization.api.Subject;
+import edu.stanford.protege.webprotege.authorization.ProjectResource;
+import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
@@ -27,7 +27,7 @@ import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.DOWNLOAD_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.MOVE_ANY_PROJECT_TO_TRASH;
-import static edu.stanford.protege.webprotege.authorization.api.Subject.forUser;
+import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static java.util.stream.Collectors.toList;
 
 /**

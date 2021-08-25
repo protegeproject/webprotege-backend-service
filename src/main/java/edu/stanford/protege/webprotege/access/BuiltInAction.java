@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.access;
 
 import com.google.common.base.CaseFormat;
-import edu.stanford.protege.webprotege.authorization.api.ActionId;
+import edu.stanford.protege.webprotege.authorization.ActionId;
 
 /**
  * Matthew Horridge

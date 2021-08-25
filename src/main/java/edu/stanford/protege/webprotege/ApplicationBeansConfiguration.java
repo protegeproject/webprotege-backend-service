@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.access.RoleOracleImpl;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.auth.*;
-import edu.stanford.protege.webprotege.authorization.api.*;
+import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslatorImpl;
 import edu.stanford.protege.webprotege.chgpwd.PasswordResetEmailTemplate;

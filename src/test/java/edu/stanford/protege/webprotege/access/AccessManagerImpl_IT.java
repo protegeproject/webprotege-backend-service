@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.access;
 
-import edu.stanford.protege.webprotege.authorization.api.ApplicationResource;
-import edu.stanford.protege.webprotege.authorization.api.RoleId;
-import edu.stanford.protege.webprotege.authorization.api.Subject;
+import edu.stanford.protege.webprotege.authorization.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.RoleId;
+import edu.stanford.protege.webprotege.authorization.Subject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
