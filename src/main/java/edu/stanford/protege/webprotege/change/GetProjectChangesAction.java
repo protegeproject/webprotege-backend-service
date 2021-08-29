@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
@@ -29,6 +31,7 @@ public class GetProjectChangesAction implements ProjectAction<GetProjectChangesR
 
     private PageRequest pageRequest;
 
+
     private GetProjectChangesAction(@Nonnull ProjectId projectId,
                                     @Nonnull Optional<OWLEntity> subject,
                                     @Nonnull PageRequest pageRequest) {
@@ -42,9 +45,10 @@ public class GetProjectChangesAction implements ProjectAction<GetProjectChangesR
         return CHANNEL;
     }
 
-    public static GetProjectChangesAction create(@Nonnull ProjectId projectId,
-                                                 @Nonnull Optional<OWLEntity> subject,
-                                                 @Nonnull PageRequest pageRequest) {
+    @JsonCreator
+    public static GetProjectChangesAction create(@Nonnull @JsonProperty("projectId") ProjectId projectId,
+                                                 @Nonnull @JsonProperty("subject") Optional<OWLEntity> subject,
+                                                 @Nonnull @JsonProperty("pageRequest") PageRequest pageRequest) {
         return new GetProjectChangesAction(projectId, subject, pageRequest);
     }
 

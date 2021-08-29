@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -40,6 +41,9 @@ public class ChangeListMinimiser_TestCase {
 
     private RemoveAxiomChange removeAxiomA;
 
+    @Mock
+    private OWLAnnotation annotation;
+
     @Before
     public void setUp() throws Exception {
         minimizer = new ChangeListMinimiser();
@@ -64,7 +68,8 @@ public class ChangeListMinimiser_TestCase {
 
     @Test
     public void shouldPreserveNonAxiomChanges() {
-        AddOntologyAnnotationChange change = mock(AddOntologyAnnotationChange.class);
+        AddOntologyAnnotationChange change = AddOntologyAnnotationChange.of(ontologyId,
+                                                                            annotation);
         changes.add(change);
         var minimizedChanges = minimizer.getMinimisedChanges(changes);
         assertThat(minimizedChanges, contains(change));

@@ -147,6 +147,8 @@ public class ChangeManager implements HasApplyChanges {
     @Nonnull
     private final GeneratedAnnotationsGenerator generatedAnnotationsGenerator;
 
+    private OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
+
     @Inject
     public ChangeManager(@Nonnull ProjectId projectId,
                          @Nonnull OWLDataFactory dataFactory,
@@ -475,7 +477,7 @@ public class ChangeManager implements HasApplyChanges {
      */
     private OntologyChange getRenamedChange(OntologyChange change,
                                             IriReplacer iriReplacer) {
-        return change.replaceIris(iriReplacer);
+        return ontologyChangeIriReplacer.replaceIris(change, iriReplacer);
     }
 
     /**

@@ -67,6 +67,11 @@
             <artifactId>webprotege-ipc</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>webprotege-change-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>commons-fileupload</groupId>
