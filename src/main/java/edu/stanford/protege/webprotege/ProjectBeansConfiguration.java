@@ -51,6 +51,7 @@ import edu.stanford.protege.webprotege.index.impl.UpdatableIndex;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.*;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
@@ -621,7 +622,7 @@ public class ProjectBeansConfiguration {
                                 IndexUpdater p23,
                                 DefaultOntologyIdManager p24,
                                 IriReplacerFactory p25,
-                                GeneratedAnnotationsGenerator p26) {
+                                GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -647,7 +648,7 @@ public class ProjectBeansConfiguration {
                                  p23,
                                  p24,
                                  p25,
-                                 p26);
+                                 p26, eventDispatcher);
     }
 
 

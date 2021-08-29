@@ -33,7 +33,7 @@ public class EventManagerProvider implements Provider<EventManager<ProjectEvent<
 
     @Override
     public EventManager<ProjectEvent<?>> get() {
-        EventManager<ProjectEvent<?>> projectEventEventManager = new EventManager<>(PROJECT_EVENT_LIFE_TIME, projectId);
+        EventManager<ProjectEvent<?>> projectEventEventManager = new EventManager<>(PROJECT_EVENT_LIFE_TIME, projectId, );
         projectDisposablesManager.register(projectEventEventManager);
         return projectEventEventManager;
     }

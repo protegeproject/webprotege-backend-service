@@ -73,7 +73,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesAction;
  *     The basic interface for actions that are sent to the dispatch service
  * </p>
  */
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "action")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes(value = {
         @Type(value = AddCommentAction.class),
         @Type(value = CheckManchesterSyntaxFrameAction.class),

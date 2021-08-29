@@ -23,6 +23,7 @@ import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyProvider
 import edu.stanford.protege.webprotege.index.RootIndex;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.owlapi.OWLEntityCreator;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -147,6 +148,9 @@ public class ChangeManager implements HasApplyChanges {
     @Nonnull
     private final GeneratedAnnotationsGenerator generatedAnnotationsGenerator;
 
+    @Nonnull
+    private final EventDispatcher eventDispatcher;
+
     private OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
 
     @Inject
@@ -175,7 +179,8 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull IndexUpdater indexUpdater,
                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                          @Nonnull IriReplacerFactory iriReplacerFactory,
-                         @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator) {
+                         @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator,
+                         @Nonnull EventDispatcher eventDispatcher) {
         this.projectId = projectId;
         this.dataFactory = dataFactory;
         this.dictionaryUpdatesProcessor = dictionaryUpdatesProcessor;
@@ -202,6 +207,7 @@ public class ChangeManager implements HasApplyChanges {
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.iriReplacerFactory = iriReplacerFactory;
         this.generatedAnnotationsGenerator = generatedAnnotationsGenerator;
+        this.eventDispatcher = eventDispatcher;
     }
 
     /**
@@ -528,6 +534,15 @@ public class ChangeManager implements HasApplyChanges {
                                                         ChangeApplicationResult<R> finalResult,
                                                         EventTranslatorManager eventTranslatorManager,
                                                         Optional<Revision> revision) {
+        var changes = finalResult.getChangeList();
+
+        // Fire low-level ontology changed events.  There's an event for every change
+        // that was applied
+        for(var change : changes) {
+            var event = new OntologyChangedEvent(projectId, userId, change);
+            eventDispatcher.dispatchEvent(event);
+        }
+
         if(changeListGenerator instanceof SilentChangeListGenerator) {
             return;
         }

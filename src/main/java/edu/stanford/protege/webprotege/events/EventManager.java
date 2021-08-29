@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.event.LargeNumberOfChangesEvent;
 import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -47,7 +48,9 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
 
     private final EventLifeTime eventLifeTime;
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
+
+    private final EventDispatcher eventDispatcher;
 
 
     private EventTag currentTag = EventTag.getFirst();
@@ -59,9 +62,10 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
     });
 
     @Inject
-    public EventManager(EventLifeTime eventLifeTime, ProjectId projectId) {
+    public EventManager(EventLifeTime eventLifeTime, ProjectId projectId, EventDispatcher eventDispatcher) {
         this.eventLifeTime = checkNotNull(eventLifeTime);
         this.projectId = checkNotNull(projectId);
+        this.eventDispatcher = eventDispatcher;
         final long eventLifeTimeInMilliseconds = eventLifeTime.getEventLifeTimeInMilliseconds();
         purgeSweepService.scheduleAtFixedRate(new PurgeExpiredEventsTask(writeLock, eventQueue),
                 eventLifeTimeInMilliseconds,
@@ -112,15 +116,18 @@ public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, H
             currentTag = currentTag.next();
             var currentTime = System.currentTimeMillis();
             if(events.size() > EVENT_LIST_SIZE_LIMIT) {
-                var collapsedEvents = ImmutableList.of(new LargeNumberOfChangesEvent(projectId));
+                var largeNumberOfChangesEvent = new LargeNumberOfChangesEvent(projectId);
+                var collapsedEvents = ImmutableList.of(largeNumberOfChangesEvent);
                 eventQueue.add(new EventBucket<>(currentTime,
                                                  collapsedEvents,
                                                  currentTag,
                                                  eventLifeTime));
+                // TODO: DISPATCH HIGH LEVEL EVENTS
             }
             else {
                 EventBucket<E> e = new EventBucket<>(currentTime, checkNotNull(events, "events must not be null"), currentTag, eventLifeTime);
                 eventQueue.add(e);
+                // TODO: DISPATCH HIGH LEVEL EVENTS
             }
 
         }
