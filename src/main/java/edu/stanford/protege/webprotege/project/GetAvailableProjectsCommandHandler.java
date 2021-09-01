@@ -26,7 +26,7 @@ public class GetAvailableProjectsCommandHandler implements CommandHandler<GetAva
     @NotNull
     @Override
     public String getChannelName() {
-        return "project-management.GetAvailableProjects";
+        return GetAvailableProjectsAction.CHANNEL;
     }
 
     @Override
