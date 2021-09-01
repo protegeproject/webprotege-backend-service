@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -31,8 +32,6 @@ import java.util.stream.Collectors;
  * 2021-09-01
  */
 public class AddAxiomsDelegateHandler extends AbstractProjectActionHandler<AddAxiomsRequest, AddAxiomsResponse> {
-
-    private final Logger logger = LoggerFactory.getLogger(AddAxiomsDelegateHandler.class);
 
     private final ChangeManager changeManager;
 
@@ -63,61 +62,16 @@ public class AddAxiomsDelegateHandler extends AbstractProjectActionHandler<AddAx
     @Override
     public AddAxiomsResponse execute(@NotNull AddAxiomsRequest action, @NotNull ExecutionContext executionContext) {
         var projectId = action.projectId();
-        try {
-            logger.info("{} Received request to load axioms", projectId);
-            var documentSource = new StringDocumentSource(action.ontologyDocument(),
-                                                          createDocumentIri(projectId),
-                                                          getDocumentFormat(action.mimeType()),
-                                                          action.mimeType());
-
-            var loaderConfig = new OWLOntologyLoaderConfiguration()
-                    .setReportStackTraces(false)
-                    .setMissingImportHandlingStrategy(MissingImportHandlingStrategy.SILENT)
-                    .setFollowRedirects(true);
-
-            var manager = OWLManager.createOWLOntologyManager();
-            var ontology = manager.loadOntologyFromOntologyDocument(documentSource, loaderConfig);
-
-            var ontologyDocument = getTargetOntologyId(ontology);
-            var changes = ontology.getAxioms()
-                                  .stream()
-                                  .map(ax -> new AddAxiomChange(ontologyDocument, ax))
-                                  .collect(Collectors.<OntologyChange>toList());
-            logger.info("{} Loaded {} axioms", projectId, changes.size());
-            var result = changeManager.applyChanges(executionContext.getUserId(),
-                                                    new FixedChangeListGenerator<>(changes,
-                                                                                   "Added axioms",
-                                                                                   action.commitMessage()));
-            var axiomsCount = result.getChangeList().size();
-            logger.info("{} Successfully applied changes.  This resulted in {} axiom additions.", projectId, axiomsCount);
-            return new AddAxiomsResponse(axiomsCount);
-        } catch (OWLOntologyCreationException e) {
-            logger.info("{} An error occurred when parsing the supplied ontology: {}", projectId, e.getMessage());
-            throw new CommandExecutionException(HttpStatus.BAD_REQUEST);
-        }
+        var loader = new AxiomsDocumentLoader(projectId,
+                                              action.ontologyDocument(),
+                                              action.mimeType(),
+                                              defaultOntologyIdManager.getDefaultOntologyId());
+        var changes = loader.<OntologyChange>loadAxioms((ax, ontologyId) -> new AddAxiomChange(ontologyId, ax));
+        var result = changeManager.applyChanges(executionContext.getUserId(),
+                                                new FixedChangeListGenerator<>(changes, "", action.commitMessage()));
+        var appliedChangesCount = result.getChangeList().size();
+        return new AddAxiomsResponse(projectId,
+                                     appliedChangesCount);
     }
 
-    private OWLDocumentFormat getDocumentFormat(String mimeType) {
-        return Arrays.stream(DownloadFormat.values())
-                .filter(format -> format.getMimeType().equalsIgnoreCase(mimeType))
-                .findFirst()
-                .map(DownloadFormat::getDocumentFormat)
-                .orElse(DownloadFormat.getDefaultFormat().getDocumentFormat());
-    }
-
-    private IRI createDocumentIri(ProjectId projectId) {
-        return IRI.create(String.format("http://webprotege.stanford.edu/%s/ontologies/temp", projectId.id()));
-    }
-
-    @NotNull
-    private OWLOntologyID getTargetOntologyId(OWLOntology ontology) {
-        final OWLOntologyID ontologyDocument;
-        if (ontology.isAnonymous()) {
-            ontologyDocument = defaultOntologyIdManager.getDefaultOntologyId();
-        }
-        else {
-            ontologyDocument = ontology.getOntologyID();
-        }
-        return ontologyDocument;
-    }
 }
