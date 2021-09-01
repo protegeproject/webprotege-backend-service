@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
 import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
+import edu.stanford.protege.webprotege.axioms.RemoveAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.bulkop.*;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -777,7 +778,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                   DefaultOntologyIdManager p4) {
         return new AddAxiomsActionHandler(p1, p2, p3, p4);
     }
-
 
     @Bean
     DeleteAxiomsActionHandler deleteAxiomActionHandler(AccessManager p1,

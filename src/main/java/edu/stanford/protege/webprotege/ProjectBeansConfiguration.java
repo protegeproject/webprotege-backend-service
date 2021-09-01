@@ -10,6 +10,7 @@ import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.axiom.*;
 import edu.stanford.protege.webprotege.axioms.AddAxiomsDelegateHandler;
+import edu.stanford.protege.webprotege.axioms.RemoveAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.MoveClassesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeListGeneratorFactory;
@@ -1211,6 +1212,15 @@ public class ProjectBeansConfiguration {
                                                      ChangeManager changeManager,
                                                      DefaultOntologyIdManager defaultOntologyIdManager) {
         return new AddAxiomsDelegateHandler(accessManager,
+                                            changeManager,
+                                            defaultOntologyIdManager);
+    }
+
+    @Bean
+    RemoveAxiomsDelegateHandler removeAxiomsDelegateHandler(AccessManager accessManager,
+                                                        ChangeManager changeManager,
+                                                        DefaultOntologyIdManager defaultOntologyIdManager) {
+        return new RemoveAxiomsDelegateHandler(accessManager,
                                             changeManager,
                                             defaultOntologyIdManager);
     }
