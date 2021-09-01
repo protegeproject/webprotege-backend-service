@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.obo;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -34,7 +35,7 @@ public class GetOboTermCrossProductsActionHandler extends AbstractProjectActionH
     @Override
     public GetOboTermCrossProductResult execute(@Nonnull GetOboTermCrossProductAction action,
                                                 @Nonnull ExecutionContext executionContext) {
-        OBOTermCrossProduct crossProduct = crossProductsManager.getCrossProduct(action.getEntity());
-        return GetOboTermCrossProductResult.create(crossProduct);
+        OBOTermCrossProduct crossProduct = crossProductsManager.getCrossProduct((OWLClass) action.term());
+        return new GetOboTermCrossProductResult(crossProduct);
     }
 }

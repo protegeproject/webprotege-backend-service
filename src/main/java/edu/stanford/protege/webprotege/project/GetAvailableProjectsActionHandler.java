@@ -10,9 +10,6 @@ import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
-import edu.stanford.protege.webprotege.project.AvailableProject;
-import edu.stanford.protege.webprotege.project.GetAvailableProjectsAction;
-import edu.stanford.protege.webprotege.project.GetAvailableProjectsResult;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserActivityRecord;
@@ -76,12 +73,12 @@ public class GetAvailableProjectsActionHandler implements ApplicationActionHandl
         List<AvailableProject> availableProjects = projectPermissionsManager.getReadableProjects(userId).stream()
                                                                             .map(details -> {
                                                                                 Subject user = forUser(userId);
-                                                                                ProjectResource projectResource = new ProjectResource(details.getProjectId());
+                                                                                ProjectResource projectResource = new ProjectResource(details.projectId());
                                                                                 boolean downloadable = accessManager.hasPermission(user, projectResource, DOWNLOAD_PROJECT);
                                                                                 boolean trashable = details.getOwner().equals(userId)
                                                                                         || accessManager.hasPermission(user, projectResource, MOVE_ANY_PROJECT_TO_TRASH);
-                                                                                long lastOpened = lastOpenedMap.getOrDefault(details.getProjectId(), 0L);
-                                                                                return AvailableProject.get(details.getProjectId(),
+                                                                                long lastOpened = lastOpenedMap.getOrDefault(details.projectId(), 0L);
+                                                                                return AvailableProject.get(details.projectId(),
                                                                                                             details.getDisplayName(),
                                                                                                             details.getDescription(),
                                                                                                             details.getOwner(),
@@ -93,6 +90,6 @@ public class GetAvailableProjectsActionHandler implements ApplicationActionHandl
                                                                                                             downloadable, trashable, lastOpened);
                                                                             })
                                                                             .collect(toList());
-        return GetAvailableProjectsResult.create(availableProjects);
+        return new GetAvailableProjectsResult(availableProjects);
     }
 }

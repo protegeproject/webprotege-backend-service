@@ -47,14 +47,8 @@ public class MoveProjectToTrashActionHandler implements ApplicationActionHandler
     @Nonnull
     @Override
     public MoveProjectToTrashResult execute(@Nonnull MoveProjectToTrashAction action, @Nonnull ExecutionContext executionContext) {
-        List<ProjectMovedToTrashEvent> events = new ArrayList<>();
         ProjectId projectId = action.getProjectId();
             projectDetailsManager.setInTrash(projectId, true);
-            events.add(new ProjectMovedToTrashEvent(projectId));
-
-        EventList<WebProtegeEvent<?>> eventList = EventList.create(EventTag.getFirst(),
-                                                                ImmutableList.copyOf(events),
-                                                                EventTag.getFirst());
         return MoveProjectToTrashResult.create();
     }
 }

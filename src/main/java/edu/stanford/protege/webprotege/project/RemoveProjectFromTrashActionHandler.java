@@ -1,19 +1,11 @@
 package edu.stanford.protege.webprotege.project;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.UserIsProjectOwnerValidator;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectMovedFromTrashEvent;
-import edu.stanford.protege.webprotege.event.WebProtegeEvent;
-import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashAction;
-import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashResult;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

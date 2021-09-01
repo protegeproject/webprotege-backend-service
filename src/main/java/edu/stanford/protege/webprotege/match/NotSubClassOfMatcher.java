@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.match;
 
 
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
-import edu.stanford.protege.webprotege.match.criteria.HierarchyFilterType;
+import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 

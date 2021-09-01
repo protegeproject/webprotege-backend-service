@@ -32,11 +32,6 @@ public class PermissionsChangedEvent_TestCase {
     }
 
     @Test
-    public void shouldReturnSupplied_source() {
-        assertThat(permissionsChangedEvent.getSource(), is(this.source));
-    }
-
-    @Test
     public void shouldBeEqualToSelf() {
         assertThat(permissionsChangedEvent, is(permissionsChangedEvent));
     }

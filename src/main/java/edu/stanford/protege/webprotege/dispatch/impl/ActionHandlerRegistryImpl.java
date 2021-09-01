@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.*;
 
 import javax.annotation.Nonnull;
@@ -28,14 +30,14 @@ public abstract class ActionHandlerRegistryImpl implements ActionHandlerRegistry
     }
 
 
-    private  <A extends Action<R>, R extends Result> void register(ActionHandler<A, R> handler) {
+    private  <A extends Request<R>, R extends Response> void register(ActionHandler<A, R> handler) {
         registry.put(handler.getActionClass(), handler);
     }
 
     @Nonnull
     @Override
     @SuppressWarnings("unchecked")
-    public <A extends Action<R>, R extends Result> ActionHandler<A, R> getActionHandler(A action) {
+    public <A extends Request<R>, R extends Response> ActionHandler<A, R> getActionHandler(A action) {
         checkNotNull(action, "action must not be null");
         ActionHandler<A, R> handler = (ActionHandler<A, R>) registry.get(action.getClass());
         if(handler == null) {

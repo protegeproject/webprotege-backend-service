@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.crud;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.match.HierarchyPositionCriteriaMatchableEntityTypesExtractor;
-import edu.stanford.protege.webprotege.match.criteria.*;
+import edu.stanford.protege.webprotege.criteria.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.semanticweb.owlapi.model.EntityType;

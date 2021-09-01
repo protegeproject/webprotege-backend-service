@@ -4,17 +4,17 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.match.Matcher;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.search.EntityNameMatchResult;
 import edu.stanford.protege.webprotege.search.SearchResultMatch;
 import edu.stanford.protege.webprotege.search.SearchResultMatchPosition;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.SearchString;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -88,7 +88,7 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
     @Override
     public LookupEntitiesResult execute(@Nonnull LookupEntitiesAction action,
                                         @Nonnull ExecutionContext executionContext) {
-        return LookupEntitiesResult.create(lookupEntities(action.getEntityLookupRequest()));
+        return new LookupEntitiesResult(lookupEntities(action.entityLookupRequest()));
     }
 
 

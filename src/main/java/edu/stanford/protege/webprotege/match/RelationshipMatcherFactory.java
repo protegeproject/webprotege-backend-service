@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
-import edu.stanford.protege.webprotege.match.criteria.RelationshipCriteria;
+import edu.stanford.protege.webprotege.criteria.RelationshipCriteria;
 
 import javax.annotation.Nonnull;
 

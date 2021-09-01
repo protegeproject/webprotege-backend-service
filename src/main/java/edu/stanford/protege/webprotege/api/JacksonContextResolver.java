@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.api;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -21,8 +20,8 @@ public class JacksonContextResolver implements ContextResolver<ObjectMapper> {
 
     private ObjectMapper objectMapper;
 
-    public JacksonContextResolver() {
-        this.objectMapper = new ObjectMapperProvider().get();
+    public JacksonContextResolver(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
         this.objectMapper.setDefaultPrettyPrinter(new DefaultPrettyPrinter());
         this.objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
     }

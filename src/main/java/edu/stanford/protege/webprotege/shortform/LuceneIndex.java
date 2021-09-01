@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.shortform;
 
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.EntityType;

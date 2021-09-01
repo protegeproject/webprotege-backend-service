@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.match;
 
-import edu.stanford.protege.webprotege.match.criteria.*;
+import edu.stanford.protege.webprotege.criteria.*;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 import javax.annotation.Nonnull;

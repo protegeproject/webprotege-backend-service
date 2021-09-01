@@ -34,7 +34,7 @@ public abstract class MergeOntologiesAction implements ProjectAction<MergeOntolo
 
     @Nonnull
     @Override
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     public abstract DocumentId getDocumentId();
 

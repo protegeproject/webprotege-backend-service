@@ -41,7 +41,7 @@ public class RemoveWatchesAction implements ProjectAction<RemoveWatchesResult>, 
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

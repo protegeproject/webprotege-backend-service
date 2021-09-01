@@ -6,31 +6,25 @@ import com.github.mustachejava.MustacheFactory;
 import com.google.common.base.Ticker;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.AccessManagerImpl;
 import edu.stanford.protege.webprotege.access.RoleOracle;
 import edu.stanford.protege.webprotege.access.RoleOracleImpl;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.auth.*;
-import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
 import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslatorImpl;
-import edu.stanford.protege.webprotege.chgpwd.PasswordResetEmailTemplate;
-import edu.stanford.protege.webprotege.chgpwd.ResetPasswordMailer;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
 import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
-import edu.stanford.protege.webprotege.form.EntityFormRepositoryImpl;
-import edu.stanford.protege.webprotege.form.EntityFormSelectorRepositoryImpl;
+import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
+import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
-import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessagingExceptionHandlerImpl;
@@ -142,12 +136,6 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    @PasswordResetEmailTemplate
-    public OverridableFile providePasswordResetEmailTemplate(OverridableFileFactory factory) {
-        return factory.getOverridableFile("templates/password-reset-email-template.html");
-    }
-
-    @Bean
     @CommentNotificationSlackTemplate
     public OverridableFile provideCommentNotificationSlackTemplate(OverridableFileFactory factory) {
         return factory.getOverridableFile("templates/comment-notification-slack-template.json");
@@ -156,12 +144,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     @CommentNotificationSlackTemplate
     public FileContents providesCommentNotificationSlackTemplate(@CommentNotificationSlackTemplate OverridableFile file) {
-        return new FileContents(file);
-    }
-
-    @Bean
-    @PasswordResetEmailTemplate
-    public FileContents providesPasswordResetEmailTemplate(@PasswordResetEmailTemplate OverridableFile file) {
         return new FileContents(file);
     }
 
@@ -338,12 +320,6 @@ public class ApplicationBeansConfiguration {
 
     @Bean
     @Singleton
-    public ObjectMapper getObjectMapper() {
-        return new ObjectMapperProvider().get();
-    }
-
-    @Bean
-    @Singleton
     public ApplicationDisposablesManager getApplicationDisposablesManager(DisposableObjectManager disposableObjectManager) {
         return new ApplicationDisposablesManager(disposableObjectManager);
     }
@@ -447,20 +423,7 @@ public class ApplicationBeansConfiguration {
                             applicationNameSupplier,
                             entityTypePerspectiveMapper);
     }
-
-    @Bean
-    ResetPasswordMailer getResetPasswordMailer(SendMailImpl sendMail,
-                                               TemplateEngine templateEngine,
-                                               PlaceUrl placeUrl,
-                                               ApplicationNameSupplier applicationNameSupplier,
-                                               @PasswordResetEmailTemplate FileContents templateContents) {
-        return new ResetPasswordMailer(sendMail,
-                                       templateEngine,
-                                       templateContents,
-                                       placeUrl,
-                                       applicationNameSupplier);
-    }
-
+    
     @Bean
     @Singleton
     ApplicationPreferencesStore getApplicationPreferencesStore(MongoTemplate mongoTemplate) {

@@ -17,7 +17,6 @@ import static edu.stanford.protege.webprotege.frame.ClassFrameTranslationOptions
 import static edu.stanford.protege.webprotege.frame.RelationshipTranslationOptions.RelationshipMinification.NON_MINIMIZED_RELATIONSHIPS;
 import static edu.stanford.protege.webprotege.frame.RelationshipTranslationOptions.allOutgoingRelationships;
 import static edu.stanford.protege.webprotege.frame.RelationshipTranslationOptions.noIncomingRelationships;
-import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 
 /**
  * Author: Matthew Horridge<br>
@@ -33,20 +32,15 @@ public class GetClassFrameActionHandler extends AbstractProjectActionHandler<Get
     private final ClassFrameProvider classFrameProvider;
 
     @Nonnull
-    private final FrameComponentSessionRendererFactory rendererFactory;
-
-    @Nonnull
-    private final Comparator<PropertyValue> propertyValueComparator;
+    private final PlainFrameRenderer plainFrameRenderer;
 
     @Inject
     public GetClassFrameActionHandler(@Nonnull AccessManager accessManager,
                                       @Nonnull ClassFrameProvider classFrameProvider,
-                                      @Nonnull FrameComponentSessionRendererFactory rendererFactory,
-                                      @Nonnull Comparator<PropertyValue> propertyValueComparator) {
+                                      @Nonnull PlainFrameRenderer plainFrameRenderer) {
         super(accessManager);
         this.classFrameProvider = classFrameProvider;
-        this.rendererFactory = rendererFactory;
-        this.propertyValueComparator = propertyValueComparator;
+        this.plainFrameRenderer = plainFrameRenderer;
     }
 
     /**
@@ -69,19 +63,14 @@ public class GetClassFrameActionHandler extends AbstractProjectActionHandler<Get
     @Override
     public GetClassFrameResult execute(@Nonnull GetClassFrameAction action,
                                        @Nonnull ExecutionContext executionContext) {
-        var subject = action.getSubject();
+        var subject = action.subject();
         var options = ClassFrameTranslationOptions.get(
                 EXCLUDE_ANCESTORS,
                 RelationshipTranslationOptions.get(allOutgoingRelationships(),
                                                    noIncomingRelationships(),
                                                    NON_MINIMIZED_RELATIONSHIPS));
         var classFrame = classFrameProvider.getFrame(subject, options);
-        var renderedFrame = classFrame.toEntityFrame(rendererFactory.create(), propertyValueComparator);
-        logger.info(BROWSING,
-                    "{} {} retrieved Class frame for {}",
-                    action.getProjectId(),
-                    executionContext.getUserId(),
-                    subject);
-        return GetClassFrameResult.get(renderedFrame);
+        var renderedFrame = plainFrameRenderer.toClassFrame(classFrame);
+        return new GetClassFrameResult((renderedFrame));
     }
 }

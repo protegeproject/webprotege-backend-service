@@ -44,7 +44,7 @@ public class GetProjectEventsAction implements Action<GetProjectEventsResult>, H
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

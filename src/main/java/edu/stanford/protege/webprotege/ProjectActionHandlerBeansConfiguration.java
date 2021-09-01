@@ -13,9 +13,9 @@ import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSett
 import edu.stanford.protege.webprotege.csv.ImportCSVFileActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.entity.*;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.form.*;
+import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTranslator;
@@ -96,37 +96,41 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     UpdateClassFrameActionHandler updateClassFrameActionHandler(AccessManager p1,
-                                                                EventManager<ProjectEvent<?>> p2,
-                                                                HasApplyChanges p3, FrameChangeGeneratorFactory p4) {
-        return new UpdateClassFrameActionHandler(p1, p2, p3, p4);
+                                                                EventManager<ProjectEvent> p2,
+                                                                HasApplyChanges p3,
+                                                                FrameChangeGeneratorFactory p4,
+                                                                PlainFrameRenderer plainFrameRenderer) {
+        return new UpdateClassFrameActionHandler(p1, p2, p3, p4, plainFrameRenderer);
     }
 
 
     @Bean
     GetObjectPropertyFrameActionHandler getObjectPropertyFrameActionHandler(AccessManager p1,
                                                                             Provider<ObjectPropertyFrameTranslator> p2,
-                                                                            FrameComponentSessionRendererFactory p3,
-                                                                            PropertyValueComparator p4) {
-        return new GetObjectPropertyFrameActionHandler(p1, p2, p3, p4);
+                                                                            PlainFrameRenderer plainFrameRenderer) {
+        return new GetObjectPropertyFrameActionHandler(p1, p2, plainFrameRenderer);
     }
 
 
     @Bean
     UpdateObjectPropertyFrameHandler updateObjectPropertyFrameHandler(AccessManager p1,
-                                                                      EventManager<ProjectEvent<?>> p2,
+                                                                      EventManager<ProjectEvent> p2,
                                                                       HasApplyChanges p3,
-                                                                      FrameChangeGeneratorFactory p4) {
-        return new UpdateObjectPropertyFrameHandler(p1, p2, p3, p4);
+                                                                      FrameChangeGeneratorFactory p4,
+                                                                      FrameComponentSessionRenderer p5,
+                                                                      Comparator<PropertyValue> p6,
+                                                                      PlainFrameRenderer plainFrameRenderer) {
+        return new UpdateObjectPropertyFrameHandler(p1, p2, p3, p4, plainFrameRenderer);
     }
 
 
     @Bean
     UpdateDataPropertyFrameHandler updateDataPropertyFrameHandler(AccessManager p1,
-                                                                  EventManager<ProjectEvent<?>> p2,
+                                                                  EventManager<ProjectEvent> p2,
                                                                   HasApplyChanges p3,
-                                                                  Provider<DataPropertyFrameTranslator> p4,
-                                                                  FrameChangeGeneratorFactory p5) {
-        return new UpdateDataPropertyFrameHandler(p1, p2, p3, p4, p5);
+                                                                  FrameChangeGeneratorFactory p5,
+                                                                  PlainFrameRenderer plainFrameRenderer) {
+        return new UpdateDataPropertyFrameHandler(p1, p2, p3, p5, plainFrameRenderer);
     }
 
 
@@ -135,17 +139,20 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                     RenderingManager p2,
                                                                                     Provider<AnnotationPropertyFrameTranslator> p3,
                                                                                     FrameComponentSessionRenderer p4,
-                                                                                    Comparator<PropertyValue> p5) {
-        return new GetAnnotationPropertyFrameActionHandler(p1, p2, p3, p4, p5);
+                                                                                    Comparator<PropertyValue> p5,
+                                                                                    PlainFrameRenderer plainFrameRenderer) {
+        return new GetAnnotationPropertyFrameActionHandler(p1, p3, plainFrameRenderer);
     }
-
-
+    
     @Bean
     UpdateAnnotationPropertyFrameActionHandler updateAnnotationPropertyFrameActionHandler(AccessManager p1,
-                                                                                          EventManager<ProjectEvent<?>> p2,
+                                                                                          EventManager<ProjectEvent> p2,
                                                                                           HasApplyChanges p3,
-                                                                                          FrameChangeGeneratorFactory p4) {
-        return new UpdateAnnotationPropertyFrameActionHandler(p1, p2, p3, p4);
+                                                                                          FrameChangeGeneratorFactory p4,
+                                                                                          FrameComponentSessionRenderer p5,
+                                                                                          Comparator<PropertyValue> p6,
+                                                                                          PlainFrameRenderer plainFrameRenderer) {
+        return new UpdateAnnotationPropertyFrameActionHandler(p1, p2, p3, p4, plainFrameRenderer);
     }
 
 
@@ -153,8 +160,9 @@ public class ProjectActionHandlerBeansConfiguration {
     GetNamedIndividualFrameActionHandler getNamedIndividualFrameActionHandler(AccessManager p1,
                                                                               Provider<NamedIndividualFrameTranslator> p2,
                                                                               FrameComponentSessionRendererFactory p3,
-                                                                              Comparator<PropertyValue> p4) {
-        return new GetNamedIndividualFrameActionHandler(p1, p2, p3, p4);
+                                                                              Comparator<PropertyValue> p4,
+                                                                              PlainFrameRenderer plainFrameRenderer) {
+        return new GetNamedIndividualFrameActionHandler(p1, p2, plainFrameRenderer);
     }
 
 
@@ -169,10 +177,13 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     UpdateNamedIndividualFrameHandler updateNamedIndividualFrameHandler(AccessManager p1,
-                                                                        EventManager<ProjectEvent<?>> p2,
+                                                                        EventManager<ProjectEvent> p2,
                                                                         HasApplyChanges p3,
-                                                                        FrameChangeGeneratorFactory p4) {
-        return new UpdateNamedIndividualFrameHandler(p1, p2, p3, p4);
+                                                                        FrameChangeGeneratorFactory p4,
+                                                                        FrameComponentSessionRenderer p5,
+                                                                        Comparator<PropertyValue> p6,
+                                                                        PlainFrameRenderer plainFrameRenderer) {
+        return new UpdateNamedIndividualFrameHandler(p1, p2, p3, p4, plainFrameRenderer);
     }
 
 
@@ -206,7 +217,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetOntologyAnnotationsActionHandler setOntologyAnnotationsActionHandler(AccessManager p1,
-                                                                            EventManager<ProjectEvent<?>> p2,
+                                                                            EventManager<ProjectEvent> p2,
                                                                             HasApplyChanges p3,
                                                                             OWLDataFactory p4,
                                                                             OntologyAnnotationsIndex p5) {
@@ -216,7 +227,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     CreateClassesActionHandler createClassesActionHandler(AccessManager p1,
-                                                          EventManager<ProjectEvent<?>> p2,
+                                                          EventManager<ProjectEvent> p2,
                                                           HasApplyChanges p3,
                                                           CreateClassesChangeGeneratorFactory p4,
                                                           EntityNodeRenderer p5) {
@@ -226,7 +237,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     CreateObjectPropertiesActionHandler createObjectPropertyActionHandler(AccessManager p1,
-                                                                          EventManager<ProjectEvent<?>> p2,
+                                                                          EventManager<ProjectEvent> p2,
                                                                           HasApplyChanges p3,
                                                                           ProjectId p4,
                                                                           CreateObjectPropertiesChangeGeneratorFactory p5,
@@ -237,7 +248,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     CreateDataPropertiesActionHandler createDataPropertiesActionHandler(AccessManager p1,
-                                                                        EventManager<ProjectEvent<?>> p2,
+                                                                        EventManager<ProjectEvent> p2,
                                                                         HasApplyChanges p3,
                                                                         ProjectId p4,
                                                                         CreateDataPropertiesChangeGeneratorFactory p5,
@@ -248,7 +259,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     CreateAnnotationPropertiesActionHandler createAnnotationPropertiesActionHandler(AccessManager p1,
-                                                                                    EventManager<ProjectEvent<?>> p2,
+                                                                                    EventManager<ProjectEvent> p2,
                                                                                     HasApplyChanges p3,
                                                                                     ProjectId p4,
                                                                                     RenderingManager p5,
@@ -261,7 +272,7 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     CreateNamedIndividualsActionHandler createNamedIndividualsActionHandler(AccessManager p1,
                                                                             ProjectId p2,
-                                                                            EventManager<ProjectEvent<?>> p3,
+                                                                            EventManager<ProjectEvent> p3,
                                                                             HasApplyChanges p4,
                                                                             EntityNodeRenderer p5,
                                                                             CreateIndividualsChangeListGeneratorFactory p6) {
@@ -279,16 +290,9 @@ public class ProjectActionHandlerBeansConfiguration {
         return new LookupEntitiesActionHandler(p1, p2, p3, p4, p5, p6, p7);
     }
 
-
-    @Bean
-    AddWatchActionHandler addWatchActionHandler(AccessManager p1, EventManager<ProjectEvent<?>> p2, WatchManager p3) {
-        return new AddWatchActionHandler(p1, p2, p3);
-    }
-
-
     @Bean
     RemoveWatchActionHandler removeWatchActionHandler(AccessManager p1,
-                                                      EventManager<ProjectEvent<?>> p2,
+                                                      EventManager<ProjectEvent> p2,
                                                       WatchManager p3) {
         return new RemoveWatchActionHandler(p1, p2, p3);
     }
@@ -296,7 +300,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetEntityWatchesActionHandler setEntityWatchesActionHandler(AccessManager p1,
-                                                                EventManager<ProjectEvent<?>> p2,
+                                                                EventManager<ProjectEvent> p2,
                                                                 WatchManager p3) {
         return new SetEntityWatchesActionHandler(p1, p2, p3);
     }
@@ -343,9 +347,8 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     GetDataPropertyFrameActionHandler getDataPropertyFrameActionHandler(AccessManager p1,
                                                                         Provider<DataPropertyFrameTranslator> p2,
-                                                                        FrameComponentSessionRendererFactory p3,
-                                                                        Comparator<PropertyValue> p4) {
-        return new GetDataPropertyFrameActionHandler(p1, p2, p3, p4);
+                                                                        PlainFrameRenderer plainFrameRenderer) {
+        return new GetDataPropertyFrameActionHandler(p1, p2, plainFrameRenderer);
     }
 
 
@@ -379,7 +382,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetManchesterSyntaxFrameActionHandler setManchesterSyntaxFrameActionHandler(AccessManager p1,
-                                                                                EventManager<ProjectEvent<?>> p2,
+                                                                                EventManager<ProjectEvent> p2,
                                                                                 HasApplyChanges p3,
                                                                                 GetManchesterSyntaxFrameActionHandler p4,
                                                                                 RenderingManager p5,
@@ -466,18 +469,9 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetProjectChangesActionHandler(p1, p2);
     }
 
-
-    @Bean
-    GetWatchedEntityChangesActionHandler getWatchedEntityChangesActionHandler(AccessManager p1,
-                                                                              WatchManager p2,
-                                                                              WatchedChangesManager p3) {
-        return new GetWatchedEntityChangesActionHandler(p1, p2, p3);
-    }
-
-
     @Bean
     RevertRevisionActionHandler revertRevisionActionHandler(AccessManager p1,
-                                                            EventManager<ProjectEvent<?>> p2,
+                                                            EventManager<ProjectEvent> p2,
                                                             HasApplyChanges p3,
                                                             ProjectId p4,
                                                             RevisionReverterChangeListGeneratorFactory p5) {
@@ -523,7 +517,7 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                   ProjectDetailsRepository p4,
                                                                                   CommentNotificationEmailer p5,
                                                                                   CommentPostedSlackWebhookInvoker p6,
-                                                                                  EventManager<ProjectEvent<?>> p7,
+                                                                                  EventManager<ProjectEvent> p7,
                                                                                   HasGetRendering p8) {
         return new CreateEntityDiscussionThreadHandler(p1, p2, p3, p4, p5, p6, p7, p8);
     }
@@ -532,7 +526,7 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     AddCommentHandler addEntityCommentActionHandler(ProjectId p1,
                                                     HasGetRendering p2,
-                                                    EventManager<ProjectEvent<?>> p3,
+                                                    EventManager<ProjectEvent> p3,
                                                     EntityDiscussionThreadRepository p4,
                                                     CommentNotificationEmailer p5,
                                                     CommentPostedSlackWebhookInvoker p6,
@@ -550,10 +544,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    EditCommentActionHandler editCommentAction(AccessManager p1,
+    EditCommentActionHandler UpdateCommentAction(AccessManager p1,
                                                ProjectId p2,
                                                EntityDiscussionThreadRepository p3,
-                                               EventManager<ProjectEvent<?>> p4) {
+                                               EventManager<ProjectEvent> p4) {
         return new EditCommentActionHandler(p1, p2, p3, p4);
     }
 
@@ -561,7 +555,7 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     SetDiscussionThreadStatusHandler setDiscussionThreadStatusHandler(AccessManager p1,
                                                                       EntityDiscussionThreadRepository p2,
-                                                                      EventManager<ProjectEvent<?>> p3, ProjectId p4) {
+                                                                      EventManager<ProjectEvent> p3, ProjectId p4) {
         return new SetDiscussionThreadStatusHandler(p1, p2, p3, p4);
     }
 
@@ -591,7 +585,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     DeleteEntitiesActionHandler deleteEntitiesActionHandler(AccessManager p1,
-                                                            EventManager<ProjectEvent<?>> p2,
+                                                            EventManager<ProjectEvent> p2,
                                                             HasApplyChanges p3,
                                                             DeleteEntitiesChangeListGeneratorFactory p4) {
         return new DeleteEntitiesActionHandler(p1, p2, p3, p4);
@@ -609,9 +603,8 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     GetClassFrameActionHandler getClassFrameActionHandler(AccessManager p1,
                                                           ClassFrameProvider p2,
-                                                          FrameComponentSessionRendererFactory p3,
-                                                          Comparator<PropertyValue> p4) {
-        return new GetClassFrameActionHandler(p1, p2, p3, p4);
+                                                          PlainFrameRenderer plainFrameRenderer) {
+        return new GetClassFrameActionHandler(p1, p2, plainFrameRenderer);
     }
 
 
@@ -719,7 +712,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveHierarchyNodeActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
-                                                                   EventManager<ProjectEvent<?>> p2,
+                                                                   EventManager<ProjectEvent> p2,
                                                                    HasApplyChanges p3,
                                                                    MoveEntityChangeListGeneratorFactory p4) {
         return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4);
@@ -742,7 +735,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MergeEntitiesActionHandler mergeClassesActionHandler(AccessManager p1,
-                                                          EventManager<ProjectEvent<?>> p2,
+                                                          EventManager<ProjectEvent> p2,
                                                           HasApplyChanges p3,
                                                           MergeEntitiesChangeListGeneratorFactory p4) {
         return new MergeEntitiesActionHandler(p1, p2, p3, p4);
@@ -757,7 +750,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     UpdateEntityTagsActionHandler updateEntityTagsActionHandler(AccessManager p1,
-                                                                EventManager<ProjectEvent<?>> p2,
+                                                                EventManager<ProjectEvent> p2,
                                                                 TagsManager p3) {
         return new UpdateEntityTagsActionHandler(p1, p2, p3);
     }
@@ -772,7 +765,7 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     SetProjectTagsActionHandler setProjectTagsActionHandler(AccessManager p1,
                                                             TagsManager p2,
-                                                            EventManager<ProjectEvent<?>> p3) {
+                                                            EventManager<ProjectEvent> p3) {
         return new SetProjectTagsActionHandler(p1, p2, p3);
     }
 
@@ -844,7 +837,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetAnnotationValueActionHandler setAnnotationValueActionHandler(AccessManager p1,
-                                                                    EventManager<ProjectEvent<?>> p2,
+                                                                    EventManager<ProjectEvent> p2,
                                                                     HasApplyChanges p3,
                                                                     SetAnnotationValueActionChangeListGeneratorFactory p4) {
         return new SetAnnotationValueActionHandler(p1, p2, p3, p4);
@@ -853,7 +846,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     EditAnnotationValuesActionHandler replaceAnnotationValuesActionHandler(AccessManager p1,
-                                                                           EventManager<ProjectEvent<?>> p2,
+                                                                           EventManager<ProjectEvent> p2,
                                                                            HasApplyChanges p3,
                                                                            EditAnnotationsChangeListGeneratorFactory p4) {
         return new EditAnnotationValuesActionHandler(p1, p2, p3, p4);
@@ -862,7 +855,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveToParentActionHandler moveToParentActionHandler(AccessManager p1,
-                                                        EventManager<ProjectEvent<?>> p2,
+                                                        EventManager<ProjectEvent> p2,
                                                         HasApplyChanges p3, MoveClassesChangeListGeneratorFactory p4) {
         return new MoveToParentActionHandler(p1, p2, p3, p4);
     }
@@ -887,7 +880,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetEntityFormsDataActionHandler setEntityFormDataActionHandler(AccessManager p1,
-                                                                   EventManager<ProjectEvent<?>> p2,
+                                                                   EventManager<ProjectEvent> p2,
                                                                    HasApplyChanges p3,
                                                                    EntityFormChangeListGeneratorFactory p4) {
         return new SetEntityFormsDataActionHandler(p1, p2, p3, p4);
@@ -954,13 +947,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                               EntityFormSelectorRepository p3) {
         return new SetEntityFormDescriptorActionHandler(p1, p2, p3);
     }
-
-
-    @Bean
-    GetFreshFormIdActionHandler getFreshFormIdActionHandler(AccessManager p1) {
-        return new GetFreshFormIdActionHandler(p1);
-    }
-
 
     @Bean
     GetEntityHtmlRenderingActionHandler getEntityHtmlRenderingActionHandler(AccessManager p1,
@@ -1029,10 +1015,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     CreateEntityFromFormDataActionHandler createEntityFromFormDataActionHandler(AccessManager p1,
-                                                                                EventManager<ProjectEvent<?>> p2,
+                                                                                EventManager<ProjectEvent> p2,
                                                                                 HasApplyChanges p3,
                                                                                 CreateEntityFromFormDataChangeListGeneratorFactory p4,
-                                                                                EntityNodeRenderer p5) {
+                                                                                RenderingManager p5) {
         return new CreateEntityFromFormDataActionHandler(p1, p2, p3, p4, p5);
     }
 
@@ -1051,7 +1037,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     DeprecateEntityByFormActionHandler deprecateEntityByFormActionHandler(AccessManager p1,
-                                                                          EventManager<ProjectEvent<?>> p2,
+                                                                          EventManager<ProjectEvent> p2,
                                                                           HasApplyChanges p3,
                                                                           ProjectId p4,
                                                                           DeprecateEntityByFormChangeListGeneratorFactory p5,

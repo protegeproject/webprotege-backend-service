@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.entity.CreateClassesAction;
 import edu.stanford.protege.webprotege.entity.CreateClassesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLClass;
 
@@ -40,7 +40,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
 
     @Inject
     public CreateClassesActionHandler(@Nonnull AccessManager accessManager,
-                                      @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                      @Nonnull EventManager<ProjectEvent> eventManager,
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull CreateClassesChangeGeneratorFactory changeFactory,
                                       @Nonnull EntityNodeRenderer entityNodeRenderer) {
@@ -64,16 +64,15 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
 
     @Override
     protected ChangeListGenerator<Set<OWLClass>> getChangeListGenerator(CreateClassesAction action, ExecutionContext executionContext) {
-        return changeGeneratorFactory.create(action.getSourceText(),
-                                             action.getLangTag(),
-                                             action.getParents());
+        return changeGeneratorFactory.create(action.sourceText(),
+                                             action.langTag(),
+                                             action.parents());
     }
 
     @Override
-    protected CreateClassesResult createActionResult(ChangeApplicationResult<Set<OWLClass>> changeApplicationResult, CreateClassesAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
+    protected CreateClassesResult createActionResult(ChangeApplicationResult<Set<OWLClass>> changeApplicationResult, CreateClassesAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
-        return CreateClassesResult.create(action.getProjectId(),
-                                       classes.stream().map(entityNodeRenderer::render).collect(toImmutableSet()),
-                                       eventList);
+        return new CreateClassesResult(action.projectId(),
+                                       classes.stream().map(entityNodeRenderer::render).collect(toImmutableSet()));
     }
 }

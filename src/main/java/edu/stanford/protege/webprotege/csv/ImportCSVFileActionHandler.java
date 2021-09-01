@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 
@@ -37,7 +37,7 @@ public class ImportCSVFileActionHandler extends AbstractProjectChangeHandler<Int
 
     @Inject
     public ImportCSVFileActionHandler(@Nonnull AccessManager accessManager,
-                                      @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                      @Nonnull EventManager<ProjectEvent> eventManager,
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull @UploadsDirectory File uploadsDirectory,
                                       @Nonnull ImportCSVFileChangeListGeneratorFactory factory) {
@@ -82,7 +82,7 @@ public class ImportCSVFileActionHandler extends AbstractProjectChangeHandler<Int
     protected ImportCSVFileResult createActionResult(ChangeApplicationResult<Integer> changeApplicationResult,
                                                      ImportCSVFileAction action,
                                                      ExecutionContext executionContext,
-                                                     EventList<ProjectEvent<?>> eventList) {
+                                                     EventList<ProjectEvent> eventList) {
         return new ImportCSVFileResult(EventList.create(EventTag.get(0), EventTag.get(1)), changeApplicationResult.getSubject());
     }
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.match.criteria.MultiMatchType;
+import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 
 import javax.annotation.Nonnull;
 import java.util.List;

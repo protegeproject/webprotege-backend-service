@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.shortform;
 
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;

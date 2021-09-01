@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.api;
 
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -31,7 +33,7 @@ public class ActionExecutor {
     }
 
     @SuppressWarnings("unchecked")
-    public   <A extends Action<R>,  R extends Result> R execute(A action, ExecutionContext executionContext) {
+    public   <A extends Request<R>,  R extends Response> R execute(A action, ExecutionContext executionContext) {
         try {
             RequestContext requestContext = new RequestContext(executionContext.userId());
             DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));
@@ -48,7 +50,7 @@ public class ActionExecutor {
     }
 
     @SuppressWarnings("unchecked")
-    public <A extends Action<R>,  R extends Result> Mono<R> executeRequest(A request, ExecutionContext executionContext) {
+    public <A extends Request<R>,  R extends Response> Mono<R> executeRequest(A request, ExecutionContext executionContext) {
         try {
             var requestContext = new RequestContext(executionContext.userId());
             var resultContainer = executor.execute(request, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));

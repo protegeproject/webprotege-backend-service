@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.events;
 
+import edu.stanford.protege.webprotege.common.Event;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 
@@ -14,7 +15,7 @@ import java.util.List;
  *     An interface to an object which can be used to post events.
  * </p>
  */
-public interface HasPostEvents<E extends WebProtegeEvent<?>> {
+public interface HasPostEvents<E extends Event> {
 
     /**
      * Posts an event to this event manager.

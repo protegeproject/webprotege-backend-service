@@ -38,10 +38,10 @@ public class GetPerspectivesActionHandler implements ApplicationActionHandler<Ge
     @Nonnull
     @Override
     public GetPerspectivesResult execute(@Nonnull GetPerspectivesAction action, @Nonnull ExecutionContext executionContext) {
-        var projectId = action.getProjectId();
-        var userId = action.getUserId();
+        var projectId = action.projectId();
+        var userId = action.userId();
         var perspectives = perspectivesManager.getPerspectives(projectId, userId);
         var resettablePerspectiveIds = perspectivesManager.getResettablePerspectiveIds(projectId, userId);
-        return GetPerspectivesResult.create(perspectives, resettablePerspectiveIds);
+        return new GetPerspectivesResult(perspectives, resettablePerspectiveIds);
     }
 }

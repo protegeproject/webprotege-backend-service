@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.entity;
 
 import edu.stanford.protege.webprotege.api.ActionExecutor;
+import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataAction;
+import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataResult;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;

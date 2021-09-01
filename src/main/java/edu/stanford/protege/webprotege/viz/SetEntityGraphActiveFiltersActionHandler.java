@@ -41,10 +41,10 @@ public class SetEntityGraphActiveFiltersActionHandler extends AbstractProjectAct
                                                      @Nonnull ExecutionContext executionContext) {
         var userId = executionContext.getUserId();
         if(userId.isGuest()) {
-            return SetEntityGraphActiveFiltersResult.create();
+            return new SetEntityGraphActiveFiltersResult();
         }
-        var activeFilters = action.getActiveFilters();
-        var projectId = action.getProjectId();
+        var activeFilters = action.activeFilters();
+        var projectId = action.projectId();
         var settings = repository.getSettingsForUserOrProjectDefault(projectId, userId);
 
         var entityGraphSettings = settings.getSettings();
@@ -59,7 +59,7 @@ public class SetEntityGraphActiveFiltersActionHandler extends AbstractProjectAct
         repository.saveSettings(ProjectUserEntityGraphSettings.get(projectId,
                                                                    userId,
                                                                    updatedSettings));
-        return SetEntityGraphActiveFiltersResult.create();
+        return new SetEntityGraphActiveFiltersResult();
     }
 
     @Nullable

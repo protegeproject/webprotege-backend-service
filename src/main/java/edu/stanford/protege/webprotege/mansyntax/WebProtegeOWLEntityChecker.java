@@ -25,7 +25,7 @@ public class WebProtegeOWLEntityChecker implements OWLEntityChecker {
     public WebProtegeOWLEntityChecker(HasFreshEntities freshEntities,
                                       DictionaryManager dictionaryManager) {
         this.dictionaryManager = dictionaryManager;
-        for (OWLEntityData data : freshEntities.getFreshEntities()) {
+        for (OWLEntityData data : freshEntities.freshEntities()) {
             freshEntitiesMap.put(stripQuotes(data.getBrowserText()), data);
         }
     }

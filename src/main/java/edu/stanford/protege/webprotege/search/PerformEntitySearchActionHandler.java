@@ -2,17 +2,16 @@ package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
 import edu.stanford.protege.webprotege.shortform.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
-import static edu.stanford.protege.webprotege.shortform.DictionaryLanguageFilter.EmptyLangTagTreatment.INCLUDE_EMPTY_LANG_TAGS;
+import static edu.stanford.protege.webprotege.common.DictionaryLanguageFilter.EmptyLangTagTreatment.INCLUDE_EMPTY_LANG_TAGS;
 
 /**
  * Matthew Horridge
@@ -46,29 +45,29 @@ public class PerformEntitySearchActionHandler extends AbstractProjectActionHandl
     @Override
     public PerformEntitySearchResult execute(@Nonnull PerformEntitySearchAction action,
                                              @Nonnull ExecutionContext executionContext) {
-        var entityTypes = action.getEntityTypes();
-        var searchString = action.getSearchString();
+        var entityTypes = action.entityTypes();
+        var searchString = action.searchString();
         var languages = ImmutableList.<DictionaryLanguage>builder();
-        var langTagFilter = action.getLangTagFilter();
+        var langTagFilter = action.langTagFilter();
         var dictionaryLanguageFilter = DictionaryLanguageFilter.get(langTagFilter, INCLUDE_EMPTY_LANG_TAGS);
         languageManager.getLanguages().stream().filter(dictionaryLanguageFilter::isIncluded).forEach(languages::add);
         languages.add(OboIdDictionaryLanguage.get());
         languages.add(LocalNameDictionaryLanguage.get());
         languages.add(PrefixedNameDictionaryLanguage.get());
 
-        var searchFilters = action.getSearchFilters();
+        var searchFilters = action.searchFilters();
 
         var entitySearcher = entitySearcherFactory.create(entityTypes,
                                                           searchString,
                                                           executionContext.getUserId(),
                                                           languages.build(),
                                                           searchFilters);
-        PageRequest pageRequest = action.getPageRequest();
+        PageRequest pageRequest = action.pageRequest();
         entitySearcher.setPageRequest(pageRequest);
         entitySearcher.invoke();
 
         Page<EntitySearchResult> results = entitySearcher.getResults();
-        return PerformEntitySearchResult.create(searchString, results);
+        return new PerformEntitySearchResult(searchString, results);
     }
 }
 

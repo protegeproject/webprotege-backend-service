@@ -4,7 +4,7 @@ import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -12,9 +12,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
  */
-public class SetManchesterSyntaxFrameResult implements Result, HasEventList<ProjectEvent<?>> {
+public class SetManchesterSyntaxFrameResult implements Result, HasEventList<ProjectEvent> {
 
-    private EventList<ProjectEvent<?>> eventList;
+    private EventList<ProjectEvent> eventList;
 
     private String frameText;
 
@@ -22,12 +22,12 @@ public class SetManchesterSyntaxFrameResult implements Result, HasEventList<Proj
     private SetManchesterSyntaxFrameResult() {
     }
 
-    private SetManchesterSyntaxFrameResult(EventList<ProjectEvent<?>> eventList, String frameText) {
+    private SetManchesterSyntaxFrameResult(EventList<ProjectEvent> eventList, String frameText) {
         this.eventList = checkNotNull(eventList);
         this.frameText = checkNotNull(frameText);
     }
 
-    public static SetManchesterSyntaxFrameResult create(EventList<ProjectEvent<?>> eventList, String frameText) {
+    public static SetManchesterSyntaxFrameResult create(EventList<ProjectEvent> eventList, String frameText) {
         return new SetManchesterSyntaxFrameResult(eventList, frameText);
     }
 
@@ -36,7 +36,7 @@ public class SetManchesterSyntaxFrameResult implements Result, HasEventList<Proj
     }
 
     @Override
-    public EventList<ProjectEvent<?>> getEventList() {
+    public EventList<ProjectEvent> getEventList() {
         return eventList;
     }
 

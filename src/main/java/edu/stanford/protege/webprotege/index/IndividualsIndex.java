@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.index;
 
 import edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 

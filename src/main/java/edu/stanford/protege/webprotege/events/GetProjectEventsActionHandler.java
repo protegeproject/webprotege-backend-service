@@ -60,15 +60,15 @@ public class GetProjectEventsActionHandler implements ApplicationActionHandler<G
     @Override
     public GetProjectEventsResult execute(@Nonnull GetProjectEventsAction action, @Nonnull ExecutionContext executionContext) {
         EventTag sinceTag = action.getSinceTag();
-        ProjectId projectId = action.getProjectId();
+        ProjectId projectId = action.projectId();
         UserId userId = executionContext.getUserId();
         if(!accessManager.hasPermission(forUser(userId),
-                                        forProject(action.getProjectId()),
+                                        forProject(action.projectId()),
                                         VIEW_PROJECT)) {
             return getEmptyResult(projectId, sinceTag);
         }
         EventList<?> projectEventList = projectManager.getProjectEventsSinceTag(projectId, sinceTag);
-        return  GetProjectEventsResult.create(projectEventList);
+        return GetProjectEventsResult.create(projectEventList);
     }
 
     private static GetProjectEventsResult getEmptyResult(ProjectId projectId, EventTag sinceTag) {

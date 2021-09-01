@@ -67,7 +67,7 @@ public class ProjectViewPlaceTokenizer {
     public String getToken(ProjectViewPlace place) {
         StringBuilder sb = new StringBuilder();
         sb.append(PROJECTS);
-        sb.append(place.getProjectId().id());
+        sb.append(place.projectId().id());
         sb.append(PERSPECTIVES);
         sb.append(place.getPerspectiveId().getId());
 

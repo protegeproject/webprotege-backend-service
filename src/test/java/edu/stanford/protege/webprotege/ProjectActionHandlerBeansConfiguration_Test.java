@@ -29,7 +29,7 @@ public class ProjectActionHandlerBeansConfiguration_Test {
         var projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         var projectComponent = projectComponentFactory.createProjectComponent(projectId);
         var actionHandlerRegistry = projectComponent.getActionHandlerRegistry();
-        var handler = actionHandlerRegistry.getActionHandler(GetAvailableProjectsAction.create());
+        var handler = actionHandlerRegistry.getActionHandler(new GetAvailableProjectsAction());
         assertThat(handler, is(Matchers.notNullValue()));
     }
 }

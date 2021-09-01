@@ -41,8 +41,8 @@ public class EntityGraphSettingsRepositoryImpl implements EntityGraphSettingsRep
     @Override
     public void saveSettings(@Nonnull ProjectUserEntityGraphSettings settings) {
         var document = objectMapper.convertValue(settings, Document.class);
-        var filter = getUpsertFilter(settings.getProjectId(), settings.getUserId()
-                                                                .orElse(null));
+        var filter = getUpsertFilter(settings.projectId(), settings.getUserId()
+                                                                   .orElse(null));
         var replaceOptions = new ReplaceOptions().upsert(true);
         getCollection().replaceOne(filter, document, replaceOptions);
     }

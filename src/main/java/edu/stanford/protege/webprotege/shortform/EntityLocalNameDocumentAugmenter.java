@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.shortform;
 
+import edu.stanford.protege.webprotege.common.LocalNameDictionaryLanguage;
 import org.apache.lucene.document.Document;
 import org.semanticweb.owlapi.model.OWLEntity;
 

@@ -25,7 +25,7 @@ public class DeleteAxiomsResult implements Result, HasProjectId {
     }
 
     @Nonnull
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

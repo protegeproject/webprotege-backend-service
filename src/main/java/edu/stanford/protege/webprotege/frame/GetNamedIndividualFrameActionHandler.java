@@ -16,7 +16,6 @@ import javax.inject.Provider;
 import java.util.Comparator;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
-import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 
 /**
  * Author: Matthew Horridge<br>
@@ -26,26 +25,19 @@ import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
  */
 public class GetNamedIndividualFrameActionHandler extends AbstractProjectActionHandler<GetNamedIndividualFrameAction, GetNamedIndividualFrameResult> {
 
-    private static Logger logger = LoggerFactory.getLogger(GetNamedIndividualFrameActionHandler.class);
-
     @Nonnull
     private final Provider<NamedIndividualFrameTranslator> translatorProvider;
 
     @Nonnull
-    private final FrameComponentSessionRendererFactory rendererFactory;
-
-    @Nonnull
-    private final Comparator<PropertyValue> propertyValueComparator;
+    private final PlainFrameRenderer plainFrameRenderer;
 
     @Inject
     public GetNamedIndividualFrameActionHandler(@Nonnull AccessManager accessManager,
                                                 @Nonnull Provider<NamedIndividualFrameTranslator> translatorProvider,
-                                                @Nonnull FrameComponentSessionRendererFactory rendererFactory,
-                                                @Nonnull Comparator<PropertyValue> propertyValueComparator) {
+                                                @Nonnull PlainFrameRenderer plainFrameRenderer) {
         super(accessManager);
         this.translatorProvider = translatorProvider;
-        this.rendererFactory = rendererFactory;
-        this.propertyValueComparator = propertyValueComparator;
+        this.plainFrameRenderer = plainFrameRenderer;
     }
 
     /**
@@ -70,15 +62,9 @@ public class GetNamedIndividualFrameActionHandler extends AbstractProjectActionH
                                                  @Nonnull ExecutionContext executionContext) {
         var translator = translatorProvider.get();
         translator.setMinimizePropertyValues(true);
-        var plainFrame = translator.getFrame(action.getSubject());
-        var renderer = rendererFactory.create();
-        var renderedFrame = plainFrame.toEntityFrame(renderer, propertyValueComparator);
-        logger.info(BROWSING,
-                     "{} {} retrieved NamedIndividual frame for {}",
-                    action.getProjectId(),
-                    executionContext.getUserId(),
-                    action.getSubject());
-        return GetNamedIndividualFrameResult.create(renderedFrame);
+        var plainFrame = translator.getFrame(action.subject());
+        var renderedFrame = plainFrameRenderer.toNamedIndividualFrame(plainFrame);
+        return new GetNamedIndividualFrameResult(renderedFrame);
 
     }
 }

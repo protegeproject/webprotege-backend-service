@@ -54,17 +54,17 @@ public class GetHierarchyPathsToRootActionHandler extends AbstractProjectActionH
     @Nonnull
     @Override
     public GetHierarchyPathsToRootResult execute(@Nonnull GetHierarchyPathsToRootAction action, @Nonnull ExecutionContext executionContext) {
-        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderMapper.getHierarchyProvider(action.getHierarchyId());
+        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderMapper.getHierarchyProvider(action.hierarchyId());
         return hierarchyProvider.map(hp -> {
-            Collection<List<OWLEntity>> pathsToRoot = hp.getPathsToRoot(action.getEntity());
+            Collection<List<OWLEntity>> pathsToRoot = hp.getPathsToRoot(action.entity());
             List<Path<GraphNode<EntityNode>>> result =
                     pathsToRoot.stream()
                                .map(pathList -> pathList.stream()
                                                         .map(e -> nodeRenderer.toGraphNode(e, hp))
                                                         .collect(toPath()))
                                .collect(toList());
-            return GetHierarchyPathsToRootResult.create(result);
-        }).orElse(GetHierarchyPathsToRootResult.create(Collections.emptyList()));
+            return new GetHierarchyPathsToRootResult(result);
+        }).orElse(new GetHierarchyPathsToRootResult(Collections.emptyList()));
 
     }
 }

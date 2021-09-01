@@ -46,7 +46,7 @@ public class SetSearchSettingsActionHandler extends AbstractProjectActionHandler
     public synchronized SetSearchSettingsResult execute(@Nonnull SetSearchSettingsAction action,
                                                         @Nonnull ExecutionContext executionContext) {
 
-        var searchFilters = action.getTo();
+        var searchFilters = action.to();
         filtersManager.setSearchFilters(searchFilters);
         return new SetSearchSettingsResult();
     }

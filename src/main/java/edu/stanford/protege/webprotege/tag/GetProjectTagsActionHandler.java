@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
@@ -53,6 +54,6 @@ public class GetProjectTagsActionHandler extends AbstractProjectActionHandler<Ge
 //        projectTags.forEach(tag -> usage.put(tag.getTagId(),
 //                                             tagsManager.getTaggedEntities(tag.getTagId()).size()));
         projectTags.forEach(tag -> usage.put(tag.getTagId(), 0));
-        return GetProjectTagsResult.create(projectTags, usage);
+        return new GetProjectTagsResult(Set.copyOf(projectTags), usage);
     }
 }

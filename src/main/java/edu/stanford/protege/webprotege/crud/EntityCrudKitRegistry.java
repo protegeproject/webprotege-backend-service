@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ProjectSingleton
 public class EntityCrudKitRegistry {
 
-    private List<EntityCrudKit<?>> kits = new ArrayList<>();
+    private final List<EntityCrudKit<?>> kits = new ArrayList<>();
 
     private final Map<EntityCrudKitId, EntityCrudKit<?>> id2CrudKit = new HashMap<>();
 

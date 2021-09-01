@@ -8,10 +8,10 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.ReplaceOptions;
 import com.mongodb.client.model.Updates;
 import edu.stanford.protege.webprotege.api.TimestampSerializer;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.persistence.Repository;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -206,7 +206,7 @@ public class ProjectDetailsRepository implements Repository {
         try {
             writeLock.lock();
             var document = objectMapper.convertValue(projectRecord, Document.class);
-            var projectId = projectRecord.getProjectId();
+            var projectId = projectRecord.projectId();
             collection.replaceOne(withProjectId(projectId), document, new ReplaceOptions().upsert(true));
             cache.invalidate(projectId);
             cache.get(projectId);

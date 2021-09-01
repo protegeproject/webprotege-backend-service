@@ -3,9 +3,9 @@ package edu.stanford.protege.webprotege.frame;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.match.criteria.AnyRelationshipPropertyCriteria;
-import edu.stanford.protege.webprotege.match.criteria.AnyRelationshipValueCriteria;
-import edu.stanford.protege.webprotege.match.criteria.RelationshipCriteria;
+import edu.stanford.protege.webprotege.criteria.AnyRelationshipPropertyCriteria;
+import edu.stanford.protege.webprotege.criteria.AnyRelationshipValueCriteria;
+import edu.stanford.protege.webprotege.criteria.RelationshipCriteria;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.index;
 
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageCollector;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames;
 import edu.stanford.protege.webprotege.shortform.LuceneEntityDocumentTranslator;
 import org.apache.lucene.index.Term;

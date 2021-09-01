@@ -71,7 +71,7 @@ public class GetEntityUsageActionHandler extends AbstractProjectActionHandler<Ge
     @Nonnull
     @Override
     public GetEntityUsageResult execute(@Nonnull GetEntityUsageAction action, @Nonnull ExecutionContext executionContext){
-        var subject = action.getSubject();
+        var subject = action.subject();
         var referencingAxiomVisitor = referencingAxiomVisitorFactory.create(subject);
         var usageFilter = action.getUsageFilter();
         var referencingAxioms = projectOntologiesIndex.getOntologyIds()
@@ -83,12 +83,12 @@ public class GetEntityUsageActionHandler extends AbstractProjectActionHandler<Ge
                 .filter(ax -> usageFilter.map(f -> f.isIncluded(ax.getAxiomType())).orElse(true))
                 .flatMap(ax -> ax.accept(referencingAxiomVisitor).stream())
                 .filter(usageReference -> usageFilter.map(f -> isIncludedBySubject(f, subject, usageReference)).orElse(true))
-                .limit(action.getPageSize())
+                .limit(action.pageRequest().getPageSize())
                 .sorted(new UsageReferenceComparator(subject))
                 .collect(toImmutableList());
 
         var entityNode = entityNodeRenderer.render(subject);
-        return GetEntityUsageResult.create(projectId, entityNode, usageReferences, referencingAxioms.size());
+        return new GetEntityUsageResult(projectId, entityNode, usageReferences, referencingAxioms.size());
     }
 
     private boolean isIncludedBySubject(UsageFilter usageFilter, OWLEntity subject, UsageReference ref) {

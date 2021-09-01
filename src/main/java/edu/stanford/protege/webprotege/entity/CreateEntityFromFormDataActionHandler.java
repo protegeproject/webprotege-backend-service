@@ -9,8 +9,11 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
+import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataAction;
+import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataResult;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -29,14 +32,14 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
 
     private final CreateEntityFromFormDataChangeListGeneratorFactory changeListGeneratorFactory;
 
-    private final EntityNodeRenderer renderer;
+    private final RenderingManager renderer;
 
     @Inject
     public CreateEntityFromFormDataActionHandler(@Nonnull AccessManager accessManager,
-                                                 @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                                 @Nonnull EventManager<ProjectEvent> eventManager,
                                                  @Nonnull HasApplyChanges applyChanges,
                                                  @Nonnull CreateEntityFromFormDataChangeListGeneratorFactory changeListGeneratorFactory,
-                                                 @Nonnull EntityNodeRenderer renderer) {
+                                                 @Nonnull RenderingManager renderer) {
         super(accessManager, eventManager, applyChanges);
         this.changeListGeneratorFactory = checkNotNull(changeListGeneratorFactory);
         this.renderer = renderer;
@@ -51,22 +54,22 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
     @Nullable
     @Override
     protected BuiltInAction getRequiredExecutableBuiltInAction(CreateEntityFromFormDataAction action) {
-        if(action.getEntityType().equals(EntityType.CLASS)) {
+        if(action.entityType().equals(EntityType.CLASS)) {
             return BuiltInAction.CREATE_CLASS;
         }
-        else if(action.getEntityType().equals(EntityType.OBJECT_PROPERTY)) {
+        else if(action.entityType().equals(EntityType.OBJECT_PROPERTY)) {
             return BuiltInAction.CREATE_PROPERTY;
         }
-        else if(action.getEntityType().equals(EntityType.DATA_PROPERTY)) {
+        else if(action.entityType().equals(EntityType.DATA_PROPERTY)) {
             return BuiltInAction.CREATE_PROPERTY;
         }
-        else if(action.getEntityType().equals(EntityType.ANNOTATION_PROPERTY)) {
+        else if(action.entityType().equals(EntityType.ANNOTATION_PROPERTY)) {
             return BuiltInAction.CREATE_PROPERTY;
         }
-        else if(action.getEntityType().equals(EntityType.NAMED_INDIVIDUAL)) {
+        else if(action.entityType().equals(EntityType.NAMED_INDIVIDUAL)) {
             return BuiltInAction.CREATE_INDIVIDUAL;
         }
-        else if (action.getEntityType().equals(EntityType.DATATYPE)) {
+        else if (action.entityType().equals(EntityType.DATATYPE)) {
             return BuiltInAction.CREATE_DATATYPE;
         }
         else {
@@ -77,20 +80,19 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
     @Override
     protected ChangeListGenerator<OWLEntity> getChangeListGenerator(CreateEntityFromFormDataAction action,
                                                                     ExecutionContext executionContext) {
-        return changeListGeneratorFactory.create(action.getEntityType(),
-                                                 action.getFreshEntityIri(),
-                                                 action.getFormData());
+        return changeListGeneratorFactory.create(action.entityType(),
+                                                 action.freshEntityIri(),
+                                                 action.formData());
     }
 
     @Override
     protected CreateEntityFromFormDataResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult,
                                                                 CreateEntityFromFormDataAction action,
                                                                 ExecutionContext executionContext,
-                                                                EventList<ProjectEvent<?>> eventList) {
+                                                                EventList<ProjectEvent> eventList) {
 
-        var entityNodes = ImmutableSet.of(renderer.render(changeApplicationResult.getSubject()));
-        return CreateEntityFromFormDataResult.create(action.getProjectId(),
-                                                  eventList,
+        var entityNodes = ImmutableSet.of(renderer.getRendering(changeApplicationResult.getSubject()));
+        return new CreateEntityFromFormDataResult(action.projectId(),
                                                   entityNodes);
     }
 

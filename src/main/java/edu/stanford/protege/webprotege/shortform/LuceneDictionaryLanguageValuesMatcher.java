@@ -2,6 +2,9 @@ package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.ShortFormMatch;
+import edu.stanford.protege.webprotege.common.ShortFormMatchPosition;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.semanticweb.owlapi.model.OWLEntity;

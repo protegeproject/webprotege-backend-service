@@ -34,8 +34,8 @@ public class SetOboTermDefinitionActionHandler extends AbstractProjectActionHand
     @Override
     public SetOboTermDefinitionResult execute(@Nonnull SetOboTermDefinitionAction action, @Nonnull ExecutionContext executionContext) {
         termDefinitionManager.setTermDefinition(executionContext.getUserId(),
-                                                action.getEntity(),
-                                                action.getDefinition());
+                                                action.term(),
+                                                action.def());
         return new SetOboTermDefinitionResult();
     }
 }

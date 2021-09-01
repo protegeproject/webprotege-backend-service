@@ -3,12 +3,11 @@ package edu.stanford.protege.webprotege.frame;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,10 +18,10 @@ import javax.annotation.Nullable;
  * Bio-Medical Informatics Research Group<br>
  * Date: 20/02/2013
  */
-public abstract class AbstractUpdateFrameHandler<A extends ProjectAction<R> & UpdateFrame, R extends Result> extends AbstractProjectActionHandler<A, R> {
+public abstract class AbstractUpdateFrameHandler<A extends Request<R> & UpdateFrame, R extends Response> extends AbstractProjectActionHandler<A, R> {
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     @Nonnull
     private final HasApplyChanges applyChanges;
@@ -31,7 +30,7 @@ public abstract class AbstractUpdateFrameHandler<A extends ProjectAction<R> & Up
     private final FrameChangeGeneratorFactory frameChangeGeneratorFactory;
 
     public AbstractUpdateFrameHandler(@Nonnull AccessManager accessManager,
-                                      @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                      @Nonnull EventManager<ProjectEvent> eventManager,
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull FrameChangeGeneratorFactory frameChangeGeneratorFactory) {
         super(accessManager);
@@ -57,19 +56,19 @@ public abstract class AbstractUpdateFrameHandler<A extends ProjectAction<R> & Up
     @Nonnull
     @Override
     public R execute(@Nonnull A action, @Nonnull ExecutionContext executionContext) {
-        var from = action.getFrom();
-        var to = action.getTo();
+        var from = action.from();
+        var to = action.to();
         final EventTag startTag = eventManager.getCurrentTag();
         if(from.equals(to)) {
-            return createResponse(action.getTo(), eventManager.getEventsFromTag(startTag));
+            return createResponse(action.to(), eventManager.getEventsFromTag(startTag));
         }
         var userId = executionContext.getUserId();
         var frameUpdate = FrameUpdate.get(from, to);
         var changeGenerator = frameChangeGeneratorFactory.create(frameUpdate);
         applyChanges.applyChanges(userId, changeGenerator);
         var events = eventManager.getEventsFromTag(startTag);
-        return createResponse(action.getTo(), events);
+        return createResponse(action.to(), events);
     }
 
-    protected abstract R createResponse(PlainEntityFrame to, EventList<ProjectEvent<?>> events);
+    protected abstract R createResponse(PlainEntityFrame to, EventList<ProjectEvent> events);
 }

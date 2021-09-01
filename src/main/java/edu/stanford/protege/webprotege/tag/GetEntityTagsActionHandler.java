@@ -37,9 +37,9 @@ public class GetEntityTagsActionHandler extends AbstractProjectActionHandler<Get
     @Nonnull
     @Override
     public GetEntityTagsResult execute(@Nonnull GetEntityTagsAction action, @Nonnull ExecutionContext executionContext) {
-        ProjectId projectId = action.getProjectId();
-        OWLEntity entity = action.getEntity();
-        return GetEntityTagsResult.create(tagsManager.getTags(entity),
+        ProjectId projectId = action.projectId();
+        OWLEntity entity = action.entity();
+        return new GetEntityTagsResult(tagsManager.getTags(entity),
                                        tagsManager.getProjectTags());
     }
 }

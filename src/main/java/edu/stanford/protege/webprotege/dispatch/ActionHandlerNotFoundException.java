@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch;
 
+import edu.stanford.protege.webprotege.common.Request;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -13,18 +15,18 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ActionHandlerNotFoundException extends RuntimeException {
 
-    private Action<?> action;
+    private Request<?> action;
 
     /**
      * Constructs an ActionHandlerNotFoundException for the specified action.
      * @param action The action for which a handler could not be found.  Not {@code null}.
      * @throws NullPointerException if {@code action} is {@code null}.
      */
-    public ActionHandlerNotFoundException(Action<?> action) {
+    public ActionHandlerNotFoundException(Request<?> action) {
         this.action = checkNotNull(action);
     }
 
-    public Action<?> getAction() {
+    public Request<?> getAction() {
         return action;
     }
 

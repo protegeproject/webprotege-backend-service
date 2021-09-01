@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.Event;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.event.EventList;
@@ -70,7 +71,7 @@ public class MockingUtils {
         return new OWLDatatypeImpl(mockIRI());
     }
 
-    public static <E extends WebProtegeEvent<?>> EventList<E> mockEventList() {
+    public static <E extends Event> EventList<E> mockEventList() {
         return EventList.create(EventTag.get(2), ImmutableList.of(), EventTag.get(2));
     }
 

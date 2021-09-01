@@ -7,9 +7,8 @@ import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
@@ -38,7 +37,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
     private final HasGetRendering renderer;
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     @Nonnull
     private final EntityDiscussionThreadRepository repository;
@@ -58,7 +57,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
     @Inject
     public AddCommentHandler(@Nonnull ProjectId projectId,
                              @Nonnull HasGetRendering renderer,
-                             @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                             @Nonnull EventManager<ProjectEvent> eventManager,
                              @Nonnull EntityDiscussionThreadRepository repository,
                              @Nonnull CommentNotificationEmailer notificationsEmailer,
                              @Nonnull CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker,
@@ -97,7 +96,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
         UserId createdBy = executionContext.getUserId();
         long createdAt = System.currentTimeMillis();
         CommentRenderer r = new CommentRenderer();
-        String rawComment = action.getComment();
+        String rawComment = action.comment();
         String renderedComment = r.renderComment(rawComment);
         Comment comment = new Comment(CommentId.create(),
                                       createdBy,
@@ -105,13 +104,12 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
                                       Optional.empty(),
                                       rawComment,
                                       renderedComment);
-        ThreadId threadId = action.getThreadId();
+        ThreadId threadId = action.threadId();
         repository.addCommentToThread(threadId, comment);
         EventTag startTag = eventManager.getCurrentTag();
         postCommentPostedEvent(threadId, comment);
-        EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(startTag);
         sendOutNotifications(threadId, comment);
-        return AddCommentResult.create(action.getProjectId(), threadId, comment, renderedComment, eventList);
+        return new AddCommentResult(action.projectId(), threadId, comment, renderedComment);
 
     }
 

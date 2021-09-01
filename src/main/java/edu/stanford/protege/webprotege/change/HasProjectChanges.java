@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.change;
 
-import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.common.Page;
 
 import javax.annotation.Nonnull;
 

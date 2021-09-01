@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ public class EditAnnotationValuesActionHandler extends AbstractProjectChangeHand
 
     @Inject
     public EditAnnotationValuesActionHandler(@Nonnull AccessManager accessManager,
-                                             @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                             @Nonnull EventManager<ProjectEvent> eventManager,
                                              @Nonnull HasApplyChanges applyChanges,
                                              @Nonnull EditAnnotationsChangeListGeneratorFactory factory) {
         super(accessManager, eventManager, applyChanges);
@@ -41,18 +41,18 @@ public class EditAnnotationValuesActionHandler extends AbstractProjectChangeHand
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(EditAnnotationsAction action, ExecutionContext executionContext) {
-        return factory.create(action.getEntities(),
-                              action.getOperation(),
-                              action.getProperty(),
-                              action.getLexicalValueExpression(),
-                              action.isLexicalValueExpressionIsRegEx(),
-                              action.getLangTagExpression(),
-                              action.getNewAnnotationData(),
-                              action.getCommitMessage());
+        return factory.create(action.entities(),
+                              action.operation(),
+                              action.property(),
+                              action.lexicalValueExpression(),
+                              action.lexicalValueExpressionIsRegEx(),
+                              action.langTagExpression(),
+                              action.newAnnotationData(),
+                              action.commitMessage());
     }
 
     @Override
-    protected EditAnnotationsResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult, EditAnnotationsAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
-        return EditAnnotationsResult.get(eventList);
+    protected EditAnnotationsResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult, EditAnnotationsAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
+        return new EditAnnotationsResult();
     }
 }

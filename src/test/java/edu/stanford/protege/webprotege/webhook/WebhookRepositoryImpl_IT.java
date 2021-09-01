@@ -3,11 +3,12 @@ package edu.stanford.protege.webprotege.webhook;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.Collections;
@@ -25,13 +26,13 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 19 May 2017
  */
+@SpringBootTest
 public class WebhookRepositoryImpl_IT {
 
     private static final String PAYLOAD_URL = "http://the.payload.url/path";
 
+    @Autowired
     private WebhookRepositoryImpl repository;
-
-    private MongoClient client;
 
     private ProjectId projectId;
 
@@ -39,13 +40,11 @@ public class WebhookRepositoryImpl_IT {
 
     private ProjectWebhook webhook;
 
+    @Autowired
     private MongoTemplate mongoTemplate;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        client = MongoClients.create();
-        mongoTemplate = new MongoTemplate(client, MongoTestUtils.getTestDbName());
-        repository = new WebhookRepositoryImpl(mongoTemplate);
         projectId = ProjectId.valueOf(UUID.randomUUID().toString());
         subscribedToEvents = Collections.singletonList(PROJECT_CHANGED);
         webhook = new ProjectWebhook(projectId,
@@ -86,11 +85,5 @@ public class WebhookRepositoryImpl_IT {
     public void shouldClearProjectWebhooks() {
         repository.clearProjectWebhooks(projectId);
         assertThat(getCollection().countDocuments(), is(0L));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        mongoTemplate.getDb().drop();
-        client.close();
     }
 }

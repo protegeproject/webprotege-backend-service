@@ -34,8 +34,8 @@ public class SetOboTermIdActionHandler extends AbstractProjectActionHandler<SetO
     @Override
     public SetOboTermIdResult execute(@Nonnull SetOboTermIdAction action, @Nonnull ExecutionContext executionContext) {
         termIdManager.setTermId(executionContext.getUserId(),
-                                action.getEntity(),
-                                action.getOboTermId());
-        return SetOboTermIdResult.create();
+                                action.term(),
+                                action.termId());
+        return new SetOboTermIdResult();
     }
 }

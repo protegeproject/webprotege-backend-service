@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.PrefixedNameDictionaryLanguage;
 import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
 import edu.stanford.protege.webprotege.project.PrefixDeclaration;
 import org.apache.lucene.document.Document;

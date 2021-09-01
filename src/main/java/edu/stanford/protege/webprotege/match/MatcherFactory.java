@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.match;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
-import edu.stanford.protege.webprotege.match.criteria.*;
+import edu.stanford.protege.webprotege.criteria.*;
 import org.apache.commons.lang.StringUtils;
 import org.semanticweb.owlapi.model.*;
 

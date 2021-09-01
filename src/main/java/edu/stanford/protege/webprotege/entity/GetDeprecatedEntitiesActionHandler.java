@@ -51,12 +51,12 @@ public class GetDeprecatedEntitiesActionHandler extends AbstractProjectActionHan
     @Override
     public GetDeprecatedEntitiesResult execute(@Nonnull GetDeprecatedEntitiesAction action,
                                                @Nonnull ExecutionContext executionContext) {
-        var pageRequest = action.getPageRequest();
-        var entityTypes = action.getEntityTypes();
+        var pageRequest = action.pageRequest();
+        var entityTypes = action.entityTypes();
         var deprecatedEntitiesPage = deprecatedEntitiesIndex.getDeprecatedEntities(entityTypes,
                                                                                    pageRequest);
         var entityDataPage = deprecatedEntitiesPage.transform(renderingManager::getRendering);
-        return GetDeprecatedEntitiesResult.create(entityDataPage);
+        return new GetDeprecatedEntitiesResult(entityDataPage);
     }
 
 

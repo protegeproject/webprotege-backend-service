@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.EntityShortForms;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

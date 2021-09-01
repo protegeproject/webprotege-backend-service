@@ -35,7 +35,7 @@ public class ProjectViewPlace implements HasProjectId {
     }
 
     @Nonnull
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

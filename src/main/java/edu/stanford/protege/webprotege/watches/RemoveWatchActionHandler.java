@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
@@ -19,14 +19,14 @@ import javax.inject.Inject;
 public class RemoveWatchActionHandler extends AbstractProjectActionHandler<RemoveWatchesAction, RemoveWatchesResult> {
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     @Nonnull
     private final WatchManager watchManager;
 
     @Inject
     public RemoveWatchActionHandler(@Nonnull AccessManager accessManager,
-                                    @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                    @Nonnull EventManager<ProjectEvent> eventManager,
                                     @Nonnull WatchManager watchManager) {
         super(accessManager);
         this.eventManager = eventManager;

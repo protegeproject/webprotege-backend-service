@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.inject;
 
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.form.EntityFrameFormDataComponent;
-import edu.stanford.protege.webprotege.form.EntityFrameFormDataModule;
-import edu.stanford.protege.webprotege.form.FormDescriptorDtoTranslatorComponent;
+import edu.stanford.protege.webprotege.forms.EntityFrameFormDataComponent;
+import edu.stanford.protege.webprotege.forms.EntityFrameFormDataModule;
+import edu.stanford.protege.webprotege.forms.FormDescriptorDtoTranslatorComponent;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
@@ -19,7 +19,7 @@ public class ProjectComponentImpl implements ProjectComponent {
 
     private final ProjectId projectId;
 
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     private final RevisionManager revisionManager;
 
@@ -28,7 +28,7 @@ public class ProjectComponentImpl implements ProjectComponent {
     private final ProjectActionHandlerRegistry projectActionHandlerRegistry;
 
     public ProjectComponentImpl(ProjectId projectId,
-                                EventManager<ProjectEvent<?>> eventManager,
+                                EventManager<ProjectEvent> eventManager,
                                 RevisionManager revisionManager,
                                 ProjectDisposablesManager projectDisposablesManager,
                                 ProjectActionHandlerRegistry projectActionHandlerRegistry) {
@@ -46,7 +46,7 @@ public class ProjectComponentImpl implements ProjectComponent {
     }
 
     @Override
-    public EventManager<ProjectEvent<?>> getEventManager() {
+    public EventManager<ProjectEvent> getEventManager() {
         return eventManager;
     }
 

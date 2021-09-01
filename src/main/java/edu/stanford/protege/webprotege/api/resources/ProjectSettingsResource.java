@@ -62,15 +62,15 @@ public class ProjectSettingsResource {
         var prefixDeclarationSettingsResult = actionExecutor.execute(GetProjectPrefixDeclarationsAction.create(projectId),
                                                                      new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
 
-        var tagsResult = actionExecutor.execute(GetProjectTagsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
-        var sharingSettings = actionExecutor.execute(GetProjectSharingSettingsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
-        var searchSettingsResult = actionExecutor.execute(GetSearchSettingsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        var tagsResult = actionExecutor.execute(new GetProjectTagsAction(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        var sharingSettings = actionExecutor.execute(new GetProjectSharingSettingsAction(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        var searchSettingsResult = actionExecutor.execute(new GetSearchSettingsAction(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var projectSettings = AllProjectSettings.get(projectSettingsResult.getSettings(),
                                                      entityCreationSettingsResult.getSettings(),
                                                      ImmutableList.copyOf(prefixDeclarationSettingsResult.getPrefixDeclarations()),
-                                                     ImmutableList.copyOf(tagsResult.getTags()),
-                                                     sharingSettings.getProjectSharingSettings(),
-                                                     ProjectSearchSettings.get(projectId, searchSettingsResult.getFilters()));
+                                                     ImmutableList.copyOf(tagsResult.tags()),
+                                                     sharingSettings.settings(),
+                                                     ProjectSearchSettings.get(projectId, searchSettingsResult.filters()));
         var nilledOutProjectSettings = projectSettings.withProjectId(ProjectId.getNil());
         return Response.ok(nilledOutProjectSettings).build();
     }
@@ -89,7 +89,7 @@ public class ProjectSettingsResource {
                                                                   entityCreationSettings,
                                                                   IRIPrefixUpdateStrategy.LEAVE_INTACT), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var prefixDeclarations = allProjectSettings.getPrefixDeclarations();
-        actionExecutor.execute(SetProjectPrefixDeclarationsAction.create(projectId, prefixDeclarations), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        actionExecutor.execute(new SetProjectPrefixDeclarationsAction(projectId, prefixDeclarations), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
 
         var projectTags = allProjectSettings.getProjectTags();
         var projectTagsData = projectTags.stream()
@@ -102,11 +102,11 @@ public class ProjectSettingsResource {
                                                                  tag.getCriteria(),
                                                                  0))
                                          .collect(toImmutableList());
-        actionExecutor.execute(SetProjectTagsAction.create(projectId, projectTagsData), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        actionExecutor.execute(new SetProjectTagsAction(projectId, projectTagsData), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var sharingSettings = allProjectSettings.getSharingSettings();
-        actionExecutor.execute(SetProjectSharingSettingsAction.create(sharingSettings), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        actionExecutor.execute(new SetProjectSharingSettingsAction(projectId, sharingSettings), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         var searchSettings = allProjectSettings.getSearchSettings();
-        actionExecutor.execute(SetSearchSettingsAction.create(projectId, ImmutableList.of(), searchSettings.getSearchFilters()), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        actionExecutor.execute(new SetSearchSettingsAction(projectId, ImmutableList.of(), searchSettings.getSearchFilters()), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         return Response.ok().build();
     }
 }

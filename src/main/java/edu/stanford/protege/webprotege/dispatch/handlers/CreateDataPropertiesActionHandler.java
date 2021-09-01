@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.entity.CreateDataPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateDataPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -44,7 +44,7 @@ public class CreateDataPropertiesActionHandler extends AbstractProjectChangeHand
 
     @Inject
     public CreateDataPropertiesActionHandler(@Nonnull AccessManager accessManager,
-                                             @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                             @Nonnull EventManager<ProjectEvent> eventManager,
                                              @Nonnull HasApplyChanges applyChanges,
                                              @Nonnull ProjectId projectId,
                                              @Nonnull CreateDataPropertiesChangeGeneratorFactory changeGeneratorFactory, @Nonnull EntityNodeRenderer entityNodeRenderer) {
@@ -57,23 +57,22 @@ public class CreateDataPropertiesActionHandler extends AbstractProjectChangeHand
     @Override
     protected ChangeListGenerator<Set<OWLDataProperty>> getChangeListGenerator(CreateDataPropertiesAction action,
                                                                                ExecutionContext executionContext) {
-        return changeGeneratorFactory.create(action.getSourceText(),
-                                             action.getLangTag(),
-                                             action.getParents());
+        return changeGeneratorFactory.create(action.sourceText(),
+                                             action.langTag(),
+                                             action.parents());
     }
 
     @Override
     protected CreateDataPropertiesResult createActionResult(ChangeApplicationResult<Set<OWLDataProperty>> changeApplicationResult,
                                                             CreateDataPropertiesAction action,
                                                             ExecutionContext executionContext,
-                                                            EventList<ProjectEvent<?>> eventList) {
+                                                            EventList<ProjectEvent> eventList) {
         Map<OWLDataProperty, String> map = new HashMap<>();
         Set<OWLDataProperty> properties = changeApplicationResult.getSubject();
-        return CreateDataPropertiesResult.create(projectId,
+        return new CreateDataPropertiesResult(projectId,
                                               properties.stream()
                                                     .map(entityNodeRenderer::render)
-                                                    .collect(toImmutableSet()),
-                                              eventList);
+                                                    .collect(toImmutableSet()));
     }
 
     @Nullable

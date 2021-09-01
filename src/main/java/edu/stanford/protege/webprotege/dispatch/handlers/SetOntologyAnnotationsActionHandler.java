@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.frame.PropertyAnnotationValue;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
@@ -40,7 +40,7 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
 
     @Inject
     public SetOntologyAnnotationsActionHandler(@Nonnull AccessManager accessManager,
-                                               @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                               @Nonnull EventManager<ProjectEvent> eventManager,
                                                @Nonnull HasApplyChanges applyChanges,
                                                @Nonnull OWLDataFactory dataFactory,
                                                @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex) {
@@ -64,9 +64,9 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
     @Override
     protected ChangeListGenerator<Set<OWLAnnotation>> getChangeListGenerator(SetOntologyAnnotationsAction action,
                                                                              ExecutionContext executionContext) {
-        final var fromAnnotations = action.getFromAnnotations();
-        final var toAnnotations = action.getToAnnotations();
-        var ontologyId = action.getOntologyId();
+        final var fromAnnotations = action.fromAnnotations();
+        final var toAnnotations = action.toAnnotations();
+        var ontologyId = action.ontologyID();
 
         var changeList = new ArrayList<OntologyChange>();
 
@@ -112,11 +112,11 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
     protected SetOntologyAnnotationsResult createActionResult(ChangeApplicationResult<Set<OWLAnnotation>> changeApplicationResult,
                                                               SetOntologyAnnotationsAction action,
                                                               ExecutionContext executionContext,
-                                                              EventList<ProjectEvent<?>> eventList) {
-        var ontologyId = action.getOntologyId();
+                                                              EventList<ProjectEvent> eventList) {
+        var ontologyId = action.ontologyID();
         Set<OWLAnnotation> annotations = ontologyAnnotationsIndex
                 .getOntologyAnnotations(ontologyId)
                 .collect(Collectors.toSet());
-        return SetOntologyAnnotationsResult.create(annotations, eventList);
+        return new SetOntologyAnnotationsResult(annotations);
     }
 }

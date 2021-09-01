@@ -6,8 +6,6 @@ import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.auth.AuthenticationManager;
-import edu.stanford.protege.webprotege.chgpwd.ResetPasswordActionHandler;
-import edu.stanford.protege.webprotege.chgpwd.ResetPasswordMailer;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.events.GetProjectEventsActionHandler;
@@ -19,7 +17,6 @@ import edu.stanford.protege.webprotege.permissions.RebuildPermissionsActionHandl
 import edu.stanford.protege.webprotege.perspective.GetPerspectivesActionHandler;
 import edu.stanford.protege.webprotege.perspective.PerspectivesManager;
 import edu.stanford.protege.webprotege.project.*;
-import edu.stanford.protege.webprotege.user.CreateUserAccountActionHandler;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import org.springframework.context.annotation.Bean;
@@ -59,10 +56,6 @@ public class ApplicationActionHandlerBeansConfiguration {
         return new GetProjectEventsActionHandler(p1, p2);
     }
 
-    @Bean
-    public GetCurrentUserInSessionActionHandler getCurrentUserInSessionActionHandler(UserInSessionFactory p1) {
-        return new GetCurrentUserInSessionActionHandler(p1);
-    }
 
     @Bean
     SetEmailAddressActionHandler setEmailAddressActionHandler(UserDetailsManager p1) {
@@ -82,18 +75,6 @@ public class ApplicationActionHandlerBeansConfiguration {
     @Bean
     public ApplicationActionHandler removeProjectsFromTrashActionHandler(ProjectDetailsManager p1) {
         return new RemoveProjectFromTrashActionHandler(p1);
-    }
-
-    @Bean
-    ResetPasswordActionHandler resetPasswordActionHandler(UserDetailsManager p1,
-                                                          AuthenticationManager p2,
-                                                          ResetPasswordMailer p3) {
-        return new ResetPasswordActionHandler(p1, p2, p3);
-    }
-
-    @Bean
-    CreateUserAccountActionHandler createUserAccountActionHandler(AccessManager p1, AuthenticationManager p2) {
-        return new CreateUserAccountActionHandler(p1, p2);
     }
 
     @Bean

@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.shortform;
 
+import edu.stanford.protege.webprotege.common.*;
+
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 

@@ -35,7 +35,7 @@ public class SetProjectSettingsAction implements ProjectAction<SetProjectSetting
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectSettings.getProjectId();
     }
 

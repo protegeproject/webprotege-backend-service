@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.webhook;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;

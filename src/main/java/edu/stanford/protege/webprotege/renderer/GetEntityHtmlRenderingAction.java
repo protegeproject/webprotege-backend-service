@@ -36,7 +36,7 @@ public abstract class GetEntityHtmlRenderingAction implements ProjectAction<GetE
 
     @Nonnull
     @Override
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     @Nonnull
     public abstract OWLEntity getEntity();

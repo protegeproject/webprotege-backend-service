@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -49,8 +50,8 @@ public class GetEntityCrudKitsActionHandler implements ProjectActionHandler<GetE
     @Override
     public GetEntityCrudKitsResult execute(@Nonnull GetEntityCrudKitsAction action, @Nonnull ExecutionContext executionContext) {
         var currentSettings = crudKitHandlerCache.getHandler().getSettings();
-        List<EntityCrudKit<?>> kits = entityCrudKitRegistry.getKits();
-        return GetEntityCrudKitsResult.create(kits, currentSettings);
+        var kits = entityCrudKitRegistry.getKits();
+        return new GetEntityCrudKitsResult(new ArrayList<>(kits), currentSettings);
     }
 }
 

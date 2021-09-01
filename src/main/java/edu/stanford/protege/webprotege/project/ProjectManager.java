@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -74,12 +74,12 @@ public class ProjectManager {
     @Nonnull
     public EventList<?> getProjectEventsSinceTag(@Nonnull ProjectId projectId,
                                                      @Nonnull EventTag sinceTag) {
-        Optional<EventManager<ProjectEvent<?>>> pem = projectCache.getProjectEventManagerIfActive(projectId);
+        Optional<EventManager<ProjectEvent>> pem = projectCache.getProjectEventManagerIfActive(projectId);
         if(pem.isEmpty()) {
             return getEmptyProjectEventList(projectId, sinceTag);
         }
-        EventManager<ProjectEvent<?>> eventManager = pem.get();
-        EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(sinceTag);
+        EventManager<ProjectEvent> eventManager = pem.get();
+        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(sinceTag);
         return EventList.create(eventList.getStartTag(), eventList.getEvents(), eventList.getEndTag());
 
     }

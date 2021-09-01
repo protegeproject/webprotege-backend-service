@@ -17,5 +17,5 @@ public interface HasProjectId {
      * @return The {@link ProjectId}.  Not {@code null}.
      */
     @Nonnull
-    ProjectId getProjectId();
+    ProjectId projectId();
 }

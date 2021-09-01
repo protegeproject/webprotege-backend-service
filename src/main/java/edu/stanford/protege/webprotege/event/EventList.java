@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.Event;
 
 import java.io.Serializable;
 
@@ -19,17 +20,17 @@ import java.io.Serializable;
  */
 @AutoValue
 
-public abstract class EventList<E extends WebProtegeEvent<?>> implements Serializable {
+public abstract class EventList<E extends Event> implements Serializable {
 
 
     @JsonCreator
-    public static <E extends WebProtegeEvent<?>> EventList<E> create(@JsonProperty("startTag") EventTag startTag,
+    public static <E extends Event> EventList<E> create(@JsonProperty("startTag") EventTag startTag,
                                                         @JsonProperty("events") ImmutableList<E> events,
                                                         @JsonProperty("endTag") EventTag endTag) {
         return new AutoValue_EventList<>(startTag, events, endTag);
     }
 
-    public static <E extends WebProtegeEvent<?>> EventList<E> create(EventTag startTag,
+    public static <E extends Event> EventList<E> create(EventTag startTag,
                                                         EventTag endTag) {
         return create(startTag, ImmutableList.of(), endTag);
     }

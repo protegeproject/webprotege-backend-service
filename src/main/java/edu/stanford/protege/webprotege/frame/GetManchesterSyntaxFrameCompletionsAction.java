@@ -48,7 +48,7 @@ public abstract class GetManchesterSyntaxFrameCompletionsAction implements Proje
 
     @Nonnull
     @Override
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     @Override
     public abstract OWLEntity getSubject();
@@ -59,7 +59,7 @@ public abstract class GetManchesterSyntaxFrameCompletionsAction implements Proje
 
     public abstract int getFrom();
 
-    public abstract Set<OWLEntityData> getFreshEntities();
+    public abstract Set<OWLEntityData> freshEntities();
 
     public abstract int getEntityTypeSuggestLimit();
 }

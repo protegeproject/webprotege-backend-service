@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.lang.LanguageMap;
-import edu.stanford.protege.webprotege.match.criteria.EntityIsDeprecatedCriteria;
-import edu.stanford.protege.webprotege.match.criteria.EntityIsNotDeprecatedCriteria;
+import edu.stanford.protege.webprotege.common.LanguageMap;
+import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
+import edu.stanford.protege.webprotege.criteria.EntityIsNotDeprecatedCriteria;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;

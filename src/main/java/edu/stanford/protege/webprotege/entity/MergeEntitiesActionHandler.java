@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -31,7 +31,7 @@ public class MergeEntitiesActionHandler extends AbstractProjectChangeHandler<OWL
 
     @Inject
     public MergeEntitiesActionHandler(@Nonnull AccessManager accessManager,
-                                      @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                      @Nonnull EventManager<ProjectEvent> eventManager,
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull MergeEntitiesChangeListGeneratorFactory factory) {
         super(accessManager, eventManager, applyChanges);
@@ -52,17 +52,17 @@ public class MergeEntitiesActionHandler extends AbstractProjectChangeHandler<OWL
 
     @Override
     protected ChangeListGenerator<OWLEntity> getChangeListGenerator(MergeEntitiesAction action, ExecutionContext executionContext) {
-        return factory.create(action.getSourceEntities(),
-                              action.getTargetEntity(),
-                              action.getTreatment(),
-                              action.getCommitMessage());
+        return factory.create(action.sourceEntities(),
+                              action.targetEntity(),
+                              action.treatment(),
+                              action.commitMessage());
     }
 
     @Override
     protected MergeEntitiesResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult, MergeEntitiesAction action,
                                                      ExecutionContext executionContext,
-                                                     EventList<ProjectEvent<?>> eventList) {
+                                                     EventList<ProjectEvent> eventList) {
 
-        return MergeEntitiesResult.create(eventList);
+        return new MergeEntitiesResult();
     }
 }

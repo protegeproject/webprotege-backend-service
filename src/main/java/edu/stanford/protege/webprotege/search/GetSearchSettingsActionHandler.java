@@ -44,8 +44,8 @@ public class GetSearchSettingsActionHandler extends AbstractProjectActionHandler
     @Override
     public GetSearchSettingsResult execute(@Nonnull GetSearchSettingsAction action,
                                            @Nonnull ExecutionContext executionContext) {
-        var projectId = action.getProjectId();
+        var projectId = action.projectId();
         var filters = searchFilterRepository.getSearchFilters(projectId);
-        return GetSearchSettingsResult.create(filters);
+        return new GetSearchSettingsResult(filters);
     }
 }

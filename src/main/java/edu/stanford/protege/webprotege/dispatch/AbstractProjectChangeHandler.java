@@ -4,9 +4,11 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
@@ -19,17 +21,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 25/02/2013
  */
-public abstract class AbstractProjectChangeHandler<T, A extends ProjectAction<R>, R extends Result> extends AbstractProjectActionHandler<A, R> {
+public abstract class AbstractProjectChangeHandler<T, A extends Request<R>, R extends Response> extends AbstractProjectActionHandler<A, R> {
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     @Nonnull
     private final HasApplyChanges applyChanges;
 
     @Nonnull
     public AbstractProjectChangeHandler(@Nonnull AccessManager accessManager,
-                                        @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                        @Nonnull EventManager<ProjectEvent> eventManager,
                                         @Nonnull HasApplyChanges applyChanges) {
         super(accessManager);
         this.eventManager = checkNotNull(eventManager);
@@ -43,7 +45,7 @@ public abstract class AbstractProjectChangeHandler<T, A extends ProjectAction<R>
         ChangeListGenerator<T> changeListGenerator = getChangeListGenerator(action, executionContext);
         ChangeApplicationResult<T> result = applyChanges.applyChanges(executionContext.getUserId(),
                                                                                        changeListGenerator);
-        EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(tag);
+        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(tag);
         return createActionResult(result, action, executionContext, eventList);
     }
 
@@ -53,7 +55,7 @@ public abstract class AbstractProjectChangeHandler<T, A extends ProjectAction<R>
     protected abstract R createActionResult(ChangeApplicationResult<T> changeApplicationResult,
                                             A action,
                                             ExecutionContext executionContext,
-                                            EventList<ProjectEvent<?>> eventList);
+                                            EventList<ProjectEvent> eventList);
 
 
 

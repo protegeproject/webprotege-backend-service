@@ -5,8 +5,8 @@ import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.IndividualRendering;
 import edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.Scanner;
 import edu.stanford.protege.webprotege.shortform.SearchString;
@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static edu.stanford.protege.webprotege.common.PageCollector.toPage;
 import static edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode.ALL_INSTANCES;
 import static edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode.DIRECT_INSTANCES;
-import static edu.stanford.protege.webprotege.pagination.PageCollector.toPage;
 import static java.util.stream.Collectors.toList;
 
 /**

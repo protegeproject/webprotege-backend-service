@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import static edu.stanford.protege.webprotege.logging.WebProtegeLogger.WebProtegeMarker;
-
 public class WebProtegeServletContextListener implements ServletContextListener {
 
     private static final Logger logger = LoggerFactory.getLogger(WebProtegeServletContextListener.class);
@@ -17,7 +15,7 @@ public class WebProtegeServletContextListener implements ServletContextListener 
     }
 
     public void contextInitialized(ServletContextEvent sce) {
-        logger.info(WebProtegeMarker, "Initializing WebProtege");
+//        logger.info(WebProtegeMarker, "Initializing WebProtege");
 //
 //        ServerComponent serverComponent = DaggerServerComponent.create();
 //
@@ -46,21 +44,21 @@ public class WebProtegeServletContextListener implements ServletContextListener 
 
         Runtime runtime = Runtime.getRuntime();
         logger.info("Max  Memory: {} MB", (runtime.maxMemory() / (1024 * 1024)));
-        logger.info(WebProtegeMarker, "WebProtege initialization complete");
+        logger.info("WebProtege initialization complete");
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
         try {
-            logger.info(WebProtegeMarker, "Shutting down WebProtege");
+            logger.info("Shutting down WebProtege");
             var servletContext = servletContextEvent.getServletContext();
             var serverComponent = (ServerComponent) servletContext.getAttribute(ServerComponent.class.getName());
             if (serverComponent != null) {
-                logger.info(WebProtegeMarker, "Disposing of objects");
+                logger.info("Disposing of objects");
                 serverComponent.getApplicationDisposablesManager().dispose();
             }
-            logger.info(WebProtegeMarker, "WebProtege shutdown complete");
+            logger.info("WebProtege shutdown complete");
             // Finally stop logging
             LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
             loggerContext.stop();

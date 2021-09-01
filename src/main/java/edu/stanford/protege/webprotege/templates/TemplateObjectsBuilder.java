@@ -74,7 +74,7 @@ public class TemplateObjectsBuilder {
     }
 
     public TemplateObjectsBuilder withProjectDetails(@Nonnull ProjectDetails projectDetails) {
-        builder.put(PROJECT_ID, projectDetails.getProjectId().id());
+        builder.put(PROJECT_ID, projectDetails.projectId().id());
         builder.put(PROJECT_DISPLAY_NAME, projectDetails.getDisplayName());
         return this;
     }

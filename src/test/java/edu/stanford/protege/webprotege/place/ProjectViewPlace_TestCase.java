@@ -36,7 +36,7 @@ public class ProjectViewPlace_TestCase {
 
     @Test
     public void shouldReturnSupplied_projectId() {
-        MatcherAssert.assertThat(projectViewPlace.getProjectId(), Matchers.is(this.projectId));
+        MatcherAssert.assertThat(projectViewPlace.projectId(), Matchers.is(this.projectId));
     }
 
     @Test(expected = java.lang.NullPointerException.class)

@@ -33,7 +33,7 @@ public class GetOboTermDefinitionActionHandler extends AbstractProjectActionHand
     @Nonnull
     @Override
     public GetOboTermDefinitionResult execute(@Nonnull GetOboTermDefinitionAction action, @Nonnull ExecutionContext executionContext) {
-        return GetOboTermDefinitionResult.create(termDefinitionManager.getTermDefinition(action.getTerm()));
+        return new GetOboTermDefinitionResult(termDefinitionManager.getTermDefinition(action.term()));
     }
 
 

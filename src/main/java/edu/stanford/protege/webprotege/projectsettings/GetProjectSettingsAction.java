@@ -36,7 +36,7 @@ public class GetProjectSettingsAction implements ProjectAction<GetProjectSetting
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 
@@ -49,19 +49,19 @@ public class GetProjectSettingsAction implements ProjectAction<GetProjectSetting
             return false;
         }
         GetProjectSettingsAction other = (GetProjectSettingsAction) obj;
-        return this.getProjectId().equals(other.getProjectId());
+        return this.projectId().equals(other.projectId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getProjectId());
+        return Objects.hashCode(projectId());
     }
 
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper("GetProjectSettingsAction")
-                          .addValue(getProjectId())
+                          .addValue(projectId())
                           .toString();
     }
 }

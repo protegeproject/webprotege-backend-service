@@ -6,7 +6,7 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.form.*;
+import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 
@@ -51,12 +51,12 @@ public class FormsResource {
     @Produces(APPLICATION_JSON)
     @Path("/")
     public Response getForms(@Context UserId userId, @Context ExecutionContext executionContext) {
-        var formsResult = executor.execute(GetProjectFormDescriptorsAction.create(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
-        var formDescriptors = formsResult.getFormDescriptors();
-        var formSelectorsMap = formsResult.getFormSelectors().stream().collect(toMap(EntityFormSelector::getFormId,
+        var formsResult = executor.execute(new GetProjectFormDescriptorsAction(projectId), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
+        var formDescriptors = formsResult.formDescriptors();
+        var formSelectorsMap = formsResult.formSelectors().stream().collect(toMap(EntityFormSelector::getFormId,
                                                                                      EntityFormSelector::getCriteria,
                                                                                      (left, right) -> left));
-        var formPurposeMap = formsResult.getFormSelectors().stream().collect(toMap(EntityFormSelector::getFormId,
+        var formPurposeMap = formsResult.formSelectors().stream().collect(toMap(EntityFormSelector::getFormId,
                                                                                      EntityFormSelector::getPurpose,
                                                                                      (left, right) -> left));
         var result = formDescriptors.stream()
@@ -77,14 +77,12 @@ public class FormsResource {
                              @Context UriInfo uriInfo,
                              @Context ExecutionContext executionContext,
                              List<EntityFormDescriptor> entityFormDescriptors) {
-        var actionListBuilder = ImmutableList.<Action<?>>builder();
         for(var entityFormDescriptor : entityFormDescriptors) {
             var formDescriptor = entityFormDescriptor.getDescriptor();
             var criteria = entityFormDescriptor.getSelectorCriteria();
             var selectionCriteria = criteria.asCompositeRootCriteria();
             var purpose = entityFormDescriptor.getPurpose();
             var action = new SetEntityFormDescriptorAction(projectId, formDescriptor, purpose, selectionCriteria);
-            actionListBuilder.add(action);
             executor.execute(action, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
         }
         return Response.created(uriInfo.getRequestUri()).build();

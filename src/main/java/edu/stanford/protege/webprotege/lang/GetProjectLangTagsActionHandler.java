@@ -2,9 +2,10 @@ package edu.stanford.protege.webprotege.lang;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.LangTag;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -52,7 +53,7 @@ public class GetProjectLangTagsActionHandler extends AbstractProjectActionHandle
                 .filter(l -> !l.isBlank())
                 .map(LangTag::get)
                 .collect(toImmutableSet());
-        return GetProjectLangTagsResult.create(action.getProjectId(), langTags);
+        return new GetProjectLangTagsResult(action.projectId(), langTags);
 
     }
 }

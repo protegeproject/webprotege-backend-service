@@ -53,6 +53,6 @@ public class GetRevisionSummariesActionHandler_TestCase {
     @Test
     public void shouldReturnRevisionSummaries() {
         GetRevisionSummariesResult result = handler.execute(action, executionContext);
-        assertThat(result.getRevisionSummaries(), contains(summaryA, summaryB, summaryC));
+        assertThat(result.revisionSummaries(), contains(summaryA, summaryB, summaryC));
     }
 }

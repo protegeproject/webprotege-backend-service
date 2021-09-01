@@ -34,8 +34,8 @@ public class SetOboTermXRefsActionHandler extends AbstractProjectActionHandler<S
     @Override
     public SetOboTermXRefsResult execute(@Nonnull SetOboTermXRefsAction action, @Nonnull ExecutionContext executionContext) {
         xRefsManager.setXRefs(executionContext.getUserId(),
-                              action.getEntity(),
-                              action.getXrefs());
-        return SetOboTermXRefsResult.create();
+                              action.entity(),
+                              action.xrefs());
+        return new SetOboTermXRefsResult();
     }
 }

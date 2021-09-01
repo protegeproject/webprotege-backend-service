@@ -42,7 +42,7 @@ public abstract class ProjectUserEntityGraphSettings implements HasProjectId {
 
     @JsonProperty(PROJECT_ID)
     @Nonnull
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     @JsonProperty(USER_ID)
     @Nullable

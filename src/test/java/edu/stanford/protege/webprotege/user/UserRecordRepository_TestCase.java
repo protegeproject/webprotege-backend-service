@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.user;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import edu.stanford.protege.webprotege.common.UserId;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.auth.Salt;
 import edu.stanford.protege.webprotege.auth.SaltedPasswordDigest;
 import org.junit.After;
@@ -11,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.List;
@@ -25,15 +26,15 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 4 Apr 2017
  */
-@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
 public class UserRecordRepository_TestCase {
 
     private static final String EMAIL_ADDRESS = "jane.doe@somewhere.com";
 
+    @Autowired
     private UserRecordRepository recordRepository;
 
-    private MongoClient client;
-
+    @Autowired
     private MongoTemplate mongoTemplate;
 
     private UserRecord userRecord;
@@ -42,9 +43,6 @@ public class UserRecordRepository_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        client = MongoClients.create();
-        mongoTemplate = new MongoTemplate(client, MongoTestUtils.getTestDbName());
-        recordRepository = new UserRecordRepository(mongoTemplate, new UserRecordConverter());
         userId = UserId.valueOf("JaneDoe");
         userRecord = new UserRecord(
                 userId,
@@ -59,7 +57,6 @@ public class UserRecordRepository_TestCase {
     @After
     public void tearDown() {
         mongoTemplate.getDb().drop();
-        client.close();
     }
 
     @Test

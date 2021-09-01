@@ -77,7 +77,7 @@ public class ProjectsResource implements ApiRootResource {
         ProjectDetails projectDetails = result.projectDetails();
         // Respond with HTTP 201 (CREATED) and a location header that points
         // to the freshly created project.
-        String projectId = projectDetails.getProjectId().id();
+        String projectId = projectDetails.projectId().id();
         URI projectUri = uriInfo.getAbsolutePathBuilder()
                                 .path(projectId)
                                 .build();
@@ -93,8 +93,8 @@ public class ProjectsResource implements ApiRootResource {
     public Response getProjects(@Nonnull @Context UserId userId,
                                 @Nonnull @Context UriInfo uriInfo,
                                 @Context ExecutionContext executionContext) {
-        GetAvailableProjectsResult result = executor.execute(GetAvailableProjectsAction.create(),
+        GetAvailableProjectsResult result = executor.execute(new GetAvailableProjectsAction(),
                                                              new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
-        return Response.ok().entity(result.getAvailableProjects()).build();
+        return Response.ok().entity(result.availableProjects()).build();
     }
 }

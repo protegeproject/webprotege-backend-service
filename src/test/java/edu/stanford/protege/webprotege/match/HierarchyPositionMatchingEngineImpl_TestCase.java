@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.IndividualsByTypeIndex;
 import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
 import edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode;
-import edu.stanford.protege.webprotege.match.criteria.*;
+import edu.stanford.protege.webprotege.criteria.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

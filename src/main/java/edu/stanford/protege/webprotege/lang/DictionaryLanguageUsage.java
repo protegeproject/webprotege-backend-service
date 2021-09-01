@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.lang;
 
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 
 import javax.annotation.Nonnull;
 

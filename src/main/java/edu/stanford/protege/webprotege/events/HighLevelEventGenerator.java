@@ -1,8 +1,10 @@
 package edu.stanford.protege.webprotege.events;
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.event.*;
+import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -108,12 +110,12 @@ public class HighLevelEventGenerator implements EventTranslator {
                    }
 
                    private void handleOntologyFrameChange(OntologyChange change) {
-                       var ontologyId = change.getOntologyId();
-                       if(!changedOntologies.add(ontologyId)) {
-                           return;
-                       }
-                       var event = new OntologyFrameChangedEvent(ontologyId, projectId);
-                       projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
+//                       var ontologyId = change.getOntologyId();
+//                       if(!changedOntologies.add(ontologyId)) {
+//                           return;
+//                       }
+//                       var event = new OntologyFrameChangedEvent(projectId, ontologyId);
+//                       projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
                    }
                }));
 
@@ -165,49 +167,49 @@ public class HighLevelEventGenerator implements EventTranslator {
     }
 
     private HighLevelProjectEventProxy toFrameChangedEvent(OWLEntity e, Revision revision) {
-        var event = e.accept(new OWLEntityVisitorEx<ProjectEvent<?>>() {
+        var event = e.accept(new OWLEntityVisitorEx<ProjectEvent>() {
             @Nonnull
             @Override
-            public ProjectEvent<?> visit(@Nonnull OWLClass cls) {
-                return new ClassFrameChangedEvent(cls, projectId, revision.getUserId());
+            public ProjectEvent visit(@Nonnull OWLClass cls) {
+                return new ClassFrameChangedEvent(projectId, revision.getUserId(), cls);
             }
 
             @Nonnull
             @Override
-            public ProjectEvent<?> visit(@Nonnull OWLObjectProperty property) {
-                return new ObjectPropertyFrameChangedEvent(property,
-                                                           projectId,
-                                                           revision.getUserId());
+            public ProjectEvent visit(@Nonnull OWLObjectProperty property) {
+                return new ObjectPropertyFrameChangedEvent(projectId,
+                                                           revision.getUserId(),
+                                                           property);
             }
 
             @Nonnull
             @Override
-            public ProjectEvent<?> visit(@Nonnull OWLDataProperty property) {
-                return new DataPropertyFrameChangedEvent(property,
-                                                         projectId,
-                                                         revision.getUserId());
+            public ProjectEvent visit(@Nonnull OWLDataProperty property) {
+                return new DataPropertyFrameChangedEvent(projectId,
+                                                         revision.getUserId(),
+                                                         property);
             }
 
             @Nonnull
             @Override
-            public ProjectEvent<?> visit(@Nonnull OWLNamedIndividual individual) {
-                return new NamedIndividualFrameChangedEvent(individual,
-                                                            projectId,
-                                                            revision.getUserId());
+            public ProjectEvent visit(@Nonnull OWLNamedIndividual individual) {
+                return new NamedIndividualFrameChangedEvent(projectId,
+                                                            revision.getUserId(),
+                                                            individual);
             }
 
             @Nonnull
             @Override
-            public ProjectEvent<?> visit(@Nonnull OWLDatatype datatype) {
-                return new DatatypeFrameChangedEvent(datatype, projectId, revision.getUserId());
+            public ProjectEvent visit(@Nonnull OWLDatatype datatype) {
+                return new DatatypeFrameChangedEvent(projectId, revision.getUserId(), datatype);
             }
 
             @Nonnull
             @Override
-            public ProjectEvent<?> visit(@Nonnull OWLAnnotationProperty property) {
-                return new AnnotationPropertyFrameChangedEvent(property,
-                                                               projectId,
-                                                               revision.getUserId());
+            public ProjectEvent visit(@Nonnull OWLAnnotationProperty property) {
+                return new AnnotationPropertyFrameChangedEvent(projectId,
+                                                               revision.getUserId(),
+                                                               property);
             }
         });
         return SimpleHighLevelProjectEventProxy.wrap(event);

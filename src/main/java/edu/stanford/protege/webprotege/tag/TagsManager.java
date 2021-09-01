@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.tag;
 
 import com.google.common.collect.Streams;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.HasPostEvents;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -41,7 +41,7 @@ public class TagsManager {
     private final TagRepository tagRepository;
 
     @Nonnull
-    private final HasPostEvents<ProjectEvent<?>> eventBus;
+    private final HasPostEvents<ProjectEvent> eventBus;
 
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
@@ -58,7 +58,7 @@ public class TagsManager {
                        @Nonnull EntityTagsRepository entityTagsRepository,
                        @Nonnull CriteriaBasedTagsManager criteriaBasedTagsManager,
                        @Nonnull TagRepository tagRepository,
-                       @Nonnull HasPostEvents<ProjectEvent<?>> eventBus) {
+                       @Nonnull HasPostEvents<ProjectEvent> eventBus) {
         this.projectId = checkNotNull(projectId);
         this.entityTagsRepository = checkNotNull(entityTagsRepository);
         this.criteriaBasedTagsManager = checkNotNull(criteriaBasedTagsManager);
@@ -199,7 +199,7 @@ public class TagsManager {
         Set<Tag> oldProjectTags = new HashSet<>(currentProjectTags);
         Set<Tag> projectTags = new HashSet<>(getProjectTags());
         if (!oldProjectTags.equals(projectTags)) {
-            List<ProjectEvent<?>> events = new ArrayList<>();
+            List<ProjectEvent> events = new ArrayList<>();
             for (OWLEntity entity : modifiedEntityTags) {
                 EntityTagsChangedEvent event = new EntityTagsChangedEvent(projectId, entity, getTags(entity));
                 events.add(event);

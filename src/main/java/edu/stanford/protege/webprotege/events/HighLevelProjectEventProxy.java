@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.events;
 
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 
 import javax.annotation.Nonnull;
 
@@ -12,6 +12,6 @@ import javax.annotation.Nonnull;
 public interface HighLevelProjectEventProxy {
 
     @Nonnull
-    ProjectEvent<?> asProjectEvent();
+    ProjectEvent asProjectEvent();
 
 }

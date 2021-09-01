@@ -46,6 +46,6 @@ public class GetHeadRevisionNumberActionHandler_TestCase {
     @Test
     public void shouldReturnProjectRevision() {
         GetHeadRevisionNumberResult result = handler.execute(action, executionContext);
-        assertThat(result.getRevisionNumber(), is(revisionNumber));
+        assertThat(result.revisionNumber(), is(revisionNumber));
     }
 }

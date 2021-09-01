@@ -59,7 +59,7 @@ public class GetEntityGraphActionHandler extends AbstractProjectActionHandler<Ge
     @Override
     public GetEntityGraphResult execute(@Nonnull GetEntityGraphAction action, @Nonnull ExecutionContext executionContext) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        var projectId = action.getProjectId();
+        var projectId = action.projectId();
         var userId = executionContext.getUserId();
         logger.info("Getting entity graph settings for " + userId);
         var projectUserSettings = entityGraphSettingsRepository.getSettingsForUserOrProjectDefault(projectId, userId);
@@ -75,12 +75,12 @@ public class GetEntityGraphActionHandler extends AbstractProjectActionHandler<Ge
         }
 
         var graph = graphBuilderFactory.create(edgeMatcher)
-                                       .createGraph(action.getEntity());
+                                       .createGraph(action.entity());
         stopwatch.stop();
         logger.debug("Created entity graph [{} nodes; edges {}] in {} ms",
                     graph.getNodes().size(),
                     graph.getEdges().size(),
                     stopwatch.elapsed(TimeUnit.MILLISECONDS));
-        return GetEntityGraphResult.get(graph, entityGraphSettings);
+        return new GetEntityGraphResult(graph, entityGraphSettings);
     }
 }

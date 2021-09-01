@@ -5,12 +5,12 @@ package edu.stanford.protege.webprotege.crud.uuid;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import edu.stanford.protege.webprotege.common.AnnotationAssertionDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.DictionaryLanguageVisitor;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.protege.webprotege.shortform.AnnotationAssertionDictionaryLanguage;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguageVisitor;
 import edu.stanford.protege.webprotege.util.IdUtil;
 import org.semanticweb.owlapi.model.*;
 

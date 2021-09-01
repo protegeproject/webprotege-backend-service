@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -36,7 +36,7 @@ public class SetManchesterSyntaxFrameActionHandler extends AbstractProjectChange
 
     @Inject
     public SetManchesterSyntaxFrameActionHandler(@Nonnull AccessManager accessManager,
-                                                 @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                                 @Nonnull EventManager<ProjectEvent> eventManager,
                                                  @Nonnull HasApplyChanges applyChanges,
                                                  @Nonnull GetManchesterSyntaxFrameActionHandler handler,
                                                  @Nonnull RenderingManager renderer,
@@ -68,13 +68,13 @@ public class SetManchesterSyntaxFrameActionHandler extends AbstractProjectChange
     protected SetManchesterSyntaxFrameResult createActionResult(ChangeApplicationResult<Optional<ManchesterSyntaxFrameParseError>> result,
                                                                 SetManchesterSyntaxFrameAction action,
                                                                 ExecutionContext executionContext,
-                                                                EventList<ProjectEvent<?>> eventList) {
+                                                                EventList<ProjectEvent> eventList) {
 
         if (result.getSubject().isPresent()) {
             throw new SetManchesterSyntaxFrameException(result.getSubject().get());
         }
         else {
-            var ac = GetManchesterSyntaxFrameAction.create(action.getProjectId(),
+            var ac = GetManchesterSyntaxFrameAction.create(action.projectId(),
                                                         action.getSubject());
             GetManchesterSyntaxFrameResult frame = handler.execute(ac, executionContext);
             String reformattedFrame = frame.getFrameManchesterSyntax();

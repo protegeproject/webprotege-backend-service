@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.obo;
 
+import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -33,6 +34,6 @@ public class GetOboTermXRefsActionHandler extends AbstractProjectActionHandler<G
     @Nonnull
     @Override
     public GetOboTermXRefsResult execute(@Nonnull GetOboTermXRefsAction action, @Nonnull ExecutionContext executionContext) {
-        return GetOboTermXRefsResult.create(xRefsManager.getXRefs(action.getEntity()));
+        return new GetOboTermXRefsResult(ImmutableList.copyOf(xRefsManager.getXRefs(action.entity())));
     }
 }

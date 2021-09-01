@@ -38,16 +38,16 @@ public class SetEmailAddressActionHandler implements ApplicationActionHandler<Se
     @Nonnull
     @Override
     public RequestValidator getRequestValidator(@Nonnull SetEmailAddressAction action, @Nonnull RequestContext requestContext) {
-        return new SetEmailAddressRequestValidator(action.getUserId(), requestContext.getUserId());
+        return new SetEmailAddressRequestValidator(action.userId(), requestContext.getUserId());
     }
 
     @Nonnull
     @Override
     public SetEmailAddressResult execute(@Nonnull SetEmailAddressAction action, @Nonnull ExecutionContext executionContext) {
-        String emailAddress = action.getEmailAddress();
+        String emailAddress = action.emailAddress().getEmailAddress();
         Optional<UserId> userId = userDetailsManager.getUserIdByEmailAddress(new EmailAddress(emailAddress));
         if(userId.isPresent()) {
-            if(userId.get().equals(action.getUserId())) {
+            if(userId.get().equals(action.userId())) {
                 // Same user, same address
                 return new SetEmailAddressResult(ADDRESS_UNCHANGED);
             }
@@ -57,7 +57,7 @@ public class SetEmailAddressActionHandler implements ApplicationActionHandler<Se
             }
         }
         else {
-            userDetailsManager.setEmail(action.getUserId(), emailAddress);
+            userDetailsManager.setEmail(action.userId(), emailAddress);
             return new SetEmailAddressResult(ADDRESS_CHANGED);
         }
     }

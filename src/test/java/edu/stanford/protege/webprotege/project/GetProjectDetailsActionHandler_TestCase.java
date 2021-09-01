@@ -40,7 +40,7 @@ public class GetProjectDetailsActionHandler_TestCase {
     @Before
     public void setUp() {
         handler = new GetProjectDetailsActionHandler(projectDetailsManager);
-        when(action.getProjectId()).thenReturn(projectId);
+        when(action.projectId()).thenReturn(projectId);
         when(projectDetailsManager.getProjectDetails(projectId)).thenReturn(projectDetails);
     }
 

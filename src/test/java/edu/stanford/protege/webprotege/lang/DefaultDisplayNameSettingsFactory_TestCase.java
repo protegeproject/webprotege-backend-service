@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.lang;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import org.junit.Before;
 import org.junit.Test;
 

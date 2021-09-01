@@ -42,7 +42,7 @@ public class GetManchesterSyntaxFrameAction implements ProjectAction<GetManchest
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

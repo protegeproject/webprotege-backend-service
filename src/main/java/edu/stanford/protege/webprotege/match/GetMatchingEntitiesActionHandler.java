@@ -8,9 +8,9 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.match.criteria.Criteria;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.criteria.Criteria;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.pagination.PageCollector.toPage;
+import static edu.stanford.protege.webprotege.common.PageCollector.toPage;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -76,8 +76,8 @@ public class GetMatchingEntitiesActionHandler extends AbstractProjectActionHandl
     @Override
     public GetMatchingEntitiesResult execute(@Nonnull GetMatchingEntitiesAction action, @Nonnull ExecutionContext executionContext) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        PageRequest pageRequest = action.getPageRequest();
-        Criteria criteria = action.getCriteria();
+        PageRequest pageRequest = action.pageRequest();
+        Criteria criteria = action.criteria();
         Optional<Page<OWLEntityData>> result = matchingEngine.match(criteria)
                                                              .map(renderingManager::getRendering)
                                                              .sorted()
@@ -85,7 +85,7 @@ public class GetMatchingEntitiesActionHandler extends AbstractProjectActionHandl
                                                                            pageRequest.getPageSize()));
         stopwatch.stop();
         logger.info("{} {} Answered query in {} ms, matching {} entities",
-                    action.getProjectId(),
+                    action.projectId(),
                     executionContext.getUserId(),
                     stopwatch.elapsed(TimeUnit.MILLISECONDS),
                     result.map(Page::getTotalElements).orElse(0L));
@@ -98,7 +98,7 @@ public class GetMatchingEntitiesActionHandler extends AbstractProjectActionHandl
                               nodes,
                               pg.getTotalElements());
         });
-        return entityHierarchyNodes.map(GetMatchingEntitiesResult::create)
-                     .orElseGet(() -> GetMatchingEntitiesResult.create(Page.emptyPage()));
+        return entityHierarchyNodes.map(GetMatchingEntitiesResult::new)
+                     .orElseGet(() -> new GetMatchingEntitiesResult(Page.emptyPage()));
     }
 }

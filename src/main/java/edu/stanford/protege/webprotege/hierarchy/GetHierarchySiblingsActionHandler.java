@@ -5,8 +5,8 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.EntityNode;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 
 import javax.annotation.Nonnull;
@@ -59,17 +59,17 @@ public class GetHierarchySiblingsActionHandler extends AbstractProjectActionHand
     @Override
     public GetHierarchySiblingsResult execute(@Nonnull GetHierarchySiblingsAction action, @Nonnull ExecutionContext executionContext) {
         Page<GraphNode<EntityNode>> siblings =
-                hierarchyProviderMapper.getHierarchyProvider(action.getHierarchyId())
+                hierarchyProviderMapper.getHierarchyProvider(action.hierarchyId())
                         .map(hp -> {
-                                 int pageNumber = action.getPageRequest().getPageNumber();
-                                 int pageSize = action.getPageRequest().getPageSize();
+                                 int pageNumber = action.pageRequest().getPageNumber();
+                                 int pageSize = action.pageRequest().getPageSize();
                                  // Parents to get children that are siblings
-                                 return hp.getParents(action.getEntity())
+                                 return hp.getParents(action.entity())
                                          .stream()
                                          // Siblings
                                          .flatMap(par -> hp.getChildren(par).stream())
                                          // Remove self
-                                         .filter(sib -> !sib.equals(action.getEntity()))
+                                         .filter(sib -> !sib.equals(action.entity()))
                                          .distinct()
                                          .sorted(Comparator.comparing(dictionaryManager::getShortForm))
                                          // Paginate and transform
@@ -79,6 +79,6 @@ public class GetHierarchySiblingsActionHandler extends AbstractProjectActionHand
                              }
                         )
                         .orElse(Page.emptyPage());
-        return GetHierarchySiblingsResult.create(siblings);
+        return new GetHierarchySiblingsResult(siblings);
     }
 }

@@ -5,12 +5,12 @@ package edu.stanford.protege.webprotege.api.resources;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.form.EntityFormDescriptor;
-import edu.stanford.protege.webprotege.form.FormDescriptor;
-import edu.stanford.protege.webprotege.form.FormId;
-import edu.stanford.protege.webprotege.form.GetEntityFormDescriptorAction;
-import edu.stanford.protege.webprotege.match.criteria.CompositeRootCriteria;
-import edu.stanford.protege.webprotege.match.criteria.MultiMatchType;
+import edu.stanford.protege.webprotege.forms.EntityFormDescriptor;
+import edu.stanford.protege.webprotege.forms.FormDescriptor;
+import edu.stanford.protege.webprotege.forms.FormId;
+import edu.stanford.protege.webprotege.forms.GetEntityFormDescriptorAction;
+import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
+import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 
@@ -51,11 +51,11 @@ public class FormResource {
     @Produces(APPLICATION_JSON)
     @Path("/")
     public Response getForm(@Context UserId userId, @Context ExecutionContext executionContext) {
-        var actionResult = actionExecutor.execute(GetEntityFormDescriptorAction.create(projectId, formId),
+        var actionResult = actionExecutor.execute(new GetEntityFormDescriptorAction(projectId, formId),
                                                   new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId()));
-        var formDescriptor = actionResult.getFormDescriptor().orElse(FormDescriptor.empty(formId));
-        var criteria = actionResult.getFormSelectorCriteria().orElse(CompositeRootCriteria.get(ImmutableList.of(), MultiMatchType.ANY));
-        var purpose = actionResult.getPurpose();
+        var formDescriptor = actionResult.formDescriptor();
+        var criteria = actionResult.selectorCriteria();
+        var purpose = actionResult.purpose();
         var result = EntityFormDescriptor.valueOf(projectId, formId, formDescriptor, purpose, criteria);
         return Response.accepted(result).build();
     }

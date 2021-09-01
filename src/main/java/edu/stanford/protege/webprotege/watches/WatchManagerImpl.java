@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.watches;
 
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -39,7 +39,7 @@ public class WatchManagerImpl implements WatchManager {
 
     private final WatchTriggeredHandler watchTriggeredHandler;
 
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     private boolean attached = false;
 
@@ -48,7 +48,7 @@ public class WatchManagerImpl implements WatchManager {
                             @Nonnull WatchRecordRepository repository,
                             @Nonnull IndirectlyWatchedEntitiesFinder indirectlyWatchedEntitiesFinder,
                             @Nonnull WatchTriggeredHandler watchTriggeredHandler,
-                            @Nonnull EventManager<ProjectEvent<?>> eventManager) {
+                            @Nonnull EventManager<ProjectEvent> eventManager) {
         this.projectId = checkNotNull(projectId);
         this.repository = checkNotNull(repository);
         this.indirectlyWatchedEntitiesFinder = checkNotNull(indirectlyWatchedEntitiesFinder);

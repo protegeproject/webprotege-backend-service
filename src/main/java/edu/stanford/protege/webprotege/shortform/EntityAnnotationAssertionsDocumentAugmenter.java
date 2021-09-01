@@ -1,5 +1,8 @@
 package edu.stanford.protege.webprotege.shortform;
 
+import edu.stanford.protege.webprotege.common.AnnotationAssertionDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.AnnotationAssertionPathDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.index.ProjectAnnotationAssertionAxiomsBySubjectIndex;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;

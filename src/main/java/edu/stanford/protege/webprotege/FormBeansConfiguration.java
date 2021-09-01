@@ -4,8 +4,8 @@ import edu.stanford.protege.webprotege.change.ReverseEngineeredChangeDescription
 import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.CreateEntityFromFormDataChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
-import edu.stanford.protege.webprotege.form.*;
-import edu.stanford.protege.webprotege.form.processor.*;
+import edu.stanford.protege.webprotege.forms.*;
+import edu.stanford.protege.webprotege.forms.processor.*;
 import edu.stanford.protege.webprotege.frame.EmptyEntityFrameFactory;
 import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.index.*;

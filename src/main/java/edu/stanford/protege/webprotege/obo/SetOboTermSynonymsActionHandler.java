@@ -42,8 +42,8 @@ public class SetOboTermSynonymsActionHandler extends AbstractProjectActionHandle
     @Override
     public SetOboTermSynonymsResult execute(@Nonnull SetOboTermSynonymsAction action, @Nonnull ExecutionContext executionContext) {
         synonymsManager.setSynonyms(executionContext.getUserId(),
-                                    action.getEntity(),
-                                    action.getSynonyms());
-        return SetOboTermSynonymsResult.create();
+                                    action.entity(),
+                                    action.synonyms());
+        return new SetOboTermSynonymsResult();
     }
 }

@@ -1,9 +1,7 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterId;
 import org.apache.lucene.document.Document;

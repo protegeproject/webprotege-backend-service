@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 
@@ -28,7 +28,7 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
     private final EntityDiscussionThreadRepository repository;
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     @Nonnull
     private final ProjectId projectId;
@@ -36,7 +36,7 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
     @Inject
     public SetDiscussionThreadStatusHandler(@Nonnull AccessManager accessManager,
                                             @Nonnull EntityDiscussionThreadRepository repository,
-                                            @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                            @Nonnull EventManager<ProjectEvent> eventManager,
                                             @Nonnull ProjectId projectId) {
         super(accessManager);
         this.repository = repository;
@@ -70,7 +70,7 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
                                                                                    thread.map(EntityDiscussionThread::getEntity),
                                                                                    openComments,
                                                                                    status));
-        EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(fromTag);
+        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(fromTag);
         return new SetDiscussionThreadStatusResult(threadId, status, eventList);
     }
 }

@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
@@ -21,14 +21,14 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class UpdateEntityTagsActionHandler extends AbstractProjectActionHandler<UpdateEntityTagsAction, UpdateEntityTagsResult> {
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventEventManager;
+    private final EventManager<ProjectEvent> eventEventManager;
 
     @Nonnull
     private final TagsManager tagsManager;
 
     @Inject
     public UpdateEntityTagsActionHandler(@Nonnull AccessManager accessManager,
-                                         @Nonnull EventManager<ProjectEvent<?>> eventEventManager, @Nonnull TagsManager tagsManager) {
+                                         @Nonnull EventManager<ProjectEvent> eventEventManager, @Nonnull TagsManager tagsManager) {
         super(accessManager);
         this.eventEventManager = checkNotNull(eventEventManager);
         this.tagsManager = checkNotNull(tagsManager);
@@ -44,12 +44,9 @@ public class UpdateEntityTagsActionHandler extends AbstractProjectActionHandler<
     @Override
     public UpdateEntityTagsResult execute(@Nonnull UpdateEntityTagsAction action,
                                           @Nonnull ExecutionContext executionContext) {
-
-        EventTag startTag = eventEventManager.getCurrentTag();
-        tagsManager.updateTags(action.getEntity(),
-                               action.getFromTagIds(),
-                               action.getToTagIds());
-        EventList<ProjectEvent<?>> events = eventEventManager.getEventsFromTag(startTag);
-        return UpdateEntityTagsResult.create(events);
+        tagsManager.updateTags(action.entity(),
+                               action.fromTagIds(),
+                               action.toTagIds());
+        return new UpdateEntityTagsResult();
     }
 }

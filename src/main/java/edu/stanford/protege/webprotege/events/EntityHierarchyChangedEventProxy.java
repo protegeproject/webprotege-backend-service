@@ -5,7 +5,7 @@ package edu.stanford.protege.webprotege.events;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -54,7 +54,7 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
 
     @Nonnull
     @Override
-    public ProjectEvent<?> asProjectEvent() {
+    public ProjectEvent asProjectEvent() {
         var mappedChanges = ImmutableList.<GraphModelChange<EntityNode>>builder();
         graphModelChangedEvent.getChanges()
              .forEach(chg -> chg.accept(new GraphModelChangeVisitor<OWLEntity>() {

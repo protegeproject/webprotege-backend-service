@@ -32,7 +32,7 @@ public abstract class GetEntityRenderingAction implements ProjectAction<GetEntit
     }
 
     @Nonnull
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     public abstract OWLEntity getEntity();
 }

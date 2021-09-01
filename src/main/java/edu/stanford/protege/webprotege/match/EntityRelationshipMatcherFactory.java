@@ -1,17 +1,13 @@
 package edu.stanford.protege.webprotege.match;
 
+import edu.stanford.protege.webprotege.criteria.RelationshipPresence;
 import edu.stanford.protege.webprotege.frame.translator.AxiomPropertyValueTranslator;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.PropertyAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
-import javax.annotation.processing.Generated;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-@Generated(
-  value = "com.google.auto.factory.processor.AutoFactoryProcessor",
-  comments = "https://github.com/google/auto/tree/master/factory"
-)
 public final class EntityRelationshipMatcherFactory {
   private final Provider<ProjectOntologiesIndex> projectOntologiesIndexProvider;
 
@@ -37,7 +33,7 @@ public final class EntityRelationshipMatcherFactory {
   }
 
   public EntityRelationshipMatcher create(
-      RelationshipPresence relationshipPresence, PropertyValueMatcher propertyValueMatcher) {
+          RelationshipPresence relationshipPresence, PropertyValueMatcher propertyValueMatcher) {
     return new EntityRelationshipMatcher(
         checkNotNull(projectOntologiesIndexProvider.get(), 1),
         checkNotNull(relationshipPresence, 2),

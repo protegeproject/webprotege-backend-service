@@ -41,7 +41,7 @@ public class GetProjectDetailsActionHandler implements ApplicationActionHandler<
     @Nonnull
     @Override
     public GetProjectDetailsResult execute(@Nonnull GetProjectDetailsAction action, @Nonnull ExecutionContext executionContext) {
-        ProjectDetails projectDetails = projectDetailsManager.getProjectDetails(action.getProjectId());
+        ProjectDetails projectDetails = projectDetailsManager.getProjectDetails(action.projectId());
         return GetProjectDetailsResult.get(projectDetails);
     }
 

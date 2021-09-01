@@ -2,10 +2,12 @@ package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.EntityShortFormMatches;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -93,8 +95,8 @@ public class DictionaryManager {
      */
     @Nonnull
     public Page<EntityShortFormMatches> getShortFormsContaining(@Nonnull List<SearchString> searchStrings,
-                                                        @Nonnull Set<EntityType<?>> entityTypes,
-                                                        @Nonnull List<DictionaryLanguage> languages,
+                                                                @Nonnull Set<EntityType<?>> entityTypes,
+                                                                @Nonnull List<DictionaryLanguage> languages,
                                                                 @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
                                                                 @Nonnull PageRequest pageRequest) {
         return dictionary.getShortFormsContaining(searchStrings, entityTypes, languages, searchFilters, pageRequest);

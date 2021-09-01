@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.shortform;
 
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+
 import javax.annotation.Nonnull;
 
 /**

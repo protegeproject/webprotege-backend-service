@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

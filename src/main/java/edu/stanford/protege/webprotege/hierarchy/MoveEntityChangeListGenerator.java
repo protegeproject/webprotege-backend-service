@@ -107,7 +107,7 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
 
     @Override
     public OntologyChangeList<Boolean> generateChanges(ChangeGenerationContext context) {
-        Path<EntityNode> fromPath = action.getFromNodePath();
+        Path<EntityNode> fromPath = action.fromNodePath();
         Optional<OWLEntity> move = fromPath.getLast().map(EntityNode::getEntity);
         if (move.isEmpty()) {
             return notMoved();
@@ -115,30 +115,30 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
         Optional<EntityNode> lastPredecessor = fromPath.getLastPredecessor();
         OWLEntity moveEntity = move.get();
         Optional<OWLEntity> fromParent = lastPredecessor.map(EntityNode::getEntity);
-        Optional<OWLEntity> toParent = action.getToNodeParentPath().getLast().map(EntityNode::getEntity);
+        Optional<OWLEntity> toParent = action.toNodeParentPath().getLast().map(EntityNode::getEntity);
         if (isClassHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveClass(moveEntity.asOWLClass(),
                              fromParent.map(OWLEntity::asOWLClass),
                              toParent.map(OWLEntity::asOWLClass),
-                             action.getDropType());
+                             action.dropType());
         }
         else if (isObjectPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveObjectProperty(moveEntity.asOWLObjectProperty(),
                                       fromParent.map(OWLEntity::asOWLObjectProperty),
                                       toParent.map(OWLEntity::asOWLObjectProperty),
-                                      action.getDropType());
+                                      action.dropType());
         }
         else if (isDataPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveDataProperty(moveEntity.asOWLDataProperty(),
                                     fromParent.map(OWLEntity::asOWLDataProperty),
                                     toParent.map(OWLEntity::asOWLDataProperty),
-                                    action.getDropType());
+                                    action.dropType());
         }
         else if (isAnnotationPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveAnnotationProperty(moveEntity.asOWLAnnotationProperty(),
                                           fromParent.map(OWLEntity::asOWLAnnotationProperty),
                                           toParent.map(OWLEntity::asOWLAnnotationProperty),
-                                          action.getDropType());
+                                          action.dropType());
         }
         else {
             return notMoved();
@@ -305,10 +305,10 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
-        String type = action.getFromNodePath().getLast().map(node -> node.getEntity().getEntityType().getPrintName().toLowerCase()).orElse("entity");
-        String entity = action.getFromNodePath().getLast().map(EntityNode::getBrowserText).orElse("");
-        String from = action.getFromNodePath().getLastPredecessor().map(EntityNode::getBrowserText).orElse("root");
-        String to = action.getToNodeParentPath().getLast().map(EntityNode::getBrowserText).orElse("root");
+        String type = action.fromNodePath().getLast().map(node -> node.getEntity().getEntityType().getPrintName().toLowerCase()).orElse("entity");
+        String entity = action.fromNodePath().getLast().map(EntityNode::getBrowserText).orElse("");
+        String from = action.fromNodePath().getLastPredecessor().map(EntityNode::getBrowserText).orElse("root");
+        String to = action.toNodeParentPath().getLast().map(EntityNode::getBrowserText).orElse("root");
         return msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
     }
 }

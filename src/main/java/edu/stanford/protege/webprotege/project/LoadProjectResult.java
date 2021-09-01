@@ -32,7 +32,7 @@ public abstract class LoadProjectResult implements Result, HasUserId, HasProject
     }
 
     @Nonnull
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     @Override
     public abstract UserId getUserId();

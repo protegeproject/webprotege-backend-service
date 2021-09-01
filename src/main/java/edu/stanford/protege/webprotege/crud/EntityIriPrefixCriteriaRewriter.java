@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.crud;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.match.criteria.*;
+import edu.stanford.protege.webprotege.criteria.*;
 import org.semanticweb.owlapi.model.EntityType;
 
 import javax.annotation.Nonnull;

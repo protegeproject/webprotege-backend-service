@@ -45,7 +45,7 @@ public class GetEmailAddressActionHandler implements ApplicationActionHandler<Ge
     @Nonnull
     @Override
     public GetEmailAddressResult execute(@Nonnull GetEmailAddressAction action, @Nonnull ExecutionContext executionContext) {
-        Optional<EmailAddress> address = userDetailsManager.getEmail(action.getUserId()).map(EmailAddress::new);
-        return GetEmailAddressResult.create(action.getUserId(), address.orElse(null));
+        Optional<EmailAddress> address = userDetailsManager.getEmail(action.userId()).map(EmailAddress::new);
+        return new GetEmailAddressResult(action.userId(), address.orElse(null));
     }
 }

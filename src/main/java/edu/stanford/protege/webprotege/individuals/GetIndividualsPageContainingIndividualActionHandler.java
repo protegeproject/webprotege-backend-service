@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.index.IndividualsIndex;
 import edu.stanford.protege.webprotege.index.IndividualsQueryResult;
-import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.common.Page;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -45,17 +45,17 @@ public class GetIndividualsPageContainingIndividualActionHandler extends Abstrac
     @Nonnull
     @Override
     public GetIndividualsPageContainingIndividualResult execute(@Nonnull GetIndividualsPageContainingIndividualAction action, @Nonnull ExecutionContext executionContext) {
-        IndividualsQueryResult result = individualsIndex.getIndividualsPageContaining(action.getIndividual(),
-                                                                                      action.getPreferredType(),
-                                                                                      action.getPreferredMode(),
+        IndividualsQueryResult result = individualsIndex.getIndividualsPageContaining(action.individual(),
+                                                                                      action.preferredType(),
+                                                                                      action.preferredMode(),
                                                                                       200);
         Page<EntityNode> entityNodesPage = result.getIndividuals().transform(renderer::render);
         ImmutableSet<EntityNode> types =
                 individualsIndex
-                        .getTypes(action.getIndividual())
+                        .getTypes(action.individual())
                         .map(renderer::render)
                         .collect(toImmutableSet());
-        return GetIndividualsPageContainingIndividualResult.create(action.getIndividual(),
+        return new GetIndividualsPageContainingIndividualResult(action.individual(),
                                                                 entityNodesPage,
                                                                 renderer.render(result.getType()),
                                                                 result.getMode(),

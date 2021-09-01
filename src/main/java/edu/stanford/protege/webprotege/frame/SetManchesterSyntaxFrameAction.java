@@ -69,7 +69,7 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 
@@ -90,7 +90,7 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
         return Optional.ofNullable(commitMessage);
     }
 
-    public Set<OWLEntityData> getFreshEntities() {
+    public Set<OWLEntityData> freshEntities() {
         return new HashSet<OWLEntityData>(freshEntities);
     }
 

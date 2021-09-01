@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Streams;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

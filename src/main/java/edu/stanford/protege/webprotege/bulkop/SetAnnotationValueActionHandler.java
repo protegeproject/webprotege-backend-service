@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -29,7 +29,7 @@ public class SetAnnotationValueActionHandler extends AbstractProjectChangeHandle
 
     @Inject
     public SetAnnotationValueActionHandler(@Nonnull AccessManager accessManager,
-                                           @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                           @Nonnull EventManager<ProjectEvent> eventManager,
                                            @Nonnull HasApplyChanges applyChanges,
                                            @Nonnull SetAnnotationValueActionChangeListGeneratorFactory factory) {
         super(accessManager, eventManager, applyChanges);
@@ -44,14 +44,14 @@ public class SetAnnotationValueActionHandler extends AbstractProjectChangeHandle
 
     @Override
     protected ChangeListGenerator<Set<OWLEntity>> getChangeListGenerator(SetAnnotationValueAction action, ExecutionContext executionContext) {
-        return factory.create(action.getEntities(),
-                              action.getProperty(),
-                              action.getValue(),
-                              action.getCommitMessage());
+        return factory.create(action.entities(),
+                              action.property(),
+                              action.value(),
+                              action.commitMessage());
     }
 
     @Override
-    protected SetAnnotationValueResult createActionResult(ChangeApplicationResult<Set<OWLEntity>> changeApplicationResult, SetAnnotationValueAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
-        return SetAnnotationValueResult.create(eventList);
+    protected SetAnnotationValueResult createActionResult(ChangeApplicationResult<Set<OWLEntity>> changeApplicationResult, SetAnnotationValueAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
+        return new SetAnnotationValueResult();
     }
 }

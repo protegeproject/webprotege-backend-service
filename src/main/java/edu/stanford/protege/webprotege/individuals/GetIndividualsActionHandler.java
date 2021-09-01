@@ -10,8 +10,8 @@ import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.index.IndividualsIndex;
 import edu.stanford.protege.webprotege.index.IndividualsQueryResult;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -25,7 +25,6 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
-import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 
 /**
  * Author: Matthew Horridge<br>
@@ -72,24 +71,25 @@ public class GetIndividualsActionHandler extends AbstractProjectActionHandler<Ge
     @Override
     public GetIndividualsResult execute(@Nonnull GetIndividualsAction action,
                                         @Nonnull ExecutionContext executionContext) {
-        OWLClass type = action.getType().orElse(DataFactory.getOWLThing());
+        OWLClass type = action.type();
+        if(type == null) {
+            type = DataFactory.getOWLThing();
+        }
         IndividualsQueryResult result;
-        String filterString = action.getSearchString();
-        PageRequest pageRequest = action.getPageRequest().orElse(PageRequest.requestSinglePage());
+        String filterString = action.searchString();
+        PageRequest pageRequest = action.pageRequest();
         result = individualsIndex.getIndividuals(type,
-                                                 action.getInstanceRetrievalMode(),
+                                                 action.instanceRetrievalMode(),
                                                  filterString,
                                                  pageRequest);
         OWLClassData typeData = renderingManager.getClassData(type);
-        logger.info(BROWSING,
-                    "{} {} retrieved instances of {}",
+        logger.info("{} {} retrieved instances of {}",
                     projectId,
                     executionContext.getUserId(),
                     type);
         Page<OWLNamedIndividual> pg = result.getIndividuals();
         Page<EntityNode> entityNodes = pg.transform(entityNodeRenderer::render);
-        Optional<OWLClassData> renderedType = action.getType().map(t -> typeData);
-        return GetIndividualsResult.create(renderedType,
+        return new GetIndividualsResult(Optional.of(typeData),
                                         entityNodes);
     }
 

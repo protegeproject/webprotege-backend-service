@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.viz;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
-import edu.stanford.protege.webprotege.match.criteria.MultiMatchType;
+import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

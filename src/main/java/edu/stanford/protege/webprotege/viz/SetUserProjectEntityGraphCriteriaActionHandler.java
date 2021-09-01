@@ -42,17 +42,17 @@ public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
 
         if(action.getUserId()
                  .equals(Optional.of(UserId.getGuest()))) {
-            return SetUserProjectEntityGraphSettingsResult.create();
+            return new SetUserProjectEntityGraphSettingsResult();
         }
-        var settings = action.getSettings();
-        var projectId = action.getProjectId();
+        var settings = action.settings();
+        var projectId = action.projectId();
         var userSettings = action.getUserId()
                                  .map(userId -> ProjectUserEntityGraphSettings.get(projectId, userId, settings))
                                  .orElse(
                                          ProjectUserEntityGraphSettings.get(projectId, null, settings)
                                  );
         repository.saveSettings(userSettings);
-        return SetUserProjectEntityGraphSettingsResult.create();
+        return new SetUserProjectEntityGraphSettingsResult();
     }
 
     @Nonnull
@@ -73,7 +73,7 @@ public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
             }
             else {
                 if(accessManager.hasPermission(Subject.forUser(userInSession),
-                                               ProjectResource.forProject(action.getProjectId()),
+                                               ProjectResource.forProject(action.projectId()),
                                                BuiltInAction.EDIT_DEFAULT_VISUALIZATION_SETTINGS)) {
                     return RequestValidationResult.getValid();
                 }

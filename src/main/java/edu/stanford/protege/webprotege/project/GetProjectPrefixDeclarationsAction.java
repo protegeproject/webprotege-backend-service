@@ -35,7 +35,7 @@ public class GetProjectPrefixDeclarationsAction implements ProjectAction<GetProj
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return ProjectId.valueOf(projectId);
     }
 

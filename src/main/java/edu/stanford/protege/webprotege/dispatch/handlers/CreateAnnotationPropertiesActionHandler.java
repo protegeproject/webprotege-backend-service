@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.entity.CreateAnnotationPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateAnnotationPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -47,7 +47,7 @@ public class CreateAnnotationPropertiesActionHandler extends AbstractProjectChan
 
     @Inject
     public CreateAnnotationPropertiesActionHandler(@Nonnull AccessManager accessManager,
-                                                   @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                                   @Nonnull EventManager<ProjectEvent> eventManager,
                                                    @Nonnull HasApplyChanges applyChanges,
                                                    @Nonnull ProjectId projectId,
                                                    @Nonnull RenderingManager renderer,
@@ -61,22 +61,21 @@ public class CreateAnnotationPropertiesActionHandler extends AbstractProjectChan
     @Override
     protected ChangeListGenerator<Set<OWLAnnotationProperty>> getChangeListGenerator(CreateAnnotationPropertiesAction action,
                                                                                      ExecutionContext executionContext) {
-        return changeGeneratorFactory.create(action.getSourceText(),
-                                             action.getLangTag(),
-                                             action.getParents());
+        return changeGeneratorFactory.create(action.sourceText(),
+                                             action.langTag(),
+                                             action.parents());
     }
 
     @Override
     protected CreateAnnotationPropertiesResult createActionResult(ChangeApplicationResult<Set<OWLAnnotationProperty>> changeApplicationResult,
                                                                   CreateAnnotationPropertiesAction action,
                                                                   ExecutionContext executionContext,
-                                                                  EventList<ProjectEvent<?>> eventList) {
+                                                                  EventList<ProjectEvent> eventList) {
         Set<OWLAnnotationProperty> properties = changeApplicationResult.getSubject();
-        return CreateAnnotationPropertiesResult.create(projectId,
+        return new CreateAnnotationPropertiesResult(projectId,
                                                     properties.stream()
                                                           .map(entityNodeRenderer::render)
-                                                          .collect(toImmutableSet()),
-                                                    eventList);
+                                                          .collect(toImmutableSet()));
     }
 
     @Nonnull

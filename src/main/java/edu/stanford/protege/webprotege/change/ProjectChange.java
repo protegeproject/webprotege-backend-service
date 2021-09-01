@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.change;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.diff.DiffElement;
-import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import edu.stanford.protege.webprotege.common.UserId;
 

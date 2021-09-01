@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
@@ -26,12 +26,12 @@ public class SetProjectTagsActionHandler extends AbstractProjectActionHandler<Se
     private final TagsManager tagsManager;
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventEventManager;
+    private final EventManager<ProjectEvent> eventEventManager;
 
     @Inject
     public SetProjectTagsActionHandler(@Nonnull AccessManager accessManager,
                                        @Nonnull TagsManager tagsManager,
-                                       @Nonnull EventManager<ProjectEvent<?>> eventEventManager) {
+                                       @Nonnull EventManager<ProjectEvent> eventEventManager) {
         super(accessManager);
         this.tagsManager = checkNotNull(tagsManager);
         this.eventEventManager = checkNotNull(eventEventManager);
@@ -52,8 +52,7 @@ public class SetProjectTagsActionHandler extends AbstractProjectActionHandler<Se
     @Nonnull
     @Override
     public SetProjectTagsResult execute(@Nonnull SetProjectTagsAction action, @Nonnull ExecutionContext executionContext) {
-        EventTag eventTag = eventEventManager.getCurrentTag();
-        tagsManager.setProjectTags(action.getTagData());
-        return SetProjectTagsResult.create(eventEventManager.getEventsFromTag(eventTag));
+        tagsManager.setProjectTags(action.tagData());
+        return new SetProjectTagsResult();
     }
 }

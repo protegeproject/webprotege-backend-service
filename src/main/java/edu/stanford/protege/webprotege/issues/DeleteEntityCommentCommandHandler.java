@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
  * 2021-08-20
  */
 @WebProtegeHandler
-public class DeleteEntityCommentCommandHandler implements CommandHandler<DeleteEntityCommentAction, DeleteEntityCommentResult> {
+public class DeleteEntityCommentCommandHandler implements CommandHandler<DeleteCommentAction, DeleteCommentResult> {
 
     private final ActionExecutor executor;
 
@@ -24,16 +24,16 @@ public class DeleteEntityCommentCommandHandler implements CommandHandler<DeleteE
     @NotNull
     @Override
     public String getChannelName() {
-        return DeleteEntityCommentAction.CHANNEL;
+        return DeleteCommentAction.CHANNEL;
     }
 
     @Override
-    public Class<DeleteEntityCommentAction> getRequestClass() {
-        return DeleteEntityCommentAction.class;
+    public Class<DeleteCommentAction> getRequestClass() {
+        return DeleteCommentAction.class;
     }
 
     @Override
-    public Mono<DeleteEntityCommentResult> handleRequest(DeleteEntityCommentAction request,
+    public Mono<DeleteCommentResult> handleRequest(DeleteCommentAction request,
                                                          ExecutionContext executionContext) {
         return executor.executeRequest(request, executionContext);
     }

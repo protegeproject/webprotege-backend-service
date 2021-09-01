@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.events;
 
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 
 import javax.annotation.Nonnull;
 
@@ -14,16 +14,16 @@ import javax.annotation.Nonnull;
 public abstract class SimpleHighLevelProjectEventProxy implements HighLevelProjectEventProxy {
 
     @Nonnull
-    public static SimpleHighLevelProjectEventProxy wrap(@Nonnull ProjectEvent<?> newWrappedEvent) {
+    public static SimpleHighLevelProjectEventProxy wrap(@Nonnull ProjectEvent newWrappedEvent) {
         return new AutoValue_SimpleHighLevelProjectEventProxy(newWrappedEvent);
     }
 
     @Nonnull
-    abstract ProjectEvent<?> getWrappedEvent();
+    abstract ProjectEvent getWrappedEvent();
 
     @Nonnull
     @Override
-    public ProjectEvent<?> asProjectEvent() {
+    public ProjectEvent asProjectEvent() {
         return getWrappedEvent();
     }
 }

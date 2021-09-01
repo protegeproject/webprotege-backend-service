@@ -68,7 +68,7 @@ public class GetOntologyAnnotationsActionHandler extends AbstractProjectActionHa
     @Nonnull
     @Override
     public GetOntologyAnnotationsResult execute(@Nonnull GetOntologyAnnotationsAction action, @Nonnull ExecutionContext executionContext) {
-        var ontologyId = action.getOntologyId().orElse(defaultOntologyManager.getDefaultOntologyId());
+        var ontologyId = action.ontologyId().orElse(defaultOntologyManager.getDefaultOntologyId());
         var annotations = ontologyAnnotationsIndex.getOntologyAnnotations(ontologyId)
                                 .map(annotation -> PropertyAnnotationValue.get(
                                         renderingManager.getAnnotationPropertyData(annotation.getProperty()),
@@ -77,7 +77,7 @@ public class GetOntologyAnnotationsActionHandler extends AbstractProjectActionHa
                                 ))
                                 .sorted(propertyValueComparator)
                                 .collect(toImmutableList());
-        return GetOntologyAnnotationsResult.create(ontologyId, annotations);
+        return new GetOntologyAnnotationsResult(ontologyId, annotations);
     }
 
 }

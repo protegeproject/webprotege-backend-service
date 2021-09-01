@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.match;
 
 
 
+import edu.stanford.protege.webprotege.criteria.RelationshipPresence;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
 import edu.stanford.protege.webprotege.frame.State;
 import edu.stanford.protege.webprotege.frame.translator.AxiomPropertyValueTranslator;

@@ -4,6 +4,10 @@ package edu.stanford.protege.webprotege.dispatch;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.ProjectRequest;
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
@@ -28,7 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * actually exists and fails if this isn't the case.
  * </p>
  */
-public abstract class AbstractProjectActionHandler<A extends ProjectAction<R>, R extends Result> implements ProjectActionHandler<A, R> {
+public abstract class AbstractProjectActionHandler<A extends Request<R>, R extends Response> implements ProjectActionHandler<A, R> {
 
     @Nonnull
     private final AccessManager accessManager;
@@ -43,9 +47,20 @@ public abstract class AbstractProjectActionHandler<A extends ProjectAction<R>, R
         List<RequestValidator> validators = new ArrayList<>();
 
         BuiltInAction builtInAction = getRequiredExecutableBuiltInAction(action);
+        ProjectId projectId;
+        if(action instanceof ProjectAction) {
+            projectId = ((ProjectAction<?>) action).projectId();
+        }
+        else if(action instanceof ProjectRequest) {
+            projectId = ((ProjectRequest<?>) action).projectId();
+        }
+        else {
+            throw new RuntimeException("Not a project action or request");
+        }
+
         if(builtInAction != null) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
-                                                                                  action.getProjectId(),
+                                                                                  projectId,
                                                                                   requestContext.getUserId(),
                                                                                   builtInAction.getActionId());
             validators.add(validator);
@@ -56,7 +71,7 @@ public abstract class AbstractProjectActionHandler<A extends ProjectAction<R>, R
         ActionId reqActionId = getRequiredExecutableAction();
         if (reqActionId != null) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
-                                                                                  action.getProjectId(),
+                                                                                  projectId,
                                                                                   requestContext.getUserId(),
                                                                                   reqActionId);
             validators.add(validator);
@@ -65,7 +80,7 @@ public abstract class AbstractProjectActionHandler<A extends ProjectAction<R>, R
         Iterable<BuiltInAction> requiredExecutableBuiltInActions = getRequiredExecutableBuiltInActions(action);
         for(BuiltInAction actionId : requiredExecutableBuiltInActions) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
-                                                                                  action.getProjectId(),
+                                                                                  projectId,
                                                                                   requestContext.getUserId(),
                                                                                   actionId.getActionId());
             validators.add(validator);

@@ -6,8 +6,8 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageCollector;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -49,7 +49,7 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
     }
 
     static GetHierarchyChildrenResult emptyResult() {
-        return GetHierarchyChildrenResult.create();
+        return new GetHierarchyChildrenResult(null, Page.emptyPage());
     }
 
     @Nonnull
@@ -67,25 +67,25 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
     @Nonnull
     @Override
     public GetHierarchyChildrenResult execute(@Nonnull GetHierarchyChildrenAction action, @Nonnull ExecutionContext executionContext) {
-        HierarchyId hierarchyId = action.getHierarchyId();
+        HierarchyId hierarchyId = action.hierarchyId();
         Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderMapper.getHierarchyProvider(hierarchyId);
         if (hierarchyProvider.isEmpty()) {
             return emptyResult();
         }
-        OWLEntity parent = action.getEntity();
+        OWLEntity parent = action.entity();
         GraphNode parentNode = nodeRenderer.toGraphNode(parent, hierarchyProvider.get());
         Page<GraphNode<EntityNode>> page = hierarchyProvider.get().getChildren(parent).stream()
                          // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
                          // owl:topDataProperty
                          .filter(child -> isNotDeprecatedTopLevelEntity(parent, child))
                          .sorted(comparingShortFormIgnoringCase())
-                         .collect(PageCollector.toPage(action.getPageRequest().getPageNumber(),
+                         .collect(PageCollector.toPage(action.pageRequest().getPageNumber(),
                                                        2000))
                          .map(pg ->
                              pg.transform(child -> nodeRenderer.toGraphNode(child, hierarchyProvider.get()))
                          ).orElse(Page.emptyPage());
 
-        return GetHierarchyChildrenResult.create(parentNode, page);
+        return new GetHierarchyChildrenResult(parentNode, page);
     }
 
     private Comparator<OWLEntity> comparingShortFormIgnoringCase() {

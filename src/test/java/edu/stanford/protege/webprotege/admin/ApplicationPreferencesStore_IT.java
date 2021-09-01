@@ -4,10 +4,9 @@ import com.mongodb.client.MongoClients;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
 import edu.stanford.protege.webprotege.app.ApplicationPreferencesStore;
 import edu.stanford.protege.webprotege.app.ApplicationLocation;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static org.hamcrest.Matchers.is;
@@ -18,6 +17,7 @@ import static org.junit.Assert.assertThat;
  * Stanford Center for Biomedical Informatics Research
  * 19 Mar 2017
  */
+@SpringBootTest
 public class ApplicationPreferencesStore_IT {
 
     private final ApplicationPreferences applicationPreferences = new ApplicationPreferences(
@@ -32,20 +32,12 @@ public class ApplicationPreferencesStore_IT {
             44L
     );
 
+    @Autowired
     private ApplicationPreferencesStore manager;
 
+    @Autowired
     private MongoTemplate mongoTemplate;
 
-    @Before
-    public void setUp() throws Exception {
-        mongoTemplate = new MongoTemplate(MongoClients.create(), MongoTestUtils.getTestDbName());
-        manager = new ApplicationPreferencesStore(mongoTemplate);
-    }
-
-    @After
-    public void tearDown() {
-        mongoTemplate.getDb().drop();
-    }
 
     @Test
     public void shouldSaveSettings() {

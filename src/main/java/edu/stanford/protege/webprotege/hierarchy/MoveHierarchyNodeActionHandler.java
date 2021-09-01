@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
     @Inject
     public MoveHierarchyNodeActionHandler(@Nonnull AccessManager accessManager,
-                                          @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                          @Nonnull EventManager<ProjectEvent> eventManager,
                                           @Nonnull HasApplyChanges applyChanges,
                                           @Nonnull MoveEntityChangeListGeneratorFactory factory) {
         super(accessManager, eventManager, applyChanges);
@@ -45,9 +45,8 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
     }
 
     @Override
-    protected MoveHierarchyNodeResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult, MoveHierarchyNodeAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
-        return MoveHierarchyNodeResult.create(changeApplicationResult.getSubject(),
-                                           eventList);
+    protected MoveHierarchyNodeResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult, MoveHierarchyNodeAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
+        return new MoveHierarchyNodeResult(changeApplicationResult.getSubject());
     }
 
     @Nullable

@@ -2,8 +2,10 @@ package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.pagination.Page;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.EntityShortFormMatches;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.EntityType;

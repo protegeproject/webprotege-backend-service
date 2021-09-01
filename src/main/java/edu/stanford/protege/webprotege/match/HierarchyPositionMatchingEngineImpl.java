@@ -6,16 +6,13 @@ import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.IndividualsByTypeIndex;
 import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
 import edu.stanford.protege.webprotege.individuals.InstanceRetrievalMode;
-import edu.stanford.protege.webprotege.match.criteria.*;
+import edu.stanford.protege.webprotege.criteria.*;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -60,7 +57,7 @@ public class HierarchyPositionMatchingEngineImpl implements HierarchyPositionMat
 
         @Override
         public Collection<OWLEntity> visit(CompositeHierarchyPositionCriteria criteria) {
-            ImmutableList<HierarchyPositionCriteria> subCriteria = criteria.getCriteria();
+            List<HierarchyPositionCriteria> subCriteria = criteria.getCriteria();
             if (criteria.getMatchType().equals(MultiMatchType.ALL)) {
                 return getMatchIntersection(subCriteria);
 
@@ -81,12 +78,12 @@ public class HierarchyPositionMatchingEngineImpl implements HierarchyPositionMat
                                         .collect(Collectors.toSet());
         }
 
-        private Collection<OWLEntity> getMatchUnion(ImmutableList<HierarchyPositionCriteria> subCriteria) {
+        private Collection<OWLEntity> getMatchUnion(List<HierarchyPositionCriteria> subCriteria) {
             // Union of collections
             return subCriteria.stream().flatMap(sc -> sc.accept(this).stream()).collect(toImmutableSet());
         }
 
-        private Collection<OWLEntity> getMatchIntersection(ImmutableList<HierarchyPositionCriteria> subCriteria) {
+        private Collection<OWLEntity> getMatchIntersection(List<HierarchyPositionCriteria> subCriteria) {
             // Intersection of collections
             var subMatches = subCriteria.stream().map(sc -> sc.accept(this))
                                         // Sort by size, with smallest first, so that we do the fewest

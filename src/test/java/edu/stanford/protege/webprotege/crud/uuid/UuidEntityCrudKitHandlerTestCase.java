@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.crud.uuid;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import edu.stanford.protege.webprotege.common.AnnotationAssertionDictionaryLanguage;
 import edu.stanford.protege.webprotege.crud.ChangeSetEntityCrudSession;
 import edu.stanford.protege.webprotege.crud.EntityCrudContext;
 import edu.stanford.protege.webprotege.crud.EntityIriPrefixResolver;
@@ -11,7 +12,6 @@ import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriInde
 import edu.stanford.protege.webprotege.crud.EntityCrudKitPrefixSettings;
 import edu.stanford.protege.webprotege.crud.EntityShortForm;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.protege.webprotege.shortform.AnnotationAssertionDictionaryLanguage;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +32,6 @@ import java.util.stream.Stream;
 import static edu.stanford.protege.webprotege.OWLDeclarationAxiomMatcher.declarationFor;
 import static edu.stanford.protege.webprotege.OWLEntityMatcher.hasIRI;
 import static edu.stanford.protege.webprotege.OWLEntityMatcher.owlThing;
-import static edu.stanford.protege.webprotege.RdfsLabelWithLexicalValueAndLang.rdfsLabelWithLexicalValueAndLang;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
@@ -196,7 +195,17 @@ public class UuidEntityCrudKitHandlerTestCase {
         List<OWLAxiom> addedAxioms = addAxiomCaptor.getAllValues().stream()
                                                    .map(OntologyChange::getAxiomOrThrow)
                                                    .collect(Collectors.toList());
-        assertThat(addedAxioms, hasItem(rdfsLabelWithLexicalValueAndLang(label, langTag)));
+        var found = addedAxioms.stream()
+                   .filter(ax -> ax instanceof OWLAnnotationAssertionAxiom)
+                   .map(ax -> (OWLAnnotationAssertionAxiom) ax)
+                   .filter(ax -> ax.getProperty().isLabel())
+                   .map(OWLAnnotationAssertionAxiom::getValue)
+                   .filter(OWLAnnotationValue::isLiteral)
+                   .map(val -> (OWLLiteral) val)
+                   .filter(lit -> lit.hasLang(langTag))
+                   .filter(lit -> lit.getLiteral().equals(label))
+                   .findFirst();
+        assertThat(found.isPresent(), is(true));
     }
 
 

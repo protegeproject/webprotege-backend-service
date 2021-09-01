@@ -21,8 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static edu.stanford.protege.webprotege.logging.RequestFormatter.formatAddr;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>
@@ -59,7 +57,7 @@ public class ProjectDownloadServlet extends HttpServlet {
         if(!downloadParameters.isProjectDownload()) {
             logger.info("Bad project download request from {} at {}.  Request URI: {}  Query String: {}",
                         webProtegeSession.getUserInSession(),
-                        formatAddr(req),
+                        req,
                         req.getRequestURI(),
                         req.getQueryString());
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -67,7 +65,7 @@ public class ProjectDownloadServlet extends HttpServlet {
         }
         logger.info("Received download request from {} at {} for project {}",
                     userId,
-                    formatAddr(req),
+                    req,
                     downloadParameters.getProjectId());
 
         if (!accessManager.hasPermission(Subject.forUser(userId),

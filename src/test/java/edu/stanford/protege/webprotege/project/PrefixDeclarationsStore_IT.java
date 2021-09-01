@@ -2,15 +2,12 @@ package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.jackson.ObjectMapperProvider;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -21,7 +18,6 @@ import static org.hamcrest.Matchers.is;
  * 23 Feb 2018
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
 public class PrefixDeclarationsStore_IT {
 
     public static final String COLLECTION_NAME = "PrefixDeclarations";
@@ -36,9 +32,8 @@ public class PrefixDeclarationsStore_IT {
 
     private PrefixDeclarations prefixDeclarations;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        var objectMapper = new ObjectMapperProvider().get();
         ImmutableMap.Builder<String, String> prefixesMap = ImmutableMap.builder();
         prefixesMap.put("a:", "http://ont.org/a/");
         prefixDeclarations = PrefixDeclarations.get(
@@ -71,7 +66,7 @@ public class PrefixDeclarationsStore_IT {
         assertThat(prefixes, is(prefixDeclarations));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         mongoTemplate.getCollection(COLLECTION_NAME).drop();
     }

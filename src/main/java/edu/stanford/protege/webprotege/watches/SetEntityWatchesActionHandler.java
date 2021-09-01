@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.UserId;
 
@@ -19,13 +19,13 @@ import java.util.Set;
  */
 public class SetEntityWatchesActionHandler extends AbstractProjectActionHandler<SetEntityWatchesAction, SetEntityWatchesResult> {
 
-    private EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
-    private WatchManager watchManager;
+    private final WatchManager watchManager;
 
     @Inject
     public SetEntityWatchesActionHandler(@Nonnull AccessManager accessManager,
-                                         EventManager<ProjectEvent<?>> eventManager,
+                                         EventManager<ProjectEvent> eventManager,
                                          WatchManager watchManager) {
         super(accessManager);
         this.eventManager = eventManager;
@@ -42,15 +42,15 @@ public class SetEntityWatchesActionHandler extends AbstractProjectActionHandler<
     @Override
     public SetEntityWatchesResult execute(@Nonnull SetEntityWatchesAction action, @Nonnull ExecutionContext executionContext) {
         EventTag startTag = eventManager.getCurrentTag();
-        UserId userId = action.getUserId();
-        Set<Watch> watches = watchManager.getDirectWatches(action.getEntity(), userId);
+        UserId userId = action.userId();
+        Set<Watch> watches = watchManager.getDirectWatches(action.entity(), userId);
         for(Watch watch : watches) {
             watchManager.removeWatch(watch);
         }
-        for(Watch watch : action.getWatches()) {
+        for(Watch watch : action.watches()) {
             watchManager.addWatch(watch);
         }
-        return SetEntityWatchesResult.create(eventManager.getEventsFromTag(startTag));
+        return new SetEntityWatchesResult();
     }
 
 }

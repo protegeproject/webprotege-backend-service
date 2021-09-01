@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.hierarchy.HasGetAncestors;
 import edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex;
 import edu.stanford.protege.webprotege.match.RelationshipMatcherFactory;
-import edu.stanford.protege.webprotege.match.criteria.RelationshipCriteria;
+import edu.stanford.protege.webprotege.criteria.RelationshipCriteria;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassExpression;

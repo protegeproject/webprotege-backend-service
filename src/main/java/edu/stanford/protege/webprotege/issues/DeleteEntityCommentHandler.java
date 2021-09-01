@@ -11,7 +11,7 @@ import java.util.Optional;
  * Stanford Center for Biomedical Informatics Research
  * 9 Oct 2016
  */
-public class DeleteEntityCommentHandler implements ProjectActionHandler<DeleteEntityCommentAction, DeleteEntityCommentResult> {
+public class DeleteEntityCommentHandler implements ProjectActionHandler<DeleteCommentAction, DeleteCommentResult> {
 
     @Nonnull
     private final EntityDiscussionThreadRepository repository;
@@ -23,21 +23,21 @@ public class DeleteEntityCommentHandler implements ProjectActionHandler<DeleteEn
 
     @Nonnull
     @Override
-    public Class<DeleteEntityCommentAction> getActionClass() {
-        return DeleteEntityCommentAction.class;
+    public Class<DeleteCommentAction> getActionClass() {
+        return DeleteCommentAction.class;
     }
 
     @Nonnull
     @Override
-    public RequestValidator getRequestValidator(@Nonnull DeleteEntityCommentAction action, @Nonnull RequestContext requestContext) {
+    public RequestValidator getRequestValidator(@Nonnull DeleteCommentAction action, @Nonnull RequestContext requestContext) {
         return () -> {
-            Optional<EntityDiscussionThread> thread = repository.findThreadByCommentId(action.getCommentId());
+            Optional<EntityDiscussionThread> thread = repository.findThreadByCommentId(action.commentId());
             if(!thread.isPresent()) {
                 return getInvalidRequest();
             }
             long commentCount = thread.get().getComments().stream()
                     .filter(c -> c.getCreatedBy().equals(requestContext.getUserId()))
-                    .filter(c -> c.getId().equals(action.getCommentId()))
+                    .filter(c -> c.getId().equals(action.commentId()))
                     .count();
             if(commentCount != 1L) {
                 return getInvalidRequest();
@@ -52,8 +52,8 @@ public class DeleteEntityCommentHandler implements ProjectActionHandler<DeleteEn
 
     @Nonnull
     @Override
-    public DeleteEntityCommentResult execute(@Nonnull DeleteEntityCommentAction action, @Nonnull ExecutionContext executionContext) {
-        boolean deleted = repository.deleteComment(action.getCommentId());
-        return DeleteEntityCommentResult.create(action.getCommentId(), deleted);
+    public DeleteCommentResult execute(@Nonnull DeleteCommentAction action, @Nonnull ExecutionContext executionContext) {
+        boolean deleted = repository.deleteComment(action.commentId());
+        return new DeleteCommentResult(action.commentId(), deleted);
     }
 }

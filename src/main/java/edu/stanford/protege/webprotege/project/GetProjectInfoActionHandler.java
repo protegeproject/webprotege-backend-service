@@ -45,7 +45,7 @@ public class GetProjectInfoActionHandler extends AbstractProjectActionHandler<Ge
     @Nonnull
     @Override
     public GetProjectInfoResult execute(@Nonnull GetProjectInfoAction action, @Nonnull ExecutionContext executionContext) {
-        ProjectId projectId = action.getProjectId();
+        ProjectId projectId = action.projectId();
         ProjectSettings projectSettings = projectDetailsManager.getProjectSettings(projectId);
         ImmutableList<DictionaryLanguageUsage> languageUsage = activeLanguagesManager.getLanguageUsage();
         return GetProjectInfoResult.create(projectSettings, languageUsage);

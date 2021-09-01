@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.api;
 import edu.stanford.protege.webprotege.api.exception.PermissionDeniedExceptionMapper;
 import edu.stanford.protege.webprotege.api.exception.UnknownProjectExceptionMapper;
 import edu.stanford.protege.webprotege.api.resources.ProjectsResource;
-import edu.stanford.protege.webprotege.api.resources.RpcResource;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
@@ -36,7 +35,7 @@ public class ApiModule {
         resourceConfig.register(new ApiKeyBinder());
         resourceConfig.register(new ExecutionContextBinder());
 
-        resourceConfig.register(new JacksonContextResolver());
+//        resourceConfig.register(new JacksonContextResolver());
 
         // Exception mappers
         resourceConfig.register(new PermissionDeniedExceptionMapper());
@@ -53,10 +52,7 @@ public class ApiModule {
         return resource;
     }
 
-    
-    ApiRootResource provideRpcResource(RpcResource resource) {
-        return resource;
-    }
+
 
 
 

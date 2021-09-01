@@ -51,7 +51,7 @@ public class GetEntityDiscussionThreadsHandler implements ProjectActionHandler<G
     @Override
     public RequestValidator getRequestValidator(@Nonnull GetEntityDiscussionThreadsAction action, @Nonnull RequestContext requestContext) {
         return new ProjectPermissionValidator(accessManager,
-                                              action.getProjectId(),
+                                              action.projectId(),
                                               requestContext.getUserId(),
                                               VIEW_OBJECT_COMMENT.getActionId());
     }
@@ -59,9 +59,9 @@ public class GetEntityDiscussionThreadsHandler implements ProjectActionHandler<G
     @Nonnull
     @Override
     public GetEntityDiscussionThreadsResult execute(@Nonnull GetEntityDiscussionThreadsAction action, @Nonnull ExecutionContext executionContext) {
-        List<EntityDiscussionThread> threads = repository.findThreads(action.getProjectId(), action.getEntity());
-        OWLEntityData entityData = renderingManager.getRendering(action.getEntity());
-        return GetEntityDiscussionThreadsResult.create(entityData,
+        List<EntityDiscussionThread> threads = repository.findThreads(action.projectId(), action.entity());
+        OWLEntityData entityData = renderingManager.getRendering(action.entity());
+        return new GetEntityDiscussionThreadsResult(entityData,
                                                     ImmutableList.copyOf(threads));
     }
 }

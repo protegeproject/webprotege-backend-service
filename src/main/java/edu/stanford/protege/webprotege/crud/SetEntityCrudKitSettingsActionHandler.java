@@ -66,11 +66,11 @@ public class SetEntityCrudKitSettingsActionHandler extends AbstractProjectAction
     @Override
     public SetEntityCrudKitSettingsResult execute(@Nonnull SetEntityCrudKitSettingsAction action,
                                                   @Nonnull ExecutionContext executionContext) {
-        var projectSettings = ProjectEntityCrudKitSettings.get(projectId, action.getToSettings());
+        var projectSettings = ProjectEntityCrudKitSettings.get(projectId, action.toSettings());
         repository.save(projectSettings);
-        if(action.getPrefixUpdateStrategy() == IRIPrefixUpdateStrategy.FIND_AND_REPLACE) {
-            var fromPrefix = action.getFromSettings().getPrefixSettings().getIRIPrefix();
-            var toPrefix = action.getToSettings().getPrefixSettings().getIRIPrefix();
+        if(action.prefixUpdateStrategy() == IRIPrefixUpdateStrategy.FIND_AND_REPLACE) {
+            var fromPrefix = action.fromSettings().getPrefixSettings().getIRIPrefix();
+            var toPrefix = action.toSettings().getPrefixSettings().getIRIPrefix();
             var changeGenerator = findAndReplaceIRIPrefixChangeGeneratorFactory.create(fromPrefix, toPrefix);
             changeManager.applyChanges(executionContext.getUserId(), changeGenerator);
         }

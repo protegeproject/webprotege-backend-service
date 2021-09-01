@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch;
 
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 
 
@@ -11,5 +13,5 @@ import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
  */
 public interface DispatchServiceExecutor {
 
-    <A extends Action<R>, R extends Result> DispatchServiceResultContainer execute(A action, RequestContext requestContext, ExecutionContext executionContext) throws ActionExecutionException, PermissionDeniedException;
+    <A extends Request<R>, R extends Response> DispatchServiceResultContainer execute(A action, RequestContext requestContext, ExecutionContext executionContext) throws ActionExecutionException, PermissionDeniedException;
 }

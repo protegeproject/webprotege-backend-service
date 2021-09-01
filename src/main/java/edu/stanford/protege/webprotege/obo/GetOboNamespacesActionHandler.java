@@ -35,6 +35,6 @@ public class GetOboNamespacesActionHandler extends AbstractProjectActionHandler<
     @Nonnull
     @Override
     public GetOboNamespacesResult execute(@Nonnull GetOboNamespacesAction action, @Nonnull ExecutionContext executionContext) {
-        return GetOboNamespacesResult.create(cache.getNamespaces());
+        return new GetOboNamespacesResult(cache.getNamespaces());
     }
 }

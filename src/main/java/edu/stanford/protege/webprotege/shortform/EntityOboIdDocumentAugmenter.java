@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.shortform;
 
+import edu.stanford.protege.webprotege.common.OboIdDictionaryLanguage;
 import edu.stanford.protege.webprotege.obo.OboId;
 import org.apache.lucene.document.Document;
 import org.semanticweb.owlapi.model.OWLEntity;

@@ -41,7 +41,7 @@ public class LoadProjectAction implements Action<LoadProjectResult>, HasProjectI
     }
 
     @Nonnull
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

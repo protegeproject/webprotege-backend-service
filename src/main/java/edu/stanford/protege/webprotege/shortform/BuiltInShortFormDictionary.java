@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.LocalNameDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.ShortFormMatch;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;

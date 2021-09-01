@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.crud;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.match.criteria.CompositeHierarchyPositionCriteria;
+import edu.stanford.protege.webprotege.criteria.CompositeHierarchyPositionCriteria;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

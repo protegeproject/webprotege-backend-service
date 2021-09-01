@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.match.criteria.CompositeRootCriteria;
+import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.search.SearchType;
 import org.semanticweb.owlapi.model.EntityType;
 

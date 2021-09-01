@@ -36,7 +36,7 @@ public class GetRevisionAction implements ProjectAction<GetRevisionResult> {
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

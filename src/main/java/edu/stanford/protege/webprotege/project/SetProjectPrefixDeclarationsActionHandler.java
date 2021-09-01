@@ -46,11 +46,11 @@ public class SetProjectPrefixDeclarationsActionHandler extends AbstractProjectAc
     @Nonnull
     @Override
     public SetProjectPrefixDeclarationsResult execute(@Nonnull SetProjectPrefixDeclarationsAction action, @Nonnull ExecutionContext executionContext) {
-        Map<String, String> decls = action.getPrefixDeclarations().stream()
+        Map<String, String> decls = action.prefixDeclarations().stream()
                                           .collect(Collectors.toMap(PrefixDeclaration::getPrefixName,
                                                                     PrefixDeclaration::getPrefix));
-        PrefixDeclarations prefixDeclarations = PrefixDeclarations.get(action.getProjectId(), decls);
+        PrefixDeclarations prefixDeclarations = PrefixDeclarations.get(action.projectId(), decls);
         store.save(prefixDeclarations);
-        return SetProjectPrefixDeclarationsResult.create(action.getProjectId(), action.getPrefixDeclarations());
+        return new SetProjectPrefixDeclarationsResult(action.projectId(), action.prefixDeclarations());
     }
 }

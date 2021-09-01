@@ -2,10 +2,10 @@ package edu.stanford.protege.webprotege;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.LocalNameDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.PrefixedNameDictionaryLanguage;
 import edu.stanford.protege.webprotege.entity.*;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
-import edu.stanford.protege.webprotege.shortform.LocalNameDictionaryLanguage;
-import edu.stanford.protege.webprotege.shortform.PrefixedNameDictionaryLanguage;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;

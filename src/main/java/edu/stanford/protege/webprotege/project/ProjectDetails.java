@@ -2,10 +2,10 @@ package edu.stanford.protege.webprotege.project;
 
 import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
-import edu.stanford.protege.webprotege.shortform.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
@@ -135,7 +135,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
             return this;
         }
         else {
-            return get(getProjectId(),
+            return get(projectId(),
                        displayName,
                        getDescription(),
                        getOwner(),
@@ -155,7 +155,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
             return this;
         }
         else {
-            return get(getProjectId(),
+            return get(projectId(),
                        getDisplayName(),
                        description,
                        getOwner(),
@@ -176,7 +176,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
             return this;
         }
         else {
-            return get(getProjectId(),
+            return get(projectId(),
                        getDisplayName(),
                        getDescription(),
                        getOwner(),
@@ -196,7 +196,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
             return this;
         }
         else {
-            return get(getProjectId(),
+            return get(projectId(),
                        getDisplayName(),
                        getDescription(),
                        getOwner(),
@@ -218,7 +218,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
             return this;
         }
         else {
-            return get(getProjectId(),
+            return get(projectId(),
                        getDisplayName(),
                        getDescription(),
                        getOwner(),
@@ -236,7 +236,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
     @Nonnull
     public ProjectDetails withEntityDeprecationSettings(@Nonnull EntityDeprecationSettings settings) {
         checkNotNull(settings);
-        return get(getProjectId(),
+        return get(projectId(),
                    getDisplayName(),
                    getDescription(),
                    getOwner(),
@@ -257,7 +257,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
      */
     @JsonProperty(PROJECT_ID)
     @Nonnull
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     /**
      * Gets the human readable name for the project.
@@ -380,6 +380,6 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
         if (descriptionDiff != 0) {
             return descriptionDiff;
         }
-        return getProjectId().id().compareTo(o.getProjectId().id());
+        return projectId().id().compareTo(o.projectId().id());
     }
 }

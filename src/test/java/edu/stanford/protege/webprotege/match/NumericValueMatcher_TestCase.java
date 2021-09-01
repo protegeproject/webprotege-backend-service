@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.match;
 
-import edu.stanford.protege.webprotege.match.criteria.NumericPredicate;
+import edu.stanford.protege.webprotege.criteria.NumericPredicate;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;

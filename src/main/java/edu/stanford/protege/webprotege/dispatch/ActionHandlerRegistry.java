@@ -1,5 +1,8 @@
 package edu.stanford.protege.webprotege.dispatch;
 
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -23,6 +26,6 @@ public interface ActionHandlerRegistry {
      * @throws NullPointerException if {@code action} is {@code null}.
      */
     @Nonnull
-    <A extends Action<R>, R extends Result> ActionHandler<A, R> getActionHandler(A action) throws ActionHandlerNotFoundException;
+    <A extends Request<R>, R extends Response> ActionHandler<A, R> getActionHandler(A action) throws ActionHandlerNotFoundException;
 
 }

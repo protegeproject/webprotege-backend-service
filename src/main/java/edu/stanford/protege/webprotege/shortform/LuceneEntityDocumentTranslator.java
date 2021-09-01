@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.shortform;
 
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.Query;
 import org.semanticweb.owlapi.model.EntityType;

@@ -15,7 +15,6 @@ import javax.inject.Provider;
 import java.util.Comparator;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_CHANGES;
-import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 
 /**
  * Author: Matthew Horridge<br>
@@ -25,26 +24,19 @@ import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
  */
 public class GetDataPropertyFrameActionHandler extends AbstractProjectActionHandler<GetDataPropertyFrameAction, GetDataPropertyFrameResult> {
 
-    private static final Logger logger = LoggerFactory.getLogger(GetDataPropertyFrameActionHandler.class);
-
     @Nonnull
     private final Provider<DataPropertyFrameTranslator> translatorProvider;
 
     @Nonnull
-    private final FrameComponentSessionRendererFactory rendererFactory;
-
-    @Nonnull
-    private final Comparator<PropertyValue> propertyValueComparator;
+    private final PlainFrameRenderer plainFrameRenderer;
 
     @Inject
     public GetDataPropertyFrameActionHandler(@Nonnull AccessManager accessManager,
                                              @Nonnull Provider<DataPropertyFrameTranslator> translatorProvider,
-                                             @Nonnull FrameComponentSessionRendererFactory rendererFactory,
-                                             @Nonnull Comparator<PropertyValue> propertyValueComparator) {
+                                             @Nonnull PlainFrameRenderer plainFrameRenderer) {
         super(accessManager);
         this.translatorProvider = translatorProvider;
-        this.rendererFactory = rendererFactory;
-        this.propertyValueComparator = propertyValueComparator;
+        this.plainFrameRenderer = plainFrameRenderer;
     }
 
     @Nullable
@@ -57,14 +49,9 @@ public class GetDataPropertyFrameActionHandler extends AbstractProjectActionHand
     @Override
     public GetDataPropertyFrameResult execute(@Nonnull GetDataPropertyFrameAction action, @Nonnull ExecutionContext executionContext) {
         var translator = translatorProvider.get();
-        var plainFrame = translator.getFrame(action.getSubject());
-        var renderedFrame = plainFrame.toEntityFrame(rendererFactory.create(), propertyValueComparator);
-        logger.info(BROWSING,
-                    "{} {} retrieved DataProperty frame for {}",
-                    action.getProjectId(),
-                    executionContext.getUserId(),
-                    action.getSubject());
-        return GetDataPropertyFrameResult.create(renderedFrame);
+        var plainFrame = translator.getFrame(action.subject());
+        var renderedFrame = plainFrameRenderer.toDataPropertyFrame(plainFrame);
+        return new GetDataPropertyFrameResult(renderedFrame);
     }
 
     @Nonnull

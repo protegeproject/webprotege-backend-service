@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
-import edu.stanford.protege.webprotege.match.criteria.HierarchyFilterType;
+import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
 import javax.annotation.processing.Generated;
 import javax.inject.Inject;
 import javax.inject.Provider;

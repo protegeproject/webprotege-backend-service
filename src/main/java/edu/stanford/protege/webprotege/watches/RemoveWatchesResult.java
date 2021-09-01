@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -15,12 +15,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 21/03/2013
  */
-public class RemoveWatchesResult  implements Result, HasEventList<ProjectEvent<?>> {
+public class RemoveWatchesResult  implements Result, HasEventList<ProjectEvent> {
 
-    private EventList<ProjectEvent<?>> eventList;
+    private EventList<ProjectEvent> eventList;
 
     @JsonCreator
-    public RemoveWatchesResult(@JsonProperty("eventList") EventList<ProjectEvent<?>> eventList) {
+    public RemoveWatchesResult(@JsonProperty("eventList") EventList<ProjectEvent> eventList) {
         this.eventList = checkNotNull(eventList);
     }
 
@@ -28,7 +28,7 @@ public class RemoveWatchesResult  implements Result, HasEventList<ProjectEvent<?
     }
 
     @Override
-    public EventList<ProjectEvent<?>> getEventList() {
+    public EventList<ProjectEvent> getEventList() {
         return eventList;
     }
 }

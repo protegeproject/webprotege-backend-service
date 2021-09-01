@@ -4,9 +4,6 @@ import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
-import edu.stanford.protege.webprotege.auth.Password;
-import edu.stanford.protege.webprotege.chgpwd.ResetPasswordAction;
-import edu.stanford.protege.webprotege.chgpwd.ResetPasswordData;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
@@ -43,7 +40,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainGetAvailableProjectsActions() {
-        var handler = registry.getActionHandler(GetAvailableProjectsAction.create());
+        var handler = registry.getActionHandler(new GetAvailableProjectsAction());
         assertThat(handler, is(notNullValue()));
     }
 
@@ -54,16 +51,8 @@ public class ApplicationActionHandlerRegistry_Test {
     }
 
     @Test
-    public void shouldContainCreateUserAccountActionHandler() {
-        var handler = registry.getActionHandler(CreateUserAccountAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
-                                                                                    mock(EmailAddress.class),
-                                                                                    mock(Password.class)));
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
     public void shouldContainGetApplicationSettingsActionHandler() {
-        var handler = registry.getActionHandler(GetApplicationSettingsAction.create());
+        var handler = registry.getActionHandler(new GetApplicationSettingsAction());
         assertThat(handler, is(notNullValue()));
     }
 
@@ -71,11 +60,6 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetAvailableProjectsWithPermissionActionHandler() {
         var handler = registry.getActionHandler(GetAvailableProjectsWithPermissionAction.create(new ActionId("OtherAction")));
-        assertThat(handler, is(notNullValue()));
-    }
-    @Test
-    public void shouldContainGetCurrentUserInSessionActionHandler() {
-        var handler = registry.getActionHandler(GetCurrentUserInSessionAction.create());
         assertThat(handler, is(notNullValue()));
     }
 
@@ -87,7 +71,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainGetPerspectivesActionHandler() {
-        var handler = registry.getActionHandler(GetPerspectivesAction.create(ProjectId.generate(),
+        var handler = registry.getActionHandler(new GetPerspectivesAction(ProjectId.generate(),
                                                                              edu.stanford.protege.webprotege.MockingUtils.mockUserId()));
         assertThat(handler, is(notNullValue()));
     }
@@ -107,7 +91,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainGetProjectPermissionsActionHandler() {
-        var handler = registry.getActionHandler(GetProjectPermissionsAction.create(ProjectId.generate(),
+        var handler = registry.getActionHandler(new GetProjectPermissionsAction(ProjectId.generate(),
                                                                                    edu.stanford.protege.webprotege.MockingUtils.mockUserId()));
         assertThat(handler, is(notNullValue()));
     }
@@ -132,19 +116,13 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainRebuildPermissionsActionHandler() {
-        var handler = registry.getActionHandler(RebuildPermissionsAction.create());
+        var handler = registry.getActionHandler(new RebuildPermissionsAction());
         assertThat(handler, is(notNullValue()));
     }
 
     @Test
     public void shouldContainRemoveProjectsFromTrashActionHandler() {
         var handler = registry.getActionHandler(RemoveProjectFromTrashAction.create(ProjectId.generate()));
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainResetPasswordActionHandler() {
-        var handler = registry.getActionHandler(ResetPasswordAction.create(mock(ResetPasswordData.class)));
         assertThat(handler, is(notNullValue()));
     }
 
@@ -156,8 +134,8 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainSetEmailAddressActionHandler() {
-        var handler = registry.getActionHandler(SetEmailAddressAction.create(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
-                                                                             "abc"));
+        var handler = registry.getActionHandler(new SetEmailAddressAction(edu.stanford.protege.webprotege.MockingUtils.mockUserId(),
+                                                                             new EmailAddress("abc")));
         assertThat(handler, is(notNullValue()));
     }
 }

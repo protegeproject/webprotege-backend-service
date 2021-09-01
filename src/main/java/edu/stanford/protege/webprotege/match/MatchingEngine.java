@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.match.criteria.Criteria;
+import edu.stanford.protege.webprotege.criteria.Criteria;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

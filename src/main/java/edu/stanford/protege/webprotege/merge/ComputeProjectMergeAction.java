@@ -25,7 +25,7 @@ public abstract class ComputeProjectMergeAction implements ProjectAction<Compute
 
     @Nonnull
     @Override
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     @Nonnull
     public abstract DocumentId getProjectDocumentId();

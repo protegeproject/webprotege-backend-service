@@ -76,6 +76,6 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     public void shouldGetAdminSettings() {
         GetApplicationSettingsResult result = handler.execute(action, executionContext);
         verify(applicationSettingsManager, times(1)).getApplicationSettings();
-        assertThat(result.getApplicationSettings(), is(applicationSettings));
+        assertThat(result.settings(), is(applicationSettings));
     }
 }

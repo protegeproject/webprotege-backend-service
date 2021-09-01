@@ -48,7 +48,7 @@ public class GetProjectPrefixDeclarationsActionHandler extends AbstractProjectAc
     public GetProjectPrefixDeclarationsResult execute(@Nonnull GetProjectPrefixDeclarationsAction action,
                                                       @Nonnull ExecutionContext executionContext) {
 
-        ProjectId projectId = action.getProjectId();
+        ProjectId projectId = action.projectId();
         List<PrefixDeclaration> decls = store.find(projectId)
                                              .getPrefixes()
                                              .entrySet()

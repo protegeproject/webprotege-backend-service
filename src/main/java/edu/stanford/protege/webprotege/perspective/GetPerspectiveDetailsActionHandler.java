@@ -43,9 +43,9 @@ public class GetPerspectiveDetailsActionHandler extends AbstractProjectActionHan
     @Override
     public GetPerspectiveDetailsResult execute(@Nonnull GetPerspectiveDetailsAction action,
                                                @Nonnull ExecutionContext executionContext) {
-        var projectId = action.getProjectId();
+        var projectId = action.projectId();
         var userId = executionContext.getUserId();
         var perspectiveDetails = perspectivesManager.getPerspectiveDetails(projectId, userId);
-        return GetPerspectiveDetailsResult.create(perspectiveDetails);
+        return new GetPerspectiveDetailsResult(perspectiveDetails);
     }
 }

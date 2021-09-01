@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -54,7 +55,7 @@ public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler
     @Nonnull
     @Override
     public GetHierarchyRootsResult execute(@Nonnull GetHierarchyRootsAction action, @Nonnull ExecutionContext executionContext) {
-        HierarchyId hierarchyId = action.getHierarchyId();
+        HierarchyId hierarchyId = action.hierarchyId();
         return hierarchyProviderMapper.getHierarchyProvider(hierarchyId).map(hierarchyProvider -> {
             Collection<OWLEntity> roots = hierarchyProvider.getRoots();
             List<GraphNode<EntityNode>> rootNodes =
@@ -65,7 +66,7 @@ public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler
                          })
                          .sorted(comparing(node -> node.getUserObject().getBrowserText()))
                          .collect(toList());
-            return GetHierarchyRootsResult.create(rootNodes);
-        }).orElse(GetHierarchyRootsResult.empty());
+            return new GetHierarchyRootsResult(rootNodes);
+        }).orElse(new GetHierarchyRootsResult(Collections.emptyList()));
     }
 }

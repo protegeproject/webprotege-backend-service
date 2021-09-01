@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import edu.stanford.protege.webprotege.match.criteria.Criteria;
+import edu.stanford.protege.webprotege.criteria.Criteria;
 
 import javax.annotation.Nonnull;
 

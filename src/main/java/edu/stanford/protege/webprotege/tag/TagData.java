@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.color.Color;
-import edu.stanford.protege.webprotege.match.criteria.RootCriteria;
+import edu.stanford.protege.webprotege.criteria.RootCriteria;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

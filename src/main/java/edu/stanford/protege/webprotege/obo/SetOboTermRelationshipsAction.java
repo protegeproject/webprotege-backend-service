@@ -45,7 +45,7 @@ public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRe
 
     @Override
     @Nonnull
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

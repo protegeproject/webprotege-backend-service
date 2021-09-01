@@ -44,7 +44,7 @@ public class ProjectWebhook implements Webhook, HasProjectId {
      * @return The ProjectId that this webhook pertains to.
      */
     @Nonnull
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

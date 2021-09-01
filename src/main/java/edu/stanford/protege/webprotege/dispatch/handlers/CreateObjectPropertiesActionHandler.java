@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
@@ -46,7 +46,7 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
 
     @Inject
     public CreateObjectPropertiesActionHandler(@Nonnull AccessManager accessManager,
-                                               @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                               @Nonnull EventManager<ProjectEvent> eventManager,
                                                @Nonnull HasApplyChanges applyChanges,
                                                @Nonnull ProjectId projectId,
                                                @Nonnull CreateObjectPropertiesChangeGeneratorFactory changeGeneratorFactory,
@@ -72,18 +72,17 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
     @Override
     protected ChangeListGenerator<Set<OWLObjectProperty>> getChangeListGenerator(CreateObjectPropertiesAction action,
                                                                                  ExecutionContext executionContext) {
-        return changeGeneratorFactory.create(action.getSourceText(),
-                                             action.getLangTag(),
-                                             action.getParents());
+        return changeGeneratorFactory.create(action.sourceText(),
+                                             action.langTag(),
+                                             action.parents());
     }
 
     @Override
-    protected CreateObjectPropertiesResult createActionResult(ChangeApplicationResult<Set<OWLObjectProperty>> changeApplicationResult, CreateObjectPropertiesAction action, ExecutionContext executionContext, EventList<ProjectEvent<?>> eventList) {
+    protected CreateObjectPropertiesResult createActionResult(ChangeApplicationResult<Set<OWLObjectProperty>> changeApplicationResult, CreateObjectPropertiesAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
         Set<OWLObjectProperty> result = changeApplicationResult.getSubject();
-        return CreateObjectPropertiesResult.create(projectId,
+        return new CreateObjectPropertiesResult(projectId,
                                                 result.stream()
                                                       .map(entityNodeRenderer::render)
-                                                      .collect(toImmutableSet()),
-                                                eventList);
+                                                      .collect(toImmutableSet()));
     }
 }

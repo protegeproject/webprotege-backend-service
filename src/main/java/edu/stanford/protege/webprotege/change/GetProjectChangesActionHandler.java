@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.pagination.Page;
+import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.revision.ProjectChangesManager;
 
 import javax.annotation.Nonnull;
@@ -45,8 +45,8 @@ public class GetProjectChangesActionHandler extends AbstractProjectActionHandler
     @Nonnull
     @Override
     public GetProjectChangesResult execute(@Nonnull final GetProjectChangesAction action, @Nonnull ExecutionContext executionContext) {
-        Page<ProjectChange> changeList = changesManager.getProjectChanges(action.getSubject(),
-                                                                          action.getPageRequest());
-        return GetProjectChangesResult.create(changeList);
+        Page<ProjectChange> changeList = changesManager.getProjectChanges(action.subject(),
+                                                                          action.pageRequest());
+        return new GetProjectChangesResult(changeList);
     }
 }

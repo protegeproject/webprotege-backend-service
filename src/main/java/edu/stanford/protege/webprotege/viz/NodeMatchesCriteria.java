@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.viz;
 
-import edu.stanford.protege.webprotege.match.criteria.EntityMatchCriteria;
+import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 
 import javax.annotation.Nonnull;
 

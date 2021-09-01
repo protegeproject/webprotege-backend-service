@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
@@ -29,7 +29,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
 
     @Inject
     public RevertRevisionActionHandler(@Nonnull AccessManager accessManager,
-                                       @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                       @Nonnull EventManager<ProjectEvent> eventManager,
                                        @Nonnull HasApplyChanges applyChanges,
                                        @Nonnull ProjectId projectId,
                                        @Nonnull RevisionReverterChangeListGeneratorFactory factory) {
@@ -47,7 +47,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(RevertRevisionAction action,
                                                                     ExecutionContext executionContext) {
-        RevisionNumber revisionNumber = action.getRevisionNumber();
+        RevisionNumber revisionNumber = action.revisionNumber();
         return factory.create(revisionNumber);
     }
 
@@ -55,8 +55,8 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
     protected RevertRevisionResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult,
                                                       RevertRevisionAction action,
                                                       ExecutionContext executionContext,
-                                                      EventList<ProjectEvent<?>> eventList) {
-        return RevertRevisionResult.create(projectId, action.getRevisionNumber(), eventList);
+                                                      EventList<ProjectEvent> eventList) {
+        return new RevertRevisionResult(projectId, action.revisionNumber());
     }
 
     @Nullable

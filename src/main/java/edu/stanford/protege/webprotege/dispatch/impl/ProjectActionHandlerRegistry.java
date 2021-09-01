@@ -15,7 +15,7 @@ import java.util.Set;
 public class ProjectActionHandlerRegistry extends ActionHandlerRegistryImpl {
 
     @Inject
-    public ProjectActionHandlerRegistry(Set<ProjectActionHandler> handlers) {
+    public ProjectActionHandlerRegistry(Set<ProjectActionHandler<?, ?>> handlers) {
         super(handlers);
     }
 }

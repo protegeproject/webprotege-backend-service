@@ -35,7 +35,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.logging.RequestFormatter.formatAddr;
 
 /**
  * Author: Matthew Horridge<br>
@@ -100,7 +99,7 @@ public class FileUploadServlet extends HttpServlet {
 
         logger.info("Received upload request from {} at {}",
                     webProtegeSession.getUserInSession(),
-                    formatAddr(req));
+                    req);
         resp.setHeader("Content-Type", RESPONSE_MIME_TYPE);
         try {
             if (ServletFileUpload.isMultipartContent(req)) {

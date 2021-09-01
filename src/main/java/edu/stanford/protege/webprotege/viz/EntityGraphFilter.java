@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.match.criteria.MultiMatchType;
+import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

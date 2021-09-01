@@ -34,8 +34,8 @@ public class ResetPerspectivesActionHandler extends AbstractProjectActionHandler
     @Override
     public ResetPerspectivesResult execute(@Nonnull ResetPerspectivesAction action,
                                            @Nonnull ExecutionContext executionContext) {
-        perspectivesManager.resetPerspectives(action.getProjectId(),
+        perspectivesManager.resetPerspectives(action.projectId(),
                                               executionContext.getUserId());
-        return ResetPerspectivesResult.create();
+        return new ResetPerspectivesResult();
     }
 }

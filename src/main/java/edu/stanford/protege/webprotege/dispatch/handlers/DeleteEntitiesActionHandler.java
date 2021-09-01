@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
@@ -11,7 +12,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.DeleteEntitiesAction;
 import edu.stanford.protege.webprotege.entity.DeleteEntitiesResult;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -32,7 +33,7 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
 
     @Inject
     public DeleteEntitiesActionHandler(@Nonnull AccessManager accessManager,
-                                       @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                       @Nonnull EventManager<ProjectEvent> eventManager,
                                        @Nonnull HasApplyChanges applyChanges,
                                        @Nonnull DeleteEntitiesChangeListGeneratorFactory factory) {
         super(accessManager, eventManager, applyChanges);
@@ -55,15 +56,14 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
     protected ChangeListGenerator<Set<OWLEntity>> getChangeListGenerator(DeleteEntitiesAction action,
                                                                          ExecutionContext executionContext) {
 
-        return factory.create(action.getEntities());
+        return factory.create(action.entities());
     }
 
     @Override
     protected DeleteEntitiesResult createActionResult(ChangeApplicationResult<Set<OWLEntity>> changeApplicationResult,
                                                       DeleteEntitiesAction action,
                                                       ExecutionContext executionContext,
-                                                      EventList<ProjectEvent<?>> eventList) {
-        return new DeleteEntitiesResult(eventList,
-                                        changeApplicationResult.getSubject());
+                                                      EventList<ProjectEvent> eventList) {
+        return new DeleteEntitiesResult(ImmutableSet.copyOf(changeApplicationResult.getSubject()));
     }
 }

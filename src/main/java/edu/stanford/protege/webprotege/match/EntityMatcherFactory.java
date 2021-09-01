@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.match;
 
-import edu.stanford.protege.webprotege.match.criteria.EntityMatchCriteria;
+import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

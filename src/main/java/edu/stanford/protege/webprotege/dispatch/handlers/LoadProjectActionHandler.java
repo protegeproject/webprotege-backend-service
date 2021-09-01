@@ -62,7 +62,7 @@ public class LoadProjectActionHandler implements ApplicationActionHandler<LoadPr
     @Nonnull
     @Override
     public RequestValidator getRequestValidator(@Nonnull LoadProjectAction action, @Nonnull RequestContext requestContext) {
-        return new ProjectPermissionValidator(accessManager, action.getProjectId(), requestContext.getUserId(), VIEW_PROJECT
+        return new ProjectPermissionValidator(accessManager, action.projectId(), requestContext.getUserId(), VIEW_PROJECT
                 .getActionId());
     }
 
@@ -71,23 +71,23 @@ public class LoadProjectActionHandler implements ApplicationActionHandler<LoadPr
     public LoadProjectResult execute(@Nonnull final LoadProjectAction action, @Nonnull ExecutionContext executionContext) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         logger.info("{} is being loaded due to request by {}",
-                    action.getProjectId(),
+                    action.projectId(),
                     executionContext.getUserId());
-        projectManager.ensureProjectIsLoaded(action.getProjectId(), executionContext.getUserId());
+        projectManager.ensureProjectIsLoaded(action.projectId(), executionContext.getUserId());
         stopwatch.stop();
         logger.info("{} was loaded in {} ms due to request by {}",
-                    action.getProjectId(),
+                    action.projectId(),
                     stopwatch.elapsed(TimeUnit.MILLISECONDS),
                     executionContext.getUserId());
         MemoryMonitor memoryMonitor = new MemoryMonitor(logger);
         memoryMonitor.monitorMemoryUsage();
         memoryMonitor.logMemoryUsage();
-        final ProjectId projectId = action.getProjectId();
+        final ProjectId projectId = action.projectId();
         ProjectDetails projectDetails = projectDetailsManager.getProjectDetails(projectId);
         if (!executionContext.getUserId().isGuest()) {
-            userActivityManager.addRecentProject(executionContext.getUserId(), action.getProjectId(), System.currentTimeMillis());
+            userActivityManager.addRecentProject(executionContext.getUserId(), action.projectId(), System.currentTimeMillis());
         }
-        return LoadProjectResult.get(action.getProjectId(),
+        return LoadProjectResult.get(action.projectId(),
                                      executionContext.getUserId(),
                                      projectDetails);
     }

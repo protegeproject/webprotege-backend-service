@@ -36,7 +36,7 @@ public abstract class MergeUploadedProjectAction implements ProjectAction<MergeU
 
     @Nonnull
     @Override
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
     public abstract DocumentId getDocumentId();
 

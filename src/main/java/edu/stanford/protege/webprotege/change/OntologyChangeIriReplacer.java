@@ -10,16 +10,18 @@ import org.jetbrains.annotations.NotNull;
  */
 public class OntologyChangeIriReplacer {
 
-    private Replacer visitor = new Replacer();
-
     public OntologyChange replaceIris(OntologyChange change, IriReplacer replacer) {
-        return change.accept(visitor);
+        return change.accept(new Replacer(replacer));
     }
 
 
     private static class Replacer implements OntologyChangeVisitorEx<OntologyChange> {
 
         private IriReplacer iriReplacer;
+
+        public Replacer(IriReplacer iriReplacer) {
+            this.iriReplacer = iriReplacer;
+        }
 
         @Override
         public OntologyChange visit(@NotNull AddAxiomChange addAxiomChange) {

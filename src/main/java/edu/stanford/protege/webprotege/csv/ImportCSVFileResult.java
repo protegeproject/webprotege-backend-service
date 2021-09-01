@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.csv;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.HasEventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 
 /**
  * Author: Matthew Horridge<br>
@@ -11,9 +11,9 @@ import edu.stanford.protege.webprotege.event.ProjectEvent;
  * Bio-Medical Informatics Research Group<br>
  * Date: 31/05/2013
  */
-public class ImportCSVFileResult implements Result, HasEventList<ProjectEvent<?>> {
+public class ImportCSVFileResult implements Result, HasEventList<ProjectEvent> {
 
-    private EventList<ProjectEvent<?>> eventList;
+    private EventList<ProjectEvent> eventList;
 
     private int rowCount;
 
@@ -23,13 +23,13 @@ public class ImportCSVFileResult implements Result, HasEventList<ProjectEvent<?>
     private ImportCSVFileResult() {
     }
 
-    public ImportCSVFileResult(EventList<ProjectEvent<?>> eventList, int rowCount) {
+    public ImportCSVFileResult(EventList<ProjectEvent> eventList, int rowCount) {
         this.eventList = eventList;
         this.rowCount = rowCount;
     }
 
     @Override
-    public EventList<ProjectEvent<?>> getEventList() {
+    public EventList<ProjectEvent> getEventList() {
         return eventList;
     }
 

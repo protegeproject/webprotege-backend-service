@@ -51,9 +51,9 @@ public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActi
                                                     @Nonnull ExecutionContext executionContext) {
 
         ManchesterSyntaxChangeGenerator changeGenerator = factory.create(
-                renderer.getRendering(action.getSubject()),
-                action.getFrom(),
-                action.getTo(),
+                renderer.getRendering(action.subject()),
+                action.from(),
+                action.to(),
                 "",
                 action);
         try {

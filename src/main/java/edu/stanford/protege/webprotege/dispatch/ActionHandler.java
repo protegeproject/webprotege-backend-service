@@ -1,5 +1,8 @@
 package edu.stanford.protege.webprotege.dispatch;
 
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -18,7 +21,7 @@ import javax.annotation.concurrent.ThreadSafe;
  * </p>
  */
 @ThreadSafe
-public interface ActionHandler<A extends Action<R>, R extends Result> {
+public interface ActionHandler<A extends Request<R>, R extends Response> {
 
     /**
      * Gets the class of {@link Action} handled by this handler.

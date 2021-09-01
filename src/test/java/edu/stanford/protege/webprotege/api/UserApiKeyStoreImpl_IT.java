@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.api;
 
 
 import com.mongodb.client.MongoClient;
-import edu.stanford.protege.webprotege.persistence.MongoTestUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -141,7 +140,6 @@ public class UserApiKeyStoreImpl_IT {
 
     @AfterEach
     public void tearDown() {
-        mongoClient.getDatabase(MongoTestUtils.getTestDbName()).drop();
         mongoClient.close();
     }
 

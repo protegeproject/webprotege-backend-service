@@ -38,7 +38,7 @@ public class UnknownProjectException extends RuntimeException implements Seriali
      * @return The {@link ProjectId}.  Not {@code null}.
      */
     @Nonnull
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 }

@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
@@ -49,7 +49,7 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
     private final CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker;
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     @Nonnull
     private final HasGetRendering renderer;
@@ -62,7 +62,7 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
                                                @Nonnull ProjectDetailsRepository projectDetailsRepository,
                                                @Nonnull CommentNotificationEmailer notificationsEmailer,
                                                @Nonnull CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker,
-                                               @Nonnull EventManager<ProjectEvent<?>> eventManager,
+                                               @Nonnull EventManager<ProjectEvent> eventManager,
                                                @Nonnull HasGetRendering renderer) {
         super(accessManager);
         this.projectId = projectId;
@@ -90,7 +90,7 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
     @Override
     public CreateEntityDiscussionThreadResult execute(@Nonnull CreateEntityDiscussionThreadAction action,
                                                       @Nonnull ExecutionContext executionContext) {
-        String rawComment = action.getComment();
+        String rawComment = action.comment();
         CommentRenderer commentRenderer = new CommentRenderer();
         String renderedComment = commentRenderer.renderComment(rawComment);
         UserId commentingUser = executionContext.getUserId();
@@ -101,15 +101,15 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
                 Optional.empty(),
                 rawComment,
                 renderedComment);
-        OWLEntity entity = action.getEntity();
+        OWLEntity entity = action.entity();
         EntityDiscussionThread thread = new EntityDiscussionThread(ThreadId.create(),
-                                                                   action.getProjectId(),
+                                                                   action.projectId(),
                                                                    entity,
                                                                    Status.OPEN,
                                                                    ImmutableList.of(comment));
         repository.saveThread(thread);
         EventTag startTag = eventManager.getCurrentTag();
-        eventManager.postEvent(new DiscussionThreadCreatedEvent(thread));
+        eventManager.postEvent(new DiscussionThreadCreatedEvent(projectId, thread));
         int commentCount = repository.getCommentsCount(projectId, entity);
         int openCommentCount = repository.getOpenCommentsCount(projectId, entity);
         Optional<OWLEntityData> rendering = Optional.of(renderer.getRendering(entity));
@@ -119,11 +119,11 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
                                                       rendering,
                                                       commentCount,
                                                       openCommentCount));
-        EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(startTag);
+        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(startTag);
         setOutNotifications(thread, comment);
 
         List<EntityDiscussionThread> threads = repository.findThreads(projectId, entity);
-        return CreateEntityDiscussionThreadResult.create(ImmutableList.copyOf(threads), eventList);
+        return new CreateEntityDiscussionThreadResult(ImmutableList.copyOf(threads));
     }
 
     void setOutNotifications(EntityDiscussionThread thread, Comment comment) {

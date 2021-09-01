@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.match;
 
+import edu.stanford.protege.webprotege.criteria.AnnotationPresence;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import javax.annotation.processing.Generated;
 import javax.inject.Inject;

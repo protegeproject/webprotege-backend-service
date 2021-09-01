@@ -41,10 +41,10 @@ public class GetPerspectiveLayoutActionHandler implements ProjectActionHandler<G
     @Nonnull
     @Override
     public GetPerspectiveLayoutResult execute(@Nonnull GetPerspectiveLayoutAction action, @Nonnull ExecutionContext executionContext) {
-        var perspectiveId = action.getPerspectiveId();
-        var projectId = action.getProjectId();
-        var userId = action.getUserId();
+        var perspectiveId = action.perspectiveId();
+        var projectId = action.projectId();
+        var userId = action.userId();
         var projectPerspective = perspectivesManager.getPerspectiveLayout(projectId, userId, perspectiveId);
-        return GetPerspectiveLayoutResult.create(projectPerspective);
+        return new GetPerspectiveLayoutResult(projectPerspective);
     }
 }

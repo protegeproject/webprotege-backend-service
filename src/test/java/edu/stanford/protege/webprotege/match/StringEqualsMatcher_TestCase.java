@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.match;
 
-import edu.stanford.protege.webprotege.match.criteria.StringEqualsCriteria;
+import edu.stanford.protege.webprotege.criteria.StringEqualsCriteria;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

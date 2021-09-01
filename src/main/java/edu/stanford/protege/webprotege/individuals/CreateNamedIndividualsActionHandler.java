@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
@@ -39,7 +39,7 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
     @Nonnull
     private final ProjectId projectId;
 
-    private final EventManager<ProjectEvent<?>> eventManager;
+    private final EventManager<ProjectEvent> eventManager;
 
     @Nonnull
     private final HasApplyChanges changeApplicator;
@@ -52,7 +52,7 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
 
     @Inject
     public CreateNamedIndividualsActionHandler(@Nonnull AccessManager accessManager,
-                                               @Nonnull ProjectId projectId, EventManager<ProjectEvent<?>> eventManager, @Nonnull HasApplyChanges changeApplicator,
+                                               @Nonnull ProjectId projectId, EventManager<ProjectEvent> eventManager, @Nonnull HasApplyChanges changeApplicator,
                                                @Nonnull EntityNodeRenderer renderer,
                                                @Nonnull CreateIndividualsChangeListGeneratorFactory factory) {
         super(accessManager);
@@ -75,15 +75,14 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
                                                 @Nonnull ExecutionContext executionContext) {
         EventTag eventTag = eventManager.getCurrentTag();
         ChangeApplicationResult<Set<OWLNamedIndividual>> result = changeApplicator.applyChanges(executionContext.getUserId(),
-                                                                                                factory.create(action.getTypes(),
-                                                                                                               action.getSourceText(),
-                                                                                                               action.getLangTag()));
-        EventList<ProjectEvent<?>> eventList = eventManager.getEventsFromTag(eventTag);
+                                                                                                factory.create(action.types(),
+                                                                                                               action.sourceText(),
+                                                                                                               action.langTag()));
+        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(eventTag);
         ImmutableSet<EntityNode> individualData = result.getSubject().stream()
                                                         .map(renderer::render)
                                                         .collect(toImmutableSet());
-        return CreateNamedIndividualsResult.create(projectId,
-                                                eventList,
+        return new CreateNamedIndividualsResult(projectId,
                                                 individualData);
     }
 

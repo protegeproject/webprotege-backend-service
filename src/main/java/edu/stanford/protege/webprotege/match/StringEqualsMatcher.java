@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.match;
 
-import edu.stanford.protege.webprotege.match.criteria.StringEqualsCriteria;
+import edu.stanford.protege.webprotege.criteria.StringEqualsCriteria;
 import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nonnull;

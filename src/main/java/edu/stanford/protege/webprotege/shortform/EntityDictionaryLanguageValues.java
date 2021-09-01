@@ -2,6 +2,8 @@ package edu.stanford.protege.webprotege.shortform;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSetMultimap;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.EntityShortForms;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;

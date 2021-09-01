@@ -6,8 +6,8 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CommentedEntityData;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
-import edu.stanford.protege.webprotege.pagination.PageRequest;
-import edu.stanford.protege.webprotege.pagination.Pager;
+import edu.stanford.protege.webprotege.common.PageRequest;
+import edu.stanford.protege.webprotege.common.Pager;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -61,8 +61,8 @@ public class GetCommentedEntitiesActionHandler extends AbstractProjectActionHand
     @Override
     public GetCommentedEntitiesResult execute(@Nonnull GetCommentedEntitiesAction action,
                                               @Nonnull ExecutionContext executionContext) {
-        PageRequest request = action.getPageRequest();
-        List<EntityDiscussionThread> allThreads = repository.getThreadsInProject(action.getProjectId());
+        PageRequest request = action.pageRequest();
+        List<EntityDiscussionThread> allThreads = repository.getThreadsInProject(action.projectId());
 
 
         Map<OWLEntity, List<EntityDiscussionThread>> commentsByEntity = allThreads.stream()
@@ -97,13 +97,13 @@ public class GetCommentedEntitiesActionHandler extends AbstractProjectActionHand
                 ));
             }
         });
-        if(action.getSortingKey() == SortingKey.SORT_BY_ENTITY) {
+        if(action.sortingKey() == SortingKey.SORT_BY_ENTITY) {
             result.sort(byEntity);
         }
         else {
             result.sort(byLastModified);
         }
         Pager<CommentedEntityData> pager = Pager.getPagerForPageSize(result, request.getPageSize());
-        return GetCommentedEntitiesResult.create(action.getProjectId(), pager.getPage(request.getPageNumber()));
+        return new GetCommentedEntitiesResult(action.projectId(), pager.getPage(request.getPageNumber()));
     }
 }

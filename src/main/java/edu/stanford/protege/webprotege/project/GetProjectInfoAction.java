@@ -35,7 +35,7 @@ public class GetProjectInfoAction implements ProjectAction<GetProjectInfoResult>
 
     @Nonnull
     @Override
-    public ProjectId getProjectId() {
+    public ProjectId projectId() {
         return projectId;
     }
 

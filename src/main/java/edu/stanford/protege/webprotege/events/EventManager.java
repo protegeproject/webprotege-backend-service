@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.events;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.HasDispose;
+import edu.stanford.protege.webprotege.common.Event;
 import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.event.LargeNumberOfChangesEvent;
@@ -31,7 +32,7 @@ import static java.util.stream.Collectors.toList;
  * Date: 20/03/2013
  */
 @ProjectSingleton
-public class EventManager<E extends WebProtegeEvent<?>> implements HasDispose, HasPostEvents<E> {
+public class EventManager<E extends Event> implements HasDispose, HasPostEvents<E> {
 
 
     private static final int EVENT_LIST_SIZE_LIMIT = 200;

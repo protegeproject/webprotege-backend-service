@@ -80,7 +80,7 @@ public abstract class AvailableProject implements  HasProjectId, Comparable<Avai
      */
     @Override
     @Nonnull
-    public abstract ProjectId getProjectId();
+    public abstract ProjectId projectId();
 
 
     /**

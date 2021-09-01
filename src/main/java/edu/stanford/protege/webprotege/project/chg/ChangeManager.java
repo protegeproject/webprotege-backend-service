@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.events.EventTranslatorManager;
 import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
@@ -86,7 +86,7 @@ public class ChangeManager implements HasApplyChanges {
     private final ProjectChangedWebhookInvoker projectChangedWebhookInvoker;
 
     @Nonnull
-    private final EventManager<ProjectEvent<?>> projectEventManager;
+    private final EventManager<ProjectEvent> projectEventManager;
 
     @Nonnull
     private final Provider<EventTranslatorManager> eventTranslatorManagerProvider;
@@ -162,7 +162,7 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull PrefixDeclarationsStore prefixDeclarationsStore,
                          @Nonnull ProjectDetailsRepository projectDetailsRepository,
                          @Nonnull ProjectChangedWebhookInvoker projectChangedWebhookInvoker,
-                         @Nonnull EventManager<ProjectEvent<?>> projectEventManager,
+                         @Nonnull EventManager<ProjectEvent> projectEventManager,
                          @Nonnull Provider<EventTranslatorManager> eventTranslatorManagerProvider,
                          @Nonnull ProjectEntityCrudKitHandlerCache entityCrudKitHandlerCache,
                          @Nonnull RevisionManager changeManager,

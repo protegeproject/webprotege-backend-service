@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableSetMultimap;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;

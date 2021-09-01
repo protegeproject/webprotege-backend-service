@@ -239,7 +239,7 @@ public class ProjectModule {
 //
 //
 //    @ProjectSingleton
-//    public EventManager<ProjectEvent<?>> providesEventManager(EventManagerProvider eventManagerProvider) {
+//    public EventManager<ProjectEvent> providesEventManager(EventManagerProvider eventManagerProvider) {
 //        return eventManagerProvider.get();
 //    }
 //
@@ -416,7 +416,7 @@ public class ProjectModule {
 //    }
 //
 //
-//    HasPostEvents<ProjectEvent<?>> provideHasPostEvents(EventManager<ProjectEvent<?>> eventManager) {
+//    HasPostEvents<ProjectEvent> provideHasPostEvents(EventManager<ProjectEvent> eventManager) {
 //        return eventManager;
 //    }
 //

@@ -16,7 +16,6 @@ import javax.inject.Provider;
 import java.util.Comparator;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
-import static edu.stanford.protege.webprotege.logging.Markers.BROWSING;
 
 /**
  * Author: Matthew Horridge<br>
@@ -32,21 +31,15 @@ public class GetAnnotationPropertyFrameActionHandler extends AbstractProjectActi
     private final Provider<AnnotationPropertyFrameTranslator> translatorProvider;
 
     @Nonnull
-    private final FrameComponentSessionRenderer renderer;
-
-    @Nonnull
-    private final Comparator<PropertyValue> propertyValueComparator;
+    private final PlainFrameRenderer plainFrameRenderer;
 
     @Inject
     public GetAnnotationPropertyFrameActionHandler(@Nonnull AccessManager accessManager,
-                                                   @Nonnull RenderingManager renderingManager,
                                                    @Nonnull Provider<AnnotationPropertyFrameTranslator> translatorProvider,
-                                                   @Nonnull FrameComponentSessionRenderer renderer,
-                                                   @Nonnull Comparator<PropertyValue> propertyValueComparator) {
+                                                   @Nonnull PlainFrameRenderer plainFrameRenderer) {
         super(accessManager);
-        this.renderer = renderer;
+        this.plainFrameRenderer = plainFrameRenderer;
         this.translatorProvider = translatorProvider;
-        this.propertyValueComparator = propertyValueComparator;
     }
 
     @Nullable
@@ -59,14 +52,9 @@ public class GetAnnotationPropertyFrameActionHandler extends AbstractProjectActi
     @Override
     public GetAnnotationPropertyFrameResult execute(@Nonnull GetAnnotationPropertyFrameAction action, @Nonnull ExecutionContext executionContext) {
         var translator = translatorProvider.get();
-        var plainFrame = translator.getFrame(action.getSubject());
-        var renderedFrame = plainFrame.toEntityFrame(renderer, propertyValueComparator);
-        logger.info(BROWSING,
-                     "{} {} retrieved AnnotationProperty frame for {}",
-                    action.getProjectId(),
-                    executionContext.getUserId(),
-                    action.getSubject());
-        return GetAnnotationPropertyFrameResult.create(renderedFrame);
+        var plainFrame = translator.getFrame(action.subject());
+        var renderedFrame = plainFrameRenderer.toAnnotationPropertyFrame(plainFrame);
+        return new GetAnnotationPropertyFrameResult(renderedFrame);
     }
 
     @Nonnull

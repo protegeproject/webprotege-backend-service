@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
@@ -127,7 +127,7 @@ public class ProjectCache implements HasDispose {
     }
 
     @Nonnull
-    public Optional<EventManager<ProjectEvent<?>>> getProjectEventManagerIfActive(@Nonnull ProjectId projectId) {
+    public Optional<EventManager<ProjectEvent>> getProjectEventManagerIfActive(@Nonnull ProjectId projectId) {
         try {
             readLock.lock();
             boolean active = isActive(projectId);

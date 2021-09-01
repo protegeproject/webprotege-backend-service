@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.entity;
 
-import edu.stanford.protege.webprotege.form.EntityFormChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.form.data.FormData;
+import edu.stanford.protege.webprotege.forms.EntityFormChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import javax.annotation.processing.Generated;

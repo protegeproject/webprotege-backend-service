@@ -37,7 +37,7 @@ import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.*;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.frame.*;
@@ -123,7 +123,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     ProjectComponent projectComponent(ProjectId projectId,
-                                      EventManager<ProjectEvent<?>> eventManager,
+                                      EventManager<ProjectEvent> eventManager,
                                       RevisionManager revisionManager,
                                       ProjectDisposablesManager projectDisposablesManager,
                                       ProjectActionHandlerRegistry actionHandlerRegistry) {
@@ -340,7 +340,7 @@ public class ProjectBeansConfiguration {
                                          WatchRecordRepository p2,
                                          IndirectlyWatchedEntitiesFinder p3,
                                          WatchTriggeredHandler p4,
-                                         EventManager<ProjectEvent<?>> p5) {
+                                         EventManager<ProjectEvent> p5) {
         var impl = new WatchManagerImpl(p1, p2, p3, p4, p5);
         // Attach it so that it listens for entity frame changed events
         // There's no need to detatch it because it is project scoped
@@ -426,7 +426,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     @ProjectSingleton
-    public EventManager<ProjectEvent<?>> eventManager(EventManagerProvider eventManagerProvider) {
+    public EventManager<ProjectEvent> eventManager(EventManagerProvider eventManagerProvider) {
         return eventManagerProvider.get();
     }
 
@@ -605,7 +605,7 @@ public class ProjectBeansConfiguration {
                                 PrefixDeclarationsStore p6,
                                 ProjectDetailsRepository p7,
                                 ProjectChangedWebhookInvoker p8,
-                                EventManager<ProjectEvent<?>> p9,
+                                EventManager<ProjectEvent> p9,
                                 Provider<EventTranslatorManager> p10,
                                 ProjectEntityCrudKitHandlerCache p11,
                                 RevisionManager p12,
@@ -770,7 +770,7 @@ public class ProjectBeansConfiguration {
                             EntityTagsRepository p2,
                             CriteriaBasedTagsManager p3,
                             TagRepository p4,
-                            HasPostEvents<ProjectEvent<?>> p5) {
+                            HasPostEvents<ProjectEvent> p5) {
         return new TagsManager(p1, p2, p3, p4, p5);
     }
 
@@ -1221,8 +1221,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    EventManagerProvider eventManagerProvider(ProjectDisposablesManager p1, ProjectId p2) {
-        return new EventManagerProvider(p1, p2);
+    EventManagerProvider eventManagerProvider(ProjectDisposablesManager p1, ProjectId p2, EventDispatcher p3) {
+        return new EventManagerProvider(p1, p2, p3);
     }
 
     @Bean
@@ -1233,7 +1233,12 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler> actionHandlers) {
+    PlainFrameRenderer plainFrameRenderer(FrameComponentRenderer p1, Comparator<? super PropertyValue> p2) {
+        return new PlainFrameRenderer(p1, p2);
+    }
+
+    @Bean
+    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler<?,?>> actionHandlers) {
         return new ProjectActionHandlerRegistry(actionHandlers);
     }
 

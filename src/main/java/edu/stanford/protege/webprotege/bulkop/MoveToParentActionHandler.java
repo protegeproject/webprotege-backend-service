@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -29,7 +29,7 @@ public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Bool
     private MoveClassesChangeListGeneratorFactory factory;
 
     @Inject
-    public MoveToParentActionHandler(@Nonnull AccessManager accessManager, @Nonnull EventManager<ProjectEvent<?>> eventManager, @Nonnull HasApplyChanges applyChanges, @Nonnull MoveClassesChangeListGeneratorFactory factory) {
+    public MoveToParentActionHandler(@Nonnull AccessManager accessManager, @Nonnull EventManager<ProjectEvent> eventManager, @Nonnull HasApplyChanges applyChanges, @Nonnull MoveClassesChangeListGeneratorFactory factory) {
         super(accessManager, eventManager, applyChanges);
         this.factory = factory;
     }
@@ -42,9 +42,9 @@ public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Bool
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(MoveEntitiesToParentAction action, ExecutionContext executionContext) {
-        if(action.getParentEntity().isOWLClass()) {
-            ImmutableSet<OWLClass> clses = action.getEntities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
-            return factory.create(clses, action.getParentEntity().asOWLClass(), action.getCommitMessage());
+        if(action.entity().isOWLClass()) {
+            ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
+            return factory.create(clses, action.entity().asOWLClass(), action.commitMessage());
         }
         return null;
     }
@@ -53,7 +53,7 @@ public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Bool
     protected MoveEntitiesToParentResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult,
                                                             MoveEntitiesToParentAction action,
                                                             ExecutionContext executionContext,
-                                                            EventList<ProjectEvent<?>> eventList) {
-        return MoveEntitiesToParentResult.create(eventList);
+                                                            EventList<ProjectEvent> eventList) {
+        return new MoveEntitiesToParentResult();
     }
 }

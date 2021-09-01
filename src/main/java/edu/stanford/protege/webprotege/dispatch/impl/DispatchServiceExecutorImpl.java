@@ -1,12 +1,11 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.project.HasProjectId;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.ProjectManager;
-import edu.stanford.protege.webprotege.common.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +51,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
      * @param projectId The optional project id.
      */
     private static void setTemporaryThreadName(@Nonnull Thread thread,
-                                               @Nonnull Action<?> action,
+                                               @Nonnull Request<?> action,
                                                @Nullable ProjectId projectId) {
         String tempThreadName;
         final ProjectId targetProjectId;
@@ -60,7 +59,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
             targetProjectId = projectId;
         }
         else if (action instanceof HasProjectId) {
-            targetProjectId = ((HasProjectId) action).getProjectId();
+            targetProjectId = ((HasProjectId) action).projectId();
         }
         else {
             targetProjectId = null;
@@ -78,17 +77,30 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
     }
 
     @Override
-    public <A extends Action<R>, R extends Result> DispatchServiceResultContainer execute(A action, RequestContext requestContext, ExecutionContext executionContext) throws ActionExecutionException, PermissionDeniedException {
+    public <A extends Request<R>, R extends Response> DispatchServiceResultContainer execute(A action, RequestContext requestContext, ExecutionContext executionContext) throws ActionExecutionException, PermissionDeniedException {
         return execAction(action, requestContext, executionContext);
     }
 
-    private <A extends Action<R>, R extends Result> DispatchServiceResultContainer execAction(A action, RequestContext requestContext, ExecutionContext executionContext) {
+    @Nullable
+    private ProjectId extractProjectId(Request<?> request) {
+        if(request instanceof ProjectAction) {
+            return ((ProjectAction) request).projectId();
+        }
+        else if(request instanceof ProjectRequest) {
+            return ((ProjectRequest<?>) request).projectId();
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    private <A extends Request<R>, R extends Response> DispatchServiceResultContainer execAction(A action, RequestContext requestContext, ExecutionContext executionContext) {
         final ActionHandler<A, R> actionHandler;
         final Thread thread = Thread.currentThread();
         String threadName = thread.getName();
-        if (action instanceof ProjectAction) {
-            ProjectAction projectAction = (ProjectAction) action;
-            ProjectId projectId = projectAction.getProjectId();
+        var projectId = extractProjectId(action);
+        if (projectId != null) {
             setTemporaryThreadName(thread, action, projectId);
             ProjectActionHandlerRegistry actionHanderRegistry = projectManager.getActionHandlerRegistry(projectId);
             actionHandler = actionHanderRegistry.getActionHandler(action);

@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.permissions;
 
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
@@ -48,8 +49,8 @@ public class GetProjectPermissionsActionHandler implements ApplicationActionHand
     public GetProjectPermissionsResult execute(@Nonnull GetProjectPermissionsAction action, @Nonnull ExecutionContext executionContext) {
         Set<ActionId> allowedActions = accessManager.getActionClosure(
                 forUser(executionContext.getUserId()),
-                forProject(action.getProjectId())
+                forProject(action.projectId())
         );
-        return GetProjectPermissionsResult.create(allowedActions);
+        return new GetProjectPermissionsResult(ImmutableSet.copyOf(allowedActions));
     }
 }
