@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.dispatch.impl;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.project.HasProjectId;
 import edu.stanford.protege.webprotege.project.ProjectManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -84,10 +86,18 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
     @Nullable
     private ProjectId extractProjectId(Request<?> request) {
         if(request instanceof ProjectAction) {
-            return ((ProjectAction) request).projectId();
+            var projectId = ((ProjectAction) request).projectId();
+            if(projectId == null) {
+                throw new CommandExecutionException(HttpStatus.BAD_REQUEST);
+            }
+            return projectId;
         }
         else if(request instanceof ProjectRequest) {
-            return ((ProjectRequest<?>) request).projectId();
+            var projectId = ((ProjectRequest<?>) request).projectId();
+            if(projectId == null) {
+                throw new CommandExecutionException(HttpStatus.BAD_REQUEST);
+            }
+            return projectId;
         }
         else {
             return null;
