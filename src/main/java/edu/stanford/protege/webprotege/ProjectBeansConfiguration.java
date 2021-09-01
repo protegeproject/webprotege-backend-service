@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.axiom.*;
+import edu.stanford.protege.webprotege.axioms.AddAxiomsActionHandler;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.MoveClassesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeListGeneratorFactory;
@@ -1203,6 +1204,15 @@ public class ProjectBeansConfiguration {
                                         MultilingualDictionaryUpdater p3,
                                         BuiltInShortFormDictionary p4) {
         return new DictionaryManager(p1, p2, p3, p4);
+    }
+
+    @Bean
+    AddAxiomsActionHandler addAxiomsActionHandler2(AccessManager accessManager,
+                                                  ChangeManager changeManager,
+                                                  DefaultOntologyIdManager defaultOntologyIdManager) {
+        return new AddAxiomsActionHandler(accessManager,
+                                          changeManager,
+                                          defaultOntologyIdManager);
     }
 
     @Bean
