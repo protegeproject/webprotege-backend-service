@@ -780,6 +780,14 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
+    SetEntityDeprecatedDelegateHandler setEntityDeprecatedDelegateHandler(AccessManager p1,
+                                                                          ChangeManager p2,
+                                                                          OWLDataFactory p3,
+                                                                          DefaultOntologyIdManager p4) {
+        return new SetEntityDeprecatedDelegateHandler(p1, p2, p3, p4);
+    }
+
+    @Bean
     DeleteAxiomsActionHandler deleteAxiomActionHandler(AccessManager p1,
                                                        ProjectId p2,
                                                        ChangeManager p3,
