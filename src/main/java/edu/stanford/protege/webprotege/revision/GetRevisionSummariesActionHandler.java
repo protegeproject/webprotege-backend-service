@@ -3,12 +3,15 @@ package edu.stanford.protege.webprotege.revision;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Matthew Horridge
@@ -36,7 +39,11 @@ public class GetRevisionSummariesActionHandler extends AbstractProjectActionHand
     @Nonnull
     @Override
     public GetRevisionSummariesResult execute(@Nonnull GetRevisionSummariesAction action, @Nonnull ExecutionContext executionContext) {
-        return new GetRevisionSummariesResult(ImmutableList.copyOf(revisionManager.getRevisionSummaries()));
+        var revisionSummaries = revisionManager.getRevisionSummaries();
+        var summariesPage = revisionSummaries.stream()
+                .collect(PageCollector.toPage(action.pageRequest().getPageNumber(),
+                                              action.pageRequest().getPageSize()));
+        return new GetRevisionSummariesResult(summariesPage.orElse(Page.emptyPage()));
     }
 
     @Nonnull
