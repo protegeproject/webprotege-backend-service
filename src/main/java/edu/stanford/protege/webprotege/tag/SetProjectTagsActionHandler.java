@@ -4,8 +4,6 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,6 +11,8 @@ import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_PROJECT_TAGS;
+
+;
 
 /**
  * Matthew Horridge
@@ -24,16 +24,10 @@ public class SetProjectTagsActionHandler extends AbstractProjectActionHandler<Se
     @Nonnull
     private final TagsManager tagsManager;
 
-    @Nonnull
-    private final EventManager<ProjectEvent> eventEventManager;
-
     @Inject
-    public SetProjectTagsActionHandler(@Nonnull AccessManager accessManager,
-                                       @Nonnull TagsManager tagsManager,
-                                       @Nonnull EventManager<ProjectEvent> eventEventManager) {
+    public SetProjectTagsActionHandler(@Nonnull AccessManager accessManager, @Nonnull TagsManager tagsManager) {
         super(accessManager);
         this.tagsManager = checkNotNull(tagsManager);
-        this.eventEventManager = checkNotNull(eventEventManager);
     }
 
     @Nonnull

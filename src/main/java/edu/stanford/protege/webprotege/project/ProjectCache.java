@@ -7,8 +7,6 @@ import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
@@ -28,6 +26,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+;
 
 /**
  * Author: Matthew Horridge<br>
@@ -124,24 +124,6 @@ public class ProjectCache implements HasDispose {
 
     public RevisionManager getRevisionManager(ProjectId projectId) {
         return getProjectInternal(projectId, AccessMode.NORMAL, InstantiationMode.LAZY).getRevisionManager();
-    }
-
-    @Nonnull
-    public Optional<EventManager<ProjectEvent>> getProjectEventManagerIfActive(@Nonnull ProjectId projectId) {
-        try {
-            readLock.lock();
-            boolean active = isActive(projectId);
-            if(!active) {
-                return Optional.empty();
-            }
-            else {
-                return Optional.of(getProjectInternal(projectId, AccessMode.QUIET, InstantiationMode.LAZY))
-                        .map(ProjectComponent::getEventManager);
-            }
-        }
-        finally {
-            readLock.unlock();
-        }
     }
 
     private enum AccessMode {

@@ -68,11 +68,6 @@ public class WebProtegeProjectComponent_TestCase {
     }
 
     @Test
-    public void shouldGetEventManagerAsSingleton() {
-        shouldInstantiateSingleton(ProjectComponent::getEventManager);
-    }
-
-    @Test
     public void shouldGetActionHandlerRegistry() {
         shouldInstantiateSingleton(ProjectComponent::getActionHandlerRegistry);
     }

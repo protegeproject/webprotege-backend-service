@@ -7,8 +7,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -28,7 +26,9 @@ public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Bool
     private MoveClassesChangeListGeneratorFactory factory;
 
     @Inject
-    public MoveToParentActionHandler(@Nonnull AccessManager accessManager, @Nonnull EventManager<ProjectEvent> eventManager, @Nonnull HasApplyChanges applyChanges, @Nonnull MoveClassesChangeListGeneratorFactory factory) {
+    public MoveToParentActionHandler(@Nonnull AccessManager accessManager,
+                                     @Nonnull HasApplyChanges applyChanges,
+                                     @Nonnull MoveClassesChangeListGeneratorFactory factory) {
         super(accessManager, applyChanges);
         this.factory = factory;
     }

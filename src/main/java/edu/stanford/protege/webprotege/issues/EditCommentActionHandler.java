@@ -2,10 +2,9 @@ package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 
 import javax.annotation.Nonnull;
@@ -14,6 +13,8 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_OWN_OBJECT_COMMENT;
+
+;
 
 /**
  * Matthew Horridge

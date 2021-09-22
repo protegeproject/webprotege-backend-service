@@ -6,14 +6,12 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateObjectPropertiesChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import javax.annotation.Nonnull;
@@ -25,6 +23,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_PROPERTY;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+
+;
 
 /**
  * Author: Matthew Horridge<br>
@@ -45,7 +45,7 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
 
     @Inject
     public CreateObjectPropertiesActionHandler(@Nonnull AccessManager accessManager,
-                                               @Nonnull EventManager<ProjectEvent> eventManager,
+
                                                @Nonnull HasApplyChanges applyChanges,
                                                @Nonnull ProjectId projectId,
                                                @Nonnull CreateObjectPropertiesChangeGeneratorFactory changeGeneratorFactory,

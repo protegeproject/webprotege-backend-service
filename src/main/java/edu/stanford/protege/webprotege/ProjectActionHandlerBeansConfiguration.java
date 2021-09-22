@@ -13,8 +13,6 @@ import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSett
 import edu.stanford.protege.webprotege.csv.ImportCSVFileActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.entity.*;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameTranslator;
@@ -63,7 +61,9 @@ import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
 import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
 import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
 import edu.stanford.protege.webprotege.viz.*;
-import edu.stanford.protege.webprotege.watches.*;
+import edu.stanford.protege.webprotege.watches.GetEntityWatchesActionHandler;
+import edu.stanford.protege.webprotege.watches.SetEntityWatchesActionHandler;
+import edu.stanford.protege.webprotege.watches.WatchManager;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
@@ -212,62 +212,62 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetOntologyAnnotationsActionHandler setOntologyAnnotationsActionHandler(AccessManager p1,
-                                                                            EventManager<ProjectEvent> p2,
+
                                                                             HasApplyChanges p3,
                                                                             OWLDataFactory p4,
                                                                             OntologyAnnotationsIndex p5) {
-        return new SetOntologyAnnotationsActionHandler(p1, p2, p3, p4, p5);
+        return new SetOntologyAnnotationsActionHandler(p1, p3, p4, p5);
     }
 
 
     @Bean
     CreateClassesActionHandler createClassesActionHandler(AccessManager p1,
-                                                          EventManager<ProjectEvent> p2,
+
                                                           HasApplyChanges p3,
                                                           CreateClassesChangeGeneratorFactory p4,
                                                           EntityNodeRenderer p5) {
-        return new CreateClassesActionHandler(p1, p2, p3, p4, p5);
+        return new CreateClassesActionHandler(p1, p3, p4, p5);
     }
 
 
     @Bean
     CreateObjectPropertiesActionHandler createObjectPropertyActionHandler(AccessManager p1,
-                                                                          EventManager<ProjectEvent> p2,
+
                                                                           HasApplyChanges p3,
                                                                           ProjectId p4,
                                                                           CreateObjectPropertiesChangeGeneratorFactory p5,
                                                                           EntityNodeRenderer p6) {
-        return new CreateObjectPropertiesActionHandler(p1, p2, p3, p4, p5, p6);
+        return new CreateObjectPropertiesActionHandler(p1, p3, p4, p5, p6);
     }
 
 
     @Bean
     CreateDataPropertiesActionHandler createDataPropertiesActionHandler(AccessManager p1,
-                                                                        EventManager<ProjectEvent> p2,
+
                                                                         HasApplyChanges p3,
                                                                         ProjectId p4,
                                                                         CreateDataPropertiesChangeGeneratorFactory p5,
                                                                         EntityNodeRenderer p6) {
-        return new CreateDataPropertiesActionHandler(p1, p2, p3, p4, p5, p6);
+        return new CreateDataPropertiesActionHandler(p1, p3, p4, p5, p6);
     }
 
 
     @Bean
     CreateAnnotationPropertiesActionHandler createAnnotationPropertiesActionHandler(AccessManager p1,
-                                                                                    EventManager<ProjectEvent> p2,
+
                                                                                     HasApplyChanges p3,
                                                                                     ProjectId p4,
                                                                                     RenderingManager p5,
                                                                                     CreateAnnotationPropertiesChangeGeneratorFactory p6,
                                                                                     EntityNodeRenderer p7) {
-        return new CreateAnnotationPropertiesActionHandler(p1, p2, p3, p4, p5, p6, p7);
+        return new CreateAnnotationPropertiesActionHandler(p1, p3, p4, p5, p6, p7);
     }
 
 
     @Bean
     CreateNamedIndividualsActionHandler createNamedIndividualsActionHandler(AccessManager p1,
                                                                             ProjectId p2,
-                                                                            EventManager<ProjectEvent> p3,
+
                                                                             HasApplyChanges p4,
                                                                             EntityNodeRenderer p5,
                                                                             CreateIndividualsChangeListGeneratorFactory p6) {
@@ -287,9 +287,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetEntityWatchesActionHandler setEntityWatchesActionHandler(AccessManager p1,
-                                                                EventManager<ProjectEvent> p2,
+
                                                                 WatchManager p3) {
-        return new SetEntityWatchesActionHandler(p1, p2, p3);
+        return new SetEntityWatchesActionHandler(p1, p3);
     }
 
 
@@ -369,12 +369,12 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetManchesterSyntaxFrameActionHandler setManchesterSyntaxFrameActionHandler(AccessManager p1,
-                                                                                EventManager<ProjectEvent> p2,
+
                                                                                 HasApplyChanges p3,
                                                                                 GetManchesterSyntaxFrameActionHandler p4,
                                                                                 RenderingManager p5,
                                                                                 ManchesterSyntaxChangeGeneratorFactory p6) {
-        return new SetManchesterSyntaxFrameActionHandler(p1, p2, p3, p4, p5, p6);
+        return new SetManchesterSyntaxFrameActionHandler(p1, p3, p4, p5, p6);
     }
 
 
@@ -458,11 +458,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     RevertRevisionActionHandler revertRevisionActionHandler(AccessManager p1,
-                                                            EventManager<ProjectEvent> p2,
+
                                                             HasApplyChanges p3,
                                                             ProjectId p4,
                                                             RevisionReverterChangeListGeneratorFactory p5) {
-        return new RevertRevisionActionHandler(p1, p2, p3, p4, p5);
+        return new RevertRevisionActionHandler(p1, p3, p4, p5);
     }
 
 
@@ -571,10 +571,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     DeleteEntitiesActionHandler deleteEntitiesActionHandler(AccessManager p1,
-                                                            EventManager<ProjectEvent> p2,
+
                                                             HasApplyChanges p3,
                                                             DeleteEntitiesChangeListGeneratorFactory p4) {
-        return new DeleteEntitiesActionHandler(p1, p2, p3, p4);
+        return new DeleteEntitiesActionHandler(p1, p3, p4);
     }
 
 
@@ -698,10 +698,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveHierarchyNodeActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
-                                                                   EventManager<ProjectEvent> p2,
+
                                                                    HasApplyChanges p3,
                                                                    MoveEntityChangeListGeneratorFactory p4) {
-        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4);
+        return new MoveHierarchyNodeActionHandler(p1, p3, p4);
     }
 
 
@@ -721,10 +721,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MergeEntitiesActionHandler mergeClassesActionHandler(AccessManager p1,
-                                                          EventManager<ProjectEvent> p2,
-                                                          HasApplyChanges p3,
-                                                          MergeEntitiesChangeListGeneratorFactory p4) {
-        return new MergeEntitiesActionHandler(p1, p2, p3, p4);
+
+                                                         HasApplyChanges p3,
+                                                         MergeEntitiesChangeListGeneratorFactory p4) {
+        return new MergeEntitiesActionHandler(p1, p3, p4);
     }
 
 
@@ -736,9 +736,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     UpdateEntityTagsActionHandler updateEntityTagsActionHandler(AccessManager p1,
-                                                                EventManager<ProjectEvent> p2,
+
                                                                 TagsManager p3) {
-        return new UpdateEntityTagsActionHandler(p1, p2, p3);
+        return new UpdateEntityTagsActionHandler(p1, p3);
     }
 
 
@@ -749,10 +749,8 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    SetProjectTagsActionHandler setProjectTagsActionHandler(AccessManager p1,
-                                                            TagsManager p2,
-                                                            EventManager<ProjectEvent> p3) {
-        return new SetProjectTagsActionHandler(p1, p2, p3);
+    SetProjectTagsActionHandler setProjectTagsActionHandler(AccessManager p1, TagsManager p2) {
+        return new SetProjectTagsActionHandler(p1, p2);
     }
 
 
@@ -830,27 +828,27 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetAnnotationValueActionHandler setAnnotationValueActionHandler(AccessManager p1,
-                                                                    EventManager<ProjectEvent> p2,
+
                                                                     HasApplyChanges p3,
                                                                     SetAnnotationValueActionChangeListGeneratorFactory p4) {
-        return new SetAnnotationValueActionHandler(p1, p2, p3, p4);
+        return new SetAnnotationValueActionHandler(p1, p3, p4);
     }
 
 
     @Bean
     EditAnnotationValuesActionHandler replaceAnnotationValuesActionHandler(AccessManager p1,
-                                                                           EventManager<ProjectEvent> p2,
+
                                                                            HasApplyChanges p3,
                                                                            EditAnnotationsChangeListGeneratorFactory p4) {
-        return new EditAnnotationValuesActionHandler(p1, p2, p3, p4);
+        return new EditAnnotationValuesActionHandler(p1, p3, p4);
     }
 
 
     @Bean
     MoveToParentActionHandler moveToParentActionHandler(AccessManager p1,
-                                                        EventManager<ProjectEvent> p2,
+
                                                         HasApplyChanges p3, MoveClassesChangeListGeneratorFactory p4) {
-        return new MoveToParentActionHandler(p1, p2, p3, p4);
+        return new MoveToParentActionHandler(p1, p3, p4);
     }
 
 
@@ -873,10 +871,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     SetEntityFormsDataActionHandler setEntityFormDataActionHandler(AccessManager p1,
-                                                                   EventManager<ProjectEvent> p2,
+
                                                                    HasApplyChanges p3,
                                                                    EntityFormChangeListGeneratorFactory p4) {
-        return new SetEntityFormsDataActionHandler(p1, p2, p3, p4);
+        return new SetEntityFormsDataActionHandler(p1, p3, p4);
     }
 
 
@@ -1008,11 +1006,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     CreateEntityFromFormDataActionHandler createEntityFromFormDataActionHandler(AccessManager p1,
-                                                                                EventManager<ProjectEvent> p2,
+
                                                                                 HasApplyChanges p3,
                                                                                 CreateEntityFromFormDataChangeListGeneratorFactory p4,
                                                                                 RenderingManager p5) {
-        return new CreateEntityFromFormDataActionHandler(p1, p2, p3, p4, p5);
+        return new CreateEntityFromFormDataActionHandler(p1, p3, p4, p5);
     }
 
 
@@ -1030,12 +1028,12 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     DeprecateEntityByFormActionHandler deprecateEntityByFormActionHandler(AccessManager p1,
-                                                                          EventManager<ProjectEvent> p2,
+
                                                                           HasApplyChanges p3,
                                                                           ProjectId p4,
                                                                           DeprecateEntityByFormChangeListGeneratorFactory p5,
                                                                           ProjectDetailsRepository p6) {
-        return new DeprecateEntityByFormActionHandler(p1, p2, p3, p4, p5, p6);
+        return new DeprecateEntityByFormActionHandler(p1, p3, p4, p5, p6);
     }
 
     @Bean

@@ -5,8 +5,6 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.frame.PropertyAnnotationValue;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
 import edu.stanford.protege.webprotege.ontology.SetOntologyAnnotationsAction;
@@ -26,6 +24,8 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY_ANNOTATIONS;
 import static java.util.Arrays.asList;
 
+;
+
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 01/08/2013
  */
@@ -39,7 +39,7 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
 
     @Inject
     public SetOntologyAnnotationsActionHandler(@Nonnull AccessManager accessManager,
-                                               @Nonnull EventManager<ProjectEvent> eventManager,
+
                                                @Nonnull HasApplyChanges applyChanges,
                                                @Nonnull OWLDataFactory dataFactory,
                                                @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex) {

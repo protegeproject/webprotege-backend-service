@@ -7,14 +7,14 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+
+;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
@@ -25,7 +25,7 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
     @Inject
     public MoveHierarchyNodeActionHandler(@Nonnull AccessManager accessManager,
-                                          @Nonnull EventManager<ProjectEvent> eventManager,
+
                                           @Nonnull HasApplyChanges applyChanges,
                                           @Nonnull MoveEntityChangeListGeneratorFactory factory) {
         super(accessManager, applyChanges);

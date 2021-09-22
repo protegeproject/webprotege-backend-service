@@ -11,8 +11,6 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateClassesAction;
 import edu.stanford.protege.webprotege.entity.CreateClassesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
@@ -25,6 +23,8 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_CLASS;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;
+
+;
 
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 22/02/2013
@@ -39,7 +39,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
 
     @Inject
     public CreateClassesActionHandler(@Nonnull AccessManager accessManager,
-                                      @Nonnull EventManager<ProjectEvent> eventManager,
+
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull CreateClassesChangeGeneratorFactory changeFactory,
                                       @Nonnull EntityNodeRenderer entityNodeRenderer) {

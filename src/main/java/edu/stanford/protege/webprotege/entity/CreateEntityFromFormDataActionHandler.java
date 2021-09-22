@@ -8,8 +8,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataAction;
 import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataResult;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -21,6 +19,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+;
 
 /**
  * Matthew Horridge
@@ -35,7 +35,7 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
 
     @Inject
     public CreateEntityFromFormDataActionHandler(@Nonnull AccessManager accessManager,
-                                                 @Nonnull EventManager<ProjectEvent> eventManager,
+
                                                  @Nonnull HasApplyChanges applyChanges,
                                                  @Nonnull CreateEntityFromFormDataChangeListGeneratorFactory changeListGeneratorFactory,
                                                  @Nonnull RenderingManager renderer) {

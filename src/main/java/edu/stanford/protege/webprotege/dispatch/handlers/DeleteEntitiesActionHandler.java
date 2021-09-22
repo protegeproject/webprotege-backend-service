@@ -11,14 +11,14 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.DeleteEntitiesAction;
 import edu.stanford.protege.webprotege.entity.DeleteEntitiesResult;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Set;
+
+;
 
 /**
  * Matthew Horridge
@@ -32,7 +32,6 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
 
     @Inject
     public DeleteEntitiesActionHandler(@Nonnull AccessManager accessManager,
-                                       @Nonnull EventManager<ProjectEvent> eventManager,
                                        @Nonnull HasApplyChanges applyChanges,
                                        @Nonnull DeleteEntitiesChangeListGeneratorFactory factory) {
         super(accessManager, applyChanges);

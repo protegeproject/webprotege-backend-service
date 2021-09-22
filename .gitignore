@@ -21,3 +21,5 @@ dependency-reduced-pom.xml
 overlays
 
 .DS_Store
+
+*.binary

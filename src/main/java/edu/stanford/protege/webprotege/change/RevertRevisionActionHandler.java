@@ -2,11 +2,9 @@ package edu.stanford.protege.webprotege.change;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 
 import javax.annotation.Nonnull;
@@ -28,7 +26,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
 
     @Inject
     public RevertRevisionActionHandler(@Nonnull AccessManager accessManager,
-                                       @Nonnull EventManager<ProjectEvent> eventManager,
+
                                        @Nonnull HasApplyChanges applyChanges,
                                        @Nonnull ProjectId projectId,
                                        @Nonnull RevisionReverterChangeListGeneratorFactory factory) {

@@ -7,8 +7,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 
@@ -18,6 +16,8 @@ import javax.inject.Inject;
 import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+
+;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
@@ -35,7 +35,7 @@ public class SetManchesterSyntaxFrameActionHandler extends AbstractProjectChange
 
     @Inject
     public SetManchesterSyntaxFrameActionHandler(@Nonnull AccessManager accessManager,
-                                                 @Nonnull EventManager<ProjectEvent> eventManager,
+
                                                  @Nonnull HasApplyChanges applyChanges,
                                                  @Nonnull GetManchesterSyntaxFrameActionHandler handler,
                                                  @Nonnull RenderingManager renderer,

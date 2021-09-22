@@ -38,7 +38,6 @@ import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.*;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.frame.*;
@@ -124,12 +123,10 @@ public class ProjectBeansConfiguration {
 
     @Bean
     ProjectComponent projectComponent(ProjectId projectId,
-                                      EventManager<ProjectEvent> eventManager,
                                       RevisionManager revisionManager,
                                       ProjectDisposablesManager projectDisposablesManager,
                                       ProjectActionHandlerRegistry actionHandlerRegistry) {
         return new ProjectComponentImpl(projectId,
-                                        eventManager,
                                         revisionManager,
                                         projectDisposablesManager,
                                         actionHandlerRegistry);
@@ -595,7 +592,6 @@ public class ProjectBeansConfiguration {
                                 PrefixDeclarationsStore p6,
                                 ProjectDetailsRepository p7,
                                 ProjectChangedWebhookInvoker p8,
-                                EventManager<ProjectEvent> p9,
                                 Provider<EventTranslatorManager> p10,
                                 ProjectEntityCrudKitHandlerCache p11,
                                 RevisionManager p12,

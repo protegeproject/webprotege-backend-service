@@ -1,11 +1,9 @@
 package edu.stanford.protege.webprotege.watches;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -18,16 +16,12 @@ import java.util.Set;
  */
 public class SetEntityWatchesActionHandler extends AbstractProjectActionHandler<SetEntityWatchesAction, SetEntityWatchesResult> {
 
-    private final EventManager<ProjectEvent> eventManager;
-
     private final WatchManager watchManager;
 
     @Inject
     public SetEntityWatchesActionHandler(@Nonnull AccessManager accessManager,
-                                         EventManager<ProjectEvent> eventManager,
                                          WatchManager watchManager) {
         super(accessManager);
-        this.eventManager = eventManager;
         this.watchManager = watchManager;
     }
 

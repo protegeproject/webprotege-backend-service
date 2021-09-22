@@ -7,8 +7,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -17,6 +15,8 @@ import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.MERGE_ENTITIES;
+
+;
 
 /**
  * Matthew Horridge
@@ -30,7 +30,7 @@ public class MergeEntitiesActionHandler extends AbstractProjectChangeHandler<OWL
 
     @Inject
     public MergeEntitiesActionHandler(@Nonnull AccessManager accessManager,
-                                      @Nonnull EventManager<ProjectEvent> eventManager,
+
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull MergeEntitiesChangeListGeneratorFactory factory) {
         super(accessManager, applyChanges);

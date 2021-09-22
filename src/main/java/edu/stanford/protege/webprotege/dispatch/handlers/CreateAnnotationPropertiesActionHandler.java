@@ -6,14 +6,12 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateAnnotationPropertiesChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateAnnotationPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateAnnotationPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 
@@ -46,7 +44,7 @@ public class CreateAnnotationPropertiesActionHandler extends AbstractProjectChan
 
     @Inject
     public CreateAnnotationPropertiesActionHandler(@Nonnull AccessManager accessManager,
-                                                   @Nonnull EventManager<ProjectEvent> eventManager,
+
                                                    @Nonnull HasApplyChanges applyChanges,
                                                    @Nonnull ProjectId projectId,
                                                    @Nonnull RenderingManager renderer,

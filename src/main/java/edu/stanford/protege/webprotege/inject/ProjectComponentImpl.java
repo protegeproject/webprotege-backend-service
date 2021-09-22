@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.inject;
 
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.forms.EntityFrameFormDataComponent;
 import edu.stanford.protege.webprotege.forms.EntityFrameFormDataModule;
 import edu.stanford.protege.webprotege.forms.FormDescriptorDtoTranslatorComponent;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
+
+;
 
 /**
  * Matthew Horridge
@@ -19,8 +19,6 @@ public class ProjectComponentImpl implements ProjectComponent {
 
     private final ProjectId projectId;
 
-    private final EventManager<ProjectEvent> eventManager;
-
     private final RevisionManager revisionManager;
 
     private final ProjectDisposablesManager projectDisposablesManager;
@@ -28,12 +26,10 @@ public class ProjectComponentImpl implements ProjectComponent {
     private final ProjectActionHandlerRegistry projectActionHandlerRegistry;
 
     public ProjectComponentImpl(ProjectId projectId,
-                                EventManager<ProjectEvent> eventManager,
                                 RevisionManager revisionManager,
                                 ProjectDisposablesManager projectDisposablesManager,
                                 ProjectActionHandlerRegistry projectActionHandlerRegistry) {
         this.projectId = projectId;
-        this.eventManager = eventManager;
         this.revisionManager = revisionManager;
         this.projectDisposablesManager = projectDisposablesManager;
         this.projectActionHandlerRegistry  = projectActionHandlerRegistry;
@@ -43,11 +39,6 @@ public class ProjectComponentImpl implements ProjectComponent {
     @Override
     public ProjectId getProjectId() {
         return projectId;
-    }
-
-    @Override
-    public EventManager<ProjectEvent> getEventManager() {
-        return eventManager;
     }
 
     @Override

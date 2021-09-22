@@ -6,14 +6,12 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateDataPropertiesChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateDataPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateDataPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 
 import javax.annotation.Nonnull;
@@ -26,6 +24,8 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_PROPERTY;
+
+;
 
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 25/03/2013
@@ -43,7 +43,7 @@ public class CreateDataPropertiesActionHandler extends AbstractProjectChangeHand
 
     @Inject
     public CreateDataPropertiesActionHandler(@Nonnull AccessManager accessManager,
-                                             @Nonnull EventManager<ProjectEvent> eventManager,
+
                                              @Nonnull HasApplyChanges applyChanges,
                                              @Nonnull ProjectId projectId,
                                              @Nonnull CreateDataPropertiesChangeGeneratorFactory changeGeneratorFactory, @Nonnull EntityNodeRenderer entityNodeRenderer) {
