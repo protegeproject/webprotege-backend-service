@@ -359,8 +359,7 @@ public class ChangeManager implements HasApplyChanges {
         var subject = forUser(userId);
         var projectResource = new ProjectResource(projectId);
         if(!accessManager.hasPermission(subject, projectResource, EDIT_ONTOLOGY)) {
-            throw new PermissionDeniedException("You do not have permission to edit this project",
-                                                userInSessionFactory.getUserInSession(userId));
+            throw new PermissionDeniedException("You do not have permission to edit this project");
         }
     }
 
@@ -394,30 +393,22 @@ public class ChangeManager implements HasApplyChanges {
         var projectResource = new ProjectResource(projectId);
         if(entity.isOWLClass()) {
             if(!accessManager.hasPermission(subject, projectResource, CREATE_CLASS)) {
-                throw new PermissionDeniedException("You do not have permission to create new classes",
-                                                    userInSessionFactory
-                                                            .getUserInSession(userId));
+                throw new PermissionDeniedException("You do not have permission to create new classes");
             }
         }
         else if(entity.isOWLObjectProperty() || entity.isOWLDataProperty() || entity.isOWLAnnotationProperty()) {
             if(!accessManager.hasPermission(subject, projectResource, CREATE_PROPERTY)) {
-                throw new PermissionDeniedException("You do not have permission to create new properties",
-                                                    userInSessionFactory
-                                                            .getUserInSession(userId));
+                throw new PermissionDeniedException("You do not have permission to create new properties");
             }
         }
         else if(entity.isOWLNamedIndividual()) {
             if(!accessManager.hasPermission(subject, projectResource, CREATE_INDIVIDUAL)) {
-                throw new PermissionDeniedException("You do not have permission to create new individuals",
-                                                    userInSessionFactory
-                                                            .getUserInSession(userId));
+                throw new PermissionDeniedException("You do not have permission to create new individuals");
             }
         }
         else if(entity.isOWLDatatype()) {
             if(!accessManager.hasPermission(subject, projectResource, CREATE_DATATYPE)) {
-                throw new PermissionDeniedException("You do not have permission to create new datatypes",
-                                                    userInSessionFactory
-                                                            .getUserInSession(userId));
+                throw new PermissionDeniedException("You do not have permission to create new datatypes");
             }
         }
     }

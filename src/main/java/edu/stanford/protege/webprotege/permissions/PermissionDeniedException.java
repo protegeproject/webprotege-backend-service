@@ -23,19 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ResponseStatus(value = HttpStatus.FORBIDDEN)
 public class PermissionDeniedException extends RuntimeException {
 
-    private UserInSession userInSession;
-
-
-    private PermissionDeniedException() {
-    }
-
-    public PermissionDeniedException(@Nonnull String message, @Nonnull UserInSession userInSession) {
+    public PermissionDeniedException(@Nonnull String message) {
         super(message);
-        this.userInSession = checkNotNull(userInSession);
-    }
-
-    @Nonnull
-    public UserInSession getUserInSession() {
-        return userInSession;
     }
 }

@@ -148,7 +148,6 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
                 return ((PermissionDeniedException) validationException);
             }
         }
-        throw new PermissionDeniedException(validationResult.getInvalidMessage(),
-                                            userInSessionFactory.getUserInSession(userId));
+        throw new PermissionDeniedException(validationResult.getInvalidMessage());
     }
 }

@@ -83,14 +83,12 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
 
             var userId = executionContext.getUserId();
             if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), CREATE_EMPTY_PROJECT)) {
-                throw new PermissionDeniedException("You do not have permission to create new projects",
-                                                    userInSessionFactory.getUserInSession(userId));
+                throw new PermissionDeniedException("You do not have permission to create new projects");
             }
             var newProjectSettings = action.newProjectSettings();
             if (newProjectSettings.hasSourceDocument()) {
                 if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), UPLOAD_PROJECT)) {
-                    throw new PermissionDeniedException("You do not have permission to upload projects",
-                                                        userInSessionFactory.getUserInSession(userId));
+                    throw new PermissionDeniedException("You do not have permission to upload projects");
                 }
             }
             var projectId = pm.createNewProject(newProjectSettings);
