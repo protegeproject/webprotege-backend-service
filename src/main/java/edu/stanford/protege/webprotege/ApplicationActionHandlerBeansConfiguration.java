@@ -6,7 +6,6 @@ import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
-import edu.stanford.protege.webprotege.events.GetProjectEventsActionHandler;
 import edu.stanford.protege.webprotege.user.GetUserIdCompletionsActionHandler;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressActionHandler;
@@ -48,12 +47,6 @@ public class ApplicationActionHandlerBeansConfiguration {
                                                                 AccessManager p3) {
         return new CreateNewProjectActionHandler(p1, p2, p3);
     }
-
-    @Bean
-    GetProjectEventsActionHandler getProjectEventsActionHandler(ProjectManager p1, AccessManager p2) {
-        return new GetProjectEventsActionHandler(p1, p2);
-    }
-
 
     @Bean
     SetEmailAddressActionHandler setEmailAddressActionHandler(UserDetailsManager p1) {

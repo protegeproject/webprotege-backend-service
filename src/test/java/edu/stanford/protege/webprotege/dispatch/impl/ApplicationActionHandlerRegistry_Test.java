@@ -5,8 +5,6 @@ import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.GetProjectEventsAction;
 import edu.stanford.protege.webprotege.user.GetUserIdCompletionsAction;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressAction;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressAction;
@@ -79,13 +77,6 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetProjectDetailsActionHandler() {
         var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainGetProjectEventsActionHandler() {
-        var handler = registry.getActionHandler(GetProjectEventsAction.create(mock(EventTag.class),
-                                                                              ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 

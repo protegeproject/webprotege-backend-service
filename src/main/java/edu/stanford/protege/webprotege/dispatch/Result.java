@@ -14,7 +14,6 @@ import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.crud.GetEntityCrudKitsResult;
 import edu.stanford.protege.webprotege.crud.SetEntityCrudKitSettingsResult;
 import edu.stanford.protege.webprotege.entity.*;
-import edu.stanford.protege.webprotege.event.GetProjectEventsResult;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataResult;
 import edu.stanford.protege.webprotege.frame.*;
@@ -139,7 +138,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(GetPerspectivesResult.class),
         @Type(GetProjectChangesResult.class),
         @Type(GetProjectDetailsResult.class),
-        @Type(GetProjectEventsResult.class),
         @Type(GetProjectFormDescriptorsResult.class),
         @Type(GetProjectInfoResult.class),
         @Type(GetPerspectiveLayoutResult.class),

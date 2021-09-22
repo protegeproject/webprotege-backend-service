@@ -3,10 +3,6 @@ package edu.stanford.protege.webprotege.project;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -63,29 +59,5 @@ public class ProjectManager {
 
     public ProjectId createNewProject(@Nonnull NewProjectSettings newProjectSettings) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException, OWLOntologyStorageException {
         return projectCache.getProject(newProjectSettings);
-    }
-
-    /**
-     * Gets the events for the specified project, if the project is active.
-     * @param projectId The project id
-     * @param sinceTag The event tag from which events should be retrieved
-     * @return A, possibly empty, event list
-     */
-    @Nonnull
-    public EventList<?> getProjectEventsSinceTag(@Nonnull ProjectId projectId,
-                                                     @Nonnull EventTag sinceTag) {
-        Optional<EventManager<ProjectEvent>> pem = projectCache.getProjectEventManagerIfActive(projectId);
-        if(pem.isEmpty()) {
-            return getEmptyProjectEventList(projectId, sinceTag);
-        }
-        EventManager<ProjectEvent> eventManager = pem.get();
-        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(sinceTag);
-        return EventList.create(eventList.getStartTag(), eventList.getEvents(), eventList.getEndTag());
-
-    }
-
-    private static EventList<?> getEmptyProjectEventList(@Nonnull ProjectId projectId,
-                                                             @Nonnull EventTag sinceTag) {
-        return EventList.create(sinceTag, ImmutableList.of(), sinceTag);
     }
 }
