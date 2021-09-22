@@ -1,7 +1,5 @@
 package edu.stanford.protege.webprotege.filter;
 
-import edu.stanford.protege.webprotege.HasLabel;
-
 import java.util.Objects;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
@@ -12,7 +10,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 21/03/16
  */
-public class FilterId implements HasLabel {
+public class FilterId {
 
     private final String label;
 
@@ -20,7 +18,6 @@ public class FilterId implements HasLabel {
         this.label = checkNotNull(label);
     }
 
-    @Override
     public String getLabel() {
         return label;
     }
