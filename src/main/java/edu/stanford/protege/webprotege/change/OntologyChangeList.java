@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.HasResult;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -19,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     A list of ontology changes plus a result of applying the changes.
  * </p>
  */
-public class OntologyChangeList<R> implements HasResult<R> {
+public class OntologyChangeList<R> {
 
     @Nonnull
     private final R result;
@@ -52,7 +51,6 @@ public class OntologyChangeList<R> implements HasResult<R> {
      * @return The result.  Not {@code null}.
      */
     @Nonnull
-    @Override
     public R getResult() {
         return result;
     }
