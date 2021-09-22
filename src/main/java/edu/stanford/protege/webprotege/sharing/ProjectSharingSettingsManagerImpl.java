@@ -6,8 +6,8 @@ import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.authorization.RoleId;
 import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.user.HasGetUserIdByUserIdOrEmail;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,11 +30,11 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
 
     private final AccessManager accessManager;
 
-    private final HasGetUserIdByUserIdOrEmail userLookup;
+    private final UserDetailsManager userLookup;
 
     @Inject
     public ProjectSharingSettingsManagerImpl(AccessManager accessManager,
-                                             HasGetUserIdByUserIdOrEmail userLookup) {
+                                             UserDetailsManager userLookup) {
         this.accessManager = accessManager;
         this.userLookup = userLookup;
     }

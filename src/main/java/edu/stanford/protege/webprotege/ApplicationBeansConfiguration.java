@@ -589,7 +589,7 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectSharingSettingsManagerImpl projectSharingSettingsManager(AccessManager p1, HasGetUserIdByUserIdOrEmail p2) {
+    ProjectSharingSettingsManagerImpl projectSharingSettingsManager(AccessManager p1, UserDetailsManager p2) {
         return new ProjectSharingSettingsManagerImpl(p1, p2);
     }
 
