@@ -156,13 +156,7 @@
 
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-owlapi-jackson</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-ipc</artifactId>
+            <artifactId>webprotege-jackson</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
