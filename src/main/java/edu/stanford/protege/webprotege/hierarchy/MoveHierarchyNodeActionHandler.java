@@ -14,8 +14,6 @@ import javax.inject.Inject;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 
-;
-
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
  */

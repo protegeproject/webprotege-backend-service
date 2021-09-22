@@ -13,7 +13,7 @@ public enum Operation {
 
     AUGMENT("Added");
 
-    private String printName;
+    private final String printName;
 
     Operation(String printName) {
         this.printName = printName;

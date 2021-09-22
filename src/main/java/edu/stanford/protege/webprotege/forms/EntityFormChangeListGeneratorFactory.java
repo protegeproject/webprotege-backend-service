@@ -53,7 +53,7 @@ public class EntityFormChangeListGeneratorFactory {
     @Nonnull
     private final DefaultOntologyIdManager rootOntologyProvider;
 
-    private DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory;
+    private final DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory;
 
     @Inject
     public EntityFormChangeListGeneratorFactory(@Nonnull FormDataConverter formDataProcessor,

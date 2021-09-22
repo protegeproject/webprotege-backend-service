@@ -104,7 +104,7 @@ public class ItemSelection implements Iterable<Item<?>> {
 
     public static class Builder {
 
-        private List<Item<?>> items = Lists.newArrayList();
+        private final List<Item<?>> items = Lists.newArrayList();
 
         public Builder addItem(Item<?> item) {
             items.add(item);

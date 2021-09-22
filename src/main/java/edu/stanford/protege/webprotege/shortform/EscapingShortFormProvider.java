@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class EscapingShortFormProvider implements ShortFormProvider {
 
-    private DictionaryManager delegate;
+    private final DictionaryManager delegate;
 
     @Inject
     public EscapingShortFormProvider(@Nonnull DictionaryManager delegate) {

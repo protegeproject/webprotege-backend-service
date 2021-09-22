@@ -182,7 +182,7 @@ public class GetManchesterSyntaxFrameCompletionsActionHandler
         }
         expectedKeywordChoices.sort(new Comparator<>() {
 
-            private ManchesterSyntaxKeywords.KeywordComparator keywordComparator = new ManchesterSyntaxKeywords.KeywordComparator();
+            private final ManchesterSyntaxKeywords.KeywordComparator keywordComparator = new ManchesterSyntaxKeywords.KeywordComparator();
 
             @Override
             public int compare(AutoCompletionChoice autoCompletionChoice, AutoCompletionChoice autoCompletionChoice2) {
@@ -228,9 +228,9 @@ public class GetManchesterSyntaxFrameCompletionsActionHandler
 
     private static class AutoCompletionMatch implements Comparable<AutoCompletionMatch> {
 
-        private EntityNameMatchResult matchResult;
+        private final EntityNameMatchResult matchResult;
 
-        private AutoCompletionChoice autoCompletionChoice;
+        private final AutoCompletionChoice autoCompletionChoice;
 
         private AutoCompletionMatch(EntityNameMatchResult matchResult, AutoCompletionChoice autoCompletionChoice) {
             this.matchResult = matchResult;

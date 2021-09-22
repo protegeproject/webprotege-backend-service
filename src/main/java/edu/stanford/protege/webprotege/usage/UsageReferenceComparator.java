@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 public class UsageReferenceComparator implements Comparator<UsageReference> {
 
-    private OWLEntity subject;
+    private final OWLEntity subject;
 
     public UsageReferenceComparator(OWLEntity subject) {
         this.subject = subject;

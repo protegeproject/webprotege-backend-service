@@ -23,7 +23,7 @@ public class XRefExtractor {
     private final AnnotationToXRefConverter converter;
 
     @Nonnull
-    private ProjectAnnotationAssertionAxiomsBySubjectIndex annotationAssertionsIndex;
+    private final ProjectAnnotationAssertionAxiomsBySubjectIndex annotationAssertionsIndex;
 
     @Inject
     public XRefExtractor(@Nonnull AnnotationToXRefConverter converter,

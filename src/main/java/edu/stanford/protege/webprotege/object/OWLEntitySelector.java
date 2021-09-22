@@ -14,9 +14,9 @@ import java.util.Optional;
  */
 public abstract class OWLEntitySelector<T extends OWLObject, E extends OWLEntity> implements OWLObjectSelector<T> {
 
-    private EntityType<E> entityType;
+    private final EntityType<E> entityType;
 
-    private Comparator<? super E> entityComparator;
+    private final Comparator<? super E> entityComparator;
 
     public OWLEntitySelector(EntityType<E> entityType, Comparator<? super E> entityComparator) {
         this.entityType = entityType;

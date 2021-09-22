@@ -22,7 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetEntityGraphActionHandler extends AbstractProjectActionHandler<GetEntityGraphAction, GetEntityGraphResult> {
 
-    private static Logger logger = LoggerFactory.getLogger(GetEntityGraphActionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(GetEntityGraphActionHandler.class);
 
     @Nonnull
     private final EntityGraphBuilderFactory graphBuilderFactory;
@@ -65,7 +65,7 @@ public class GetEntityGraphActionHandler extends AbstractProjectActionHandler<Ge
         var projectUserSettings = entityGraphSettingsRepository.getSettingsForUserOrProjectDefault(projectId, userId);
         var entityGraphSettings = projectUserSettings.getSettings();
         var criteria = projectUserSettings.getSettings()
-                                          .getCombinedActiveFilterCriteria();;
+                                          .getCombinedActiveFilterCriteria();
         var edgeMatcher = edgeMatcherFactory.createMatcher(criteria.simplify());
         try {
             logger.info("Criteria: " + objectMapper.writeValueAsString(criteria));

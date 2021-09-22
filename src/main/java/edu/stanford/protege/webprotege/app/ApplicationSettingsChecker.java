@@ -18,13 +18,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ApplicationSettingsChecker {
 
-    private static Logger logger = LoggerFactory.getLogger(ApplicationSettingsChecker.class);
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationSettingsChecker.class);
 
     @Nonnull
     private final ApplicationSettings settings;
 
     @Nonnull
-    private PlaceUrl placeUrl;
+    private final PlaceUrl placeUrl;
 
     @Inject
     public ApplicationSettingsChecker(@Nonnull ApplicationSettings applicationSettings,

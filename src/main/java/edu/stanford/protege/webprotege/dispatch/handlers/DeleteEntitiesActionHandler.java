@@ -18,8 +18,6 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Set;
 
-;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

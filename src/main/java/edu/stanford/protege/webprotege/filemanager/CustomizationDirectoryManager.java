@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.common.UserId;
 import javax.inject.Inject;
 import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -40,7 +41,7 @@ public class CustomizationDirectoryManager {
     private String getHashedUserId(UserId userId) {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte [] digest = messageDigest.digest(userId.id().getBytes(Charset.forName("UTF-8")));
+            byte [] digest = messageDigest.digest(userId.id().getBytes(StandardCharsets.UTF_8));
             return BaseEncoding.base16().lowerCase().encode(digest);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);

@@ -19,7 +19,7 @@ import static java.util.Optional.of;
  */
 public class AxiomIRISubjectProvider {
 
-    private AxiomSubjectProviderVisitor visitor;
+    private final AxiomSubjectProviderVisitor visitor;
 
     @Inject
     public AxiomIRISubjectProvider(Comparator<IRI> iriComparator) {
@@ -40,7 +40,7 @@ public class AxiomIRISubjectProvider {
         public static final int AFTER = 1;
 
 
-        private Comparator<IRI> iriComparator;
+        private final Comparator<IRI> iriComparator;
 
         public AxiomSubjectProviderVisitor(Comparator<IRI> iriComparator) {
             this.iriComparator = iriComparator;

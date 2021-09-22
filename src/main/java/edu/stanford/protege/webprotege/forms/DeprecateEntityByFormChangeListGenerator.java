@@ -47,9 +47,9 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
     @Nonnull
     private final Optional<OWLEntity> replacementEntity;
 
-    private EntityDeprecationSettings entityDeprecationSettings;
+    private final EntityDeprecationSettings entityDeprecationSettings;
 
-    private EntityDeleter entityDeleter;
+    private final EntityDeleter entityDeleter;
 
     @Nonnull
     private final EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory;
@@ -283,7 +283,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
         // Map this data to the replacement entity so that we can remove it from the replacement entity
         var formDataOnReplacementToRemove = formDataOnDeprecatedEntity.values()
                                                                       .stream()
-                                                                      .map(formData -> FormData.get(Optional.<FormEntitySubject>of(
+                                                                      .map(formData -> FormData.get(Optional.of(
                                                                               FormEntitySubject.get(replacementEntity.get())),
                                                                                                     formData.getFormDescriptor(),
                                                                                                     formData.getFormFieldData()))

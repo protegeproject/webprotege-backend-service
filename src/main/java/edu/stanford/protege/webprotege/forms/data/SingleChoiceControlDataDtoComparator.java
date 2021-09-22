@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class SingleChoiceControlDataDtoComparator implements Comparator<SingleChoiceControlDataDto> {
 
-    private static Comparator<Optional<PrimitiveFormControlDataDto>> optionalComparator = Comparators.emptiesLast(
+    private static final Comparator<Optional<PrimitiveFormControlDataDto>> optionalComparator = Comparators.emptiesLast(
             PrimitiveFormControlDataDto::compareTo
     );
 

@@ -24,9 +24,9 @@ public class ProjectWebhook implements Webhook, HasProjectId {
 
     public static final String SUBSCRIBED_TO_EVENTS = "subscribedToEvents";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private String payloadUrl;
+    private final String payloadUrl;
 
     private List<ProjectWebhookEventType> subscribedToEvents = new ArrayList<>();
 

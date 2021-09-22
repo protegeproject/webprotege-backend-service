@@ -9,7 +9,7 @@ import com.google.common.base.MoreObjects;
  */
 public abstract class Item<T> {
 
-    private T item;
+    private final T item;
 
     public abstract Type<T> getAssociatedType();
 
@@ -71,9 +71,9 @@ public abstract class Item<T> {
 
         private static int counter = 0;
 
-        private int hashCode = counter++;
+        private final int hashCode = counter++;
 
-        private String name;
+        private final String name;
 
         protected Type(String name) {
             this.name = name;

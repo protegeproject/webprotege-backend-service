@@ -23,7 +23,7 @@ public abstract class ClassFrameTranslationOptions {
 
     public enum AncestorsTreatment {
         INCLUDE_ANCESTORS,
-        EXCLUDE_ANCESTORS;
+        EXCLUDE_ANCESTORS
     }
 
     public static ClassFrameTranslationOptions get(@Nonnull AncestorsTreatment ancestorsTreatment,

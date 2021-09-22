@@ -20,7 +20,7 @@ public class TerminalNode extends Node {
 
     private NodeProperties nodeProperties;
 
-    private TerminalNodeId nodeId;
+    private final TerminalNodeId nodeId;
 
     /**
      * Constructs a fresh {@code TerminalNode}.  A fresh {@link TerminalNodeId} will be generated for the node.

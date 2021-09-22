@@ -26,9 +26,9 @@ import java.util.Optional;
  */
 public class ZipArchiveProjectSourcesExtractor implements RawProjectSourcesExtractor {
 
-    private TempFileFactory tempFileFactory;
+    private final TempFileFactory tempFileFactory;
 
-    private RootOntologyDocumentFileMatcher rootOntologyDocumentFileMatcher;
+    private final RootOntologyDocumentFileMatcher rootOntologyDocumentFileMatcher;
 
     @Inject
     public ZipArchiveProjectSourcesExtractor(TempFileFactory tempFileFactory, RootOntologyDocumentFileMatcher rootOntologyDocumentFileMatcher) {
@@ -68,9 +68,9 @@ public class ZipArchiveProjectSourcesExtractor implements RawProjectSourcesExtra
 
     private static class ExtractedZipArchiveProjectSources implements RawProjectSources {
 
-        private File rootOntologyDocument;
+        private final File rootOntologyDocument;
 
-        private File baseDirectory;
+        private final File baseDirectory;
 
         private ExtractedZipArchiveProjectSources(File rootOntologyDocument, File baseDirectory) {
             this.rootOntologyDocument = rootOntologyDocument;

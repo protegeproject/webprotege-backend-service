@@ -23,7 +23,7 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
 public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Boolean, MoveEntitiesToParentAction, MoveEntitiesToParentResult> {
 
     @Nonnull
-    private MoveClassesChangeListGeneratorFactory factory;
+    private final MoveClassesChangeListGeneratorFactory factory;
 
     @Inject
     public MoveToParentActionHandler(@Nonnull AccessManager accessManager,

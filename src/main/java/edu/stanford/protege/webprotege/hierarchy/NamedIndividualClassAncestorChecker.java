@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class NamedIndividualClassAncestorChecker implements HasHasAncestor<OWLNamedIndividual, OWLClass> {
 
     @Nonnull
-    private HasHasAncestor<OWLClass, OWLClass> classAncestorChecker;
+    private final HasHasAncestor<OWLClass, OWLClass> classAncestorChecker;
 
     @Nonnull
     private final ClassAssertionAxiomsByIndividualIndex axiomsIndex;

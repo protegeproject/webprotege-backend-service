@@ -62,7 +62,7 @@ public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity
     private final ClassFrameProvider classFrameProvider;
 
     @Nonnull
-    private ClassFrame2FrameAxiomsTranslator classFrame2FrameAxiomsTranslator;
+    private final ClassFrame2FrameAxiomsTranslator classFrame2FrameAxiomsTranslator;
 
     @Inject
     public FrameChangeGenerator(@Nonnull FrameUpdate frameUpdate,

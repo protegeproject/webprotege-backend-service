@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class PortletPluginId {
 
-    private String id;
+    private final String id;
 
     public PortletPluginId(String id) {
         this.id = checkNotNull(id);

@@ -21,7 +21,7 @@ public class UuidSuffixKit extends EntityCrudKit<UuidSuffixSettings> {
 
     public static final String EXAMPLE_SUFFIX = "RtvBaCCEyk09YwGRQljc2z";
 
-    private static EntityCrudKitId ID = EntityCrudKitId.get("UUID");
+    private static final EntityCrudKitId ID = EntityCrudKitId.get("UUID");
 
     @Inject
     public UuidSuffixKit() {

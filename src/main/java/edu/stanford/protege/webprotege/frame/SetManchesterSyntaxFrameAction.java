@@ -22,17 +22,17 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
 
     public static final String CHANNEL = "webprotege.mansyntax.SetManchesterSyntaxFrame";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private OWLEntity subject;
+    private final OWLEntity subject;
 
-    private String fromRendering;
+    private final String fromRendering;
 
-    private String toRendering;
+    private final String toRendering;
 
-    private Set<OWLEntityData> freshEntities;
+    private final Set<OWLEntityData> freshEntities;
 
-    private String commitMessage;
+    private final String commitMessage;
 
     private SetManchesterSyntaxFrameAction(ProjectId projectId,
                                            OWLEntity subject,

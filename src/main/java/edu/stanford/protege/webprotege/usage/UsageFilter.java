@@ -17,9 +17,9 @@ public class UsageFilter implements Serializable {
 
     private boolean showDefiningAxioms = true;
 
-    private Set<AxiomType<?>> axiomTypes;
+    private final Set<AxiomType<?>> axiomTypes;
 
-    private Set<EntityType<?>> entityTypes;
+    private final Set<EntityType<?>> entityTypes;
 
     public UsageFilter() {
         axiomTypes = new HashSet<AxiomType<?>>();

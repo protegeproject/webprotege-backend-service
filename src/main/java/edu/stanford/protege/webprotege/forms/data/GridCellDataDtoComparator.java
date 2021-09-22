@@ -9,7 +9,7 @@ import java.util.Comparator;
 public class GridCellDataDtoComparator implements Comparator<GridCellDataDto> {
 
     @Nonnull
-    private Comparator<Iterable<FormControlDataDto>> lexComparator;
+    private final Comparator<Iterable<FormControlDataDto>> lexComparator;
 
     @Inject
     public GridCellDataDtoComparator(@Nonnull FormControlDataDtoComparator formControlDataDtoComparator) {

@@ -14,7 +14,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
  */
 public class ProjectDocumentNotFoundException extends RuntimeException {
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
     public ProjectDocumentNotFoundException(ProjectId projectId) {
         super("Project Not Found (" + projectId + ")");

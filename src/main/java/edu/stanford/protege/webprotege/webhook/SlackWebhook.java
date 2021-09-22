@@ -22,9 +22,9 @@ public class SlackWebhook implements Webhook {
 
     public static final String PAYLOAD_URL = "payloadUrl";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private String payloadUrl;
+    private final String payloadUrl;
 
     public SlackWebhook(@Nonnull ProjectId projectId,
                         @Nonnull String payloadUrl) {

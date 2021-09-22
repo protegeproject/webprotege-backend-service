@@ -8,8 +8,6 @@ import edu.stanford.protege.webprotege.forms.FormDescriptorDtoTranslatorComponen
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 
-;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

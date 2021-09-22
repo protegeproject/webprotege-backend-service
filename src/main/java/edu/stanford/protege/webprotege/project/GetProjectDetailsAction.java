@@ -20,7 +20,7 @@ public class GetProjectDetailsAction implements Action<GetProjectDetailsResult>,
 
     public static final String CHANNEL = "webprotege.projects.GetProjectDetails";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
     public GetProjectDetailsAction(ProjectId projectId) {
         this.projectId = checkNotNull(projectId);

@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class NodePropertyValueMap implements Map<String, NodePropertyValue> {
 
-    private Map<String, NodePropertyValue> delegate = new LinkedHashMap<>();
+    private final Map<String, NodePropertyValue> delegate = new LinkedHashMap<>();
 
     public NodePropertyValueMap() {
     }

@@ -27,9 +27,9 @@ public class RecentProjectRecord implements Comparable<RecentProjectRecord> {
 
     private Date timestamp;
 
-    private static Comparator<RecentProjectRecord> comparator = Comparator.comparing(RecentProjectRecord::getTimestamp)
-                                                               .reversed()
-                                                               .thenComparing(r -> r.getProjectId().id());
+    private static final Comparator<RecentProjectRecord> comparator = Comparator.comparing(RecentProjectRecord::getTimestamp)
+                                                                                .reversed()
+                                                                                .thenComparing(r -> r.getProjectId().id());
 
     // For Morphia
     private RecentProjectRecord() {

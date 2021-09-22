@@ -24,7 +24,7 @@ public class Revision implements Comparable<Revision> {
 
     private final RevisionNumber revisionNumber;
 
-    private long timestamp;
+    private final long timestamp;
 
     private final ImmutableList<OntologyChange> changes;
 

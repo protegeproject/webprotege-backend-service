@@ -18,7 +18,7 @@ public enum DownloadFormatExtension {
 
     ofn("Functional OWL Syntax");
 
-    private String displayName;
+    private final String displayName;
 
     DownloadFormatExtension(String displayName) {
         this.displayName = displayName;

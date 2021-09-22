@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class IndexedSet<T> implements Set<T> {
 
-    private static Logger logger = LoggerFactory.getLogger(IndexedSet.class);
+    private static final Logger logger = LoggerFactory.getLogger(IndexedSet.class);
 
     private static final int THRESHOLD_SIZE = 256;
 

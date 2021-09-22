@@ -11,7 +11,7 @@ import java.io.File;
  */
 public class RootOntologyDocumentProvider implements Provider<File> {
 
-    private File projectDirectory;
+    private final File projectDirectory;
 
 
 

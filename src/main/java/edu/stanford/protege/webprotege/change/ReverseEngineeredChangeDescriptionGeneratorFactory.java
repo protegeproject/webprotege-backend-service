@@ -19,10 +19,10 @@ import java.util.Set;
 public class ReverseEngineeredChangeDescriptionGeneratorFactory {
 
     @Nonnull
-    private Set<ChangeMatcher> changeMatchers;
+    private final Set<ChangeMatcher> changeMatchers;
 
     @Nonnull
-    private OWLObjectStringFormatter formatter;
+    private final OWLObjectStringFormatter formatter;
 
     @Inject
     public ReverseEngineeredChangeDescriptionGeneratorFactory(@Nonnull Set<ChangeMatcher> changeMatchers,

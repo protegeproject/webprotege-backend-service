@@ -15,7 +15,7 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  */
 public class FilterSet {
 
-    private Map<FilterId, FilterSetting> map = new HashMap<>();
+    private final Map<FilterId, FilterSetting> map = new HashMap<>();
 
     public FilterSet(Collection<Filter> filters) {
         for(Filter filter : filters) {

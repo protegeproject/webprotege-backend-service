@@ -46,9 +46,9 @@ public class OBOIdSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Obo
 
     private long currentId = 0;
 
-    private EntityCrudKitPrefixSettings prefixSettings;
+    private final EntityCrudKitPrefixSettings prefixSettings;
 
-    private OboIdSuffixSettings suffixSettings;
+    private final OboIdSuffixSettings suffixSettings;
 
     @Nonnull
     private final OWLDataFactory dataFactory;

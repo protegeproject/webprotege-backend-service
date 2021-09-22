@@ -24,8 +24,6 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_PROPERTY;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 
-;
-
 /**
  * Author: Matthew Horridge<br>
  * Stanford University<br>

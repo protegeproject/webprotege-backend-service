@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class RoleOracleImpl implements RoleOracle {
 
-    private Map<RoleId, Role> closure = new LinkedHashMap<>();
+    private final Map<RoleId, Role> closure = new LinkedHashMap<>();
 
     private RoleOracleImpl() {
 

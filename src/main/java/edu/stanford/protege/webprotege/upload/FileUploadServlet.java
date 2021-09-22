@@ -219,9 +219,9 @@ public class FileUploadServlet extends HttpServlet {
     
     private static class Pair {
         
-        private String string;
+        private final String string;
         
-        private String value;
+        private final String value;
 
         private Pair(String string, String value) {
             this.string = string;

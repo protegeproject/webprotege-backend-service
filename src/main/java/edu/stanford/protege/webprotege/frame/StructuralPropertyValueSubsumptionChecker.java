@@ -34,9 +34,7 @@ public class StructuralPropertyValueSubsumptionChecker implements PropertyValueS
     @Override
     public boolean isSubsumedBy(PlainPropertyValue propertyValueA, PlainPropertyValue propertyValueB) {
         if (isSubsumedBy(propertyValueA.getProperty(), propertyValueB.getProperty())) {
-            if (isSubsumedBy(propertyValueA.getValue(), propertyValueB.getValue())) {
-                return true;
-            }
+            return isSubsumedBy(propertyValueA.getValue(), propertyValueB.getValue());
         }
         return false;
     }

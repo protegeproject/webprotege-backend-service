@@ -16,7 +16,7 @@ import java.util.Set;
  */
 public class EventTranslatorManager {
 
-    private Collection<EventTranslator> eventTranslators;
+    private final Collection<EventTranslator> eventTranslators;
 
     @Inject
     public EventTranslatorManager(Set<EventTranslator> eventTranslators) {

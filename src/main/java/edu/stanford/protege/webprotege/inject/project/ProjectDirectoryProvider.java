@@ -13,9 +13,9 @@ import java.io.File;
  */
 public class ProjectDirectoryProvider implements Provider<File> {
 
-    private ProjectDirectoryFactory projectDirectoryFactory;
+    private final ProjectDirectoryFactory projectDirectoryFactory;
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
     @Inject
     public ProjectDirectoryProvider(ProjectDirectoryFactory projectDirectoryFactory, ProjectId projectId) {

@@ -186,7 +186,7 @@ public class ProjectDownloadService {
             revisionNumberSuffix = "";
         }
         else {
-            revisionNumberSuffix = "-REVISION-" + Long.toString(revision.getValue());
+            revisionNumberSuffix = "-REVISION-" + revision.getValue();
         }
         String projectDisplayName = projectDetailsManager.getProjectDetails(projectId).getDisplayName();
         String fileName = projectDisplayName.replaceAll("\\s+", "-")

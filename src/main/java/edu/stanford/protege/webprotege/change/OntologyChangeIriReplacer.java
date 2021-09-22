@@ -17,7 +17,7 @@ public class OntologyChangeIriReplacer {
 
     private static class Replacer implements OntologyChangeVisitorEx<OntologyChange> {
 
-        private IriReplacer iriReplacer;
+        private final IriReplacer iriReplacer;
 
         public Replacer(IriReplacer iriReplacer) {
             this.iriReplacer = iriReplacer;

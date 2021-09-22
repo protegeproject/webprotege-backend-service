@@ -134,11 +134,11 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
 
     private static class OWLEntityDataMatch implements Comparable<OWLEntityDataMatch> {
 
-        private DictionaryLanguage dictionaryLanguage;
+        private final DictionaryLanguage dictionaryLanguage;
 
-        private OWLEntityData visualEntity;
+        private final OWLEntityData visualEntity;
 
-        private EntityNameMatchResult matchResult;
+        private final EntityNameMatchResult matchResult;
 
         private OWLEntityDataMatch(DictionaryLanguage dictionaryLanguage,
                                    OWLEntityData visualEntity,

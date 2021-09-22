@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CSVGrid {
 
-    private List<CSVRow> grid = new ArrayList<CSVRow>();
+    private final List<CSVRow> grid = new ArrayList<CSVRow>();
 
     private int columnCount;
 
@@ -74,7 +74,7 @@ public class CSVGrid {
 
     public static class Builder {
 
-        private List<CSVRow> rows = new ArrayList<CSVRow>();
+        private final List<CSVRow> rows = new ArrayList<CSVRow>();
 
         public void addRow(CSVRow row) {
             checkNotNull(row);

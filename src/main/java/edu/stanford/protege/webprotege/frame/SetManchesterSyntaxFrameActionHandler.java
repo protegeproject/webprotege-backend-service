@@ -17,8 +17,6 @@ import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 
-;
-
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
  */

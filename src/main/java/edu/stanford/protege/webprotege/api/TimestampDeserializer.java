@@ -40,7 +40,7 @@ public class TimestampDeserializer extends StdDeserializer<Long> {
     }
 
     @Override
-    public Long deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public Long deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         String ts = extractDateTime(jsonParser.getValueAsString());
         ZonedDateTime dateTime = ZonedDateTime.parse(ts, FORMATTER);
         Instant instant = dateTime.toInstant();

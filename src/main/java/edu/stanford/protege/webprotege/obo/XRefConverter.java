@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  */
 public class XRefConverter {
 
-    private static Pattern SEPARATOR_PATTERN = Pattern.compile("([^#_|_]+)(#_|_)(.+)");
+    private static final Pattern SEPARATOR_PATTERN = Pattern.compile("([^#_|_]+)(#_|_)(.+)");
 
     @Inject
     public XRefConverter() {

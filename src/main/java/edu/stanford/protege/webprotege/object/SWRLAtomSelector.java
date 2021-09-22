@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 public class SWRLAtomSelector implements OWLObjectSelector<SWRLAtom> {
 
-    private Comparator<? super SWRLAtom> swrlObjectComparator;
+    private final Comparator<? super SWRLAtom> swrlObjectComparator;
 
 
     @Inject

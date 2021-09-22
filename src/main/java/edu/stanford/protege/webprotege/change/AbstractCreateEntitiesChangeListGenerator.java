@@ -57,7 +57,7 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
     @Nonnull
     private final DefaultOntologyIdManager defaultOntologyIdManager;
 
-    private static Map<String, String> builtInPrefixes = new HashMap<>();
+    private static final Map<String, String> builtInPrefixes = new HashMap<>();
 
     static {
         builtInPrefixes.put("owl:", Namespaces.OWL.toString());

@@ -5,9 +5,9 @@ package edu.stanford.protege.webprotege.place;
  */
 public class ItemToken {
 
-    private String typeName;
+    private final String typeName;
 
-    private String itemContent;
+    private final String itemContent;
 
     public ItemToken(String typeName, String itemContent) {
         this.typeName = typeName;

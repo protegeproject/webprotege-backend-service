@@ -25,7 +25,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 @Configuration
 public class WebProtegeMongoConfiguration extends AbstractMongoClientConfiguration {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public WebProtegeMongoConfiguration(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -86,7 +86,7 @@ public class WebProtegeMongoConfiguration extends AbstractMongoClientConfigurati
 
     public static class DocumentToOwlEntityConverter implements Converter<Document, OWLEntity> {
 
-        private OWLDataFactory dataFactory = new OWLDataFactoryImpl();
+        private final OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
         @Override
         public OWLEntity convert(Document document) {

@@ -17,7 +17,7 @@ import edu.stanford.protege.webprotege.common.UserId;
  */
 public class MentionReadConverter implements Converter<BasicDBObject, Mention> {
 
-    private OWLEntityReadConverter entityReadConverter = new OWLEntityReadConverter();
+    private final OWLEntityReadConverter entityReadConverter = new OWLEntityReadConverter();
 
     @Override
     public Mention convert(BasicDBObject dbObject) {

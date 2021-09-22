@@ -35,7 +35,7 @@ public class UploadedOntologiesCache implements HasDispose {
 
     private static final Duration SWEEP_PERIOD = Duration.ofSeconds(10);
 
-    private static Logger logger = LoggerFactory.getLogger(UploadedOntologiesCache.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadedOntologiesCache.class);
 
     private final ScheduledExecutorService service;
 

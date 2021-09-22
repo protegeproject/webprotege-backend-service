@@ -18,9 +18,9 @@ import java.util.Optional;
 @JsonTypeName("TextControlDataDto")
 public abstract class TextControlDataDto implements FormControlDataDto, Comparable<TextControlDataDto> {
 
-    private static Comparator<OWLLiteral> literalComparator = Comparator.nullsLast(Comparator.comparing(OWLLiteral::getLang)
-            .thenComparing(OWLLiteral::getLiteral, String::compareToIgnoreCase)
-            .thenComparing(OWLLiteral::getDatatype));
+    private static final Comparator<OWLLiteral> literalComparator = Comparator.nullsLast(Comparator.comparing(OWLLiteral::getLang)
+                                                                                                   .thenComparing(OWLLiteral::getLiteral, String::compareToIgnoreCase)
+                                                                                                   .thenComparing(OWLLiteral::getDatatype));
 
     @JsonCreator
     @Nonnull

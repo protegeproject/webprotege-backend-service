@@ -25,7 +25,7 @@ public enum EntityNameCharType {
 
     private static final char SINGLE_QUOTE = '\'';
 
-    private LetterCategory letterCategory;
+    private final LetterCategory letterCategory;
 
     EntityNameCharType(LetterCategory letterCategory) {
         this.letterCategory = letterCategory;

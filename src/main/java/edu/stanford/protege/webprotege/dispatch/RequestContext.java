@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class RequestContext {
 
-    private UserId userId;
+    private final UserId userId;
 
     /**
      * Constructs a {@link RequestContext} for the user specified by {@code userId}.

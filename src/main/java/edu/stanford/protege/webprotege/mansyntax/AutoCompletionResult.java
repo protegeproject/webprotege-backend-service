@@ -16,9 +16,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class AutoCompletionResult {
     private static final AutoCompletionResult EMPTY_RESULT = new AutoCompletionResult();
 
-    private List<AutoCompletionChoice> choices;
+    private final List<AutoCompletionChoice> choices;
 
-    private EditorPosition fromPosition;
+    private final EditorPosition fromPosition;
 
     public AutoCompletionResult() {
         this(new ArrayList<AutoCompletionChoice>(), new EditorPosition(0, 0));

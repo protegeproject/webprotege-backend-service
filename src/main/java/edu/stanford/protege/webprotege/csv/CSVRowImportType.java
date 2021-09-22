@@ -14,9 +14,9 @@ public enum CSVRowImportType {
 
     INDIVIDUAL("Individual", EntityType.NAMED_INDIVIDUAL);
 
-    private String displayName;
+    private final String displayName;
 
-    private EntityType<?> entityType;
+    private final EntityType<?> entityType;
 
     CSVRowImportType(String displayName, EntityType<?> entityType) {
         this.displayName = displayName;

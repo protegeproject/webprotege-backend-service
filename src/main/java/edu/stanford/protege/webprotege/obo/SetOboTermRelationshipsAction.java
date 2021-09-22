@@ -18,11 +18,11 @@ public class SetOboTermRelationshipsAction implements ProjectAction<SetOboTermRe
 
     public static final String CHANNEL = "webprotege.obo.SetOboTermRelationships";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private OWLEntity entity;
+    private final OWLEntity entity;
 
-    private OBOTermRelationships oboTermRelationships;
+    private final OBOTermRelationships oboTermRelationships;
 
     private SetOboTermRelationshipsAction(@Nonnull ProjectId projectId,
                                           @Nonnull OWLEntity entity,

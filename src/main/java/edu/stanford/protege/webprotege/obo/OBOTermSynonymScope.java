@@ -19,7 +19,7 @@ public enum OBOTermSynonymScope implements Serializable {
     NARROWER("Narrower");
     
     
-    private String displayText;
+    private final String displayText;
 
     OBOTermSynonymScope(String displayText) {
         this.displayText = displayText;

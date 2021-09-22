@@ -15,9 +15,9 @@ public class GetCSVGridAction implements Action<GetCSVGridResult> {
 
     public static final String CHANNEL = "webprotege.csv.GetCsvGrid";
 
-    private DocumentId csvDocumentId;
+    private final DocumentId csvDocumentId;
 
-    private int rowLimit;
+    private final int rowLimit;
 
     @Override
     public String getChannel() {

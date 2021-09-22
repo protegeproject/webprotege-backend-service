@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @ProjectSingleton
 public class OntologyAnnotationsIndexImpl implements OntologyAnnotationsSignatureIndex, OntologyAnnotationsIndex, UpdatableIndex {
 
-    private Multimap<OWLOntologyID, OWLAnnotation> annotationsMap = ArrayListMultimap.create();
+    private final Multimap<OWLOntologyID, OWLAnnotation> annotationsMap = ArrayListMultimap.create();
 
     @Inject
     public OntologyAnnotationsIndexImpl() {

@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class AxiomComparatorImpl implements Comparator<OWLAxiom> {
 
-    private Comparator<OWLAxiom> compoundComparator;
+    private final Comparator<OWLAxiom> compoundComparator;
 
     @Inject
     public AxiomComparatorImpl(AxiomBySubjectComparator axiomBySubjectComparator, AxiomByTypeComparator axiomByTypeComparator, AxiomByRenderingComparator axiomByRenderingComparator) {

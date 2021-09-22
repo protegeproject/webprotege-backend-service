@@ -14,8 +14,6 @@ import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_OWN_OBJECT_COMMENT;
 
-;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

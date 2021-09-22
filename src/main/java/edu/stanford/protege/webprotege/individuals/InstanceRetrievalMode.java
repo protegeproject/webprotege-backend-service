@@ -8,5 +8,5 @@ package edu.stanford.protege.webprotege.individuals;
 public enum InstanceRetrievalMode {
 
     ALL_INSTANCES,
-    DIRECT_INSTANCES;
+    DIRECT_INSTANCES
 }

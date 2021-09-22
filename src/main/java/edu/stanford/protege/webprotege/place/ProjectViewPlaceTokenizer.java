@@ -24,7 +24,7 @@ public class ProjectViewPlaceTokenizer {
 
     private static final String SELECTION = "?selection=";
 
-    private static Pattern pattern = Pattern.compile(PROJECTS + "(.{36})" + PERSPECTIVES + "([^\\?]*)(\\" + SELECTION + "(.*))?" );
+    private static final Pattern pattern = Pattern.compile(PROJECTS + "(.{36})" + PERSPECTIVES + "([^\\?]*)(\\" + SELECTION + "(.*))?" );
 
     public boolean matches(String token) {
         return pattern.matcher(token).matches();

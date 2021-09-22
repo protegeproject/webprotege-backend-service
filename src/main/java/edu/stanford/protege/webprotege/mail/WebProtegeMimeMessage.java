@@ -16,7 +16,7 @@ public class WebProtegeMimeMessage extends MimeMessage {
 
     private static final String MESSAGE_ID_FIELD = "Message-ID";
 
-    private MessageId messageId;
+    private final MessageId messageId;
 
     public WebProtegeMimeMessage(@Nonnull MessageId messageId,
                                  @Nonnull Session session) {

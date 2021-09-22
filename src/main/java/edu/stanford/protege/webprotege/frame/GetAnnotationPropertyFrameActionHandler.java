@@ -25,7 +25,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
  */
 public class GetAnnotationPropertyFrameActionHandler extends AbstractProjectActionHandler<GetAnnotationPropertyFrameAction, GetAnnotationPropertyFrameResult> {
 
-    private Logger logger = LoggerFactory.getLogger(GetAnnotationPropertyFrameActionHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(GetAnnotationPropertyFrameActionHandler.class);
 
     @Nonnull
     private final Provider<AnnotationPropertyFrameTranslator> translatorProvider;

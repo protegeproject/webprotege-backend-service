@@ -23,17 +23,17 @@ import static org.semanticweb.owlapi.manchestersyntax.parser.ManchesterOWLSyntax
  */
 public class ManchesterSyntaxObjectRenderer implements OWLObjectRenderer {
 
-    private ShortFormProvider shortFormProvider;
+    private final ShortFormProvider shortFormProvider;
 
-    private EntityIRIChecker entityIRIChecker;
+    private final EntityIRIChecker entityIRIChecker;
 
-    private LiteralStyle literalStyle;
+    private final LiteralStyle literalStyle;
 
-    private PrettyPrint prettyPrintOverride = PrettyPrint.ON;
+    private final PrettyPrint prettyPrintOverride = PrettyPrint.ON;
 
-    private HttpLinkRenderer linkRenderer;
+    private final HttpLinkRenderer linkRenderer;
 
-    private LiteralRenderer literalRenderer;
+    private final LiteralRenderer literalRenderer;
 
     @Inject
     public ManchesterSyntaxObjectRenderer(ShortFormProvider shortFormProvider,
@@ -69,27 +69,27 @@ public class ManchesterSyntaxObjectRenderer implements OWLObjectRenderer {
 
     private static class EntityRenderer implements OWLObjectVisitor {
 
-        private StringBuilder stringBuilder;
+        private final StringBuilder stringBuilder;
 
-        private ShortFormProvider sfp;
+        private final ShortFormProvider sfp;
 
-        private IRIShortFormProvider iriSfp = new SimpleIRIShortFormProvider();
+        private final IRIShortFormProvider iriSfp = new SimpleIRIShortFormProvider();
 
-        private EntityIRIChecker entityIRIChecker;
+        private final EntityIRIChecker entityIRIChecker;
 
-        private HighlightedEntityChecker highlightChecker;
+        private final HighlightedEntityChecker highlightChecker;
 
-        private DeprecatedEntityChecker deprecatedChecker;
+        private final DeprecatedEntityChecker deprecatedChecker;
 
-        private LiteralStyle literalStyle;
+        private final LiteralStyle literalStyle;
 
         private int classExpressionDepth = 0;
 
-        private PrettyPrint prettyPrintOverride;
+        private final PrettyPrint prettyPrintOverride;
 
-        private HttpLinkRenderer linkRenderer;
+        private final HttpLinkRenderer linkRenderer;
 
-        private LiteralRenderer literalRenderer;
+        private final LiteralRenderer literalRenderer;
 
         private EntityRenderer(StringBuilder stringBuilder,
                                ShortFormProvider sfp,

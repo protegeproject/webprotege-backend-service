@@ -14,9 +14,9 @@ import javax.inject.Inject;
 public class OntologyDiffCalculator {
 
 
-    private AnnotationDiffCalculator annotationDiffCalculator;
+    private final AnnotationDiffCalculator annotationDiffCalculator;
 
-    private AxiomDiffCalculator axiomDiffCalculator;
+    private final AxiomDiffCalculator axiomDiffCalculator;
 
     @Inject
     public OntologyDiffCalculator(AnnotationDiffCalculator annotationDiffCalculator, AxiomDiffCalculator axiomDiffCalculator) {

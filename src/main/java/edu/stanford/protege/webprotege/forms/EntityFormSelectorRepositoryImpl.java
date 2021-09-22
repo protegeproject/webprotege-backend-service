@@ -52,7 +52,7 @@ public class EntityFormSelectorRepositoryImpl implements EntityFormSelectorRepos
         var collection = database.getCollection(COLLECTION_NAME);
         var filter = new Document(PROJECT_ID, projectId.id());
         List<EntityFormSelector> resultList = new ArrayList<>();
-        collection.find(filter).forEach((Consumer<Document>) doc -> resultList.add(toEntityFormSelector(doc)));
+        collection.find(filter).forEach(doc -> resultList.add(toEntityFormSelector(doc)));
         return resultList.stream();
     }
 

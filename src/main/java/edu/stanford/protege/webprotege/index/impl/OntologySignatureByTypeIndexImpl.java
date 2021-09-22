@@ -49,8 +49,8 @@ public class OntologySignatureByTypeIndexImpl implements OntologySignatureByType
         checkNotNull(type);
         checkNotNull(ontologyId);
         if(type.equals(EntityType.ANNOTATION_PROPERTY)) {
-            return Stream.<E>concat(ontologyAxiomsSignatureIndex.getOntologyAxiomsSignature(type, ontologyId),
-                                    (Stream<E>) ontologyAnnotationsSignatureIndex.getOntologyAnnotationsSignature(ontologyId));
+            return Stream.concat(ontologyAxiomsSignatureIndex.getOntologyAxiomsSignature(type, ontologyId),
+                                 (Stream<E>) ontologyAnnotationsSignatureIndex.getOntologyAnnotationsSignature(ontologyId));
         }
         else {
             return ontologyAxiomsSignatureIndex.getOntologyAxiomsSignature(type, ontologyId);

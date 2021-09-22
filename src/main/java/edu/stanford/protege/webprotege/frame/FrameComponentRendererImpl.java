@@ -26,7 +26,7 @@ public class FrameComponentRendererImpl implements FrameComponentRenderer {
     @Nonnull
     private final EntitiesInProjectSignatureByIriIndex entitiesInProjectSignatureByIriIndex;
 
-    private OWLEntityVisitorEx<OWLEntityData> entityRenderer = new OWLEntityVisitorEx<>() {
+    private final OWLEntityVisitorEx<OWLEntityData> entityRenderer = new OWLEntityVisitorEx<>() {
         @Nonnull
         @Override
         public OWLEntityData visit(@Nonnull OWLClass cls) {
@@ -67,7 +67,7 @@ public class FrameComponentRendererImpl implements FrameComponentRenderer {
     @Nonnull
     private final EntitiesInProjectSignatureByIriIndex entitiesByIriIndex;
 
-    private OWLAnnotationValueVisitorEx<OWLPrimitiveData> annotationRenderer = new OWLAnnotationValueVisitorEx<>() {
+    private final OWLAnnotationValueVisitorEx<OWLPrimitiveData> annotationRenderer = new OWLAnnotationValueVisitorEx<>() {
         @Nonnull
         @Override
         public OWLPrimitiveData visit(@Nonnull IRI iri) {

@@ -32,7 +32,7 @@ public class UserActivityManager implements Repository {
 
     private static final Logger logger = LoggerFactory.getLogger(UserActivityManager.class);
 
-    private MongoOperations mongoTemplate;
+    private final MongoOperations mongoTemplate;
 
     @Inject
     public UserActivityManager(MongoTemplate mongoTemplate) {

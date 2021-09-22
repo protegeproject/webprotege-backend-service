@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class ImageLinkRenderer implements LinkRendererPlugin {
 
-    private static Set<String> extensions = Sets.newHashSet();
+    private static final Set<String> extensions = Sets.newHashSet();
 
     static {
         extensions.add(".png");

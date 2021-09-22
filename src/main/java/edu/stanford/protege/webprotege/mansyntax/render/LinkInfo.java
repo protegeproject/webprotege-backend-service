@@ -8,9 +8,9 @@ package edu.stanford.protege.webprotege.mansyntax.render;
  */
 public class LinkInfo {
 
-    private String linkAddress;
+    private final String linkAddress;
 
-    private String linkContent;
+    private final String linkContent;
 
     public LinkInfo(String linkAddress, String linkContent) {
         this.linkAddress = linkAddress;

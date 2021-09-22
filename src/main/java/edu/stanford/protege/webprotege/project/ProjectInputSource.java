@@ -24,7 +24,7 @@ public class ProjectInputSource implements OWLOntologyDocumentSource {
     private static final int BUFFER_SIZE = (8 * 1024 * 1024) + 100;
 
     @RootOntologyDocument
-    private File rootOntologyDocument;
+    private final File rootOntologyDocument;
 
 
     @Inject

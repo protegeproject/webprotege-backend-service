@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class OBONamespace implements Serializable {
 
-    private String namespace;
+    private final String namespace;
 
     public OBONamespace() {
         namespace = "";

@@ -17,7 +17,7 @@ public enum RevisionSerializationVocabulary {
 
     REVISION_TYPE_META_DATA_ATTRIBUTE("revisionType");
 
-    private String vocabularyName;
+    private final String vocabularyName;
 
     RevisionSerializationVocabulary(String vocabularyName) {
         this.vocabularyName = vocabularyName;

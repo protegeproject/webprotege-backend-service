@@ -23,9 +23,9 @@ public class AxiomBySubjectComparator implements Comparator<OWLAxiom> {
     public static final int SAME = 0;
     public static final int AFTER = 1;
 
-    private AxiomSubjectProvider axiomSubjectProvider;
+    private final AxiomSubjectProvider axiomSubjectProvider;
 
-    private Comparator<OWLObject> subjectComparator;
+    private final Comparator<OWLObject> subjectComparator;
 
     @Inject
     public AxiomBySubjectComparator(AxiomSubjectProvider axiomSubjectProvider, Comparator<OWLObject> subjectComparator) {

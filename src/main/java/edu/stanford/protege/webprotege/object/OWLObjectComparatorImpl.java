@@ -15,7 +15,7 @@ import java.util.Comparator;
  */
 public class OWLObjectComparatorImpl implements Comparator<OWLObject> {
 
-    private RenderingManager renderer;
+    private final RenderingManager renderer;
 
     @Inject
     public OWLObjectComparatorImpl(RenderingManager renderer) {

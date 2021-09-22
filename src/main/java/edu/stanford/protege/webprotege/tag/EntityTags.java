@@ -32,11 +32,11 @@ public class EntityTags {
 
     public static final String TAGS = "tags";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private OWLEntity entity;
+    private final OWLEntity entity;
 
-    private List<TagId> tags;
+    private final List<TagId> tags;
 
 
     public EntityTags(@Nonnull ProjectId projectId, @Nonnull OWLEntity entity, @Nonnull List<TagId> tags) {

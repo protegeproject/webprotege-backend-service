@@ -17,8 +17,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
@@ -33,7 +31,7 @@ public class DeprecateEntityByFormActionHandler extends AbstractProjectChangeHan
     private final DeprecateEntityByFormChangeListGeneratorFactory changeListGeneratorFactory;
 
     @Nonnull
-    private ProjectDetailsRepository projectDetailsRepository;
+    private final ProjectDetailsRepository projectDetailsRepository;
 
     @Inject
     public DeprecateEntityByFormActionHandler(@Nonnull AccessManager accessManager,

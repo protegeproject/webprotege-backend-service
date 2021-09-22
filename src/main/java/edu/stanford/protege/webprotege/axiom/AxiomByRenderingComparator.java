@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class AxiomByRenderingComparator implements Comparator<OWLAxiom> {
 
-    private OWLObjectRenderer renderer;
+    private final OWLObjectRenderer renderer;
 
     @Inject
     public AxiomByRenderingComparator(OWLObjectRenderer renderer) {

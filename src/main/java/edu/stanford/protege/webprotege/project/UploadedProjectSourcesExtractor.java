@@ -14,11 +14,11 @@ import java.io.IOException;
  */
 public class UploadedProjectSourcesExtractor implements RawProjectSourcesExtractor {
 
-    private ZipInputStreamChecker zipInputStreamChecker;
+    private final ZipInputStreamChecker zipInputStreamChecker;
 
-    private ZipArchiveProjectSourcesExtractor zipArchiveProjectSourcesExtractor;
+    private final ZipArchiveProjectSourcesExtractor zipArchiveProjectSourcesExtractor;
 
-    private SingleDocumentProjectSourcesExtractor singleDocumentProjectSourcesExtractor;
+    private final SingleDocumentProjectSourcesExtractor singleDocumentProjectSourcesExtractor;
 
     @Inject
     public UploadedProjectSourcesExtractor(ZipInputStreamChecker zipInputStreamChecker,

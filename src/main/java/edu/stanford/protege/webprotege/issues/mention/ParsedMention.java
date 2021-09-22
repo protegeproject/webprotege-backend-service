@@ -11,11 +11,11 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class ParsedMention {
 
-    private Mention parsedMention;
+    private final Mention parsedMention;
 
-    private int startIndex;
+    private final int startIndex;
 
-    private int endIndex;
+    private final int endIndex;
 
     public ParsedMention(Mention parsedMention, int startIndex, int endIndex) {
         this.parsedMention = parsedMention;

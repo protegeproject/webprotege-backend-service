@@ -29,7 +29,7 @@ public class MailPropertiesProvider implements Provider<Properties> {
 
     public static final String MAIL_SMTP_PASSWORD_MISSING_MESSAGE = "Mail properties are not configured correctly.  The mail.smtp.auth has been specified, which means that authentication will be used to send emails, but the mail.smtp.password property has not been specified.  Please specify a password for the smtp mail webprotege by using this property.  Mail properties may be specified using a mail.properties file placed in the root directory of the WebProtégé web-app directory.";
 
-    private static Logger logger = LoggerFactory.getLogger(MailPropertiesProvider.class);
+    private static final Logger logger = LoggerFactory.getLogger(MailPropertiesProvider.class);
 
     @Nonnull
     private final ConfigInputStreamSupplier configInputStreamSupplier;

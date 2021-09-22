@@ -34,7 +34,7 @@ public class ClassHierarchyChildrenAxiomsIndexImpl implements ClassHierarchyChil
     @Nonnull
     private final AxiomMultimapIndex<OWLClass, OWLClassAxiom> index;
 
-    private OWLAxiomVisitorExAdapter<List<OWLClass>> parentExtractorVisitor = new OWLAxiomVisitorExAdapter<>(Collections.<OWLClass>emptyList()) {
+    private final OWLAxiomVisitorExAdapter<List<OWLClass>> parentExtractorVisitor = new OWLAxiomVisitorExAdapter<>(Collections.emptyList()) {
         @Nonnull
         @Override
         public List<OWLClass> visit(OWLSubClassOfAxiom axiom) {

@@ -25,8 +25,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_PROPERTY;
 
-;
-
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 25/03/2013
  */

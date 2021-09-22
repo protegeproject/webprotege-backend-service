@@ -22,9 +22,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ProjectSharingSettings implements Serializable {
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
     
-    private List<SharingSetting> sharingSettings = new ArrayList<>();
+    private final List<SharingSetting> sharingSettings = new ArrayList<>();
 
     @Nullable
     private SharingPermission linkSharingPermission = null;

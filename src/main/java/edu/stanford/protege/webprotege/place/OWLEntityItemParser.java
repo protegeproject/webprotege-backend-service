@@ -13,11 +13,11 @@ public abstract class OWLEntityItemParser<E extends OWLEntity> implements ItemTo
 
     public static final String IRI_END = ">";
 
-    private EntityType<E> entityType;
+    private final EntityType<E> entityType;
 
-    private PrefixManager pm;
+    private final PrefixManager pm;
 
-    private OWLDataFactory dataFactory;
+    private final OWLDataFactory dataFactory;
 
     public OWLEntityItemParser(EntityType<E> entityType, OWLDataFactory dataFactory, PrefixManager pm) {
         this.entityType = entityType;

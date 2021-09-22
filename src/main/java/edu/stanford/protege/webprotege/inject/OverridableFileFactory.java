@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class OverridableFileFactory {
 
-    private File dataDirectory;
+    private final File dataDirectory;
 
     @Inject
     public OverridableFileFactory(@Nonnull @DataDirectory File dataDirectory) {

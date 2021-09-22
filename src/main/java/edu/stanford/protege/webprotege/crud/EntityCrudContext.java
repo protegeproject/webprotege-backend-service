@@ -33,7 +33,7 @@ public class EntityCrudContext {
     private DictionaryLanguage dictionaryLanguage;
 
     @Nonnull
-    private OWLOntologyID targetOntologyId;
+    private final OWLOntologyID targetOntologyId;
 
     public EntityCrudContext(@Nonnull ProjectId projectId,
                              @Nonnull ProjectDetailsRepository projectDetailsRepository,

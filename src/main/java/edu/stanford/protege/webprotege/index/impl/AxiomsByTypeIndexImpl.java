@@ -40,7 +40,7 @@ public class AxiomsByTypeIndexImpl implements AxiomsByTypeIndex, UpdatableIndex 
     @Nonnull
     private final ImmutableList<SetMultimap<OWLOntologyID, OWLAxiom>> axiomTypeList;
 
-    private AxiomChangeHandler axiomChangeHandler = new AxiomChangeHandler();
+    private final AxiomChangeHandler axiomChangeHandler = new AxiomChangeHandler();
 
     @Inject
     public AxiomsByTypeIndexImpl() {

@@ -14,9 +14,9 @@ import javax.annotation.Nonnull;
 public class DeleteAxiomsResult implements Result, HasProjectId {
 
     @Nonnull
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private int deletedAxiomsCount;
+    private final int deletedAxiomsCount;
 
     public DeleteAxiomsResult(@Nonnull ProjectId projectId,
                               int deletedAxiomsCount) {

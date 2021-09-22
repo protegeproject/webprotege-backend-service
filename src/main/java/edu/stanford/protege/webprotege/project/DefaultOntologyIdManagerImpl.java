@@ -50,7 +50,7 @@ public class DefaultOntologyIdManagerImpl implements DefaultOntologyIdManager, D
 
     private OWLOntologyID createFreshOntologyId() {
         if(freshOntologyId == null) {
-            var ontologyIri = "urn:webprotege:ontology:" + UUID.randomUUID().toString();
+            var ontologyIri = "urn:webprotege:ontology:" + UUID.randomUUID();
             freshOntologyId = new OWLOntologyID(IRI.create(ontologyIri));
         }
         return freshOntologyId;

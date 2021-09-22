@@ -26,19 +26,19 @@ import java.util.List;
 @ProjectSingleton
 public class ManchesterSyntaxEntityFrameRenderer {
 
-    private ShortFormProvider shortFormProvider;
+    private final ShortFormProvider shortFormProvider;
 
-    private OntologyIRIShortFormProvider ontologyIRIShortFormProvider;
+    private final OntologyIRIShortFormProvider ontologyIRIShortFormProvider;
 
-    private ManchesterSyntaxObjectRenderer objectRenderer;
+    private final ManchesterSyntaxObjectRenderer objectRenderer;
 
-    private HighlightedEntityChecker highlightChecker;
+    private final HighlightedEntityChecker highlightChecker;
 
-    private DeprecatedEntityChecker deprecatedChecker;
+    private final DeprecatedEntityChecker deprecatedChecker;
 
-    private ItemStyleProvider itemStyleProvider;
+    private final ItemStyleProvider itemStyleProvider;
 
-    private NestedAnnotationStyle nestedAnnotationStyle;
+    private final NestedAnnotationStyle nestedAnnotationStyle;
 
     private final ElementTagRenderer frameHeaderTagRenderer = new ElementRenderer("div", "frame-header");
 
@@ -388,9 +388,9 @@ public class ManchesterSyntaxEntityFrameRenderer {
 
     private static class ElementRenderer implements ElementTagRenderer {
 
-        private String elementName;
+        private final String elementName;
 
-        private String className;
+        private final String className;
 
         private ElementRenderer(String elementName, String className) {
             this.elementName = elementName;

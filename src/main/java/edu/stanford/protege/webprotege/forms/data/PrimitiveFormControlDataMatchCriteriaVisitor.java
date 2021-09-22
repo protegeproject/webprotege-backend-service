@@ -9,13 +9,13 @@ public interface PrimitiveFormControlDataMatchCriteriaVisitor<R> {
 
     default R visit(EntityFormControlDataMatchCriteria entityFormControlDataMatchCriteria) {
         return null;
-    };
+    }
 
     default R visit(LiteralFormControlDataMatchCriteria literalFormControlDataMatchCriteria) {
         return null;
-    };
+    }
 
     default R visit(CompositePrimitiveFormControlDataMatchCriteria compositePrimitiveFormControlDataMatchCriteria) {
         return null;
-    };
+    }
 }

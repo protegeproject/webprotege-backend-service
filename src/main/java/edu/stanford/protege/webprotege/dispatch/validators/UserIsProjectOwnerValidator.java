@@ -16,11 +16,11 @@ import javax.inject.Inject;
  */
 public class UserIsProjectOwnerValidator implements RequestValidator {
 
-    private ProjectDetailsManager projectDetailsManager;
+    private final ProjectDetailsManager projectDetailsManager;
 
-    private UserId userId;
+    private final UserId userId;
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
     @Inject
     public UserIsProjectOwnerValidator(ProjectId projectId,

@@ -24,9 +24,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 public class NonUniqueLangTagsMatcher implements EntityFrameMatcher {
 
-    private AnnotationAssertionAxiomsIndex axiomsIndex;
+    private final AnnotationAssertionAxiomsIndex axiomsIndex;
 
-    private Matcher<OWLAnnotationProperty> propertyMatcher;
+    private final Matcher<OWLAnnotationProperty> propertyMatcher;
 
     @Inject
     public NonUniqueLangTagsMatcher(@Nonnull  AnnotationAssertionAxiomsIndex axiomsIndex,

@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class PrefixedNameExpander {
 
-    private ImmutableMap<String, String> prefixName2PrefixMap;
+    private final ImmutableMap<String, String> prefixName2PrefixMap;
 
     private PrefixedNameExpander(ImmutableMap<String, String> prefixName2PrefixMap) {
         this.prefixName2PrefixMap = checkNotNull(prefixName2PrefixMap);
@@ -51,7 +51,7 @@ public class PrefixedNameExpander {
 
     public static class Builder {
 
-        private Map<String, String> prefixName2PrefixMap = Maps.newHashMap();
+        private final Map<String, String> prefixName2PrefixMap = Maps.newHashMap();
 
         public Builder() {
         }

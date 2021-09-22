@@ -30,11 +30,11 @@ public class OBONamespaceCache {
 
     private ImmutableSet<OBONamespace> namespaceCache = ImmutableSet.of();
 
-    private ReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
+    private final ReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
 
-    private Lock READ_LOCK = READ_WRITE_LOCK.readLock();
+    private final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
 
-    private Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
+    private final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
 
     @Nonnull
     private final OntologyAnnotationsIndex ontologyAnnotationsIndex;

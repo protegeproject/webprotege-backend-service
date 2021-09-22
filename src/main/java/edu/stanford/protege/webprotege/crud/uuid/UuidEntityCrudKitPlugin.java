@@ -18,7 +18,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class UuidEntityCrudKitPlugin implements EntityCrudKitPlugin<UuidEntityCrudKitHandler, UuidSuffixSettings, ChangeSetEntityCrudSession> {
 
     @Nonnull
-    private UuidSuffixKit kit;
+    private final UuidSuffixKit kit;
 
     @Nonnull
     private final UuidEntityCrudKitHandlerFactory factory;

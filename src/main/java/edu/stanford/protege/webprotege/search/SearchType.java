@@ -14,7 +14,7 @@ public enum SearchType {
 
     SUB_STRING_MATCH_IGNORE_CASE(true);
 
-    private boolean ignoreCase;
+    private final boolean ignoreCase;
 
     SearchType(boolean ignoreCase) {
         this.ignoreCase = ignoreCase;

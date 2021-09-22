@@ -21,7 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class FileContents {
 
-    private Supplier<File> fileSupplier;
+    private final Supplier<File> fileSupplier;
 
     private long lastTimestamp = 0;
 

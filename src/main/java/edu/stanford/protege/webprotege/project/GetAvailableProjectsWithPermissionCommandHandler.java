@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
  */
 public class GetAvailableProjectsWithPermissionCommandHandler implements CommandHandler<GetAvailableProjectsWithPermissionAction, GetAvailableProjectsWithPermissionResult> {
 
-    private GetAvailableProjectsWithPermissionActionHandler delegate;
+    private final GetAvailableProjectsWithPermissionActionHandler delegate;
 
     public GetAvailableProjectsWithPermissionCommandHandler(GetAvailableProjectsWithPermissionActionHandler delegate) {
         this.delegate = delegate;

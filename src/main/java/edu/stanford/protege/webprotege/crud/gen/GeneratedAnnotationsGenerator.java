@@ -31,7 +31,7 @@ public class GeneratedAnnotationsGenerator {
     private final IncrementingPatternDescriptorValueGenerator incrementingPatternDescriptorValueGenerator;
 
     @Nonnull
-    private OWLDataFactory dataFactory;
+    private final OWLDataFactory dataFactory;
 
     @Nonnull
     private final DefaultOntologyIdManager defaultOntologyIdManager;

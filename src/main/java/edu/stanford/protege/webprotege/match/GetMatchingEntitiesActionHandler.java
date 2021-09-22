@@ -34,7 +34,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class GetMatchingEntitiesActionHandler extends AbstractProjectActionHandler<GetMatchingEntitiesAction, GetMatchingEntitiesResult>{
 
-    private static Logger logger = LoggerFactory.getLogger(GetMatchingEntitiesActionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(GetMatchingEntitiesActionHandler.class);
 
     @Nonnull
     private final DictionaryManager dictionaryManager;

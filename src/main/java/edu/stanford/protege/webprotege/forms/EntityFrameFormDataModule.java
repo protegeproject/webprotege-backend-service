@@ -20,7 +20,7 @@ public class EntityFrameFormDataModule {
     private final FormPageRequestIndex pageRequestIndex;
 
     @Nonnull
-    private FormRegionFilterIndex formRegionFilterIndex;
+    private final FormRegionFilterIndex formRegionFilterIndex;
 
 
     public EntityFrameFormDataModule(@Nonnull FormRegionOrderingIndex formRegionOrderingIndex,

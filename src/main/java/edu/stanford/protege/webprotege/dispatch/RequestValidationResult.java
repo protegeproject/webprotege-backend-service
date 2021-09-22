@@ -12,9 +12,9 @@ public class RequestValidationResult {
 
     private static final RequestValidationResult VALID_RESULT = new RequestValidationResult();
 
-    private ValidationResult validationResult;
+    private final ValidationResult validationResult;
 
-    private Optional<Exception> exception;
+    private final Optional<Exception> exception;
 
     protected RequestValidationResult() {
         this(ValidationResult.VALID, Optional.empty());

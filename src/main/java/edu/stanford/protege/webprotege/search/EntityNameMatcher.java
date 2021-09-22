@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class EntityNameMatcher {
 
-    private String searchString;
+    private final String searchString;
 
     /**
      * Constructs and {@link EntityNameMatcher} which searches for the specified string.

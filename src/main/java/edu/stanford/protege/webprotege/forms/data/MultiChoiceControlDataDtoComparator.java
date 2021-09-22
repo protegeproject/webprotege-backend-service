@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 public class MultiChoiceControlDataDtoComparator implements Comparator<MultiChoiceControlDataDto> {
 
-    private static Comparator<Iterable<PrimitiveFormControlDataDto>> lexComparator = Comparators.lexicographical(
+    private static final Comparator<Iterable<PrimitiveFormControlDataDto>> lexComparator = Comparators.lexicographical(
             PrimitiveFormControlDataDto::compareTo
     );
 

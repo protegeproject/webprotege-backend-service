@@ -39,7 +39,7 @@ public class CommentedEntityData implements  Comparable<CommentedEntityData> {
 
     private List<UserId> partipants;
 
-    private static transient Comparator<CommentedEntityData> comparator =
+    private static final transient Comparator<CommentedEntityData> comparator =
             Comparator.comparing((CommentedEntityData c) -> c.getOpenThreadCount() > 0)
                       .reversed()
                       .thenComparing(c -> c.getEntityData().getBrowserText().toLowerCase());

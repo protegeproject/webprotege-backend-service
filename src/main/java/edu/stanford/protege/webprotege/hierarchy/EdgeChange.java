@@ -9,7 +9,7 @@ import java.util.function.Consumer;
  */
 public abstract class EdgeChange<U> extends GraphModelChange<U> {
 
-    private GraphEdge<U> edge;
+    private final GraphEdge<U> edge;
 
     protected EdgeChange(GraphEdge<U> edge) {
         this.edge = edge;

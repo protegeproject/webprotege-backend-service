@@ -86,11 +86,11 @@ public class ProjectViewPlace implements HasProjectId {
 
     public static class Builder {
 
-        private ProjectId projectId;
+        private final ProjectId projectId;
 
         private PerspectiveId perspectiveId;
 
-        private ItemSelection.Builder itemSelectionBuilder;
+        private final ItemSelection.Builder itemSelectionBuilder;
 
         public Builder(ProjectId projectId, PerspectiveId perspectiveId) {
             this.projectId = checkNotNull(projectId);
@@ -139,9 +139,9 @@ public class ProjectViewPlace implements HasProjectId {
 
     private static class Key implements PlaceKey {
 
-        private ProjectId projectId;
+        private final ProjectId projectId;
 
-        private PerspectiveId perspectiveId;
+        private final PerspectiveId perspectiveId;
 
         private Key(ProjectId projectId, PerspectiveId perspectiveId) {
             this.projectId = projectId;

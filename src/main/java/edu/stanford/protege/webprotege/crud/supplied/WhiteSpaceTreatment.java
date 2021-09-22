@@ -16,7 +16,7 @@ public enum  WhiteSpaceTreatment {
 
     REPLACE_WITH_DASHES("Replace with dashes");
 
-    private String displayName;
+    private final String displayName;
 
     WhiteSpaceTreatment(String displayName) {
         this.displayName = displayName;

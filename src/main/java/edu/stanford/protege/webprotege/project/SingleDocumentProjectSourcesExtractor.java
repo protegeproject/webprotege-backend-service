@@ -31,7 +31,7 @@ public class SingleDocumentProjectSourcesExtractor implements RawProjectSourcesE
 
         public static final NonMappingOntologyIRIMapper EMPTY_IRI_MAPPER = new NonMappingOntologyIRIMapper();
 
-        private File ontologyDocument;
+        private final File ontologyDocument;
 
         private SingleDocumentProjectSources(File ontologyDocument) {
             this.ontologyDocument = ontologyDocument;

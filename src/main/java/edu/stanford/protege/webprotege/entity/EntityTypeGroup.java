@@ -23,9 +23,9 @@ public enum EntityTypeGroup {
 
     DATATYPE("Datatype", EntityType.DATATYPE);
 
-    private List<EntityType<?>> entityTypes;
+    private final List<EntityType<?>> entityTypes;
 
-    private String displayName;
+    private final String displayName;
 
     EntityTypeGroup(String displayName, EntityType<?>... entityTypes) {
         this.entityTypes = Collections.unmodifiableList(new ArrayList<EntityType<?>>(Arrays.asList(entityTypes)));

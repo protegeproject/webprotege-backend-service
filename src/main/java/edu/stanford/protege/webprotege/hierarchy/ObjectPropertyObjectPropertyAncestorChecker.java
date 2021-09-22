@@ -9,7 +9,7 @@ import javax.inject.Inject;
  */
 public class ObjectPropertyObjectPropertyAncestorChecker implements HasHasAncestor<OWLObjectProperty, OWLObjectProperty> {
 
-    private ObjectPropertyHierarchyProvider hierarchyProvider;
+    private final ObjectPropertyHierarchyProvider hierarchyProvider;
 
     @Inject
     public ObjectPropertyObjectPropertyAncestorChecker(ObjectPropertyHierarchyProvider

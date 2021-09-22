@@ -25,11 +25,11 @@ public class ManchesterSyntaxKeywords {
 
     private static final String AXIOM_KEYWORD_STYLE = "cm-axiom-kw";
 
-    private Map<String, ManchesterOWLSyntax> keywordMap = Maps.newHashMap();
+    private final Map<String, ManchesterOWLSyntax> keywordMap = Maps.newHashMap();
 
-    private Map<String, String> rawKeyword2StyleNameMap = Maps.newHashMap();
+    private final Map<String, String> rawKeyword2StyleNameMap = Maps.newHashMap();
 
-    private Map<ManchesterOWLSyntax, String> keywordStyleMap = Maps.newHashMap();
+    private final Map<ManchesterOWLSyntax, String> keywordStyleMap = Maps.newHashMap();
 
     public ManchesterSyntaxKeywords() {
         for(ManchesterOWLSyntax syntax : ManchesterOWLSyntax.values()) {
@@ -93,9 +93,9 @@ public class ManchesterSyntaxKeywords {
 
     public static class KeywordComparator implements Comparator<String> {
 
-        private ManchesterSyntaxKeywords keywords = new ManchesterSyntaxKeywords();
+        private final ManchesterSyntaxKeywords keywords = new ManchesterSyntaxKeywords();
 
-        private ManchesterSyntaxKeywordComparator comparator = new ManchesterSyntaxKeywordComparator();
+        private final ManchesterSyntaxKeywordComparator comparator = new ManchesterSyntaxKeywordComparator();
 
         @Override
         public int compare(String s, String s2) {

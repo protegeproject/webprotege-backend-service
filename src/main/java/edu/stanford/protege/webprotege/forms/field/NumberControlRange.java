@@ -113,9 +113,9 @@ public class NumberControlRange {
         INCLUSIVE(">=", "<="),
         EXCLUSIVE(">", "<");
 
-        private String lowerSymbol;
+        private final String lowerSymbol;
 
-        private String upperSymbol;
+        private final String upperSymbol;
 
         BoundType(String lowerSymbol, String upperSymbol) {
             this.lowerSymbol = lowerSymbol;

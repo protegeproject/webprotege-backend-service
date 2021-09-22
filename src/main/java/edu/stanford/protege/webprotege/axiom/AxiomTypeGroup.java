@@ -88,9 +88,9 @@ public enum AxiomTypeGroup {
 
 
 
-    private String displayName;
+    private final String displayName;
 
-    private Optional<OWLRDFVocabulary> owlrdfVocabulary;
+    private final Optional<OWLRDFVocabulary> owlrdfVocabulary;
 
     private final List<AxiomType<?>> axiomTypes;
 

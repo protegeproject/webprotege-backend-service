@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ActionHandlerNotFoundException extends RuntimeException {
 
-    private Request<?> action;
+    private final Request<?> action;
 
     /**
      * Constructs an ActionHandlerNotFoundException for the specified action.

@@ -18,7 +18,7 @@ public class SetProjectSettingsAction implements ProjectAction<SetProjectSetting
 
     public static final String CHANNEL = "webprotege.projects.SetProjectSettings";
 
-    private ProjectSettings projectSettings;
+    private final ProjectSettings projectSettings;
 
     @Override
     public String getChannel() {

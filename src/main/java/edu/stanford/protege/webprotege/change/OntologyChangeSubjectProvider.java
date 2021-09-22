@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class OntologyChangeSubjectProvider implements HasGetChangeSubjects {
 
-    private ChangeSubjectProvider changeSubjectProvider;
+    private final ChangeSubjectProvider changeSubjectProvider;
 
     private final SubjectClosureResolver closureResolver;
 
@@ -47,7 +47,7 @@ public class OntologyChangeSubjectProvider implements HasGetChangeSubjects {
 
     private static class ChangeSubjectProvider implements OntologyChangeVisitorEx<Set<OWLEntity>> {
 
-        private AxiomEntitySubjectProvider subjectProvider;
+        private final AxiomEntitySubjectProvider subjectProvider;
 
         private ChangeSubjectProvider(AxiomEntitySubjectProvider subjectProvider) {
             this.subjectProvider = subjectProvider;
@@ -72,7 +72,7 @@ public class OntologyChangeSubjectProvider implements HasGetChangeSubjects {
 
     private static class AxiomEntitySubjectProvider {
 
-        private EntitiesInProjectSignatureByIriIndex entitiesByIri;
+        private final EntitiesInProjectSignatureByIriIndex entitiesByIri;
 
         private AxiomEntitySubjectProvider(EntitiesInProjectSignatureByIriIndex entitiesByIri) {
             this.entitiesByIri = entitiesByIri;

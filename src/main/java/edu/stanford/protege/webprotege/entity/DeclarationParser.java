@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public class DeclarationParser {
 
-    private OWLDataFactory dataFactory;
+    private final OWLDataFactory dataFactory;
 
     public DeclarationParser(OWLDataFactory dataFactory) {
         this.dataFactory = dataFactory;

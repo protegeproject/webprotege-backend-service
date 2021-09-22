@@ -23,11 +23,11 @@ import static org.semanticweb.owlapi.model.AxiomType.ANNOTATION_ASSERTION;
 public class EntityDeprecatedChangedEventTranslator implements EventTranslator {
 
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private DeprecatedEntityChecker deprecatedEntityChecker;
+    private final DeprecatedEntityChecker deprecatedEntityChecker;
 
-    private EntitiesInProjectSignatureByIriIndex entitiesByIri;
+    private final EntitiesInProjectSignatureByIriIndex entitiesByIri;
 
     @Inject
     public EntityDeprecatedChangedEventTranslator(ProjectId projectId,

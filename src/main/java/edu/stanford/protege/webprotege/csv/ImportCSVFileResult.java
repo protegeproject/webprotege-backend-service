@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.dispatch.Result;
  */
 public class ImportCSVFileResult implements Result {
 
-    private int rowCount;
+    private final int rowCount;
 
     public ImportCSVFileResult(int rowCount) {
         this.rowCount = rowCount;

@@ -28,7 +28,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
  */
 class FileTransferTask implements Callable<Void> {
 
-    private static Logger logger = LoggerFactory.getLogger(FileTransferTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(FileTransferTask.class);
 
     private static final String MIME_TYPE = "application/zip";
 

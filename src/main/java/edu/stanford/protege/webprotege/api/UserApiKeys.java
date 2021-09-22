@@ -35,9 +35,9 @@ public class UserApiKeys {
     public static final String API_KEYS__API_KEY = API_KEYS + ".apiKey";
 
     @Id
-    private UserId userId;
+    private final UserId userId;
 
-    private List<ApiKeyRecord> apiKeys;
+    private final List<ApiKeyRecord> apiKeys;
 
     public UserApiKeys(@Nonnull @JsonProperty("_id") UserId userId, @Nonnull List<ApiKeyRecord> apiKeys) {
         this.userId = checkNotNull(userId);

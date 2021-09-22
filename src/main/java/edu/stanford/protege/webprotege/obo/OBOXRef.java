@@ -13,17 +13,17 @@ public class OBOXRef implements Serializable {
     /**
      * The name of the external source (historically database I suppose, but this could be an ontology, vocabulary etc.)
      */
-    private String databaseName;
+    private final String databaseName;
 
     /**
      * The ID of the term in the database
      */
-    private String databaseId;
+    private final String databaseId;
 
     /**
      * The description of the xref
      */
-    private String description;
+    private final String description;
 
 
     public OBOXRef() {

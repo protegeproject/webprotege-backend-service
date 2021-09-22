@@ -24,15 +24,15 @@ public class ApplicationPreferences {
 
     @SuppressWarnings("unused")
     @Id
-    private String id = ID;
+    private final String id = ID;
 
-    private String applicationName;
+    private final String applicationName;
 
-    private String systemNotificationEmailAddress;
+    private final String systemNotificationEmailAddress;
 
-    private ApplicationLocation applicationLocation;
+    private final ApplicationLocation applicationLocation;
 
-    private long maxUploadSize;
+    private final long maxUploadSize;
     
     public ApplicationPreferences(@Nonnull String applicationName,
                                   @Nonnull String systemNotificationEmailAddress,

@@ -17,9 +17,9 @@ import java.util.Map;
  */
 public class WebProtegeOWLEntityChecker implements OWLEntityChecker {
 
-    private DictionaryManager dictionaryManager;
+    private final DictionaryManager dictionaryManager;
 
-    private Map<String, OWLEntityData> freshEntitiesMap = Maps.newHashMap();
+    private final Map<String, OWLEntityData> freshEntitiesMap = Maps.newHashMap();
 
     @Inject
     public WebProtegeOWLEntityChecker(HasFreshEntities freshEntities,

@@ -15,7 +15,7 @@ public class DefaultItemTypeMapper implements ItemTokenParser.ItemTypeMapper {
 //
 //    private DefaultPrefixManager defaultPrefixManager;
 
-    private Map<String, ItemTokenParser.ItemParser> typeMapper = Maps.newHashMap();
+    private final Map<String, ItemTokenParser.ItemParser> typeMapper = Maps.newHashMap();
 
     public DefaultItemTypeMapper(OWLDataFactory dataFactory, DefaultPrefixManager defaultPrefixManager) {
         setTypeParser(OWLClassItem.getType(), new OWLEntityItemParser<OWLClass>(

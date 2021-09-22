@@ -18,13 +18,13 @@ public class ImportCSVFileAction implements ProjectAction<ImportCSVFileResult> {
 
     public static final String CHANNEL = "webprotege.csv.ImportCsvFile";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
-    private OWLClass importRootClass;
+    private final OWLClass importRootClass;
 
-    private DocumentId documentId;
+    private final DocumentId documentId;
 
-    private CSVImportDescriptor descriptor;
+    private final CSVImportDescriptor descriptor;
 
     @Override
     public String getChannel() {

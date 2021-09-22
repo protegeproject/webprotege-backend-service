@@ -10,6 +10,7 @@ import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -56,7 +57,8 @@ public class GetCSVGridActionHandler implements ApplicationActionHandler<GetCSVG
     private CSVGrid getCSVGrid(File file, int rowLimit) {
         CSVGrid grid;
         try {
-            Reader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
+            Reader fileReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),
+                                                                         StandardCharsets.UTF_8));
             CSVGridParser gridParser = new CSVGridParser();
             grid = gridParser.readToLimit(fileReader, rowLimit);
             fileReader.close();

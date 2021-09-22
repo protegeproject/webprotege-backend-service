@@ -65,7 +65,7 @@ public class FormFrameConverter {
                     @Override
                     public Optional<PlainEntityFrame> visit(@Nonnull OWLNamedIndividual individual) {
                         return Optional.of(PlainNamedIndividualFrame.get(individual,
-                                                                         formFrame.getClasses(), ImmutableSet.<OWLNamedIndividual>of(),
+                                                                         formFrame.getClasses(), ImmutableSet.of(),
                                                                          formFrame.getPropertyValues()));
                     }
 

@@ -19,9 +19,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class ParentNode extends Node {
 
-    private Direction direction;
+    private final Direction direction;
 
-    private List<ParentNode.NodeHolder> children = new ArrayList<ParentNode.NodeHolder>();
+    private final List<ParentNode.NodeHolder> children = new ArrayList<ParentNode.NodeHolder>();
 
     public ParentNode() {
         this(Direction.getDefaultDirection());

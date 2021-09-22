@@ -15,11 +15,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Deprecated
 public class ApiKeyInfo {
 
-    private ApiKeyId apiKeyId;
+    private final ApiKeyId apiKeyId;
 
-    private long createdAt;
+    private final long createdAt;
 
-    private String purpose;
+    private final String purpose;
 
     public ApiKeyInfo(ApiKeyId apiKeyId,
                       long createdAt,

@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class AxiomByTypeComparator implements Comparator<OWLAxiom> {
 
-    private Map<AxiomType<?>, Integer> typeIndexMap = new HashMap<>();
+    private final Map<AxiomType<?>, Integer> typeIndexMap = new HashMap<>();
 
     @Inject
     public AxiomByTypeComparator(@AxiomTypeOrdering List<AxiomType<?>> axiomTypeOrdering) {

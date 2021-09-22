@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class AxiomTypeRenderer {
 
-    private static Map<AxiomType, String> renderingMap = new HashMap<AxiomType, String>();
+    private static final Map<AxiomType, String> renderingMap = new HashMap<AxiomType, String>();
 
 
     static {

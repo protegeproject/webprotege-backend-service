@@ -13,9 +13,9 @@ import java.io.Serializable;
  */
 public class GraphEdge<U> implements Serializable {
 
-    private GraphNode<U> predecessor;
+    private final GraphNode<U> predecessor;
 
-    private GraphNode<U> successor;
+    private final GraphNode<U> successor;
 
     @JsonCreator
     public GraphEdge(@JsonProperty("predecessor") GraphNode<U> predecessor,

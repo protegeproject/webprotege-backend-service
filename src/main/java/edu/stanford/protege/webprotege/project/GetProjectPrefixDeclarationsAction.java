@@ -18,7 +18,7 @@ public class GetProjectPrefixDeclarationsAction implements ProjectAction<GetProj
 
     public static final String CHANNEL = "webprotege.projects.GetProjectPrefixDeclarations";
 
-    private String projectId;
+    private final String projectId;
 
     private GetProjectPrefixDeclarationsAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId.id());

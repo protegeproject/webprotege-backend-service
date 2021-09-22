@@ -38,7 +38,7 @@ public class GetOntologyAnnotationsActionHandler extends AbstractProjectActionHa
     private final PropertyValueComparator propertyValueComparator;
 
     @Nonnull
-    private DefaultOntologyIdManager defaultOntologyManager;
+    private final DefaultOntologyIdManager defaultOntologyManager;
 
     @Inject
     public GetOntologyAnnotationsActionHandler(@Nonnull AccessManager accessManager,

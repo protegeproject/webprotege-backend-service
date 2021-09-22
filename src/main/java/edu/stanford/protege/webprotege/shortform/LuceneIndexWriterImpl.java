@@ -55,7 +55,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     private final SearcherManager searcherManager;
 
     @Nonnull
-    private BuiltInOwlEntitiesIndex builtInOwlEntitiesIndex;
+    private final BuiltInOwlEntitiesIndex builtInOwlEntitiesIndex;
 
 
     @Inject

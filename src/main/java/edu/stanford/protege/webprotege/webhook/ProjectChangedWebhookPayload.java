@@ -22,7 +22,7 @@ public class ProjectChangedWebhookPayload {
 
     private final long revisionNumber;
 
-    private long timestamp;
+    private final long timestamp;
 
     public ProjectChangedWebhookPayload(@Nonnull ProjectId projectId,
                                         @Nonnull UserId userId,

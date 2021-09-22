@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class OBOIdSession implements ChangeSetEntityCrudSession {
 
-    private Set<Long> sessionIds = Sets.newHashSet();
+    private final Set<Long> sessionIds = Sets.newHashSet();
 
     public OBOIdSession() {
     }

@@ -11,9 +11,9 @@ public enum DiffOperation {
 
     REMOVE("Remove", "\u2296");
 
-    private String displayName;
+    private final String displayName;
 
-    private String symbol;
+    private final String symbol;
 
     DiffOperation(String displayName, String symbol) {
         this.displayName = displayName;

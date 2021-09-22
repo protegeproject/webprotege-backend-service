@@ -19,7 +19,7 @@ import static com.google.common.base.MoreObjects.toStringHelper;
  */
 public class FileDownloadParameters {
 
-    private HttpServletRequest request;
+    private final HttpServletRequest request;
 
     public FileDownloadParameters(HttpServletRequest request) {
         this.request = request;

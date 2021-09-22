@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class CommentRenderer {
 
-    private MentionParser mentionParser = new MentionParser();
+    private final MentionParser mentionParser = new MentionParser();
 
     public String renderComment(String commentBody) {
         List<ParsedMention> parsedMentions = mentionParser.parseMentions(commentBody);
@@ -30,7 +30,7 @@ public class CommentRenderer {
         for(ParsedMention pm : parsedMentions) {
             int startIndex = pm.getStartIndex();
             int endIndex = pm.getEndIndex();
-            rendering.append(commentBody.substring(currentPos, startIndex));
+            rendering.append(commentBody, currentPos, startIndex);
             Mention mention = pm.getParsedMention();
             if(mention.getMentionedUserId().isPresent()) {
                 rendering.append("<span class=\"wp-comment__user-mention\">");
@@ -38,7 +38,7 @@ public class CommentRenderer {
                 rendering.append("</span>");
             }
             else {
-                rendering.append(commentBody.substring(startIndex, endIndex));
+                rendering.append(commentBody, startIndex, endIndex);
             }
             currentPos = endIndex;
         }

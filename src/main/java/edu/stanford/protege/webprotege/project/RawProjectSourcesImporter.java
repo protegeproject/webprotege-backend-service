@@ -14,9 +14,9 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
  */
 public class RawProjectSourcesImporter {
 
-    private OWLOntologyManager manager;
+    private final OWLOntologyManager manager;
 
-    private OWLOntologyLoaderConfiguration loaderConfig;
+    private final OWLOntologyLoaderConfiguration loaderConfig;
 
     public RawProjectSourcesImporter(OWLOntologyManager manager, OWLOntologyLoaderConfiguration loaderConfig) {
         this.manager = manager;

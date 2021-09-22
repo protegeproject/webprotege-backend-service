@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class DefaultHttpLinkRenderer implements HttpLinkRenderer {
 
-    private List<LinkRendererPlugin> pluginList = new ArrayList<>();
+    private final List<LinkRendererPlugin> pluginList = new ArrayList<>();
 
     @Inject
     public DefaultHttpLinkRenderer() {

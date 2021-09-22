@@ -17,9 +17,9 @@ import java.util.Set;
  */
 class PropertyValueTranslator implements PlainPropertyValueVisitor<Set<OWLAxiom>> {
 
-    private OWLEntity subject;
+    private final OWLEntity subject;
 
-    private Mode mode;
+    private final Mode mode;
 
     PropertyValueTranslator(OWLEntity subject,
                             Mode mode) {

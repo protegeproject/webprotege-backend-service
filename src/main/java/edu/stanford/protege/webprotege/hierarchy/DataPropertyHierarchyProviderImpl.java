@@ -31,7 +31,7 @@ public class DataPropertyHierarchyProviderImpl extends AbstractOWLPropertyHierar
     private final AxiomsByTypeIndex axiomsByTypeIndex;
 
     @Nonnull
-    private SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex;
+    private final SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex;
 
     @Inject
     public DataPropertyHierarchyProviderImpl(ProjectId projectId,

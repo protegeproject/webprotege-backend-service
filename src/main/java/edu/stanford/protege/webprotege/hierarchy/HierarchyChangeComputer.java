@@ -36,9 +36,9 @@ public abstract class HierarchyChangeComputer<T extends OWLEntity> implements Ev
     private final EntityNodeRenderer renderer;
 
 
-    private SetMultimap<T, T> child2ParentMap = HashMultimap.create();
+    private final SetMultimap<T, T> child2ParentMap = HashMultimap.create();
 
-    private Set<T> roots = new HashSet<>();
+    private final Set<T> roots = new HashSet<>();
 
     public HierarchyChangeComputer(ProjectId projectId, EntityType<T> entityType, HierarchyProvider<T> hierarchyProvider, HierarchyId hierarchyId, EntityNodeRenderer renderer) {
         this.projectId = projectId;

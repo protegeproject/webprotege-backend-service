@@ -10,17 +10,17 @@ import edu.stanford.protege.webprotege.inject.ProjectSingleton;
  */
 public class AnnotationAssertionAxiomsModule {
 
-    private ProjectOntologiesIndex projectOntologiesIndex;
+    private final ProjectOntologiesIndex projectOntologiesIndex;
 
-    private ProjectAnnotationAssertionAxiomsBySubjectIndex annotationAssertionAxiomsBySubjectIndex;
+    private final ProjectAnnotationAssertionAxiomsBySubjectIndex annotationAssertionAxiomsBySubjectIndex;
 
-    private ProjectSignatureIndex provideProjectSignatureIndex;
+    private final ProjectSignatureIndex provideProjectSignatureIndex;
 
-    private EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex;
+    private final EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex;
 
-    private EntitiesInProjectSignatureByIriIndex entitiesInProjectSignatureByIriIndex;
+    private final EntitiesInProjectSignatureByIriIndex entitiesInProjectSignatureByIriIndex;
 
-    private AnnotationAssertionAxiomsByValueIndex annotationAssertionAxiomsByValueIndex;
+    private final AnnotationAssertionAxiomsByValueIndex annotationAssertionAxiomsByValueIndex;
 
     public AnnotationAssertionAxiomsModule(ProjectOntologiesIndex projectOntologiesIndex,
                                            ProjectAnnotationAssertionAxiomsBySubjectIndex annotationAssertionAxiomsBySubjectIndex,

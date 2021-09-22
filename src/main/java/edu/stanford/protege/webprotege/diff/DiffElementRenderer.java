@@ -13,9 +13,9 @@ import java.io.Serializable;
  */
 public class DiffElementRenderer<S extends Serializable> {
 
-    private HasHtmlBrowserText renderer;
+    private final HasHtmlBrowserText renderer;
 
-    private OntologyChangeVisitorEx<String> visitor;
+    private final OntologyChangeVisitorEx<String> visitor;
 
     public DiffElementRenderer(HasHtmlBrowserText ren) {
         this.renderer = ren;

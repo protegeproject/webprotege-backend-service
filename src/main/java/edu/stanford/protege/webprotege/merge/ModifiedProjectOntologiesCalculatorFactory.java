@@ -11,7 +11,7 @@ import java.util.Collection;
  */
 public class ModifiedProjectOntologiesCalculatorFactory {
 
-    private OntologyDiffCalculator ontologyDiffCalculator;
+    private final OntologyDiffCalculator ontologyDiffCalculator;
 
     public ModifiedProjectOntologiesCalculatorFactory(OntologyDiffCalculator ontologyDiffCalculator) {
         this.ontologyDiffCalculator = ontologyDiffCalculator;

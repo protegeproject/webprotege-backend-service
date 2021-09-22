@@ -29,7 +29,7 @@ public class FormDescriptor {
 
     private LanguageMap label = LanguageMap.empty();
 
-    private List<FormFieldDescriptor> elements;
+    private final List<FormFieldDescriptor> elements;
 
     @Nullable
     private FormSubjectFactoryDescriptor subjectFactoryDescriptor;

@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SearchFiltersDocumentAugmenter implements EntityDocumentAugmenter {
 
-    private EntitySearchFilterMatchersFactory searchFilterMatchersFactory;
+    private final EntitySearchFilterMatchersFactory searchFilterMatchersFactory;
 
     @Inject
     public SearchFiltersDocumentAugmenter(@Nonnull EntitySearchFilterMatchersFactory searchFilterMatchersFactory) {

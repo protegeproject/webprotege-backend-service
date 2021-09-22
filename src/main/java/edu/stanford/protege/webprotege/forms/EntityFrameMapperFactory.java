@@ -22,10 +22,10 @@ public class EntityFrameMapperFactory {
     private final ClassAssertionAxiomsByClassIndex classAssertionAxiomsIndex;
 
     @Nonnull
-    private ProjectOntologiesIndex projectOntologiesIndex;
+    private final ProjectOntologiesIndex projectOntologiesIndex;
 
     @Nonnull
-    private RenderingManager renderingManager;
+    private final RenderingManager renderingManager;
 
     @Nonnull
     private final MatcherFactory matcherFactory;

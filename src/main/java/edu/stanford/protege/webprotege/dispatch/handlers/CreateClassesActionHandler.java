@@ -24,8 +24,6 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_CLASS;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;
 
-;
-
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 22/02/2013
  */

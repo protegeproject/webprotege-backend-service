@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toSet;
  */
 public class ObjectPropertyCharacteristicsSectionRenderer extends AbstractOWLAxiomItemSectionRenderer<OWLObjectProperty, OWLObjectPropertyCharacteristicAxiom, String> {
 
-    private static Map<AxiomType<? extends OWLObjectPropertyCharacteristicAxiom>, ManchesterOWLSyntax> keywordMap = Maps.newHashMap();
+    private static final Map<AxiomType<? extends OWLObjectPropertyCharacteristicAxiom>, ManchesterOWLSyntax> keywordMap = Maps.newHashMap();
 
     static {
         keywordMap.put(AxiomType.FUNCTIONAL_OBJECT_PROPERTY, ManchesterOWLSyntax.FUNCTIONAL);

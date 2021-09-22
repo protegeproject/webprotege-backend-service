@@ -18,7 +18,7 @@ public class GetProjectInfoAction implements ProjectAction<GetProjectInfoResult>
 
     public static final String CHANNEL = "webprotege.projects.GetProjectInfo";
 
-    private ProjectId projectId;
+    private final ProjectId projectId;
 
     private GetProjectInfoAction(@Nonnull ProjectId projectId) {
         this.projectId = checkNotNull(projectId);

@@ -12,15 +12,15 @@ import java.util.Set;
  */
 public class PropertyValueDescriptor {
 
-    private OWLPropertyData property;
+    private final OWLPropertyData property;
 
-    private OWLPrimitiveData value;
+    private final OWLPrimitiveData value;
 
     private State state = State.ASSERTED;
 
-    private boolean mostSpecific;
+    private final boolean mostSpecific;
 
-    private Set<OWLAxiom> additionalAxioms;
+    private final Set<OWLAxiom> additionalAxioms;
 
     public PropertyValueDescriptor(OWLPropertyData property, OWLPrimitiveData value, State state, boolean mostSpecific, Set<OWLAxiom> additionalAxioms) {
         this.property = property;

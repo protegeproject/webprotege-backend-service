@@ -13,7 +13,7 @@ import javax.inject.Inject;
  */
 public class OWLObjectRendererImpl implements OWLObjectRenderer {
 
-    private RenderingManager renderingManager;
+    private final RenderingManager renderingManager;
 
     @Inject
     public OWLObjectRendererImpl(RenderingManager renderingManager) {

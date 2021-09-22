@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class OWLEntityCreator<E extends OWLEntity> {
 
-    private E entity;
+    private final E entity;
 
-    private List<OntologyChange> changes = new ArrayList<>();
+    private final List<OntologyChange> changes = new ArrayList<>();
 
     public OWLEntityCreator(E entity, List<OntologyChange> changes) {
         this.entity = entity;

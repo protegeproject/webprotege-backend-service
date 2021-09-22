@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @ProjectSingleton
 public class ProjectOntologiesIndexImpl implements ProjectOntologiesIndex, UpdatableIndex {
 
-    private static Logger logger = LoggerFactory.getLogger(ProjectOntologiesIndexImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProjectOntologiesIndexImpl.class);
 
     @Nonnull
     private final Set<OWLOntologyID> ontologyIds = new HashSet<>();

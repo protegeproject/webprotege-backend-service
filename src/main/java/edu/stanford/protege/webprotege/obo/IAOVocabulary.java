@@ -11,7 +11,7 @@ public enum IAOVocabulary {
     DEFINITION("IAO_0000115");
 
 
-    private String suffix;
+    private final String suffix;
 
     IAOVocabulary(String suffix) {
         this.suffix = suffix;

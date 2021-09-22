@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ProjectSingleton
 public class IncrementingPatternDescriptorValueGenerator {
 
-    private Map<CacheKey, Integer> cache = new HashMap<>();
+    private final Map<CacheKey, Integer> cache = new HashMap<>();
 
     @Nonnull
     private final OWLDataFactory dataFactory;

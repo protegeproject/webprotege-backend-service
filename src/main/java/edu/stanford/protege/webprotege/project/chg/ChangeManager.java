@@ -142,7 +142,7 @@ public class ChangeManager implements HasApplyChanges {
     @Nonnull
     private final GeneratedAnnotationsGenerator generatedAnnotationsGenerator;
 
-    private OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
+    private final OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
 
     @Inject
     public ChangeManager(@Nonnull ProjectId projectId,

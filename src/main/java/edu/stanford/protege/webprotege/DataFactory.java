@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  */
 public class DataFactory {
 
-    private static OWLDataFactory dataFactory = new OWLDataFactoryImpl();
+    private static final OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
     public static OWLDataFactory get() {
         return dataFactory;
