@@ -341,7 +341,7 @@ public class ProjectBeansConfiguration {
                                          WatchRecordRepository p2,
                                          IndirectlyWatchedEntitiesFinder p3,
                                          WatchTriggeredHandler p4,
-                                         EventManager<ProjectEvent> p5) {
+                                         EventDispatcher p5) {
         var impl = new WatchManagerImpl(p1, p2, p3, p4, p5);
         // Attach it so that it listens for entity frame changed events
         // There's no need to detatch it because it is project scoped
@@ -769,7 +769,7 @@ public class ProjectBeansConfiguration {
                             EntityTagsRepository p2,
                             CriteriaBasedTagsManager p3,
                             TagRepository p4,
-                            HasPostEvents<ProjectEvent> p5) {
+                            EventDispatcher p5) {
         return new TagsManager(p1, p2, p3, p4, p5);
     }
 

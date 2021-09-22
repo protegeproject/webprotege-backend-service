@@ -1,10 +1,9 @@
 package edu.stanford.protege.webprotege.tag;
 
 import com.google.common.collect.Streams;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.HasPostEvents;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -41,7 +40,7 @@ public class TagsManager {
     private final TagRepository tagRepository;
 
     @Nonnull
-    private final HasPostEvents<ProjectEvent> eventBus;
+    private final EventDispatcher eventDispatcher;
 
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
@@ -58,12 +57,12 @@ public class TagsManager {
                        @Nonnull EntityTagsRepository entityTagsRepository,
                        @Nonnull CriteriaBasedTagsManager criteriaBasedTagsManager,
                        @Nonnull TagRepository tagRepository,
-                       @Nonnull HasPostEvents<ProjectEvent> eventBus) {
+                       @Nonnull EventDispatcher eventBus) {
         this.projectId = checkNotNull(projectId);
         this.entityTagsRepository = checkNotNull(entityTagsRepository);
         this.criteriaBasedTagsManager = checkNotNull(criteriaBasedTagsManager);
         this.tagRepository = checkNotNull(tagRepository);
-        this.eventBus = checkNotNull(eventBus);
+        this.eventDispatcher = checkNotNull(eventBus);
     }
 
     /**
@@ -199,13 +198,12 @@ public class TagsManager {
         Set<Tag> oldProjectTags = new HashSet<>(currentProjectTags);
         Set<Tag> projectTags = new HashSet<>(getProjectTags());
         if (!oldProjectTags.equals(projectTags)) {
-            List<ProjectEvent> events = new ArrayList<>();
             for (OWLEntity entity : modifiedEntityTags) {
-                EntityTagsChangedEvent event = new EntityTagsChangedEvent(projectId, entity, getTags(entity));
-                events.add(event);
+                var event = new EntityTagsChangedEvent(projectId, entity, getTags(entity));
+                eventDispatcher.dispatchEvent(event);
             }
-            events.add(new ProjectTagsChangedEvent(projectId, projectTags));
-            eventBus.postEvents(events);
+            var event = new ProjectTagsChangedEvent(projectId, projectTags);
+            eventDispatcher.dispatchEvent(event);
         }
     }
 
@@ -237,9 +235,8 @@ public class TagsManager {
             entityTagsRepository.save(nextEntityTags);
             boolean changed = !existingTags.equals(Optional.of(nextEntityTags));
             if (changed) {
-                eventBus.postEvent(new EntityTagsChangedEvent(projectId,
-                                                              entity,
-                                                              getTags(entity)));
+                var event = new EntityTagsChangedEvent(projectId, entity, getTags(entity));
+                eventDispatcher.dispatchEvent(event);
             }
         } finally {
             writeLock.unlock();

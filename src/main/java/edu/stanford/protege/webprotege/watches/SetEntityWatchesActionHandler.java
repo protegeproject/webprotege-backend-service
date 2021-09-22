@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.watches;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventTag;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -41,7 +40,6 @@ public class SetEntityWatchesActionHandler extends AbstractProjectActionHandler<
     @Nonnull
     @Override
     public SetEntityWatchesResult execute(@Nonnull SetEntityWatchesAction action, @Nonnull ExecutionContext executionContext) {
-        EventTag startTag = eventManager.getCurrentTag();
         UserId userId = action.userId();
         Set<Watch> watches = watchManager.getDirectWatches(action.entity(), userId);
         for(Watch watch : watches) {

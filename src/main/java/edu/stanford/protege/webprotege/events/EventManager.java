@@ -32,7 +32,7 @@ import static java.util.stream.Collectors.toList;
  * Date: 20/03/2013
  */
 @ProjectSingleton
-public class EventManager<E extends Event> implements HasDispose, HasPostEvents<E> {
+public class EventManager<E extends Event> implements HasDispose {
 
 
     private static final int EVENT_LIST_SIZE_LIMIT = 200;
@@ -86,32 +86,30 @@ public class EventManager<E extends Event> implements HasDispose, HasPostEvents<
      * @return The tag after posting the events.
      * @throws NullPointerException if {@code event} is {@code null}.
      */
-    public EventTag postEvent(E event) {
+    public void postEvent(E event) {
         final List<E> events = new ArrayList<>(1);
         events.add(checkNotNull(event, "event must not be null"));
-        return postEvents(events);
+        postEvents(events);
     }
 
-    @Nonnull
-    public EventTag postHighLevelEvents(List<HighLevelProjectEventProxy> eventProxies) {
+    public void postHighLevelEvents(List<HighLevelProjectEventProxy> eventProxies) {
         if(eventProxies.size() > EVENT_LIST_SIZE_LIMIT) {
-            return postEvent((E) new LargeNumberOfChangesEvent(projectId));
+            postEvent((E) new LargeNumberOfChangesEvent(projectId));
         }
         else {
             var realEvents = eventProxies.stream()
                         .map(e -> (E) e.asProjectEvent())
                         .collect(toList());
-            return postEvents(realEvents);
+            postEvents(realEvents);
         }
     }
 
     /**
      * Posts a list of events to this event manager.
      * @param events The list of events to be posted.  Not {@code null}.
-     * @return The tag after posting the events.
      * @throws NullPointerException if {@code events} is {@code null}.
      */
-    public EventTag postEvents(List<E> events) {
+    public void postEvents(List<E> events) {
         try {
             writeLock.lock();
             currentTag = currentTag.next();
@@ -135,11 +133,6 @@ public class EventManager<E extends Event> implements HasDispose, HasPostEvents<
         finally {
             writeLock.unlock();
         }
-        for(E event : new LinkedHashSet<>(events)) {
-//            throw new RuntimeException("Needs reimplementing");
-//            eventBus.fireEvent((WebProtegeEvent) event);
-        }
-        return currentTag;
     }
 
     /**

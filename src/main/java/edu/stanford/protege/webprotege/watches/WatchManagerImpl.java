@@ -1,10 +1,9 @@
 package edu.stanford.protege.webprotege.watches;
 
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +38,7 @@ public class WatchManagerImpl implements WatchManager {
 
     private final WatchTriggeredHandler watchTriggeredHandler;
 
-    private final EventManager<ProjectEvent> eventManager;
+    private final EventDispatcher eventDispatcher;
 
     private boolean attached = false;
 
@@ -48,12 +47,12 @@ public class WatchManagerImpl implements WatchManager {
                             @Nonnull WatchRecordRepository repository,
                             @Nonnull IndirectlyWatchedEntitiesFinder indirectlyWatchedEntitiesFinder,
                             @Nonnull WatchTriggeredHandler watchTriggeredHandler,
-                            @Nonnull EventManager<ProjectEvent> eventManager) {
+                            @Nonnull EventDispatcher eventDispatcher) {
         this.projectId = checkNotNull(projectId);
         this.repository = checkNotNull(repository);
         this.indirectlyWatchedEntitiesFinder = checkNotNull(indirectlyWatchedEntitiesFinder);
         this.watchTriggeredHandler = checkNotNull(watchTriggeredHandler);
-        this.eventManager = checkNotNull(eventManager);
+        this.eventDispatcher = checkNotNull(eventDispatcher);
     }
 
     public synchronized void attach() {
@@ -75,13 +74,13 @@ public class WatchManagerImpl implements WatchManager {
     @Override
     public void addWatch(@Nonnull Watch watch) {
         repository.saveWatchRecord(toWatchRecord(watch));
-        eventManager.postEvent(new WatchAddedEvent(projectId, watch));
+        eventDispatcher.dispatchEvent(new WatchAddedEvent(projectId, watch));
     }
 
     @Override
     public void removeWatch(@Nonnull Watch watch) {
         repository.deleteWatchRecord(toWatchRecord(watch));
-        eventManager.postEvent(new WatchRemovedEvent(projectId, watch));
+        eventDispatcher.dispatchEvent(new WatchRemovedEvent(projectId, watch));
     }
 
     @Override

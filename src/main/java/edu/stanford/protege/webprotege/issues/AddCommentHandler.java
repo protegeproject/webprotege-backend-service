@@ -7,9 +7,7 @@ import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
@@ -37,7 +35,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
     private final HasGetRendering renderer;
 
     @Nonnull
-    private final EventManager<ProjectEvent> eventManager;
+    private final EventDispatcher eventDispatcher;
 
     @Nonnull
     private final EntityDiscussionThreadRepository repository;
@@ -57,7 +55,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
     @Inject
     public AddCommentHandler(@Nonnull ProjectId projectId,
                              @Nonnull HasGetRendering renderer,
-                             @Nonnull EventManager<ProjectEvent> eventManager,
+                             @Nonnull EventDispatcher eventDispatcher,
                              @Nonnull EntityDiscussionThreadRepository repository,
                              @Nonnull CommentNotificationEmailer notificationsEmailer,
                              @Nonnull CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker,
@@ -65,7 +63,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
                              @Nonnull AccessManager accessManager) {
         this.projectId = projectId;
         this.renderer = renderer;
-        this.eventManager = eventManager;
+        this.eventDispatcher = eventDispatcher;
         this.repository = repository;
         this.notificationsEmailer = notificationsEmailer;
         this.commentPostedSlackWebhookInvoker = commentPostedSlackWebhookInvoker;
@@ -106,7 +104,6 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
                                       renderedComment);
         ThreadId threadId = action.threadId();
         repository.addCommentToThread(threadId, comment);
-        EventTag startTag = eventManager.getCurrentTag();
         postCommentPostedEvent(threadId, comment);
         sendOutNotifications(threadId, comment);
         return new AddCommentResult(action.projectId(), threadId, comment, renderedComment);
@@ -142,13 +139,13 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
             OWLEntityData entityData = renderer.getRendering(t.getEntity());
             int commentCount = repository.getCommentsCount(projectId, t.getEntity());
             int openCommentCount = repository.getOpenCommentsCount(projectId, t.getEntity());
-            CommentPostedEvent event = new CommentPostedEvent(projectId,
+            var event = new CommentPostedEvent(projectId,
                                                               threadId,
                                                               comment,
                                                               Optional.of(entityData),
                                                               commentCount,
                                                               openCommentCount);
-            eventManager.postEvent(event);
+            eventDispatcher.dispatchEvent(event);
 
         });
     }

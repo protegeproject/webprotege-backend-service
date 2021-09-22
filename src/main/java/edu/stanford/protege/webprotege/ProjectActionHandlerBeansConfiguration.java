@@ -513,7 +513,7 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     AddCommentHandler addEntityCommentActionHandler(ProjectId p1,
                                                     HasGetRendering p2,
-                                                    EventManager<ProjectEvent> p3,
+                                                    EventDispatcher p3,
                                                     EntityDiscussionThreadRepository p4,
                                                     CommentNotificationEmailer p5,
                                                     CommentPostedSlackWebhookInvoker p6,
