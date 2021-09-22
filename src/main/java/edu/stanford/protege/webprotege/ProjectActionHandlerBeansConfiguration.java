@@ -532,10 +532,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     EditCommentActionHandler UpdateCommentAction(AccessManager p1,
-                                               ProjectId p2,
-                                               EntityDiscussionThreadRepository p3,
-                                               EventManager<ProjectEvent> p4) {
-        return new EditCommentActionHandler(p1, p2, p3, p4);
+                                                 ProjectId p2,
+                                                 EntityDiscussionThreadRepository p3,
+                                                 EventDispatcher eventDispatcher) {
+        return new EditCommentActionHandler(p1, p2, p3, eventDispatcher);
     }
 
 

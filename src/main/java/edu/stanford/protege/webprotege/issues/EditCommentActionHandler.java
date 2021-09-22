@@ -4,11 +4,9 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,18 +30,17 @@ public class EditCommentActionHandler extends AbstractProjectActionHandler<Updat
     private final EntityDiscussionThreadRepository repository;
 
     @Nonnull
-    private final EventManager<ProjectEvent> eventManager;
-
+    private final EventDispatcher eventDispatcher;
 
     @Inject
     public EditCommentActionHandler(@Nonnull AccessManager accessManager,
                                     @Nonnull ProjectId projectId,
                                     @Nonnull EntityDiscussionThreadRepository repository,
-                                    @Nonnull EventManager<ProjectEvent> eventManager) {
+                                    @Nonnull EventDispatcher eventDispatcher) {
         super(accessManager);
         this.projectId = projectId;
         this.repository = repository;
-        this.eventManager = eventManager;
+        this.eventDispatcher = eventDispatcher;
     }
 
     @Nonnull
@@ -62,15 +59,13 @@ public class EditCommentActionHandler extends AbstractProjectActionHandler<Updat
     @Override
     public UpdateCommentResult execute(@Nonnull UpdateCommentAction action,
                                      @Nonnull ExecutionContext executionContext) {
-        EventTag fromTag = eventManager.getCurrentTag();
-
         Optional<EntityDiscussionThread> thread = repository.getThread(action.threadId());
-        if (!thread.isPresent()) {
+        if (thread.isEmpty()) {
             throw new RuntimeException("Invalid comment thread");
         }
-        EntityDiscussionThread t = thread.get();
+        var theThread = thread.get();
         String renderedComment = new CommentRenderer().renderComment(action.body());
-        Optional<Comment> updatedComment = t.getComments().stream()
+        var updatedComment = theThread.getComments().stream()
                                             .filter(c -> c.getId().equals(action.commentId()))
                                             .limit(1)
                                             .map(c -> new Comment(c.getId(),
@@ -79,10 +74,9 @@ public class EditCommentActionHandler extends AbstractProjectActionHandler<Updat
                                                                   Optional.of(System.currentTimeMillis()),
                                                                   action.body(),
                                                                   renderedComment))
-                                            .peek(c -> repository.updateComment(t.getId(), c))
+                                            .peek(c -> repository.updateComment(theThread.getId(), c))
                                             .findFirst();
-        updatedComment.ifPresent(comment -> eventManager.postEvent(new CommentUpdatedEvent(projectId, t.getId(), comment)));
-        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(fromTag);
+        updatedComment.ifPresent(comment -> eventDispatcher.dispatchEvent(new CommentUpdatedEvent(projectId, theThread.getId(), comment)));
         return new UpdateCommentResult(updatedComment);
     }
 
