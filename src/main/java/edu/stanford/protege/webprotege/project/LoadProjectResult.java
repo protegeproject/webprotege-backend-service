@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.HasUserId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -20,7 +19,7 @@ import javax.annotation.Nonnull;
 @AutoValue
 @Deprecated
 @JsonTypeName("LoadProject")
-public abstract class LoadProjectResult implements Result, HasUserId, HasProjectId {
+public abstract class LoadProjectResult implements Result, HasProjectId {
 
     @JsonCreator
     public static LoadProjectResult get(@JsonProperty("projectId") @Nonnull ProjectId projectId,
@@ -34,7 +33,6 @@ public abstract class LoadProjectResult implements Result, HasUserId, HasProject
     @Nonnull
     public abstract ProjectId projectId();
 
-    @Override
     public abstract UserId getUserId();
 
     @Nonnull

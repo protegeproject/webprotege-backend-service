@@ -1,8 +1,5 @@
 package edu.stanford.protege.webprotege.dispatch;
 
-import com.google.common.base.MoreObjects;
-import edu.stanford.protege.webprotege.HasUserId;
-import edu.stanford.protege.webprotege.session.WebProtegeSession;
 import edu.stanford.protege.webprotege.common.UserId;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -16,7 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     Describes the context in which an action is being executed.
  * </p>
  */
-public class ExecutionContext implements HasUserId {
+public class ExecutionContext {
 
     private final UserId userId;
 

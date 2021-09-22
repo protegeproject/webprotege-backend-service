@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.HasIRIPrefix;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,7 +16,7 @@ import javax.annotation.Nullable;
  */
 @AutoValue
 
-public abstract class EntityCrudKitPrefixSettings implements HasIRIPrefix {
+public abstract class EntityCrudKitPrefixSettings {
 
     public static final String DEFAULT_IRI_PREFIX = "http://www.example.org/";
 
@@ -49,7 +48,6 @@ public abstract class EntityCrudKitPrefixSettings implements HasIRIPrefix {
     }
 
     @JsonProperty(IRI_PREFIX)
-    @Override
     public abstract String getIRIPrefix();
 
     @JsonProperty(CONDITIONAL_IRI_PREFIXES)

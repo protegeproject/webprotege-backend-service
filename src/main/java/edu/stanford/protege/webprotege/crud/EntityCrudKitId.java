@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.crud;
 
 import com.google.common.base.MoreObjects;
-import edu.stanford.protege.webprotege.HasLexicalForm;
 
 import java.io.Serializable;
 
@@ -16,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *     Provides an identifier for an {@link EntityCrudKit} and its associated paraphernalia.
  * </p>
  */
-public final class EntityCrudKitId implements Serializable, HasLexicalForm {
+public final class EntityCrudKitId implements Serializable {
 
     private String lexicalForm;
 
@@ -43,15 +42,6 @@ public final class EntityCrudKitId implements Serializable, HasLexicalForm {
      */
     public static EntityCrudKitId get(String lexicalForm) {
         return new EntityCrudKitId(lexicalForm);
-    }
-
-    /**
-     * Gets the lexical form for this id.
-     * @return The lexical form of this id.  Not {@code null}.
-     */
-    @Override
-    public String getLexicalForm() {
-        return lexicalForm;
     }
 
     @Override
