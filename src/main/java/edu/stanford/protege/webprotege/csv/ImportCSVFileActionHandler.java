@@ -41,7 +41,7 @@ public class ImportCSVFileActionHandler extends AbstractProjectChangeHandler<Int
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull @UploadsDirectory File uploadsDirectory,
                                       @Nonnull ImportCSVFileChangeListGeneratorFactory factory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.uploadsDirectory = uploadsDirectory;
         this.factory = factory;
     }
@@ -81,8 +81,7 @@ public class ImportCSVFileActionHandler extends AbstractProjectChangeHandler<Int
     @Override
     protected ImportCSVFileResult createActionResult(ChangeApplicationResult<Integer> changeApplicationResult,
                                                      ImportCSVFileAction action,
-                                                     ExecutionContext executionContext,
-                                                     EventList<ProjectEvent> eventList) {
+                                                     ExecutionContext executionContext) {
         return new ImportCSVFileResult(EventList.create(EventTag.get(0), EventTag.get(1)), changeApplicationResult.getSubject());
     }
 

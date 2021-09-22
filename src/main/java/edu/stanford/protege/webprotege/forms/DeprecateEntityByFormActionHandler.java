@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
@@ -41,7 +40,7 @@ public class DeprecateEntityByFormActionHandler extends AbstractProjectChangeHan
                                               @Nonnull EventManager<ProjectEvent> eventManager,
                                               @Nonnull HasApplyChanges applyChanges, @Nonnull ProjectId projectId, @Nonnull DeprecateEntityByFormChangeListGeneratorFactory changeListGeneratorFactory,
                                               @Nonnull ProjectDetailsRepository projectDetailsRepository) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.projectId = projectId;
         this.changeListGeneratorFactory = changeListGeneratorFactory;
         this.projectDetailsRepository = projectDetailsRepository;
@@ -76,8 +75,7 @@ public class DeprecateEntityByFormActionHandler extends AbstractProjectChangeHan
     @Override
     protected DeprecateEntityByFormResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult,
                                                              DeprecateEntityByFormAction action,
-                                                             ExecutionContext executionContext,
-                                                             EventList<ProjectEvent> eventList) {
+                                                             ExecutionContext executionContext) {
         return new DeprecateEntityByFormResult();
     }
 }

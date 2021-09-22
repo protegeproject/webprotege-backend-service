@@ -8,7 +8,6 @@ import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.Comparator;
 
 /**
  * Author: Matthew Horridge<br>
@@ -23,16 +22,15 @@ public class UpdateObjectPropertyFrameHandler extends AbstractUpdateFrameHandler
 
     @Inject
     public UpdateObjectPropertyFrameHandler(@Nonnull AccessManager accessManager,
-                                            @Nonnull EventManager<ProjectEvent> eventManager,
                                             @Nonnull HasApplyChanges applyChanges,
                                             @Nonnull FrameChangeGeneratorFactory frameChangeGeneratorFactory,
                                             @Nonnull PlainFrameRenderer plainFrameRenderer) {
-        super(accessManager, eventManager, applyChanges, frameChangeGeneratorFactory);
+        super(accessManager, applyChanges, frameChangeGeneratorFactory);
         this.plainFrameRenderer = plainFrameRenderer;
     }
 
     @Override
-    protected UpdateObjectPropertyFrameResult createResponse(PlainEntityFrame to, EventList<ProjectEvent> events) {
+    protected UpdateObjectPropertyFrameResult createResponse(PlainEntityFrame to) {
         return new UpdateObjectPropertyFrameResult(plainFrameRenderer.toObjectPropertyFrame((PlainObjectPropertyFrame) to));
     }
 

@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -33,7 +32,7 @@ public class SetEntityFormsDataActionHandler extends AbstractProjectChangeHandle
                                            @Nonnull EventManager<ProjectEvent> eventManager,
                                            @Nonnull HasApplyChanges applyChanges,
                                            @Nonnull EntityFormChangeListGeneratorFactory changeListGeneratorFactory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.changeListGeneratorFactory = checkNotNull(changeListGeneratorFactory);
     }
 
@@ -46,8 +45,7 @@ public class SetEntityFormsDataActionHandler extends AbstractProjectChangeHandle
     @Override
     protected SetEntityFormsDataResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult,
                                                           SetEntityFormsDataAction action,
-                                                          ExecutionContext executionContext,
-                                                          EventList<ProjectEvent> eventList) {
+                                                          ExecutionContext executionContext) {
         return new SetEntityFormsDataResult();
     }
 

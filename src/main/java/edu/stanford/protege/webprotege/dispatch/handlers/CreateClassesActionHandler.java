@@ -11,7 +11,6 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateClassesAction;
 import edu.stanford.protege.webprotege.entity.CreateClassesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -44,7 +43,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull CreateClassesChangeGeneratorFactory changeFactory,
                                       @Nonnull EntityNodeRenderer entityNodeRenderer) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.changeGeneratorFactory = checkNotNull(changeFactory);
         this.entityNodeRenderer = checkNotNull(entityNodeRenderer);
     }
@@ -70,7 +69,9 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
     }
 
     @Override
-    protected CreateClassesResult createActionResult(ChangeApplicationResult<Set<OWLClass>> changeApplicationResult, CreateClassesAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
+    protected CreateClassesResult createActionResult(ChangeApplicationResult<Set<OWLClass>> changeApplicationResult,
+                                                     CreateClassesAction action,
+                                                     ExecutionContext executionContext) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
         return new CreateClassesResult(action.projectId(),
                                        classes.stream().map(entityNodeRenderer::render).collect(toImmutableSet()));

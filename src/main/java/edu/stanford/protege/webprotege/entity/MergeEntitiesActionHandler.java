@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -34,7 +33,7 @@ public class MergeEntitiesActionHandler extends AbstractProjectChangeHandler<OWL
                                       @Nonnull EventManager<ProjectEvent> eventManager,
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull MergeEntitiesChangeListGeneratorFactory factory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.factory = checkNotNull(factory);
     }
 
@@ -59,9 +58,9 @@ public class MergeEntitiesActionHandler extends AbstractProjectChangeHandler<OWL
     }
 
     @Override
-    protected MergeEntitiesResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult, MergeEntitiesAction action,
-                                                     ExecutionContext executionContext,
-                                                     EventList<ProjectEvent> eventList) {
+    protected MergeEntitiesResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult,
+                                                     MergeEntitiesAction action,
+                                                     ExecutionContext executionContext) {
 
         return new MergeEntitiesResult();
     }

@@ -5,7 +5,6 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.frame.PropertyAnnotationValue;
@@ -44,7 +43,7 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
                                                @Nonnull HasApplyChanges applyChanges,
                                                @Nonnull OWLDataFactory dataFactory,
                                                @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.dataFactory = checkNotNull(dataFactory);
         this.ontologyAnnotationsIndex = checkNotNull(ontologyAnnotationsIndex);
     }
@@ -111,8 +110,7 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
     @Override
     protected SetOntologyAnnotationsResult createActionResult(ChangeApplicationResult<Set<OWLAnnotation>> changeApplicationResult,
                                                               SetOntologyAnnotationsAction action,
-                                                              ExecutionContext executionContext,
-                                                              EventList<ProjectEvent> eventList) {
+                                                              ExecutionContext executionContext) {
         var ontologyId = action.ontologyID();
         Set<OWLAnnotation> annotations = ontologyAnnotationsIndex
                 .getOntologyAnnotations(ontologyId)

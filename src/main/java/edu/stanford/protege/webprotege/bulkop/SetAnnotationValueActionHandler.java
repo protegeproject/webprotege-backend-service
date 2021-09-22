@@ -6,7 +6,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -32,7 +31,7 @@ public class SetAnnotationValueActionHandler extends AbstractProjectChangeHandle
                                            @Nonnull EventManager<ProjectEvent> eventManager,
                                            @Nonnull HasApplyChanges applyChanges,
                                            @Nonnull SetAnnotationValueActionChangeListGeneratorFactory factory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.factory = checkNotNull(factory);
     }
 
@@ -51,7 +50,9 @@ public class SetAnnotationValueActionHandler extends AbstractProjectChangeHandle
     }
 
     @Override
-    protected SetAnnotationValueResult createActionResult(ChangeApplicationResult<Set<OWLEntity>> changeApplicationResult, SetAnnotationValueAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
+    protected SetAnnotationValueResult createActionResult(ChangeApplicationResult<Set<OWLEntity>> changeApplicationResult,
+                                                          SetAnnotationValueAction action,
+                                                          ExecutionContext executionContext) {
         return new SetAnnotationValueResult();
     }
 }

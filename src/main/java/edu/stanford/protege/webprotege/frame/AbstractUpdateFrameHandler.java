@@ -5,9 +5,6 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.*;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,20 +18,14 @@ import javax.annotation.Nullable;
 public abstract class AbstractUpdateFrameHandler<A extends Request<R> & UpdateFrame, R extends Response> extends AbstractProjectActionHandler<A, R> {
 
     @Nonnull
-    private final EventManager<ProjectEvent> eventManager;
-
-    @Nonnull
     private final HasApplyChanges applyChanges;
 
     @Nonnull
     private final FrameChangeGeneratorFactory frameChangeGeneratorFactory;
 
-    public AbstractUpdateFrameHandler(@Nonnull AccessManager accessManager,
-                                      @Nonnull EventManager<ProjectEvent> eventManager,
-                                      @Nonnull HasApplyChanges applyChanges,
+    public AbstractUpdateFrameHandler(@Nonnull AccessManager accessManager, @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull FrameChangeGeneratorFactory frameChangeGeneratorFactory) {
         super(accessManager);
-        this.eventManager = eventManager;
         this.applyChanges = applyChanges;
         this.frameChangeGeneratorFactory = frameChangeGeneratorFactory;
     }
@@ -58,17 +49,15 @@ public abstract class AbstractUpdateFrameHandler<A extends Request<R> & UpdateFr
     public R execute(@Nonnull A action, @Nonnull ExecutionContext executionContext) {
         var from = action.from();
         var to = action.to();
-        final EventTag startTag = eventManager.getCurrentTag();
         if(from.equals(to)) {
-            return createResponse(action.to(), eventManager.getEventsFromTag(startTag));
+            return createResponse(action.to());
         }
         var userId = executionContext.getUserId();
         var frameUpdate = FrameUpdate.get(from, to);
         var changeGenerator = frameChangeGeneratorFactory.create(frameUpdate);
         applyChanges.applyChanges(userId, changeGenerator);
-        var events = eventManager.getEventsFromTag(startTag);
-        return createResponse(action.to(), events);
+        return createResponse(action.to());
     }
 
-    protected abstract R createResponse(PlainEntityFrame to, EventList<ProjectEvent> events);
+    protected abstract R createResponse(PlainEntityFrame to);
 }

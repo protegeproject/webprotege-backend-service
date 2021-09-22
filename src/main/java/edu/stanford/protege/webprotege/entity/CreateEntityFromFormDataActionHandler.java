@@ -8,7 +8,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataAction;
@@ -40,7 +39,7 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
                                                  @Nonnull HasApplyChanges applyChanges,
                                                  @Nonnull CreateEntityFromFormDataChangeListGeneratorFactory changeListGeneratorFactory,
                                                  @Nonnull RenderingManager renderer) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.changeListGeneratorFactory = checkNotNull(changeListGeneratorFactory);
         this.renderer = renderer;
     }
@@ -88,8 +87,7 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
     @Override
     protected CreateEntityFromFormDataResult createActionResult(ChangeApplicationResult<OWLEntity> changeApplicationResult,
                                                                 CreateEntityFromFormDataAction action,
-                                                                ExecutionContext executionContext,
-                                                                EventList<ProjectEvent> eventList) {
+                                                                ExecutionContext executionContext) {
 
         var entityNodes = ImmutableSet.of(renderer.getRendering(changeApplicationResult.getSubject()));
         return new CreateEntityFromFormDataResult(action.projectId(),

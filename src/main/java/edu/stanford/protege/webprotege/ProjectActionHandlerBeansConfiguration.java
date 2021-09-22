@@ -5,7 +5,6 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
 import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
-import edu.stanford.protege.webprotege.axioms.RemoveAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.bulkop.*;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -97,11 +96,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     UpdateClassFrameActionHandler updateClassFrameActionHandler(AccessManager p1,
-                                                                EventManager<ProjectEvent> p2,
                                                                 HasApplyChanges p3,
                                                                 FrameChangeGeneratorFactory p4,
                                                                 PlainFrameRenderer plainFrameRenderer) {
-        return new UpdateClassFrameActionHandler(p1, p2, p3, p4, plainFrameRenderer);
+        return new UpdateClassFrameActionHandler(p1, p3, p4, plainFrameRenderer);
     }
 
 
@@ -115,29 +113,26 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     UpdateObjectPropertyFrameHandler updateObjectPropertyFrameHandler(AccessManager p1,
-                                                                      EventManager<ProjectEvent> p2,
                                                                       HasApplyChanges p3,
                                                                       FrameChangeGeneratorFactory p4,
                                                                       FrameComponentSessionRenderer p5,
                                                                       Comparator<PropertyValue> p6,
                                                                       PlainFrameRenderer plainFrameRenderer) {
-        return new UpdateObjectPropertyFrameHandler(p1, p2, p3, p4, plainFrameRenderer);
+        return new UpdateObjectPropertyFrameHandler(p1, p3, p4, plainFrameRenderer);
     }
 
 
     @Bean
     UpdateDataPropertyFrameHandler updateDataPropertyFrameHandler(AccessManager p1,
-                                                                  EventManager<ProjectEvent> p2,
                                                                   HasApplyChanges p3,
                                                                   FrameChangeGeneratorFactory p5,
                                                                   PlainFrameRenderer plainFrameRenderer) {
-        return new UpdateDataPropertyFrameHandler(p1, p2, p3, p5, plainFrameRenderer);
+        return new UpdateDataPropertyFrameHandler(p1, p3, p5, plainFrameRenderer);
     }
 
 
     @Bean
     GetAnnotationPropertyFrameActionHandler getAnnotationPropertyFrameActionHandler(AccessManager p1,
-                                                                                    RenderingManager p2,
                                                                                     Provider<AnnotationPropertyFrameTranslator> p3,
                                                                                     FrameComponentSessionRenderer p4,
                                                                                     Comparator<PropertyValue> p5,
@@ -147,13 +142,12 @@ public class ProjectActionHandlerBeansConfiguration {
     
     @Bean
     UpdateAnnotationPropertyFrameActionHandler updateAnnotationPropertyFrameActionHandler(AccessManager p1,
-                                                                                          EventManager<ProjectEvent> p2,
                                                                                           HasApplyChanges p3,
                                                                                           FrameChangeGeneratorFactory p4,
                                                                                           FrameComponentSessionRenderer p5,
                                                                                           Comparator<PropertyValue> p6,
                                                                                           PlainFrameRenderer plainFrameRenderer) {
-        return new UpdateAnnotationPropertyFrameActionHandler(p1, p2, p3, p4, plainFrameRenderer);
+        return new UpdateAnnotationPropertyFrameActionHandler(p1, p3, p4, plainFrameRenderer);
     }
 
 
@@ -178,13 +172,12 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     UpdateNamedIndividualFrameHandler updateNamedIndividualFrameHandler(AccessManager p1,
-                                                                        EventManager<ProjectEvent> p2,
                                                                         HasApplyChanges p3,
                                                                         FrameChangeGeneratorFactory p4,
                                                                         FrameComponentSessionRenderer p5,
                                                                         Comparator<PropertyValue> p6,
                                                                         PlainFrameRenderer plainFrameRenderer) {
-        return new UpdateNamedIndividualFrameHandler(p1, p2, p3, p4, plainFrameRenderer);
+        return new UpdateNamedIndividualFrameHandler(p1, p3, p4, plainFrameRenderer);
     }
 
 

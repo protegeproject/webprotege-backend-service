@@ -11,7 +11,6 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -51,7 +50,7 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
                                                @Nonnull ProjectId projectId,
                                                @Nonnull CreateObjectPropertiesChangeGeneratorFactory changeGeneratorFactory,
                                                @Nonnull EntityNodeRenderer entityNodeRenderer) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.projectId = checkNotNull(projectId);
         this.changeGeneratorFactory = checkNotNull(changeGeneratorFactory);
         this.entityNodeRenderer = checkNotNull(entityNodeRenderer);
@@ -78,7 +77,9 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
     }
 
     @Override
-    protected CreateObjectPropertiesResult createActionResult(ChangeApplicationResult<Set<OWLObjectProperty>> changeApplicationResult, CreateObjectPropertiesAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
+    protected CreateObjectPropertiesResult createActionResult(ChangeApplicationResult<Set<OWLObjectProperty>> changeApplicationResult,
+                                                              CreateObjectPropertiesAction action,
+                                                              ExecutionContext executionContext) {
         Set<OWLObjectProperty> result = changeApplicationResult.getSubject();
         return new CreateObjectPropertiesResult(projectId,
                                                 result.stream()

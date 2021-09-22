@@ -3,13 +3,9 @@ package edu.stanford.protege.webprotege.frame;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.Action;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.Comparator;
 
 /**
  * Author: Matthew Horridge<br>
@@ -24,11 +20,10 @@ public class UpdateClassFrameActionHandler extends AbstractUpdateFrameHandler<Up
 
     @Inject
     public UpdateClassFrameActionHandler(@Nonnull AccessManager accessManager,
-                                         @Nonnull EventManager<ProjectEvent> eventManager,
                                          @Nonnull HasApplyChanges applyChanges,
                                          @Nonnull FrameChangeGeneratorFactory frameChangeGeneratorFactory,
                                          @Nonnull PlainFrameRenderer plainFrameRenderer) {
-        super(accessManager, eventManager, applyChanges,
+        super(accessManager, applyChanges,
               frameChangeGeneratorFactory);
         this.plainFrameRenderer = plainFrameRenderer;
     }
@@ -44,7 +39,7 @@ public class UpdateClassFrameActionHandler extends AbstractUpdateFrameHandler<Up
     }
 
     @Override
-    protected UpdateClassFrameResult createResponse(PlainEntityFrame to, EventList<ProjectEvent> events) {
+    protected UpdateClassFrameResult createResponse(PlainEntityFrame to) {
         return new UpdateClassFrameResult(plainFrameRenderer.toClassFrame((PlainClassFrame) to));
     }
 }

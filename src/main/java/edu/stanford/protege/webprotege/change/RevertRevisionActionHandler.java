@@ -4,7 +4,6 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -33,7 +32,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
                                        @Nonnull HasApplyChanges applyChanges,
                                        @Nonnull ProjectId projectId,
                                        @Nonnull RevisionReverterChangeListGeneratorFactory factory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.projectId = projectId;
         this.factory = factory;
     }
@@ -54,8 +53,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
     @Override
     protected RevertRevisionResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult,
                                                       RevertRevisionAction action,
-                                                      ExecutionContext executionContext,
-                                                      EventList<ProjectEvent> eventList) {
+                                                      ExecutionContext executionContext) {
         return new RevertRevisionResult(projectId, action.revisionNumber());
     }
 

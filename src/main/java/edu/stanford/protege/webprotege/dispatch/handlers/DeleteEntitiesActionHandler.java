@@ -11,7 +11,6 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.DeleteEntitiesAction;
 import edu.stanford.protege.webprotege.entity.DeleteEntitiesResult;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -36,7 +35,7 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
                                        @Nonnull EventManager<ProjectEvent> eventManager,
                                        @Nonnull HasApplyChanges applyChanges,
                                        @Nonnull DeleteEntitiesChangeListGeneratorFactory factory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.factory = factory;
     }
 
@@ -62,8 +61,7 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
     @Override
     protected DeleteEntitiesResult createActionResult(ChangeApplicationResult<Set<OWLEntity>> changeApplicationResult,
                                                       DeleteEntitiesAction action,
-                                                      ExecutionContext executionContext,
-                                                      EventList<ProjectEvent> eventList) {
+                                                      ExecutionContext executionContext) {
         return new DeleteEntitiesResult(ImmutableSet.copyOf(changeApplicationResult.getSubject()));
     }
 }

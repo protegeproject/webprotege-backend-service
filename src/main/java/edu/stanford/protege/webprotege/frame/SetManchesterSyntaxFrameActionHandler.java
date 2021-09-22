@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
@@ -41,7 +40,7 @@ public class SetManchesterSyntaxFrameActionHandler extends AbstractProjectChange
                                                  @Nonnull GetManchesterSyntaxFrameActionHandler handler,
                                                  @Nonnull RenderingManager renderer,
                                                  @Nonnull ManchesterSyntaxChangeGeneratorFactory factory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.handler = handler;
         this.renderer = renderer;
         this.factory = factory;
@@ -67,8 +66,7 @@ public class SetManchesterSyntaxFrameActionHandler extends AbstractProjectChange
     @Override
     protected SetManchesterSyntaxFrameResult createActionResult(ChangeApplicationResult<Optional<ManchesterSyntaxFrameParseError>> result,
                                                                 SetManchesterSyntaxFrameAction action,
-                                                                ExecutionContext executionContext,
-                                                                EventList<ProjectEvent> eventList) {
+                                                                ExecutionContext executionContext) {
 
         if (result.getSubject().isPresent()) {
             throw new SetManchesterSyntaxFrameException(result.getSubject().get());
@@ -78,7 +76,7 @@ public class SetManchesterSyntaxFrameActionHandler extends AbstractProjectChange
                                                         action.getSubject());
             GetManchesterSyntaxFrameResult frame = handler.execute(ac, executionContext);
             String reformattedFrame = frame.getFrameManchesterSyntax();
-            return SetManchesterSyntaxFrameResult.create(eventList, reformattedFrame);
+            return SetManchesterSyntaxFrameResult.create(reformattedFrame);
         }
     }
 

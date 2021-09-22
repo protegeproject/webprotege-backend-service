@@ -6,7 +6,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.events.EventManager;
 
@@ -29,7 +28,7 @@ public class EditAnnotationValuesActionHandler extends AbstractProjectChangeHand
                                              @Nonnull EventManager<ProjectEvent> eventManager,
                                              @Nonnull HasApplyChanges applyChanges,
                                              @Nonnull EditAnnotationsChangeListGeneratorFactory factory) {
-        super(accessManager, eventManager, applyChanges);
+        super(accessManager, applyChanges);
         this.factory = factory;
     }
 
@@ -52,7 +51,9 @@ public class EditAnnotationValuesActionHandler extends AbstractProjectChangeHand
     }
 
     @Override
-    protected EditAnnotationsResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult, EditAnnotationsAction action, ExecutionContext executionContext, EventList<ProjectEvent> eventList) {
+    protected EditAnnotationsResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult,
+                                                       EditAnnotationsAction action,
+                                                       ExecutionContext executionContext) {
         return new EditAnnotationsResult();
     }
 }

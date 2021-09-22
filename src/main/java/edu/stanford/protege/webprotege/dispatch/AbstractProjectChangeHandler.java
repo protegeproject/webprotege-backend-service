@@ -6,10 +6,6 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.common.Response;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 
 import javax.annotation.Nonnull;
 
@@ -24,29 +20,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public abstract class AbstractProjectChangeHandler<T, A extends Request<R>, R extends Response> extends AbstractProjectActionHandler<A, R> {
 
     @Nonnull
-    private final EventManager<ProjectEvent> eventManager;
-
-    @Nonnull
     private final HasApplyChanges applyChanges;
 
-    @Nonnull
-    public AbstractProjectChangeHandler(@Nonnull AccessManager accessManager,
-                                        @Nonnull EventManager<ProjectEvent> eventManager,
-                                        @Nonnull HasApplyChanges applyChanges) {
+    public AbstractProjectChangeHandler(@Nonnull AccessManager accessManager, @Nonnull HasApplyChanges applyChanges) {
         super(accessManager);
-        this.eventManager = checkNotNull(eventManager);
         this.applyChanges = checkNotNull(applyChanges);
     }
 
     @Nonnull
     @Override
     public final R execute(@Nonnull A action, @Nonnull ExecutionContext executionContext) {
-        EventTag tag = eventManager.getCurrentTag();
         ChangeListGenerator<T> changeListGenerator = getChangeListGenerator(action, executionContext);
         ChangeApplicationResult<T> result = applyChanges.applyChanges(executionContext.getUserId(),
                                                                                        changeListGenerator);
-        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(tag);
-        return createActionResult(result, action, executionContext, eventList);
+        return createActionResult(result, action, executionContext);
     }
 
     protected abstract ChangeListGenerator<T> getChangeListGenerator(A action,
@@ -54,8 +41,7 @@ public abstract class AbstractProjectChangeHandler<T, A extends Request<R>, R ex
 
     protected abstract R createActionResult(ChangeApplicationResult<T> changeApplicationResult,
                                             A action,
-                                            ExecutionContext executionContext,
-                                            EventList<ProjectEvent> eventList);
+                                            ExecutionContext executionContext);
 
 
 
