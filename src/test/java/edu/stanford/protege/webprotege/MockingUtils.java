@@ -2,12 +2,8 @@ package edu.stanford.protege.webprotege;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.common.Event;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.csv.DocumentId;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.owlapi.model.*;
@@ -69,10 +65,6 @@ public class MockingUtils {
 
     public static OWLDatatype mockOWLDatatype() {
         return new OWLDatatypeImpl(mockIRI());
-    }
-
-    public static <E extends Event> EventList<E> mockEventList() {
-        return EventList.create(EventTag.get(2), ImmutableList.of(), EventTag.get(2));
     }
 
     public static OWLOntologyID mockOWLOntologyID() {
