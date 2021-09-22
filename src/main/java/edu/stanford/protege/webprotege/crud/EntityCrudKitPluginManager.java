@@ -15,7 +15,7 @@ import java.util.Set;
  * Date: 8/19/13
  */
 @ProjectSingleton
-public class EntityCrudKitPluginManager implements HasPlugins<EntityCrudKitPlugin<?,?,?>> {
+public class EntityCrudKitPluginManager {
 
     private final ImmutableList<EntityCrudKitPlugin<?,?,?>> plugins;
 
