@@ -87,7 +87,7 @@ public class LoadProjectActionHandler implements ApplicationActionHandler<LoadPr
         if (!executionContext.getUserId().isGuest()) {
             userActivityManager.addRecentProject(executionContext.getUserId(), action.projectId(), System.currentTimeMillis());
         }
-        return LoadProjectResult.get(action.projectId(),
+        return new LoadProjectResult(action.projectId(),
                                      executionContext.getUserId(),
                                      projectDetails);
     }

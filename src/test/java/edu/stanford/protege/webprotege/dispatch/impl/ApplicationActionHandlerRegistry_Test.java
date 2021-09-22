@@ -95,7 +95,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainLoadProjectActionHandler() {
-        var handler = registry.getActionHandler(LoadProjectAction.create(ProjectId.generate()));
+        var handler = registry.getActionHandler(new LoadProjectAction(ProjectId.generate()));
         assertThat(handler, is(notNullValue()));
     }
 
