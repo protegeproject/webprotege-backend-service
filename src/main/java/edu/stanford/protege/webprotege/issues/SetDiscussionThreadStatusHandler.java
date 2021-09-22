@@ -4,11 +4,8 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,19 +25,19 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
     private final EntityDiscussionThreadRepository repository;
 
     @Nonnull
-    private final EventManager<ProjectEvent> eventManager;
+    private final ProjectId projectId;
 
     @Nonnull
-    private final ProjectId projectId;
+    private final EventDispatcher eventDispatcher;
 
     @Inject
     public SetDiscussionThreadStatusHandler(@Nonnull AccessManager accessManager,
                                             @Nonnull EntityDiscussionThreadRepository repository,
-                                            @Nonnull EventManager<ProjectEvent> eventManager,
-                                            @Nonnull ProjectId projectId) {
+                                            @Nonnull ProjectId projectId,
+                                            @Nonnull EventDispatcher eventDispatcher) {
         super(accessManager);
         this.repository = repository;
-        this.eventManager = eventManager;
+        this.eventDispatcher = eventDispatcher;
         this.projectId = projectId;
     }
 
@@ -60,17 +57,15 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
     @Override
     public SetDiscussionThreadStatusResult execute(@Nonnull SetDiscussionThreadStatusAction action,
                                                    @Nonnull ExecutionContext executionContext) {
-        EventTag fromTag = eventManager.getCurrentTag();
-        ThreadId threadId = action.getThreadId();
-        Status status = action.getStatus();
-        Optional<EntityDiscussionThread> thread = repository.setThreadStatus(threadId, status);
+        var threadId = action.threadId();
+        var status = action.status();
+        var thread = repository.setThreadStatus(threadId, status);
         int openComments = thread.map(t -> repository.getOpenCommentsCount(projectId, t.getEntity())).orElse(-1);
-        eventManager.postEvent(new DiscussionThreadStatusChangedEvent(projectId,
+        eventDispatcher.dispatchEvent(new DiscussionThreadStatusChangedEvent(projectId,
                                                                                    threadId,
                                                                                    thread.map(EntityDiscussionThread::getEntity),
                                                                                    openComments,
                                                                                    status));
-        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(fromTag);
-        return new SetDiscussionThreadStatusResult(threadId, status, eventList);
+        return new SetDiscussionThreadStatusResult(threadId, status);
     }
 }

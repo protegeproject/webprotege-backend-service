@@ -542,8 +542,8 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     SetDiscussionThreadStatusHandler setDiscussionThreadStatusHandler(AccessManager p1,
                                                                       EntityDiscussionThreadRepository p2,
-                                                                      EventManager<ProjectEvent> p3, ProjectId p4) {
-        return new SetDiscussionThreadStatusHandler(p1, p2, p3, p4);
+                                                                      ProjectId p4, EventDispatcher eventDispatcher) {
+        return new SetDiscussionThreadStatusHandler(p1, p2, p4, eventDispatcher);
     }
 
 
@@ -554,7 +554,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                         EntitiesInProjectSignatureIndex p4) {
         return new GetCommentedEntitiesActionHandler(p1, p2, p3, p4);
     }
-
 
     @Bean
     ResetPerspectiveLayoutActionHandler resetPerspectiveLayoutActionHandler(AccessManager p1, PerspectivesManager p2) {
