@@ -1,8 +1,6 @@
 
 package edu.stanford.protege.webprotege.user;
 
-import edu.stanford.protege.webprotege.auth.Salt;
-import edu.stanford.protege.webprotege.auth.SaltedPasswordDigest;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -29,20 +27,14 @@ public class UserRecord_TestCase {
 
     private String avatarUrl = "The avatarUrl";
 
-    @Mock
-    private Salt salt;
-
-    @Mock
-    private SaltedPasswordDigest saltedPasswordDigest;
-
     @Before
     public void setUp() {
-        userRecord = new UserRecord(userId, realName, emailAddress, avatarUrl, salt, saltedPasswordDigest);
+        userRecord = new UserRecord(userId, realName, emailAddress, avatarUrl);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
-        new UserRecord(null, realName, emailAddress, avatarUrl, salt, saltedPasswordDigest);
+        new UserRecord(null, realName, emailAddress, avatarUrl);
     }
 
     @Test
@@ -52,7 +44,7 @@ public class UserRecord_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_realName_IsNull() {
-        new UserRecord(userId, null, emailAddress, avatarUrl, salt, saltedPasswordDigest);
+        new UserRecord(userId, null, emailAddress, avatarUrl);
     }
 
     @Test
@@ -62,7 +54,7 @@ public class UserRecord_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_emailAddress_IsNull() {
-        new UserRecord(userId, realName, null, avatarUrl, salt, saltedPasswordDigest);
+        new UserRecord(userId, realName, null, avatarUrl);
     }
 
     @Test
@@ -72,7 +64,7 @@ public class UserRecord_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_avatarUrl_IsNull() {
-        new UserRecord(userId, realName, emailAddress, null, salt, saltedPasswordDigest);
+        new UserRecord(userId, realName, emailAddress, null);
     }
 
     @Test
@@ -82,22 +74,7 @@ public class UserRecord_TestCase {
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_salt_IsNull() {
-        new UserRecord(userId, realName, emailAddress, avatarUrl, null, saltedPasswordDigest);
-    }
-
-    @Test
-    public void shouldReturnSupplied_salt() {
-        assertThat(userRecord.getSalt(), is(this.salt));
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_saltedPasswordDigest_IsNull() {
-        new UserRecord(userId, realName, emailAddress, avatarUrl, salt, null);
-    }
-
-    @Test
-    public void shouldReturnSupplied_saltedPasswordDigest() {
-        assertThat(userRecord.getSaltedPasswordDigest(), is(this.saltedPasswordDigest));
+        new UserRecord(userId, realName, emailAddress, avatarUrl);
     }
 
     @Test
@@ -112,42 +89,42 @@ public class UserRecord_TestCase {
 
     @Test
     public void shouldBeEqualToOther() {
-        assertThat(userRecord, is(new UserRecord(userId, realName, emailAddress, avatarUrl, salt, saltedPasswordDigest)));
+        assertThat(userRecord, is(new UserRecord(userId, realName, emailAddress, avatarUrl)));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_userId() {
-        assertThat(userRecord, is(not(new UserRecord(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), realName, emailAddress, avatarUrl, salt, saltedPasswordDigest))));
+        assertThat(userRecord, is(not(new UserRecord(edu.stanford.protege.webprotege.MockingUtils.mockUserId(), realName, emailAddress, avatarUrl))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_realName() {
-        assertThat(userRecord, is(not(new UserRecord(userId, "String-c546a2c3-850a-40db-81c2-d376303cb542", emailAddress, avatarUrl, salt, saltedPasswordDigest))));
+        assertThat(userRecord, is(not(new UserRecord(userId, "String-c546a2c3-850a-40db-81c2-d376303cb542", emailAddress, avatarUrl))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_emailAddress() {
-        assertThat(userRecord, is(not(new UserRecord(userId, realName, "String-e725a477-c521-469e-abff-3cf9dcdfd977", avatarUrl, salt, saltedPasswordDigest))));
+        assertThat(userRecord, is(not(new UserRecord(userId, realName, "String-e725a477-c521-469e-abff-3cf9dcdfd977", avatarUrl))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_avatarUrl() {
-        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, "String-9c62bcba-f234-4c15-aa49-650fe22b962f", salt, saltedPasswordDigest))));
+        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, "String-9c62bcba-f234-4c15-aa49-650fe22b962f"))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_salt() {
-        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, avatarUrl, Mockito.mock(Salt.class), saltedPasswordDigest))));
+        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, avatarUrl))));
     }
 
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_saltedPasswordDigest() {
-        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, avatarUrl, salt, Mockito.mock(SaltedPasswordDigest.class)))));
+        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, avatarUrl))));
     }
 
     @Test
     public void shouldBeEqualToOtherHashCode() {
-        assertThat(userRecord.hashCode(), is(new UserRecord(userId, realName, emailAddress, avatarUrl, salt, saltedPasswordDigest).hashCode()));
+        assertThat(userRecord.hashCode(), is(new UserRecord(userId, realName, emailAddress, avatarUrl).hashCode()));
     }
 
     @Test

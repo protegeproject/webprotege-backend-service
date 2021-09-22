@@ -1,7 +1,5 @@
 package edu.stanford.protege.webprotege.user;
 
-import edu.stanford.protege.webprotege.auth.Salt;
-import edu.stanford.protege.webprotege.auth.SaltedPasswordDigest;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.persistence.*;
 import org.bson.Document;
@@ -42,8 +40,6 @@ public class UserRecordConverter implements DocumentConverter<UserRecord> {
         if (!object.getAvatarUrl().isEmpty()) {
             document.append(AVATAR_URL, object.getAvatarUrl());
         }
-        document.append(SALT, new SaltWriteConverter().convert(object.getSalt()));
-        document.append(SALTED_PASSWORD_DIGEST, new SaltedPasswordDigestWriteConverter().convert(object.getSaltedPasswordDigest()));
         return document;
     }
 
@@ -53,15 +49,11 @@ public class UserRecordConverter implements DocumentConverter<UserRecord> {
         String realName = document.getString(REAL_NAME);
         String email = orEmptyString(document.getString(EMAIL_ADDRESS));
         String avatar = orEmptyString(document.getString(AVATAR_URL));
-        Salt salt = new SaltReadConverter().convert(document.getString(SALT));
-        SaltedPasswordDigest password = new SaltedPasswordDigestReadConverter().convert(document.getString(SALTED_PASSWORD_DIGEST));
         return new UserRecord(
                 UserId.valueOf(userId),
                 realName,
                 email,
-                avatar,
-                salt,
-                password);
+                avatar);
     }
 
     public UserId getUserId(Document document) {

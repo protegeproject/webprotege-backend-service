@@ -356,13 +356,6 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    @Singleton
-    AuthenticationManager getAuthenticationManager(UserRecordRepository userRecordRepository) {
-        return new AuthenticationManagerImpl(userRecordRepository, new PasswordDigestAlgorithm(Md5MessageDigestAlgorithm::new),
-                                             new SaltProvider());
-    }
-
-    @Bean
     ProjectPermissionsManager getProjectPermissionsManager(AccessManager accessManager,
                                                            ProjectDetailsRepository projectDetailsRepository) {
         return new ProjectPermissionsManagerImpl(accessManager,

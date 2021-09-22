@@ -90,9 +90,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
                 theRecord.getUserId(),
                 theRecord.getRealName(),
                 email,
-                theRecord.getAvatarUrl(),
-                theRecord.getSalt(),
-                theRecord.getSaltedPasswordDigest()
+                theRecord.getAvatarUrl()
         );
         repository.delete(userId);
         repository.save(replacement);

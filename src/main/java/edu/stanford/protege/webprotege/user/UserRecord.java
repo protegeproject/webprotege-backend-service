@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.google.common.base.Objects;
-import edu.stanford.protege.webprotege.auth.Salt;
-import edu.stanford.protege.webprotege.auth.SaltedPasswordDigest;
 import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
@@ -32,32 +30,20 @@ public class UserRecord {
     @Nonnull
     private final String avatarUrl;
 
-    @Nonnull
-    private final Salt salt;
-
-    @Nonnull
-    private final SaltedPasswordDigest saltedPasswordDigest;
-
     /**
      * @param userId The userId that identifies this record in the DB
      * @param realName The real name of the user.  May be empty, but must not be {@code null}.
      * @param emailAddress The email address of the user.   May be empty, but must not be {@code null}.
      * @param avatarUrl The Avatar URL of the user.    May be empty, but must not be {@code null}.
-     * @param salt The salt for the user.  Not {@code null}.
-     * @param saltedPasswordDigest The salted password digest for the user. Not {@code null}.
      */
     public UserRecord(@Nonnull UserId userId,
                       @Nonnull String realName,
                       @Nonnull String emailAddress,
-                      @Nonnull String avatarUrl,
-                      @Nonnull Salt salt,
-                      @Nonnull SaltedPasswordDigest saltedPasswordDigest) {
+                      @Nonnull String avatarUrl) {
         this.userId = checkNotNull(userId);
         this.realName = checkNotNull(realName);
         this.emailAddress = checkNotNull(emailAddress);
         this.avatarUrl = checkNotNull(avatarUrl);
-        this.salt = checkNotNull(salt);
-        this.saltedPasswordDigest = checkNotNull(saltedPasswordDigest);
     }
 
     /**
@@ -92,23 +78,6 @@ public class UserRecord {
         return avatarUrl;
     }
 
-    /**
-     * Gets the salt for this user.
-     * @return The salt.  Not {@code null}.
-     */
-    @Nonnull
-    public Salt getSalt() {
-        return salt;
-    }
-
-    /**
-     * Gets the salted password digest.
-     * @return The salted password digest.  Not {@code null}.
-     */
-    @Nonnull
-    public SaltedPasswordDigest getSaltedPasswordDigest() {
-        return saltedPasswordDigest;
-    }
 
 
     @Override
@@ -118,8 +87,6 @@ public class UserRecord {
                 .addValue(realName)
                 .addValue(emailAddress)
                 .addValue(avatarUrl)
-                .addValue(salt)
-                .addValue(saltedPasswordDigest)
                 .toString();
     }
 
@@ -129,9 +96,7 @@ public class UserRecord {
                 userId,
                 realName,
                 emailAddress,
-                avatarUrl,
-                salt,
-                saltedPasswordDigest
+                avatarUrl
         );
     }
 
@@ -140,15 +105,12 @@ public class UserRecord {
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof UserRecord)) {
+        if (!(obj instanceof UserRecord other)) {
             return false;
         }
-        UserRecord other = (UserRecord) obj;
         return this.userId.equals(other.userId)
                 && this.realName.equals(other.realName)
                 && this.emailAddress.equals(other.emailAddress)
-                && this.avatarUrl.equals(other.avatarUrl)
-                && this.salt.equals(other.salt)
-                && this.saltedPasswordDigest.equals(other.saltedPasswordDigest);
+                && this.avatarUrl.equals(other.avatarUrl);
     }
 }
