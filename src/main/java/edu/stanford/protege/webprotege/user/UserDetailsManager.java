@@ -10,7 +10,7 @@ import java.util.Optional;
  * Stanford Center for Biomedical Informatics Research
  * 06/02/15
  */
-public interface UserDetailsManager extends HasGetUserIdByEmailAddress, HasGetUserIdByUserIdOrEmail {
+public interface UserDetailsManager extends HasGetUserIdByUserIdOrEmail {
 
     List<UserId> getUserIdsContainingIgnoreCase(String userName, int limit);
 
@@ -26,6 +26,14 @@ public interface UserDetailsManager extends HasGetUserIdByEmailAddress, HasGetUs
     Optional<String> getEmail(UserId userId);
 
     void setEmail(UserId userId, String email);
+
+    /**
+     * Retrieves a UserId by their email address.
+     * @param emailAddress The email address.  Not {@code null}.
+     * @return The UserId that has the specified email address.  An absent value will be returned if there is
+     * no user with the specified email address.
+     */
+    Optional<UserId> getUserIdByEmailAddress(EmailAddress emailAddress);
 
 
 }
