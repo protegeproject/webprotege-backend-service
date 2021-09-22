@@ -426,17 +426,6 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    @ProjectSingleton
-    public EventManager<ProjectEvent> eventManager(EventManagerProvider eventManagerProvider) {
-        return eventManagerProvider.get();
-    }
-
-    @Bean
-    public EventLifeTime eventLifeTime() {
-        return EventManagerProvider.PROJECT_EVENT_LIFE_TIME;
-    }
-
-    @Bean
     public RevisionNumber revisionNumber(RevisionNumberProvider provider) {
         return provider.get();
     }
@@ -631,7 +620,6 @@ public class ProjectBeansConfiguration {
                                  p6,
                                  p7,
                                  p8,
-                                 p9,
                                  p10,
                                  p11,
                                  p12,
@@ -1235,11 +1223,6 @@ public class ProjectBeansConfiguration {
     @Bean
     RevisionNumberProvider revisionNumberProvider(RevisionManager p1) {
         return new RevisionNumberProvider(p1);
-    }
-
-    @Bean
-    EventManagerProvider eventManagerProvider(ProjectDisposablesManager p1, ProjectId p2, EventDispatcher p3) {
-        return new EventManagerProvider(p1, p2, p3);
     }
 
     @Bean

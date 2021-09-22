@@ -11,8 +11,6 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.events.EventTranslatorManager;
 import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
 import edu.stanford.protege.webprotege.hierarchy.AnnotationPropertyHierarchyProvider;
@@ -85,7 +83,7 @@ public class ChangeManager implements HasApplyChanges {
     private final ProjectChangedWebhookInvoker projectChangedWebhookInvoker;
 
     @Nonnull
-    private final EventManager<ProjectEvent> projectEventManager;
+    private final EventDispatcher eventDispatcher;
 
     @Nonnull
     private final Provider<EventTranslatorManager> eventTranslatorManagerProvider;
@@ -144,9 +142,6 @@ public class ChangeManager implements HasApplyChanges {
     @Nonnull
     private final GeneratedAnnotationsGenerator generatedAnnotationsGenerator;
 
-    @Nonnull
-    private final EventDispatcher eventDispatcher;
-
     private OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
 
     @Inject
@@ -158,7 +153,6 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull PrefixDeclarationsStore prefixDeclarationsStore,
                          @Nonnull ProjectDetailsRepository projectDetailsRepository,
                          @Nonnull ProjectChangedWebhookInvoker projectChangedWebhookInvoker,
-                         @Nonnull EventManager<ProjectEvent> projectEventManager,
                          @Nonnull Provider<EventTranslatorManager> eventTranslatorManagerProvider,
                          @Nonnull ProjectEntityCrudKitHandlerCache entityCrudKitHandlerCache,
                          @Nonnull RevisionManager changeManager,
@@ -184,9 +178,9 @@ public class ChangeManager implements HasApplyChanges {
         this.prefixDeclarationsStore = prefixDeclarationsStore;
         this.projectDetailsRepository = projectDetailsRepository;
         this.projectChangedWebhookInvoker = projectChangedWebhookInvoker;
-        this.projectEventManager = projectEventManager;
         this.eventTranslatorManagerProvider = eventTranslatorManagerProvider;
         this.entityCrudKitHandlerCache = entityCrudKitHandlerCache;
+        this.eventDispatcher = eventDispatcher;
         this.changeManager = changeManager;
         this.rootIndex = rootIndex;
         this.dictionaryManager = dictionaryManager;
@@ -201,7 +195,6 @@ public class ChangeManager implements HasApplyChanges {
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.iriReplacerFactory = iriReplacerFactory;
         this.generatedAnnotationsGenerator = generatedAnnotationsGenerator;
-        this.eventDispatcher = eventDispatcher;
     }
 
     /**
@@ -537,7 +530,8 @@ public class ChangeManager implements HasApplyChanges {
             if(changeListGenerator instanceof HasHighLevelEvents) {
                 highLevelEvents.addAll(((HasHighLevelEvents) changeListGenerator).getHighLevelEvents());
             }
-            projectEventManager.postHighLevelEvents(highLevelEvents);
+            highLevelEvents.stream().map(HighLevelProjectEventProxy::asProjectEvent)
+                    .forEach(eventDispatcher::dispatchEvent);
             projectChangedWebhookInvoker.invoke(userId, rev.getRevisionNumber(), rev.getTimestamp());
         });
     }
