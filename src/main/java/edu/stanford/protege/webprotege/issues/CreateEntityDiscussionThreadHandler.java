@@ -3,18 +3,15 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -49,10 +46,10 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
     private final CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker;
 
     @Nonnull
-    private final EventManager<ProjectEvent> eventManager;
+    private final HasGetRendering renderer;
 
     @Nonnull
-    private final HasGetRendering renderer;
+    private final EventDispatcher eventDispatcher;
 
 
     @Inject
@@ -62,16 +59,16 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
                                                @Nonnull ProjectDetailsRepository projectDetailsRepository,
                                                @Nonnull CommentNotificationEmailer notificationsEmailer,
                                                @Nonnull CommentPostedSlackWebhookInvoker commentPostedSlackWebhookInvoker,
-                                               @Nonnull EventManager<ProjectEvent> eventManager,
-                                               @Nonnull HasGetRendering renderer) {
+                                               @Nonnull HasGetRendering renderer,
+                                               @Nonnull EventDispatcher eventDispatcher) {
         super(accessManager);
         this.projectId = projectId;
         this.repository = repository;
         this.projectDetailsRepository = projectDetailsRepository;
         this.notificationsEmailer = notificationsEmailer;
         this.commentPostedSlackWebhookInvoker = commentPostedSlackWebhookInvoker;
-        this.eventManager = eventManager;
         this.renderer = renderer;
+        this.eventDispatcher = eventDispatcher;
     }
 
     @Nonnull
@@ -94,13 +91,12 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
         CommentRenderer commentRenderer = new CommentRenderer();
         String renderedComment = commentRenderer.renderComment(rawComment);
         UserId commentingUser = executionContext.getUserId();
-        Comment comment = new Comment(
-                CommentId.create(),
-                commentingUser,
-                System.currentTimeMillis(),
-                Optional.empty(),
-                rawComment,
-                renderedComment);
+        Comment comment = new Comment(CommentId.create(),
+                                      commentingUser,
+                                      System.currentTimeMillis(),
+                                      Optional.empty(),
+                                      rawComment,
+                                      renderedComment);
         OWLEntity entity = action.entity();
         EntityDiscussionThread thread = new EntityDiscussionThread(ThreadId.create(),
                                                                    action.projectId(),
@@ -108,33 +104,32 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
                                                                    Status.OPEN,
                                                                    ImmutableList.of(comment));
         repository.saveThread(thread);
-        EventTag startTag = eventManager.getCurrentTag();
-        eventManager.postEvent(new DiscussionThreadCreatedEvent(projectId, thread));
         int commentCount = repository.getCommentsCount(projectId, entity);
         int openCommentCount = repository.getOpenCommentsCount(projectId, entity);
         Optional<OWLEntityData> rendering = Optional.of(renderer.getRendering(entity));
-        eventManager.postEvent(new CommentPostedEvent(projectId,
-                                                      thread.getId(),
-                                                      comment,
-                                                      rendering,
-                                                      commentCount,
-                                                      openCommentCount));
-        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(startTag);
+        var event = new CommentPostedEvent(projectId,
+                                           thread.getId(),
+                                           comment,
+                                           rendering,
+                                           commentCount,
+                                           openCommentCount);
+        eventDispatcher.dispatchEvent(event);
         setOutNotifications(thread, comment);
-
         List<EntityDiscussionThread> threads = repository.findThreads(projectId, entity);
         return new CreateEntityDiscussionThreadResult(ImmutableList.copyOf(threads));
     }
 
-    void setOutNotifications(EntityDiscussionThread thread, Comment comment) {
+    private void setOutNotifications(EntityDiscussionThread thread, Comment comment) {
+        // TODO: Move this to a different service to listen for comment posted event
         Thread t = new Thread(() -> {
             notificationsEmailer.sendCommentPostedNotification(projectId,
                                                                renderer.getRendering(thread.getEntity()),
                                                                thread,
                                                                comment);
             commentPostedSlackWebhookInvoker.invoke(projectId,
-                                                    projectDetailsRepository.findOne(projectId).map(
-                                                            ProjectDetails::getDisplayName).orElse("Project"),
+                                                    projectDetailsRepository.findOne(projectId)
+                                                                            .map(ProjectDetails::getDisplayName)
+                                                                            .orElse("Project"),
                                                     renderer.getRendering(thread.getEntity()),
                                                     comment);
         });

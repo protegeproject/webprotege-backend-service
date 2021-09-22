@@ -27,6 +27,7 @@ import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGe
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.GetProjectLangTagsActionHandler;
@@ -503,9 +504,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                   ProjectDetailsRepository p4,
                                                                                   CommentNotificationEmailer p5,
                                                                                   CommentPostedSlackWebhookInvoker p6,
-                                                                                  EventManager<ProjectEvent> p7,
-                                                                                  HasGetRendering p8) {
-        return new CreateEntityDiscussionThreadHandler(p1, p2, p3, p4, p5, p6, p7, p8);
+                                                                                  HasGetRendering p8,
+                                                                                  EventDispatcher eventDispatcher) {
+        return new CreateEntityDiscussionThreadHandler(p1, p2, p3, p4, p5, p6, p8, eventDispatcher);
     }
 
 
