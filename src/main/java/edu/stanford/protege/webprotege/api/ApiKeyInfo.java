@@ -29,10 +29,6 @@ public class ApiKeyInfo {
         this.purpose = checkNotNull(purpose);
     }
 
-
-    private ApiKeyInfo() {
-    }
-
     public ApiKeyId getApiKeyId() {
         return apiKeyId;
     }
