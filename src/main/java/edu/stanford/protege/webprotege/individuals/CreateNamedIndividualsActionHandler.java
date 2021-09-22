@@ -11,10 +11,6 @@ import edu.stanford.protege.webprotege.entity.CreateNamedIndividualsAction;
 import edu.stanford.protege.webprotege.entity.CreateNamedIndividualsResult;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
-import edu.stanford.protege.webprotege.events.EventManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
@@ -39,8 +35,6 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
     @Nonnull
     private final ProjectId projectId;
 
-    private final EventManager<ProjectEvent> eventManager;
-
     @Nonnull
     private final HasApplyChanges changeApplicator;
 
@@ -52,12 +46,12 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
 
     @Inject
     public CreateNamedIndividualsActionHandler(@Nonnull AccessManager accessManager,
-                                               @Nonnull ProjectId projectId, EventManager<ProjectEvent> eventManager, @Nonnull HasApplyChanges changeApplicator,
+                                               @Nonnull ProjectId projectId,
+                                               @Nonnull HasApplyChanges changeApplicator,
                                                @Nonnull EntityNodeRenderer renderer,
                                                @Nonnull CreateIndividualsChangeListGeneratorFactory factory) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
-        this.eventManager = checkNotNull(eventManager);
         this.changeApplicator = checkNotNull(changeApplicator);
         this.renderer = checkNotNull(renderer);
         this.factory = checkNotNull(factory);
@@ -73,12 +67,10 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
     @Override
     public CreateNamedIndividualsResult execute(@Nonnull CreateNamedIndividualsAction action,
                                                 @Nonnull ExecutionContext executionContext) {
-        EventTag eventTag = eventManager.getCurrentTag();
         ChangeApplicationResult<Set<OWLNamedIndividual>> result = changeApplicator.applyChanges(executionContext.getUserId(),
                                                                                                 factory.create(action.types(),
                                                                                                                action.sourceText(),
                                                                                                                action.langTag()));
-        EventList<ProjectEvent> eventList = eventManager.getEventsFromTag(eventTag);
         ImmutableSet<EntityNode> individualData = result.getSubject().stream()
                                                         .map(renderer::render)
                                                         .collect(toImmutableSet());
