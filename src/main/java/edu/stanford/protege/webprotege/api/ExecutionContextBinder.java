@@ -9,6 +9,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-15
  */
+@Deprecated
 public class ExecutionContextBinder extends AbstractBinder {
 
     @Override

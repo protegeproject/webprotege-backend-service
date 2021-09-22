@@ -16,6 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 10 May 2018
  */
+@Deprecated
 public class ResponseUtil<T> {
 
     private final Map<String, String> links;

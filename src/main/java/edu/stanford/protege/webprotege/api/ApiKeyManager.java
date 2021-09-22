@@ -16,6 +16,7 @@ import static java.util.stream.Collectors.toList;
  * Stanford Center for Biomedical Informatics Research
  * 14 Apr 2018
  */
+@Deprecated
 @ApplicationSingleton
 public class ApiKeyManager implements ApiKeyChecker {
 

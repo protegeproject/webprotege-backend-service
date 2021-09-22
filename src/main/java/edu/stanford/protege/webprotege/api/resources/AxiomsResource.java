@@ -29,6 +29,7 @@ import static edu.stanford.protege.webprotege.download.DownloadFormat.*;
  * Stanford Center for Biomedical Informatics Research
  * 18 Apr 2018
  */
+@Deprecated
 public class AxiomsResource {
 
     private static final String ADDED_EXTERNAL_AXIOMS = "Added external axioms";

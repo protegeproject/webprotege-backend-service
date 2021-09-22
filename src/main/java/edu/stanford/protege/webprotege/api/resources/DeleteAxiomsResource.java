@@ -28,6 +28,7 @@ import static edu.stanford.protege.webprotege.download.DownloadFormat.*;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-08
  */
+@Deprecated
 public class DeleteAxiomsResource {
 
     private static final String DELETED_AXIOMS = "Deleted external axioms";

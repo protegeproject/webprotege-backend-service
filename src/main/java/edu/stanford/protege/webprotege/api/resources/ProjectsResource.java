@@ -30,6 +30,7 @@ import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
  */
 @Path("projects")
 @Produces(MediaType.TEXT_PLAIN)
+@Deprecated
 public class ProjectsResource implements ApiRootResource {
 
     @Nonnull

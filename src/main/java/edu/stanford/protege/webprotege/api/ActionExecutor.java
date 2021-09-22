@@ -22,6 +22,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * An executor for actions that provides the necessary request and execution context.
  */
+@Deprecated
 public class ActionExecutor {
 
     @Nonnull

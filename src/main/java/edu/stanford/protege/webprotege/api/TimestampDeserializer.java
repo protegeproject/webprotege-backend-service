@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatterBuilder;
  * Deserializes ISO timestamps into longs (UTC Zone).  This also deserializes
  * mongodb timestamps which look like this  ISODate("2018-09-01T01:02:03Z")
  */
+@Deprecated
 public class TimestampDeserializer extends StdDeserializer<Long> {
 
     private static final String UTC = "UTC";

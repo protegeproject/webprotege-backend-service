@@ -16,6 +16,7 @@ import javax.ws.rs.ext.Provider;
  */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
+@Deprecated
 public class JacksonContextResolver implements ContextResolver<ObjectMapper> {
 
     private ObjectMapper objectMapper;

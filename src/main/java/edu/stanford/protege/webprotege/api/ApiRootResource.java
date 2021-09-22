@@ -8,6 +8,7 @@ package edu.stanford.protege.webprotege.api;
  * A marker interface for root resources so that they can be injected into a set of
  * root resources.
  */
+@Deprecated
 public interface ApiRootResource {
 
 }

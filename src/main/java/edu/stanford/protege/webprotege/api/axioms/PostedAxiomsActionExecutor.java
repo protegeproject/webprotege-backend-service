@@ -27,6 +27,7 @@ import static javax.ws.rs.core.Response.Status.FORBIDDEN;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-08
  */
+@Deprecated
 public class PostedAxiomsActionExecutor {
 
     @Nonnull

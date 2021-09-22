@@ -13,6 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 20 Apr 2018
  */
+@Deprecated
 public class PostedAxiomsLoadSuccessResponse implements PostedAxiomsLoadResponse {
 
     private int parsedAxiomsCount;

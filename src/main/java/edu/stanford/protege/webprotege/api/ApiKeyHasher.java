@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
+@Deprecated
 public class ApiKeyHasher {
 
     @Inject

@@ -30,6 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * The changes within a context of a project
  */
+@Deprecated
 public class RevisionsResource {
 
     private final ProjectId projectId;

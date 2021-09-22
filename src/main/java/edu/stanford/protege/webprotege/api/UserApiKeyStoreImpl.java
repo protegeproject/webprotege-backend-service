@@ -21,6 +21,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
+@Deprecated
 public class UserApiKeyStoreImpl implements UserApiKeyStore {
 
     private static final int INCLUDE = 1;

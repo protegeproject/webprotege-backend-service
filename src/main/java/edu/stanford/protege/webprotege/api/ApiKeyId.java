@@ -13,6 +13,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 18 Apr 2018
  */
+@Deprecated
 public class ApiKeyId {
 
     private String id;

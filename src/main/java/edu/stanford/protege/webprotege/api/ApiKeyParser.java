@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
+@Deprecated
 public class ApiKeyParser {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";

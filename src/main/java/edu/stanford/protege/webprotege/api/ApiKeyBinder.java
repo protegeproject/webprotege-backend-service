@@ -8,6 +8,7 @@ import org.glassfish.jersey.process.internal.RequestScoped;
  * Stanford Center for Biomedical Informatics Research
  * 1 May 2018
  */
+@Deprecated
 public class ApiKeyBinder extends AbstractBinder {
 
     @Override

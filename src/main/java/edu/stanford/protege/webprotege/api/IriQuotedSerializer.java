@@ -12,6 +12,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 23 Apr 2018
  */
+@Deprecated
 public class IriQuotedSerializer extends StdSerializer<IRI> {
 
     public IriQuotedSerializer() {

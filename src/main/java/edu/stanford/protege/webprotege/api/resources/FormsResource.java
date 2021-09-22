@@ -27,6 +27,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  * Stanford Center for Biomedical Informatics Research
  * 2020-08-22
  */
+@Deprecated
 public class FormsResource {
 
     @Nonnull

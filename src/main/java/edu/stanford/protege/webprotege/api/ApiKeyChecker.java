@@ -10,6 +10,7 @@ import java.util.Optional;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
+@Deprecated
 public interface ApiKeyChecker {
 
     /**

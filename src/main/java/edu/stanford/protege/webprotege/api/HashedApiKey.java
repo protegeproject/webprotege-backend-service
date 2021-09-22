@@ -14,6 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * Represents an API key that has been hashed
  */
+@Deprecated
 public class HashedApiKey {
 
     private final String apiKey;

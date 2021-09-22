@@ -18,6 +18,7 @@ import static edu.stanford.protege.webprotege.api.AuthenticationConstants.AUTHEN
  *
  * A factory that creates API
  */
+@Deprecated
 public class ApiKeyFactory implements Factory<ApiKey> {
 
 

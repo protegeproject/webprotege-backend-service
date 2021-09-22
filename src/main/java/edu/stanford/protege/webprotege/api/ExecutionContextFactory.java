@@ -16,6 +16,7 @@ import static edu.stanford.protege.webprotege.api.AuthenticationConstants.EXECUT
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-15
  */
+@Deprecated
 public class ExecutionContextFactory implements Factory<ExecutionContext> {
 
     @Context

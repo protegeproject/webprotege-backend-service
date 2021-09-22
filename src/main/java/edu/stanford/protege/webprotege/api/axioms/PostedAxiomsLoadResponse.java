@@ -12,6 +12,7 @@ import java.util.stream.Stream;
  * Stanford Center for Biomedical Informatics Research
  * 20 Apr 2018
  */
+@Deprecated
 public interface PostedAxiomsLoadResponse {
 
     /**

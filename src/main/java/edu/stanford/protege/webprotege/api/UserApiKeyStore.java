@@ -18,7 +18,7 @@ import java.util.Optional;
  * specific keys to be dropped; 2) A timestamp that records the time that the key was generated; 3)
  * A user specified string that records the purpose of the key.
  */
-@ApplicationSingleton
+@Deprecated
 public interface UserApiKeyStore extends Repository {
 
     /**

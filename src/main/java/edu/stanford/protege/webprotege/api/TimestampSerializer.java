@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
  * Stanford Center for Biomedical Informatics Research
  * 23 Apr 2018
  */
+@Deprecated
 public class TimestampSerializer extends StdSerializer<Long> {
 
     private static final String UTC = "UTC";

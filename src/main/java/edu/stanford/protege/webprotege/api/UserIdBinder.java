@@ -11,6 +11,7 @@ import javax.inject.Inject;
  * Stanford Center for Biomedical Informatics Research
  * 16 Apr 2018
  */
+@Deprecated
 public class UserIdBinder extends AbstractBinder {
 
     @Inject

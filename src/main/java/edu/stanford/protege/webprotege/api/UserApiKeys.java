@@ -23,6 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
         @CompoundIndex(def = "apiKeys.apiKeyId", unique = true),
         @CompoundIndex(def = "apiKeys.apiKey", unique = true)
 })
+@Deprecated
 public class UserApiKeys {
 
     public static final String USER_ID = "_id";

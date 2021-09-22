@@ -30,6 +30,7 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
  * status code is returned along with information about the error.  If the axioms are parsed successfully
  * then an HTTP 200 (OK) status code is returned along with the number of parsed axioms.
  */
+@Deprecated
 public class PostedAxiomsLoader {
 
     private static final String ONTOLOGY_IRI_TEMPLATE = "http://webprotege.stanford.edu/projects/%s/ontologies/temp";

@@ -15,6 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 17 Apr 2018
  */
 @Document(collection = "UserApiKeys")
+@Deprecated
 public class ApiKeyRecord {
 
     public static final String API_KEY_ID = "apiKeyId";

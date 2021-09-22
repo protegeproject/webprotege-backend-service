@@ -10,6 +10,7 @@ import javax.ws.rs.container.ContainerRequestContext;
  * Stanford Center for Biomedical Informatics Research
  * 16 Apr 2018
  */
+@Deprecated
 public class AuthenticationConstants {
 
     /**

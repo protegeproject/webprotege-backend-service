@@ -26,6 +26,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
  * Stanford Center for Biomedical Informatics Research
  * 15 Apr 2018
  */
+@Deprecated
 public class ProjectResource {
 
     @Nonnull

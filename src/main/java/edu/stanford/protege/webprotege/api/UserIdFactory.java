@@ -19,6 +19,7 @@ import static edu.stanford.protege.webprotege.api.AuthenticationConstants.AUTHEN
  * A factory for creating UserId objects from the user id that is set by the
  * {@link AuthenticationFilter}.  This works in tandem with {@link AuthenticationFilter}.
  */
+@Deprecated
 public class UserIdFactory implements Factory<UserId> {
 
     @Context

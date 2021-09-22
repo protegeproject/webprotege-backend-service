@@ -6,10 +6,7 @@ import javax.annotation.processing.Generated;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-@Generated(
-  value = "com.google.auto.factory.processor.AutoFactoryProcessor",
-  comments = "https://github.com/google/auto/tree/master/factory"
-)
+@Deprecated
 public final class FormsResourceFactory {
   private final Provider<ActionExecutor> executorProvider;
 

@@ -9,6 +9,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 10 May 2018
  */
+@Deprecated
 public class ErrorInfo {
 
     private final int code;

@@ -28,6 +28,7 @@ import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
  *
  * An filter that provides api-key based or session based authentication.
  */
+@Deprecated
 public class AuthenticationFilter implements ContainerRequestFilter {
 
     @Nonnull

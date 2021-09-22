@@ -12,6 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
+@Deprecated
 public class ApiKeyInfo {
 
     private ApiKeyId apiKeyId;
