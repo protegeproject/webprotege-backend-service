@@ -285,14 +285,6 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
-    RemoveWatchActionHandler removeWatchActionHandler(AccessManager p1,
-                                                      EventManager<ProjectEvent> p2,
-                                                      WatchManager p3) {
-        return new RemoveWatchActionHandler(p1, p2, p3);
-    }
-
-
-    @Bean
     SetEntityWatchesActionHandler setEntityWatchesActionHandler(AccessManager p1,
                                                                 EventManager<ProjectEvent> p2,
                                                                 WatchManager p3) {
