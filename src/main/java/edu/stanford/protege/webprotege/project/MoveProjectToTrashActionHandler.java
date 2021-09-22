@@ -1,21 +1,14 @@
 package edu.stanford.protege.webprotege.project;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import edu.stanford.protege.webprotege.event.EventList;
-import edu.stanford.protege.webprotege.event.EventTag;
-import edu.stanford.protege.webprotege.event.ProjectMovedToTrashEvent;
-import edu.stanford.protege.webprotege.event.WebProtegeEvent;
 import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Author: Matthew Horridge<br>
@@ -25,7 +18,7 @@ import java.util.List;
  */
 public class MoveProjectToTrashActionHandler implements ApplicationActionHandler<MoveProjectToTrashAction, MoveProjectToTrashResult> {
 
-    private ProjectDetailsManager projectDetailsManager;
+    private final ProjectDetailsManager projectDetailsManager;
 
     @Inject
     public MoveProjectToTrashActionHandler(ProjectDetailsManager projectDetailsManager) {
