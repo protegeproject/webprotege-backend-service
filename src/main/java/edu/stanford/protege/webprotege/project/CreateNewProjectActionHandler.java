@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -11,7 +10,6 @@ import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ApplicationPermissionValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValidator;
-import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.UserIsSignedInValidator;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -44,18 +42,13 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
 
     private final AccessManager accessManager;
 
-    @Nonnull
-    private final UserInSessionFactory userInSessionFactory;
-
     @Inject
     public CreateNewProjectActionHandler(@Nonnull ProjectManager pm,
                                          @Nonnull ProjectDetailsManager projectDetailsManager,
-                                         @Nonnull AccessManager accessManager,
-                                         @Nonnull UserInSessionFactory userInSessionFactory) {
+                                         @Nonnull AccessManager accessManager) {
         this.pm = checkNotNull(pm);
         this.projectDetailsManager = checkNotNull(projectDetailsManager);
         this.accessManager = checkNotNull(accessManager);
-        this.userInSessionFactory = checkNotNull(userInSessionFactory);
     }
 
     @Nonnull

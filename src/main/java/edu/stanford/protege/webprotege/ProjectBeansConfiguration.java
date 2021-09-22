@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationHostSupplier;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
-import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.axiom.*;
 import edu.stanford.protege.webprotege.axioms.AddAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.axioms.RemoveAxiomsDelegateHandler;
@@ -617,7 +616,6 @@ public class ProjectBeansConfiguration {
                                 ObjectPropertyHierarchyProvider p16,
                                 DataPropertyHierarchyProvider p17,
                                 AnnotationPropertyHierarchyProvider p18,
-                                UserInSessionFactory p19,
                                 EntityCrudContextFactory p20,
                                 RenameMapFactory p21,
                                 BuiltInPrefixDeclarations p22,
@@ -643,7 +641,6 @@ public class ProjectBeansConfiguration {
                                  p16,
                                  p17,
                                  p18,
-                                 p19,
                                  p20,
                                  p21,
                                  p22,

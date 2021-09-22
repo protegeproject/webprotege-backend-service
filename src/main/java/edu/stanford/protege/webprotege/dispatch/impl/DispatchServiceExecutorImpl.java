@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
-import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
@@ -33,16 +32,11 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
     @Nonnull
     private final ProjectManager projectManager;
 
-    @Nonnull
-    private final UserInSessionFactory userInSessionFactory;
-
     @Inject
     public DispatchServiceExecutorImpl(@Nonnull ApplicationActionHandlerRegistry handlerRegistry,
-                                       @Nonnull ProjectManager projectManager,
-                                       @Nonnull UserInSessionFactory userInSessionFactory) {
+                                       @Nonnull ProjectManager projectManager) {
         this.handlerRegistry = checkNotNull(handlerRegistry);
         this.projectManager = checkNotNull(projectManager);
-        this.userInSessionFactory = userInSessionFactory;
     }
 
     /**

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.change.*;
@@ -116,9 +115,6 @@ public class ChangeManager implements HasApplyChanges {
     private final AnnotationPropertyHierarchyProvider annotationPropertyHierarchyProvider;
 
     @Nonnull
-    private final UserInSessionFactory userInSessionFactory;
-
-    @Nonnull
     private final EntityCrudContextFactory entityCrudContextFactory;
 
     @Nonnull
@@ -172,7 +168,6 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull ObjectPropertyHierarchyProvider objectPropertyHierarchyProvider,
                          @Nonnull DataPropertyHierarchyProvider dataPropertyHierarchyProvider,
                          @Nonnull AnnotationPropertyHierarchyProvider annotationPropertyHierarchyProvider,
-                         @Nonnull UserInSessionFactory userInSessionFactory,
                          @Nonnull EntityCrudContextFactory entityCrudContextFactory,
                          @Nonnull RenameMapFactory renameMapFactory,
                          @Nonnull BuiltInPrefixDeclarations builtInPrefixDeclarations,
@@ -199,7 +194,6 @@ public class ChangeManager implements HasApplyChanges {
         this.objectPropertyHierarchyProvider = objectPropertyHierarchyProvider;
         this.dataPropertyHierarchyProvider = dataPropertyHierarchyProvider;
         this.annotationPropertyHierarchyProvider = annotationPropertyHierarchyProvider;
-        this.userInSessionFactory = userInSessionFactory;
         this.entityCrudContextFactory = entityCrudContextFactory;
         this.renameMapFactory = renameMapFactory;
         this.builtInPrefixDeclarations = builtInPrefixDeclarations;

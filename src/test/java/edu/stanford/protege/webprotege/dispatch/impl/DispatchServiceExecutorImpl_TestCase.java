@@ -1,9 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
-import edu.stanford.protege.webprotege.app.UserInSessionFactory;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.project.ProjectManager;
-import edu.stanford.protege.webprotege.app.UserInSession;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.ActionExecutionException;
 import edu.stanford.protege.webprotege.dispatch.Result;
@@ -47,23 +45,17 @@ public class DispatchServiceExecutorImpl_TestCase<A extends Action<R>, R extends
     @Mock
     private ProjectManager projectManager;
 
-    @Mock
-    private UserInSessionFactory userInSessionFactory;
-
-    @Mock
-    private UserInSession userInSession;
 
     @Mock
     private R result;
 
     @Before
     public void setUp() throws Exception {
-        executor = new DispatchServiceExecutorImpl(registry, projectManager, userInSessionFactory);
+        executor = new DispatchServiceExecutorImpl(registry, projectManager);
         when(registry.getActionHandler(action)).thenReturn(actionHandler);
         when(actionHandler.getRequestValidator(action, requestContext)).thenReturn(requestValidator);
         when(actionHandler.execute(action, executionContext)).thenReturn(result);
         when(requestValidator.validateAction()).thenReturn(RequestValidationResult.getValid());
-        when(userInSessionFactory.getUserInSession(any())).thenReturn(userInSession);
 
     }
 

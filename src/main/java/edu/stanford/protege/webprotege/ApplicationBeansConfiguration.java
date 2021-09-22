@@ -296,19 +296,11 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    UserInSessionFactory getUserInSessionFactory(AccessManager accessManager,
-                                                 UserDetailsManager userDetailsManager) {
-        return new UserInSessionFactory(accessManager, userDetailsManager);
-    }
-
-    @Bean
     @Singleton
     DispatchServiceExecutor getDispatchServiceExecutor(ApplicationActionHandlerRegistry actionHandlerRegistry,
-                                                               ProjectManager projectManager,
-                                                               UserInSessionFactory userInSessionFactory) {
+                                                               ProjectManager projectManager) {
         return new DispatchServiceExecutorImpl(actionHandlerRegistry,
-                                               projectManager,
-                                               userInSessionFactory);
+                                               projectManager);
     }
 
 
