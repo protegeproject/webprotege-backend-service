@@ -10,8 +10,6 @@ import edu.stanford.protege.webprotege.access.RoleOracle;
 import edu.stanford.protege.webprotege.access.RoleOracleImpl;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
-import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslator;
-import edu.stanford.protege.webprotege.change.OntologyChangeRecordTranslatorImpl;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
@@ -36,6 +34,9 @@ import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
+import edu.stanford.protege.webprotege.revision.ChangeHistoryFileFactory;
+import edu.stanford.protege.webprotege.revision.OntologyChangeRecordTranslator;
+import edu.stanford.protege.webprotege.revision.OntologyChangeRecordTranslatorImpl;
 import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl;
@@ -217,7 +218,12 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ChangeHistoryFileFactory getChangeHistoryFileFactory(ProjectDirectoryFactory projectDirectoryFactory) {
+    edu.stanford.protege.webprotege.revision.ProjectDirectoryFactory projectDirectoryFactoryRev(@DataDirectory File dataDirectory) {
+        return new edu.stanford.protege.webprotege.revision.ProjectDirectoryFactory(dataDirectory);
+    }
+
+    @Bean
+    ChangeHistoryFileFactory getChangeHistoryFileFactory(edu.stanford.protege.webprotege.revision.ProjectDirectoryFactory projectDirectoryFactory) {
         return new ChangeHistoryFileFactory(projectDirectoryFactory);
     }
 

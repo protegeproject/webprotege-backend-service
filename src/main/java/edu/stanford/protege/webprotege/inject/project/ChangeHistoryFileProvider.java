@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.inject.project;
 
-import edu.stanford.protege.webprotege.inject.ChangeHistoryFileFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.revision.ChangeHistoryFileFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

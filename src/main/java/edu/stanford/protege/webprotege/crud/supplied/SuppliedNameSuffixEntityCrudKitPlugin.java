@@ -41,8 +41,8 @@ public class SuppliedNameSuffixEntityCrudKitPlugin implements EntityCrudKitPlugi
     }
 
     @Override
-    public EntityCrudKitHandler<SuppliedNameSuffixSettings, ChangeSetEntityCrudSession> getEntityCrudKitHandler(EntityCrudKitSettings<SuppliedNameSuffixSettings> settings) {
-        return factory.create(settings.getPrefixSettings(), settings.getSuffixSettings(),
+    public EntityCrudKitHandler<SuppliedNameSuffixSettings, ChangeSetEntityCrudSession> getEntityCrudKitHandler(EntityCrudKitSettings settings) {
+        return factory.create(settings.getPrefixSettings(), (SuppliedNameSuffixSettings) settings.getSuffixSettings(),
                               settings.getGeneratedAnnotationsSettings());
     }
 

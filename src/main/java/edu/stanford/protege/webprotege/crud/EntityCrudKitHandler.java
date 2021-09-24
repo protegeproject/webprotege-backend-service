@@ -21,7 +21,7 @@ public interface EntityCrudKitHandler<S extends EntityCrudKitSuffixSettings, C e
 
     S getSuffixSettings();
 
-    EntityCrudKitSettings<S> getSettings();
+    EntityCrudKitSettings getSettings();
 
     /**
      * Creates a fresh change set session.  Each time a set of changes is applied to an ontology a session is created

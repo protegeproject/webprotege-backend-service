@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.DictionaryLanguageVisitor;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.protege.webprotege.crud.oboid.OBOIdSuffixKit;
+import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixKit;
 import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixSettings;
 import edu.stanford.protege.webprotege.crud.oboid.UserIdRange;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
@@ -90,7 +90,7 @@ public class OBOIdSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Obo
 
     @Override
     public EntityCrudKitId getKitId() {
-        return OBOIdSuffixKit.getId();
+        return OboIdSuffixKit.getId();
     }
 
 
@@ -110,7 +110,7 @@ public class OBOIdSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Obo
     }
 
     @Override
-    public EntityCrudKitSettings<OboIdSuffixSettings> getSettings() {
+    public EntityCrudKitSettings getSettings() {
         return EntityCrudKitSettings.get(prefixSettings, suffixSettings, generatedAnnotationsSettings);
     }
 

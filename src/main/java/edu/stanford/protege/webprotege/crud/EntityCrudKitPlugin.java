@@ -12,7 +12,7 @@ public interface EntityCrudKitPlugin<H extends EntityCrudKitHandler<S, C>, S ext
 
     EntityCrudKitHandler<S, C> getEntityCrudKitHandler();
 
-    EntityCrudKitHandler<S, C> getEntityCrudKitHandler(EntityCrudKitSettings<S> settings);
+    EntityCrudKitHandler<S, C> getEntityCrudKitHandler(EntityCrudKitSettings settings);
 
     S getDefaultSettings();
 }

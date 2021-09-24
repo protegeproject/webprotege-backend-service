@@ -44,14 +44,14 @@ public class ProjectEntityCrudKitHandlerCache {
      * @return The current {@link EntityCrudKitHandler}.  Not {@code null}.
      */
     public synchronized EntityCrudKitHandler<?, ?> getHandler() {
-        EntityCrudKitSettings<?> settings = getCurrentSettings();
+        EntityCrudKitSettings settings = getCurrentSettings();
         if (isCachedHandlerStale(settings)) {
             cachedHandler = registry.getHandler(settings);
         }
         return cachedHandler;
     }
 
-    private EntityCrudKitSettings<?> getCurrentSettings() {
+    private EntityCrudKitSettings getCurrentSettings() {
         Optional<ProjectEntityCrudKitSettings> settings = repository.findOne(projectId);
         ProjectEntityCrudKitSettings projectSettings;
         if (!settings.isPresent()) {
@@ -64,7 +64,7 @@ public class ProjectEntityCrudKitHandlerCache {
         return projectSettings.getSettings();
     }
 
-    private boolean isCachedHandlerStale(EntityCrudKitSettings<?> settings) {
+    private boolean isCachedHandlerStale(EntityCrudKitSettings settings) {
         return cachedHandler == null || !settings.equals(cachedHandler.getSettings());
     }
 
@@ -73,7 +73,7 @@ public class ProjectEntityCrudKitHandlerCache {
      *
      * @return The default settings.  Not {@code null}.
      */
-    private static EntityCrudKitSettings<?> getDefaultSettings() {
+    private static EntityCrudKitSettings getDefaultSettings() {
         return EntityCrudKitSettings.get(getDefaultPrefixSettings(), getDefaultSuffixSettings(), getDefaultGeneratedAnnotationsSettings());
     }
 

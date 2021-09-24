@@ -46,8 +46,8 @@ public class UuidEntityCrudKitPlugin implements EntityCrudKitPlugin<UuidEntityCr
     }
 
     @Override
-    public UuidEntityCrudKitHandler getEntityCrudKitHandler(EntityCrudKitSettings<UuidSuffixSettings> settings) {
-        return factory.create(settings.getPrefixSettings(), settings.getSuffixSettings(), settings.getGeneratedAnnotationsSettings());
+    public UuidEntityCrudKitHandler getEntityCrudKitHandler(EntityCrudKitSettings settings) {
+        return factory.create(settings.getPrefixSettings(), (UuidSuffixSettings) settings.getSuffixSettings(), settings.getGeneratedAnnotationsSettings());
     }
 }
 

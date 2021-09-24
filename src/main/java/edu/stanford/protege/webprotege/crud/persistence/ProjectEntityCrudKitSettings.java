@@ -38,7 +38,7 @@ public abstract class ProjectEntityCrudKitSettings {
     @JsonCreator
     public static ProjectEntityCrudKitSettings get(@JsonProperty(PROJECT_ID) @Nonnull ProjectId projectId,
                                                    @JsonProperty(
-                                                           SETTINGS) @Nonnull EntityCrudKitSettings<? extends EntityCrudKitSuffixSettings> settings) {
+                                                           SETTINGS) @Nonnull EntityCrudKitSettings settings) {
 
         return new AutoValue_ProjectEntityCrudKitSettings(projectId, settings);
     }
@@ -57,5 +57,5 @@ public abstract class ProjectEntityCrudKitSettings {
      * @return The settings.  Not {@code null}.
      */
     @JsonProperty(SETTINGS)
-    public abstract EntityCrudKitSettings<? extends EntityCrudKitSuffixSettings> getSettings();
+    public abstract EntityCrudKitSettings getSettings();
 }

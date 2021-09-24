@@ -52,7 +52,7 @@ public class GeneratedAnnotationsGenerator {
 
     public <E> void generateAnnotations(@Nonnull OWLEntity entity,
                                     @Nonnull Collection<OWLEntity> parents,
-                                    @Nonnull EntityCrudKitSettings<?> crudKitSettings,
+                                    @Nonnull EntityCrudKitSettings crudKitSettings,
                                     @Nonnull OntologyChangeList.Builder<E> changeListBuilder) {
 
         var generatedAnnotationSettings = crudKitSettings.getGeneratedAnnotationsSettings();

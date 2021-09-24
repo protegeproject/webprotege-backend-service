@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.crud.obo;
 
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
-import edu.stanford.protege.webprotege.crud.oboid.OBOIdSuffixKit;
+import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixKit;
 import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixSettings;
 
 import javax.annotation.Nonnull;
@@ -19,13 +19,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class OBOIdSuffixEntityCrudKitPlugin implements EntityCrudKitPlugin<OBOIdSuffixEntityCrudKitHandler, OboIdSuffixSettings, OBOIdSession> {
 
     @Nonnull
-    private final OBOIdSuffixKit kit;
+    private final OboIdSuffixKit kit;
 
     @Nonnull
     private final OBOIdSuffixEntityCrudKitHandlerFactory factory;
 
     @Inject
-    public OBOIdSuffixEntityCrudKitPlugin(@Nonnull OBOIdSuffixKit kit,
+    public OBOIdSuffixEntityCrudKitPlugin(@Nonnull OboIdSuffixKit kit,
                                           @Nonnull OBOIdSuffixEntityCrudKitHandlerFactory factory) {
         this.kit = checkNotNull(kit);
         this.factory = checkNotNull(factory);
@@ -43,8 +43,8 @@ public class OBOIdSuffixEntityCrudKitPlugin implements EntityCrudKitPlugin<OBOId
     }
 
     @Override
-    public EntityCrudKitHandler<OboIdSuffixSettings, OBOIdSession> getEntityCrudKitHandler(EntityCrudKitSettings<OboIdSuffixSettings> settings) {
-        return factory.create(settings.getPrefixSettings(), settings.getSuffixSettings(), settings.getGeneratedAnnotationsSettings());
+    public EntityCrudKitHandler<OboIdSuffixSettings, OBOIdSession> getEntityCrudKitHandler(EntityCrudKitSettings settings) {
+        return factory.create(settings.getPrefixSettings(), (OboIdSuffixSettings) settings.getSuffixSettings(), settings.getGeneratedAnnotationsSettings());
     }
 
     @Override

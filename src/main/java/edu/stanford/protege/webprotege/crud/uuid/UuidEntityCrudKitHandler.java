@@ -80,7 +80,7 @@ public class UuidEntityCrudKitHandler implements EntityCrudKitHandler<UuidSuffix
     }
 
     @Override
-    public EntityCrudKitSettings<UuidSuffixSettings> getSettings() {
+    public EntityCrudKitSettings getSettings() {
         return EntityCrudKitSettings.get(prefixSettings, suffixSettings, generatedAnnotationsSettings);
     }
 

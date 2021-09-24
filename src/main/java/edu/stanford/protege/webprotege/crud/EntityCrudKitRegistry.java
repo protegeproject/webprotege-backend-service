@@ -72,7 +72,7 @@ public class EntityCrudKitRegistry {
         return getHandler(EntityCrudKitSettings.get(kit.getDefaultPrefixSettings(), kit.getDefaultSuffixSettings(), kit.getDefaultGeneratedAnnotationsSettings()));
     }
 
-    public <H extends EntityCrudKitHandler<S, C>, S extends EntityCrudKitSuffixSettings, C extends ChangeSetEntityCrudSession> EntityCrudKitHandler<S, C> getHandler(EntityCrudKitSettings<S> settings) {
+    public <H extends EntityCrudKitHandler<S, C>, S extends EntityCrudKitSuffixSettings, C extends ChangeSetEntityCrudSession> EntityCrudKitHandler<S, C> getHandler(EntityCrudKitSettings settings) {
         EntityCrudKitId kitId = settings.getSuffixSettings().getKitId();
         EntityCrudKitPlugin<H, S, C> plugin = getPlugin(kitId);
         return plugin.getEntityCrudKitHandler(settings);
