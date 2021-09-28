@@ -142,7 +142,6 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(GetProjectInfoResult.class),
         @Type(GetPerspectiveLayoutResult.class),
         @Type(GetProjectPermissionsResult.class),
-        @Type(GetProjectPrefixDeclarationsResult.class),
         @Type(GetProjectSettingsResult.class),
         @Type(GetProjectSharingSettingsResult.class),
         @Type(GetProjectTagsResult.class),

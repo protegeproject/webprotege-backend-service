@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
  * 2021-08-20
  */
 @WebProtegeHandler
-public class GetProjectPrefixDeclarationsCommandHandler implements CommandHandler<GetProjectPrefixDeclarationsAction, GetProjectPrefixDeclarationsResult> {
+public class GetProjectPrefixDeclarationsCommandHandler implements CommandHandler<GetProjectPrefixDeclarationsRequest, GetProjectPrefixDeclarationsResponse> {
 
     private final ActionExecutor executor;
 
@@ -24,16 +24,16 @@ public class GetProjectPrefixDeclarationsCommandHandler implements CommandHandle
     @NotNull
     @Override
     public String getChannelName() {
-        return GetProjectPrefixDeclarationsAction.CHANNEL;
+        return GetProjectPrefixDeclarationsRequest.CHANNEL;
     }
 
     @Override
-    public Class<GetProjectPrefixDeclarationsAction> getRequestClass() {
-        return GetProjectPrefixDeclarationsAction.class;
+    public Class<GetProjectPrefixDeclarationsRequest> getRequestClass() {
+        return GetProjectPrefixDeclarationsRequest.class;
     }
 
     @Override
-    public Mono<GetProjectPrefixDeclarationsResult> handleRequest(GetProjectPrefixDeclarationsAction request,
+    public Mono<GetProjectPrefixDeclarationsResponse> handleRequest(GetProjectPrefixDeclarationsRequest request,
                                                                   ExecutionContext executionContext) {
         return executor.executeRequest(request, executionContext);
     }

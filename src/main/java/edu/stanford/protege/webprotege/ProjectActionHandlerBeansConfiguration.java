@@ -12,7 +12,6 @@ import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSettingsRepository;
 import edu.stanford.protege.webprotege.csv.ImportCSVFileActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
-import edu.stanford.protege.webprotege.download.ProjectDownloaderFactory;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
