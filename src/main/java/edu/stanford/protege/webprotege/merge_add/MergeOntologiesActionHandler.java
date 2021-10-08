@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.merge.ProjectOntologiesBuilder;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
+import edu.stanford.protege.webprotege.project.UploadedOntologiesCache;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +24,12 @@ public class MergeOntologiesActionHandler extends AbstractProjectActionHandler<M
 
     private static final Logger logger = LoggerFactory.getLogger(MergeOntologiesActionHandler.class);
 
-    @Nonnull
-    private final UploadedOntologiesCache uploadedOntologiesCache;
 
     @Nonnull
     private final ProjectOntologiesBuilder projectOntologiesBuilder;
+
+    @Nonnull
+    private final UploadedOntologiesCache uploadedOntologiesCache;
 
     @Nonnull
     private final MergeOntologyCalculator mergeCalculator;
@@ -38,12 +39,12 @@ public class MergeOntologiesActionHandler extends AbstractProjectActionHandler<M
 
     @Inject
     public MergeOntologiesActionHandler(@Nonnull AccessManager accessManager,
-                                        @Nonnull UploadedOntologiesCache uploadedOntologiesCache,
                                         @Nonnull ProjectOntologiesBuilder projectOntologiesBuilder,
+                                        @Nonnull UploadedOntologiesCache uploadedOntologiesCache,
                                         @Nonnull HasApplyChanges changeManager) {
         super(accessManager);
-        this.uploadedOntologiesCache = uploadedOntologiesCache;
         this.projectOntologiesBuilder = projectOntologiesBuilder;
+        this.uploadedOntologiesCache = uploadedOntologiesCache;
         this.mergeCalculator = new MergeOntologyCalculator();
         this.patcher = new OntologyMergeAddPatcher(changeManager);
     }

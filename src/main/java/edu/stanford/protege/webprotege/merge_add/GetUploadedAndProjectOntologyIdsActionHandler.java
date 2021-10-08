@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.merge.ProjectOntologiesBuilder;
 import edu.stanford.protege.webprotege.project.Ontology;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
+import edu.stanford.protege.webprotege.project.UploadedOntologiesCache;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +27,7 @@ public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProje
     @Nonnull
     private final ProjectId projectId;
 
-    @Nonnull
-    private final UploadedOntologiesCache uploadedOntologiesCache;
+    private UploadedOntologiesCache uploadedOntologiesCache;
 
     @Nonnull
     private final ProjectOntologiesBuilder projectOntologiesBuilder;

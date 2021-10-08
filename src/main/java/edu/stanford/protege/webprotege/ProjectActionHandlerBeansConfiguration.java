@@ -57,7 +57,6 @@ import edu.stanford.protege.webprotege.sharing.SetProjectSharingSettingsActionHa
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
 import edu.stanford.protege.webprotege.tag.*;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
 import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
 import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
 import edu.stanford.protege.webprotege.viz.*;
@@ -161,9 +160,13 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetNamedIndividualFrameActionHandler(p1, p2, plainFrameRenderer);
     }
 
+    @Bean
+    public UploadedOntologiesCache uploadedOntologiesCache() {
+        return new UploadedOntologiesCache();
+    }
 
     @Bean
-    GetUploadedAndProjectOntologyIdsActionHandler getAllOntologiesActionHandler(AccessManager p1,
+    GetUploadedAndProjectOntologyIdsActionHandler getUploadedAndProjectOntologyIdsActionHandler(AccessManager p1,
                                                                                 ProjectId p2,
                                                                                 UploadedOntologiesCache p3,
                                                                                 ProjectOntologiesBuilder p4) {
@@ -427,16 +430,17 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ProjectId p2,
                                                                       AxiomComparatorImpl p3,
                                                                       LanguageManager p4,
-                                                                      UploadedOntologiesCache p5,
-                                                                      ProjectOntologiesBuilder p6) {
+                                                                      ProjectOntologiesBuilder p5,
+                                                                      UploadedOntologiesCache p6) {
         return new ComputeProjectMergeActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
 
     @Bean
     MergeOntologiesActionHandler newOntologyMergeAddActionHandler(AccessManager p1,
-                                                                  UploadedOntologiesCache p2,
-                                                                  ProjectOntologiesBuilder p3, HasApplyChanges p4) {
+                                                                  ProjectOntologiesBuilder p2,
+                                                                  UploadedOntologiesCache p3,
+                                                                  HasApplyChanges p4) {
         return new MergeOntologiesActionHandler(p1, p2, p3, p4);
     }
 

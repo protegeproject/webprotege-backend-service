@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ActionExecutionException;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
+import edu.stanford.protege.webprotege.project.UploadedOntologiesCache;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import javax.annotation.Nonnull;
@@ -58,7 +58,6 @@ public class MergeUploadedProjectActionHandler extends AbstractProjectActionHand
     @Override
     public MergeUploadedProjectResult execute(@Nonnull MergeUploadedProjectAction action,
                                               @Nonnull ExecutionContext executionContext) {
-        try {
             var documentId = action.getDocumentId();
             var uploadedOntologies = uploadedOntologiesCache.getUploadedOntologies(documentId);
             var projectOntologies = projectOntologiesBuilder.buildProjectOntologies();
@@ -67,9 +66,6 @@ public class MergeUploadedProjectActionHandler extends AbstractProjectActionHand
             var commitMessage = action.getCommitMessage();
             ontologyPatcher.applyPatch(ontologyDiffSet, commitMessage, executionContext);
 
-        } catch(IOException | OWLOntologyCreationException e) {
-            throw new ActionExecutionException(e);
-        }
         return MergeUploadedProjectResult.create();
     }
 

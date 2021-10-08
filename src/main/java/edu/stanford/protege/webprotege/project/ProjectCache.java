@@ -14,6 +14,7 @@ import org.semanticweb.owlapi.io.OWLParserException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -52,8 +53,6 @@ public class ProjectCache implements HasDispose {
 
     private final Map<ProjectId, Long> lastAccessMap = new HashMap<>();
 
-    private final ProjectImporterFactory projectImporterFactory;
-
     /**
      * Elapsed time from the last access after which a project should be considered dormant (and should therefore
      * be purged).  This can interact with the frequency with which clients poll the project event queue (which is
@@ -65,10 +64,8 @@ public class ProjectCache implements HasDispose {
 
     @Inject
     public ProjectCache(@Nonnull ProjectComponentFactory projectComponentFactory,
-                        @Nonnull ProjectImporterFactory projectImporterFactory,
-                        @DormantProjectTime  long dormantProjectTime) {
+                        @Value("${project.dormantTime:30000}") long dormantProjectTime) {
         this.projectComponentFactory = checkNotNull(projectComponentFactory);
-        this.projectImporterFactory = checkNotNull(projectImporterFactory);
         projectIdInterner = Interners.newWeakInterner();
         this.dormantProjectTime = dormantProjectTime;
         logger.info("Dormant project time: {} milliseconds", dormantProjectTime);
@@ -179,8 +176,9 @@ public class ProjectCache implements HasDispose {
         ProjectId projectId = ProjectIdFactory.getFreshProjectId();
         Optional<DocumentId> sourceDocumentId = newProjectSettings.getSourceDocumentId();
         if(sourceDocumentId.isPresent()) {
-            ProjectImporter importer = projectImporterFactory.create(projectId);
-            importer.createProjectFromSources(sourceDocumentId.get(), newProjectSettings.getProjectOwner());
+            throw new RuntimeException("Not implemented");
+//            ProjectImporter importer = projectImporterFactory.create(projectId);
+//            importer.createProjectFromSources(sourceDocumentId.get(), newProjectSettings.getProjectOwner());
         }
         return getProjectInternal(projectId, AccessMode.NORMAL, InstantiationMode.EAGER).getProjectId();
     }

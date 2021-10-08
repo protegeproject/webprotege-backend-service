@@ -43,12 +43,10 @@ import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl
 import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
 import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
-import edu.stanford.protege.webprotege.upload.*;
 import edu.stanford.protege.webprotege.user.*;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.util.TempFileFactory;
 import edu.stanford.protege.webprotege.util.TempFileFactoryImpl;
-import edu.stanford.protege.webprotege.util.ZipInputStreamChecker;
 import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepositoryImpl;
 import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
@@ -96,11 +94,6 @@ public class ApplicationBeansConfiguration {
     @UploadsDirectory
     public File provideUploadsDirectory(UploadsDirectoryProvider provider) {
         return provider.get();
-    }
-
-    @Bean
-    public RootOntologyDocumentFileMatcher provideRootOntologyDocumentFileMatcher() {
-        return new RootOntologyDocumentMatcherImpl();
     }
 
     @Bean
@@ -166,43 +159,6 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    DocumentResolver getDocumentResolver(@UploadsDirectory File uploadsDirectory) {
-        return new DocumentResolverImpl(uploadsDirectory);
-    }
-
-    @Bean
-    ZipInputStreamChecker getZipInputStreamChecker() {
-        return new ZipInputStreamChecker();
-    }
-
-    @Bean
-    ZipArchiveProjectSourcesExtractor getZipArchiveProjectSourcesExtractor(TempFileFactory tempFileFactory) {
-        return new ZipArchiveProjectSourcesExtractor(tempFileFactory,
-                                                     new RootOntologyDocumentMatcherImpl());
-    }
-
-    @Bean
-    SingleDocumentProjectSourcesExtractor getSingleDocumentProjectSourcesExtractor() {
-        return new SingleDocumentProjectSourcesExtractor();
-    }
-
-    @Bean
-    UploadedProjectSourcesExtractor getUploadedProjectSourcesExtractor(ZipInputStreamChecker zipInputStreamChecker,
-                                                                       ZipArchiveProjectSourcesExtractor zipArchiveProjectSourcesExtractor,
-                                                                       SingleDocumentProjectSourcesExtractor singleDocumentProjectSourcesExtractor) {
-        return new UploadedProjectSourcesExtractor(zipInputStreamChecker,
-                                                   zipArchiveProjectSourcesExtractor,
-                                                   singleDocumentProjectSourcesExtractor);
-    }
-
-    @Bean
-    UploadedOntologiesProcessor getUploadedOntologiesProcessor(DocumentResolver documentResolver,
-                                                               Provider<UploadedProjectSourcesExtractor> uploadedProjectSourcesExtractor) {
-        return new UploadedOntologiesProcessor(documentResolver,
-                                               uploadedProjectSourcesExtractor);
-    }
-
-    @Bean
     @Singleton
     OWLDataFactory getOwlDataFactory() {
         return new OWLDataFactoryImpl();
@@ -243,20 +199,8 @@ public class ApplicationBeansConfiguration {
 
     @Bean
     @Singleton
-    ProjectImporterFactory getProjectImporterFactory(UploadedOntologiesProcessor p1,
-                                                     DocumentResolver p2,
-                                                     RevisionStoreFactory p3) {
-        return new ProjectImporterFactory(p1,
-                                          p2,
-                                          p3);
-    }
-
-    @Bean
-    @Singleton
-    ProjectCache getProjectCache(ProjectComponentFactory projectComponentFactory,
-                                 ProjectImporterFactory projectImporterFactory) {
+    ProjectCache getProjectCache(ProjectComponentFactory projectComponentFactory) {
         return new ProjectCache(projectComponentFactory,
-                                projectImporterFactory,
                                 50000);
     }
 
@@ -573,19 +517,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     HttpLinkRenderer httpLinkRenderer() {
         return new DefaultHttpLinkRenderer();
-    }
-
-    @Bean
-    UploadedOntologiesCache uploadedOntologiesCache(UploadedOntologiesProcessor p1,
-                                                    @UploadedOntologiesCacheTicker Ticker p2,
-                                                    @UploadedOntologiesCacheService ScheduledExecutorService p3) {
-        return new UploadedOntologiesCache(p1, p2, p3);
-    }
-
-    @Bean
-    @UploadedOntologiesCacheTicker
-    Ticker uploadedOntologiesCacheTicker() {
-        return Ticker.systemTicker();
     }
 
     @Bean

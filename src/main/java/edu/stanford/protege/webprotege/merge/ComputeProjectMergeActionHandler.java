@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.project.Ontology;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.upload.UploadedOntologiesCache;
+import edu.stanford.protege.webprotege.project.UploadedOntologiesCache;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,25 +40,25 @@ public class ComputeProjectMergeActionHandler extends AbstractProjectActionHandl
     @Nonnull
     private final LanguageManager languageManager;
 
-    @Nonnull
-    private final UploadedOntologiesCache uploadedOntologiesCache;
 
     @Nonnull
     private final ProjectOntologiesBuilder projectOntologiesBuilder;
+
+    private UploadedOntologiesCache uploadedOntologiesCache;
 
     @Inject
     public ComputeProjectMergeActionHandler(@Nonnull AccessManager accessManager,
                                             @Nonnull ProjectId projectId,
                                             @Nonnull Comparator<OWLAxiom> axiomComparator,
                                             @Nonnull LanguageManager languageManager,
-                                            @Nonnull UploadedOntologiesCache uploadedOntologiesCache,
-                                            @Nonnull ProjectOntologiesBuilder projectOntologiesBuilder) {
+                                            @Nonnull ProjectOntologiesBuilder projectOntologiesBuilder,
+                                            UploadedOntologiesCache uploadedOntologiesCache) {
         super(accessManager);
         this.projectId = projectId;
         this.axiomComparator = axiomComparator;
         this.languageManager = languageManager;
-        this.uploadedOntologiesCache = uploadedOntologiesCache;
         this.projectOntologiesBuilder = projectOntologiesBuilder;
+        this.uploadedOntologiesCache = uploadedOntologiesCache;
     }
 
     @Nonnull
