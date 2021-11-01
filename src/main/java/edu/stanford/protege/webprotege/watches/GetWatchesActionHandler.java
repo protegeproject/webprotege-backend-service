@@ -18,14 +18,14 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.WATCH_CHANGES
  * Stanford Center for Biomedical Informatics Research
  * 29/02/16
  */
-public class GetEntityWatchesActionHandler extends AbstractProjectActionHandler<GetWatchesAction, GetWatchesResult> {
+public class GetWatchesActionHandler extends AbstractProjectActionHandler<GetWatchesAction, GetWatchesResult> {
 
     @Nonnull
     private final WatchManager watchManager;
 
     @Inject
-    public GetEntityWatchesActionHandler(@Nonnull AccessManager accessManager,
-                                         @Nonnull WatchManager watchManager) {
+    public GetWatchesActionHandler(@Nonnull AccessManager accessManager,
+                                   @Nonnull WatchManager watchManager) {
         super(accessManager);
         this.watchManager = watchManager;
     }

@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
+import edu.stanford.protege.webprotege.user.GetAuthenticatedUserDetailsActionHandler;
 import edu.stanford.protege.webprotege.user.GetUserIdCompletionsActionHandler;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressActionHandler;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressActionHandler;
@@ -102,5 +103,11 @@ public class ApplicationActionHandlerBeansConfiguration {
     @Bean
     GetPerspectivesActionHandler getPerspectivesActionHandler(PerspectivesManager p1) {
         return new GetPerspectivesActionHandler(p1);
+    }
+
+    @Bean
+    GetAuthenticatedUserDetailsActionHandler getAuthenticatedUserDetailsActionHandler(AccessManager p1,
+                                                                                      UserDetailsManager p2) {
+        return new GetAuthenticatedUserDetailsActionHandler(p1, p2);
     }
 }

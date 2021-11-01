@@ -13,27 +13,27 @@ import reactor.core.publisher.Mono;
  * 2021-08-21
  */
 @WebProtegeHandler
-public class SetEntityWatchesCommandHandler implements CommandHandler<SetEntityWatchesAction, SetEntityWatchesResult> {
+public class SetWatchesCommandHandler implements CommandHandler<SetWatchesAction, SetWatchesResult> {
 
     private final ActionExecutor executor;
 
-    public SetEntityWatchesCommandHandler(ActionExecutor executor) {
+    public SetWatchesCommandHandler(ActionExecutor executor) {
         this.executor = executor;
     }
 
     @NotNull
     @Override
     public String getChannelName() {
-        return SetEntityWatchesAction.CHANNEL;
+        return SetWatchesAction.CHANNEL;
     }
 
     @Override
-    public Class<SetEntityWatchesAction> getRequestClass() {
-        return SetEntityWatchesAction.class;
+    public Class<SetWatchesAction> getRequestClass() {
+        return SetWatchesAction.class;
     }
 
     @Override
-    public Mono<SetEntityWatchesResult> handleRequest(SetEntityWatchesAction request,
+    public Mono<SetWatchesResult> handleRequest(SetWatchesAction request,
                                                       ExecutionContext executionContext) {
         return executor.executeRequest(request, executionContext);
     }

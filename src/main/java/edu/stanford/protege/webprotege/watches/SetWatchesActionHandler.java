@@ -14,26 +14,26 @@ import java.util.Set;
  * Stanford Center for Biomedical Informatics Research
  * 29/02/16
  */
-public class SetEntityWatchesActionHandler extends AbstractProjectActionHandler<SetEntityWatchesAction, SetEntityWatchesResult> {
+public class SetWatchesActionHandler extends AbstractProjectActionHandler<SetWatchesAction, SetWatchesResult> {
 
     private final WatchManager watchManager;
 
     @Inject
-    public SetEntityWatchesActionHandler(@Nonnull AccessManager accessManager,
-                                         WatchManager watchManager) {
+    public SetWatchesActionHandler(@Nonnull AccessManager accessManager,
+                                   WatchManager watchManager) {
         super(accessManager);
         this.watchManager = watchManager;
     }
 
     @Nonnull
     @Override
-    public Class<SetEntityWatchesAction> getActionClass() {
-        return SetEntityWatchesAction.class;
+    public Class<SetWatchesAction> getActionClass() {
+        return SetWatchesAction.class;
     }
 
     @Nonnull
     @Override
-    public SetEntityWatchesResult execute(@Nonnull SetEntityWatchesAction action, @Nonnull ExecutionContext executionContext) {
+    public SetWatchesResult execute(@Nonnull SetWatchesAction action, @Nonnull ExecutionContext executionContext) {
         UserId userId = action.userId();
         Set<Watch> watches = watchManager.getDirectWatches(action.entity(), userId);
         for(Watch watch : watches) {
@@ -42,7 +42,7 @@ public class SetEntityWatchesActionHandler extends AbstractProjectActionHandler<
         for(Watch watch : action.watches()) {
             watchManager.addWatch(watch);
         }
-        return new SetEntityWatchesResult();
+        return new SetWatchesResult();
     }
 
 }

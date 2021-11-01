@@ -60,8 +60,8 @@ import edu.stanford.protege.webprotege.tag.*;
 import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
 import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
 import edu.stanford.protege.webprotege.viz.*;
-import edu.stanford.protege.webprotege.watches.GetEntityWatchesActionHandler;
-import edu.stanford.protege.webprotege.watches.SetEntityWatchesActionHandler;
+import edu.stanford.protege.webprotege.watches.GetWatchesActionHandler;
+import edu.stanford.protege.webprotege.watches.SetWatchesActionHandler;
 import edu.stanford.protege.webprotege.watches.WatchManager;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -289,16 +289,16 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
-    SetEntityWatchesActionHandler setEntityWatchesActionHandler(AccessManager p1,
+    SetWatchesActionHandler setEntityWatchesActionHandler(AccessManager p1,
 
-                                                                WatchManager p3) {
-        return new SetEntityWatchesActionHandler(p1, p3);
+                                                          WatchManager p3) {
+        return new SetWatchesActionHandler(p1, p3);
     }
 
 
     @Bean
-    GetEntityWatchesActionHandler getWatchesActionHandler(AccessManager p1, WatchManager p2) {
-        return new GetEntityWatchesActionHandler(p1, p2);
+    GetWatchesActionHandler getWatchesActionHandler(AccessManager p1, WatchManager p2) {
+        return new GetWatchesActionHandler(p1, p2);
     }
 
 
