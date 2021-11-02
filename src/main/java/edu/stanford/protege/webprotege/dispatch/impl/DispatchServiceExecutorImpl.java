@@ -127,7 +127,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
         } catch (PermissionDeniedException e) {
             throw e;
         } catch (Exception e) {
-            logger.error("An error occurred whilst executing an action", e);
+            logger.error("An error occurred whilst executing an action ({})", action, e);
             throw new ActionExecutionException(e);
         } finally {
             thread.setName(threadName);

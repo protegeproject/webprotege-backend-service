@@ -55,7 +55,7 @@ public class ApplicationPreferencesStore implements Repository {
         }
         readLock.lock();
         try {
-            var applicationPreferences = mongoTemplate.findById(ApplicationPreferences.ID, ApplicationPreferences.class);
+            var applicationPreferences = mongoTemplate.findOne(new Query(), ApplicationPreferences.class);
             if (applicationPreferences == null) {
                 var newApplicationPreferences = DefaultApplicationPreferences.get();
                 mongoTemplate.upsert(queryById(),

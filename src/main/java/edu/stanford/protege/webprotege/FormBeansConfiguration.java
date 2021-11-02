@@ -118,11 +118,6 @@ public class FormBeansConfiguration {
     }
 
     @Bean
-    EntityFormManager entityFormManager(EntityFormRepository p1, EntityFormSelectorRepository p2, MatchingEngine p3) {
-        return new EntityFormManager(p1, p2, p3);
-    }
-
-    @Bean
     FormsCopierFactory formsCopierFactory(Provider<EntityFormRepository> p1, Provider<EntityFormSelectorRepository> p2) {
         return new FormsCopierFactory(p1, p2);
     }

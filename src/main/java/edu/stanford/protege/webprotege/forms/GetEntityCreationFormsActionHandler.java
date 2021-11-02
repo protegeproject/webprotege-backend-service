@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.forms;
 
+import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -37,7 +38,7 @@ public class GetEntityCreationFormsActionHandler extends AbstractProjectActionHa
     @Override
     public GetEntityCreationFormsResult execute(@Nonnull GetEntityCreationFormsAction action,
                                                 @Nonnull ExecutionContext executionContext) {
-        throw new RuntimeException("Needs fixing");
+        return new GetEntityCreationFormsResult(ImmutableList.of());
 //        var entityCreationForms = entityFormManager.getFormDescriptors(action.getParentEntity(),
 //                                             action.getProjectId(),
 //                                             FormPurpose.ENTITY_CREATION);

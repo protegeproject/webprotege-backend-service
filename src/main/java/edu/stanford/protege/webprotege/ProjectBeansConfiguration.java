@@ -40,6 +40,9 @@ import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFa
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
 import edu.stanford.protege.webprotege.events.*;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
+import edu.stanford.protege.webprotege.forms.EntityFormManager;
+import edu.stanford.protege.webprotege.forms.EntityFormRepository;
+import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepository;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
@@ -1897,4 +1900,8 @@ public class ProjectBeansConfiguration {
         return new NamedIndividualTypesSectionRenderer(p1);
     }
 
+    @Bean
+    EntityFormManager entityFormManager(EntityFormRepository p1, EntityFormSelectorRepository p2, MatchingEngine p3) {
+        return new EntityFormManager(p1, p2, p3);
+    }
 }

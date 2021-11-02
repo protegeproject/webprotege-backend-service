@@ -1,23 +1,23 @@
 package edu.stanford.protege.webprotege.admin;
 
-import com.mongodb.client.MongoClients;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
 import edu.stanford.protege.webprotege.app.ApplicationPreferencesStore;
 import edu.stanford.protege.webprotege.app.ApplicationLocation;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 19 Mar 2017
  */
-@SpringBootTest
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 public class ApplicationPreferencesStore_IT {
 
     private final ApplicationPreferences applicationPreferences = new ApplicationPreferences(
@@ -38,12 +38,17 @@ public class ApplicationPreferencesStore_IT {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @Test
+    void shouldWorkWithEmptyCollection() {
+        var preferences = manager.getApplicationPreferences();
+        assertThat(preferences).isNotNull();
+    }
 
     @Test
     public void shouldSaveSettings() {
         manager.setApplicationPreferences(applicationPreferences);
         var count = countDocuments();
-        assertThat(count, is(1L));
+        assertThat(count).isEqualTo(1);
     }
 
     private long countDocuments() {
@@ -54,14 +59,18 @@ public class ApplicationPreferencesStore_IT {
     public void shouldSaveSingleSettings() {
         manager.setApplicationPreferences(applicationPreferences);
         manager.setApplicationPreferences(applicationPreferences);
-        assertThat(countDocuments(), is(1L));
+        assertThat(countDocuments()).isEqualTo(1);
     }
 
     @Test
     public void shouldGetSavedSettings() {
         manager.setApplicationPreferences(applicationPreferences);
         ApplicationPreferences settings = manager.getApplicationPreferences();
-        assertThat(settings, is(applicationPreferences));
+        assertThat(settings).isEqualTo(applicationPreferences);
     }
 
+    @AfterEach
+    void tearDown() {
+//        mongoTemplate.getCollection("ApplicationPreferences").drop();
+    }
 }

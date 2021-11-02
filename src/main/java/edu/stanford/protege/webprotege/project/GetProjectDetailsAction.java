@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -15,14 +17,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 10/03/16
  */
-@JsonTypeName("GetProjectDetails")
+@JsonTypeName("webprotege.projects.GetProjectDetails")
 public class GetProjectDetailsAction implements Action<GetProjectDetailsResult>, HasProjectId {
 
     public static final String CHANNEL = "webprotege.projects.GetProjectDetails";
 
     private final ProjectId projectId;
 
-    public GetProjectDetailsAction(ProjectId projectId) {
+    @JsonCreator
+    public GetProjectDetailsAction(@JsonProperty("projectId") ProjectId projectId) {
         this.projectId = checkNotNull(projectId);
     }
 
