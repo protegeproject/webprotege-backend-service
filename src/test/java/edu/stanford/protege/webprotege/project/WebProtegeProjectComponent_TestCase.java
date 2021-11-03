@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
@@ -21,7 +22,7 @@ import static org.hamcrest.Matchers.*;
  * 2021-07-12
  */
 @SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class})
+@Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class})
 public class WebProtegeProjectComponent_TestCase {
 
     @Autowired

@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
 import edu.stanford.protege.webprotege.ProjectBeansConfiguration;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -19,7 +20,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class})
+@Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class})
 public class ProjectCache_Test {
 
     @Autowired
