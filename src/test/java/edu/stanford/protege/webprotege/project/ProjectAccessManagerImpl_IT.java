@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.project;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
@@ -12,12 +13,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @SpringBootTest
+@Import({WebprotegeBackendMonolithApplication.class})
 public class ProjectAccessManagerImpl_IT {
 
     public static final long TIMESTAMP_A = 33L;

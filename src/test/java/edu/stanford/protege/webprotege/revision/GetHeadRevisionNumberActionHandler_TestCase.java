@@ -1,11 +1,14 @@
 package edu.stanford.protege.webprotege.revision;
 
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -16,12 +19,12 @@ import static org.mockito.Mockito.when;
  * 21/02/15
  */
 @SpringBootTest
+@Import({WebprotegeBackendMonolithApplication.class})
 public class GetHeadRevisionNumberActionHandler_TestCase {
 
     private GetHeadRevisionNumberActionHandler handler;
 
-    @Mock
-    private GetHeadRevisionNumberAction action;
+    private GetHeadRevisionNumberAction action = new GetHeadRevisionNumberAction(ProjectId.generate());
 
     @Mock
     private ExecutionContext executionContext;

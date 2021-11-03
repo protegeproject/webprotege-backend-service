@@ -1,6 +1,7 @@
 
 package edu.stanford.protege.webprotege.admin;
 
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
@@ -13,10 +14,11 @@ import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_APPLICATION_SETTINGS;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
@@ -24,7 +26,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
-@RunWith(value = org.mockito.junit.MockitoJUnitRunner.class)
+@SpringBootTest
+@Import({WebprotegeBackendMonolithApplication.class})
 public class GetApplicationPreferencesActionHandler_TestCase {
 
     private GetApplicationSettingsActionHandler handler;
@@ -35,8 +38,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     @Mock
     private ApplicationSettingsManager applicationSettingsManager;
 
-    @Mock
-    private GetApplicationSettingsAction action;
+    private GetApplicationSettingsAction action = new GetApplicationSettingsAction();
 
     @Mock
     private ExecutionContext executionContext;
@@ -55,7 +57,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     public GetApplicationPreferencesActionHandler_TestCase() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         handler = new GetApplicationSettingsActionHandler(accessManager, applicationSettingsManager);
         when(requestContext.getUserId()).thenReturn(userId);

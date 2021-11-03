@@ -57,7 +57,7 @@ import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaResu
 import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersResult;
 import edu.stanford.protege.webprotege.viz.SetUserProjectEntityGraphSettingsResult;
 import edu.stanford.protege.webprotege.watches.GetWatchesResult;
-import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
+import edu.stanford.protege.webprotege.watches.SetWatchesResult;
 
 
 /**
@@ -176,7 +176,7 @@ import edu.stanford.protege.webprotege.watches.SetEntityWatchesResult;
         @Type(SetEntityFormDescriptorResult.class),
         @Type(SetEntityFormsDataResult.class),
         @Type(SetEntityGraphActiveFiltersResult.class),
-        @Type(SetEntityWatchesResult.class),
+        @Type(SetWatchesResult.class),
         @Type(SetManchesterSyntaxFrameResult.class),
         @Type(SetOboTermCrossProductResult.class),
         @Type(SetOboTermDefinitionResult.class),

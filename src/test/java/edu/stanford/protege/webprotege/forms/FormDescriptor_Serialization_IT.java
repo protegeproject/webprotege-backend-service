@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.forms;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.common.LanguageMap;
+import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.EntityType;
@@ -10,6 +11,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.springframework.context.annotation.Import;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -24,6 +26,7 @@ import static org.hamcrest.Matchers.is;
  * 2019-11-15
  */
 @JsonTest
+@Import(WebProtegeJacksonApplication.class)
 public class FormDescriptor_Serialization_IT {
 
     private static final FormId FORM_ID = FormId.get("12345678-1234-1234-1234-123456789abc");

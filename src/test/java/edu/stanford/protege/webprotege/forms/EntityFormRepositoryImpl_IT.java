@@ -1,25 +1,23 @@
 package edu.stanford.protege.webprotege.forms;
 
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 
 /**
  * Matthew Horridge
@@ -27,7 +25,7 @@ import static org.mockito.Mockito.mock;
  * 2019-11-01
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@Import({WebprotegeBackendMonolithApplication.class})
 public class EntityFormRepositoryImpl_IT {
 
     @Autowired
@@ -39,12 +37,12 @@ public class EntityFormRepositoryImpl_IT {
     private ProjectId projectId;
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         projectId = ProjectId.valueOf(UUID.randomUUID().toString());
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
     }
 

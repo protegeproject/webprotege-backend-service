@@ -1,13 +1,13 @@
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.annotation.Import;
 
 import java.util.UUID;
 import java.util.function.Function;
@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.*;
  * 2021-07-12
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@Import({WebprotegeBackendMonolithApplication.class})
 public class WebProtegeProjectComponent_TestCase {
 
     @Autowired
@@ -89,7 +89,7 @@ public class WebProtegeProjectComponent_TestCase {
 //        otherProjectComponent.getDisposablesManager().dispose();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
 
     }

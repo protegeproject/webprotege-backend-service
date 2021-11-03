@@ -254,7 +254,6 @@ public class ApplicationBeansConfiguration {
 
 
     @Bean
-    @Singleton
     public ActionExecutor getActionExecutor(DispatchServiceExecutor dispatchServiceExecutor) {
         return new ActionExecutor(dispatchServiceExecutor);
     }

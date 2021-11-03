@@ -1,12 +1,16 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
+import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.context.annotation.Import;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.io.IOException;
@@ -21,10 +25,11 @@ import static org.hamcrest.Matchers.is;
  * 2019-11-25
  */
 @JsonTest
+@Import({WebProtegeJacksonApplication.class})
 public class FormFieldDescriptor_Serialization_IT {
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private JacksonTester<FormFieldDescriptor> tester;
 
 
     @Test
@@ -42,9 +47,9 @@ public class FormFieldDescriptor_Serialization_IT {
                 ExpansionState.COLLAPSED,
                 LanguageMap.empty()
         );
-        var serialized = objectMapper.writeValueAsString(formElementDescriptor);
-        var deserialized = objectMapper.readerFor(FormFieldDescriptor.class).readValue(serialized);
-        assertThat(formElementDescriptor, is(deserialized));
+        var serialized = tester.write(formElementDescriptor);
+        var deserialized = tester.parse(serialized.getJson());
+        assertThat(formElementDescriptor, is(deserialized.getObject()));
     }
 
     @Test
@@ -62,10 +67,10 @@ public class FormFieldDescriptor_Serialization_IT {
                 ExpansionState.COLLAPSED,
                 LanguageMap.empty()
         );
-        var serialized = objectMapper.writeValueAsString(formElementDescriptor);
+        var serialized = tester.write(formElementDescriptor);
         System.out.println(serialized);
-        var deserialized = objectMapper.readerFor(FormFieldDescriptor.class).readValue(serialized);
-        assertThat(deserialized, is(formElementDescriptor));
+        var deserialized = tester.parse(serialized.getJson());
+        assertThat(deserialized.getObject(), is(formElementDescriptor));
     }
 
     @Test
@@ -83,18 +88,18 @@ public class FormFieldDescriptor_Serialization_IT {
                 ExpansionState.COLLAPSED,
                 LanguageMap.empty()
         );
-        var serialized = objectMapper.writeValueAsString(formElementDescriptor);
+        var serialized = tester.write(formElementDescriptor);
         System.out.println(serialized);
-        var deserialized = objectMapper.readerFor(FormFieldDescriptor.class).readValue(serialized);
-        assertThat(deserialized, is(formElementDescriptor));
+        var deserialized = tester.parse(serialized.getJson());
+        assertThat(deserialized.getObject(), is(formElementDescriptor));
     }
 
     @Test
     public void shouldParseWithNoOwlBinding() throws IOException {
-        var serializedForm = "{\"id\":\"12345678-1234-1234-1234-123456789abc\",\"label\":{},\"elementRun\":\"START\",\"formControlDescriptor\":{\"type\":\"TEXT\",\"placeholder\":{},\"stringType\":\"SIMPLE_STRING\",\"lineMode\":\"SINGLE_LINE\",\"patternViolationErrorMessage\":{}},\"repeatability\":\"NON_REPEATABLE\",\"optionality\":\"REQUIRED\",\"help\":{}}";
-        FormFieldDescriptor deserializedForm = objectMapper.readerFor(FormFieldDescriptor.class)
-                                                           .readValue(serializedForm);
-        assertThat(deserializedForm.getOwlBinding().isEmpty(), is(true));
+        var serializedForm = """
+                {"id":"12345678-1234-1234-1234-123456789abc","label":{},"elementRun":"START","formControlDescriptor":{"type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","lineMode":"SINGLE_LINE","patternViolationErrorMessage":{}},"repeatability":"NON_REPEATABLE","optionality":"REQUIRED","help":{}}""";
+        var deserializedForm = tester.parse(serializedForm);
+        assertThat(deserializedForm.getObject().getOwlBinding().isEmpty(), is(true));
 
     }
 }

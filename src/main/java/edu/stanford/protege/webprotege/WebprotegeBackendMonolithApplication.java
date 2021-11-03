@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(WebProtegeIpcApplication.class)
 public class WebprotegeBackendMonolithApplication {
 
 	public static void main(String[] args) {

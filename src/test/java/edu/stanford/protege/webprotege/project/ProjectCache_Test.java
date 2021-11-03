@@ -1,14 +1,15 @@
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.ProjectBeansConfiguration;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.After;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.annotation.Import;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -18,7 +19,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@Import({WebprotegeBackendMonolithApplication.class})
 public class ProjectCache_Test {
 
     @Autowired
@@ -61,7 +62,7 @@ public class ProjectCache_Test {
         assertThat(projectCache.isActive(projectId), is(true));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         projectCache.purgeAllProjects();
     }

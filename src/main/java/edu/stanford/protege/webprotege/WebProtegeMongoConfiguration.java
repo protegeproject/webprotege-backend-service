@@ -12,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions.MongoConverterConfigurationAdapter;
@@ -25,10 +26,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 @Configuration
 public class WebProtegeMongoConfiguration extends AbstractMongoClientConfiguration {
 
-    private final ObjectMapper objectMapper;
-
-    public WebProtegeMongoConfiguration(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+    public WebProtegeMongoConfiguration() {
     }
 
     @Value("${webprotege.database.name}")
@@ -49,14 +47,6 @@ public class WebProtegeMongoConfiguration extends AbstractMongoClientConfigurati
         conf.registerConverter(new String2ProjectIdConverter());
         conf.registerConverter(new UserId2StringConverter());
         conf.registerConverter(new String2UserIdConverter());
-//        register(ThreadId.class, conf);
-//        register(TagId.class, conf);
-//        register(ActionId.class, conf);
-//        register(CommentId.class, conf);
-//        register(FormId.class, conf);
-//        register(FormFieldId.class, conf);
-//        register(GridColumnId.class, conf);
-//        register(PersonId.class, conf);
     }
 
     public static class StringToIriConverter implements Converter<String, IRI> {

@@ -33,8 +33,8 @@ public class GetProjectPermissionsActionHandler_TestCase {
 
     private ProjectId projectId = ProjectId.generate();
 
-    @Mock
-    private GetProjectPermissionsAction action;
+    private GetProjectPermissionsAction action = new GetProjectPermissionsAction(ProjectId.generate(),
+                                                                                 UserId.getGuest());
 
 
     @Before

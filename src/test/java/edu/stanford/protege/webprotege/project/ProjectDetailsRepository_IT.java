@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.project;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
@@ -12,9 +13,12 @@ import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -29,6 +33,7 @@ import static org.hamcrest.Matchers.is;
  * 6 Mar 2017
  */
 @SpringBootTest
+@Import({WebprotegeBackendMonolithApplication.class})
 public class ProjectDetailsRepository_IT {
 
     public static final String COLLECTION_NAME = "ProjectDetails";

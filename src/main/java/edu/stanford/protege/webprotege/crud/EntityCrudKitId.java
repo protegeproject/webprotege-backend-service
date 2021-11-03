@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.crud;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
@@ -25,6 +27,11 @@ public final class EntityCrudKitId implements Serializable {
     private EntityCrudKitId() {
     }
 
+    @JsonValue
+    public String getLexicalForm() {
+        return lexicalForm;
+    }
+
     /**
      * Constructs an instance of {@link EntityCrudKitId} for the specified lexical form.
      * @param lexicalForm The lexical form of the id.  Not {@code null}.
@@ -40,6 +47,7 @@ public final class EntityCrudKitId implements Serializable {
      * @return The id for the specified lexical form. Not {@code null}.
      * @throws NullPointerException if {@code lexicalForm} is {@code null}.
      */
+    @JsonCreator
     public static EntityCrudKitId get(String lexicalForm) {
         return new EntityCrudKitId(lexicalForm);
     }

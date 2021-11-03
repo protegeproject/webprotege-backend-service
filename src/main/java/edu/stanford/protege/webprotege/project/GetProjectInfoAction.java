@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 
@@ -24,6 +25,7 @@ public class GetProjectInfoAction implements ProjectAction<GetProjectInfoResult>
         this.projectId = checkNotNull(projectId);
     }
 
+    @JsonCreator
     public static GetProjectInfoAction create(@Nonnull ProjectId projectId) {
         return new GetProjectInfoAction(projectId);
     }

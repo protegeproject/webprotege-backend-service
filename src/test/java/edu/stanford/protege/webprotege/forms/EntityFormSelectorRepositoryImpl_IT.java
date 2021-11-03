@@ -1,26 +1,24 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
 import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 import edu.stanford.protege.webprotege.criteria.SubClassOfCriteria;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 
 /**
  * Matthew Horridge
@@ -28,7 +26,7 @@ import static org.mockito.Mockito.mock;
  * 2019-11-08
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
+@Import({WebprotegeBackendMonolithApplication.class})
 public class EntityFormSelectorRepositoryImpl_IT {
 
     @Autowired
@@ -37,7 +35,7 @@ public class EntityFormSelectorRepositoryImpl_IT {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 
@@ -58,7 +56,7 @@ public class EntityFormSelectorRepositoryImpl_IT {
         assertThat(deserializedFormTrigger, is(formTrigger));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         mongoTemplate.getDb().getCollection("FormSelectors").drop();
     }
