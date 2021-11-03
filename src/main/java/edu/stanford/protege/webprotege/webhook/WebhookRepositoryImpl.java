@@ -34,7 +34,7 @@ public class WebhookRepositoryImpl implements WebhookRepository {
     }
 
     private Query queryByProjectId(ProjectId projectId) {
-        return query(where(PROJECT_ID).is(projectId));
+        return query(where(PROJECT_ID).is(projectId.value()));
     }
 
     @Override

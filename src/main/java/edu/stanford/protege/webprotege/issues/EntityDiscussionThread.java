@@ -68,6 +68,7 @@ public class EntityDiscussionThread {
         return projectId;
     }
 
+    @Id
     public ThreadId getId() {
         return id;
     }

@@ -15,6 +15,9 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -76,7 +79,8 @@ public class EntityDiscussionThreadRepository_IT {
 
     @Test
     public void shouldSaveItem() {
-        long count = getCollection().countDocuments(new Document("_id", thread.getId().getId()));
+        var query = new Query().addCriteria(new Criteria("_id").is(thread.getId().value()));
+        long count = mongoTemplate.count(query, EntityDiscussionThread.class);
         assertThat(count, is(1L));
     }
 

@@ -1,10 +1,7 @@
 package edu.stanford.protege.webprotege;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.persistence.ProjectId2StringConverter;
-import edu.stanford.protege.webprotege.persistence.String2ProjectIdConverter;
-import edu.stanford.protege.webprotege.persistence.String2UserIdConverter;
-import edu.stanford.protege.webprotege.persistence.UserId2StringConverter;
+import edu.stanford.protege.webprotege.persistence.*;
 import org.bson.Document;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
@@ -47,6 +44,10 @@ public class WebProtegeMongoConfiguration extends AbstractMongoClientConfigurati
         conf.registerConverter(new String2ProjectIdConverter());
         conf.registerConverter(new UserId2StringConverter());
         conf.registerConverter(new String2UserIdConverter());
+        conf.registerConverter(new String2ThreadIdConverter());
+        conf.registerConverter(new ThreadId2StringConverter());
+        conf.registerConverter(new CommentId2StringConverter());
+        conf.registerConverter(new String2CommentIdConverter());
     }
 
     public static class StringToIriConverter implements Converter<String, IRI> {
