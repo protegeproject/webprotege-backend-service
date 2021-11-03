@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge
@@ -18,7 +19,7 @@ public class GetUserIdCompletionsAction implements Action<GetUserIdCompletionsRe
     private final String completionText;
 
     private GetUserIdCompletionsAction(String completionText) {
-        this.completionText = completionText;
+        this.completionText = checkNotNull(completionText);
     }
 
     public static GetUserIdCompletionsAction create(String completionText) {

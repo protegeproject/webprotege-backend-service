@@ -3,6 +3,8 @@ package edu.stanford.protege.webprotege.webhook;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.project.HasProjectId;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
@@ -23,6 +25,9 @@ public class ProjectWebhook implements Webhook, HasProjectId {
     public static final String PROJECT_ID = "projectId";
 
     public static final String SUBSCRIBED_TO_EVENTS = "subscribedToEvents";
+
+    @Id
+    private ObjectId id;
 
     private final ProjectId projectId;
 

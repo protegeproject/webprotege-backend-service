@@ -45,4 +45,9 @@ public class GetUserIdCompletionsResult implements Result {
     public int hashCode() {
         return Objects.hash(completions);
     }
+
+    @Override
+    public String toString() {
+        return "GetUserIdCompletionsResult{" + "completions=" + completions + '}';
+    }
 }

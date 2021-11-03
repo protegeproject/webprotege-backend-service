@@ -86,4 +86,9 @@ public class WebhookRepositoryImpl_IT {
         repository.clearProjectWebhooks(projectId);
         assertThat(getCollection().countDocuments(), is(0L));
     }
+
+    @AfterEach
+    void tearDown() {
+        getCollection().drop();
+    }
 }

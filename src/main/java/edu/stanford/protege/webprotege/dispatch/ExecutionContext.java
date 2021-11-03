@@ -18,7 +18,7 @@ public class ExecutionContext {
     private final UserId userId;
 
     public ExecutionContext(UserId userId) {
-        this.userId = userId;
+        this.userId = checkNotNull(userId);
     }
 
     public UserId getUserId() {

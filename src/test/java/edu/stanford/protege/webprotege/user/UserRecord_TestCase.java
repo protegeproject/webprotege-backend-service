@@ -72,11 +72,6 @@ public class UserRecord_TestCase {
         assertThat(userRecord.getAvatarUrl(), is(this.avatarUrl));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_salt_IsNull() {
-        new UserRecord(userId, realName, emailAddress, avatarUrl);
-    }
-
     @Test
     public void shouldBeEqualToSelf() {
         assertThat(userRecord, is(userRecord));
@@ -110,16 +105,6 @@ public class UserRecord_TestCase {
     @Test
     public void shouldNotBeEqualToOtherThatHasDifferent_avatarUrl() {
         assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, "String-9c62bcba-f234-4c15-aa49-650fe22b962f"))));
-    }
-
-    @Test
-    public void shouldNotBeEqualToOtherThatHasDifferent_salt() {
-        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, avatarUrl))));
-    }
-
-    @Test
-    public void shouldNotBeEqualToOtherThatHasDifferent_saltedPasswordDigest() {
-        assertThat(userRecord, is(not(new UserRecord(userId, realName, emailAddress, avatarUrl))));
     }
 
     @Test

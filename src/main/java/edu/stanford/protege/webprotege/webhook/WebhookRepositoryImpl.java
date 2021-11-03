@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.webhook;
 
+import com.mongodb.client.model.BulkWriteOptions;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.springframework.data.mongodb.core.BulkOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -30,7 +32,7 @@ public class WebhookRepositoryImpl implements WebhookRepository {
 
     @Override
     public void clearProjectWebhooks(ProjectId projectId) {
-        mongoTemplate.remove(queryByProjectId(projectId), ProjectWebhook.class);
+        mongoTemplate.findAllAndRemove(queryByProjectId(projectId), ProjectWebhook.class);
     }
 
     private Query queryByProjectId(ProjectId projectId) {

@@ -20,10 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExecutionContext_TestCase {
 
-    @Mock
-    private WebProtegeSession session;
-
-    private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
+    private UserId userId = UserId.valueOf("TheUser");
 
     private ExecutionContext context;
 
@@ -31,7 +28,7 @@ public class ExecutionContext_TestCase {
 
     @Before
     public void setUp() throws Exception {
-        context = new ExecutionContext(UserId.valueOf("TheUser"));
+        context = new ExecutionContext(userId);
     }
 
     @Test(expected = NullPointerException.class)
@@ -39,16 +36,8 @@ public class ExecutionContext_TestCase {
         new ExecutionContext(null);
     }
 
-
-    @Test
-    public void shouldReturnGuestUser() {
-        when(session.getUserInSession()).thenReturn(UserId.getGuest());
-        assertThat(context.getUserId(), is(UserId.getGuest()));
-    }
-
     @Test
     public void shouldReturnUserId() {
-        when(session.getUserInSession()).thenReturn(userId);
         assertThat(context.getUserId(), is(userId));
     }
 
