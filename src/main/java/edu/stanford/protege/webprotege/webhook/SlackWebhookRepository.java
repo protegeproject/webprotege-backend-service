@@ -17,5 +17,5 @@ public interface SlackWebhookRepository extends Repository {
 
     void clearWebhooks(@Nonnull ProjectId projectId);
 
-    void addWebhooks(@Nonnull List<SlackWebhook> webhooks);
+    void addWebhook(@Nonnull SlackWebhook webhooks);
 }

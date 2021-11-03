@@ -2,6 +2,8 @@ package edu.stanford.protege.webprotege.webhook;
 
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.annotation.Nonnull;
@@ -22,6 +24,7 @@ public class SlackWebhook implements Webhook {
 
     public static final String PAYLOAD_URL = "payloadUrl";
 
+    @Id
     private final ProjectId projectId;
 
     private final String payloadUrl;

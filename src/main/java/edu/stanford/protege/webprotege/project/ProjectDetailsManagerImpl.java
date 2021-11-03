@@ -11,7 +11,6 @@ import edu.stanford.protege.webprotege.webhook.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -107,7 +106,7 @@ public class ProjectDetailsManagerImpl implements ProjectDetailsManager {
         slackWebhookRepository.clearWebhooks(projectId);
         String payloadUrl = projectSettings.getSlackIntegrationSettings().getPayloadUrl();
         if (!payloadUrl.isEmpty()) {
-            slackWebhookRepository.addWebhooks(Collections.singletonList(new SlackWebhook(projectId, payloadUrl)));
+            slackWebhookRepository.addWebhook(new SlackWebhook(projectId, payloadUrl));
         }
         webhookRepository.clearProjectWebhooks(projectId);
         List<ProjectWebhook> projectWebhooks = projectSettings.getWebhookSettings().getWebhookSettings().stream()

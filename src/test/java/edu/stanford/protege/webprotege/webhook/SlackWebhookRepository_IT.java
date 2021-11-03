@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.webhook;
 
-import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
@@ -51,7 +50,7 @@ public class SlackWebhookRepository_IT {
 
     @Test
     public void shouldSaveWebhook() {
-        repository.addWebhooks(singletonList(slackWebhookA));
+        repository.addWebhook(slackWebhookA);
         assertThat(countDocuments(), is(1L));
     }
 
@@ -65,28 +64,22 @@ public class SlackWebhookRepository_IT {
     }
 
     @Test
-    public void shouldSaveMultipleWebhooks() {
-        repository.addWebhooks(asList(slackWebhookA, slackWebhookB));
-        assertThat(countDocuments(), is(2L));
-    }
-
-    @Test
     public void shouldNotSaveDuplicates() {
-        repository.addWebhooks(Collections.singletonList(slackWebhookA));
-        repository.addWebhooks(Collections.singletonList(slackWebhookA));
+        repository.addWebhook(slackWebhookA);
+        repository.addWebhook(slackWebhookA);
         assertThat(countDocuments(), is(1L));
     }
 
     @Test
     public void shouldFindWebhookByProjectId() {
-        repository.addWebhooks(Collections.singletonList(slackWebhookA));
+        repository.addWebhook(slackWebhookA);
         List<SlackWebhook> webhooks = repository.getWebhooks(projectId);
         assertThat(webhooks, is(singletonList(slackWebhookA)));
     }
 
     @Test
     public void shouldClearWebhook() {
-        repository.addWebhooks(Collections.singletonList(slackWebhookA));
+        repository.addWebhook(slackWebhookA);
         repository.clearWebhooks(projectId);
         assertThat(countDocuments(), is(0L));
     }

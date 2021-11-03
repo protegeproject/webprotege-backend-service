@@ -1,11 +1,15 @@
 package edu.stanford.protege.webprotege.webhook;
 
 import com.mongodb.DuplicateKeyException;
+import com.mongodb.bulk.BulkWriteUpsert;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.BasicUpdate;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.query.UpdateDefinition;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -51,9 +55,9 @@ public class SlackWebhookRepositoryImpl implements SlackWebhookRepository {
     }
 
     @Override
-    public void addWebhooks(@Nonnull List<SlackWebhook> webhooks) {
+    public void addWebhook(@Nonnull SlackWebhook webhook) {
         try {
-            mongo.insert(webhooks, SlackWebhook.class);
+            mongo.save(webhook);
         } catch (DuplicateKeyException e) {
             logger.debug("Ignored duplicate webhook", e);
         }
