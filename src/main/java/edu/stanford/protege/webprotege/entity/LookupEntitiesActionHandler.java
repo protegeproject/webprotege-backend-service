@@ -17,6 +17,7 @@ import edu.stanford.protege.webprotege.search.SearchResultMatch;
 import edu.stanford.protege.webprotege.search.SearchResultMatchPosition;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.SearchString;
+import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -122,14 +123,23 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
                                                             shortFormMatch.getLanguage(),
                                                             shortFormMatch.getShortForm(),
                                                             matchPositions);
-                    var entityLookupResult = EntityLookupResult.get(matchResult,
-                                                                    placeUrl.getEntityUrl(projectId, matchedEntity));
+                    String entityUrl = getEntityUrl(matchedEntity);
+                    var entityLookupResult = EntityLookupResult.get(matchResult, entityUrl);
                     lookupResults.add(entityLookupResult);
                 }
 
             }
         }
         return lookupResults;
+    }
+
+    @NotNull
+    private String getEntityUrl(OWLEntity matchedEntity) {
+        try {
+            return placeUrl.getEntityUrl(projectId, matchedEntity);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     private static class OWLEntityDataMatch implements Comparable<OWLEntityDataMatch> {
