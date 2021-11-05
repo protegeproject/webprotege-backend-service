@@ -97,6 +97,7 @@ import edu.stanford.protege.webprotege.util.EntityDeleter;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
 import edu.stanford.protege.webprotege.viz.EdgeMatcherFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
+import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
 import edu.stanford.protege.webprotege.watches.*;
 import edu.stanford.protege.webprotege.webhook.*;
 import org.semanticweb.owlapi.expression.OWLOntologyChecker;
@@ -105,6 +106,7 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
@@ -1680,7 +1682,7 @@ public class ProjectBeansConfiguration {
                                                         Provider<SubClassOfAxiomsBySubClassIndex> p4,
                                                         Provider<ClassAssertionAxiomsByIndividualIndex> p5,
                                                         Provider<EquivalentClassesAxiomsIndex> p6,
-                                                        Provider<Integer> p7) {
+                                                        @EntityGraphEdgeLimit Integer p7) {
         return new EntityGraphBuilderFactory(p1, p2, p3, p4, p5, p6, p7);
     }
 
@@ -1903,5 +1905,13 @@ public class ProjectBeansConfiguration {
     @Bean
     EntityFormManager entityFormManager(EntityFormRepository p1, EntityFormSelectorRepository p2, MatchingEngine p3) {
         return new EntityFormManager(p1, p2, p3);
+    }
+
+
+
+    @Bean
+    @EntityGraphEdgeLimit
+    Integer entityGraphEdgeLimit(@Value("${webprotege.entityGraph.edgeLimit}") Integer edgeLimit) {
+        return edgeLimit;
     }
 }
