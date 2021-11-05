@@ -28,7 +28,7 @@ public final class EntityGraphBuilderFactory {
 
   private final Provider<EquivalentClassesAxiomsIndex> equivalentClassesAxiomsProvider;
 
-  private final Provider<Integer> edgeLimitProvider;
+  private final Integer edgeLimit;
 
   @Inject
   public EntityGraphBuilderFactory(
@@ -38,14 +38,14 @@ public final class EntityGraphBuilderFactory {
       Provider<SubClassOfAxiomsBySubClassIndex> subClassOfAxiomsProvider,
       Provider<ClassAssertionAxiomsByIndividualIndex> classAssertionAxiomsProvider,
       Provider<EquivalentClassesAxiomsIndex> equivalentClassesAxiomsProvider,
-      @EntityGraphEdgeLimit Provider<Integer> edgeLimitProvider) {
+      @EntityGraphEdgeLimit Integer edgeLimit) {
     this.rendererProvider = checkNotNull(rendererProvider, 1);
     this.projectOntologiesIndexProvider = checkNotNull(projectOntologiesIndexProvider, 2);
     this.objectPropertyAssertionsProvider = checkNotNull(objectPropertyAssertionsProvider, 3);
     this.subClassOfAxiomsProvider = checkNotNull(subClassOfAxiomsProvider, 4);
     this.classAssertionAxiomsProvider = checkNotNull(classAssertionAxiomsProvider, 5);
     this.equivalentClassesAxiomsProvider = checkNotNull(equivalentClassesAxiomsProvider, 6);
-    this.edgeLimitProvider = checkNotNull(edgeLimitProvider, 7);
+    this.edgeLimit = checkNotNull(edgeLimit, 7);
   }
 
   public EntityGraphBuilder create(EdgeMatcher edgeMatcher) {
@@ -56,7 +56,7 @@ public final class EntityGraphBuilderFactory {
         checkNotNull(subClassOfAxiomsProvider.get(), 4),
         checkNotNull(classAssertionAxiomsProvider.get(), 5),
         checkNotNull(equivalentClassesAxiomsProvider.get(), 6),
-        checkNotNull(edgeLimitProvider.get(), 7),
+        checkNotNull(edgeLimit, 7),
         checkNotNull(edgeMatcher, 8));
   }
 
