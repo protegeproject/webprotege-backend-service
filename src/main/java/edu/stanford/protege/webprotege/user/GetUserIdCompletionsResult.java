@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.Result;
 
@@ -21,10 +23,12 @@ public class GetUserIdCompletionsResult implements Result {
         completions = List.copyOf(possibleItemCompletions);
     }
 
-    public static GetUserIdCompletionsResult create(List<UserId> possibleItemCompletions) {
-        return new GetUserIdCompletionsResult(possibleItemCompletions);
+    @JsonCreator
+    public static GetUserIdCompletionsResult create(@JsonProperty("completions") List<UserId> completions) {
+        return new GetUserIdCompletionsResult(completions);
     }
 
+    @JsonProperty
     public List<UserId> getCompletions() {
         return completions;
     }

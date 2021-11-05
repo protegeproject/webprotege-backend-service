@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.user;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
@@ -22,7 +24,8 @@ public class GetUserIdCompletionsAction implements Action<GetUserIdCompletionsRe
         this.completionText = checkNotNull(completionText);
     }
 
-    public static GetUserIdCompletionsAction create(String completionText) {
+    @JsonCreator
+    public static GetUserIdCompletionsAction create(@JsonProperty("completionText") String completionText) {
         return new GetUserIdCompletionsAction(completionText);
     }
 
