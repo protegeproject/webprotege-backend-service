@@ -162,7 +162,7 @@ public class AccessManagerImpl implements AccessManager {
 
     @Override
     public Collection<Subject> getSubjectsWithAccessToResource(Resource resource) {
-        return null;
+        return getSubjectsWithAccessToResource(resource, BuiltInAction.VIEW_PROJECT);
     }
 
     @Override
