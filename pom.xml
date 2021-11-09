@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>edu.stanford.protege</groupId>
-    <artifactId>webprotege-backend</artifactId>
+    <artifactId>webprotege-backend-service</artifactId>
     <version>6.0.0-SNAPSHOT</version>
 
     <properties>
@@ -62,12 +62,12 @@
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-forms-api</artifactId>
+            <artifactId>webprotege-forms</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-criteria-api</artifactId>
+            <artifactId>webprotege-criteria</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -82,7 +82,7 @@
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-entity-frames-api</artifactId>
+            <artifactId>webprotege-entity-frames</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -92,7 +92,7 @@
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-change-api</artifactId>
+            <artifactId>webprotege-change</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
@@ -161,7 +161,7 @@
 
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-authorization-service-api-java</artifactId>
+            <artifactId>webprotege-authorization</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
