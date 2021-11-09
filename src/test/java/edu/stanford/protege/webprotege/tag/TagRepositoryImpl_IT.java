@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteError;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.criteria.RootCriteria;
@@ -31,7 +32,7 @@ import static org.junit.Assert.fail;
  * Stanford Center for Biomedical Informatics Research
  * 18 Mar 2018
  */
-@SpringBootTest
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 @RunWith(SpringRunner.class)
 public class TagRepositoryImpl_IT {
 

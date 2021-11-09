@@ -26,8 +26,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class})
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 public class GetApplicationPreferencesActionHandler_TestCase {
 
     private GetApplicationSettingsActionHandler handler;

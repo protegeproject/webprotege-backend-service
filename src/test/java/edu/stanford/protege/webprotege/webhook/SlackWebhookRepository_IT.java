@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.webhook;
 
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +25,7 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 8 Jun 2017
  */
-@SpringBootTest
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 public class SlackWebhookRepository_IT {
 
     private static final String PAYLOAD_URL_A = "payloadurlA";

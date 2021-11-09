@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.tag;
 
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 15 Mar 2018
  */
-@SpringBootTest
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 @RunWith(SpringRunner.class)
 public class EntityTagsRepositoryImpl_TestCase {
 

@@ -422,24 +422,24 @@
         </repository>
     </distributionManagement>
 
-    <repositories>
-        <repository>
-            <id>oss-sonatype</id>
-            <name>OSS Sonatype Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>edu.protege.stanford</id>
-            <name>Protege Project Maven Repo</name>
-            <url>https://github.com/protegeproject/mvn-repo/raw/master/releases</url>
-            <snapshots>
-                <updatePolicy>daily</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>oss-sonatype</id>-->
+<!--            <name>OSS Sonatype Snapshot Repository</name>-->
+<!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
+<!--            <snapshots>-->
+<!--                <updatePolicy>daily</updatePolicy>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--        <repository>-->
+<!--            <id>edu.protege.stanford</id>-->
+<!--            <name>Protege Project Maven Repo</name>-->
+<!--            <url>https://github.com/protegeproject/mvn-repo/raw/master/releases</url>-->
+<!--            <snapshots>-->
+<!--                <updatePolicy>daily</updatePolicy>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 
     <build>
 
@@ -561,71 +561,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <profiles>
-        <!-- Profile for local development of WebProtege -->
-        <profile>
-            <id>development</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <data.directory>/srv/webprotege</data.directory>
-            </properties>
-
-        </profile>
-        <!-- Profile for producing a deployment on a particular machine -->
-        <profile>
-            <id>deployment</id>
-            <properties>
-                <data.directory>/srv/webprotege</data.directory>
-            </properties>
-        </profile>
-        <!-- Profile for producing a release of WebProtege that people can download and install locally -->
-        <profile>
-            <id>webprotege.release</id>
-            <properties>
-                <data.directory>/srv/webprotege</data.directory>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.0.1</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!-- Profile for deployment of WebProtege to webprotege.stanford.edu -->
-        <profile>
-            <id>webprotege.stanford.edu</id>
-            <properties>
-                <!-- Insert the code for google analytics.  This code is not inserted by default. -->
-                <application.analytics>
-                    <![CDATA[
-                    <script type="tet/javascript">
-                        var _gaq = _gaq || [];
-                        _gaq.push(['_setAccount', 'UA-32498293-1']);
-                        _gaq.push(['_trackPageview']);
-                        (function() {
-                        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-                        })();
-                    </script>
-                    ]]>
-                </application.analytics>
-            </properties>
-        </profile>
-    </profiles>
-
 </project>

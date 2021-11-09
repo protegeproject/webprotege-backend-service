@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.perspective;
 
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +15,7 @@ import static org.hamcrest.Matchers.*;
  * Stanford Center for Biomedical Informatics Research
  * 2020-09-01
  */
-@SpringBootTest
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 public class BuiltInPerspective_TestCase {
 
     @Autowired

@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
@@ -36,7 +37,7 @@ import static org.hamcrest.core.IsNot.not;
  * An integration test for the repo that stores entity discussion thread.  This test requires
  * a running version of MongoDB.
  */
-@SpringBootTest
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class EntityDiscussionThreadRepository_IT {
 

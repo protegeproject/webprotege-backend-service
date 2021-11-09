@@ -28,15 +28,9 @@ public class AccessManagerConfiguration {
         return new CommandExecutor<>(GetRolesResponse.class);
     }
 
-
     @Bean
     CommandExecutor<GetAuthorizedActionsRequest, GetAuthorizedActionsResponse> getAuthorizedActionsExecutor() {
         return new CommandExecutor<>(GetAuthorizedActionsResponse.class);
-    }
-
-    @Bean
-    CommandExecutor<GetAuthorizationStatusRequest, GetAuthorizationStatusResponse> getAuthorizationStatusExecutor() {
-        return new CommandExecutor<>(GetAuthorizationStatusResponse.class);
     }
 
     @Bean

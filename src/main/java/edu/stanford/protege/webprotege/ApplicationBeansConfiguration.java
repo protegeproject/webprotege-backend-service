@@ -45,9 +45,7 @@ import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
 import edu.stanford.protege.webprotege.user.*;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
-import edu.stanford.protege.webprotege.util.TempFileFactory;
 import edu.stanford.protege.webprotege.util.TempFileFactoryImpl;
-import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
 import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepositoryImpl;
 import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
@@ -65,7 +63,6 @@ import javax.inject.Singleton;
 import java.io.File;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Matthew Horridge

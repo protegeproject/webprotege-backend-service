@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
@@ -25,7 +26,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 
-@SpringBootTest
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 @RunWith(SpringRunner.class)
 public class ApplicationActionHandlerRegistry_Test {
 
