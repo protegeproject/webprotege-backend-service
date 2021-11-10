@@ -65,42 +65,42 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-common</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-forms</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-criteria</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-entity-data</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-entity-frames</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-change</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
 
         <dependency>
@@ -163,19 +163,19 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-jackson</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
 
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-authorization</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
 
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-revision-manager</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>0.9.0</version>
         </dependency>
 
         <dependency>
@@ -247,12 +247,6 @@
             <artifactId>opencsv</artifactId>
             <version>2.3</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.mongodb</groupId>-->
-            <!--<artifactId>mongoTemplate-java-driver</artifactId>-->
-            <!--<version>3.11.0</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
