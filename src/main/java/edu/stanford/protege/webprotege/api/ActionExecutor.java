@@ -6,13 +6,13 @@ import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import javax.ws.rs.InternalServerErrorException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -24,6 +24,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * An executor for actions that provides the necessary request and execution context.
  */
 public class ActionExecutor {
+
+    private static final Logger logger = LoggerFactory.getLogger(ActionExecutor.class);
 
     @Nonnull
     private final DispatchServiceExecutor executor;
@@ -40,13 +42,8 @@ public class ActionExecutor {
             DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));
             return (R) resultContainer.getResult();
         } catch (ActionExecutionException e) {
-            Throwable throwable = e.getCause();
-            if(throwable instanceof RuntimeException) {
-                throw ((RuntimeException) throwable);
-            }
-            else {
-                throw new InternalServerErrorException();
-            }
+            logger.info("Action execution execeptuon while executing request: {}", e.getMessage(), e);
+            throw new CommandExecutionException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
