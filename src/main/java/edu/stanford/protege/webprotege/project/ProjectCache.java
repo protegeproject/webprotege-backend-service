@@ -6,6 +6,7 @@ import com.google.common.collect.Interners;
 import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.csv.DocumentId;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
@@ -62,10 +63,14 @@ public class ProjectCache implements HasDispose {
 
     private final ProjectComponentFactory projectComponentFactory;
 
+    private final ProjectImporter projectImporter;
+
     @Inject
     public ProjectCache(@Nonnull ProjectComponentFactory projectComponentFactory,
-                        @Value("${project.dormantTime:30000}") long dormantProjectTime) {
+                        @Value("${project.dormantTime:30000}") long dormantProjectTime,
+                        ProjectImporter projectImporter) {
         this.projectComponentFactory = checkNotNull(projectComponentFactory);
+        this.projectImporter = projectImporter;
         projectIdInterner = Interners.newWeakInterner();
         this.dormantProjectTime = dormantProjectTime;
         logger.info("Dormant project time: {} milliseconds", dormantProjectTime);
@@ -172,14 +177,13 @@ public class ProjectCache implements HasDispose {
         return projectIdInterner.intern(projectId);
     }
 
-    public ProjectId getProject(NewProjectSettings newProjectSettings) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException {
+    public ProjectId getProject(NewProjectSettings newProjectSettings,
+                                ExecutionContext executionContext) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException {
         ProjectId projectId = ProjectIdFactory.getFreshProjectId();
         Optional<DocumentId> sourceDocumentId = newProjectSettings.getSourceDocumentId();
-        if(sourceDocumentId.isPresent()) {
-            throw new RuntimeException("Not implemented");
-//            ProjectImporter importer = projectImporterFactory.create(projectId);
-//            importer.createProjectFromSources(sourceDocumentId.get(), newProjectSettings.getProjectOwner());
-        }
+        sourceDocumentId.ifPresent(documentId -> projectImporter.createProjectFromSources(projectId,
+                                                                                          documentId,
+                                                                                          executionContext.getUserId()));
         return getProjectInternal(projectId, AccessMode.NORMAL, InstantiationMode.EAGER).getProjectId();
     }
 

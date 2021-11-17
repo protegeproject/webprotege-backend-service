@@ -84,7 +84,7 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
                     throw new PermissionDeniedException("You do not have permission to upload projects");
                 }
             }
-            var projectId = pm.createNewProject(newProjectSettings);
+            var projectId = pm.createNewProject(newProjectSettings, executionContext);
             if (!projectDetailsManager.isExistingProject(projectId)) {
                 projectDetailsManager.registerProject(projectId, newProjectSettings);
                 applyDefaultPermissions(projectId, userId);

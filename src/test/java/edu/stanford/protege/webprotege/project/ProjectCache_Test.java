@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.ProjectBeansConfiguration;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -58,8 +59,8 @@ public class ProjectCache_Test {
         var projectId = projectCache.getProject(NewProjectSettings.get(UserId.valueOf("Matthew"),
                                                        "A project",
                                                        "en",
-                                                       "A project description"
-        ));
+                                                       "A project description"),
+                                                new ExecutionContext(UserId.valueOf("John Smith")));
         assertThat(projectCache.isActive(projectId), is(true));
     }
 

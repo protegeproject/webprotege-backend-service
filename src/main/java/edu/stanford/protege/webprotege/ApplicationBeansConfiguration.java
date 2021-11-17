@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
-import com.google.common.base.Ticker;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.RoleOracle;
@@ -20,6 +19,7 @@ import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
@@ -30,6 +30,8 @@ import edu.stanford.protege.webprotege.mansyntax.render.DefaultHttpLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.HttpLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.LiteralStyle;
 import edu.stanford.protege.webprotege.mansyntax.render.MarkdownLiteralRenderer;
+import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest;
+import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesResponse;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl;
 import edu.stanford.protege.webprotege.perspective.*;
@@ -79,18 +81,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     @DataDirectory
     public File provideDataDirectory(DataDirectoryProvider provider) {
-        return provider.get();
-    }
-
-
-    @Bean
-    UploadsDirectoryProvider provideUploadsDirectoryProvider() {
-        return new UploadsDirectoryProvider();
-    }
-
-    @Bean
-    @UploadsDirectory
-    public File provideUploadsDirectory(UploadsDirectoryProvider provider) {
         return provider.get();
     }
 
@@ -197,9 +187,10 @@ public class ApplicationBeansConfiguration {
 
     @Bean
     @Singleton
-    ProjectCache getProjectCache(ProjectComponentFactory projectComponentFactory) {
+    ProjectCache getProjectCache(ProjectComponentFactory projectComponentFactory,
+                                 ProjectImporter projectImporter) {
         return new ProjectCache(projectComponentFactory,
-                                50000);
+                                50000, projectImporter);
     }
 
     @Bean
@@ -540,5 +531,15 @@ public class ApplicationBeansConfiguration {
     @Bean
     EntityFormSelectorRepositoryImpl entityFormSelectorRepository(MongoTemplate p1, ObjectMapper p2) {
         return new EntityFormSelectorRepositoryImpl(p1, p2);
+    }
+
+    @Bean
+    CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> executorForProcessUploadedOntologiesRequest() {
+        return new CommandExecutor<>(ProcessUploadedOntologiesResponse.class);
+    }
+
+    @Bean
+    ProjectImporter projectImporter(CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> p1) {
+        return new ProjectImporter(p1);
     }
 }

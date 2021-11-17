@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -57,7 +58,8 @@ public class ProjectManager {
         return projectCache.getRevisionManager(projectId);
     }
 
-    public ProjectId createNewProject(@Nonnull NewProjectSettings newProjectSettings) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException, OWLOntologyStorageException {
-        return projectCache.getProject(newProjectSettings);
+    public ProjectId createNewProject(@Nonnull NewProjectSettings newProjectSettings,
+                                      @Nonnull ExecutionContext executionContext) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException, OWLOntologyStorageException {
+        return projectCache.getProject(newProjectSettings, executionContext);
     }
 }

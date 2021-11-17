@@ -42,7 +42,7 @@ public class ActionExecutor {
             DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));
             return (R) resultContainer.getResult();
         } catch (ActionExecutionException e) {
-            logger.info("Action execution execeptuon while executing request: {}", e.getMessage(), e);
+            logger.info("Action execution exception while executing request: {}", e.getMessage(), e);
             throw new CommandExecutionException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -55,8 +55,10 @@ public class ActionExecutor {
             var result = (R) resultContainer.getResult();
             return Mono.just(result);
         } catch (PermissionDeniedException e) {
+            logger.info("PermissionDeniedException thrown while handling request", e);
             return Mono.error(new CommandExecutionException(HttpStatus.FORBIDDEN));
-        } catch (ActionExecutionException e) {
+        } catch (Exception e) {
+            logger.info("Exception thrown while handling request", e);
             return Mono.error(new CommandExecutionException(HttpStatus.INTERNAL_SERVER_ERROR));
         }
     }
