@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.user;
 
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.WebProtegeMongoConfiguration;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
@@ -22,7 +21,6 @@ import java.util.UUID;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.MOCK;
 
 /**
  * Matthew Horridge

@@ -34,6 +34,7 @@ import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest
 import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesResponse;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl;
+import edu.stanford.protege.webprotege.persistence.*;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.ChangeHistoryFileFactory;
@@ -53,16 +54,19 @@ import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDatatype;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
 
@@ -75,8 +79,28 @@ import java.util.Set;
 @EnableMongoRepositories
 public class ApplicationBeansConfiguration {
 
-    private static final String DATABASE_NAME = "webprotege";
+    @Bean
+    public MongoCustomConversions mongoCustomConversions(DocumentToOwlEntityConverter documentToOwlEntityConverter) {
+        var converters = new ArrayList<>();
+        converters.add(new StringToIriConverter());
+        converters.add(new IriToStringConverter());
+        converters.add(new OwlEntityToDocumentConverter());
+        converters.add(documentToOwlEntityConverter);
+        converters.add(new ProjectId2StringConverter());
+        converters.add(new String2ProjectIdConverter());
+        converters.add(new UserId2StringConverter());
+        converters.add(new String2UserIdConverter());
+        converters.add(new String2ThreadIdConverter());
+        converters.add(new ThreadId2StringConverter());
+        converters.add(new CommentId2StringConverter());
+        converters.add(new String2CommentIdConverter());
+        return new MongoCustomConversions(converters);
+    }
 
+    @Bean
+    DocumentToOwlEntityConverter documentToOwlEntityConverter(OWLDataFactory dataFactory) {
+        return new DocumentToOwlEntityConverter(dataFactory);
+    }
 
     @Bean
     @DataDirectory
