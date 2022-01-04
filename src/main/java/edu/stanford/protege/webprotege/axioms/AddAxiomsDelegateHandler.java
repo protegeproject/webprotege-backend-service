@@ -13,8 +13,9 @@ import edu.stanford.protege.webprotege.download.DownloadFormat;
 import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StringDocumentSource;
 import org.semanticweb.owlapi.model.*;
@@ -46,7 +47,7 @@ public class AddAxiomsDelegateHandler extends AbstractProjectActionHandler<AddAx
     }
 
 
-    @NotNull
+    @Nonnull
     @Override
     public Class<AddAxiomsRequest> getActionClass() {
         return AddAxiomsRequest.class;
@@ -58,9 +59,9 @@ public class AddAxiomsDelegateHandler extends AbstractProjectActionHandler<AddAx
         return BuiltInAction.EDIT_ONTOLOGY;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public AddAxiomsResponse execute(@NotNull AddAxiomsRequest action, @NotNull ExecutionContext executionContext) {
+    public AddAxiomsResponse execute(@Nonnull AddAxiomsRequest action, @Nonnull ExecutionContext executionContext) {
         var projectId = action.projectId();
         var loader = new AxiomsDocumentLoader(projectId,
                                               action.ontologyDocument(),

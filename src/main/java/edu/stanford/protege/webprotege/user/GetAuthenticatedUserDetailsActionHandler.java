@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -27,23 +27,23 @@ public class GetAuthenticatedUserDetailsActionHandler implements ApplicationActi
         this.userDetailsManager = userDetailsManager;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Class<GetAuthenticatedUserDetailsRequest> getActionClass() {
         return GetAuthenticatedUserDetailsRequest.class;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public RequestValidator getRequestValidator(@NotNull GetAuthenticatedUserDetailsRequest action,
-                                                @NotNull RequestContext requestContext) {
+    public RequestValidator getRequestValidator(@Nonnull GetAuthenticatedUserDetailsRequest action,
+                                                @Nonnull RequestContext requestContext) {
         return NullValidator.get();
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public GetAuthenticatedUserDetailsResponse execute(@NotNull GetAuthenticatedUserDetailsRequest action,
-                                                       @NotNull ExecutionContext executionContext) {
+    public GetAuthenticatedUserDetailsResponse execute(@Nonnull GetAuthenticatedUserDetailsRequest action,
+                                                       @Nonnull ExecutionContext executionContext) {
 
         var userId = executionContext.getUserId();
         if(userId.isGuest()) {

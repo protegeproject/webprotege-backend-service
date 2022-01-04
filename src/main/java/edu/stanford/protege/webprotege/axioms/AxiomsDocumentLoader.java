@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.download.DownloadFormat;
 import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StringDocumentSource;
 import org.semanticweb.owlapi.model.*;
@@ -86,7 +86,7 @@ public class AxiomsDocumentLoader {
         return IRI.create(String.format("http://webprotege.stanford.edu/%s/ontologies/temp", projectId.id()));
     }
 
-    @NotNull
+    @Nonnull
     private OWLOntologyID getTargetOntologyId(OWLOntology ontology) {
         final OWLOntologyID ontologyDocument;
         if (ontology.isAnonymous()) {

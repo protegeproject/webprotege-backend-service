@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -68,9 +68,9 @@ public class AccessManagerImpl implements AccessManager {
         this.getAuthorizedResourcesExecutor = getAuthorizedResourcesExecutor;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Collection<RoleId> getAssignedRoles(@NotNull Subject subject, @NotNull Resource resource) {
+    public Collection<RoleId> getAssignedRoles(@Nonnull Subject subject, @Nonnull Resource resource) {
 
         try {
             return getAssignedRolesExecutor.execute(new GetAssignedRolesRequest(subject,
@@ -85,9 +85,9 @@ public class AccessManagerImpl implements AccessManager {
     }
 
     @Override
-    public void setAssignedRoles(@NotNull Subject subject,
-                                 @NotNull Resource resource,
-                                 @NotNull Collection<RoleId> roleIds) {
+    public void setAssignedRoles(@Nonnull Subject subject,
+                                 @Nonnull Resource resource,
+                                 @Nonnull Collection<RoleId> roleIds) {
         try {
             var response = setAssignedRolesExecutor.execute(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)),
                                                             new ExecutionContext());
@@ -97,9 +97,9 @@ public class AccessManagerImpl implements AccessManager {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Collection<RoleId> getRoleClosure(@NotNull Subject subject, @NotNull Resource resource) {
+    public Collection<RoleId> getRoleClosure(@Nonnull Subject subject, @Nonnull Resource resource) {
         try {
             return getRolesRequestExecutor.execute(new GetRolesRequest(subject, resource),
                                                    new ExecutionContext())
@@ -111,9 +111,9 @@ public class AccessManagerImpl implements AccessManager {
         }
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public Set<ActionId> getActionClosure(@NotNull Subject subject, @NotNull Resource resource) {
+    public Set<ActionId> getActionClosure(@Nonnull Subject subject, @Nonnull Resource resource) {
         try {
             return getAuthorizedActionsExecutor.execute(new GetAuthorizedActionsRequest(resource, subject),
                                                         new ExecutionContext())
@@ -126,7 +126,7 @@ public class AccessManagerImpl implements AccessManager {
     }
 
     @Override
-    public boolean hasPermission(@NotNull Subject subject, @NotNull Resource resource, @NotNull ActionId actionId) {
+    public boolean hasPermission(@Nonnull Subject subject, @Nonnull Resource resource, @Nonnull ActionId actionId) {
         try {
             return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
                                                           new ExecutionContext())
@@ -139,9 +139,9 @@ public class AccessManagerImpl implements AccessManager {
     }
 
     @Override
-    public boolean hasPermission(@NotNull Subject subject,
-                                 @NotNull Resource resource,
-                                 @NotNull BuiltInAction builtInAction) {
+    public boolean hasPermission(@Nonnull Subject subject,
+                                 @Nonnull Resource resource,
+                                 @Nonnull BuiltInAction builtInAction) {
         return hasPermission(subject, resource, builtInAction.getActionId());
     }
 

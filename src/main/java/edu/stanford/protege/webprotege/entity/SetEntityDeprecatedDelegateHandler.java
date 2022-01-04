@@ -5,15 +5,14 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
-import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class SetEntityDeprecatedDelegateHandler extends AbstractProjectActionHan
 
     private final DefaultOntologyIdManager defaultOntologyIdManager;
 
-    public SetEntityDeprecatedDelegateHandler(@NotNull AccessManager accessManager,
+    public SetEntityDeprecatedDelegateHandler(@Nonnull AccessManager accessManager,
                                               ChangeManager changeManager,
                                               OWLDataFactory dataFactory,
                                               DefaultOntologyIdManager defaultOntologyIdManager) {
@@ -40,7 +39,7 @@ public class SetEntityDeprecatedDelegateHandler extends AbstractProjectActionHan
         this.defaultOntologyIdManager = defaultOntologyIdManager;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Class<SetEntityDeprecatedRequest> getActionClass() {
         return SetEntityDeprecatedRequest.class;
@@ -52,10 +51,10 @@ public class SetEntityDeprecatedDelegateHandler extends AbstractProjectActionHan
         return BuiltInAction.EDIT_ONTOLOGY;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public SetEntityDeprecatedResponse execute(@NotNull SetEntityDeprecatedRequest action,
-                                               @NotNull ExecutionContext executionContext) {
+    public SetEntityDeprecatedResponse execute(@Nonnull SetEntityDeprecatedRequest action,
+                                               @Nonnull ExecutionContext executionContext) {
 
         var axiom = dataFactory.getDeprecatedOWLAnnotationAssertionAxiom(action.entityIri());
         var changes = List.<OntologyChange>of(new AddAxiomChange(defaultOntologyIdManager.getDefaultOntologyId(),

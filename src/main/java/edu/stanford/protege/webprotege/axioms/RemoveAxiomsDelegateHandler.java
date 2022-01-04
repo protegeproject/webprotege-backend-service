@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Matthew Horridge
@@ -22,7 +22,7 @@ public class RemoveAxiomsDelegateHandler extends AbstractProjectActionHandler<Re
 
     private final DefaultOntologyIdManager defaultOntologyIdManager;
 
-    public RemoveAxiomsDelegateHandler(@NotNull AccessManager accessManager,
+    public RemoveAxiomsDelegateHandler(@Nonnull AccessManager accessManager,
                                        ChangeManager changeManager,
                                        DefaultOntologyIdManager defaultOntologyIdManager) {
         super(accessManager);
@@ -30,16 +30,16 @@ public class RemoveAxiomsDelegateHandler extends AbstractProjectActionHandler<Re
         this.defaultOntologyIdManager = defaultOntologyIdManager;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public Class<RemoveAxiomsRequest> getActionClass() {
         return RemoveAxiomsRequest.class;
     }
 
-    @NotNull
+    @Nonnull
     @Override
-    public RemoveAxiomsResponse execute(@NotNull RemoveAxiomsRequest action,
-                                        @NotNull ExecutionContext executionContext) {
+    public RemoveAxiomsResponse execute(@Nonnull RemoveAxiomsRequest action,
+                                        @Nonnull ExecutionContext executionContext) {
         var projectId = action.projectId();
         var loader = new AxiomsDocumentLoader(projectId,
                                               action.ontologyDocument(),

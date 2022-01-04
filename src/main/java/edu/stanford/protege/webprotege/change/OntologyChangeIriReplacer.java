@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
 import edu.stanford.protege.webprotege.util.IriReplacer;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 /**
  * Matthew Horridge
@@ -24,36 +24,36 @@ public class OntologyChangeIriReplacer {
         }
 
         @Override
-        public OntologyChange visit(@NotNull AddAxiomChange addAxiomChange) {
+        public OntologyChange visit(@Nonnull AddAxiomChange addAxiomChange) {
             return AddAxiomChange.of(addAxiomChange.ontologyId(),
                                      iriReplacer.replaceIris(addAxiomChange.axiom()));
         }
 
         @Override
-        public OntologyChange visit(@NotNull RemoveAxiomChange removeAxiomChange) {
+        public OntologyChange visit(@Nonnull RemoveAxiomChange removeAxiomChange) {
             return RemoveAxiomChange.of(removeAxiomChange.ontologyId(),
                                      iriReplacer.replaceIris(removeAxiomChange.axiom()));
         }
 
         @Override
-        public OntologyChange visit(@NotNull AddOntologyAnnotationChange addOntologyAnnotationChange) {
+        public OntologyChange visit(@Nonnull AddOntologyAnnotationChange addOntologyAnnotationChange) {
             return AddOntologyAnnotationChange.of(addOntologyAnnotationChange.ontologyId(),
                                                   iriReplacer.replaceIris(addOntologyAnnotationChange.annotation()));
         }
 
         @Override
-        public OntologyChange visit(@NotNull RemoveOntologyAnnotationChange removeOntologyAnnotationChange) {
+        public OntologyChange visit(@Nonnull RemoveOntologyAnnotationChange removeOntologyAnnotationChange) {
             return RemoveOntologyAnnotationChange.of(removeOntologyAnnotationChange.ontologyId(),
                                                   iriReplacer.replaceIris(removeOntologyAnnotationChange.annotation()));
         }
 
         @Override
-        public OntologyChange visit(@NotNull AddImportChange addImportChange) {
+        public OntologyChange visit(@Nonnull AddImportChange addImportChange) {
             return addImportChange;
         }
 
         @Override
-        public OntologyChange visit(@NotNull RemoveImportChange removeImportChange) {
+        public OntologyChange visit(@Nonnull RemoveImportChange removeImportChange) {
             return removeImportChange;
         }
     }

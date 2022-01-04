@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import edu.stanford.protege.webprotege.project.LoadProjectAction;
 import edu.stanford.protege.webprotege.project.LoadProjectResult;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import reactor.core.publisher.Mono;
 
 /**
@@ -23,7 +23,7 @@ public class LoadProjectCommandHandler implements CommandHandler<LoadProjectActi
         this.actionExecutor = actionExecutor;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getChannelName() {
         return LoadProjectAction.CHANNEL;

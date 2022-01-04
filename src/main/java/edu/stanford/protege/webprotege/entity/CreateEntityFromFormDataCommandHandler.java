@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.forms.CreateEntityFromFormDataResult;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import reactor.core.publisher.Mono;
 
 /**
@@ -23,7 +23,7 @@ public class CreateEntityFromFormDataCommandHandler implements CommandHandler<Cr
         this.executor = executor;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getChannelName() {
         return CreateEntityFromFormDataAction.CHANNEL;

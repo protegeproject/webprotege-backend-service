@@ -4,8 +4,10 @@ import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import reactor.core.publisher.Mono;
+
+import javax.annotation.Nonnull;
 
 /**
  * Matthew Horridge
@@ -21,7 +23,7 @@ public class SetEntityFormDescriptorCommandHandler implements CommandHandler<Set
         this.executor = executor;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getChannelName() {
         return SetEntityFormDescriptorAction.CHANNEL;

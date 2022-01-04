@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashAction;
 import edu.stanford.protege.webprotege.project.RemoveProjectFromTrashResult;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import reactor.core.publisher.Mono;
 
 /**
@@ -23,7 +23,7 @@ public class RemoveProjectFromTrashCommandHandler implements CommandHandler<Remo
         this.executor = executor;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getChannelName() {
         return RemoveProjectFromTrashAction.CHANNEL;

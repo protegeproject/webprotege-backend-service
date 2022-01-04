@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import reactor.core.publisher.Mono;
 
 /**
@@ -18,7 +18,7 @@ public class GetAvailableProjectsWithPermissionCommandHandler implements Command
         this.delegate = delegate;
     }
 
-    @NotNull
+    @Nonnull
     @Override
     public String getChannelName() {
         return "projects.GetAvailableProjectsWithPermission";

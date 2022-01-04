@@ -17,7 +17,7 @@ import edu.stanford.protege.webprotege.search.SearchResultMatch;
 import edu.stanford.protege.webprotege.search.SearchResultMatchPosition;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.SearchString;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -133,7 +133,7 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
         return lookupResults;
     }
 
-    @NotNull
+    @Nonnull
     private String getEntityUrl(OWLEntity matchedEntity) {
         try {
             return placeUrl.getEntityUrl(projectId, matchedEntity);
