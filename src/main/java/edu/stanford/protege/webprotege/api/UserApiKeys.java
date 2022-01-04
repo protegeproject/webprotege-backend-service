@@ -18,11 +18,11 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 17 Apr 2018
  */
-@Document(collection = "UserApiKeys")
-@CompoundIndexes({
-        @CompoundIndex(def = "apiKeys.apiKeyId", unique = true),
-        @CompoundIndex(def = "apiKeys.apiKey", unique = true)
-})
+//@Document(collection = "UserApiKeys")
+//@CompoundIndexes({
+//        @CompoundIndex(def = "apiKeys.apiKeyId", unique = true),
+//        @CompoundIndex(def = "apiKeys.apiKey", unique = true)
+//})
 @Deprecated
 public class UserApiKeys {
 

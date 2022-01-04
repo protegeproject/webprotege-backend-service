@@ -448,18 +448,7 @@ public class ApplicationBeansConfiguration {
                                            perspectiveDescriptorRepository,
                                            perspectiveLayoutRepository);
     }
-
-    @Bean
-    UserApiKeyStore userApiKeyStore(MongoTemplate mongoTemplate) {
-        return new UserApiKeyStoreImpl(mongoTemplate);
-    }
-
-    @Bean
-    ApiKeyManager apiKeyManager(UserApiKeyStore userApiKeyStore) {
-        return new ApiKeyManager(new ApiKeyHasher(),
-                                 userApiKeyStore);
-    }
-
+    
     @Bean
     EntityTagsRepositoryImpl entityTagsRepository(MongoTemplate mongoTemplate) {
         return new EntityTagsRepositoryImpl(mongoTemplate);
