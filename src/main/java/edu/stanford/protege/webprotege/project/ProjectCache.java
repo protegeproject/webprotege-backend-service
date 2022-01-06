@@ -177,9 +177,10 @@ public class ProjectCache implements HasDispose {
         return projectIdInterner.intern(projectId);
     }
 
-    public ProjectId getProject(NewProjectSettings newProjectSettings,
+    public ProjectId getProject(ProjectId projectId,
+                                NewProjectSettings newProjectSettings,
                                 ExecutionContext executionContext) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException {
-        ProjectId projectId = ProjectIdFactory.getFreshProjectId();
+
         Optional<DocumentId> sourceDocumentId = newProjectSettings.getSourceDocumentId();
         sourceDocumentId.ifPresent(documentId -> projectImporter.createProjectFromSources(projectId,
                                                                                           documentId,

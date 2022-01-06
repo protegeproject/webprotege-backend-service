@@ -45,7 +45,8 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainCreateNewProjectActionHandler() {
-        var handler = registry.getActionHandler(CreateNewProjectAction.create(mock(NewProjectSettings.class)));
+        var handler = registry.getActionHandler(CreateNewProjectAction.create(ProjectId.generate(),
+                                                                              mock(NewProjectSettings.class)));
         assertThat(handler, is(notNullValue()));
     }
 

@@ -15,6 +15,8 @@ import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -35,6 +37,8 @@ import static java.util.Collections.singleton;
  * 21/02/15
  */
 public class CreateNewProjectActionHandler implements ApplicationActionHandler<CreateNewProjectAction, CreateNewProjectResult> {
+
+    private static Logger logger = LoggerFactory.getLogger(CreateNewProjectActionHandler.class);
 
     private final ProjectManager pm;
 
@@ -72,6 +76,7 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
     @Nonnull
     @Override
     public CreateNewProjectResult execute(@Nonnull CreateNewProjectAction action, @Nonnull ExecutionContext executionContext) {
+        var projectId = action.newProjectId();
         try {
 
             var userId = executionContext.getUserId();
@@ -84,14 +89,15 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
                     throw new PermissionDeniedException("You do not have permission to upload projects");
                 }
             }
-            var projectId = pm.createNewProject(newProjectSettings, executionContext);
             if (!projectDetailsManager.isExistingProject(projectId)) {
+                pm.createNewProject(projectId, newProjectSettings, executionContext);
                 projectDetailsManager.registerProject(projectId, newProjectSettings);
                 applyDefaultPermissions(projectId, userId);
             }
             return new CreateNewProjectResult(projectDetailsManager.getProjectDetails(projectId));
         } catch (OWLOntologyCreationException | OWLOntologyStorageException | IOException e) {
-            throw new RuntimeException(e);
+            logger.warn("Error when creating project: {}", e.getMessage(), e);
+            throw new ProjectCreationException(projectId, "An error occurred when creating the project: " + e.getMessage());
         }
     }
 

@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.project;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
@@ -14,12 +15,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 21/02/15
  */
 @JsonTypeName("CreateNewProject")
-public record CreateNewProjectAction(NewProjectSettings newProjectSettings) implements Action<CreateNewProjectResult>, Request<CreateNewProjectResult> {
+public record CreateNewProjectAction(ProjectId newProjectId, NewProjectSettings newProjectSettings) implements Action<CreateNewProjectResult>, Request<CreateNewProjectResult> {
 
     public static final String CHANNEL = "webprotege.projects.CreateNewProject";
 
     @JsonCreator
-    public CreateNewProjectAction(@JsonProperty("newProjectSettings") NewProjectSettings newProjectSettings) {
+    public CreateNewProjectAction(@JsonProperty("newProjectId") ProjectId newProjectId, @JsonProperty("newProjectSettings") NewProjectSettings newProjectSettings) {
+        this.newProjectId = checkNotNull(newProjectId);
         this.newProjectSettings = checkNotNull(newProjectSettings);
     }
 
@@ -28,7 +30,8 @@ public record CreateNewProjectAction(NewProjectSettings newProjectSettings) impl
         return CHANNEL;
     }
 
-    public static CreateNewProjectAction create(NewProjectSettings newProjectSettings) {
-        return new CreateNewProjectAction(newProjectSettings);
+    public static CreateNewProjectAction create(ProjectId projectId,
+                                                NewProjectSettings newProjectSettings) {
+        return new CreateNewProjectAction(projectId, newProjectSettings);
     }
 }

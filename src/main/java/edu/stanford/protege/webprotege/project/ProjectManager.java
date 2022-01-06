@@ -58,8 +58,9 @@ public class ProjectManager {
         return projectCache.getRevisionManager(projectId);
     }
 
-    public ProjectId createNewProject(@Nonnull NewProjectSettings newProjectSettings,
+    public ProjectId createNewProject(@Nonnull ProjectId projectId,
+                                      @Nonnull NewProjectSettings newProjectSettings,
                                       @Nonnull ExecutionContext executionContext) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException, OWLOntologyStorageException {
-        return projectCache.getProject(newProjectSettings, executionContext);
+        return projectCache.getProject(projectId, newProjectSettings, executionContext);
     }
 }
