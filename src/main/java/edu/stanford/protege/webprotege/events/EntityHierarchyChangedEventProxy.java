@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.events;
 
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
@@ -108,6 +109,6 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
                  }
              }));
         var mappedEvent = GraphModelChangedEvent.create(mappedChanges.build());
-        return new EntityHierarchyChangedEvent(projectId, hierarchyId, mappedEvent);
+        return new EntityHierarchyChangedEvent(EventId.generate(), projectId, hierarchyId, mappedEvent);
     }
 }

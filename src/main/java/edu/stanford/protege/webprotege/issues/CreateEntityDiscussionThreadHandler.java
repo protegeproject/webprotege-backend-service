@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -107,7 +108,8 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
         int commentCount = repository.getCommentsCount(projectId, entity);
         int openCommentCount = repository.getOpenCommentsCount(projectId, entity);
         Optional<OWLEntityData> rendering = Optional.of(renderer.getRendering(entity));
-        var event = new CommentPostedEvent(projectId,
+        var event = new CommentPostedEvent(EventId.generate(),
+                                           projectId,
                                            thread.getId(),
                                            comment,
                                            rendering,

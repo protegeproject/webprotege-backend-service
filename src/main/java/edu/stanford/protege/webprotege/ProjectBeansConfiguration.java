@@ -73,7 +73,6 @@ import edu.stanford.protege.webprotege.match.*;
 import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.object.*;
-import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.owlapi.HasContainsEntityInSignatureImpl;
 import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMapFactory;
@@ -884,22 +883,6 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    OBONamespaceCacheFactory oboNamespaceCacheFactory(OntologyAnnotationsIndex p1,
-                                                      DefaultOntologyIdManager p2,
-                                                      AxiomsByEntityReferenceIndex p3,
-                                                      ProjectOntologiesIndex p4,
-                                                      OWLDataFactory p5) {
-        return new OBONamespaceCacheFactory(p1, p2, p3, p4, p5);
-    }
-
-    @Bean
-    OBONamespaceCache oboNamespaceCache(OBONamespaceCacheFactory factory) {
-        var namespaceCache = factory.create();
-        //        namespaceCache.rebuildNamespaceCache();
-        return namespaceCache;
-    }
-
-    @Bean
     MatchingEngineImpl matchingEngine(ProjectSignatureIndex p1, MatcherFactory p2) {
         return new MatchingEngineImpl(p1, p2);
     }
@@ -998,19 +981,6 @@ public class ProjectBeansConfiguration {
     @Bean
     MessageFormatter messageFormatter(RenderingManager p1) {
         return new MessageFormatter(p1);
-    }
-
-    @Bean
-    TermDefinitionManagerImpl termDefinitionManager(OWLDataFactory p1,
-                                                    AnnotationToXRefConverter p2,
-                                                    ChangeManager p3,
-                                                    XRefExtractor p4,
-                                                    RenderingManager p5,
-                                                    ProjectOntologiesIndex p6,
-                                                    AnnotationAssertionAxiomsBySubjectIndex p7,
-                                                    DefaultOntologyIdManager p8,
-                                                    MessageFormatter p9) {
-        return new TermDefinitionManagerImpl(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }
 
     @Bean

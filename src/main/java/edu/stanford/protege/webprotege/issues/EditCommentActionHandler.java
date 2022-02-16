@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -75,7 +76,7 @@ public class EditCommentActionHandler extends AbstractProjectActionHandler<Updat
                                                                   renderedComment))
                                             .peek(c -> repository.updateComment(theThread.getId(), c))
                                             .findFirst();
-        updatedComment.ifPresent(comment -> eventDispatcher.dispatchEvent(new CommentUpdatedEvent(projectId, theThread.getId(), comment)));
+        updatedComment.ifPresent(comment -> eventDispatcher.dispatchEvent(new CommentUpdatedEvent(EventId.generate(), projectId, theThread.getId(), comment)));
         return new UpdateCommentResult(updatedComment);
     }
 

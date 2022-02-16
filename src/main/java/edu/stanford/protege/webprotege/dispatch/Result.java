@@ -31,7 +31,6 @@ import edu.stanford.protege.webprotege.merge.MergeUploadedProjectResult;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddResult;
 import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsResult;
 import edu.stanford.protege.webprotege.merge_add.MergeOntologiesResult;
-import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.ontology.GetOntologyAnnotationsResult;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdResult;
 import edu.stanford.protege.webprotege.ontology.SetOntologyAnnotationsResult;
@@ -123,13 +122,6 @@ import edu.stanford.protege.webprotege.watches.SetWatchesResult;
         @Type(GetMatchingEntitiesResult.class),
         @Type(GetNamedIndividualFrameResult.class),
         @Type(GetObjectPropertyFrameResult.class),
-        @Type(GetOboTermIdResult.class),
-        @Type(GetOboNamespacesResult.class),
-        @Type(GetOboTermCrossProductResult.class),
-        @Type(GetOboTermDefinitionResult.class),
-        @Type(GetOboTermSynonymsResult.class),
-        @Type(GetOboTermRelationshipsResult.class),
-        @Type(GetOboTermXRefsResult.class),
         @Type(GetOntologyAnnotationsResult.class),
         @Type(GetOntologyFramesResult.class),
         @Type(GetPerspectiveDetailsResult.class),
@@ -178,12 +170,6 @@ import edu.stanford.protege.webprotege.watches.SetWatchesResult;
         @Type(SetEntityGraphActiveFiltersResult.class),
         @Type(SetWatchesResult.class),
         @Type(SetManchesterSyntaxFrameResult.class),
-        @Type(SetOboTermCrossProductResult.class),
-        @Type(SetOboTermDefinitionResult.class),
-        @Type(SetOboTermIdResult.class),
-        @Type(SetOboTermRelationshipsResult.class),
-        @Type(SetOboTermSynonymsResult.class),
-        @Type(SetOboTermXRefsResult.class),
         @Type(SetOntologyAnnotationsResult.class),
         @Type(SetPerspectiveLayoutResult.class),
         @Type(SetProjectFormDescriptorsResult.class),

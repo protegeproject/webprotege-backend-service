@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.events;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -42,7 +43,7 @@ public class OWLObjectPropertyHierarchyChangeComputer extends HierarchyChangeCom
                 new GraphNode(renderer.render(parent)),
                 new GraphNode(renderer.render(child))
         ));
-        return Collections.singletonList(SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(getProjectId(),
+        return Collections.singletonList(SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(EventId.generate(), getProjectId(),
                                                                                                                OBJECT_PROPERTY_HIERARCHY,
                                                                                                                GraphModelChangedEvent
                                                                                                                        .create(ImmutableList
@@ -56,7 +57,7 @@ public class OWLObjectPropertyHierarchyChangeComputer extends HierarchyChangeCom
                 new GraphNode(renderer.render(parent), hierarchyProvider.isLeaf(parent)),
                 new GraphNode(renderer.render(child), hierarchyProvider.isLeaf(child))
         ));
-        return Collections.singletonList(SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(getProjectId(),
+        return Collections.singletonList(SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(EventId.generate(), getProjectId(),
                                                                          OBJECT_PROPERTY_HIERARCHY,
                                                                          GraphModelChangedEvent.create(ImmutableList.of(
                                                                                  addEdge)))));

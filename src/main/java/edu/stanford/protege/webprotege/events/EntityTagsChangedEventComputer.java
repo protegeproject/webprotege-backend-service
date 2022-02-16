@@ -5,6 +5,7 @@ import com.google.common.collect.SetMultimap;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeSubjectProvider;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.Revision;
@@ -62,7 +63,7 @@ public class EntityTagsChangedEventComputer implements EventTranslator {
             provider.getChangeSubjects(chg).forEach(entity -> {
                 Collection<Tag> tags = tagsManager.getTags(entity);
                 if(!tags.equals(beforeChangesTags.get(entity))) {
-                    projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(new EntityTagsChangedEvent(projectId, entity, tags)));
+                    projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(new EntityTagsChangedEvent(EventId.generate(), projectId, entity, tags)));
                 }
             });
         });

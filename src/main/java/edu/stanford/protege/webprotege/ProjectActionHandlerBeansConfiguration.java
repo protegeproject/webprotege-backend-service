@@ -40,7 +40,6 @@ import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddActionHandler;
 import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsActionHandler;
 import edu.stanford.protege.webprotege.merge_add.MergeOntologiesActionHandler;
-import edu.stanford.protege.webprotege.obo.*;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
@@ -487,13 +486,6 @@ public class ProjectActionHandlerBeansConfiguration {
         return new SetPerspectivesActionHandler(p1, p2);
     }
 
-
-    @Bean
-    GetIssuesActionHandler getIssuesActionHandler(AccessManager p1, ProjectId p2) {
-        return new GetIssuesActionHandler(p1, p2);
-    }
-
-
     @Bean
     GetEntityDiscussionThreadsHandler getDiscussionThreadsActionHandler(EntityDiscussionThreadRepository p1,
                                                                         AccessManager p2, RenderingManager p3) {
@@ -596,83 +588,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                           PlainFrameRenderer plainFrameRenderer) {
         return new GetClassFrameActionHandler(p1, p2, plainFrameRenderer);
     }
-
-
-    @Bean
-    GetOboTermIdActionHandler getOboTermIdActionHandler(AccessManager p1, TermIdManager p2) {
-        return new GetOboTermIdActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    GetOboTermDefinitionActionHandler getOboTermDefinitionActionHandler(AccessManager p1, TermDefinitionManager p2) {
-        return new GetOboTermDefinitionActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    GetOboNamespacesActionHandler getOboNamespacesActionHandler(AccessManager p1, OBONamespaceCache p2) {
-        return new GetOboNamespacesActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    SetOboTermIdActionHandler sSetOboTermIdActionHandler(AccessManager p1, TermIdManager p2) {
-        return new SetOboTermIdActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    SetOboTermDefinitionActionHandler sSetOboTermDefinitionActionHandler(AccessManager p1, TermDefinitionManager p2) {
-        return new SetOboTermDefinitionActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    GetOboTermRelationshipsActionHandler getOboTermRelationshipsActionHandler(AccessManager p1,
-                                                                              TermRelationshipsManager p2) {
-        return new GetOboTermRelationshipsActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    GetOboTermCrossProductsActionHandler getOboTermCrossProductsActionHandler(AccessManager p1,
-                                                                              TermCrossProductsManager p2) {
-        return new GetOboTermCrossProductsActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    SetOboTermCrossProductsActionHandler setOboTermCrossProductsActionHandler(AccessManager p1,
-                                                                               TermCrossProductsManager p2) {
-        return new SetOboTermCrossProductsActionHandler(p1, p2);
-    }
-
-
-
-    @Bean
-    GetOboTermSynonymsActionHandler getOboTermSynonymsActionHandler(AccessManager p1, TermSynonymsManager p2) {
-        return new GetOboTermSynonymsActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    SetOboTermSynonymsActionHandler setOboTermSynonymsActionHandler(AccessManager p1, TermSynonymsManager p2) {
-        return new SetOboTermSynonymsActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    GetOboTermXRefsActionHandler getOboTermXRefsActionHandler(AccessManager p1, TermXRefsManager p2) {
-        return new GetOboTermXRefsActionHandler(p1, p2);
-    }
-
-
-    @Bean
-    SetOboTermXRefsActionHandler setOboTermXRefsActionHandler(AccessManager p1, TermXRefsManager p2) {
-        return new SetOboTermXRefsActionHandler(p1, p2);
-    }
-
 
     @Bean
     GetEntityHierarchyChildrenActionHandler getClassHierarchyChildrenActionHandler(AccessManager p1,

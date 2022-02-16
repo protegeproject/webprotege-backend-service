@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.watches;
 
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -74,13 +75,13 @@ public class WatchManagerImpl implements WatchManager {
     @Override
     public void addWatch(@Nonnull Watch watch) {
         repository.saveWatchRecord(toWatchRecord(watch));
-        eventDispatcher.dispatchEvent(new WatchAddedEvent(projectId, watch));
+        eventDispatcher.dispatchEvent(new WatchAddedEvent(EventId.generate(), projectId, watch));
     }
 
     @Override
     public void removeWatch(@Nonnull Watch watch) {
         repository.deleteWatchRecord(toWatchRecord(watch));
-        eventDispatcher.dispatchEvent(new WatchRemovedEvent(projectId, watch));
+        eventDispatcher.dispatchEvent(new WatchRemovedEvent(EventId.generate(), projectId, watch));
     }
 
     @Override

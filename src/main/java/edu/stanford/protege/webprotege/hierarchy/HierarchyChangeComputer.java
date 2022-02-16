@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.events.EventTranslator;
@@ -102,7 +103,8 @@ public abstract class HierarchyChangeComputer<T extends OWLEntity> implements Ev
                 ImmutableList<GraphModelChange<EntityNode>> changes = ImmutableList.of(new AddRootNode(
                         new GraphNode(renderer.render(rootAfter),
                                       hierarchyProvider.isLeaf(rootAfter))));
-                EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(projectId,
+                EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(EventId.generate(),
+                                                                                    projectId,
                                                                                     hierarchyId,
                                                                                     GraphModelChangedEvent.create(changes));
                 projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
@@ -112,7 +114,8 @@ public abstract class HierarchyChangeComputer<T extends OWLEntity> implements Ev
             if (!rootsAfter.contains(rootBefore)) {
                 ImmutableList<GraphModelChange<EntityNode>> changes = ImmutableList.of(new RemoveRootNode(
                         new GraphNode(renderer.render(rootBefore))));
-                EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(projectId,
+                EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(EventId.generate(),
+                                                                                    projectId,
                                                                                     hierarchyId,
                                                                                     GraphModelChangedEvent.create(changes));
                 projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));

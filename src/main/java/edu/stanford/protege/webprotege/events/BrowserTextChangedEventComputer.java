@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.HasGetChangeSubjects;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ShortForm;
 import edu.stanford.protege.webprotege.event.BrowserTextChangedEvent;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -86,7 +87,7 @@ public class BrowserTextChangedEventComputer implements EventTranslator {
                                .map(e -> ShortForm.get(e.getKey(), e.getValue()))
                                .collect(toImmutableList());
                        var shortForm = dictionaryManager.getShortForm(entity);
-                       var browserTextChangedEvent = new BrowserTextChangedEvent(projectId, entity, shortForm,
+                       var browserTextChangedEvent = new BrowserTextChangedEvent(EventId.generate(), projectId, entity, shortForm,
                                                                                  shortFormsList);
                        projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(browserTextChangedEvent));
                    }

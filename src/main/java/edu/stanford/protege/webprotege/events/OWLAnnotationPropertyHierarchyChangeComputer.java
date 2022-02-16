@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.events;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -39,7 +40,7 @@ public class OWLAnnotationPropertyHierarchyChangeComputer extends HierarchyChang
                 new GraphNode(renderer.render(child))
         ));
         return singletonList(
-               SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(getProjectId(), ANNOTATION_PROPERTY_HIERARCHY, GraphModelChangedEvent.create(
+               SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(EventId.generate(), getProjectId(), ANNOTATION_PROPERTY_HIERARCHY, GraphModelChangedEvent.create(
                        ImmutableList.of(removeEdge))))
         );
     }
@@ -51,7 +52,7 @@ public class OWLAnnotationPropertyHierarchyChangeComputer extends HierarchyChang
                 new GraphNode(renderer.render(child), hierarchyProvider.isLeaf(child))
         ));
         return singletonList(
-                SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(getProjectId(), ANNOTATION_PROPERTY_HIERARCHY, GraphModelChangedEvent.create(ImmutableList.of(addEdge))))
+                SimpleHighLevelProjectEventProxy.wrap(new EntityHierarchyChangedEvent(EventId.generate(), getProjectId(), ANNOTATION_PROPERTY_HIERARCHY, GraphModelChangedEvent.create(ImmutableList.of(addEdge))))
         );
     }
 }

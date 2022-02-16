@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.tag;
 
 import com.google.common.collect.Streams;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
@@ -199,10 +200,10 @@ public class TagsManager {
         Set<Tag> projectTags = new HashSet<>(getProjectTags());
         if (!oldProjectTags.equals(projectTags)) {
             for (OWLEntity entity : modifiedEntityTags) {
-                var event = new EntityTagsChangedEvent(projectId, entity, getTags(entity));
+                var event = new EntityTagsChangedEvent(EventId.generate(), projectId, entity, getTags(entity));
                 eventDispatcher.dispatchEvent(event);
             }
-            var event = new ProjectTagsChangedEvent(projectId, projectTags);
+            var event = new ProjectTagsChangedEvent(EventId.generate(), projectId, projectTags);
             eventDispatcher.dispatchEvent(event);
         }
     }
@@ -235,7 +236,7 @@ public class TagsManager {
             entityTagsRepository.save(nextEntityTags);
             boolean changed = !existingTags.equals(Optional.of(nextEntityTags));
             if (changed) {
-                var event = new EntityTagsChangedEvent(projectId, entity, getTags(entity));
+                var event = new EntityTagsChangedEvent(EventId.generate(), projectId, entity, getTags(entity));
                 eventDispatcher.dispatchEvent(event);
             }
         } finally {

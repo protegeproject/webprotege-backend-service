@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.events;
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.event.*;
@@ -145,7 +146,7 @@ public class HighLevelEventGenerator implements EventTranslator {
         }
         var revisionSummary = hasGetRevisionSummary.getRevisionSummary(revision.getRevisionNumber());
         if(revisionSummary.isPresent()) {
-            var event = new ProjectChangedEvent(projectId, revisionSummary.get(), changedEntitiesData);
+            var event = new ProjectChangedEvent(EventId.generate(), projectId, revisionSummary.get(), changedEntitiesData);
             projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
         }
     }
@@ -171,13 +172,13 @@ public class HighLevelEventGenerator implements EventTranslator {
             @Nonnull
             @Override
             public ProjectEvent visit(@Nonnull OWLClass cls) {
-                return new ClassFrameChangedEvent(projectId, revision.getUserId(), cls);
+                return new ClassFrameChangedEvent(EventId.generate(), projectId, revision.getUserId(), cls);
             }
 
             @Nonnull
             @Override
             public ProjectEvent visit(@Nonnull OWLObjectProperty property) {
-                return new ObjectPropertyFrameChangedEvent(projectId,
+                return new ObjectPropertyFrameChangedEvent(EventId.generate(), projectId,
                                                            revision.getUserId(),
                                                            property);
             }
@@ -185,7 +186,7 @@ public class HighLevelEventGenerator implements EventTranslator {
             @Nonnull
             @Override
             public ProjectEvent visit(@Nonnull OWLDataProperty property) {
-                return new DataPropertyFrameChangedEvent(projectId,
+                return new DataPropertyFrameChangedEvent(EventId.generate(), projectId,
                                                          revision.getUserId(),
                                                          property);
             }
@@ -193,7 +194,7 @@ public class HighLevelEventGenerator implements EventTranslator {
             @Nonnull
             @Override
             public ProjectEvent visit(@Nonnull OWLNamedIndividual individual) {
-                return new NamedIndividualFrameChangedEvent(projectId,
+                return new NamedIndividualFrameChangedEvent(EventId.generate(), projectId,
                                                             revision.getUserId(),
                                                             individual);
             }
@@ -201,13 +202,14 @@ public class HighLevelEventGenerator implements EventTranslator {
             @Nonnull
             @Override
             public ProjectEvent visit(@Nonnull OWLDatatype datatype) {
-                return new DatatypeFrameChangedEvent(projectId, revision.getUserId(), datatype);
+                return new DatatypeFrameChangedEvent(EventId.generate(), projectId, revision.getUserId(), datatype);
             }
 
             @Nonnull
             @Override
             public ProjectEvent visit(@Nonnull OWLAnnotationProperty property) {
-                return new AnnotationPropertyFrameChangedEvent(projectId,
+                return new AnnotationPropertyFrameChangedEvent(EventId.generate(),
+                                                               projectId,
                                                                revision.getUserId(),
                                                                property);
             }

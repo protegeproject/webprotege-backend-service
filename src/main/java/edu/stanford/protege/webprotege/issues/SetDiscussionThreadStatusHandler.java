@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -61,11 +62,12 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
         var status = action.status();
         var thread = repository.setThreadStatus(threadId, status);
         int openComments = thread.map(t -> repository.getOpenCommentsCount(projectId, t.getEntity())).orElse(-1);
-        eventDispatcher.dispatchEvent(new DiscussionThreadStatusChangedEvent(projectId,
-                                                                                   threadId,
-                                                                                   thread.map(EntityDiscussionThread::getEntity),
-                                                                                   openComments,
-                                                                                   status));
+        eventDispatcher.dispatchEvent(new DiscussionThreadStatusChangedEvent(EventId.generate(),
+                                                                             projectId,
+                                                                             threadId,
+                                                                             thread.map(EntityDiscussionThread::getEntity),
+                                                                             openComments,
+                                                                             status));
         return new SetDiscussionThreadStatusResult(threadId, status);
     }
 }

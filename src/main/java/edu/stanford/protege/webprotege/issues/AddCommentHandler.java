@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
@@ -139,12 +140,13 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
             OWLEntityData entityData = renderer.getRendering(t.getEntity());
             int commentCount = repository.getCommentsCount(projectId, t.getEntity());
             int openCommentCount = repository.getOpenCommentsCount(projectId, t.getEntity());
-            var event = new CommentPostedEvent(projectId,
-                                                              threadId,
-                                                              comment,
-                                                              Optional.of(entityData),
-                                                              commentCount,
-                                                              openCommentCount);
+            var event = new CommentPostedEvent(EventId.generate(),
+                                               projectId,
+                                               threadId,
+                                               comment,
+                                               Optional.of(entityData),
+                                               commentCount,
+                                               openCommentCount);
             eventDispatcher.dispatchEvent(event);
 
         });

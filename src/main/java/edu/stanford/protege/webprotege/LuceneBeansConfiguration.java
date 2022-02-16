@@ -296,7 +296,7 @@ public class LuceneBeansConfiguration {
     @Bean
     @Scope("prototype")
     EntityOboIdDocumentAugmenter entityOboIdDocumentAugmenter(DictionaryLanguageFieldWriter p1) {
-        return new EntityOboIdDocumentAugmenter(p1);
+        return new EntityOboIdDocumentAugmenter();
     }
 
     @Bean
