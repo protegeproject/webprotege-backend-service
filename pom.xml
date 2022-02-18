@@ -99,7 +99,7 @@
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-change</artifactId>
+            <artifactId>webprotege-ontology-change</artifactId>
             <version>0.9.1-SNAPSHOT</version>
         </dependency>
         <dependency>
