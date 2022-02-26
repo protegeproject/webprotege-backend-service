@@ -63,7 +63,8 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
     protected ChangeListGenerator<Set<OWLClass>> getChangeListGenerator(CreateClassesAction action, ExecutionContext executionContext) {
         return changeGeneratorFactory.create(action.sourceText(),
                                              action.langTag(),
-                                             action.parents());
+                                             action.parents(),
+                                             action.changeRequestId());
     }
 
     @Override
@@ -71,7 +72,8 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                                      CreateClassesAction action,
                                                      ExecutionContext executionContext) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
-        return new CreateClassesResult(action.projectId(),
+        return new CreateClassesResult(action.changeRequestId(),
+                                       action.projectId(),
                                        classes.stream().map(entityNodeRenderer::render).collect(toImmutableSet()));
     }
 }

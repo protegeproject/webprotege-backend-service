@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public interface AnnotationAssertionAxiomsByValueIndex extends Index {
 
     /**
-     * Gets the annotation assertion axioms by values, where the value is either an {@link IRI}
+     * Gets the annotation assertion axiomsSource by values, where the value is either an {@link IRI}
      * or an {@link OWLAnonymousIndividual} or an {@link OWLLiteral}.
      * @param value The value
      * @param ontologyId The ontology context.

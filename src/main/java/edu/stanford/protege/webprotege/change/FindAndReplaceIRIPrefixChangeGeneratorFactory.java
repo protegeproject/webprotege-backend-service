@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.change;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
 import javax.annotation.processing.Generated;
@@ -23,12 +24,11 @@ public final class FindAndReplaceIRIPrefixChangeGeneratorFactory {
     this.entityRenamerProvider = checkNotNull(entityRenamerProvider, 2);
   }
 
-  public FindAndReplaceIRIPrefixChangeGenerator create(String fromPrefix, String toPrefix) {
-    return new FindAndReplaceIRIPrefixChangeGenerator(
-        checkNotNull(fromPrefix, 1),
-        checkNotNull(toPrefix, 2),
-        checkNotNull(projectSignatureIndexProvider.get(), 3),
-        checkNotNull(entityRenamerProvider.get(), 4));
+  public FindAndReplaceIRIPrefixChangeGenerator create(ChangeRequestId changeRequestId, String fromPrefix, String toPrefix) {
+    return new FindAndReplaceIRIPrefixChangeGenerator(changeRequestId, checkNotNull(fromPrefix, 1),
+                                                      checkNotNull(toPrefix, 2),
+                                                      checkNotNull(projectSignatureIndexProvider.get(), 3),
+                                                      checkNotNull(entityRenamerProvider.get(), 4));
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

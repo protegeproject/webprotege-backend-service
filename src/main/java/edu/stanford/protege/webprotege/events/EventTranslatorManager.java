@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.events;
 
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.revision.Revision;
 
 import javax.inject.Inject;
@@ -29,9 +30,11 @@ public class EventTranslatorManager {
         }
     }
 
-    public void translateOntologyChanges(Revision revision, ChangeApplicationResult<?> appliedChanges, List<HighLevelProjectEventProxy> projectEventList) {
+    public void translateOntologyChanges(ChangeRequestId changeRequestId, Revision revision,
+                                         ChangeApplicationResult<?> appliedChanges,
+                                         List<HighLevelProjectEventProxy> projectEventList) {
         for(EventTranslator eventTranslator : eventTranslators) {
-            eventTranslator.translateOntologyChanges(revision, appliedChanges, projectEventList);
+            eventTranslator.translateOntologyChanges(revision, appliedChanges, projectEventList, changeRequestId);
         }
     }
 }

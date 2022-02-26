@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import javax.annotation.processing.Generated;
@@ -31,14 +32,14 @@ public final class CreateClassesChangeGeneratorFactory {
   }
 
   public CreateClassesChangeGenerator create(
-      String sourceText, String langTag, ImmutableSet<OWLClass> parent) {
+          String sourceText, String langTag, ImmutableSet<OWLClass> parent, ChangeRequestId changeRequestId) {
     return new CreateClassesChangeGenerator(
-        checkNotNull(dataFactoryProvider.get(), 1),
-        checkNotNull(msgProvider.get(), 2),
-        checkNotNull(defaultOntologyIdManagerProvider.get(), 3),
-        checkNotNull(sourceText, 4),
-        checkNotNull(langTag, 5),
-        checkNotNull(parent, 6));
+            checkNotNull(dataFactoryProvider.get(), 1),
+            checkNotNull(msgProvider.get(), 2),
+            checkNotNull(defaultOntologyIdManagerProvider.get(), 3),
+            checkNotNull(sourceText, 4),
+            checkNotNull(langTag, 5),
+            checkNotNull(parent, 6), changeRequestId);
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

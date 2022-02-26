@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.events;
 
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.event.EntityDeprecationStatusChangedEvent;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
@@ -48,7 +49,8 @@ public class EntityDeprecatedChangedEventTranslator implements EventTranslator {
     @Override
     public void translateOntologyChanges(Revision revision,
                                          ChangeApplicationResult<?> changes,
-                                         List<HighLevelProjectEventProxy> projectEventList) {
+                                         List<HighLevelProjectEventProxy> projectEventList,
+                                         ChangeRequestId changeRequestId) {
         for(OntologyChange change : changes.getChangeList()) {
             if(change.isChangeFor(ANNOTATION_ASSERTION)) {
                 var annotationAssertion = (OWLAnnotationAssertionAxiom) change.getAxiomOrThrow();

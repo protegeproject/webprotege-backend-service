@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.impl.*;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManagerImpl;
@@ -135,7 +136,8 @@ public class MergeEntitiesChangeListGenerator_TestCase {
     }
 
     private void createGeneratorAndApplyChanges(MergedEntityTreatment treatment) {
-        MergeEntitiesChangeListGenerator gen = new MergeEntitiesChangeListGenerator(sourceEntities,
+        MergeEntitiesChangeListGenerator gen = new MergeEntitiesChangeListGenerator(ChangeRequestId.generate(),
+                                                                                    sourceEntities,
                                                                                     targetEntity,
                                                                                     treatment,
                                                                                     "The commit message",

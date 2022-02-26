@@ -7,6 +7,8 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
@@ -200,6 +202,7 @@ public class ChangeManager implements HasApplyChanges {
     /**
      * Applies ontology changes to the ontologies contained within a project.
      *
+     *
      * @param userId              The userId of the user applying the changes.  Not {@code null}.
      * @param changeListGenerator A generator which creates a list of changes (based on the state of the project at
      *                            the time of change application).  The idea behind passing in a change generator is
@@ -328,8 +331,8 @@ public class ChangeManager implements HasApplyChanges {
                 // Release for reads
                 projectChangeWriteLock.unlock();
             }
-
-            generateAndDispatchHighLevelEvents(userId,
+            var changeRequestId = changeListGenerator.getChangeRequestId();
+            generateAndDispatchHighLevelEvents(changeRequestId, userId,
                                                changeListGenerator,
                                                changeApplicationResult,
                                                eventTranslatorManager,
@@ -507,7 +510,7 @@ public class ChangeManager implements HasApplyChanges {
         return revision;
     }
 
-    private <R> void generateAndDispatchHighLevelEvents(UserId userId,
+    private <R> void generateAndDispatchHighLevelEvents(ChangeRequestId changeRequestId, UserId userId,
                                                         ChangeListGenerator<R> changeListGenerator,
                                                         ChangeApplicationResult<R> finalResult,
                                                         EventTranslatorManager eventTranslatorManager,
@@ -517,7 +520,7 @@ public class ChangeManager implements HasApplyChanges {
         // Fire low-level ontology changed events.  There's an event for every change
         // that was applied
         for(var change : changes) {
-            var event = new OntologyChangedEvent(projectId, userId, change);
+            var event = new OntologyChangedEvent(EventId.generate(), projectId, userId, change);
             eventDispatcher.dispatchEvent(event);
         }
 
@@ -526,7 +529,7 @@ public class ChangeManager implements HasApplyChanges {
         }
         revision.ifPresent(rev -> {
             var highLevelEvents = new ArrayList<HighLevelProjectEventProxy>();
-            eventTranslatorManager.translateOntologyChanges(rev, finalResult, highLevelEvents);
+            eventTranslatorManager.translateOntologyChanges(changeRequestId, rev, finalResult, highLevelEvents);
             if(changeListGenerator instanceof HasHighLevelEvents) {
                 highLevelEvents.addAll(((HasHighLevelEvents) changeListGenerator).getHighLevelEvents());
             }

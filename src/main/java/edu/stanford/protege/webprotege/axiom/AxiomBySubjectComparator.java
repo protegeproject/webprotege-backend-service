@@ -14,7 +14,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 03/02/15
  *
- * A comparator that compares axioms by a rendering of their subject.
+ * A comparator that compares axiomsSource by a rendering of their subject.
  */
 public class AxiomBySubjectComparator implements Comparator<OWLAxiom> {
 
@@ -34,10 +34,10 @@ public class AxiomBySubjectComparator implements Comparator<OWLAxiom> {
     }
 
     /**
-     * Compares the two axioms using their subject.
+     * Compares the two axiomsSource using their subject.
      * @param ax1 The first axiom.
      * @param ax2 The second axiom.
-     * @return If both axioms have subjects: An integer representing the comparison of the subjects of the two axioms.
+     * @return If both axiomsSource have subjects: An integer representing the comparison of the subjects of the two axiomsSource.
      * If the first axiom has a subject, but the second axiom does not, then -1 (first before second).  If the second axiom has a subject
      * but the first axiom does not, then 1 (first after second).  If neither the first axiom has a subject or the second
      * axiom has a subject then 0.

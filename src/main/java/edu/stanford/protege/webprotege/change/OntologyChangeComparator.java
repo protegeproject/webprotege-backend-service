@@ -32,7 +32,7 @@ public class OntologyChangeComparator implements Comparator<OntologyChange> {
 
 
     /**
-     * Creates a change record comparator that uses the specified comparators to compare axioms an ontology
+     * Creates a change record comparator that uses the specified comparators to compare axiomsSource an ontology
      * annotations within the records that it compares.
      * @param axiomComparator The axiom comparator.
      * @param annotationComparator The annotation comparator.

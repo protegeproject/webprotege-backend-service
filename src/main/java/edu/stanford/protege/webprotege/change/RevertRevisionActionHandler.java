@@ -45,7 +45,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
     protected ChangeListGenerator<Boolean> getChangeListGenerator(RevertRevisionAction action,
                                                                     ExecutionContext executionContext) {
         RevisionNumber revisionNumber = action.revisionNumber();
-        return factory.create(revisionNumber);
+        return factory.create(revisionNumber, action.changeRequestId());
     }
 
     @Override

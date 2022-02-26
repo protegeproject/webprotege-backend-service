@@ -53,7 +53,7 @@ public class AxiomsByReferenceIndexImpl implements AxiomsByReferenceIndex, Depen
     @Nonnull
     private Stream<OWLAxiom> getReferencingAxioms(OWLEntity entity,
                                                   OWLOntologyID ontologyId) {
-        // Combine both entity in signature and IRI mentions in annotation axioms
+        // Combine both entity in signature and IRI mentions in annotation axiomsSource
         var entityReferencingAxioms = axiomsByEntityReferenceIndex.getReferencingAxioms(entity, ontologyId);
         var iriReferencingAxioms = axiomsByIriReferenceIndex.getReferencingAxioms(entity.getIRI(), ontologyId);
         return Streams.concat(entityReferencingAxioms, iriReferencingAxioms);

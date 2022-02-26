@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.change;
 
 
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
@@ -27,12 +28,22 @@ public class RevisionReverterChangeListGenerator implements ChangeListGenerator<
     @Nonnull
     private final RevisionManager revisionManager;
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
 
     @Inject
     public RevisionReverterChangeListGenerator(@Nonnull RevisionNumber revisionNumber,
-                                               @Nonnull RevisionManager revisionManager) {
+                                               @Nonnull RevisionManager revisionManager,
+                                               @Nonnull ChangeRequestId changeRequestId) {
         this.revisionNumber = checkNotNull(revisionNumber);
         this.revisionManager = checkNotNull(revisionManager);
+        this.changeRequestId = checkNotNull(changeRequestId);
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

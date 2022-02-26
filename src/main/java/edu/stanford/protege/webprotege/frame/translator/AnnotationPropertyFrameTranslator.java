@@ -86,7 +86,7 @@ public class AnnotationPropertyFrameTranslator {
     }
 
     /**
-     * Converts annotation assertion axioms to property values
+     * Converts annotation assertion axiomsSource to property values
      */
     private Function<OWLAnnotationAssertionAxiom, PlainPropertyAnnotationValue> toPropertyValue() {
         return ax -> PlainPropertyAnnotationValue.get(

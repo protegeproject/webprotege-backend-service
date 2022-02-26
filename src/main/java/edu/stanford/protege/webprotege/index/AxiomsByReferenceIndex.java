@@ -19,8 +19,8 @@ import java.util.stream.Stream;
 public interface AxiomsByReferenceIndex extends Index {
 
     /**
-     * Gets the axioms that reference one or more of the specified entities.  This includes logical and non-logical
-     * axioms that have any of the entities in their signature.  This also includes annotation axioms that
+     * Gets the axiomsSource that reference one or more of the specified entities.  This includes logical and non-logical
+     * axiomsSource that have any of the entities in their signature.  This also includes annotation axiomsSource that
      * reference one or more IRIs equal to IRIs of the entities in the specified set.
      * @param entities The entities.
      * @param ontologyId The ontology Id

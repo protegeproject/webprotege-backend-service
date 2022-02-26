@@ -56,7 +56,8 @@ public class CreateDataPropertiesActionHandler extends AbstractProjectChangeHand
                                                                                ExecutionContext executionContext) {
         return changeGeneratorFactory.create(action.sourceText(),
                                              action.langTag(),
-                                             action.parents());
+                                             action.parents(),
+                                             action.changeRequestId());
     }
 
     @Override

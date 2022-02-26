@@ -58,7 +58,7 @@ public class DeleteAxiomsActionHandler extends AbstractProjectActionHandler<Dele
         action.getAxioms()
               .forEach(ax -> builder.add(RemoveAxiomChange.of(ontId, ax)));
         var changeList = builder.build(action.getCommitMessage());
-        var changeListGenerator = new FixedChangeListGenerator<>(changeList.getChanges(),
+        var changeListGenerator = new FixedChangeListGenerator<>(action.changeRequestId(), changeList.getChanges(),
                                                                  "",
                                                                  action.getCommitMessage());
         var result = changeManager.applyChanges(executionContext.getUserId(),

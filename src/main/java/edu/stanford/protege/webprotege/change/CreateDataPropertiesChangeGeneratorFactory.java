@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import javax.annotation.processing.Generated;
@@ -30,15 +31,17 @@ public final class CreateDataPropertiesChangeGeneratorFactory {
     this.defaultOntologyIdManagerProvider = checkNotNull(defaultOntologyIdManagerProvider, 3);
   }
 
-  public CreateDataPropertiesChangeGenerator create(
-      String sourceText, String langTag, ImmutableSet<OWLDataProperty> parents) {
+  public CreateDataPropertiesChangeGenerator create(String sourceText,
+                                                    String langTag,
+                                                    ImmutableSet<OWLDataProperty> parents,
+                                                    ChangeRequestId changeRequestId) {
     return new CreateDataPropertiesChangeGenerator(
-        checkNotNull(dataFactoryProvider.get(), 1),
-        checkNotNull(msgProvider.get(), 2),
-        checkNotNull(defaultOntologyIdManagerProvider.get(), 3),
-        checkNotNull(sourceText, 4),
-        checkNotNull(langTag, 5),
-        checkNotNull(parents, 6));
+            checkNotNull(dataFactoryProvider.get(), 1),
+            checkNotNull(msgProvider.get(), 2),
+            checkNotNull(defaultOntologyIdManagerProvider.get(), 3),
+            checkNotNull(sourceText, 4),
+            checkNotNull(langTag, 5),
+            checkNotNull(parents, 6), changeRequestId);
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

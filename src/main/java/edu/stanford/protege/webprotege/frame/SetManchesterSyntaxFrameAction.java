@@ -2,6 +2,8 @@ package edu.stanford.protege.webprotege.frame;
 
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.HasSubject;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.common.ContentChangeRequest;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -18,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
  */
-public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities {
+public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities, ContentChangeRequest {
 
     public static final String CHANNEL = "webprotege.mansyntax.SetManchesterSyntaxFrame";
 
@@ -34,18 +36,21 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
 
     private final String commitMessage;
 
+    private ChangeRequestId changeRequestId;
+
     private SetManchesterSyntaxFrameAction(ProjectId projectId,
                                            OWLEntity subject,
                                            String fromRendering,
                                            String toRendering,
                                            Set<OWLEntityData> freshEntities,
-                                           Optional<String> commitMessage) {
+                                           Optional<String> commitMessage, ChangeRequestId changeRequestId) {
         this.projectId = checkNotNull(projectId);
         this.subject = checkNotNull(subject);
         this.fromRendering = checkNotNull(fromRendering);
         this.toRendering = checkNotNull(toRendering);
         this.freshEntities = new HashSet<>(freshEntities);
         this.commitMessage = checkNotNull(commitMessage).orElse(null);
+        this.changeRequestId = checkNotNull(changeRequestId);
     }
 
     @Override
@@ -64,7 +69,13 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
                                                   fromRendering,
                                                   toRendering,
                                                   freshEntities,
-                                                  commitMessage);
+                                                  commitMessage,
+                                                  ChangeRequestId.generate());
+    }
+
+    @Override
+    public ChangeRequestId changeRequestId() {
+        return changeRequestId;
     }
 
     @Nonnull

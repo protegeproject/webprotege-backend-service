@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import java.util.Optional;
@@ -32,16 +33,16 @@ public final class EditAnnotationsChangeListGeneratorFactory {
     this.annotationAssertionsIndexProvider = checkNotNull(annotationAssertionsIndexProvider, 3);
   }
 
-  public EditAnnotationsChangeListGenerator create(
-      ImmutableSet<OWLEntity> entities,
-      Operation operation,
-      Optional<OWLAnnotationProperty> matchProperty,
-      Optional<String> matchLexicalValue,
-      boolean regEx,
-      Optional<String> matchLangTag,
-      NewAnnotationData newAnnotationData,
-      String commitMessage) {
-    return new EditAnnotationsChangeListGenerator(
+  public EditAnnotationsChangeListGenerator create(ChangeRequestId changeRequestId,
+                                                   ImmutableSet<OWLEntity> entities,
+                                                   Operation operation,
+                                                   Optional<OWLAnnotationProperty> matchProperty,
+                                                   Optional<String> matchLexicalValue,
+                                                   boolean regEx,
+                                                   Optional<String> matchLangTag,
+                                                   NewAnnotationData newAnnotationData,
+                                                   String commitMessage) {
+    return new EditAnnotationsChangeListGenerator(changeRequestId,
         checkNotNull(dataFactoryProvider.get(), 1),
         checkNotNull(projectOntologiesIndexProvider.get(), 2),
         checkNotNull(annotationAssertionsIndexProvider.get(), 3),

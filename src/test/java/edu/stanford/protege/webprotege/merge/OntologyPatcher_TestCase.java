@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.merge;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -68,7 +69,8 @@ public class OntologyPatcher_TestCase {
 
     @Test
     public void shouldApplyChangesWithExecContextUser() {
-        patcher.applyPatch(Collections.singleton(ontologyDiff),
+        patcher.applyPatch(ChangeRequestId.generate(),
+                           Collections.singleton(ontologyDiff),
                            commitMessage,
                            executionContext);
 
@@ -78,7 +80,8 @@ public class OntologyPatcher_TestCase {
 
     @Test
     public void shouldCreateChangeGeneratorForOntologyChanges() {
-        patcher.applyPatch(Collections.singleton(ontologyDiff),
+        patcher.applyPatch(ChangeRequestId.generate(),
+                           Collections.singleton(ontologyDiff),
                            commitMessage,
                            executionContext);
 
@@ -92,7 +95,8 @@ public class OntologyPatcher_TestCase {
     @SuppressWarnings("unchecked")
     @Test
     public void shouldCreateChangeGeneratorWithSuppliedMessage() {
-        patcher.applyPatch(Collections.singleton(ontologyDiff),
+        patcher.applyPatch(ChangeRequestId.generate(),
+                           Collections.singleton(ontologyDiff),
                            commitMessage,
                            executionContext);
 

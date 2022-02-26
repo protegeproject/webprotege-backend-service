@@ -95,6 +95,5 @@ public class OntologyChangeList<R> {
             return new OntologyChangeList<>(listBuilder.build(), checkNotNull(subject));
         }
 
-
     }
 }

@@ -52,7 +52,7 @@ public class ObjectPropertyCharacteristicsSectionRenderer extends AbstractOWLAxi
     @Override
     protected Set<OWLObjectPropertyCharacteristicAxiom> getAxiomsInOntology(OWLObjectProperty subject, OWLOntologyID ontologyId) {
         // Don't use specific indexes as the number of properties, and thus the number
-        // of property characteristic axioms in an ontology is small
+        // of property characteristic axiomsSource in an ontology is small
         return keywordMap.keySet()
                   .stream()
                   .flatMap(type -> getAxiom(type, ontologyId, subject))

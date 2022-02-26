@@ -1,15 +1,10 @@
 package edu.stanford.protege.webprotege.mansyntax;
 
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.ReverseEngineeredChangeDescriptionGeneratorFactory;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.frame.CheckManchesterSyntaxFrameAction;
 import edu.stanford.protege.webprotege.frame.SetManchesterSyntaxFrameAction;
-import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGenerator;
-import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
-import edu.stanford.protege.webprotege.mansyntax.OntologyAxiomPairChangeGenerator;
-
-import java.util.Optional;
 
 /**
  * Matthew Horridge
@@ -44,7 +39,7 @@ public class ManchesterSyntaxChangeGeneratorFactory {
                                                    fromRendering,
                                                    toRendering,
                                                    commitMessage,
-                                                   action);
+                                                   action, ChangeRequestId.generate());
     }
 
     public ManchesterSyntaxChangeGenerator create(OWLEntityData rendering,
@@ -59,6 +54,7 @@ public class ManchesterSyntaxChangeGeneratorFactory {
                                                    fromRendering,
                                                    toRendering,
                                                    commitMessage,
-                                                   action);
+                                                   action,
+                                                   action.changeRequestId());
     }
 }

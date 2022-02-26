@@ -34,7 +34,7 @@ import static edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex.Annota
  * Bio-Medical Informatics Research Group<br>
  * Date: 09/12/2012
  * <p>
- * A translator that converts sets of axioms to class frames and vice-versa.
+ * A translator that converts sets of axiomsSource to class frames and vice-versa.
  * </p>
  */
 public class Class2ClassFrameTranslator {

@@ -38,7 +38,8 @@ public class EditAnnotationValuesActionHandler extends AbstractProjectChangeHand
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(EditAnnotationsAction action, ExecutionContext executionContext) {
-        return factory.create(action.entities(),
+        return factory.create(action.changeRequestId(),
+                              action.entities(),
                               action.operation(),
                               action.property(),
                               action.lexicalValueExpression(),

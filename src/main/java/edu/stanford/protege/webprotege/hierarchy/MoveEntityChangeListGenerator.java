@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
@@ -75,6 +76,11 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
         this.subObjectPropertyOfAxiomsIndex = subObjectPropertyOfAxiomsIndex;
         this.subDataPropertyOfAxiomsIndex = subDataPropertyOfAxiomsIndex;
         this.subAnnotationPropertyOfAxiomsIndex = subAnnotationPropertyOfAxiomsIndex;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return action.changeRequestId();
     }
 
     private static OntologyChangeList<Boolean> notMoved() {
@@ -218,10 +224,10 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
      * @param move The entity to move/copy (the child).
      * @param toParent The parent to move/copy the entity to.
      * @param dropType Whether the operation is a move or a copy
-     * @param axiomExtractor An extractor that can select candidate axioms for removal from an ontology (axioms that
+     * @param axiomExtractor An extractor that can select candidate axiomsSource for removal from an ontology (axiomsSource that
      *                       potentially specify the current parent).
-     * @param axiomFilter A filter that filters axioms for remove (to remove the child from its existing parent).
-     * @param reparentingAxiomFactory A factory that can create axioms to reposition the child under its new parent.
+     * @param axiomFilter A filter that filters axiomsSource for remove (to remove the child from its existing parent).
+     * @param reparentingAxiomFactory A factory that can create axiomsSource to reposition the child under its new parent.
      * @param <A> The axiom type.
      * @param <E> The entity type.
      * @return A list of changes for moving or copying the entity.

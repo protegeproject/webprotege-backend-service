@@ -29,7 +29,7 @@ public class AnnotationPropertyDomainAxiomsIndexImpl implements AnnotationProper
 
     @Inject
     public AnnotationPropertyDomainAxiomsIndexImpl(@Nonnull AxiomsByTypeIndex axiomsByTypeIndex) {
-        // Perform an index scan on property domain axioms (there's likely to be few)
+        // Perform an index scan on property domain axiomsSource (there's likely to be few)
         this.axiomsByTypeIndex = checkNotNull(axiomsByTypeIndex);
     }
 

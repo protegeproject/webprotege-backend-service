@@ -21,16 +21,16 @@ public class AxiomSubjectProvider {
     /**
      * Constructs an AxiomSubjectProvider.
      * @param classExpressionSelector A selector for class expressions that chooses a class expression to be the
-     *                                subject.  This is used for nary class axioms, for example
-     *                                {@link OWLEquivalentClassesAxiom} axioms.  Not {@code null}.
+     *                                subject.  This is used for nary class axiomsSource, for example
+     *                                {@link OWLEquivalentClassesAxiom} axiomsSource.  Not {@code null}.
      * @param objectPropertyExpressionSelector A selector for object properties that chooses an object property to be
-     *                                         the subject.  This is used for nary property axioms, for example,
+     *                                         the subject.  This is used for nary property axiomsSource, for example,
      *                                         {@link OWLEquivalentObjectPropertiesAxiom}.  Not {@code null}.
      * @param dataPropertyExpressionSelector A selector for data properties that chooses a data property to be the
-     *                                       subject.  This is used for nary property axioms, for example
-     *                                       {@link OWLEquivalentDataPropertiesAxiom} axioms.  Not {@code null}.
+     *                                       subject.  This is used for nary property axiomsSource, for example
+     *                                       {@link OWLEquivalentDataPropertiesAxiom} axiomsSource.  Not {@code null}.
      * @param individualSelector A selector for individuals that chooses an individual to be the subject.  This is used
-     *                           for nary individual axioms, for example {@link OWLSameIndividualAxiom} axioms.
+     *                           for nary individual axiomsSource, for example {@link OWLSameIndividualAxiom} axiomsSource.
      * @param atomSelector A selector for SWRL atoms that chooses an atom to be the subject.  This is used to select
      *                     an atom that is in the head of a {@link SWRLRule} to be the subject. Not {@code null}.
      * @throws java.lang.NullPointerException if any parameters are {@code null}.

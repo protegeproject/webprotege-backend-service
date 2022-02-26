@@ -4,6 +4,7 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -25,6 +26,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class MoveClassesChangeListGenerator implements ChangeListGenerator<Boolean> {
 
     @Nonnull
+    private final ChangeRequestId changeRequestId;
+
+    @Nonnull
     private final ImmutableSet<OWLClass> childClasses;
 
     @Nonnull
@@ -43,19 +47,25 @@ public class MoveClassesChangeListGenerator implements ChangeListGenerator<Boole
     private final String commitMessage;
 
     @Inject
-
-    public MoveClassesChangeListGenerator(@Nonnull ImmutableSet<OWLClass> childClasses,
+    public MoveClassesChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                          @Nonnull ImmutableSet<OWLClass> childClasses,
                                           @Nonnull OWLClass targetParent,
                                           @Nonnull String commitMessage,
                                           @Nonnull ProjectOntologiesIndex projectOntologies,
                                           @Nonnull SubClassOfAxiomsBySubClassIndex subClassAxiomIndex,
                                           @Nonnull OWLDataFactory dataFactory) {
+        this.changeRequestId = changeRequestId;
         this.childClasses = checkNotNull(childClasses);
         this.targetParent = checkNotNull(targetParent);
         this.projectOntologies = checkNotNull(projectOntologies);
         this.subClassAxiomIndex = checkNotNull(subClassAxiomIndex);
         this.dataFactory = checkNotNull(dataFactory);
         this.commitMessage = checkNotNull(commitMessage);
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

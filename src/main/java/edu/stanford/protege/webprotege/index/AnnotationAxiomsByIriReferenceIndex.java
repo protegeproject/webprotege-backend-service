@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 public interface AnnotationAxiomsByIriReferenceIndex extends Index {
 
     /**
-     * Returns a stream of axioms from the specified ontology, where:
+     * Returns a stream of axiomsSource from the specified ontology, where:
      *   - The axiom is an AnnotationAssertion axiom that has a subject or object equal to the IRI
      *   - The axiom is a SubAnnotationPropertyOf axiom that has a sub-property or super-property
      *     equal to the specified IRI

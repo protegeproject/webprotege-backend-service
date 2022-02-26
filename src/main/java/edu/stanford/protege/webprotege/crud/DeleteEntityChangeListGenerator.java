@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -28,11 +29,21 @@ public class DeleteEntityChangeListGenerator implements ChangeListGenerator<OWLE
     @Nonnull
     private final EntityDeleter entityDeleter;
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
     @Inject
-    public DeleteEntityChangeListGenerator(@Nonnull OWLEntity entity,
+    public DeleteEntityChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                           @Nonnull OWLEntity entity,
                                            @Nonnull EntityDeleter entityDeleter) {
         this.entity = checkNotNull(entity);
         this.entityDeleter = checkNotNull(entityDeleter);
+        this.changeRequestId = changeRequestId;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

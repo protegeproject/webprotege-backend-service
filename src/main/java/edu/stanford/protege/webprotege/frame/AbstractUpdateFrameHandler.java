@@ -54,7 +54,7 @@ public abstract class AbstractUpdateFrameHandler<A extends Request<R> & UpdateFr
         }
         var userId = executionContext.getUserId();
         var frameUpdate = FrameUpdate.get(from, to);
-        var changeGenerator = frameChangeGeneratorFactory.create(frameUpdate);
+        var changeGenerator = frameChangeGeneratorFactory.create(action.changeRequestId(), frameUpdate);
         applyChanges.applyChanges(userId, changeGenerator);
         return createResponse(action.to());
     }

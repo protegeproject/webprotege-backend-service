@@ -52,7 +52,7 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
     protected ChangeListGenerator<Set<OWLEntity>> getChangeListGenerator(DeleteEntitiesAction action,
                                                                          ExecutionContext executionContext) {
 
-        return factory.create(action.entities());
+        return factory.create(action.entities(), action.changeRequestId());
     }
 
     @Override

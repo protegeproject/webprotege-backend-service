@@ -677,8 +677,13 @@ public class ProjectActionHandlerBeansConfiguration {
     AddAxiomsActionHandler addAxiomActionHandler(AccessManager p1,
                                                   ProjectId p2,
                                                   ChangeManager p3,
-                                                  DefaultOntologyIdManager p4) {
+                                                  AddAxiomsChangeListGeneratorFactory p4) {
         return new AddAxiomsActionHandler(p1, p2, p3, p4);
+    }
+
+    @Bean
+    AddAxiomsChangeListGeneratorFactory addAxiomsChangeListGeneratorFactory(DefaultOntologyIdManager p1) {
+        return new AddAxiomsChangeListGeneratorFactory(p1);
     }
 
     @Bean

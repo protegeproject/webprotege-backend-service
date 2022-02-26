@@ -7,6 +7,7 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
@@ -33,14 +34,25 @@ public class DeleteEntitiesChangeListGenerator implements ChangeListGenerator<Se
     @Nonnull
     private final MessageFormatter msgFormatter;
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
     private String message = "Deleted entities";
+
+
 
     public DeleteEntitiesChangeListGenerator(@Nonnull MessageFormatter msgFormatter,
                                              @Nonnull EntityDeleter entityDeleter,
-                                             @Nonnull Set<OWLEntity> entities) {
+                                             @Nonnull Set<OWLEntity> entities, @Nonnull ChangeRequestId changeRequestId) {
         this.entityDeleter = entityDeleter;
         this.entities = ImmutableSet.copyOf(entities);
         this.msgFormatter = msgFormatter;
+        this.changeRequestId = changeRequestId;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

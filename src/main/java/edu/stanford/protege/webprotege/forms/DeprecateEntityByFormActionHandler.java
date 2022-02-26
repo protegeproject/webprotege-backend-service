@@ -64,7 +64,7 @@ public class DeprecateEntityByFormActionHandler extends AbstractProjectChangeHan
         var entityDeprecationSettings = projectDetailsRepository.findOne(projectId)
                 .map(ProjectDetails::getEntityDeprecationSettings)
                 .orElse(EntityDeprecationSettings.empty());
-        return changeListGeneratorFactory.create(entityToBeDeprecated,
+        return changeListGeneratorFactory.create(action.changeRequestId(), entityToBeDeprecated,
                                                  action.getDeprecationFormData(),
                                                  action.getReplacementEntity(),
                                                  entityDeprecationSettings);

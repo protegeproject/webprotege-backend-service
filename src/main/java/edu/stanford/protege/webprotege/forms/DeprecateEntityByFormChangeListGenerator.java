@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.forms.data.FormDataDto;
@@ -37,6 +38,9 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
  * 2020-10-22
  */
 public class DeprecateEntityByFormChangeListGenerator implements ChangeListGenerator<OWLEntity> {
+
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
 
     @Nonnull
     private final OWLEntity entityToBeDeprecated;
@@ -98,7 +102,8 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
 
 
 
-    public DeprecateEntityByFormChangeListGenerator(@Nonnull OWLEntity entityToBeDeprecated,
+    public DeprecateEntityByFormChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                                    @Nonnull OWLEntity entityToBeDeprecated,
                                                     @Nonnull Optional<FormData> deprecationFormData,
                                                     @Nonnull Optional<OWLEntity> replacementEntity,
                                                     @Nonnull EntityDeprecationSettings entityDeprecationSettings,
@@ -117,6 +122,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                     @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
                                                     @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyAxiomsBySubPropertyIndex,
                                                     @Nonnull ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex) {
+        this.changeRequestId = changeRequestId;
         this.entityToBeDeprecated = checkNotNull(entityToBeDeprecated);
         this.deprecationFormData = checkNotNull(deprecationFormData);
         this.replacementEntity = checkNotNull(replacementEntity);
@@ -136,6 +142,11 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
         this.subDataPropertyAxiomsBySubPropertyIndex = subDataPropertyAxiomsBySubPropertyIndex;
         this.subAnnotationPropertyAxiomsBySubPropertyIndex = subAnnotationPropertyAxiomsBySubPropertyIndex;
         this.classAssertionAxiomsByIndividualIndex = classAssertionAxiomsByIndividualIndex;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override
@@ -259,7 +270,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                                                                                      .equals(FormFieldDeprecationStrategy.LEAVE_VALUES_INTACT)))
                                                       .collect(toImmutableList());
         var formDataToPreserve = getFormData(preservedFormDescriptors, entityToBeDeprecated);
-        var changes = formChangeListGeneratorFactory.createForAdd(entityToBeDeprecated, new FormDataByFormId(formDataToPreserve))
+        var changes = formChangeListGeneratorFactory.createForAdd(changeRequestId, entityToBeDeprecated, new FormDataByFormId(formDataToPreserve))
                                                     .generateChanges(context)
                                                     .getChanges();
         changeListBuilder.addAll(changes);
@@ -291,7 +302,8 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                                                               formData -> formData));
 
         // Generate the changes to remove the deprecated form data from the replacement entity
-        changesListBuilder.addAll(formChangeListGeneratorFactory.createForRemove(replacementEntity.get(),
+        changesListBuilder.addAll(formChangeListGeneratorFactory.createForRemove(changeRequestId,
+                                                                                 replacementEntity.get(),
                                                                                  formDataOnReplacementToRemove)
                                                                 .generateChanges(context)
                                                                 .getChanges());
@@ -303,7 +315,8 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                                                         projectId,
                                                                                         FormPurpose.ENTITY_EDITING);
         var formDataForReplacement = getFormData(formDescriptorsFormReplacementEntity, replacementEntity.get());
-        changesListBuilder.addAll(formChangeListGeneratorFactory.createForAdd(replacementEntity.get(), new FormDataByFormId(formDataForReplacement))
+        changesListBuilder.addAll(formChangeListGeneratorFactory.createForAdd(changeRequestId,
+                                                                              replacementEntity.get(), new FormDataByFormId(formDataForReplacement))
                                                                 .generateChanges(context)
                                                                 .getChanges());
 
@@ -315,7 +328,8 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
         if (deprecationFormData.isEmpty()) {
             return;
         }
-        formChangeListGeneratorFactory.createForAdd(entityToBeDeprecated,
+        formChangeListGeneratorFactory.createForAdd(changeRequestId,
+                                                    entityToBeDeprecated,
                                                     new FormDataByFormId(ImmutableMap.of(deprecationFormData.get().getFormId(),
                                                                                          deprecationFormData.get())))
                                       .generateChanges(context)

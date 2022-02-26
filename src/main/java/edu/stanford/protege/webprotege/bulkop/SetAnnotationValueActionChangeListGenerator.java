@@ -4,6 +4,7 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.EntitiesInOntologySignatureIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
@@ -46,8 +47,11 @@ public class SetAnnotationValueActionChangeListGenerator implements ChangeListGe
     @Nonnull
     private final AnnotationAssertionAxiomsBySubjectIndex annotationAssertionBySubject;
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
 
-    public SetAnnotationValueActionChangeListGenerator(@Nonnull OWLDataFactory dataFactory,
+
+    public SetAnnotationValueActionChangeListGenerator(@Nonnull ChangeRequestId changeRequestId, @Nonnull OWLDataFactory dataFactory,
                                                        @Nonnull ImmutableSet<OWLEntity> entities,
                                                        @Nonnull OWLAnnotationProperty property,
                                                        @Nonnull OWLAnnotationValue value,
@@ -63,6 +67,12 @@ public class SetAnnotationValueActionChangeListGenerator implements ChangeListGe
         this.projectOntologiesIndex = checkNotNull(projectOntologiesIndex);
         this.entitiesInSignature = checkNotNull(entitiesInSignature);
         this.annotationAssertionBySubject = checkNotNull(annotationAssertionBySubject);
+        this.changeRequestId = changeRequestId;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

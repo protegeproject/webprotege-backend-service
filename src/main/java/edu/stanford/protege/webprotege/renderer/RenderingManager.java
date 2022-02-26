@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.renderer;
 
+import edu.stanford.protege.webprotege.entity.*;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.DataFactory;
-import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;

@@ -5,6 +5,7 @@ package edu.stanford.protege.webprotege.entity;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
@@ -29,7 +30,7 @@ import static org.semanticweb.owlapi.vocab.SKOSVocabulary.PREFLABEL;
  * Performs a simple merge of one entity into another entity.  For a source entity, S, and a
  * target entity, T, S will be merged into T.  This involves the following:
  * 1) All usages of S will be replaced by T.
- * 2) Annotation assertion axioms that annotate S with an rdfs:label or a skos:prefLabel will
+ * 2) Annotation assertion axiomsSource that annotate S with an rdfs:label or a skos:prefLabel will
  *    be removed and replaced with annotation assertions that annotate T with the value of the
  *    annotations on S but with the property switched to skos:altLabel.  For example,
  *    AnnotationAssertion(rdfs:label S "Blah"@en) will be replaced with
@@ -39,6 +40,8 @@ import static org.semanticweb.owlapi.vocab.SKOSVocabulary.PREFLABEL;
  *    discussion threads on S will be copied over to T.
  */
 public class MergeEntitiesChangeListGenerator implements ChangeListGenerator<OWLEntity> {
+
+    private final ChangeRequestId changeRequestId;
 
     @Nonnull
     private final ProjectId projectId;
@@ -75,7 +78,8 @@ public class MergeEntitiesChangeListGenerator implements ChangeListGenerator<OWL
 
 
     @Inject
-    public MergeEntitiesChangeListGenerator(@Nonnull ImmutableSet<OWLEntity> sourceEntities,
+    public MergeEntitiesChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                            @Nonnull ImmutableSet<OWLEntity> sourceEntities,
                                             @Nonnull OWLEntity targetEntity,
                                             @Nonnull MergedEntityTreatment treatment,
                                             @Nonnull String commitMessage,
@@ -86,6 +90,7 @@ public class MergeEntitiesChangeListGenerator implements ChangeListGenerator<OWL
                                             @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                             @Nonnull ProjectOntologiesIndex projectOntologies,
                                             @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertions) {
+        this.changeRequestId = changeRequestId;
         this.projectId = checkNotNull(projectId);
         this.dataFactory = checkNotNull(dataFactory);
         this.sourceEntities = checkNotNull(sourceEntities);
@@ -97,6 +102,11 @@ public class MergeEntitiesChangeListGenerator implements ChangeListGenerator<OWL
         this.defaultOntologyIdManager = checkNotNull(defaultOntologyIdManager);
         this.projectOntologies = checkNotNull(projectOntologies);
         this.annotationAssertions = checkNotNull(annotationAssertions);
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

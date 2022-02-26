@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.SetMultimap;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
@@ -70,7 +71,10 @@ public abstract class HierarchyChangeComputer<T extends OWLEntity> implements Ev
 
     @SuppressWarnings("unchecked")
     @Override
-    public void translateOntologyChanges(Revision revision, ChangeApplicationResult<?> result, List<HighLevelProjectEventProxy> projectEventList) {
+    public void translateOntologyChanges(Revision revision,
+                                         ChangeApplicationResult<?> result,
+                                         List<HighLevelProjectEventProxy> projectEventList,
+                                         ChangeRequestId changeRequestId) {
         Set<T> changeSignature = new HashSet<>();
         for (OntologyChange change : result.getChangeList()) {
             for (OWLEntity child : change.getSignature()) {

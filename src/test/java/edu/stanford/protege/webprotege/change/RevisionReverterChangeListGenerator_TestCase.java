@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
@@ -48,7 +49,8 @@ public class RevisionReverterChangeListGenerator_TestCase {
     public void setUp() {
         var changes = ImmutableList.of(changeO, change1);
         generator = new RevisionReverterChangeListGenerator(revisionNumber,
-                                                            revisionManager);
+                                                            revisionManager,
+                                                            ChangeRequestId.generate());
         when(revisionManager.getRevision(revisionNumber))
                 .thenReturn(Optional.of(revision));
 

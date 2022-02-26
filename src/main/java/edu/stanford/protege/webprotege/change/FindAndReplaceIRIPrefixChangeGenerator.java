@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.change;
 
 
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -34,15 +35,25 @@ public class FindAndReplaceIRIPrefixChangeGenerator implements ChangeListGenerat
     @Nonnull
     private final EntityRenamer entityRenamer;
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
 
-    public FindAndReplaceIRIPrefixChangeGenerator(@Nonnull String fromPrefix,
+
+    public FindAndReplaceIRIPrefixChangeGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                                  @Nonnull String fromPrefix,
                                                   @Nonnull String toPrefix,
                                                   @Nonnull ProjectSignatureIndex projectSignatureIndex,
                                                   @Nonnull EntityRenamer entityRenamer) {
+        this.changeRequestId = changeRequestId;
         this.fromPrefix = checkNotNull(fromPrefix);
         this.toPrefix = checkNotNull(toPrefix);
         this.projectSignatureIndex = checkNotNull(projectSignatureIndex);
         this.entityRenamer = checkNotNull(entityRenamer);
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

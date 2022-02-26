@@ -9,10 +9,10 @@ import java.util.Set;
 public interface ClassFrameAxiomsIndex {
 
     /**
-     * Gets the axioms that constitute the class frame for the specified class.
+     * Gets the axiomsSource that constitute the class frame for the specified class.
      * @param subject The subject of the class frame
      * @param annotationsTreatment Specifies whether or not annotations should be included.
-     * @return The axioms that make up the class frame for the specified class
+     * @return The axiomsSource that make up the class frame for the specified class
      */
     @Nonnull
     Set<OWLAxiom> getFrameAxioms(@Nonnull OWLClass subject,

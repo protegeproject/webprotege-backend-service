@@ -60,7 +60,8 @@ public class SetEntityDeprecatedDelegateHandler extends AbstractProjectActionHan
         var changes = List.<OntologyChange>of(new AddAxiomChange(defaultOntologyIdManager.getDefaultOntologyId(),
                                                                  axiom));
         var result = changeManager.applyChanges(executionContext.getUserId(),
-                                   new FixedChangeListGenerator<>(changes, "", "Deprecated entity"));
+                                                new FixedChangeListGenerator<>(action.changeRequestId(),
+                                                                               changes, "", "Deprecated entity"));
         return new SetEntityDeprecatedResponse();
     }
 }

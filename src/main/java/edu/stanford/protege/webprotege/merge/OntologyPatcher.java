@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.merge;
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -33,7 +34,8 @@ public class OntologyPatcher {
         this.ontologyDiff2OntologyChanges = checkNotNull(ontologyDiff2OntologyChanges);
     }
 
-    public void applyPatch(@Nonnull Collection<OntologyDiff> diffSet,
+    public void applyPatch(@Nonnull ChangeRequestId changeRequestId,
+                           @Nonnull Collection<OntologyDiff> diffSet,
                            @Nonnull String commitMessage,
                            @Nonnull ExecutionContext executionContext) {
         var changeList = new ArrayList<OntologyChange>();
@@ -41,13 +43,19 @@ public class OntologyPatcher {
             List<OntologyChange> changes = ontologyDiff2OntologyChanges.getOntologyChangesFromDiff(diff);
             changeList.addAll(changes);
         }
-        applyChanges(commitMessage, changeList, executionContext);
+        applyChanges(changeRequestId, commitMessage, changeList, executionContext);
     }
 
-    private void applyChanges(String commitMessage,
+    private void applyChanges(ChangeRequestId changeRequestId,
+                              String commitMessage,
                               final List<OntologyChange> changes,
                               ExecutionContext executionContext) {
         changeManager.applyChanges(executionContext.getUserId(), new ChangeListGenerator<Boolean>() {
+            @Override
+            public ChangeRequestId getChangeRequestId() {
+                return changeRequestId;
+            }
+
             @Override
             public OntologyChangeList<Boolean> generateChanges(ChangeGenerationContext context) {
                 OntologyChangeList.Builder<Boolean> builder = OntologyChangeList.builder();

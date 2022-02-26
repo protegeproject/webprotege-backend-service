@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.entity;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.forms.EntityFormChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -37,16 +38,17 @@ public final class CreateEntityFromFormDataChangeListGeneratorFactory {
     this.renderingManagerProvider = checkNotNull(renderingManagerProvider, 4);
   }
 
-  public CreateEntityFromFormDataChangeListGenerator create(
-      EntityType<?> entityType, FreshEntityIri freshEntityIri, FormData formData) {
-    return new CreateEntityFromFormDataChangeListGenerator(
-        checkNotNull(formChangeListGeneratorFactoryProvider.get(), 1),
-        checkNotNull(dataFactoryProvider.get(), 2),
-        checkNotNull(entityType, 3),
-        checkNotNull(freshEntityIri, 4),
-        checkNotNull(defaultOntologyIdManagerProvider.get(), 5),
-        checkNotNull(formData, 6),
-        checkNotNull(renderingManagerProvider.get(), 7));
+  public CreateEntityFromFormDataChangeListGenerator create(ChangeRequestId changeRequestId, EntityType<?> entityType,
+                                                            FreshEntityIri freshEntityIri,
+                                                            FormData formData) {
+    return new CreateEntityFromFormDataChangeListGenerator(changeRequestId,
+                                                           checkNotNull(formChangeListGeneratorFactoryProvider.get(), 1),
+                                                           checkNotNull(dataFactoryProvider.get(), 2),
+                                                           checkNotNull(entityType, 3),
+                                                           checkNotNull(freshEntityIri, 4),
+                                                           checkNotNull(defaultOntologyIdManagerProvider.get(), 5),
+                                                           checkNotNull(formData, 6),
+                                                           checkNotNull(renderingManagerProvider.get(), 7));
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

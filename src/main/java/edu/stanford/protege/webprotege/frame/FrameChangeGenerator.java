@@ -4,6 +4,7 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.index.OntologyAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
@@ -27,6 +28,9 @@ import static java.util.stream.Collectors.toList;
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 14/01/2013
  */
 public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity> {
+
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
 
     @Nonnull
     private final FrameUpdate frameUpdate;
@@ -65,7 +69,8 @@ public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity
     private final ClassFrame2FrameAxiomsTranslator classFrame2FrameAxiomsTranslator;
 
     @Inject
-    public FrameChangeGenerator(@Nonnull FrameUpdate frameUpdate,
+    public FrameChangeGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                @Nonnull FrameUpdate frameUpdate,
                                 @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                 @Nonnull ReverseEngineeredChangeDescriptionGeneratorFactory factory,
                                 @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
@@ -77,6 +82,7 @@ public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity
                                 @Nonnull RenderingManager renderingManager,
                                 @Nonnull ClassFrameProvider classFrameProvider,
                                 @Nonnull ClassFrame2FrameAxiomsTranslator classFrame2FrameAxiomsTranslator) {
+        this.changeRequestId = changeRequestId;
         this.frameUpdate = checkNotNull(frameUpdate);
         this.projectOntologiesIndex = checkNotNull(projectOntologiesIndex);
         this.factory = checkNotNull(factory);
@@ -89,6 +95,11 @@ public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity
         this.namedIndividualFrameTranslator = namedIndividualFrameTranslator;
         this.renderingManager = renderingManager;
         this.classFrame2FrameAxiomsTranslator = classFrame2FrameAxiomsTranslator;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override
@@ -155,7 +166,7 @@ public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity
 
 
         // This looks like it is more complicated than necessary, however we need to consider the fact that
-        // a frame may be generated from multiple axioms (note the minimal and maximal translation)
+        // a frame may be generated from multiple axiomsSource (note the minimal and maximal translation)
 
         var to = frameUpdate.getToFrame();
         var toSubject = to.getSubject();
@@ -166,7 +177,7 @@ public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity
         }
 
 
-        // Get the axioms that were consumed in the translation
+        // Get the axiomsSource that were consumed in the translation
         var fromAxioms = getAxiomsForFrame(frameUpdate.getFromFrame(), Mode.MAXIMAL);
 
         var ontologyIds = projectOntologiesIndex.getOntologyIds()
@@ -177,7 +188,7 @@ public final class FrameChangeGenerator implements ChangeListGenerator<OWLEntity
 
         var axiom2OntologyMap = LinkedHashMultimap.<OWLAxiom, OWLOntologyID>create();
 
-        // Generate a map of existing axioms so we can ensure they stay in the correct place
+        // Generate a map of existing axiomsSource so we can ensure they stay in the correct place
         for(OWLOntologyID ontologyId : ontologyIds) {
             for(OWLAxiom fromAxiom : fromAxioms) {
                 if(isContainedInOntology(fromAxiom, ontologyId)) {

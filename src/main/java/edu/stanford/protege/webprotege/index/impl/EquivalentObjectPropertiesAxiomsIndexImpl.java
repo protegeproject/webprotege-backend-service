@@ -29,7 +29,7 @@ public class EquivalentObjectPropertiesAxiomsIndexImpl implements EquivalentObje
 
     @Inject
     public EquivalentObjectPropertiesAxiomsIndexImpl(@Nonnull AxiomsByTypeIndex axiomsByTypeIndex) {
-        // Use AxiomsByType because there are few ontologies with many EquivalentObjectProperties axioms
+        // Use AxiomsByType because there are few ontologies with many EquivalentObjectProperties axiomsSource
         this.axiomsByTypeIndex = checkNotNull(axiomsByTypeIndex);
     }
 

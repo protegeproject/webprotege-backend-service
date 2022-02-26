@@ -32,7 +32,7 @@ public abstract class AbstractProjectChangeHandler<T, A extends Request<R>, R ex
     public final R execute(@Nonnull A action, @Nonnull ExecutionContext executionContext) {
         ChangeListGenerator<T> changeListGenerator = getChangeListGenerator(action, executionContext);
         ChangeApplicationResult<T> result = applyChanges.applyChanges(executionContext.getUserId(),
-                                                                                       changeListGenerator);
+                                                                      changeListGenerator);
         return createActionResult(result, action, executionContext);
     }
 

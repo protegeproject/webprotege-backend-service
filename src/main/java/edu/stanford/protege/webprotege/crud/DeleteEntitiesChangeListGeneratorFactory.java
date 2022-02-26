@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.crud;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import java.util.Set;
@@ -25,11 +26,11 @@ public final class DeleteEntitiesChangeListGeneratorFactory {
     this.entityDeleterProvider = checkNotNull(entityDeleterProvider, 2);
   }
 
-  public DeleteEntitiesChangeListGenerator create(Set<OWLEntity> entities) {
+  public DeleteEntitiesChangeListGenerator create(Set<OWLEntity> entities, ChangeRequestId changeRequestId) {
     return new DeleteEntitiesChangeListGenerator(
-        checkNotNull(msgFormatterProvider.get(), 1),
-        checkNotNull(entityDeleterProvider.get(), 2),
-        checkNotNull(entities, 3));
+            checkNotNull(msgFormatterProvider.get(), 1),
+            checkNotNull(entityDeleterProvider.get(), 2),
+            checkNotNull(entities, 3), changeRequestId);
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
@@ -41,6 +42,9 @@ import static com.google.common.collect.ImmutableMap.toImmutableMap;
 public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEntity> {
 
     @Nonnull
+    private final ChangeRequestId changeRequestId;
+
+    @Nonnull
     private final FormDataConverter formDataProcessor;
 
     @Nonnull
@@ -73,9 +77,8 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     @Nonnull
     private final DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory;
 
-
     @Inject
-    public EntityFormChangeListGenerator(@Nonnull OWLEntity subject,
+    public EntityFormChangeListGenerator(@Nonnull ChangeRequestId changeRequestId, @Nonnull OWLEntity subject,
                                          @Nonnull ImmutableMap<FormId, FormData> pristineFormsData,
                                          @Nonnull FormDataByFormId editedFormData,
                                          @Nonnull FormDataConverter formDataProcessor,
@@ -97,6 +100,12 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
         this.dataFactory = dataFactory;
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.deleteEntitiesChangeListGeneratorFactory = deleteEntitiesChangeListGeneratorFactory;
+        this.changeRequestId = changeRequestId;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override
@@ -186,7 +195,8 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
                 if(!this.subject.equals(subject.getEntity())) {
                     // Non-top-level subject.  This needs deleting because it corresponds to a grid row subject,
                     // or sub-form subject
-                    var deletionChangeListGenerator = deleteEntitiesChangeListGeneratorFactory.create(Collections.singleton(subject.getEntity()));
+                    var deletionChangeListGenerator = deleteEntitiesChangeListGeneratorFactory.create(Collections.singleton(subject.getEntity()),
+                                                                                                      changeRequestId);
                     var deletionChanges = OntologyChangeList.<OWLEntity>builder()
                             .addAll(deletionChangeListGenerator.generateChanges(context).getChanges())
                             .build(subject.getEntity());
@@ -227,7 +237,7 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
                                                                       PlainEntityFrame editedFrame,
                                                                       ChangeGenerationContext context) {
         var frameUpdate = FrameUpdate.get(pristineFrame, editedFrame);
-        var changeGeneratorFactory = frameChangeGeneratorFactory.create(frameUpdate);
+        var changeGeneratorFactory = frameChangeGeneratorFactory.create(changeRequestId, frameUpdate);
 
         return changeGeneratorFactory.generateChanges(context);
     }

@@ -40,10 +40,10 @@ public class ReferenceFinder {
      *
      * @param entities   The entities whose references are to be retrieved. Not {@code null}.
      * @param ontologyId The ontology.  Not {@code null}.
-     * @return The ReferenceSet that contains axioms that reference the specified entities and ontology annotations
+     * @return The ReferenceSet that contains axiomsSource that reference the specified entities and ontology annotations
      * that reference the specified entities.  Note that, since annotation assertions have subjects that may be IRIs and
      * values that may be IRIs, and ontology annotation have values that may be IRIs, the reference set includes these
-     * axioms where the IRI is the IRI of one or more of the specified entities.
+     * axiomsSource where the IRI is the IRI of one or more of the specified entities.
      */
     public ReferenceSet getReferenceSet(@Nonnull Collection<OWLEntity> entities,
                                         @Nonnull OWLOntologyID ontologyId) {

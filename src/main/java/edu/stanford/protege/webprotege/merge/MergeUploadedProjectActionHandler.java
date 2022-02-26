@@ -58,13 +58,13 @@ public class MergeUploadedProjectActionHandler extends AbstractProjectActionHand
     @Override
     public MergeUploadedProjectResult execute(@Nonnull MergeUploadedProjectAction action,
                                               @Nonnull ExecutionContext executionContext) {
-            var documentId = action.getDocumentId();
+            var documentId = action.uploadedDocumentId();
             var uploadedOntologies = uploadedOntologiesCache.getUploadedOntologies(documentId);
             var projectOntologies = projectOntologiesBuilder.buildProjectOntologies();
             var diffCalculator = diffCalculatorFactory.create(projectOntologies, uploadedOntologies);
             var ontologyDiffSet = diffCalculator.getModifiedOntologyDiffs();
-            var commitMessage = action.getCommitMessage();
-            ontologyPatcher.applyPatch(ontologyDiffSet, commitMessage, executionContext);
+            var commitMessage = action.commitMessage();
+            ontologyPatcher.applyPatch(action.changeRequestId(), ontologyDiffSet, commitMessage, executionContext);
 
         return MergeUploadedProjectResult.create();
     }

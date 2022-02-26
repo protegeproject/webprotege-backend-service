@@ -73,7 +73,7 @@ public class MergeOntologiesActionHandler extends AbstractProjectActionHandler<M
             return MergeOntologiesResult.create();
         }
         catch (Exception e){
-            logger.info("An error occurred while merging(adding axioms) ontologies", e);
+            logger.info("An error occurred while merging(adding axiomsSource) ontologies", e);
             throw new RuntimeException(e);
         }
     }

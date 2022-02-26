@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.change;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import javax.annotation.processing.Generated;
@@ -19,9 +20,9 @@ public final class RevisionReverterChangeListGeneratorFactory {
     this.revisionManagerProvider = checkNotNull(revisionManagerProvider, 1);
   }
 
-  public RevisionReverterChangeListGenerator create(RevisionNumber revisionNumber) {
+  public RevisionReverterChangeListGenerator create(RevisionNumber revisionNumber, ChangeRequestId changeRequestId) {
     return new RevisionReverterChangeListGenerator(
-        checkNotNull(revisionNumber, 1), checkNotNull(revisionManagerProvider.get(), 2));
+            checkNotNull(revisionNumber, 1), checkNotNull(revisionManagerProvider.get(), 2), changeRequestId);
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

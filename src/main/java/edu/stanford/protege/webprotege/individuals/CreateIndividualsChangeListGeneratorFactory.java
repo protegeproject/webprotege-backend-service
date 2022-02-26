@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.individuals;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import javax.annotation.processing.Generated;
@@ -30,15 +31,17 @@ public final class CreateIndividualsChangeListGeneratorFactory {
     this.defaultOntologyIdManagerProvider = checkNotNull(defaultOntologyIdManagerProvider, 3);
   }
 
-  public CreateIndividualsChangeListGenerator create(
-      ImmutableSet<OWLClass> parents, String sourceText, String langTag) {
+  public CreateIndividualsChangeListGenerator create(ImmutableSet<OWLClass> parents,
+                                                     String sourceText,
+                                                     String langTag,
+                                                     ChangeRequestId changeRequestId) {
     return new CreateIndividualsChangeListGenerator(
-        checkNotNull(dataFactoryProvider.get(), 1),
-        checkNotNull(msgProvider.get(), 2),
-        checkNotNull(defaultOntologyIdManagerProvider.get(), 3),
-        checkNotNull(parents, 4),
-        checkNotNull(sourceText, 5),
-        checkNotNull(langTag, 6));
+            checkNotNull(dataFactoryProvider.get(), 1),
+            checkNotNull(msgProvider.get(), 2),
+            checkNotNull(defaultOntologyIdManagerProvider.get(), 3),
+            checkNotNull(parents, 4),
+            checkNotNull(sourceText, 5),
+            checkNotNull(langTag, 6), changeRequestId);
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

@@ -71,7 +71,8 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
                                                                                  ExecutionContext executionContext) {
         return changeGeneratorFactory.create(action.sourceText(),
                                              action.langTag(),
-                                             action.parents());
+                                             action.parents(),
+                                             action.changeRequestId());
     }
 
     @Override

@@ -77,7 +77,8 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
     @Override
     protected ChangeListGenerator<OWLEntity> getChangeListGenerator(CreateEntityFromFormDataAction action,
                                                                     ExecutionContext executionContext) {
-        return changeListGeneratorFactory.create(action.entityType(),
+        return changeListGeneratorFactory.create(action.changeRequestId(),
+                                                 action.entityType(),
                                                  action.freshEntityIri(),
                                                  action.formData());
     }

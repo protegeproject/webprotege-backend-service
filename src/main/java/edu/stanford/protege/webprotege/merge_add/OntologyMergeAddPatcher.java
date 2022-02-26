@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.merge_add;
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import org.semanticweb.owlapi.model.OWLAnnotation;
@@ -38,6 +39,11 @@ public class OntologyMergeAddPatcher {
     void applyChanges(final List<OntologyChange> changes,
                       ExecutionContext executionContext) {
         changeManager.applyChanges(executionContext.getUserId(), new ChangeListGenerator<Boolean>() {
+            @Override
+            public ChangeRequestId getChangeRequestId() {
+                return null;
+            }
+
             @Override
             public OntologyChangeList<Boolean> generateChanges(ChangeGenerationContext context) {
                 OntologyChangeList.Builder<Boolean> builder = OntologyChangeList.builder();

@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.events;
 
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.revision.Revision;
 
 import java.util.List;
@@ -25,7 +26,11 @@ public interface EventTranslator {
      * @param revision The revision
      * @param changes The applied changes.
      * @param projectEventList A list to be filled with high level project events that were generated from the changes.
+     * @param changeRequestId
      */
-    void translateOntologyChanges(Revision revision, ChangeApplicationResult<?> changes, List<HighLevelProjectEventProxy> projectEventList);
+    void translateOntologyChanges(Revision revision,
+                                  ChangeApplicationResult<?> changes,
+                                  List<HighLevelProjectEventProxy> projectEventList,
+                                  ChangeRequestId changeRequestId);
 }
 

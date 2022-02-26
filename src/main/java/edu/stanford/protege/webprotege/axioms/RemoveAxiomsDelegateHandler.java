@@ -4,7 +4,6 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -47,7 +46,7 @@ public class RemoveAxiomsDelegateHandler extends AbstractProjectActionHandler<Re
                                               defaultOntologyIdManager.getDefaultOntologyId());
         var changes = loader.<OntologyChange>loadAxioms((ax, ontologyId) -> new RemoveAxiomChange(ontologyId, ax));
         var result = changeManager.applyChanges(executionContext.getUserId(),
-                                   new FixedChangeListGenerator<>(changes, "", action.commitMessage()));
+                                                new FixedChangeListGenerator<>(action.changeRequestId(), changes, "", action.commitMessage()));
         var appliedChangesCount = result.getChangeList().size();
         return new RemoveAxiomsResponse(projectId,
                                         appliedChangesCount);

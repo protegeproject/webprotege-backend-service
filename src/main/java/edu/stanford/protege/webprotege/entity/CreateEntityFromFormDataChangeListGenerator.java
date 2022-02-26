@@ -5,6 +5,7 @@ package edu.stanford.protege.webprotege.entity;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.forms.EntityFormChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.forms.FormDataByFormId;
 import edu.stanford.protege.webprotege.forms.data.FormData;
@@ -23,6 +24,10 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 2020-10-01
  */
 public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGenerator<OWLEntity> {
+
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
     @Nonnull
     private final EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory;
 
@@ -45,13 +50,15 @@ public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGe
     private final RenderingManager renderingManager;
 
 
-    public CreateEntityFromFormDataChangeListGenerator(@Nonnull EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory,
+    public CreateEntityFromFormDataChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                                       @Nonnull EntityFormChangeListGeneratorFactory formChangeListGeneratorFactory,
                                                        @Nonnull OWLDataFactory dataFactory,
                                                        @Nonnull EntityType<?> entityType,
                                                        @Nonnull FreshEntityIri freshEntityIri,
                                                        @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                                        @Nonnull FormData formData,
                                                        @Nonnull RenderingManager renderingManager) {
+        this.changeRequestId = changeRequestId;
         this.formChangeListGeneratorFactory = formChangeListGeneratorFactory;
         this.dataFactory = checkNotNull(dataFactory);
         this.entityType = checkNotNull(entityType);
@@ -59,6 +66,11 @@ public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGe
         this.defaultOntologyIdManager = checkNotNull(defaultOntologyIdManager);
         this.formData = checkNotNull(formData);
         this.renderingManager = renderingManager;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override
@@ -130,7 +142,8 @@ public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGe
                                                FormData.empty(entity, formId));
         var newEntityFormData = ImmutableMap.of(formId,
                                                 formData);
-        var formChangesList = formChangeListGeneratorFactory.create(entity, pristineFormData, new FormDataByFormId(newEntityFormData));
+        var formChangesList = formChangeListGeneratorFactory.create(changeRequestId,
+                                                                    entity, pristineFormData, new FormDataByFormId(newEntityFormData));
         var formChanges = formChangesList.generateChanges(context);
         return OntologyChangeList.<OWLEntity>builder()
                 .addAll(changeListBuilder.build())

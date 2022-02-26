@@ -53,7 +53,7 @@ public class ImportCSVFileActionHandler extends AbstractProjectChangeHandler<Int
         CSVGrid csvGrid = parseCSVGrid(action);
         var rootClass = action.getImportRootClass();
         var csvImportDescriptor = action.getDescriptor();
-        return factory.create(rootClass,
+        return factory.create(action.changeRequestId(), rootClass,
                               csvGrid,
                               csvImportDescriptor);
     }

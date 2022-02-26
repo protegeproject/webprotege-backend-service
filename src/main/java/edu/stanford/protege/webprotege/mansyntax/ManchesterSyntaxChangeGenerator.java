@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.mansyntax;
 
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.frame.HasFreshEntities;
 import edu.stanford.protege.webprotege.frame.ManchesterSyntaxFrameParseError;
@@ -41,6 +42,8 @@ public class ManchesterSyntaxChangeGenerator implements ChangeListGenerator<Opti
 
     private final ReverseEngineeredChangeDescriptionGeneratorFactory factory;
 
+    private final ChangeRequestId changeRequestId;
+
 
     /**
      * Generates a list of ontology changes to convert one piece of Manchester Syntax to another piece.
@@ -49,6 +52,7 @@ public class ManchesterSyntaxChangeGenerator implements ChangeListGenerator<Opti
      * @param from The from piece of syntax.  Not {@code null}.
      * @param to The to piece of syntax.  Not {@code null}.
      * @param commitMessage The commit message.  Can be empty.
+     * @param changeRequestId
      * @throws ParserException If there was a problem parsing either {@code from} or {@code to}.
      */
     @Inject
@@ -59,7 +63,8 @@ public class ManchesterSyntaxChangeGenerator implements ChangeListGenerator<Opti
                                            @Nonnull String from,
                                            @Nonnull String to,
                                            @Nonnull String commitMessage,
-                                           @Nonnull HasFreshEntities hasFreshEntities) {
+                                           @Nonnull HasFreshEntities hasFreshEntities,
+                                           @Nonnull ChangeRequestId changeRequestId) {
         this.parser = parser;
         this.changeGenerator = changeGenerator;
         this.subject = subject;
@@ -68,6 +73,12 @@ public class ManchesterSyntaxChangeGenerator implements ChangeListGenerator<Opti
         this.commitMessage = commitMessage;
         this.hasFreshEntities = checkNotNull(hasFreshEntities);
         this.factory = factory;
+        this.changeRequestId = changeRequestId;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

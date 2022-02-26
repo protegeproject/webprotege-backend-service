@@ -16,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Bio-Medical Informatics Research Group<br>
  * Date: 27/11/2012
  * <p>
- * Translates a set of axioms into a set of property values.
+ * Translates a set of axiomsSource into a set of property values.
  * </p>
  * <p>
  * The translation is as follows:
@@ -39,7 +39,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * </table>
  * </p>
  * <p>
- * The translation does not do any splitting of axioms.  e.g.
+ * The translation does not do any splitting of axiomsSource.  e.g.
  * SubClassOf(A  ObjectIntersection(B C)) is not split into SubClassOf(A B)  SubClassOf(A C) before the translation.
  * </p>
  */

@@ -31,17 +31,17 @@ public class AddAxiomsActionHandler extends AbstractProjectActionHandler<AddAxio
     private final ChangeManager changeManager;
 
     @Nonnull
-    private final DefaultOntologyIdManager defaultOntologyIdManager;
+    private final AddAxiomsChangeListGeneratorFactory changeListGeneratorFactory;
 
     @Inject
     public AddAxiomsActionHandler(@Nonnull AccessManager accessManager,
                                   @Nonnull ProjectId projectId,
                                   @Nonnull ChangeManager changeManager,
-                                  @Nonnull DefaultOntologyIdManager defaultOntologyIdManager) {
+                                  @Nonnull AddAxiomsChangeListGeneratorFactory changeListGeneratorFactory) {
         super(accessManager);
         this.projectId = projectId;
         this.changeManager = changeManager;
-        this.defaultOntologyIdManager = defaultOntologyIdManager;
+        this.changeListGeneratorFactory = changeListGeneratorFactory;
     }
 
     @Nonnull
@@ -59,16 +59,8 @@ public class AddAxiomsActionHandler extends AbstractProjectActionHandler<AddAxio
     @Nonnull
     @Override
     public AddAxiomsResult execute(@Nonnull AddAxiomsAction action, @Nonnull ExecutionContext executionContext) {
-        var builder = OntologyChangeList.<String>builder();
-        var ontId = defaultOntologyIdManager.getDefaultOntologyId();
-        action.getAxioms()
-              .forEach(ax -> builder.add(AddAxiomChange.of(ontId, ax)));
-        var changeList = builder.build(action.getCommitMessage());
-        var changeListGenerator = new FixedChangeListGenerator<>(changeList.getChanges(),
-                                                                 "",
-                                                                 action.getCommitMessage());
-        var result = changeManager.applyChanges(executionContext.getUserId(),
-                                                changeListGenerator);
+        var changeListGenerator = changeListGeneratorFactory.create(action);
+        var result = changeManager.applyChanges(executionContext.getUserId(), changeListGenerator);
         int addedAxiomsCount = result.getChangeList()
                                      .size();
         return new AddAxiomsResult(projectId, addedAxiomsCount);

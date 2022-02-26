@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.DataFactory;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityShortFormsParser;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
@@ -57,6 +58,9 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
     @Nonnull
     private final DefaultOntologyIdManager defaultOntologyIdManager;
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
     private static final Map<String, String> builtInPrefixes = new HashMap<>();
 
     static {
@@ -76,6 +80,7 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
      * @param sourceText The set of browser text strings that correspond to short names of the fresh entities that will
      * be created.  Not {@code null}.  May be empty.
      * @param parents The parent entities.  Not {@code null}.
+     * @param changeRequestId
      * @throws NullPointerException if any parameters are {@code null}.
      */
     public AbstractCreateEntitiesChangeListGenerator(@Nonnull EntityType<E> entityType,
@@ -84,7 +89,8 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
                                                      @Nonnull ImmutableSet<P> parents,
                                                      @Nonnull OWLDataFactory dataFactory,
                                                      @Nonnull MessageFormatter msg,
-                                                     @Nonnull DefaultOntologyIdManager defaultOntologyIdManager) {
+                                                     @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                                     @Nonnull ChangeRequestId changeRequestId) {
         this.entityType = entityType;
         this.sourceText = sourceText;
         this.langTag = langTag;
@@ -92,6 +98,7 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
         this.dataFactory = dataFactory;
         this.msg = msg;
         this.defaultOntologyIdManager = defaultOntologyIdManager;
+        this.changeRequestId = changeRequestId;
     }
 
     @Override
@@ -153,11 +160,11 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
     }
 
     /**
-     * Creates any extra axioms that are necessary to set up the "parent" association with the specified fresh entity.
+     * Creates any extra axiomsSource that are necessary to set up the "parent" association with the specified fresh entity.
      * @param freshEntity The fresh entity that was created. Not {@code null}.
      * @param context The change generation context. Not {@code null}.
      * @param parents The optional parents. Not {@code null}.
-     * @return A possibly empty set of axioms representing axioms that need to be added to the project ontologies to
+     * @return A possibly empty set of axiomsSource representing axiomsSource that need to be added to the project ontologies to
      * associate the specified fresh entity with its optional parent.  Not {@code null}.
      */
     protected abstract Set<? extends OWLAxiom> createParentPlacementAxioms(E freshEntity,
@@ -227,5 +234,10 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
         else {
             return "as children of";
         }
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 }

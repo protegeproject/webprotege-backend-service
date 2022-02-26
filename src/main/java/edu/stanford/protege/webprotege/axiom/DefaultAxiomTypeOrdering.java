@@ -21,17 +21,17 @@ public class DefaultAxiomTypeOrdering {
 
                         ANNOTATION_ASSERTION,
 
-                        // Class axioms
+                        // Class axiomsSource
                         EQUIVALENT_CLASSES,
                         SUBCLASS_OF,
                         DISJOINT_CLASSES,
                         DISJOINT_UNION,
                         HAS_KEY,
 
-                        // Datatype axioms,
+                        // Datatype axiomsSource,
                         DATATYPE_DEFINITION,
 
-                        // Object property axioms
+                        // Object property axiomsSource
                         EQUIVALENT_OBJECT_PROPERTIES,
                         SUB_OBJECT_PROPERTY,
                         SUB_PROPERTY_CHAIN_OF,
@@ -47,7 +47,7 @@ public class DefaultAxiomTypeOrdering {
                         REFLEXIVE_OBJECT_PROPERTY,
                         IRREFLEXIVE_OBJECT_PROPERTY,
 
-                        // Data property axioms
+                        // Data property axiomsSource
                         EQUIVALENT_DATA_PROPERTIES,
                         SUB_DATA_PROPERTY,
                         DISJOINT_DATA_PROPERTIES,
@@ -55,7 +55,7 @@ public class DefaultAxiomTypeOrdering {
                         DATA_PROPERTY_RANGE,
                         FUNCTIONAL_DATA_PROPERTY,
 
-                        // ABox axioms
+                        // ABox axiomsSource
                         CLASS_ASSERTION,
                         OBJECT_PROPERTY_ASSERTION,
                         DATA_PROPERTY_ASSERTION,
@@ -64,7 +64,7 @@ public class DefaultAxiomTypeOrdering {
                         NEGATIVE_OBJECT_PROPERTY_ASSERTION,
                         NEGATIVE_DATA_PROPERTY_ASSERTION,
 
-                        // Annotation property axioms
+                        // Annotation property axiomsSource
                         SUB_ANNOTATION_PROPERTY_OF,
                         ANNOTATION_PROPERTY_DOMAIN,
                         ANNOTATION_PROPERTY_RANGE,

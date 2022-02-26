@@ -47,7 +47,7 @@ public class AxiomsDocumentLoader {
 
     public <R> List<R> loadAxioms(BiFunction<OWLAxiom, OWLOntologyID, R> function) {
         try {
-            logger.info("{} Loading axioms", projectId);
+            logger.info("{} Loading axiomsSource", projectId);
             var documentSource = new StringDocumentSource(ontologyDocument,
                                                           createDocumentIri(),
                                                           getDocumentFormat(),
@@ -66,7 +66,7 @@ public class AxiomsDocumentLoader {
                                   .stream()
                                   .map(ax -> function.apply(ax, ontologyDocumentId))
                                   .collect(Collectors.toList());
-            logger.info("{} Loaded {} axioms", projectId, result.size());
+            logger.info("{} Loaded {} axiomsSource", projectId, result.size());
             return result;
         } catch (OWLOntologyCreationException e) {
             logger.info("{} An error occurred when parsing the supplied ontology document: {}", projectId, e.getMessage());

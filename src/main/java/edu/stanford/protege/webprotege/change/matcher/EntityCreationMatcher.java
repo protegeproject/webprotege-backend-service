@@ -51,7 +51,7 @@ public class EntityCreationMatcher implements ChangeMatcher {
         // Here, Entity Creation Consists of:
         //   1) a Declaration axiom
         //   2) possibly a positioning axiom e.g. SubClassOf, Sub*PropertyOf, ClassAssertion
-        // First group axioms by their subject
+        // First group axiomsSource by their subject
         var axiomsBySubject = changes
                 .stream()
                 .filter(data -> data instanceof AddAxiomData)
@@ -59,7 +59,7 @@ public class EntityCreationMatcher implements ChangeMatcher {
                 .map(AxiomChangeData::getAxiom)
                 .filter(this::isEntityCreationAxiom)
                 .collect(groupingBy(this::getSubject));
-        // Now figure out whether the set of axioms for each subject is an entity creation set of axioms
+        // Now figure out whether the set of axiomsSource for each subject is an entity creation set of axiomsSource
         // and if so extract the created entities
         var declaredEntities = axiomsBySubject
                 .values()

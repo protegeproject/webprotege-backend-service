@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.EntitiesInOntologySignatureIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
@@ -9,8 +9,6 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
-
-import java.util.Set;
 
 /**
  * Matthew Horridge
@@ -37,11 +35,11 @@ public class SetAnnotationValueActionChangeListGeneratorFactory {
         this.annotationAssertionAxiomsBySubject = annotationAssertionAxiomsBySubject;
     }
 
-    public SetAnnotationValueActionChangeListGenerator create(ImmutableSet<OWLEntity> entities,
+    public SetAnnotationValueActionChangeListGenerator create(ChangeRequestId changeRequestId, ImmutableSet<OWLEntity> entities,
                                                               OWLAnnotationProperty property,
                                                               OWLAnnotationValue value,
                                                               String commitMessage) {
-        return new SetAnnotationValueActionChangeListGenerator(dataFactory,
+        return new SetAnnotationValueActionChangeListGenerator(changeRequestId, dataFactory,
                                                                entities,
                                                                property,
                                                                value,

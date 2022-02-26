@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -28,10 +28,11 @@ public class MoveClassesChangeListGeneratorFactory {
         this.dataFactory = dataFactory;
     }
 
-    public MoveClassesChangeListGenerator create(ImmutableSet<OWLClass> clses,
+    public MoveClassesChangeListGenerator create(ChangeRequestId changeRequestId,
+                                                 ImmutableSet<OWLClass> clses,
                                                  OWLClass targetParent,
                                                  String commitMessage) {
-        return new MoveClassesChangeListGenerator(clses,
+        return new MoveClassesChangeListGenerator(changeRequestId, clses,
                                                   targetParent,
                                                   commitMessage,
                                                   projectOntologiesIndex,

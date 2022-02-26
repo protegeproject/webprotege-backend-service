@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.csv;
 
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -22,10 +22,10 @@ public class ImportCSVFileChangeListGeneratorFactory {
         this.defaultOntologyManager = defaultOntologyManager;
     }
 
-    public ImportCSVFileChangeListGenerator create(OWLClass rootClass,
+    public ImportCSVFileChangeListGenerator create(ChangeRequestId changeRequestId, OWLClass rootClass,
                                                    CSVGrid csvGrid,
                                                    CSVImportDescriptor csvImportDescriptor) {
-        return new ImportCSVFileChangeListGenerator(rootClass,
+        return new ImportCSVFileChangeListGenerator(changeRequestId, rootClass,
                                                     csvGrid,
                                                     csvImportDescriptor,
                                                     dataFactory,

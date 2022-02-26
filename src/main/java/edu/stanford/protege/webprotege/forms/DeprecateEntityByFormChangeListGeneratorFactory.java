@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.forms;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByIndividualIndex;
@@ -100,31 +101,30 @@ public final class DeprecateEntityByFormChangeListGeneratorFactory {
         checkNotNull(classAssertionAxiomsByIndividualIndexProvider, 15);
   }
 
-  public DeprecateEntityByFormChangeListGenerator create(
-      OWLEntity entityToBeDeprecated,
-      Optional<FormData> deprecationFormData,
-      Optional<OWLEntity> replacementEntity,
-      EntityDeprecationSettings entityDeprecationSettings) {
-    return new DeprecateEntityByFormChangeListGenerator(
-        checkNotNull(entityToBeDeprecated, 1),
-        checkNotNull(deprecationFormData, 2),
-        checkNotNull(replacementEntity, 3),
-        checkNotNull(entityDeprecationSettings, 4),
-        checkNotNull(entityDeleterProvider.get(), 5),
-        checkNotNull(formChangeListGeneratorFactoryProvider.get(), 6),
-        checkNotNull(entityFormManagerProvider.get(), 7),
-        checkNotNull(messageFormatterProvider.get(), 8),
-        checkNotNull(projectIdProvider.get(), 9),
-        checkNotNull(projectComponentProvider.get(), 10),
-        checkNotNull(entityRenamerProvider.get(), 11),
-        checkNotNull(defaultOntologyIdManagerProvider.get(), 12),
-        checkNotNull(dataFactoryProvider.get(), 13),
-        checkNotNull(projectOntologiesIndexProvider.get(), 14),
-        checkNotNull(subClassOfAxiomsBySubClassIndexProvider.get(), 15),
-        checkNotNull(subObjectPropertyAxiomsBySubPropertyIndexProvider.get(), 16),
-        checkNotNull(subDataPropertyAxiomsBySubPropertyIndexProvider.get(), 17),
-        checkNotNull(subAnnotationPropertyAxiomsBySubPropertyIndexProvider.get(), 18),
-        checkNotNull(classAssertionAxiomsByIndividualIndexProvider.get(), 19));
+  public DeprecateEntityByFormChangeListGenerator create(ChangeRequestId changeRequestId,
+                                                         OWLEntity entityToBeDeprecated,
+                                                         Optional<FormData> deprecationFormData,
+                                                         Optional<OWLEntity> replacementEntity,
+                                                         EntityDeprecationSettings entityDeprecationSettings) {
+    return new DeprecateEntityByFormChangeListGenerator(changeRequestId, checkNotNull(entityToBeDeprecated, 1),
+                                                        checkNotNull(deprecationFormData, 2),
+                                                        checkNotNull(replacementEntity, 3),
+                                                        checkNotNull(entityDeprecationSettings, 4),
+                                                        checkNotNull(entityDeleterProvider.get(), 5),
+                                                        checkNotNull(formChangeListGeneratorFactoryProvider.get(), 6),
+                                                        checkNotNull(entityFormManagerProvider.get(), 7),
+                                                        checkNotNull(messageFormatterProvider.get(), 8),
+                                                        checkNotNull(projectIdProvider.get(), 9),
+                                                        checkNotNull(projectComponentProvider.get(), 10),
+                                                        checkNotNull(entityRenamerProvider.get(), 11),
+                                                        checkNotNull(defaultOntologyIdManagerProvider.get(), 12),
+                                                        checkNotNull(dataFactoryProvider.get(), 13),
+                                                        checkNotNull(projectOntologiesIndexProvider.get(), 14),
+                                                        checkNotNull(subClassOfAxiomsBySubClassIndexProvider.get(), 15),
+                                                        checkNotNull(subObjectPropertyAxiomsBySubPropertyIndexProvider.get(), 16),
+                                                        checkNotNull(subDataPropertyAxiomsBySubPropertyIndexProvider.get(), 17),
+                                                        checkNotNull(subAnnotationPropertyAxiomsBySubPropertyIndexProvider.get(), 18),
+                                                        checkNotNull(classAssertionAxiomsByIndividualIndexProvider.get(), 19));
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

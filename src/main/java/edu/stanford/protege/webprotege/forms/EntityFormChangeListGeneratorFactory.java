@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.change.ReverseEngineeredChangeDescriptionGeneratorFactory;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.forms.processor.FormDataConverter;
@@ -80,17 +81,19 @@ public class EntityFormChangeListGeneratorFactory {
 
     /**
      * Create a change generator to edit the pristine form data to the editedFormsData.
+     * @param changeRequestId
      * @param subject The subject of the forms
      * @param pristineFormsData The pristine data.
      * @param editedFormsData The edited data.  Note, the Map may contain null values.
      */
-    public EntityFormChangeListGenerator create(@Nonnull OWLEntity subject,
+    public EntityFormChangeListGenerator create(@Nonnull ChangeRequestId changeRequestId,
+                                                @Nonnull OWLEntity subject,
                                                 @Nonnull ImmutableMap<FormId, FormData> pristineFormsData,
                                                 @Nonnull FormDataByFormId editedFormsData) {
         checkNotNull(subject);
         checkNotNull(editedFormsData);
         checkNotNull(pristineFormsData);
-        return new EntityFormChangeListGenerator(subject,
+        return new EntityFormChangeListGenerator(changeRequestId, subject,
                                                  pristineFormsData,
                                                  editedFormsData,
                                                  formDataProcessor,
@@ -102,20 +105,22 @@ public class EntityFormChangeListGeneratorFactory {
                                                  rootOntologyProvider, deleteEntitiesChangeListGeneratorFactory);
     }
 
-    public EntityFormChangeListGenerator createForAdd(@Nonnull OWLEntity subject,
+    public EntityFormChangeListGenerator createForAdd(@Nonnull ChangeRequestId changeRequestId,
+                                                      @Nonnull OWLEntity subject,
                                                       @Nonnull FormDataByFormId formsData) {
         checkNotNull(subject);
         checkNotNull(formsData);
         var emptyFormData = getEmptyFormData(subject, formsData);
-        return create(subject, emptyFormData, formsData);
+        return create(changeRequestId, subject, emptyFormData, formsData);
     }
 
-    public EntityFormChangeListGenerator createForRemove(@Nonnull OWLEntity subject,
+    public EntityFormChangeListGenerator createForRemove(@Nonnull ChangeRequestId changeRequestId,
+                                                         @Nonnull OWLEntity subject,
                                                          @Nonnull ImmutableMap<FormId, FormData> formsData) {
         checkNotNull(subject);
         checkNotNull(formsData);
         var emptyFormData = getEmptyFormData(subject, new FormDataByFormId(formsData));
-        return create(subject, formsData, new FormDataByFormId(emptyFormData));
+        return create(changeRequestId, subject, formsData, new FormDataByFormId(emptyFormData));
     }
 
     private static ImmutableMap<FormId, FormData> getEmptyFormData(@Nonnull OWLEntity subject,

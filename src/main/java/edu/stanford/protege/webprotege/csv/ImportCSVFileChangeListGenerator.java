@@ -4,6 +4,7 @@ package edu.stanford.protege.webprotege.csv;
 
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.semanticweb.owlapi.model.*;
@@ -24,6 +25,8 @@ import static org.semanticweb.owlapi.model.EntityType.CLASS;
  */
 public class ImportCSVFileChangeListGenerator implements ChangeListGenerator<Integer>, SilentChangeListGenerator {
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
 
     @Nonnull
     private final OWLClass importRootClass;
@@ -43,16 +46,23 @@ public class ImportCSVFileChangeListGenerator implements ChangeListGenerator<Int
 
 
     @Inject
-    public ImportCSVFileChangeListGenerator(@Nonnull OWLClass importRootClass,
+    public ImportCSVFileChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                            @Nonnull OWLClass importRootClass,
                                             @Nonnull CSVGrid csvGrid,
                                             @Nonnull CSVImportDescriptor descriptor,
                                             @Nonnull OWLDataFactory dataFactory,
                                             @Nonnull DefaultOntologyIdManager defaultOntologyIdManager) {
+        this.changeRequestId = changeRequestId;
         this.importRootClass = checkNotNull(importRootClass);
         this.csvGrid = checkNotNull(csvGrid);
         this.descriptor = checkNotNull(descriptor);
         this.dataFactory = checkNotNull(dataFactory);
         this.defaultOntologyIdManager = defaultOntologyIdManager;
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override
@@ -192,6 +202,6 @@ public class ImportCSVFileChangeListGenerator implements ChangeListGenerator<Int
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<Integer> result) {
-        return "Generated axioms from imported CSV file";
+        return "Generated axiomsSource from imported CSV file";
     }
 }

@@ -70,7 +70,8 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
         ChangeApplicationResult<Set<OWLNamedIndividual>> result = changeApplicator.applyChanges(executionContext.getUserId(),
                                                                                                 factory.create(action.types(),
                                                                                                                action.sourceText(),
-                                                                                                               action.langTag()));
+                                                                                                               action.langTag(),
+                                                                                                               action.changeRequestId()));
         ImmutableSet<EntityNode> individualData = result.getSubject().stream()
                                                         .map(renderer::render)
                                                         .collect(toImmutableSet());

@@ -14,9 +14,9 @@ import java.util.Set;
 public interface NamedIndividualFrameAxiomIndex {
 
     /**
-     * Gets the axioms that constitute the frame for a named individual
+     * Gets the axiomsSource that constitute the frame for a named individual
      * @param subject The subject of the frame
-     * @return The set of axioms that make up the frame for the individual
+     * @return The set of axiomsSource that make up the frame for the individual
      */
     @Nonnull
     Set<OWLAxiom> getNamedIndividualFrameAxioms(@Nonnull OWLNamedIndividual subject);

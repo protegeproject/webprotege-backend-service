@@ -41,7 +41,7 @@ public class SetAnnotationValueActionHandler extends AbstractProjectChangeHandle
 
     @Override
     protected ChangeListGenerator<Set<OWLEntity>> getChangeListGenerator(SetAnnotationValueAction action, ExecutionContext executionContext) {
-        return factory.create(action.entities(),
+        return factory.create(action.changeRequestId(), action.entities(),
                               action.property(),
                               action.value(),
                               action.commitMessage());

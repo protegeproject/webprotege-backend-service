@@ -102,7 +102,8 @@ public class SetOntologyAnnotationsActionHandler extends AbstractProjectChangeHa
                           });
             }
         }
-        return new FixedChangeListGenerator<>(changeList, Collections.emptySet(), "Edited ontology annotations");
+        return new FixedChangeListGenerator<>(action.changeRequestId(),
+                                              changeList, Collections.emptySet(), "Edited ontology annotations");
     }
 
     @Override

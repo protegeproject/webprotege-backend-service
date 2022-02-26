@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.events;
 
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
@@ -65,7 +66,8 @@ public class HighLevelEventGenerator implements EventTranslator {
     @Override
     public void translateOntologyChanges(Revision revision,
                                          ChangeApplicationResult<?> changes,
-                                         final List<HighLevelProjectEventProxy> projectEventList) {
+                                         final List<HighLevelProjectEventProxy> projectEventList,
+                                         ChangeRequestId changeRequestId) {
         var changedEntities = new HashSet<OWLEntity>();
         var changedOntologies = new HashSet<OWLOntologyID>();
         changes.getChangeList()
@@ -106,7 +108,7 @@ public class HighLevelEventGenerator implements EventTranslator {
                        var entities = getEntitiesForSubject(subject);
                        entities.stream()
                                .filter(e -> !changedEntities.add(e))
-                               .map(entity -> toFrameChangedEvent(entity, revision))
+                               .map(entity -> toFrameChangedEvent(changeRequestId, entity, revision))
                                .forEach(projectEventList::add);
                    }
 
@@ -167,12 +169,12 @@ public class HighLevelEventGenerator implements EventTranslator {
         return entities;
     }
 
-    private HighLevelProjectEventProxy toFrameChangedEvent(OWLEntity e, Revision revision) {
+    private HighLevelProjectEventProxy toFrameChangedEvent(ChangeRequestId changeRequestId, OWLEntity e, Revision revision) {
         var event = e.accept(new OWLEntityVisitorEx<ProjectEvent>() {
             @Nonnull
             @Override
             public ProjectEvent visit(@Nonnull OWLClass cls) {
-                return new ClassFrameChangedEvent(EventId.generate(), projectId, revision.getUserId(), cls);
+                return new ClassFrameChangedEvent(EventId.generate(), changeRequestId,  projectId, revision.getUserId(), cls);
             }
 
             @Nonnull

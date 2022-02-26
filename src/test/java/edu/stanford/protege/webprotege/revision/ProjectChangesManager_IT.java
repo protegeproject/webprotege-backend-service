@@ -163,7 +163,7 @@ public class ProjectChangesManager_IT {
 //        manager.applyChanges(changeList.stream().map(translator::toOwlOntologyChange).collect(toList()));
 //        revisionManager.addRevision(UserId.getUserId("MH" ),
 //                                    changeList,
-//                                    "Adding axioms");
+//                                    "Adding axiomsSource");
 //    }
 //
 //    @Test

@@ -67,7 +67,7 @@ public class IncrementingPatternDescriptorValueGenerator_TestCase {
         when(axiom.getProperty())
                 .thenReturn(property);
 
-        // By default don't "contain" any axioms
+        // By default don't "contain" any axiomsSource
         when(annotationAssertionAxiomsByValueIndex.getAxiomsByValue(any(),
                                                                     any()))
                 .thenAnswer(inv -> Stream.empty());

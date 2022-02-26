@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.change;
 
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
@@ -35,8 +36,10 @@ public class CreateAnnotationPropertiesChangeGenerator extends AbstractCreateEnt
                                                      @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                                      @Nonnull String sourceText,
                                                      @Nonnull String langTag,
-                                                     @Nonnull ImmutableSet<OWLAnnotationProperty> parents) {
-        super(ANNOTATION_PROPERTY, sourceText, langTag, parents, dataFactory, msg, defaultOntologyIdManager);
+                                                     @Nonnull ImmutableSet<OWLAnnotationProperty> parents,
+                                                     ChangeRequestId changeRequestId) {
+        super(ANNOTATION_PROPERTY, sourceText, langTag, parents, dataFactory, msg, defaultOntologyIdManager,
+              changeRequestId);
         this.dataFactory = checkNotNull(dataFactory);
     }
 

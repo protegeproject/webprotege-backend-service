@@ -5,11 +5,8 @@ import com.google.common.collect.Maps;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.HasGetChangeSubjects;
 import edu.stanford.protege.webprotege.change.OntologyChange;
-import edu.stanford.protege.webprotege.common.DictionaryLanguage;
-import edu.stanford.protege.webprotege.common.EventId;
-import edu.stanford.protege.webprotege.common.ShortForm;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.event.BrowserTextChangedEvent;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.semanticweb.owlapi.model.HasContainsEntityInSignature;
@@ -73,7 +70,10 @@ public class BrowserTextChangedEventComputer implements EventTranslator {
     }
 
     @Override
-    public void translateOntologyChanges(Revision revision, ChangeApplicationResult<?> changes, List<HighLevelProjectEventProxy> projectEventList) {
+    public void translateOntologyChanges(Revision revision,
+                                         ChangeApplicationResult<?> changes,
+                                         List<HighLevelProjectEventProxy> projectEventList,
+                                         ChangeRequestId changeRequestId) {
         Set<OWLEntity> processedEntities = new HashSet<>();
         changes.getChangeList().stream()
                .flatMap(change -> changeSubjectsProvider.getChangeSubjects(change).stream())

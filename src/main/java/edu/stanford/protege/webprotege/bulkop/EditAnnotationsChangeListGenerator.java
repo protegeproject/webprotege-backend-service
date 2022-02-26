@@ -4,6 +4,7 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -55,8 +56,11 @@ public class EditAnnotationsChangeListGenerator implements ChangeListGenerator<B
     @Nonnull
     private final String commitMessage;
 
+    private final ChangeRequestId changeRequestId;
 
-    public EditAnnotationsChangeListGenerator(@Nonnull OWLDataFactory dataFactory,
+
+    public EditAnnotationsChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                              @Nonnull OWLDataFactory dataFactory,
                                               @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                               @Nonnull AnnotationAssertionAxiomsBySubjectIndex annotationAssertionsIndex,
                                               @Nonnull ImmutableSet<OWLEntity> entities,
@@ -67,6 +71,7 @@ public class EditAnnotationsChangeListGenerator implements ChangeListGenerator<B
                                               @Nonnull Optional<String> matchLangTag,
                                               @Nonnull NewAnnotationData newAnnotationData,
                                               @Nonnull String commitMessage) {
+        this.changeRequestId = checkNotNull(changeRequestId);
         this.dataFactory = checkNotNull(dataFactory);
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.annotationAssertionsIndex = annotationAssertionsIndex;
@@ -78,6 +83,11 @@ public class EditAnnotationsChangeListGenerator implements ChangeListGenerator<B
         this.regEx = regEx;
         this.newAnnotationData = checkNotNull(newAnnotationData);
         this.commitMessage = checkNotNull(commitMessage);
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

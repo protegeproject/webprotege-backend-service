@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
@@ -49,23 +50,22 @@ public final class MergeEntitiesChangeListGeneratorFactory {
     this.annotationAssertionsProvider = checkNotNull(annotationAssertionsProvider, 7);
   }
 
-  public MergeEntitiesChangeListGenerator create(
-      ImmutableSet<OWLEntity> sourceEntities,
-      OWLEntity targetEntity,
-      MergedEntityTreatment treatment,
-      String commitMessage) {
-    return new MergeEntitiesChangeListGenerator(
-        checkNotNull(sourceEntities, 1),
-        checkNotNull(targetEntity, 2),
-        checkNotNull(treatment, 3),
-        checkNotNull(commitMessage, 4),
-        checkNotNull(projectIdProvider.get(), 5),
-        checkNotNull(dataFactoryProvider.get(), 6),
-        checkNotNull(discussionThreadRepositoryProvider.get(), 7),
-        checkNotNull(entityRenamerProvider.get(), 8),
-        checkNotNull(defaultOntologyIdManagerProvider.get(), 9),
-        checkNotNull(projectOntologiesProvider.get(), 10),
-        checkNotNull(annotationAssertionsProvider.get(), 11));
+  public MergeEntitiesChangeListGenerator create(ChangeRequestId changeRequestId,
+                                                 ImmutableSet<OWLEntity> sourceEntities,
+                                                 OWLEntity targetEntity,
+                                                 MergedEntityTreatment treatment,
+                                                 String commitMessage) {
+    return new MergeEntitiesChangeListGenerator(changeRequestId, checkNotNull(sourceEntities, 1),
+                                                checkNotNull(targetEntity, 2),
+                                                checkNotNull(treatment, 3),
+                                                checkNotNull(commitMessage, 4),
+                                                checkNotNull(projectIdProvider.get(), 5),
+                                                checkNotNull(dataFactoryProvider.get(), 6),
+                                                checkNotNull(discussionThreadRepositoryProvider.get(), 7),
+                                                checkNotNull(entityRenamerProvider.get(), 8),
+                                                checkNotNull(defaultOntologyIdManagerProvider.get(), 9),
+                                                checkNotNull(projectOntologiesProvider.get(), 10),
+                                                checkNotNull(annotationAssertionsProvider.get(), 11));
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

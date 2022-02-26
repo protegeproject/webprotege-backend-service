@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.csv;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -18,6 +19,9 @@ public class ImportCSVFileAction implements ProjectAction<ImportCSVFileResult> {
 
     public static final String CHANNEL = "webprotege.csv.ImportCsvFile";
 
+
+    private final ChangeRequestId changeRequestId;
+
     private final ProjectId projectId;
 
     private final OWLClass importRootClass;
@@ -31,11 +35,20 @@ public class ImportCSVFileAction implements ProjectAction<ImportCSVFileResult> {
         return CHANNEL;
     }
 
-    public ImportCSVFileAction(ProjectId projectId, DocumentId csvDocumentId, OWLClass importRootClass, CSVImportDescriptor descriptor) {
+    public ImportCSVFileAction(ChangeRequestId changeRequestId,
+                               ProjectId projectId,
+                               DocumentId csvDocumentId,
+                               OWLClass importRootClass,
+                               CSVImportDescriptor descriptor) {
+        this.changeRequestId = changeRequestId;
         this.projectId = checkNotNull(projectId);
         this.importRootClass = checkNotNull(importRootClass);
         this.documentId = checkNotNull(csvDocumentId);
         this.descriptor = checkNotNull(descriptor);
+    }
+
+    public ChangeRequestId changeRequestId() {
+        return changeRequestId;
     }
 
     @Nonnull

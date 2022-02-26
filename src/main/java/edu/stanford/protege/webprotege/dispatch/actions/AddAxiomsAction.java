@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.dispatch.actions;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.common.ContentChangeRequest;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.semanticweb.owlapi.model.OWLAxiom;
 
 import javax.annotation.Nonnull;
-import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -16,45 +16,25 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * This is a webprotege side action.  It won't work on the client.
  */
-public class AddAxiomsAction implements ProjectAction<AddAxiomsResult> {
+public record AddAxiomsAction(@Nonnull ChangeRequestId changeRequestId,
+                             @Nonnull ProjectId projectId,
+                             @Nonnull AxiomsSource axiomsSource,
+                             @Nonnull String commitMessage) implements ProjectAction<AddAxiomsResult>, ContentChangeRequest {
 
-    public static final String CHANNEL = "webprotege.axioms.AddAxioms";
+    public static final String CHANNEL = "webprotege.axiomsSource.AddAxioms";
 
-    @Nonnull
-    private final ProjectId projectId;
-
-    @Nonnull
-    private final Stream<OWLAxiom> axioms;
-
-    @Nonnull
-    private final String commitMessage;
-
-    public AddAxiomsAction(@Nonnull ProjectId projectId,
-                           @Nonnull Stream<OWLAxiom> axioms,
+    public AddAxiomsAction(@Nonnull ChangeRequestId changeRequestId,
+                           @Nonnull ProjectId projectId,
+                           @Nonnull AxiomsSource axiomsSource,
                            @Nonnull String commitMessage) {
+        this.changeRequestId = checkNotNull(changeRequestId);
         this.projectId = checkNotNull(projectId);
-        this.axioms = checkNotNull(axioms);
+        this.axiomsSource = checkNotNull(axiomsSource);
         this.commitMessage = checkNotNull(commitMessage);
     }
 
     @Override
     public String getChannel() {
         return CHANNEL;
-    }
-
-    @Nonnull
-    @Override
-    public ProjectId projectId() {
-        return projectId;
-    }
-
-    @Nonnull
-    public Stream<OWLAxiom> getAxioms() {
-        return axioms;
-    }
-
-    @Nonnull
-    public String getCommitMessage() {
-        return commitMessage;
     }
 }

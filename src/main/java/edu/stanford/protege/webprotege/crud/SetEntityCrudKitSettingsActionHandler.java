@@ -71,7 +71,8 @@ public class SetEntityCrudKitSettingsActionHandler extends AbstractProjectAction
         if(action.prefixUpdateStrategy() == IRIPrefixUpdateStrategy.FIND_AND_REPLACE) {
             var fromPrefix = action.fromSettings().getPrefixSettings().getIRIPrefix();
             var toPrefix = action.toSettings().getPrefixSettings().getIRIPrefix();
-            var changeGenerator = findAndReplaceIRIPrefixChangeGeneratorFactory.create(fromPrefix, toPrefix);
+            var changeGenerator = findAndReplaceIRIPrefixChangeGeneratorFactory.create(action.changeRequestId(),
+                                                                                       fromPrefix, toPrefix);
             changeManager.applyChanges(executionContext.getUserId(), changeGenerator);
         }
         return new SetEntityCrudKitSettingsResult();

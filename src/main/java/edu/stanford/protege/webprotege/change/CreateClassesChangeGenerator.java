@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.change;
 
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.util.ClassExpression;
@@ -36,8 +37,8 @@ public class CreateClassesChangeGenerator extends AbstractCreateEntitiesChangeLi
                                         @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                         @Nonnull String sourceText,
                                         @Nonnull String langTag,
-                                        @Nonnull ImmutableSet<OWLClass> parent) {
-        super(CLASS, sourceText, langTag, parent, dataFactory, msg, defaultOntologyIdManager);
+                                        @Nonnull ImmutableSet<OWLClass> parent, ChangeRequestId changeRequestId) {
+        super(CLASS, sourceText, langTag, parent, dataFactory, msg, defaultOntologyIdManager, changeRequestId);
         this.dataFactory = checkNotNull(dataFactory);
     }
 

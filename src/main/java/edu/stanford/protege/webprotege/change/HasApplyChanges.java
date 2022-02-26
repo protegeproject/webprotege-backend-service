@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.change;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.common.UserId;
 

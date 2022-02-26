@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.change;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.ChangeRequest;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 
 import javax.annotation.Nonnull;
@@ -26,18 +28,29 @@ public class FixedChangeListGenerator<R> implements ChangeListGenerator<R> {
     @Nonnull
     private final String message;
 
-    public FixedChangeListGenerator(@Nonnull List<OntologyChange> fixedChangeList,
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
+    public FixedChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                    @Nonnull List<OntologyChange> fixedChangeList,
                                     @Nonnull R result,
                                     @Nonnull String message) {
+        this.changeRequestId = changeRequestId;
         this.result = checkNotNull(result);
         this.fixedChangeList = ImmutableList.copyOf(fixedChangeList);
         this.message = checkNotNull(message);
     }
 
-    public static <S> FixedChangeListGenerator<S> get(List<OntologyChange> changes,
+    public static <S> FixedChangeListGenerator<S> get(@Nonnull ChangeRequestId changeRequestId,
+                                                      List<OntologyChange> changes,
                                                       @Nonnull S result,
                                                       String message) {
-        return new FixedChangeListGenerator<>(changes, result, message);
+        return new FixedChangeListGenerator<>(changeRequestId, changes, result, message);
+    }
+
+    @Override
+    public ChangeRequestId getChangeRequestId() {
+        return changeRequestId;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.change;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 
 import javax.annotation.Nonnull;
@@ -29,4 +30,6 @@ public interface ChangeListGenerator<R> {
 
     @Nonnull
     String getMessage(ChangeApplicationResult<R> result);
+
+    ChangeRequestId getChangeRequestId();
 }

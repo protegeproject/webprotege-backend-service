@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.change.ReverseEngineeredChangeDescriptionGeneratorFactory;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.index.OntologyAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
@@ -80,8 +81,8 @@ public class FrameChangeGeneratorFactory {
     }
 
     @Nonnull
-    public FrameChangeGenerator create(FrameUpdate frameUpdate) {
-        return new FrameChangeGenerator(checkNotNull(frameUpdate),
+    public FrameChangeGenerator create(ChangeRequestId changeRequestId, FrameUpdate frameUpdate) {
+        return new FrameChangeGenerator(changeRequestId, checkNotNull(frameUpdate),
                                         projectOntologiesIndex,
                                         reverseEngineeredChangeDescriptionGeneratorFactory,
                                         defaultOntologyIdManager,

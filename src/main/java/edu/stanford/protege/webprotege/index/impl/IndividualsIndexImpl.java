@@ -147,7 +147,7 @@ public class IndividualsIndexImpl implements IndividualsIndex, DependentIndex {
         OWLClass matchingDirectType = null;
         OWLClass matchingIndirectType = null;
         if(preferredType.isPresent()) {
-            // Search through class assertion axioms in order to find a matching preferred type
+            // Search through class assertion axiomsSource in order to find a matching preferred type
             OWLClass thePreferredType = preferredType.get();
             if(!thePreferredType.isOWLThing()) {
                 var types = projectOntologiesIndex.getOntologyIds()
