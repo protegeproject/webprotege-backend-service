@@ -3,5 +3,5 @@ MAINTAINER protege.stanford.edu
 
 EXPOSE 7770
 
-COPY target/*.jar webprotege-backend-service.jar
+COPY target/${JAR_FILE} webprotege-backend-service.jar
 ENTRYPOINT ["java","-jar","/webprotege-backend-service.jar"]
