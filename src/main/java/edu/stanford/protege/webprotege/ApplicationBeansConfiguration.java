@@ -20,7 +20,7 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
-import edu.stanford.protege.webprotege.ipc.kafka.KafkaCommandExecutor;
+import edu.stanford.protege.webprotege.ipc.pulsar.PulsarCommandExecutor;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
@@ -549,7 +549,7 @@ public class ApplicationBeansConfiguration {
 
     @Bean
     CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> executorForProcessUploadedOntologiesRequest() {
-        return new KafkaCommandExecutor<>(ProcessUploadedOntologiesResponse.class);
+        return new PulsarCommandExecutor<>(ProcessUploadedOntologiesResponse.class);
     }
 
     @Bean

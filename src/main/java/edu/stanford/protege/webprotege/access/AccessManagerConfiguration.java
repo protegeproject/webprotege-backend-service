@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.access;
 
 import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
-import edu.stanford.protege.webprotege.ipc.kafka.KafkaCommandExecutor;
+import edu.stanford.protege.webprotege.ipc.pulsar.PulsarCommandExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,31 +16,31 @@ public class AccessManagerConfiguration {
 
     @Bean
     CommandExecutor<GetAssignedRolesRequest, GetAssignedRolesResponse> assignedRolesExecutor() {
-        return new KafkaCommandExecutor<>(GetAssignedRolesResponse.class);
+        return new PulsarCommandExecutor<>(GetAssignedRolesResponse.class);
     }
 
     @Bean
     CommandExecutor<SetAssignedRolesRequest, SetAssignedRolesResponse> setAssignedRolesExecutor() {
-        return new KafkaCommandExecutor<>(SetAssignedRolesResponse.class);
+        return new PulsarCommandExecutor<>(SetAssignedRolesResponse.class);
     }
 
     @Bean
     CommandExecutor<GetRolesRequest, GetRolesResponse> getRolesExecutor() {
-        return new KafkaCommandExecutor<>(GetRolesResponse.class);
+        return new PulsarCommandExecutor<>(GetRolesResponse.class);
     }
 
     @Bean
     CommandExecutor<GetAuthorizedActionsRequest, GetAuthorizedActionsResponse> getAuthorizedActionsExecutor() {
-        return new KafkaCommandExecutor<>(GetAuthorizedActionsResponse.class);
+        return new PulsarCommandExecutor<>(GetAuthorizedActionsResponse.class);
     }
 
     @Bean
     CommandExecutor<GetAuthorizedSubjectsRequest, GetAuthorizedSubjectsResponse> getAuthorizedSubjectsExecutor() {
-        return new KafkaCommandExecutor<>(GetAuthorizedSubjectsResponse.class);
+        return new PulsarCommandExecutor<>(GetAuthorizedSubjectsResponse.class);
     }
 
     @Bean
     CommandExecutor<GetAuthorizedResourcesRequest, GetAuthorizedResourcesResponse> getAuthorizedResourcesRequest() {
-        return new KafkaCommandExecutor<>(GetAuthorizedResourcesResponse.class);
+        return new PulsarCommandExecutor<>(GetAuthorizedResourcesResponse.class);
     }
 }
