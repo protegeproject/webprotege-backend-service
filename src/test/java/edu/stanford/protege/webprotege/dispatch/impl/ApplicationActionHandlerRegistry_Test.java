@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
+import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
@@ -14,12 +16,12 @@ import edu.stanford.protege.webprotege.permissions.RebuildPermissionsAction;
 import edu.stanford.protege.webprotege.perspective.GetPerspectivesAction;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.user.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -27,13 +29,14 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@RunWith(SpringRunner.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ApplicationActionHandlerRegistry_Test {
 
     @Autowired
     private ApplicationActionHandlerRegistry registry;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
     }
 

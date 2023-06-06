@@ -1,19 +1,20 @@
 package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.criteria.EntityIsNotDeprecatedCriteria;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.UUID;
 
@@ -21,8 +22,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
 @SpringBootTest
-@RunWith(SpringRunner.class)
-@ExtendWith(PulsarTestExtension.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class EntitySearchFilterRepositoryImpl_IT {
 
     @Autowired
@@ -30,7 +31,7 @@ public class EntitySearchFilterRepositoryImpl_IT {
 
     private ProjectId projectId;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         projectId = ProjectId.valueOf(UUID.randomUUID().toString());
     }
@@ -69,7 +70,7 @@ public class EntitySearchFilterRepositoryImpl_IT {
         assertThat(filters, contains(updatedFilter));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
 
     }

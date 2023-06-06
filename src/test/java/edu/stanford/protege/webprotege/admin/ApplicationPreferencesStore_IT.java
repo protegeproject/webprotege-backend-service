@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.admin;
 
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,7 +22,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 19 Mar 2017
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith(PulsarTestExtension.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ApplicationPreferencesStore_IT {
 
     private final ApplicationPreferences applicationPreferences = new ApplicationPreferences(

@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.forms;
 
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.forms.field.*;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.util.UUID;
@@ -28,7 +30,8 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith(PulsarTestExtension.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class EntityFormRepositoryImpl_IT {
 
     @Autowired

@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.project;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -20,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
@@ -36,7 +38,8 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith(PulsarTestExtension.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectDetailsRepository_IT {
 
     public static final String COLLECTION_NAME = "ProjectDetails";
@@ -56,7 +59,7 @@ public class ProjectDetailsRepository_IT {
     private ProjectId projectId = getProjectId();
 
     private ProjectId otherProjectId = getProjectId();
-    
+
 
     private static ProjectId getProjectId() {
         return ProjectId.valueOf(UUID.randomUUID().toString());

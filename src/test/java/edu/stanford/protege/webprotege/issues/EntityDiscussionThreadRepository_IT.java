@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -21,6 +22,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -40,9 +42,10 @@ import static org.hamcrest.core.IsNot.not;
  * a running version of MongoDB.
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith(PulsarTestExtension.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
-public class EntityDiscussionThreadRepository_IT {
+class EntityDiscussionThreadRepository_IT {
 
     private final ProjectId projectId = ProjectId.generate();
 

@@ -1,9 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
-import edu.stanford.protege.webprotege.ProjectBeansConfiguration;
-import edu.stanford.protege.webprotege.PulsarTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
@@ -15,6 +12,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -25,7 +23,8 @@ import static org.hamcrest.core.IsNull.notNullValue;
 
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class, WebProtegeIpcApplication.class})
-@ExtendWith(PulsarTestExtension.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectCache_Test {
 
     @Autowired

@@ -4,20 +4,21 @@ import com.google.common.collect.ImmutableList;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteError;
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.criteria.RootCriteria;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
@@ -34,9 +35,9 @@ import static org.junit.Assert.fail;
  * Stanford Center for Biomedical Informatics Research
  * 18 Mar 2018
  */
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@RunWith(SpringRunner.class)
-@ExtendWith(PulsarTestExtension.class)
+@SpringBootTest
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TagRepositoryImpl_IT {
 
     private static final String THE_TAG_LABEL = "The tag label";
@@ -63,7 +64,7 @@ public class TagRepositoryImpl_IT {
 
     private ImmutableList<RootCriteria> criteria;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         tagId = TagId.getId("12345678-1234-1234-1234-123456789abc");
         tagId2 = TagId.getId("12345678-1234-1234-1234-123456789def");
@@ -94,7 +95,7 @@ public class TagRepositoryImpl_IT {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         mongoTemplate.getCollection(COLLECTION_NAME).drop();
     }

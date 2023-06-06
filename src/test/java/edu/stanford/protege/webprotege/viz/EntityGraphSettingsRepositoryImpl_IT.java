@@ -1,24 +1,21 @@
 package edu.stanford.protege.webprotege.viz;
 
 
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 
 /**
  * Matthew Horridge
@@ -26,8 +23,8 @@ import static org.mockito.Mockito.mock;
  * 2019-12-06
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
-@ExtendWith(PulsarTestExtension.class)
+@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityGraphSettingsRepositoryImpl_IT {
 
     private static final double RANK_SEPARATION = 2.0;
@@ -42,7 +39,7 @@ public class EntityGraphSettingsRepositoryImpl_IT {
 
     private UserId userId;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         userId = UserId.valueOf("JohnDoe");
         projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
@@ -99,7 +96,7 @@ public class EntityGraphSettingsRepositoryImpl_IT {
         assertThat(savedSettings, is(settings));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         mongoTemplate.getDb().getCollection(EntityGraphSettingsRepositoryImpl.getCollectionName()).drop();
     }
