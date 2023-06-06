@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.project;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
@@ -13,6 +14,7 @@ import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +36,7 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
+@ExtendWith(PulsarTestExtension.class)
 public class ProjectDetailsRepository_IT {
 
     public static final String COLLECTION_NAME = "ProjectDetails";

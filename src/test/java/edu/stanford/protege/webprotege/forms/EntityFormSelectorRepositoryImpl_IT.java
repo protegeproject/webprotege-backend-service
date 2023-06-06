@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
@@ -10,6 +11,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,6 +29,7 @@ import static org.hamcrest.Matchers.*;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
+@ExtendWith(PulsarTestExtension.class)
 public class EntityFormSelectorRepositoryImpl_IT {
 
     @Autowired

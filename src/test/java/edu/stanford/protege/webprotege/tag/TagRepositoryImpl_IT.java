@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteError;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
@@ -12,6 +13,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,6 +36,7 @@ import static org.junit.Assert.fail;
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 @RunWith(SpringRunner.class)
+@ExtendWith(PulsarTestExtension.class)
 public class TagRepositoryImpl_IT {
 
     private static final String THE_TAG_LABEL = "The tag label";

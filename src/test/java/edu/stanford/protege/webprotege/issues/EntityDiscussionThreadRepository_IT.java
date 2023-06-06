@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.issues;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -10,6 +11,7 @@ import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -38,6 +40,7 @@ import static org.hamcrest.core.IsNot.not;
  * a running version of MongoDB.
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
+@ExtendWith(PulsarTestExtension.class)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class EntityDiscussionThreadRepository_IT {
 

@@ -1,11 +1,13 @@
 package edu.stanford.protege.webprotege.viz;
 
 
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +27,7 @@ import static org.mockito.Mockito.mock;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@ExtendWith(PulsarTestExtension.class)
 public class EntityGraphSettingsRepositoryImpl_IT {
 
     private static final double RANK_SEPARATION = 2.0;

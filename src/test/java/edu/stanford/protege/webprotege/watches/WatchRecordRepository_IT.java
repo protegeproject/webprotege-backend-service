@@ -1,10 +1,12 @@
 package edu.stanford.protege.webprotege.watches;
 
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -29,6 +31,7 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@ExtendWith(PulsarTestExtension.class)
 public class WatchRecordRepository_IT {
 
     public static final String WATCHES = "Watches";

@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.criteria.EntityIsNotDeprecatedCriteria;
@@ -8,6 +9,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +22,7 @@ import static org.hamcrest.Matchers.contains;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@ExtendWith(PulsarTestExtension.class)
 public class EntitySearchFilterRepositoryImpl_IT {
 
     @Autowired

@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.webhook;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -28,6 +30,7 @@ import static org.hamcrest.Matchers.is;
  * 19 May 2017
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
+@ExtendWith(PulsarTestExtension.class)
 public class WebhookRepositoryImpl_IT {
 
     private static final String PAYLOAD_URL = "http://the.payload.url/path";

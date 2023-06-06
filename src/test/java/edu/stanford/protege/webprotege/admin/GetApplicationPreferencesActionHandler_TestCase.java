@@ -1,6 +1,7 @@
 
 package edu.stanford.protege.webprotege.admin;
 
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
@@ -16,6 +17,7 @@ import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -27,6 +29,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
+@ExtendWith(PulsarTestExtension.class)
 public class GetApplicationPreferencesActionHandler_TestCase {
 
     private GetApplicationSettingsActionHandler handler;

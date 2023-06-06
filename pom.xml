@@ -95,7 +95,6 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>0.9.3</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -338,6 +337,19 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.18.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>pulsar</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -401,6 +413,13 @@
                 <groupId>com.github.ben-manes.caffeine</groupId>
                 <artifactId>caffeine</artifactId>
                 <version>2.7.0</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>edu.stanford.protege</groupId>
+                <artifactId>webprotege-ipc</artifactId>
+                <version>0.10.1</version>
             </dependency>
 
         </dependencies>

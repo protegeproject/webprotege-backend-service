@@ -1,11 +1,13 @@
 package edu.stanford.protege.webprotege.revision;
 
+import edu.stanford.protege.webprotege.PulsarTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -20,6 +22,7 @@ import static org.mockito.Mockito.when;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
+@ExtendWith(PulsarTestExtension.class)
 public class GetHeadRevisionNumberActionHandler_TestCase {
 
     private GetHeadRevisionNumberActionHandler handler;
