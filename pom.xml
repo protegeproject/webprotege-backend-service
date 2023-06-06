@@ -95,7 +95,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>0.9.2</version>
+            <version>0.9.3</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
