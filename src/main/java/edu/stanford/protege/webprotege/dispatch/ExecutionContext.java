@@ -16,13 +16,22 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class ExecutionContext {
 
     private final UserId userId;
+    private final String jwt;
 
     public ExecutionContext(UserId userId) {
         this.userId = checkNotNull(userId);
+        this.jwt = "";
+    }
+    public ExecutionContext(UserId userId, String jwt) {
+        this.userId = userId;
+        this.jwt = jwt;
     }
 
     public UserId getUserId() {
         return userId;
     }
 
+    public String getJwt() {
+        return jwt;
+    }
 }

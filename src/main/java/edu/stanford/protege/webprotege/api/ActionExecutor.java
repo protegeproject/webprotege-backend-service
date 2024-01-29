@@ -38,8 +38,8 @@ public class ActionExecutor {
     @SuppressWarnings("unchecked")
     public   <A extends Request<R>,  R extends Response> R execute(A action, ExecutionContext executionContext) {
         try {
-            RequestContext requestContext = new RequestContext(executionContext.userId());
-            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));
+            RequestContext requestContext = new RequestContext(executionContext.userId(), new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
+            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
             return (R) resultContainer.getResult();
         } catch (ActionExecutionException e) {
             logger.info("Action execution exception while executing request: {}", e.getMessage(), e);
@@ -50,8 +50,8 @@ public class ActionExecutor {
     @SuppressWarnings("unchecked")
     public <A extends Request<R>,  R extends Response> Mono<R> executeRequest(A request, ExecutionContext executionContext) {
         try {
-            var requestContext = new RequestContext(executionContext.userId());
-            var resultContainer = executor.execute(request, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId()));
+            var requestContext = new RequestContext(executionContext.userId(), new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
+            var resultContainer = executor.execute(request, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
             var result = (R) resultContainer.getResult();
             return Mono.just(result);
         } catch (PermissionDeniedException e) {

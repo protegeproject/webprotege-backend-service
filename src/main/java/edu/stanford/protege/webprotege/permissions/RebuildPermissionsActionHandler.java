@@ -35,7 +35,7 @@ public class RebuildPermissionsActionHandler implements ApplicationActionHandler
     @Nonnull
     @Override
     public RequestValidator getRequestValidator(@Nonnull RebuildPermissionsAction action, @Nonnull RequestContext requestContext) {
-        return new ApplicationPermissionValidator(accessManager, requestContext.getUserId(), REBUILD_PERMISSIONS.getActionId());
+        return new ApplicationPermissionValidator(accessManager, requestContext.getUserId(), REBUILD_PERMISSIONS, requestContext.getExecutionContext());
     }
 
     @Nonnull

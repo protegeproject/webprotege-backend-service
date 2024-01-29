@@ -42,7 +42,7 @@ public class SetApplicationSettingsActionHandler implements ApplicationActionHan
     public RequestValidator getRequestValidator(@Nonnull SetApplicationSettingsAction action, @Nonnull RequestContext requestContext) {
         return new ApplicationPermissionValidator(accessManager,
                                                   requestContext.getUserId(),
-                                                  BuiltInAction.EDIT_APPLICATION_SETTINGS.getActionId());
+                                                  BuiltInAction.EDIT_APPLICATION_SETTINGS, requestContext.getExecutionContext());
     }
 
     @Nonnull

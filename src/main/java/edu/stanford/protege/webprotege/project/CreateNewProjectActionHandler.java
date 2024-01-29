@@ -69,7 +69,8 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
                 new ApplicationPermissionValidator(
                         accessManager,
                         requestContext.getUserId(),
-                        CREATE_EMPTY_PROJECT)
+                        CREATE_EMPTY_PROJECT,
+                        requestContext.getExecutionContext())
         );
     }
 
@@ -80,12 +81,12 @@ public class CreateNewProjectActionHandler implements ApplicationActionHandler<C
         try {
 
             var userId = executionContext.getUserId();
-            if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), CREATE_EMPTY_PROJECT)) {
+            if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), CREATE_EMPTY_PROJECT.getActionId(), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId(), executionContext.getJwt()))) {
                 throw new PermissionDeniedException("You do not have permission to create new projects");
             }
             var newProjectSettings = action.newProjectSettings();
             if (newProjectSettings.hasSourceDocument()) {
-                if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), UPLOAD_PROJECT)) {
+                if (!accessManager.hasPermission(forUser(userId), ApplicationResource.get(), UPLOAD_PROJECT.getActionId(), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId(), executionContext.getJwt()))) {
                     throw new PermissionDeniedException("You do not have permission to upload projects");
                 }
             }

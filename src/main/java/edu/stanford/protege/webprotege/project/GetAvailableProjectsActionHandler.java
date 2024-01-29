@@ -70,7 +70,7 @@ public class GetAvailableProjectsActionHandler implements ApplicationActionHandl
                                              record.getRecentProjects()
                                                    .forEach(recent ->
                                                                     lastOpenedMap.put(recent.getProjectId(), recent.getTimestamp())));
-        List<AvailableProject> availableProjects = projectPermissionsManager.getReadableProjects(userId).stream()
+        List<AvailableProject> availableProjects = projectPermissionsManager.getReadableProjects(executionContext).stream()
                                                                             .map(details -> {
                                                                                 Subject user = forUser(userId);
                                                                                 ProjectResource projectResource = new ProjectResource(details.projectId());

@@ -1,10 +1,8 @@
 package edu.stanford.protege.webprotege.access;
 
 
-import edu.stanford.protege.webprotege.authorization.ActionId;
-import edu.stanford.protege.webprotege.authorization.Resource;
-import edu.stanford.protege.webprotege.authorization.RoleId;
-import edu.stanford.protege.webprotege.authorization.Subject;
+import edu.stanford.protege.webprotege.authorization.*;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -56,7 +54,8 @@ public interface AccessManager {
      */
     @Nonnull
     Set<ActionId> getActionClosure(@Nonnull Subject subject,
-                                   @Nonnull Resource resource);
+                                   @Nonnull Resource resource,
+                                    ExecutionContext executionContext);
 
     /**
      * Tests to see if the specified subject has permission to execute the specified action on the specified resource.
@@ -69,6 +68,11 @@ public interface AccessManager {
     boolean hasPermission(@Nonnull Subject subject,
                           @Nonnull Resource resource,
                           @Nonnull ActionId actionId);
+
+    boolean hasPermission(@Nonnull Subject subject,
+                          @Nonnull ApplicationResource resource,
+                          @Nonnull ActionId actionId,
+                          ExecutionContext executionContext);
 
     /**
      * Tests to see if the specified subject has permission to execute the specified action on the specified resource.
@@ -86,7 +90,7 @@ public interface AccessManager {
 
     Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInAction action);
 
-    Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId);
+    Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId, ExecutionContext executionContext);
 
 
     /**

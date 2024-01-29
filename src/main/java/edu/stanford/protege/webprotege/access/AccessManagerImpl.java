@@ -1,32 +1,18 @@
 package edu.stanford.protege.webprotege.access;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
+
 import edu.stanford.protege.webprotege.authorization.*;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import java.io.IOException;
+
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
-import static edu.stanford.protege.webprotege.access.RoleAssignment.*;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 
 /**
  * Matthew Horridge
@@ -113,10 +99,10 @@ public class AccessManagerImpl implements AccessManager {
 
     @Nonnull
     @Override
-    public Set<ActionId> getActionClosure(@Nonnull Subject subject, @Nonnull Resource resource) {
+    public Set<ActionId> getActionClosure(@Nonnull Subject subject, @Nonnull Resource resource, ExecutionContext executionContext) {
         try {
             return getAuthorizedActionsExecutor.execute(new GetAuthorizedActionsRequest(resource, subject),
-                                                        new ExecutionContext())
+                                                        executionContext)
                     .get()
                     .actionIds();
         } catch (InterruptedException | ExecutionException e) {
@@ -130,6 +116,19 @@ public class AccessManagerImpl implements AccessManager {
         try {
             return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
                                                           new ExecutionContext())
+                    .get()
+                    .authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("Error when getting authorization status", e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean hasPermission(@Nonnull Subject subject, @Nonnull ApplicationResource resource, @Nonnull ActionId actionId, ExecutionContext executionContext) {
+        try {
+            return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
+                            executionContext)
                     .get()
                     .authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
         } catch (InterruptedException | ExecutionException e) {
@@ -166,10 +165,10 @@ public class AccessManagerImpl implements AccessManager {
     }
 
     @Override
-    public Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId) {
+    public Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId, ExecutionContext executionContext) {
         try {
             return getAuthorizedResourcesExecutor.execute(new GetAuthorizedResourcesRequest(subject, actionId),
-                                                          new ExecutionContext())
+                            executionContext)
                     .get()
                     .resources();
         } catch (InterruptedException | ExecutionException e) {

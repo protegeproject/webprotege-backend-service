@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.permissions;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.Resource;
+import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -34,9 +35,9 @@ public class ProjectPermissionsManagerImpl implements ProjectPermissionsManager 
     }
 
     @Override
-    public List<ProjectDetails> getReadableProjects(UserId userId) {
+    public List<ProjectDetails> getReadableProjects(ExecutionContext executionContext) {
         Set<ProjectDetails> result = new HashSet<>();
-        accessManager.getResourcesAccessibleToSubject(forUser(userId), VIEW_PROJECT.getActionId())
+        accessManager.getResourcesAccessibleToSubject(forUser(executionContext.getUserId()), VIEW_PROJECT.getActionId(), new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId(), executionContext.getJwt()))
                      .stream()
                      .filter(Resource::isProject)
                      .forEach(
@@ -48,7 +49,7 @@ public class ProjectPermissionsManagerImpl implements ProjectPermissionsManager 
         // Always add owned in case permissions are screwed up - yes?
         // It will be obvious that the permissions are screwed up because the
         // user won't be able to open their own project.
-        result.addAll(projectDetailsRepository.findByOwner(userId));
+        result.addAll(projectDetailsRepository.findByOwner(executionContext.getUserId()));
         return new ArrayList<>(result);
     }
 }
