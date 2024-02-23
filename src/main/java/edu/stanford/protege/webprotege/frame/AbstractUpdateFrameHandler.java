@@ -3,8 +3,11 @@ package edu.stanford.protege.webprotege.frame;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
-import edu.stanford.protege.webprotege.common.*;
-import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.common.Response;
+import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +42,7 @@ public abstract class AbstractUpdateFrameHandler<A extends Request<R> & UpdateFr
     /**
      * Executes the specified action, against the specified project in the specified context.
      * @param action The action to be handled/executed
-     * @param executionContext The {@link edu.stanford.protege.webprotege.dispatch.ExecutionContext} that should be
+     * @param executionContext The {@link edu.stanford.protege.webprotege.ipc.ExecutionContext;} that should be
      * used to provide details such as the
      * {@link UserId} of the user who requested the action be executed.
      * @return The result of the execution to be returned to the client.
@@ -52,7 +55,7 @@ public abstract class AbstractUpdateFrameHandler<A extends Request<R> & UpdateFr
         if(from.equals(to)) {
             return createResponse(action.to());
         }
-        var userId = executionContext.getUserId();
+        var userId = executionContext.userId();
         var frameUpdate = FrameUpdate.get(from, to);
         var changeGenerator = frameChangeGeneratorFactory.create(action.changeRequestId(), frameUpdate);
         applyChanges.applyChanges(userId, changeGenerator);

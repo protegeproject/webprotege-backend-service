@@ -1,18 +1,16 @@
 package edu.stanford.protege.webprotege.project;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.revision.RevisionManager;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

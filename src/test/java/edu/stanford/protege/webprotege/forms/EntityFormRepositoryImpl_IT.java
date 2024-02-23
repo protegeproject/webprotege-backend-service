@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.PulsarTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class EntityFormRepositoryImpl_IT {
 

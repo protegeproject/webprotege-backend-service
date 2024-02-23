@@ -1,6 +1,10 @@
 package edu.stanford.protege.webprotege.issues;
 
-import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
+import edu.stanford.protege.webprotege.dispatch.RequestContext;
+import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
+import edu.stanford.protege.webprotege.dispatch.RequestValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;

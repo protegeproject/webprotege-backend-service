@@ -1,18 +1,20 @@
 package edu.stanford.protege.webprotege.mail;
 
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.user.EmailAddress;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
-import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.mail.SetEmailAddressResult.Result.*;
+import static edu.stanford.protege.webprotege.mail.SetEmailAddressResult.Result.ADDRESS_ALREADY_EXISTS;
+import static edu.stanford.protege.webprotege.mail.SetEmailAddressResult.Result.ADDRESS_CHANGED;
+import static edu.stanford.protege.webprotege.mail.SetEmailAddressResult.Result.ADDRESS_UNCHANGED;
 
 /**
  * Author: Matthew Horridge<br>

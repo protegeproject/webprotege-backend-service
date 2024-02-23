@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-import edu.stanford.protege.webprotege.entity.CommentedEntityData;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
-import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.common.Pager;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.entity.CommentedEntityData;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
@@ -66,26 +66,25 @@ public class GetCommentedEntitiesActionHandler extends AbstractProjectActionHand
 
 
         Map<OWLEntity, List<EntityDiscussionThread>> commentsByEntity = allThreads.stream()
-                                                                                  .collect(groupingBy(
-                                                                                          EntityDiscussionThread::getEntity));
+                .collect(groupingBy(
+                        EntityDiscussionThread::getEntity));
 
         List<CommentedEntityData> result = new ArrayList<>();
         commentsByEntity.forEach((entity, threads) -> {
             if (entitiesInSignature.containsEntityInSignature(entity)) {
                 int totalThreadCount = threads.size();
                 int openThreadCount = (int) threads.stream()
-                                                   .filter(thread -> thread.getStatus().isOpen())
-                                                   .count();
+                        .filter(thread -> thread.getStatus().isOpen())
+                        .count();
                 List<Comment> entityComments = threads.stream()
-                                                      .flatMap(thread -> thread.getComments()
-                                                                               .stream())
-                                                      .collect(toList());
+                        .flatMap(thread -> thread.getComments()
+                                .stream()).toList();
                 Comment lastComment = entityComments.stream()
-                                                    .max(comparing(c -> c.getUpdatedAt().orElse(c.getCreatedAt()))).get();
+                        .max(comparing(c -> c.getUpdatedAt().orElse(c.getCreatedAt()))).get();
 
                 List<UserId> participants = entityComments.stream()
-                                                          .map(Comment::getCreatedBy)
-                                                          .collect(toList());
+                        .map(Comment::getCreatedBy)
+                        .collect(toList());
                 result.add(new CommentedEntityData(
                         renderer.getRendering(entity),
                         totalThreadCount,
@@ -97,10 +96,9 @@ public class GetCommentedEntitiesActionHandler extends AbstractProjectActionHand
                 ));
             }
         });
-        if(action.sortingKey() == SortingKey.SORT_BY_ENTITY) {
+        if (action.sortingKey() == SortingKey.SORT_BY_ENTITY) {
             result.sort(byEntity);
-        }
-        else {
+        } else {
             result.sort(byLastModified);
         }
         Pager<CommentedEntityData> pager = Pager.getPagerForPageSize(result, request.getPageSize());

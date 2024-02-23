@@ -12,6 +12,8 @@ import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValid
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
 import edu.stanford.protege.webprotege.project.HasProjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,6 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class AbstractProjectActionHandler<A extends Request<R>, R extends Response> implements ProjectActionHandler<A, R> {
 
+    private final Logger logger = LoggerFactory.getLogger(AbstractProjectActionHandler.class);
     @Nonnull
     private final AccessManager accessManager;
 
@@ -57,7 +60,6 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
         else {
             throw new RuntimeException("Not a project action or request");
         }
-
         if(builtInAction != null) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
                                                                                   projectId,
@@ -90,7 +92,8 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
         if (additionalRequestValidator != NullValidator.get()) {
             validators.add(additionalRequestValidator);
         }
-        return CompositeRequestValidator.get(validators);
+        var response = CompositeRequestValidator.get(validators);
+        return response;
     }
 
     @Nullable

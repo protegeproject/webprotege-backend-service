@@ -5,8 +5,8 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

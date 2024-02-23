@@ -20,7 +20,7 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
-import edu.stanford.protege.webprotege.ipc.pulsar.PulsarCommandExecutor;
+import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
@@ -59,6 +59,7 @@ import org.semanticweb.owlapi.model.OWLDatatype;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -318,8 +319,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectPermissionsManager getProjectPermissionsManager(AccessManager accessManager,
-                                                           ProjectDetailsRepository projectDetailsRepository) {
+    ProjectPermissionsManager getProjectPermissionsManager(@Lazy AccessManager accessManager,
+                                                           @Lazy ProjectDetailsRepository projectDetailsRepository) {
         return new ProjectPermissionsManagerImpl(accessManager,
                                                  projectDetailsRepository);
     }
@@ -549,7 +550,7 @@ public class ApplicationBeansConfiguration {
 
     @Bean
     CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> executorForProcessUploadedOntologiesRequest() {
-        return new PulsarCommandExecutor<>(ProcessUploadedOntologiesResponse.class);
+        return new CommandExecutorImpl<>(ProcessUploadedOntologiesResponse.class);
     }
 
     @Bean

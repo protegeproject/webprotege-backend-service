@@ -4,11 +4,15 @@ import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
-import edu.stanford.protege.webprotege.project.*;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.project.LoadProjectAction;
+import edu.stanford.protege.webprotege.project.LoadProjectResult;
+import edu.stanford.protege.webprotege.project.ProjectDetails;
+import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
+import edu.stanford.protege.webprotege.project.ProjectManager;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.util.MemoryMonitor;
 import org.slf4j.Logger;
@@ -72,23 +76,23 @@ public class LoadProjectActionHandler implements ApplicationActionHandler<LoadPr
         Stopwatch stopwatch = Stopwatch.createStarted();
         logger.info("{} is being loaded due to request by {}",
                     action.projectId(),
-                    executionContext.getUserId());
-        projectManager.ensureProjectIsLoaded(action.projectId(), executionContext.getUserId());
+                    executionContext.userId());
+        projectManager.ensureProjectIsLoaded(action.projectId(), executionContext.userId());
         stopwatch.stop();
         logger.info("{} was loaded in {} ms due to request by {}",
                     action.projectId(),
                     stopwatch.elapsed(TimeUnit.MILLISECONDS),
-                    executionContext.getUserId());
+                    executionContext.userId());
         MemoryMonitor memoryMonitor = new MemoryMonitor(logger);
         memoryMonitor.monitorMemoryUsage();
         memoryMonitor.logMemoryUsage();
         final ProjectId projectId = action.projectId();
         ProjectDetails projectDetails = projectDetailsManager.getProjectDetails(projectId);
-        if (!executionContext.getUserId().isGuest()) {
-            userActivityManager.addRecentProject(executionContext.getUserId(), action.projectId(), System.currentTimeMillis());
+        if (!executionContext.userId().isGuest()) {
+            userActivityManager.addRecentProject(executionContext.userId(), action.projectId(), System.currentTimeMillis());
         }
         return new LoadProjectResult(action.projectId(),
-                                     executionContext.getUserId(),
+                                     executionContext.userId(),
                                      projectDetails);
     }
 }

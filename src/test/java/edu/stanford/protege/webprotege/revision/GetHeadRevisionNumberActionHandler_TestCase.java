@@ -1,11 +1,12 @@
 package edu.stanford.protege.webprotege.revision;
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.PulsarTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class GetHeadRevisionNumberActionHandler_TestCase {
 
@@ -32,8 +33,7 @@ public class GetHeadRevisionNumberActionHandler_TestCase {
 
     private GetHeadRevisionNumberAction action = new GetHeadRevisionNumberAction(ProjectId.generate());
 
-    @Mock
-    private ExecutionContext executionContext;
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
 
     @Mock
     private RevisionNumber revisionNumber;

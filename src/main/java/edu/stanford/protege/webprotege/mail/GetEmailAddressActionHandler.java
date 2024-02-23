@@ -1,6 +1,10 @@
 package edu.stanford.protege.webprotege.mail;
 
-import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
+import edu.stanford.protege.webprotege.dispatch.RequestContext;
+import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
+import edu.stanford.protege.webprotege.dispatch.RequestValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.user.EmailAddress;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 

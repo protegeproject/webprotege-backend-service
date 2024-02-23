@@ -5,8 +5,7 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
-
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 

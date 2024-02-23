@@ -3,17 +3,17 @@ package edu.stanford.protege.webprotege.project;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.authorization.Subject;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserActivityRecord;
-import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -63,8 +63,8 @@ public class GetAvailableProjectsActionHandler implements ApplicationActionHandl
     @Nonnull
     @Override
     public GetAvailableProjectsResult execute(@Nonnull GetAvailableProjectsAction action, @Nonnull ExecutionContext executionContext) {
-        UserId userId = executionContext.getUserId();
-        Optional<UserActivityRecord> userActivityRecord = userActivityManager.getUserActivityRecord(executionContext.getUserId());
+        UserId userId = executionContext.userId();
+        Optional<UserActivityRecord> userActivityRecord = userActivityManager.getUserActivityRecord(executionContext.userId());
         Map<ProjectId, Long> lastOpenedMap = new HashMap<>();
         userActivityRecord.ifPresent(record ->
                                              record.getRecentProjects()

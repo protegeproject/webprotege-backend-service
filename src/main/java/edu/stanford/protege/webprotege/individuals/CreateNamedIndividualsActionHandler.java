@@ -5,13 +5,13 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateNamedIndividualsAction;
 import edu.stanford.protege.webprotege.entity.CreateNamedIndividualsResult;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import javax.annotation.Nonnull;
@@ -67,7 +67,7 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
     @Override
     public CreateNamedIndividualsResult execute(@Nonnull CreateNamedIndividualsAction action,
                                                 @Nonnull ExecutionContext executionContext) {
-        ChangeApplicationResult<Set<OWLNamedIndividual>> result = changeApplicator.applyChanges(executionContext.getUserId(),
+        ChangeApplicationResult<Set<OWLNamedIndividual>> result = changeApplicator.applyChanges(executionContext.userId(),
                                                                                                 factory.create(action.types(),
                                                                                                                action.sourceText(),
                                                                                                                action.langTag(),

@@ -1,9 +1,14 @@
 package edu.stanford.protege.webprotege.merge;
 
-import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
+import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
+import edu.stanford.protege.webprotege.change.ChangeListGenerator;
+import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 
 import javax.annotation.Nonnull;
@@ -50,7 +55,7 @@ public class OntologyPatcher {
                               String commitMessage,
                               final List<OntologyChange> changes,
                               ExecutionContext executionContext) {
-        changeManager.applyChanges(executionContext.getUserId(), new ChangeListGenerator<Boolean>() {
+        changeManager.applyChanges(executionContext.userId(), new ChangeListGenerator<Boolean>() {
             @Override
             public ChangeRequestId getChangeRequestId() {
                 return changeRequestId;

@@ -5,11 +5,11 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
-import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,7 +54,7 @@ public class AddAxiomsDelegateHandler extends AbstractProjectActionHandler<AddAx
                                               action.mimeType(),
                                               defaultOntologyIdManager.getDefaultOntologyId());
         var changes = loader.<OntologyChange>loadAxioms((ax, ontologyId) -> new AddAxiomChange(ontologyId, ax));
-        var result = changeManager.applyChanges(executionContext.getUserId(),
+        var result = changeManager.applyChanges(executionContext.userId(),
                                                 new FixedChangeListGenerator<>(action.changeRequestId(), changes, "", action.commitMessage()));
         var appliedChangesCount = result.getChangeList().size();
         return new AddAxiomsResponse(projectId,

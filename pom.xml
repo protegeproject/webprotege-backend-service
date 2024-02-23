@@ -85,7 +85,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>0.9.4</version>
+            <version>0.9.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -96,6 +96,10 @@
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
             <version>0.10.3-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -341,8 +345,8 @@
 
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>pulsar</artifactId>
-            <version>1.18.1</version>
+            <artifactId>rabbitmq</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -420,6 +424,14 @@
                 <groupId>edu.stanford.protege</groupId>
                 <artifactId>webprotege-ipc</artifactId>
                 <version>0.10.3-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.17.1</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
         </dependencies>

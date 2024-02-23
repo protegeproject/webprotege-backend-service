@@ -2,7 +2,9 @@ package edu.stanford.protege.webprotege.api;
 
 import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.common.Response;
-import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
+import edu.stanford.protege.webprotege.dispatch.DispatchServiceResultContainer;
+import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
@@ -38,10 +40,10 @@ public class ActionExecutor {
     @SuppressWarnings("unchecked")
     public   <A extends Request<R>,  R extends Response> R execute(A action, ExecutionContext executionContext) {
         try {
-            RequestContext requestContext = new RequestContext(executionContext.userId(), new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
-            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
+            RequestContext requestContext = new RequestContext(executionContext.userId(), executionContext);
+            DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, executionContext);
             return (R) resultContainer.getResult();
-        } catch (ActionExecutionException e) {
+        } catch (Exception e) {
             logger.info("Action execution exception while executing request: {}", e.getMessage(), e);
             throw new CommandExecutionException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -50,8 +52,8 @@ public class ActionExecutor {
     @SuppressWarnings("unchecked")
     public <A extends Request<R>,  R extends Response> Mono<R> executeRequest(A request, ExecutionContext executionContext) {
         try {
-            var requestContext = new RequestContext(executionContext.userId(), new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
-            var resultContainer = executor.execute(request, requestContext, new edu.stanford.protege.webprotege.dispatch.ExecutionContext(executionContext.userId(), executionContext.jwt()));
+            var requestContext = new RequestContext(executionContext.userId(), executionContext);
+            var resultContainer = executor.execute(request, requestContext, executionContext);
             var result = (R) resultContainer.getResult();
             return Mono.just(result);
         } catch (PermissionDeniedException e) {

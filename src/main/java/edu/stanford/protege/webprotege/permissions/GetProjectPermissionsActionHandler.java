@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -48,9 +48,9 @@ public class GetProjectPermissionsActionHandler implements ApplicationActionHand
     @Override
     public GetProjectPermissionsResult execute(@Nonnull GetProjectPermissionsAction action, @Nonnull ExecutionContext executionContext) {
         Set<ActionId> allowedActions = accessManager.getActionClosure(
-                forUser(executionContext.getUserId()),
+                forUser(executionContext.userId()),
                 forProject(action.projectId()),
-                new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId(), executionContext.getJwt()));
+                new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt()));
         return new GetProjectPermissionsResult(ImmutableSet.copyOf(allowedActions));
     }
 }

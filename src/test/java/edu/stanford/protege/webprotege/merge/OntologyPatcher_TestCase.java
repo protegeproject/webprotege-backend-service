@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,8 +42,8 @@ public class OntologyPatcher_TestCase {
 
     private String commitMessage = "The Commit Message";
 
-    @Mock
     private ExecutionContext executionContext;
+
 
     @Mock
     private OntologyChange ontologyChange;
@@ -63,8 +63,7 @@ public class OntologyPatcher_TestCase {
                                       ontologyDiff2OntologyChanges);
         when(ontologyDiff2OntologyChanges.getOntologyChangesFromDiff(ontologyDiff))
                 .thenReturn(ImmutableList.of(ontologyChange));
-        when(executionContext.getUserId())
-                .thenReturn(userId);
+        executionContext = new ExecutionContext(userId, "DUMMY_JWT");
     }
 
     @Test

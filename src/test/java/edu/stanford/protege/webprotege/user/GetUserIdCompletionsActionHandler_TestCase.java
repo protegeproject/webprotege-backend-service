@@ -2,8 +2,8 @@
 package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.MockingUtils;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 public class GetUserIdCompletionsActionHandler_TestCase {
 
     private GetUserIdCompletionsActionHandler actionHandler;
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
 
     @Mock
     private UserDetailsManager userDetailsManager;
@@ -49,7 +50,7 @@ public class GetUserIdCompletionsActionHandler_TestCase {
     @Test
     public void shouldReturnFoundUserIds() {
         when(action.getCompletionText()).thenReturn("j");
-        GetUserIdCompletionsResult result = actionHandler.execute(action, mock(ExecutionContext.class));
+        GetUserIdCompletionsResult result = actionHandler.execute(action, executionContext);
         assertThat(result.getCompletions(), hasItems(janeDoe, johnSmith));
     }
 }

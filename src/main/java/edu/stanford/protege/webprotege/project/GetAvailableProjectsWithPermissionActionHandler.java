@@ -4,10 +4,10 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.Resource;
 import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -52,9 +52,9 @@ public class GetAvailableProjectsWithPermissionActionHandler implements Applicat
     @Override
     public GetAvailableProjectsWithPermissionResult execute(@Nonnull GetAvailableProjectsWithPermissionAction action,
                                                             @Nonnull ExecutionContext executionContext) {
-        var userId = Subject.forUser(executionContext.getUserId());
+        var userId = Subject.forUser(executionContext.userId());
         var permission = action.getPermission();
-        var projectDetails = accessManager.getResourcesAccessibleToSubject(userId, permission, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId(), executionContext.getJwt()))
+        var projectDetails = accessManager.getResourcesAccessibleToSubject(userId, permission, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt()))
                      .stream()
                      .map(Resource::getProjectId)
                      .filter(Optional::isPresent)

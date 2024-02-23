@@ -1,13 +1,9 @@
 package edu.stanford.protege.webprotege.axioms;
 
-import edu.stanford.protege.webprotege.change.AddAxiomChange;
-import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
-import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.download.DownloadFormat;
 import edu.stanford.protege.webprotege.ipc.CommandExecutionException;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
+
 import javax.annotation.Nonnull;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.StringDocumentSource;

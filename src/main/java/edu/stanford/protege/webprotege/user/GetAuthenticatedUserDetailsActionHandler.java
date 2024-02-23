@@ -3,10 +3,13 @@ package edu.stanford.protege.webprotege.user;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.authorization.Subject;
-import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
+import edu.stanford.protege.webprotege.dispatch.RequestContext;
+import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
-import javax.annotation.Nonnull;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -45,7 +48,7 @@ public class GetAuthenticatedUserDetailsActionHandler implements ApplicationActi
     public GetAuthenticatedUserDetailsResponse execute(@Nonnull GetAuthenticatedUserDetailsRequest action,
                                                        @Nonnull ExecutionContext executionContext) {
 
-        var userId = executionContext.getUserId();
+        var userId = executionContext.userId();
         if(userId.isGuest()) {
             return new GetAuthenticatedUserDetailsResponse(UserDetails.getGuestUserDetails(),
                                                            Collections.emptySet());
@@ -55,7 +58,7 @@ public class GetAuthenticatedUserDetailsActionHandler implements ApplicationActi
                                                 .orElse(UserDetails.getUserDetails(userId,
                                                                                    userId.id(), Optional.empty()));
             var permittedActions = accessManager.getActionClosure(Subject.forUser(userId), ApplicationResource.get(),
-                    new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId(), executionContext.getJwt()));
+                    new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt()));
             return new GetAuthenticatedUserDetailsResponse(userDetails, permittedActions);
         }
     }

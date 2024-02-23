@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -20,6 +22,8 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * 18/02/16
  */
 public class PerspectivesManagerImpl implements PerspectivesManager {
+
+    private final Logger logger = LoggerFactory.getLogger(PerspectivesManagerImpl.class);
 
     @Nonnull
     private final ImmutableList<BuiltInPerspective> builtInPerspectives;

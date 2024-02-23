@@ -6,10 +6,10 @@ import com.google.common.collect.Interners;
 import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.csv.DocumentId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import org.semanticweb.owlapi.io.OWLParserException;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -20,7 +20,12 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -184,7 +189,7 @@ public class ProjectCache implements HasDispose {
         Optional<DocumentId> sourceDocumentId = newProjectSettings.getSourceDocumentId();
         sourceDocumentId.ifPresent(documentId -> projectImporter.createProjectFromSources(projectId,
                                                                                           documentId,
-                                                                                          executionContext.getUserId()));
+                                                                                          executionContext.userId()));
         return getProjectInternal(projectId, AccessMode.NORMAL, InstantiationMode.EAGER).getProjectId();
     }
 

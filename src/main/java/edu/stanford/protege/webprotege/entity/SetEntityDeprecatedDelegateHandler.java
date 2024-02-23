@@ -6,14 +6,13 @@ import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -59,7 +58,7 @@ public class SetEntityDeprecatedDelegateHandler extends AbstractProjectActionHan
         var axiom = dataFactory.getDeprecatedOWLAnnotationAssertionAxiom(action.entityIri());
         var changes = List.<OntologyChange>of(new AddAxiomChange(defaultOntologyIdManager.getDefaultOntologyId(),
                                                                  axiom));
-        var result = changeManager.applyChanges(executionContext.getUserId(),
+        var result = changeManager.applyChanges(executionContext.userId(),
                                                 new FixedChangeListGenerator<>(action.changeRequestId(),
                                                                                changes, "", "Deprecated entity"));
         return new SetEntityDeprecatedResponse();

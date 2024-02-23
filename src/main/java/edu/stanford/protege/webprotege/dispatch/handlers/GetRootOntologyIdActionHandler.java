@@ -2,14 +2,14 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.Action;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdAction;
 import edu.stanford.protege.webprotege.ontology.GetRootOntologyIdResult;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -60,7 +60,7 @@ public class GetRootOntologyIdActionHandler extends AbstractProjectActionHandler
     /**
      * Executes the specified action, against the specified project in the specified context.
      * @param action The action to be handled/executed
-     * @param executionContext The {@link edu.stanford.protege.webprotege.dispatch.ExecutionContext} that should be
+     * @param executionContext The {@link edu.stanford.protege.webprotege.ipc.ExecutionContext;} that should be
      * used to provide details such as the
      * {@link UserId} of the user who requested the action be executed.
      * @return The result of the execution to be returned to the client.

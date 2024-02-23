@@ -7,7 +7,8 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateClassesChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+
 import edu.stanford.protege.webprotege.entity.CreateClassesAction;
 import edu.stanford.protege.webprotege.entity.CreateClassesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;

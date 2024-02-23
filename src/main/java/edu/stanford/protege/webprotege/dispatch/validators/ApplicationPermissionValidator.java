@@ -4,10 +4,10 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
-import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 
@@ -41,13 +41,12 @@ public class ApplicationPermissionValidator implements RequestValidator {
 
     @Override
     public RequestValidationResult validateAction() {
-        if(accessManager.hasPermission(forUser(userId),
-                                       ApplicationResource.get(),
-                                       actionId,
-                new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.getUserId(), executionContext.getJwt()))) {
+        if (accessManager.hasPermission(forUser(userId),
+                ApplicationResource.get(),
+                actionId,
+                executionContext)) {
             return RequestValidationResult.getValid();
-        }
-        else {
+        } else {
             return RequestValidationResult.getInvalid("You do not have permission for " + actionId.id());
         }
     }
