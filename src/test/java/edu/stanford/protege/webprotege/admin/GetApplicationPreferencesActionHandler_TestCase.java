@@ -1,9 +1,6 @@
 
 package edu.stanford.protege.webprotege.admin;
 
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
@@ -16,12 +13,14 @@ import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_APPLICATION_SETTINGS;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
@@ -31,12 +30,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@RunWith(MockitoJUnitRunner.class)
 public class GetApplicationPreferencesActionHandler_TestCase {
 
-    private GetApplicationSettingsActionHandler handler;
+
 
     @Mock
     private AccessManager accessManager;
@@ -44,30 +41,25 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     @Mock
     private ApplicationSettingsManager applicationSettingsManager;
 
+    @Mock
+    private ApplicationSettings applicationSettings;
+
+    @InjectMocks
+    private GetApplicationSettingsActionHandler handler;
+
     private GetApplicationSettingsAction action = new GetApplicationSettingsAction();
-
-    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
-
 
     private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
-    @Mock
-    private RequestValidator requestValidator;
+    private ExecutionContext executionContext = new ExecutionContext(userId, "DUMMY_JWT");
 
-    @Mock
-    private RequestContext requestContext;
-
-    @Mock
-    private ApplicationSettings applicationSettings;
+    private RequestContext requestContext = new RequestContext(userId, executionContext);
 
     public GetApplicationPreferencesActionHandler_TestCase() {
     }
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
-        handler = new GetApplicationSettingsActionHandler(accessManager, applicationSettingsManager);
-        when(requestContext.getUserId()).thenReturn(userId);
-        when(requestContext.getExecutionContext()).thenReturn(executionContext);
         when(applicationSettingsManager.getApplicationSettings()).thenReturn(applicationSettings);
     }
 
@@ -82,9 +74,14 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     }
 
     @Test
-    public void shouldGetAdminSettings() {
+    public void shouldGetApplicationSettings() {
         GetApplicationSettingsResult result = handler.execute(action, executionContext);
         verify(applicationSettingsManager, times(1)).getApplicationSettings();
         assertThat(result.settings(), is(applicationSettings));
+    }
+
+    @After
+    public void tearDown(){
+        Mockito.reset(accessManager, applicationSettingsManager, applicationSettings);
     }
 }

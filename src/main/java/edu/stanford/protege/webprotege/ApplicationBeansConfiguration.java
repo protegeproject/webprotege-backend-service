@@ -234,7 +234,7 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ApplicationActionHandlerRegistry getApplicationActionHandlerRegistry(Set<ApplicationActionHandler> handlers) {
+    ApplicationActionHandlerRegistry getApplicationActionHandlerRegistry(Set<? extends ApplicationActionHandler> handlers) {
         return new ApplicationActionHandlerRegistry(handlers);
     }
 
@@ -319,8 +319,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectPermissionsManager getProjectPermissionsManager(@Lazy AccessManager accessManager,
-                                                           @Lazy ProjectDetailsRepository projectDetailsRepository) {
+    ProjectPermissionsManager getProjectPermissionsManager(AccessManager accessManager,
+                                                           ProjectDetailsRepository projectDetailsRepository) {
         return new ProjectPermissionsManagerImpl(accessManager,
                                                  projectDetailsRepository);
     }

@@ -36,7 +36,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class AbstractProjectActionHandler<A extends Request<R>, R extends Response> implements ProjectActionHandler<A, R> {
 
-    private final Logger logger = LoggerFactory.getLogger(AbstractProjectActionHandler.class);
     @Nonnull
     private final AccessManager accessManager;
 
@@ -92,8 +91,7 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
         if (additionalRequestValidator != NullValidator.get()) {
             validators.add(additionalRequestValidator);
         }
-        var response = CompositeRequestValidator.get(validators);
-        return response;
+        return CompositeRequestValidator.get(validators);
     }
 
     @Nullable

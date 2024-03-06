@@ -26,7 +26,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>
- * Stanford University<br>
+ * Stanford University<br>n
  * Bio-Medical Informatics Research Group<br>
  * Date: 05/04/2013
  */

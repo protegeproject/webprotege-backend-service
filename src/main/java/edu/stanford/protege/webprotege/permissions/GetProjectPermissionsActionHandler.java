@@ -50,7 +50,7 @@ public class GetProjectPermissionsActionHandler implements ApplicationActionHand
         Set<ActionId> allowedActions = accessManager.getActionClosure(
                 forUser(executionContext.userId()),
                 forProject(action.projectId()),
-                new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt()));
+                new ExecutionContext(executionContext.userId(), executionContext.jwt()));
         return new GetProjectPermissionsResult(ImmutableSet.copyOf(allowedActions));
     }
 }
