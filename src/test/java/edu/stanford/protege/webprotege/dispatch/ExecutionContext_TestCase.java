@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.dispatch;
 
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,9 +30,10 @@ public class ExecutionContext_TestCase {
         context = new ExecutionContext(userId, "");
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerForNullSession() {
-        new ExecutionContext(null, null);
+    @Test
+    public void shouldReturnGuestUserIdForNullSession() {
+        ExecutionContext ec = new ExecutionContext();
+        Assert.assertTrue(ec.userId().isGuest());
     }
 
     @Test
