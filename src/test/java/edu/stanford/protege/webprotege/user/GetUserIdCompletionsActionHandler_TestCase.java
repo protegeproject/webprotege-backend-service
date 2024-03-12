@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 public class GetUserIdCompletionsActionHandler_TestCase {
 
     private GetUserIdCompletionsActionHandler actionHandler;
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
 
     @Mock
     private UserDetailsManager userDetailsManager;
@@ -49,7 +50,7 @@ public class GetUserIdCompletionsActionHandler_TestCase {
     @Test
     public void shouldReturnFoundUserIds() {
         when(action.getCompletionText()).thenReturn("j");
-        GetUserIdCompletionsResult result = actionHandler.execute(action, mock(ExecutionContext.class));
+        GetUserIdCompletionsResult result = actionHandler.execute(action, executionContext);
         assertThat(result.getCompletions(), hasItems(janeDoe, johnSmith));
     }
 }

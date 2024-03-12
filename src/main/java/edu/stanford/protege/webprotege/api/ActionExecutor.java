@@ -42,7 +42,6 @@ public class ActionExecutor {
     public   <A extends Request<R>,  R extends Response> R execute(A action, ExecutionContext executionContext) {
         try {
             RequestContext requestContext = new RequestContext(executionContext.userId(), executionContext);
-            logger.info("ALEX execute din Action executor cu executor {} si context  {}",this.executor.getClass(), requestContext);
             DispatchServiceResultContainer resultContainer = executor.execute(action, requestContext, executionContext);
             return (R) resultContainer.getResult();
         } catch (Exception e) {

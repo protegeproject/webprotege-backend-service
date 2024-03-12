@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.admin;
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.PulsarTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
 import edu.stanford.protege.webprotege.app.ApplicationPreferencesStore;
@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 19 Mar 2017
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ApplicationPreferencesStore_IT {
 

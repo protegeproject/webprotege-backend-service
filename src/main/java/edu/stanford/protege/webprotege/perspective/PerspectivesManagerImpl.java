@@ -120,7 +120,6 @@ public class PerspectivesManagerImpl implements PerspectivesManager {
                                       @Nonnull UserId userId,
                                       @Nonnull PerspectiveLayout layout) {
         var record = PerspectiveLayoutRecord.get(projectId, userId, layout.getPerspectiveId(), layout.getLayout().orElse(null));
-        logger.info("ALEX salvez la perspectiva " + record);
         layoutsRepository.saveLayout(record);
     }
 

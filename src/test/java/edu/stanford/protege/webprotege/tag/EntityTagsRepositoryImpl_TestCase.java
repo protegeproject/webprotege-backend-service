@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.tag;
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.PulsarTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import static org.hamcrest.Matchers.is;
  * 15 Mar 2018
  */
 @SpringBootTest
-@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityTagsRepositoryImpl_TestCase {
 

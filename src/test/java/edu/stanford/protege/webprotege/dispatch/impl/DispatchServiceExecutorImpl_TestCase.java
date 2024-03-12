@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.dispatch.ActionExecutionException;
 import edu.stanford.protege.webprotege.dispatch.ActionHandler;
@@ -41,8 +42,8 @@ public class DispatchServiceExecutorImpl_TestCase<A extends Action<R>, R extends
     @Mock
     private RequestContext requestContext;
 
-    @Mock
-    private ExecutionContext executionContext;
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
+
 
     @Mock
     private RequestValidator requestValidator;

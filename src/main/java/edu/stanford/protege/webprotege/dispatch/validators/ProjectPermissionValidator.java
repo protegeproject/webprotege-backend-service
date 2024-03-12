@@ -45,7 +45,6 @@ public class ProjectPermissionValidator implements RequestValidator {
     @Override
     public RequestValidationResult validateAction() {
         if(accessManager.hasPermission(forUser(userId), new ProjectResource(projectId), actionId)) {
-            logger.info("ALEX are permisiune");
             return RequestValidationResult.getValid();
         }
         else {

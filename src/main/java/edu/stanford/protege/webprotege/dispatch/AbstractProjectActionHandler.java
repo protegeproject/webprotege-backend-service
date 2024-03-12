@@ -60,7 +60,6 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
         else {
             throw new RuntimeException("Not a project action or request");
         }
-        logger.info("ALEX din abstract action handler built in action {}", builtInAction);
         if(builtInAction != null) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
                                                                                   projectId,
@@ -94,7 +93,6 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
             validators.add(additionalRequestValidator);
         }
         var response = CompositeRequestValidator.get(validators);
-        logger.info("ALEX din abstract validator response {} cu size {}", response, validators.size() );
         return response;
     }
 

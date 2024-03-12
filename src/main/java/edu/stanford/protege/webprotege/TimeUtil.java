@@ -10,6 +10,9 @@ import java.util.Date;
  */
 public class TimeUtil {
 
+    /*
+    TODO is this still needed?
+     */
 
     private static final int ONE_SECOND = 1000;
 

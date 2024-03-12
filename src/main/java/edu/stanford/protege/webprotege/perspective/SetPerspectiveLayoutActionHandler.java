@@ -49,7 +49,6 @@ public class SetPerspectiveLayoutActionHandler extends AbstractProjectActionHand
         var projectId = action.projectId();
         var userId = action.userId();
         var layout = action.layout();
-        logger.info("ALEX set perspective projectId {} userId {} layout {}", projectId, userId, layout);
         if(!userId.isGuest()) {
             perspectivesManager.savePerspectiveLayout(projectId, userId, layout);
         }

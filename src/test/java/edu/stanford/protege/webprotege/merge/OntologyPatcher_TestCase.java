@@ -42,8 +42,8 @@ public class OntologyPatcher_TestCase {
 
     private String commitMessage = "The Commit Message";
 
-    @Mock
     private ExecutionContext executionContext;
+
 
     @Mock
     private OntologyChange ontologyChange;
@@ -63,8 +63,7 @@ public class OntologyPatcher_TestCase {
                                       ontologyDiff2OntologyChanges);
         when(ontologyDiff2OntologyChanges.getOntologyChangesFromDiff(ontologyDiff))
                 .thenReturn(ImmutableList.of(ontologyChange));
-        when(executionContext.userId())
-                .thenReturn(userId);
+        executionContext = new ExecutionContext(userId, "DUMMY_JWT");
     }
 
     @Test

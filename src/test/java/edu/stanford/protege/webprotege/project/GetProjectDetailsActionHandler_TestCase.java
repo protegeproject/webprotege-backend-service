@@ -2,6 +2,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -21,8 +22,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GetProjectDetailsActionHandler_TestCase {
 
-
-
     private GetProjectDetailsActionHandler handler;
 
     @Mock
@@ -38,6 +37,9 @@ public class GetProjectDetailsActionHandler_TestCase {
 
     @Mock
     private ProjectDetails projectDetails;
+
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
+
 
     @Before
     public void setUp() {
@@ -63,7 +65,7 @@ public class GetProjectDetailsActionHandler_TestCase {
 
     @Test
     public void should_execute() {
-        GetProjectDetailsResult res = handler.execute(action, mock(ExecutionContext.class));
+        GetProjectDetailsResult res = handler.execute(action, executionContext);
         verify(projectDetailsManager).getProjectDetails(projectId);
         assertThat(res.getProjectDetails(), is(projectDetails));
     }

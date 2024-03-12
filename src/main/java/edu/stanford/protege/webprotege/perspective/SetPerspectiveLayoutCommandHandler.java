@@ -40,7 +40,6 @@ public class SetPerspectiveLayoutCommandHandler implements CommandHandler<SetPer
     @Override
     public Mono<SetPerspectiveLayoutResult> handleRequest(SetPerspectiveLayoutAction request,
                                                           ExecutionContext executionContext) {
-        logger.info("ALEX execut din command handler " + executor.getClass());
         return executor.executeRequest(request, executionContext);
     }
 }
