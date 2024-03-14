@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.authorization.RoleId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +13,11 @@ import java.util.Optional;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.startsWith;
 
-@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class RoleAssignment_TestCase {
 
     private RoleAssignment roleAssignment;
