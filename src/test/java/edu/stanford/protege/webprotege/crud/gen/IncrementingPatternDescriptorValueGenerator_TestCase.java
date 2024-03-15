@@ -16,8 +16,8 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 import java.util.IllegalFormatException;
 import java.util.stream.Stream;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
