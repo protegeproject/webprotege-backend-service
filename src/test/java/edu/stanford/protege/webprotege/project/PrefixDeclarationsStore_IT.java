@@ -1,19 +1,15 @@
 package edu.stanford.protege.webprotege.project;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.annotation.DirtiesContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -23,18 +19,16 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 23 Feb 2018
  */
-@SpringBootTest
-@Import(WebprotegeBackendMonolithApplication.class)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@DataMongoTest
 public class PrefixDeclarationsStore_IT {
 
     public static final String COLLECTION_NAME = "PrefixDeclarations";
     
     private final ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
-    @Autowired
     private PrefixDeclarationsStore store;
+
+    private ObjectMapper objectMapper;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -49,6 +43,9 @@ public class PrefixDeclarationsStore_IT {
                 projectId,
                 prefixesMap.build()
         );
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new Jdk8Module());
+        store = new PrefixDeclarationsStore(objectMapper, mongoTemplate);
     }
 
     @Test

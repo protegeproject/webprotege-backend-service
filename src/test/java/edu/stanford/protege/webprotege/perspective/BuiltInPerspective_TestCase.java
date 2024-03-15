@@ -1,25 +1,34 @@
 package edu.stanford.protege.webprotege.perspective;
 
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 2020-09-01
  */
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 public class BuiltInPerspective_TestCase {
 
-    @Autowired
+    private ObjectMapper objectMapper;
     private BuiltInPerspectiveLoader loader;
+
+    @BeforeEach
+    public void setUp(){
+        objectMapper = new ObjectMapper();
+        loader = new BuiltInPerspectiveLoader(objectMapper);
+    }
 
     @Test
     public void shouldLoadBuiltInClassesPerspective() throws IOException {

@@ -2,36 +2,26 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.test.annotation.DirtiesContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@DataMongoTest
 public class ProjectAccessManagerImpl_IT {
 
     public static final long TIMESTAMP_A = 33L;
 
     public static final long TIMESTAMP_B = 44L;
 
-    @Autowired
     private ProjectAccessManagerImpl manager;
 
     @Autowired
@@ -45,6 +35,7 @@ public class ProjectAccessManagerImpl_IT {
     
     @BeforeEach
     public void setUp() throws Exception {
+        manager = new ProjectAccessManagerImpl(mongoTemplate);
         manager.ensureIndexes();
     }
 

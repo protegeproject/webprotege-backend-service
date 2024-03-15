@@ -1,15 +1,16 @@
 
 package edu.stanford.protege.webprotege.metaproject;
 
+import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.user.EmailAddress;
 import edu.stanford.protege.webprotege.user.UserDetailsManagerImpl;
 import edu.stanford.protege.webprotege.user.UserRecord;
 import edu.stanford.protege.webprotege.user.UserRecordRepository;
-import edu.stanford.protege.webprotege.user.EmailAddress;
-import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
-@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class UserDetailsManagerImpl_TestCase {
 
     private UserDetailsManagerImpl userDetailsManagerImpl;
