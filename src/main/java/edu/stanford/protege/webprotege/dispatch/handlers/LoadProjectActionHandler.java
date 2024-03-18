@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
+import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
@@ -30,7 +30,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
  * Bio-Medical Informatics Research Group<br>
  * Date: 05/04/2013
  */
-public class LoadProjectActionHandler implements ApplicationActionHandler<LoadProjectAction, LoadProjectResult> {
+public class LoadProjectActionHandler implements ProjectActionHandler<LoadProjectAction, LoadProjectResult> {
 
     private static final Logger logger = LoggerFactory.getLogger(LoadProjectActionHandler.class);
 
