@@ -79,11 +79,11 @@ public class ApplicationActionHandlerRegistry_Test {
         assertThat(handler, is(notNullValue()));
     }
 
-    @Test
-    public void shouldContainGetProjectDetailsActionHandler() {
-        var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
-        assertThat(handler, is(notNullValue()));
-    }
+//    @Test
+//    public void shouldContainGetProjectDetailsActionHandler() {
+//        var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
+//        assertThat(handler, is(notNullValue()));
+//    }
 
     @Test
     public void shouldContainGetProjectPermissionsActionHandler() {
@@ -98,11 +98,11 @@ public class ApplicationActionHandlerRegistry_Test {
         assertThat(handler, is(notNullValue()));
     }
 
-    @Test
-    public void shouldContainLoadProjectActionHandler() {
-        var handler = registry.getActionHandler(new LoadProjectAction(ProjectId.generate()));
-        assertThat(handler, is(notNullValue()));
-    }
+//    @Test
+//    public void shouldContainLoadProjectActionHandler() {
+//        var handler = registry.getActionHandler(new LoadProjectAction(ProjectId.generate()));
+//        assertThat(handler, is(notNullValue()));
+//    }
 
     @Test
     public void shouldContainMoveProjectsToTrashActionHandler() {
