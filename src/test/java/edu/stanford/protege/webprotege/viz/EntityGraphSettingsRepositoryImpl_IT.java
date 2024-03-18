@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.viz;
 
 
-import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -15,7 +14,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Matthew Horridge
@@ -23,7 +22,7 @@ import static org.hamcrest.Matchers.*;
  * 2019-12-06
  */
 @SpringBootTest
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith(RabbitTestExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityGraphSettingsRepositoryImpl_IT {
 

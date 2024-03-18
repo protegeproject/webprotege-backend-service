@@ -5,9 +5,7 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(org.mockito.runners.MockitoJUnitRunner.class)
 public class GetUserIdCompletionsAction_TestCase {
 
     private GetUserIdCompletionsAction action;

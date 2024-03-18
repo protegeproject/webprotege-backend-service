@@ -5,16 +5,11 @@ import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-@RunWith(MockitoJUnitRunner.class)
 public class UserRecord_TestCase {
 
     private UserRecord userRecord;

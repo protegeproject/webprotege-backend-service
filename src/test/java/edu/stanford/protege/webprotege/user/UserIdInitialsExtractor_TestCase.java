@@ -1,22 +1,16 @@
 package edu.stanford.protege.webprotege.user;
 
-import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.when;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 10/03/16
  */
-@RunWith(MockitoJUnitRunner.class)
 public class UserIdInitialsExtractor_TestCase {
 
     private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();

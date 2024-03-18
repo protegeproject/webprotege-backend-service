@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.session;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
@@ -16,7 +14,6 @@ import static org.hamcrest.core.IsEqual.equalTo;
  * Stanford Center for Biomedical Informatics Research
  * 12/02/15
  */
-@RunWith(MockitoJUnitRunner.class)
 public class WebProtegeSessionImplAttribute_TestCase {
 
 

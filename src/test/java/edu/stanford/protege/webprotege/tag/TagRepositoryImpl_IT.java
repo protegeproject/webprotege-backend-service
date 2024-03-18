@@ -4,12 +4,11 @@ import com.google.common.collect.ImmutableList;
 import com.mongodb.ErrorCategory;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteError;
-import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.color.Color;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.criteria.RootCriteria;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +33,7 @@ import static org.junit.Assert.fail;
  * 18 Mar 2018
  */
 @SpringBootTest
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith(RabbitTestExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TagRepositoryImpl_IT {
 

@@ -1,23 +1,22 @@
 package edu.stanford.protege.webprotege.project;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
-import edu.stanford.protege.webprotege.common.DictionaryLanguage;
-import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -33,9 +32,7 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 6 Mar 2017
  */
-@SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@DataMongoTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectDetailsRepository_IT {
 
@@ -47,8 +44,9 @@ public class ProjectDetailsRepository_IT {
 
     public static final boolean IN_TRASH = true;
 
-    @Autowired
     private ProjectDetailsRepository repository;
+
+    private ObjectMapper objectMapper;
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -74,6 +72,11 @@ public class ProjectDetailsRepository_IT {
 
     @BeforeEach
     public void setUp() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new Jdk8Module());
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.registerModule(new GuavaModule());
+        repository = new ProjectDetailsRepository(mongoTemplate, objectMapper);
         projectDetails = ProjectDetails.get(projectId,
                                             "The Display Name",
                                             "The Description",

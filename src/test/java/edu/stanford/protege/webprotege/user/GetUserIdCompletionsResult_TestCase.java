@@ -6,14 +6,10 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-
-@RunWith(org.mockito.runners.MockitoJUnitRunner.class)
 public class GetUserIdCompletionsResult_TestCase {
 
     private GetUserIdCompletionsResult result;

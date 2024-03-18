@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -20,6 +22,7 @@ import static org.hamcrest.Matchers.is;
  * 23 Feb 2018
  */
 @DataMongoTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class PrefixDeclarationsStore_IT {
 
     public static final String COLLECTION_NAME = "PrefixDeclarations";
@@ -45,6 +48,7 @@ public class PrefixDeclarationsStore_IT {
         );
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new Jdk8Module());
+        objectMapper.registerModule(new GuavaModule());
         store = new PrefixDeclarationsStore(objectMapper, mongoTemplate);
     }
 
