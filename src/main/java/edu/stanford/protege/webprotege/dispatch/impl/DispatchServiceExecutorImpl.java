@@ -105,10 +105,10 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
             }
             return projectId;
         }
-        else {
-            return null;
+        else if(request instanceof HasProjectId) {
+            return ((HasProjectId) request).projectId();
         }
-
+        return null;
     }
 
     private <A extends Request<R>, R extends Response> DispatchServiceResultContainer execAction(A action, RequestContext requestContext, ExecutionContext executionContext) {

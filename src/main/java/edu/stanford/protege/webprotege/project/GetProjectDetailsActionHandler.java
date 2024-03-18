@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
+import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 10/03/16
  */
-public class GetProjectDetailsActionHandler implements ApplicationActionHandler<GetProjectDetailsAction, GetProjectDetailsResult> {
+public class GetProjectDetailsActionHandler implements ProjectActionHandler<GetProjectDetailsAction, GetProjectDetailsResult> {
 
     private final ProjectDetailsManager projectDetailsManager;
 
