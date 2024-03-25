@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.watches;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -26,6 +27,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 //         }
 //)
 @Document("Watches")
+
 public class WatchRecord {
 
     public static final String PROJECT_ID = "projectId";
@@ -36,7 +38,9 @@ public class WatchRecord {
 
     public static final String TYPE = "type";
 
+    @JsonProperty("projectId")
     private ProjectId projectId;
+    @JsonProperty("userId")
 
     private UserId userId;
 

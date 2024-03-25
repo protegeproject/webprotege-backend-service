@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.viz;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -37,7 +37,7 @@ public class GetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
                                                            @Nonnull ExecutionContext executionContext) {
 
         var projectId = action.projectId();
-        var userId = executionContext.getUserId();
+        var userId = executionContext.userId();
         var settings = repository.getSettingsForUserOrProjectDefault(projectId, userId);
         return new GetUserProjectEntityGraphCriteriaResult(projectId,
                                                            userId,

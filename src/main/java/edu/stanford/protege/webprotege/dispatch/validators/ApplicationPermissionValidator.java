@@ -4,9 +4,10 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
-import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 
@@ -26,28 +27,26 @@ public class ApplicationPermissionValidator implements RequestValidator {
 
     private final ActionId actionId;
 
-    public ApplicationPermissionValidator(@Nonnull AccessManager accessManager,
-                                          @Nonnull UserId userId,
-                                          @Nonnull ActionId actionId) {
-        this.accessManager = checkNotNull(accessManager);
-        this.userId = checkNotNull(userId);
-        this.actionId = checkNotNull(actionId);
-    }
+    private final ExecutionContext executionContext;
 
     public ApplicationPermissionValidator(@Nonnull AccessManager accessManager,
                                           @Nonnull UserId userId,
-                                          @Nonnull BuiltInAction actionId) {
-        this(accessManager, userId, actionId.getActionId());
+                                          @Nonnull BuiltInAction actionId,
+                                          ExecutionContext executionContext) {
+        this.accessManager = checkNotNull(accessManager);
+        this.userId = checkNotNull(userId);
+        this.actionId = checkNotNull(actionId.getActionId());
+        this.executionContext = executionContext;
     }
 
     @Override
     public RequestValidationResult validateAction() {
-        if(accessManager.hasPermission(forUser(userId),
-                                       ApplicationResource.get(),
-                                       actionId)) {
+        if (accessManager.hasPermission(forUser(userId),
+                ApplicationResource.get(),
+                actionId,
+                executionContext)) {
             return RequestValidationResult.getValid();
-        }
-        else {
+        } else {
             return RequestValidationResult.getInvalid("You do not have permission for " + actionId.id());
         }
     }

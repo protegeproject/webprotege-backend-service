@@ -1,9 +1,10 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
-import javax.annotation.Nonnull;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import reactor.core.publisher.Mono;
+
+import javax.annotation.Nonnull;
 
 /**
  * Matthew Horridge
@@ -32,7 +33,7 @@ public class GetAvailableProjectsWithPermissionCommandHandler implements Command
     @Override
     public Mono<GetAvailableProjectsWithPermissionResult> handleRequest(GetAvailableProjectsWithPermissionAction request,
                                                                         edu.stanford.protege.webprotege.ipc.ExecutionContext executionContext) {
-        var result = delegate.execute(request, new ExecutionContext(executionContext.userId()));
+        var result = delegate.execute(request, new ExecutionContext(executionContext.userId(), executionContext.jwt()));
         return Mono.just(result);
     }
 }

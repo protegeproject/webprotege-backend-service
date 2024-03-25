@@ -2,18 +2,18 @@ package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.EventId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 
 import javax.annotation.Nonnull;
@@ -92,7 +92,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
     @Override
     public AddCommentResult execute(@Nonnull AddCommentAction action,
                                     @Nonnull ExecutionContext executionContext) {
-        UserId createdBy = executionContext.getUserId();
+        UserId createdBy = executionContext.userId();
         long createdAt = System.currentTimeMillis();
         CommentRenderer r = new CommentRenderer();
         String rawComment = action.comment();

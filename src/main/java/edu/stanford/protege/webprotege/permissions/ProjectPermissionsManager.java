@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.permissions;
 
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
-import edu.stanford.protege.webprotege.common.UserId;
 
 import java.util.List;
 
@@ -20,5 +20,5 @@ public interface ProjectPermissionsManager {
      * @param userId The userId.  Not {@code null}.
      * @return The (possibly empty) list of projects.
      */
-    List<ProjectDetails> getReadableProjects(UserId userId);
+    List<ProjectDetails> getReadableProjects(ExecutionContext executionContext);
 }

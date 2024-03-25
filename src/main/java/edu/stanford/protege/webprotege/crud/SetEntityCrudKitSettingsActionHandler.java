@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSettings;
 import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSettingsRepository;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
@@ -73,7 +73,7 @@ public class SetEntityCrudKitSettingsActionHandler extends AbstractProjectAction
             var toPrefix = action.toSettings().getPrefixSettings().getIRIPrefix();
             var changeGenerator = findAndReplaceIRIPrefixChangeGeneratorFactory.create(action.changeRequestId(),
                                                                                        fromPrefix, toPrefix);
-            changeManager.applyChanges(executionContext.getUserId(), changeGenerator);
+            changeManager.applyChanges(executionContext.userId(), changeGenerator);
         }
         return new SetEntityCrudKitSettingsResult();
     }

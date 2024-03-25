@@ -1,41 +1,39 @@
 
 package edu.stanford.protege.webprotege.admin;
 
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.PulsarTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
+import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
+import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
-import edu.stanford.protege.webprotege.app.ApplicationSettings;
-import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
-import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
-import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.DirtiesContext;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_APPLICATION_SETTINGS;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@RunWith(MockitoJUnitRunner.class)
 public class GetApplicationPreferencesActionHandler_TestCase {
 
-    private GetApplicationSettingsActionHandler handler;
+
 
     @Mock
     private AccessManager accessManager;
@@ -43,29 +41,25 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     @Mock
     private ApplicationSettingsManager applicationSettingsManager;
 
-    private GetApplicationSettingsAction action = new GetApplicationSettingsAction();
-
     @Mock
-    private ExecutionContext executionContext;
+    private ApplicationSettings applicationSettings;
+
+    @InjectMocks
+    private GetApplicationSettingsActionHandler handler;
+
+    private GetApplicationSettingsAction action = new GetApplicationSettingsAction();
 
     private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
-    @Mock
-    private RequestValidator requestValidator;
+    private ExecutionContext executionContext = new ExecutionContext(userId, "DUMMY_JWT");
 
-    @Mock
-    private RequestContext requestContext;
-
-    @Mock
-    private ApplicationSettings applicationSettings;
+    private RequestContext requestContext = new RequestContext(userId, executionContext);
 
     public GetApplicationPreferencesActionHandler_TestCase() {
     }
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
-        handler = new GetApplicationSettingsActionHandler(accessManager, applicationSettingsManager);
-        when(requestContext.getUserId()).thenReturn(userId);
         when(applicationSettingsManager.getApplicationSettings()).thenReturn(applicationSettings);
     }
 
@@ -76,13 +70,18 @@ public class GetApplicationPreferencesActionHandler_TestCase {
         assertThat(result.isInvalid(), is(true));
         verify(accessManager, times(1)).hasPermission(forUser(userId),
                                                       ApplicationResource.get(),
-                                                      EDIT_APPLICATION_SETTINGS.getActionId());
+                                                      EDIT_APPLICATION_SETTINGS.getActionId(),executionContext);
     }
 
     @Test
-    public void shouldGetAdminSettings() {
+    public void shouldGetApplicationSettings() {
         GetApplicationSettingsResult result = handler.execute(action, executionContext);
         verify(applicationSettingsManager, times(1)).getApplicationSettings();
         assertThat(result.settings(), is(applicationSettings));
+    }
+
+    @After
+    public void tearDown(){
+        Mockito.reset(accessManager, applicationSettingsManager, applicationSettings);
     }
 }

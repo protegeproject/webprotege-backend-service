@@ -1,21 +1,21 @@
 package edu.stanford.protege.webprotege.watches;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.PulsarTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import java.util.List;
@@ -31,16 +31,15 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 19 Apr 2017
  */
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@ExtendWith({PulsarTestExtension.class, MongoTestExtension.class})
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
+@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class WatchRecordRepository_IT {
 
     public static final String WATCHES = "Watches";
 
-    @Autowired
-    private WatchRecordRepositoryImpl repository;
+    private WatchRecordRepository repository;
 
     private UserId userId = UserId.valueOf("The User");
 
@@ -49,10 +48,14 @@ public class WatchRecordRepository_IT {
     private ProjectId projectId = ProjectId.valueOf(UUID.randomUUID().toString());
 
     @Autowired
-    private MongoTemplate database;
+    private MongoTemplate mongoTemplate;
 
-    @Before
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
     public void setUp() throws Exception {
+        repository = new WatchRecordRepositoryImpl(mongoTemplate, objectMapper);
         repository.ensureIndexes();
     }
 
@@ -63,7 +66,7 @@ public class WatchRecordRepository_IT {
     }
 
     private long getDocumentCount() {
-        return database.getCollection(WATCHES).countDocuments();
+        return mongoTemplate.getCollection(WATCHES).countDocuments();
     }
 
     @Test
@@ -106,8 +109,8 @@ public class WatchRecordRepository_IT {
         assertThat(getDocumentCount(), is(0L));
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
-        database.getCollection(WATCHES).drop();
+        mongoTemplate.getCollection(WATCHES).drop();
     }
 }

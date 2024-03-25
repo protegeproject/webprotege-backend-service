@@ -8,10 +8,10 @@ import edu.stanford.protege.webprotege.change.CreateObjectPropertiesChangeGenera
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import javax.annotation.Nonnull;

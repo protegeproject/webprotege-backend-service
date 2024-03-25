@@ -2,10 +2,10 @@ package edu.stanford.protege.webprotege.permissions;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ApplicationPermissionValidator;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -35,7 +35,7 @@ public class RebuildPermissionsActionHandler implements ApplicationActionHandler
     @Nonnull
     @Override
     public RequestValidator getRequestValidator(@Nonnull RebuildPermissionsAction action, @Nonnull RequestContext requestContext) {
-        return new ApplicationPermissionValidator(accessManager, requestContext.getUserId(), REBUILD_PERMISSIONS.getActionId());
+        return new ApplicationPermissionValidator(accessManager, requestContext.getUserId(), REBUILD_PERMISSIONS, requestContext.getExecutionContext());
     }
 
     @Nonnull

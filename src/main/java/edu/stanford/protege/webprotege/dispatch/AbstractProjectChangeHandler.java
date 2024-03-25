@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.common.Response;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 
@@ -31,7 +32,7 @@ public abstract class AbstractProjectChangeHandler<T, A extends Request<R>, R ex
     @Override
     public final R execute(@Nonnull A action, @Nonnull ExecutionContext executionContext) {
         ChangeListGenerator<T> changeListGenerator = getChangeListGenerator(action, executionContext);
-        ChangeApplicationResult<T> result = applyChanges.applyChanges(executionContext.getUserId(),
+        ChangeApplicationResult<T> result = applyChanges.applyChanges(executionContext.userId(),
                                                                       changeListGenerator);
         return createActionResult(result, action, executionContext);
     }

@@ -2,6 +2,8 @@ package edu.stanford.protege.webprotege.crud;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.IRI;
 
 import java.util.Optional;
@@ -13,6 +15,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 17/04/2014
  */
+@RunWith(MockitoJUnitRunner.class)
 public class IRIParserTestCase {
 
     private IRIParser parser;

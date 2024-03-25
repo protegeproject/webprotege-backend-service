@@ -5,6 +5,9 @@ import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import javax.annotation.Nonnull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
 /**
@@ -14,6 +17,8 @@ import reactor.core.publisher.Mono;
  */
 @WebProtegeHandler
 public class SetPerspectiveLayoutCommandHandler implements CommandHandler<SetPerspectiveLayoutAction, SetPerspectiveLayoutResult> {
+
+    private final Logger logger = LoggerFactory.getLogger(SetPerspectiveLayoutCommandHandler.class);
 
     private final ActionExecutor executor;
 

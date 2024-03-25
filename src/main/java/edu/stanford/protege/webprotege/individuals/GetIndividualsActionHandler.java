@@ -3,16 +3,16 @@ package edu.stanford.protege.webprotege.individuals;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageRequest;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.index.IndividualsIndex;
 import edu.stanford.protege.webprotege.index.IndividualsQueryResult;
-import edu.stanford.protege.webprotege.common.Page;
-import edu.stanford.protege.webprotege.common.PageRequest;
-import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
@@ -85,7 +85,7 @@ public class GetIndividualsActionHandler extends AbstractProjectActionHandler<Ge
         OWLClassData typeData = renderingManager.getClassData(type);
         logger.info("{} {} retrieved instances of {}",
                     projectId,
-                    executionContext.getUserId(),
+                    executionContext.userId(),
                     type);
         Page<OWLNamedIndividual> pg = result.getIndividuals();
         Page<EntityNode> entityNodes = pg.transform(entityNodeRenderer::render);

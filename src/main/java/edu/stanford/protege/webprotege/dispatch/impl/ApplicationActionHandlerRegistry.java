@@ -15,7 +15,7 @@ import java.util.Set;
 public class ApplicationActionHandlerRegistry extends ActionHandlerRegistryImpl {
 
     @Inject
-    public ApplicationActionHandlerRegistry(Set<ApplicationActionHandler> handlers) {
+    public ApplicationActionHandlerRegistry(Set<? extends ApplicationActionHandler> handlers) {
         super(handlers);
     }
 }

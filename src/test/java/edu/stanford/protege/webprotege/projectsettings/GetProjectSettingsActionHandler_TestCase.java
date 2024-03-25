@@ -1,10 +1,11 @@
 package edu.stanford.protege.webprotege.projectsettings;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 import edu.stanford.protege.webprotege.project.ProjectManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,8 +39,8 @@ public class GetProjectSettingsActionHandler_TestCase {
     @Mock
     private GetProjectSettingsAction action;
 
-    @Mock
-    private ExecutionContext executionContext;
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
+
 
     @Mock
     private ProjectManager projectManager;

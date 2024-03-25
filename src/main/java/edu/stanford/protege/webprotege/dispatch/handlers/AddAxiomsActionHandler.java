@@ -2,15 +2,11 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.change.AddAxiomChange;
-import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
-import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.AddAxiomsAction;
 import edu.stanford.protege.webprotege.dispatch.actions.AddAxiomsResult;
-import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 
 import javax.annotation.Nonnull;
@@ -60,7 +56,7 @@ public class AddAxiomsActionHandler extends AbstractProjectActionHandler<AddAxio
     @Override
     public AddAxiomsResult execute(@Nonnull AddAxiomsAction action, @Nonnull ExecutionContext executionContext) {
         var changeListGenerator = changeListGeneratorFactory.create(action);
-        var result = changeManager.applyChanges(executionContext.getUserId(), changeListGenerator);
+        var result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
         int addedAxiomsCount = result.getChangeList()
                                      .size();
         return new AddAxiomsResult(projectId, addedAxiomsCount);

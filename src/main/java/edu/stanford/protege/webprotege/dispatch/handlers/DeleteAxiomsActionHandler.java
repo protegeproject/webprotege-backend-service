@@ -4,12 +4,12 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.dispatch.actions.DeleteAxiomsAction;
 import edu.stanford.protege.webprotege.dispatch.actions.DeleteAxiomsResult;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 
 import javax.annotation.Nonnull;
@@ -61,7 +61,7 @@ public class DeleteAxiomsActionHandler extends AbstractProjectActionHandler<Dele
         var changeListGenerator = new FixedChangeListGenerator<>(action.changeRequestId(), changeList.getChanges(),
                                                                  "",
                                                                  action.getCommitMessage());
-        var result = changeManager.applyChanges(executionContext.getUserId(),
+        var result = changeManager.applyChanges(executionContext.userId(),
                                                 changeListGenerator);
         int removedAxioms = result.getChangeList()
                                   .size();

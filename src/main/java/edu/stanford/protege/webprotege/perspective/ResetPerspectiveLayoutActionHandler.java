@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.perspective;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -37,7 +37,7 @@ public class ResetPerspectiveLayoutActionHandler extends AbstractProjectActionHa
                                                 @Nonnull ExecutionContext executionContext) {
         var projectId = action.projectId();
         var perspectiveId = action.perspectiveId();
-        var userId = executionContext.getUserId();
+        var userId = executionContext.userId();
         perspectivesManager.resetPerspectiveLayout(projectId, userId, perspectiveId);
         var perspectiveLayout = perspectivesManager.getPerspectiveLayout(projectId, userId, perspectiveId);
         return new ResetPerspectiveLayoutResult(perspectiveLayout);

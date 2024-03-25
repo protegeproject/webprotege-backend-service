@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.perspective;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,7 +44,7 @@ public class GetPerspectiveDetailsActionHandler extends AbstractProjectActionHan
     public GetPerspectiveDetailsResult execute(@Nonnull GetPerspectiveDetailsAction action,
                                                @Nonnull ExecutionContext executionContext) {
         var projectId = action.projectId();
-        var userId = executionContext.getUserId();
+        var userId = executionContext.userId();
         var perspectiveDetails = perspectivesManager.getPerspectiveDetails(projectId, userId);
         return new GetPerspectiveDetailsResult(perspectiveDetails);
     }

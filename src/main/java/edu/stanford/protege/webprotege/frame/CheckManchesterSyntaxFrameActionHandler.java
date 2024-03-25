@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGenerator;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
@@ -57,7 +57,7 @@ public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActi
                 "",
                 action);
         try {
-            OntologyChangeList<?> changeList = changeGenerator.generateChanges(new ChangeGenerationContext(executionContext.getUserId()));
+            OntologyChangeList<?> changeList = changeGenerator.generateChanges(new ChangeGenerationContext(executionContext.userId()));
             if (changeList.getChanges().isEmpty()) {
                 return CheckManchesterSyntaxFrameResult.create(UNCHANGED);
             }

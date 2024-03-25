@@ -1,8 +1,15 @@
 package edu.stanford.protege.webprotege.merge_add;
 
-import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.change.AddAxiomChange;
+import edu.stanford.protege.webprotege.change.AddOntologyAnnotationChange;
+import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
+import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
+import edu.stanford.protege.webprotege.change.ChangeListGenerator;
+import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -38,7 +45,7 @@ public class OntologyMergeAddPatcher {
 
     void applyChanges(final List<OntologyChange> changes,
                       ExecutionContext executionContext) {
-        changeManager.applyChanges(executionContext.getUserId(), new ChangeListGenerator<Boolean>() {
+        changeManager.applyChanges(executionContext.userId(), new ChangeListGenerator<Boolean>() {
             @Override
             public ChangeRequestId getChangeRequestId() {
                 return null;

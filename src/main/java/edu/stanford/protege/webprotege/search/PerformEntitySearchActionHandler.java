@@ -2,11 +2,16 @@ package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.common.*;
+import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.DictionaryLanguageFilter;
+import edu.stanford.protege.webprotege.common.LocalNameDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.OboIdDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.Page;
+import edu.stanford.protege.webprotege.common.PageRequest;
+import edu.stanford.protege.webprotege.common.PrefixedNameDictionaryLanguage;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
-import edu.stanford.protege.webprotege.shortform.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -59,7 +64,7 @@ public class PerformEntitySearchActionHandler extends AbstractProjectActionHandl
 
         var entitySearcher = entitySearcherFactory.create(entityTypes,
                                                           searchString,
-                                                          executionContext.getUserId(),
+                                                          executionContext.userId(),
                                                           languages.build(),
                                                           searchFilters);
         PageRequest pageRequest = action.pageRequest();

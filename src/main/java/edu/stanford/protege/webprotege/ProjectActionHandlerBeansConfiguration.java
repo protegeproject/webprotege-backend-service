@@ -269,7 +269,6 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     CreateNamedIndividualsActionHandler createNamedIndividualsActionHandler(AccessManager p1,
                                                                             ProjectId p2,
-
                                                                             HasApplyChanges p4,
                                                                             EntityNodeRenderer p5,
                                                                             CreateIndividualsChangeListGeneratorFactory p6) {

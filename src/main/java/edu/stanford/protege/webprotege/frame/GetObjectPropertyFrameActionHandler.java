@@ -3,10 +3,8 @@ package edu.stanford.protege.webprotege.frame;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

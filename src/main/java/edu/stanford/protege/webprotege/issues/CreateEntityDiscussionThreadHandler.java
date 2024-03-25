@@ -7,9 +7,9 @@ import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ExecutionContext;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import edu.stanford.protege.webprotege.project.ProjectDetails;
 import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
@@ -91,7 +91,7 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
         String rawComment = action.comment();
         CommentRenderer commentRenderer = new CommentRenderer();
         String renderedComment = commentRenderer.renderComment(rawComment);
-        UserId commentingUser = executionContext.getUserId();
+        UserId commentingUser = executionContext.userId();
         Comment comment = new Comment(CommentId.create(),
                                       commentingUser,
                                       System.currentTimeMillis(),

@@ -12,6 +12,8 @@ import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValid
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
 import edu.stanford.protege.webprotege.project.HasProjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -57,7 +59,6 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
         else {
             throw new RuntimeException("Not a project action or request");
         }
-
         if(builtInAction != null) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
                                                                                   projectId,

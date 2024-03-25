@@ -85,7 +85,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>0.9.4</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -96,6 +96,22 @@
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-amqp</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ontology-change</artifactId>
@@ -159,11 +175,6 @@
             <version>0.9.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-authorization</artifactId>
-            <version>0.9.0</version>
-        </dependency>
 
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -340,8 +351,8 @@
 
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>pulsar</artifactId>
-            <version>1.18.1</version>
+            <artifactId>rabbitmq</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -418,7 +429,15 @@
             <dependency>
                 <groupId>edu.stanford.protege</groupId>
                 <artifactId>webprotege-ipc</artifactId>
-                <version>0.10.1</version>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.17.1</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
         </dependencies>
