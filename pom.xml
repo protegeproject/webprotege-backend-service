@@ -12,7 +12,7 @@
 
     <groupId>edu.stanford.protege</groupId>
     <artifactId>webprotege-backend-service</artifactId>
-    <version>0.2.0</version>
+    <version>1.0.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>0.9.4</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -95,7 +95,6 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>0.10.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -430,7 +429,7 @@
             <dependency>
                 <groupId>edu.stanford.protege</groupId>
                 <artifactId>webprotege-ipc</artifactId>
-                <version>0.10.3-SNAPSHOT</version>
+                <version>1.0.0</version>
             </dependency>
 
             <dependency>
@@ -455,15 +454,6 @@
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>1.4.13</version>
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>push</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <repository>protegeproject/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
