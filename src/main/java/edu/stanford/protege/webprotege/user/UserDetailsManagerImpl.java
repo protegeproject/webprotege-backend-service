@@ -1,10 +1,13 @@
 package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,20 +16,28 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 06/02/15
  */
+
+@Component
 public class UserDetailsManagerImpl implements UserDetailsManager {
 
     private final UserRecordRepository repository;
 
+    private final CommandExecutor<UsersQueryRequest, UsersQueryResponse> getUsersExecutor;
     private final Logger logger = LoggerFactory.getLogger(UserDetailsManagerImpl.class);
 
-    @Inject
-    public UserDetailsManagerImpl(UserRecordRepository userRecordRepository) {
+    public UserDetailsManagerImpl(UserRecordRepository userRecordRepository, CommandExecutor<UsersQueryRequest, UsersQueryResponse> getUsersExecutor) {
         this.repository = checkNotNull(userRecordRepository);
+        this.getUsersExecutor = getUsersExecutor;
     }
 
     @Override
     public List<UserId> getUserIdsContainingIgnoreCase(String userName, int limit) {
-        return repository.findByUserIdContainingIgnoreCase(userName, limit);
+        try {
+            return getUsersExecutor.execute(new UsersQueryRequest(userName), new ExecutionContext()).get().userIds();
+        } catch (Exception e) {
+            logger.error("Error calling get users",e);
+            return new ArrayList<>();
+        }
     }
 
     @Override
