@@ -55,11 +55,9 @@ import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLDatatype;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -252,11 +250,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     UserRecordRepository getUserRecordRepository(MongoTemplate mongoTemplate) {
         return new UserRecordRepository(mongoTemplate, new UserRecordConverter());
-    }
-
-    @Bean
-    UserDetailsManager getUserDetailsManager(UserRecordRepository userRecordRepository) {
-        return new UserDetailsManagerImpl(userRecordRepository);
     }
 
     @Bean
