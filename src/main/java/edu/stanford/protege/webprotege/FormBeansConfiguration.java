@@ -10,7 +10,6 @@ import edu.stanford.protege.webprotege.frame.EmptyEntityFrameFactory;
 import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
-import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -147,5 +146,10 @@ public class FormBeansConfiguration {
                                                                                                     Provider<SubAnnotationPropertyAxiomsBySubPropertyIndex> p14,
                                                                                                     Provider<ClassAssertionAxiomsByIndividualIndex> p15) {
         return new DeprecateEntityByFormChangeListGeneratorFactory(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
+    }
+
+    @Bean
+    FormSubjectTranslator formSubjectTranslator(OWLDataFactory p1) {
+        return new FormSubjectTranslator(p1);
     }
 }
