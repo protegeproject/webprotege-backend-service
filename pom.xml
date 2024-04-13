@@ -70,7 +70,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-forms</artifactId>
-            <version>0.9.3-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
