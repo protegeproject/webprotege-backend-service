@@ -32,9 +32,9 @@ public class FormPageRequestIndex {
         checkNotNull(pageRequests);
         Map<Key, FormPageRequest> map = new HashMap<>();
         for(FormPageRequest pageRequest : pageRequests) {
-            map.put(Key.get(pageRequest.getSubject(),
-                            pageRequest.getFieldId(),
-                            pageRequest.getSourceType()),
+            map.put(Key.get(pageRequest.subject(),
+                            pageRequest.regionId(),
+                            pageRequest.sourceType()),
                     pageRequest);
         }
         return new FormPageRequestIndex(ImmutableMap.copyOf(map));
