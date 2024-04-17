@@ -85,7 +85,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>0.9.4</version>
+            <version>0.9.7</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -95,7 +95,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>0.10.3-SNAPSHOT</version>
+            <version>0.10.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -116,7 +116,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ontology-change</artifactId>
-            <version>0.9.2</version>
+            <version>0.9.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -425,14 +425,6 @@
                 <artifactId>caffeine</artifactId>
                 <version>2.7.0</version>
             </dependency>
-
-
-            <dependency>
-                <groupId>edu.stanford.protege</groupId>
-                <artifactId>webprotege-ipc</artifactId>
-                <version>0.10.3-SNAPSHOT</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>

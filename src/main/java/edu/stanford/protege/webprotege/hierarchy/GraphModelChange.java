@@ -17,8 +17,10 @@ import java.util.function.Consumer;
         @Type(AddRootNode.class),
         @Type(RemoveRootNode.class)
 })
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "changeType")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 public abstract class GraphModelChange<U> {
+
+
 
     public GraphModelChange() {
     }
