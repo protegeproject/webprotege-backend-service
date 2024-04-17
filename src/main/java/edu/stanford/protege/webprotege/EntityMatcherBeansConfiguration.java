@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege;
 
+import edu.stanford.protege.webprotege.forms.FormRegionFilterIndex;
 import edu.stanford.protege.webprotege.frame.translator.AxiomPropertyValueTranslator;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.index.*;
@@ -90,5 +91,10 @@ public class EntityMatcherBeansConfiguration {
                                               IriAnnotationsMatcherFactory p10,
                                               EntityRelationshipMatcherFactory p11) {
         return new MatcherFactory(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+    }
+
+    @Bean
+    LiteralMatcherFactory literalMatcherFactory() {
+        return new LiteralMatcherFactory();
     }
 }

@@ -456,8 +456,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
     }
 
     private FormDataDto getFormData(FormDescriptor formDescriptor, OWLEntity subject) {
-        return projectComponent.getEntityFrameFormDataComponentBuilder(new EntityFrameFormDataModule())
-                               .formDataBuilder()
+        return projectComponent.getEntityFrameFormDataComponentBuilder(new EntityFormDataRequestSpec())
                                .toFormData(Optional.of(FormSubject.get(subject)), formDescriptor);
     }
 
