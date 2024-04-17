@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
-import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.springframework.context.ApplicationContext;
