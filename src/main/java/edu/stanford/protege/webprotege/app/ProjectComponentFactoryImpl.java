@@ -17,6 +17,8 @@ import javax.inject.Inject;
  */
 public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
 
+    protected static final String PROJECT_ID_BEAN_NAME = "projectId";
+
     private final ApplicationContext applicationContext;
 
     @Inject
@@ -27,8 +29,16 @@ public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
     @Nonnull
     @Override
     public ProjectComponent createProjectComponent(@Nonnull ProjectId projectId) {
+        var projectContext = getProjectContext(projectId);
+        return projectContext.getBean(ProjectComponent.class);
+    }
+
+    @Nonnull
+    @Override
+    public ApplicationContext getProjectContext(@Nonnull ProjectId projectId) {
         var projectContext = new AnnotationConfigApplicationContext();
         projectContext.setParent(applicationContext);
+        projectContext.setId("ProjectContext-" + projectId.id());
         projectContext.setDisplayName("Project-Context for " + projectId);
         projectContext.register(ProjectBeansConfiguration.class);
         projectContext.register(ProjectIndexBeansConfiguration.class);
@@ -36,8 +46,8 @@ public class ProjectComponentFactoryImpl implements ProjectComponentFactory {
         projectContext.register(EntityMatcherBeansConfiguration.class);
         projectContext.register(ProjectActionHandlerBeansConfiguration.class);
         projectContext.register(FormBeansConfiguration.class);
-        projectContext.registerBean("projectId", ProjectId.class, projectId.id());
+        projectContext.registerBean(PROJECT_ID_BEAN_NAME, ProjectId.class, projectId.id());
         projectContext.refresh();
-        return projectContext.getBean(ProjectComponent.class);
+        return projectContext;
     }
 }

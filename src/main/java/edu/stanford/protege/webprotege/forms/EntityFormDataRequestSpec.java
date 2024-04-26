@@ -3,12 +3,14 @@ package edu.stanford.protege.webprotege.forms;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.common.LangTagFilter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Nonnull;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class EntityFrameFormDataModule {
+public class EntityFormDataRequestSpec {
 
     @Nonnull
     private final FormRegionOrderingIndex formRegionOrderingIndex;
@@ -23,7 +25,7 @@ public class EntityFrameFormDataModule {
     private final FormRegionFilterIndex formRegionFilterIndex;
 
 
-    public EntityFrameFormDataModule(@Nonnull FormRegionOrderingIndex formRegionOrderingIndex,
+    public EntityFormDataRequestSpec(@Nonnull FormRegionOrderingIndex formRegionOrderingIndex,
                                      @Nonnull LangTagFilter langTagFilter,
                                      @Nonnull FormPageRequestIndex pageRequestIndex, @Nonnull FormRegionFilterIndex formRegionFilterIndex) {
         this.formRegionOrderingIndex = checkNotNull(formRegionOrderingIndex);
@@ -32,26 +34,30 @@ public class EntityFrameFormDataModule {
         this.formRegionFilterIndex = checkNotNull(formRegionFilterIndex);
     }
 
-    public EntityFrameFormDataModule() {
+    public EntityFormDataRequestSpec() {
         this.formRegionOrderingIndex = FormRegionOrderingIndex.get(ImmutableSet.of());
         this.langTagFilter = LangTagFilter.get(ImmutableSet.of());
         this.pageRequestIndex = FormPageRequestIndex.create(ImmutableList.of());
         this.formRegionFilterIndex = FormRegionFilterIndex.get(ImmutableSet.of());
     }
 
-    public FormRegionOrderingIndex provideFormRegionOrderingIndex() {
+    @Bean
+    public FormRegionOrderingIndex formRegionOrderingIndex() {
         return formRegionOrderingIndex;
     }
 
-    public LangTagFilter provideLangTagFilter() {
+    @Bean
+    public LangTagFilter langTagFilter() {
         return langTagFilter;
     }
 
-    public FormPageRequestIndex providePageRequestIndex() {
+    @Bean
+    public FormPageRequestIndex pageRequestIndex() {
         return pageRequestIndex;
     }
 
-    public FormRegionFilterIndex provideFormRegionFilterIndex() {
+    @Bean
+    public FormRegionFilterIndex formRegionFilterIndex() {
         return formRegionFilterIndex;
     }
 }

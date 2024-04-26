@@ -7,9 +7,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.change.*;
-import edu.stanford.protege.webprotege.common.ChangeRequestId;
-import edu.stanford.protege.webprotege.common.EventId;
-import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
@@ -33,11 +31,12 @@ import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryUpdatesProcessor;
-import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.util.IriReplacer;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
 import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
 import org.semanticweb.owlapi.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -59,6 +58,8 @@ import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
  */
 @ProjectSingleton
 public class ChangeManager implements HasApplyChanges {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ChangeManager.class);
 
     @Nonnull
     private final ProjectId projectId;
@@ -519,9 +520,10 @@ public class ChangeManager implements HasApplyChanges {
 
         // Fire low-level ontology changed events.  There's an event for every change
         // that was applied
+        List<ProjectEvent> eventList = new ArrayList<>();
         for(var change : changes) {
             var event = new OntologyChangedEvent(EventId.generate(), projectId, userId, change);
-            eventDispatcher.dispatchEvent(event);
+            eventList.add(event);
         }
 
         if(changeListGenerator instanceof SilentChangeListGenerator) {
@@ -534,9 +536,16 @@ public class ChangeManager implements HasApplyChanges {
                 highLevelEvents.addAll(((HasHighLevelEvents) changeListGenerator).getHighLevelEvents());
             }
             highLevelEvents.stream().map(HighLevelProjectEventProxy::asProjectEvent)
-                    .forEach(eventDispatcher::dispatchEvent);
+                    .forEach( (event) -> {
+                        LOGGER.info("[ProjectManger] Dispatch high level event {}", event);
+                        eventList.add(event);
+                    });
             projectChangedWebhookInvoker.invoke(userId, rev.getRevisionNumber(), rev.getTimestamp());
         });
+        if(!eventList.isEmpty()) {
+            var packagedProjectChange = new PackagedProjectChangeEvent(projectId, EventId.generate(), eventList);
+            eventDispatcher.dispatchEvent(packagedProjectChange);
+        }
     }
 
     @SuppressWarnings("unchecked")

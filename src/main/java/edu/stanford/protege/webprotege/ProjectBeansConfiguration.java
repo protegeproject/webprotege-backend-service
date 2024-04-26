@@ -16,7 +16,6 @@ import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeList
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.change.matcher.*;
-import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
@@ -41,9 +40,7 @@ import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFa
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
 import edu.stanford.protege.webprotege.events.*;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
-import edu.stanford.protege.webprotege.forms.EntityFormManager;
-import edu.stanford.protege.webprotege.forms.EntityFormRepository;
-import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepository;
+import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
@@ -107,6 +104,7 @@ import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
@@ -131,11 +129,15 @@ public class ProjectBeansConfiguration {
     ProjectComponent projectComponent(ProjectId projectId,
                                       RevisionManager revisionManager,
                                       ProjectDisposablesManager projectDisposablesManager,
-                                      ProjectActionHandlerRegistry actionHandlerRegistry) {
-        return new ProjectComponentImpl(projectId,
+                                      ProjectActionHandlerRegistry actionHandlerRegistry,
+                                      ApplicationContext applicationContext,
+                                      EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory) {
+        return new ProjectComponentImpl(applicationContext,
+                                        projectId,
                                         revisionManager,
                                         projectDisposablesManager,
-                                        actionHandlerRegistry);
+                                        actionHandlerRegistry,
+                                        entityFrameFormDataDtoBuilderFactory);
     }
 
     @Bean
@@ -1878,6 +1880,10 @@ public class ProjectBeansConfiguration {
         return new EntityFormManager(p1, p2, p3);
     }
 
+    @Bean
+    EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory() {
+        return new EntityFrameFormDataDtoBuilderFactoryImpl();
+    }
 
 
     @Bean
@@ -1885,4 +1891,16 @@ public class ProjectBeansConfiguration {
     Integer entityGraphEdgeLimit(@Value("${webprotege.entityGraph.edgeLimit}") Integer edgeLimit) {
         return edgeLimit;
     }
+
+    @Bean
+    BindingValuesExtractor bindingValuesExtractor(ProjectOntologiesIndex p1, ClassAssertionAxiomsByIndividualIndex p2,
+                                                  ClassHierarchyProvider p3,
+                                                  ObjectPropertyAssertionAxiomsBySubjectIndex p4,
+                                                  DataPropertyAssertionAxiomsBySubjectIndex p5,
+                                                  AnnotationAssertionAxiomsBySubjectIndex p6,
+                                                  ClassAssertionAxiomsByClassIndex p7, ClassFrameProvider p8,
+                                                  MatcherFactory p9) {
+        return new BindingValuesExtractor(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
 }

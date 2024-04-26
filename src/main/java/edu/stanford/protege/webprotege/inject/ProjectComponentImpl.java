@@ -2,11 +2,10 @@ package edu.stanford.protege.webprotege.inject;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.forms.EntityFrameFormDataComponent;
-import edu.stanford.protege.webprotege.forms.EntityFrameFormDataModule;
-import edu.stanford.protege.webprotege.forms.FormDescriptorDtoTranslatorComponent;
+import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
+import org.springframework.context.ApplicationContext;
 
 /**
  * Matthew Horridge
@@ -14,6 +13,8 @@ import edu.stanford.protege.webprotege.revision.RevisionManager;
  * 2021-07-13
  */
 public class ProjectComponentImpl implements ProjectComponent {
+
+    private final ApplicationContext applicationContext;
 
     private final ProjectId projectId;
 
@@ -23,14 +24,20 @@ public class ProjectComponentImpl implements ProjectComponent {
 
     private final ProjectActionHandlerRegistry projectActionHandlerRegistry;
 
-    public ProjectComponentImpl(ProjectId projectId,
+    private final EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory;
+
+    public ProjectComponentImpl(ApplicationContext projectContext,
+                                ProjectId projectId,
                                 RevisionManager revisionManager,
                                 ProjectDisposablesManager projectDisposablesManager,
-                                ProjectActionHandlerRegistry projectActionHandlerRegistry) {
+                                ProjectActionHandlerRegistry projectActionHandlerRegistry,
+                                EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory) {
+        this.applicationContext = projectContext;
         this.projectId = projectId;
         this.revisionManager = revisionManager;
         this.projectDisposablesManager = projectDisposablesManager;
         this.projectActionHandlerRegistry  = projectActionHandlerRegistry;
+        this.entityFrameFormDataDtoBuilderFactory = entityFrameFormDataDtoBuilderFactory;
     }
     
 
@@ -55,12 +62,15 @@ public class ProjectComponentImpl implements ProjectComponent {
     }
 
     @Override
-    public EntityFrameFormDataComponent getEntityFrameFormDataComponentBuilder(EntityFrameFormDataModule module) {
-        return null;
+    public EntityFrameFormDataDtoBuilder getEntityFrameFormDataComponentBuilder(EntityFormDataRequestSpec requestSpec) {
+        return entityFrameFormDataDtoBuilderFactory.getFormDataDtoBuilder(
+                applicationContext,
+                requestSpec
+        );
     }
 
     @Override
-    public FormDescriptorDtoTranslatorComponent getFormDescriptorDtoTranslatorComponent(EntityFrameFormDataModule module) {
+    public FormDescriptorDtoTranslatorComponent getFormDescriptorDtoTranslatorComponent(EntityFormDataRequestSpec module) {
         return null;
     }
 }

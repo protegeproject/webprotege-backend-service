@@ -25,6 +25,7 @@ import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGe
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
+import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
@@ -65,6 +66,7 @@ import edu.stanford.protege.webprotege.watches.WatchManager;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import javax.inject.Provider;
@@ -812,8 +814,10 @@ public class ProjectActionHandlerBeansConfiguration {
     GetEntityFormsActionHandler getEntityFormActionHandler(AccessManager p1,
                                                            ProjectId p2,
                                                            EntityFormManager p3,
-                                                           RenderingManager p4) {
-        return new GetEntityFormsActionHandler(p1, p2, p3, p4);
+                                                           RenderingManager p4,
+                                                           ApplicationContext p5,
+                                                           EntityFrameFormDataDtoBuilderFactory p6) {
+        return new GetEntityFormsActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
 
