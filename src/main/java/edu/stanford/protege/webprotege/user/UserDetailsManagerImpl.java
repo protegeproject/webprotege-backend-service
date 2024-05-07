@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -33,7 +34,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     @Override
     public List<UserId> getUserIdsContainingIgnoreCase(String userName, int limit) {
         try {
-            return getUsersExecutor.execute(new UsersQueryRequest(userName), new ExecutionContext()).get().userIds();
+            return getUsersExecutor.execute(new UsersQueryRequest(userName), new ExecutionContext()).get().completions();
         } catch (Exception e) {
             logger.error("Error calling get users",e);
             return new ArrayList<>();
@@ -110,11 +111,19 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 
     @Override
     public Optional<UserId> getUserByUserIdOrEmail(String userNameOrEmail) {
-        Optional<UserRecord> byUserId = repository.findOne(UserId.valueOf(userNameOrEmail));
-        if (byUserId.isPresent()) {
-            return Optional.of(byUserId.get().getUserId());
+        try{
+            List<UserId> response =  getUsersExecutor.execute(new UsersQueryRequest(userNameOrEmail), new ExecutionContext()).get(3, TimeUnit.SECONDS).completions();
+            if(response == null || response.isEmpty()) {
+                return Optional.empty();
+            }
+            if(response.size() > 1) {
+                logger.error("Duplicated user with username {}", userNameOrEmail);
+                throw new RuntimeException("Duplicated user with username " + userNameOrEmail);
+            }
+            return Optional.of(UserId.valueOf(response.get(0).id()));
+        } catch (Exception e) {
+            logger.error("Error fetching for userID ", e);
+            return Optional.empty();
         }
-        Optional<UserRecord> byEmail = repository.findOneByEmailAddress(userNameOrEmail);
-        return byEmail.map(UserRecord::getUserId);
     }
 }

@@ -5,6 +5,6 @@ import edu.stanford.protege.webprotege.common.UserId;
 
 import java.util.List;
 
-public record UsersQueryResponse(List<UserId> userIds) implements Response {
+public record UsersQueryResponse(List<UserId> completions) implements Response {
 
 }
