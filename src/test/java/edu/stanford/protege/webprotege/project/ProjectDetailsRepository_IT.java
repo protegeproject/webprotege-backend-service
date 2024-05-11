@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.project;
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
@@ -33,9 +32,9 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 6 Mar 2017
  */
-@SpringBootTest
+@SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
 @Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectDetailsRepository_IT {
 

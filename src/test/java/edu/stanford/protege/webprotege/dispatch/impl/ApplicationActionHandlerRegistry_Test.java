@@ -1,7 +1,5 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
@@ -29,7 +27,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ApplicationActionHandlerRegistry_Test {
 
@@ -43,13 +40,6 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetAvailableProjectsActions() {
         var handler = registry.getActionHandler(new GetAvailableProjectsAction());
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainCreateNewProjectActionHandler() {
-        var handler = registry.getActionHandler(CreateNewProjectAction.create(ProjectId.generate(),
-                                                                              mock(NewProjectSettings.class)));
         assertThat(handler, is(notNullValue()));
     }
 

@@ -17,8 +17,8 @@ public class ProjectCreationException extends RuntimeException implements Serial
     protected ProjectCreationException() {
     }
 
-    public ProjectCreationException(ProjectId projectId, String message) {
-        super(message);
+    public ProjectCreationException(ProjectId projectId, String message, Throwable cause) {
+        super(message, cause);
         this.projectId = projectId;
     }
 

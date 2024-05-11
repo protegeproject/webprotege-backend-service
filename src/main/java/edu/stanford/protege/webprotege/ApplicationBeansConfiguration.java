@@ -38,12 +38,11 @@ import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl
 import edu.stanford.protege.webprotege.persistence.*;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
-import edu.stanford.protege.webprotege.revision.ChangeHistoryFileFactory;
-import edu.stanford.protege.webprotege.revision.OntologyChangeRecordTranslator;
-import edu.stanford.protege.webprotege.revision.OntologyChangeRecordTranslatorImpl;
-import edu.stanford.protege.webprotege.revision.RevisionStoreFactory;
+import edu.stanford.protege.webprotege.revision.*;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl;
+import edu.stanford.protege.webprotege.storage.MinioFileDownloader;
+import edu.stanford.protege.webprotege.storage.MinioProperties;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
 import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
 import edu.stanford.protege.webprotege.templates.TemplateEngine;
@@ -54,12 +53,11 @@ import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepositoryImpl;
 import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
+import io.minio.MinioClient;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLDatatype;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -213,10 +211,9 @@ public class ApplicationBeansConfiguration {
 
     @Bean
     @Singleton
-    ProjectCache getProjectCache(ProjectComponentFactory projectComponentFactory,
-                                 ProjectImporter projectImporter) {
+    ProjectCache getProjectCache(ProjectComponentFactory projectComponentFactory) {
         return new ProjectCache(projectComponentFactory,
-                                50000, projectImporter);
+                                50000);
     }
 
     @Bean
@@ -554,7 +551,16 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectImporter projectImporter(CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> p1) {
-        return new ProjectImporter(p1);
+    CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> executorForCreateInitialRevisionHistory() {
+        return new CommandExecutorImpl<>(CreateInitialRevisionHistoryResponse.class);
     }
+
+    @Bean
+    MinioClient minioClient(MinioProperties properties) {
+        return MinioClient.builder()
+                          .credentials(properties.getAccessKey(), properties.getSecretKey())
+                          .endpoint(properties.getEndPoint())
+                          .build();
+    }
+
 }

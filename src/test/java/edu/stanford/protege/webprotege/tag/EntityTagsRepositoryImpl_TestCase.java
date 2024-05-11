@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.tag;
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +25,8 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 15 Mar 2018
  */
-@SpringBootTest
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
+@ExtendWith(MongoTestExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityTagsRepositoryImpl_TestCase {
 

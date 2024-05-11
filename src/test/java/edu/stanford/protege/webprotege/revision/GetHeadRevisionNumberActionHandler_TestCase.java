@@ -1,8 +1,5 @@
 package edu.stanford.protege.webprotege.revision;
 
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -11,9 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.DirtiesContext;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -23,10 +18,7 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 21/02/15
  */
-@SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@ExtendWith(MockitoExtension.class)
 public class GetHeadRevisionNumberActionHandler_TestCase {
 
     private GetHeadRevisionNumberActionHandler handler;

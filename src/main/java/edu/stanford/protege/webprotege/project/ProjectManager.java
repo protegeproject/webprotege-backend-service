@@ -51,14 +51,4 @@ public class ProjectManager {
         projectAccessManager.logProjectAccess(projectId, requestingUser, currentTime);
         projectCache.ensureProjectIsLoaded(projectId);
     }
-
-    public RevisionManager getRevisionManager(@Nonnull ProjectId projectId) {
-        return projectCache.getRevisionManager(projectId);
-    }
-
-    public ProjectId createNewProject(@Nonnull ProjectId projectId,
-                                      @Nonnull NewProjectSettings newProjectSettings,
-                                      @Nonnull ExecutionContext executionContext) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException, OWLOntologyStorageException {
-        return projectCache.getProject(projectId, newProjectSettings, executionContext);
-    }
 }

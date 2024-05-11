@@ -17,11 +17,11 @@ public abstract class ProjectAlreadyExistsException extends ProjectCreationExcep
     }
 
     protected ProjectAlreadyExistsException(ProjectId projectId, String message) {
-        super(projectId, message);
+        super(projectId, message, null);
     }
 
     public ProjectAlreadyExistsException(ProjectId projectId) {
-        super(projectId, "Project already exists: " + projectId);
+        super(projectId, "Project already exists: " + projectId, null);
     }
 
 }

@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class})
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class})
 class GetEntityFormsActionHandlerIT {
 
     @Autowired

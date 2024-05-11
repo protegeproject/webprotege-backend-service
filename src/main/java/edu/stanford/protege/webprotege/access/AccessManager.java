@@ -7,6 +7,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Matthew Horridge
@@ -35,6 +36,10 @@ public interface AccessManager {
     void setAssignedRoles(@Nonnull Subject subject,
                           @Nonnull Resource resource,
                           @Nonnull Collection<RoleId> roleIds);
+
+    CompletableFuture<SetAssignedRolesResponse> setAssignedRolesAsync(@Nonnull Subject subject,
+                                                  @Nonnull Resource resource,
+                                                  @Nonnull Collection<RoleId> roleIds);
 
     /**
      * Gets the role closure for the specified subject and resource pair.

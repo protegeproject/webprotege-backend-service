@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.AfterEach;
@@ -23,9 +22,9 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 23 Feb 2018
  */
-@SpringBootTest
+@SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
 @Import(WebprotegeBackendMonolithApplication.class)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class PrefixDeclarationsStore_IT {
 

@@ -5,7 +5,6 @@ import com.mongodb.ErrorCategory;
 import com.mongodb.MongoWriteException;
 import com.mongodb.WriteError;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.criteria.RootCriteria;
@@ -33,8 +32,8 @@ import static org.junit.Assert.fail;
  * Stanford Center for Biomedical Informatics Research
  * 18 Mar 2018
  */
-@SpringBootTest
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
+@ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TagRepositoryImpl_IT {
 
