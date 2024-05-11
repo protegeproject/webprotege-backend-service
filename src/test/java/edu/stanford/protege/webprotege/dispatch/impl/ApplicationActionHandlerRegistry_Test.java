@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.impl;
 
+import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
@@ -26,8 +28,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 public class ApplicationActionHandlerRegistry_Test {
 
     @Autowired

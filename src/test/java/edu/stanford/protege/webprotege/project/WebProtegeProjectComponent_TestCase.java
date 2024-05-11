@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
 import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
@@ -26,7 +27,7 @@ import static org.hamcrest.Matchers.*;
  */
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class})
-@ExtendWith({MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class WebProtegeProjectComponent_TestCase {
 
