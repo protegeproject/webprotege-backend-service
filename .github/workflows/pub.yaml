@@ -18,6 +18,9 @@ jobs:
           server-password: OSSRH_TOKEN
           gpg-private-key: ${{secrets.GPG_PRIVATE_KEY}}
           gpg-passphrase: GPG_PASSPHRASE
+      - if: github.event.release
+        name: Update version in pom.xml (Release only)
+        run: mvn -B versions:set -DnewVersion=${{ github.event.release.tag_name }} -DgenerateBackupPoms=false
       - name: Publish package
         run: mvn --batch-mode -Prelease deploy
 env:
