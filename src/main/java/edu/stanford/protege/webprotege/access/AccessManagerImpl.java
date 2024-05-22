@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 
@@ -81,6 +82,14 @@ public class AccessManagerImpl implements AccessManager {
         } catch (ExecutionException | InterruptedException e) {
             logger.error("Error when setting assigned roles", e);
         }
+    }
+
+    @Override
+    public CompletableFuture<SetAssignedRolesResponse> setAssignedRolesAsync(@Nonnull Subject subject,
+                                                         @Nonnull Resource resource,
+                                                         @Nonnull Collection<RoleId> roleIds) {
+        return setAssignedRolesExecutor.execute(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)),
+                                                new ExecutionContext());
     }
 
     @Nonnull

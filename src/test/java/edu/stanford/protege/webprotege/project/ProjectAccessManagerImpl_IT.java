@@ -3,7 +3,6 @@ package edu.stanford.protege.webprotege.project;
 
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -23,7 +22,7 @@ import static org.hamcrest.core.Is.is;
 
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectAccessManagerImpl_IT {
 

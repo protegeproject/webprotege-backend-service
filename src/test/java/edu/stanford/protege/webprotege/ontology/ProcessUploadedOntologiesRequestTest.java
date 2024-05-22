@@ -1,0 +1,52 @@
+package edu.stanford.protege.webprotege.ontology;
+
+import edu.stanford.protege.webprotege.csv.DocumentId;
+import org.junit.jupiter.api.BeforeEach;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.boot.test.json.JsonContent;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class ProcessUploadedOntologiesRequestTest {
+
+    private JacksonTester<ProcessUploadedOntologiesRequest> json;
+
+    @BeforeEach
+    public void setup() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JacksonTester.initFields(this, objectMapper);
+    }
+
+    @Test
+    void serializesToJson() throws Exception {
+        var documentId = new DocumentId("123");
+        var request = new ProcessUploadedOntologiesRequest(documentId);
+        JsonContent<ProcessUploadedOntologiesRequest> jsonContent = json.write(request);
+        assertThat(jsonContent).hasJsonPathStringValue("@.fileSubmissionId", "123");
+    }
+
+    @Test
+    void deserializesFromJson() throws Exception {
+        String content = """
+                        {"fileSubmissionId":"123"}""
+                """;
+        assertThat(json.parse(content))
+                .usingRecursiveComparison()
+                .isEqualTo(new ProcessUploadedOntologiesRequest(new DocumentId("123")));
+    }
+
+    @Test
+    void throwsNullPointerExceptionIfDocumentIdIsNull() {
+        assertThatExceptionOfType(NullPointerException.class)
+                .isThrownBy(() -> new ProcessUploadedOntologiesRequest(null));
+    }
+}

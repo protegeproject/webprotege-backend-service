@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -39,7 +38,7 @@ import static org.hamcrest.core.IsNot.not;
  * a running version of MongoDB.
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 class EntityDiscussionThreadRepository_IT {

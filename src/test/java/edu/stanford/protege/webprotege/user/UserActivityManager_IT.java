@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.user;
 
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
@@ -30,8 +29,8 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 12 Mar 2017
  */
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = {"webprotege.rabbitmq.commands-subscribe=false"})
+@ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class UserActivityManager_IT {

@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
 import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -24,9 +23,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-@SpringBootTest
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class, WebProtegeIpcApplication.class})
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectCache_Test {
 
@@ -58,17 +57,6 @@ public class ProjectCache_Test {
         assertThat(projectCache.isActive(projectId), is(true));
         projectCache.purgeAllProjects();
         assertThat(projectCache.isActive(projectId), is(false));
-    }
-
-    @Test
-    public void shouldCreateNewEmptyProject() throws OWLOntologyCreationException, IOException {
-        var projectId = projectCache.getProject(ProjectId.generate(),
-                                                NewProjectSettings.get(UserId.valueOf("Matthew"),
-                                                       "A project",
-                                                       "en",
-                                                       "A project description"),
-                                                new ExecutionContext(UserId.valueOf("John Smith"), ""));
-        assertThat(projectCache.isActive(projectId), is(true));
     }
 
     @AfterEach

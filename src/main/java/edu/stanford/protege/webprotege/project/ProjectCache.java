@@ -68,14 +68,10 @@ public class ProjectCache implements HasDispose {
 
     private final ProjectComponentFactory projectComponentFactory;
 
-    private final ProjectImporter projectImporter;
-
     @Inject
     public ProjectCache(@Nonnull ProjectComponentFactory projectComponentFactory,
-                        @Value("${project.dormantTime:30000}") long dormantProjectTime,
-                        ProjectImporter projectImporter) {
+                        @Value("${project.dormantTime:30000}") long dormantProjectTime) {
         this.projectComponentFactory = checkNotNull(projectComponentFactory);
-        this.projectImporter = projectImporter;
         projectIdInterner = Interners.newWeakInterner();
         this.dormantProjectTime = dormantProjectTime;
         logger.info("Dormant project time: {} milliseconds", dormantProjectTime);
@@ -180,17 +176,6 @@ public class ProjectCache implements HasDispose {
     private ProjectId getInternedProjectId(ProjectId projectId) {
         // The interner is thread safe.
         return projectIdInterner.intern(projectId);
-    }
-
-    public ProjectId getProject(ProjectId projectId,
-                                NewProjectSettings newProjectSettings,
-                                ExecutionContext executionContext) throws ProjectAlreadyExistsException, OWLOntologyCreationException, IOException {
-
-        Optional<DocumentId> sourceDocumentId = newProjectSettings.getSourceDocumentId();
-        sourceDocumentId.ifPresent(documentId -> projectImporter.createProjectFromSources(projectId,
-                                                                                          documentId,
-                                                                                          executionContext.userId()));
-        return getProjectInternal(projectId, AccessMode.NORMAL, InstantiationMode.EAGER).getProjectId();
     }
 
     public void purge(ProjectId projectId) {

@@ -28,9 +28,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
 public class ApplicationActionHandlerRegistry_Test {
 
     @Autowired
@@ -43,13 +43,6 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetAvailableProjectsActions() {
         var handler = registry.getActionHandler(new GetAvailableProjectsAction());
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
-    public void shouldContainCreateNewProjectActionHandler() {
-        var handler = registry.getActionHandler(CreateNewProjectAction.create(ProjectId.generate(),
-                                                                              mock(NewProjectSettings.class)));
         assertThat(handler, is(notNullValue()));
     }
 

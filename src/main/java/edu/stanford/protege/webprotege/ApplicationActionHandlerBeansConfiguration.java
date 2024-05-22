@@ -43,13 +43,6 @@ public class ApplicationActionHandlerBeansConfiguration {
     }
 
     @Bean
-    CreateNewProjectActionHandler createNewProjectActionHandler(ProjectManager p1,
-                                                                ProjectDetailsManager p2,
-                                                                AccessManager p3) {
-        return new CreateNewProjectActionHandler(p1, p2, p3);
-    }
-
-    @Bean
     SetEmailAddressActionHandler setEmailAddressActionHandler(UserDetailsManager p1) {
         return new SetEmailAddressActionHandler(p1);
     }
