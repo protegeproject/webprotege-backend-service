@@ -599,6 +599,13 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetEntityHierarchyChildrenActionHandler(p1, p2, p3, p4, p5);
     }
 
+    @Bean
+    GetEntityHierarchyParentsActionHandler getClassHierarchyParentsActionHandler(AccessManager p1,
+                                                                                   HierarchyProviderMapper p2,
+                                                                                 RenderingManager p3) {
+        return new GetEntityHierarchyParentsActionHandler(p1, p2, p3);
+    }
+
 
     @Bean
     GetHierarchyPathsToRootActionHandler getHierarchyPathsToRootActionHandler(AccessManager p1,

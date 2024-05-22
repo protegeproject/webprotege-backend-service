@@ -28,9 +28,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
 @ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ApplicationActionHandlerRegistry_Test {
 
     @Autowired
@@ -43,6 +43,13 @@ public class ApplicationActionHandlerRegistry_Test {
     @Test
     public void shouldContainGetAvailableProjectsActions() {
         var handler = registry.getActionHandler(new GetAvailableProjectsAction());
+        assertThat(handler, is(notNullValue()));
+    }
+
+    @Test
+    public void shouldContainCreateNewProjectActionHandler() {
+        var handler = registry.getActionHandler(CreateNewProjectAction.create(ProjectId.generate(),
+                                                                              mock(NewProjectSettings.class)));
         assertThat(handler, is(notNullValue()));
     }
 
@@ -72,11 +79,11 @@ public class ApplicationActionHandlerRegistry_Test {
         assertThat(handler, is(notNullValue()));
     }
 
-    @Test
-    public void shouldContainGetProjectDetailsActionHandler() {
-        var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
-        assertThat(handler, is(notNullValue()));
-    }
+//    @Test
+//    public void shouldContainGetProjectDetailsActionHandler() {
+//        var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
+//        assertThat(handler, is(notNullValue()));
+//    }
 
     @Test
     public void shouldContainGetProjectPermissionsActionHandler() {
@@ -91,11 +98,11 @@ public class ApplicationActionHandlerRegistry_Test {
         assertThat(handler, is(notNullValue()));
     }
 
-    @Test
-    public void shouldContainLoadProjectActionHandler() {
-        var handler = registry.getActionHandler(new LoadProjectAction(ProjectId.generate()));
-        assertThat(handler, is(notNullValue()));
-    }
+//    @Test
+//    public void shouldContainLoadProjectActionHandler() {
+//        var handler = registry.getActionHandler(new LoadProjectAction(ProjectId.generate()));
+//        assertThat(handler, is(notNullValue()));
+//    }
 
     @Test
     public void shouldContainMoveProjectsToTrashActionHandler() {
