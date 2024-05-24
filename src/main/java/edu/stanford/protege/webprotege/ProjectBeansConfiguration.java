@@ -7,17 +7,53 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationHostSupplier;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
-import edu.stanford.protege.webprotege.axiom.*;
+import edu.stanford.protege.webprotege.axiom.AxiomByRenderingComparator;
+import edu.stanford.protege.webprotege.axiom.AxiomBySubjectComparator;
+import edu.stanford.protege.webprotege.axiom.AxiomByTypeComparator;
+import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
+import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
+import edu.stanford.protege.webprotege.axiom.DefaultAxiomTypeOrdering;
 import edu.stanford.protege.webprotege.axioms.AddAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.axioms.RemoveAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.EditParentsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.MoveClassesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.change.CreateAnnotationPropertiesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.CreateClassesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.CreateDataPropertiesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.CreateObjectPropertiesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.FindAndReplaceIRIPrefixChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
-import edu.stanford.protege.webprotege.change.*;
-import edu.stanford.protege.webprotege.change.matcher.*;
+import edu.stanford.protege.webprotege.change.HasGetChangeSubjects;
+import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.change.OntologyChangeComparator;
+import edu.stanford.protege.webprotege.change.OntologyChangeSubjectProvider;
+import edu.stanford.protege.webprotege.change.ReverseEngineeredChangeDescriptionGeneratorFactory;
+import edu.stanford.protege.webprotege.change.RevisionReverterChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.change.matcher.AnnotationAssertionChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.ChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.ClassAssertionAxiomMatcher;
+import edu.stanford.protege.webprotege.change.matcher.ClassMoveChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.EditedAnnotationAssertionChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.EntityCreationMatcher;
+import edu.stanford.protege.webprotege.change.matcher.EntityDeletionMatcher;
+import edu.stanford.protege.webprotege.change.matcher.FunctionalDataPropertyAxiomChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.PropertyAssertionAxiomMatcher;
+import edu.stanford.protege.webprotege.change.matcher.PropertyDomainAxiomChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.PropertyRangeAxiomChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.SameIndividualAxiomChangeMatcher;
+import edu.stanford.protege.webprotege.change.matcher.SubClassOfAxiomMatcher;
+import edu.stanford.protege.webprotege.change.matcher.SubClassOfEditChangeMatcher;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.crud.*;
+import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.crud.EntityCrudContextFactory;
+import edu.stanford.protege.webprotege.crud.EntityCrudKitPlugin;
+import edu.stanford.protege.webprotege.crud.EntityCrudKitPluginManager;
+import edu.stanford.protege.webprotege.crud.EntityCrudKitRegistry;
+import edu.stanford.protege.webprotege.crud.EntityIriPrefixCriteriaRewriter;
+import edu.stanford.protege.webprotege.crud.EntityIriPrefixResolver;
+import edu.stanford.protege.webprotege.crud.ProjectEntityCrudKitHandlerCache;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.crud.gen.IncrementingPatternDescriptorValueGenerator;
 import edu.stanford.protege.webprotege.crud.obo.OBOIdSuffixEntityCrudKitHandlerFactory;
@@ -38,23 +74,153 @@ import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
-import edu.stanford.protege.webprotege.events.*;
+import edu.stanford.protege.webprotege.events.BrowserTextChangedEventComputer;
+import edu.stanford.protege.webprotege.events.EntityDeprecatedChangedEventTranslator;
+import edu.stanford.protege.webprotege.events.EntityHierarchyChangedEventProxyFactory;
+import edu.stanford.protege.webprotege.events.EntityTagsChangedEventComputer;
+import edu.stanford.protege.webprotege.events.EventTranslator;
+import edu.stanford.protege.webprotege.events.EventTranslatorManager;
+import edu.stanford.protege.webprotege.events.HighLevelEventGenerator;
+import edu.stanford.protege.webprotege.events.OWLAnnotationPropertyHierarchyChangeComputer;
+import edu.stanford.protege.webprotege.events.OWLClassHierarchyChangeComputer;
+import edu.stanford.protege.webprotege.events.OWLDataPropertyHierarchyChangeComputer;
+import edu.stanford.protege.webprotege.events.OWLObjectPropertyHierarchyChangeComputer;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
-import edu.stanford.protege.webprotege.forms.*;
-import edu.stanford.protege.webprotege.frame.*;
-import edu.stanford.protege.webprotege.frame.translator.*;
-import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.forms.BindingValuesExtractor;
+import edu.stanford.protege.webprotege.forms.EntityFormManager;
+import edu.stanford.protege.webprotege.forms.EntityFormRepository;
+import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepository;
+import edu.stanford.protege.webprotege.forms.EntityFrameFormDataDtoBuilderFactory;
+import edu.stanford.protege.webprotege.forms.EntityFrameFormDataDtoBuilderFactoryImpl;
+import edu.stanford.protege.webprotege.frame.ClassFrameProvider;
+import edu.stanford.protege.webprotege.frame.ClassFrameProviderImpl;
+import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.frame.FrameComponentRenderer;
+import edu.stanford.protege.webprotege.frame.FrameComponentRendererImpl;
+import edu.stanford.protege.webprotege.frame.FrameComponentSessionRenderer;
+import edu.stanford.protege.webprotege.frame.FrameComponentSessionRendererFactory;
+import edu.stanford.protege.webprotege.frame.PlainFrameRenderer;
+import edu.stanford.protege.webprotege.frame.PropertyValue;
+import edu.stanford.protege.webprotege.frame.PropertyValueComparator;
+import edu.stanford.protege.webprotege.frame.PropertyValueMinimiser;
+import edu.stanford.protege.webprotege.frame.PropertyValueSubsumptionChecker;
+import edu.stanford.protege.webprotege.frame.StructuralPropertyValueSubsumptionChecker;
+import edu.stanford.protege.webprotege.frame.translator.Annotation2PropertyValueTranslator;
+import edu.stanford.protege.webprotege.frame.translator.AnnotationAssertionAxiom2PropertyValuesTranslator;
+import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.AxiomPropertyValueTranslator;
+import edu.stanford.protege.webprotege.frame.translator.AxiomTranslatorFactory;
+import edu.stanford.protege.webprotege.frame.translator.Class2ClassFrameTranslatorFactory;
+import edu.stanford.protege.webprotege.frame.translator.ClassAssertionAxiom2PropertyValuesTranslator;
+import edu.stanford.protege.webprotege.frame.translator.ClassExpression2PropertyValuesTranslator;
+import edu.stanford.protege.webprotege.frame.translator.ClassFrame2FrameAxiomsTranslator;
+import edu.stanford.protege.webprotege.frame.translator.DataPropertyAssertionAxiom2PropertyValuesTranslator;
+import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.EquivalentClassesAxiom2PropertyValuesTranslator;
+import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyAssertionAxiom2PropertyValuesTranslator;
+import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.PropertyValue2AxiomTranslator;
+import edu.stanford.protege.webprotege.frame.translator.SubClassOfAxiom2PropertyValuesTranslator;
+import edu.stanford.protege.webprotege.hierarchy.AnnotationPropertyHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.AnnotationPropertyHierarchyProviderImpl;
+import edu.stanford.protege.webprotege.hierarchy.ClassClassAncestorChecker;
+import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProviderImpl;
+import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyRoot;
+import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyRootProvider;
+import edu.stanford.protege.webprotege.hierarchy.DataPropertyDataPropertyAncestorChecker;
+import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyProviderImpl;
+import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyRoot;
+import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyRootProvider;
+import edu.stanford.protege.webprotege.hierarchy.GraphNodeRenderer;
+import edu.stanford.protege.webprotege.hierarchy.HasGetAncestors;
+import edu.stanford.protege.webprotege.hierarchy.HasHasAncestor;
+import edu.stanford.protege.webprotege.hierarchy.HierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.HierarchyProviderMapper;
+import edu.stanford.protege.webprotege.hierarchy.MoveEntityChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.hierarchy.NamedIndividualClassAncestorChecker;
+import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyProviderImpl;
+import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyRoot;
+import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyRootProvider;
+import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyObjectPropertyAncestorChecker;
+import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
+import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsByValueIndex;
+import edu.stanford.protege.webprotege.index.AnnotationPropertyDomainAxiomsIndex;
+import edu.stanford.protege.webprotege.index.AnnotationPropertyRangeAxiomsIndex;
+import edu.stanford.protege.webprotege.index.AxiomsByEntityReferenceIndex;
+import edu.stanford.protege.webprotege.index.AxiomsByReferenceIndex;
+import edu.stanford.protege.webprotege.index.AxiomsByTypeIndex;
+import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByClassIndex;
+import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByIndividualIndex;
+import edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex;
+import edu.stanford.protege.webprotege.index.ClassHierarchyChildrenAxiomsIndex;
+import edu.stanford.protege.webprotege.index.DataPropertyAssertionAxiomsBySubjectIndex;
+import edu.stanford.protege.webprotege.index.DataPropertyCharacteristicsIndex;
+import edu.stanford.protege.webprotege.index.DataPropertyDomainAxiomsIndex;
+import edu.stanford.protege.webprotege.index.DataPropertyRangeAxiomsIndex;
+import edu.stanford.protege.webprotege.index.DeprecatedEntitiesByEntityIndex;
+import edu.stanford.protege.webprotege.index.DifferentIndividualsAxiomsIndex;
+import edu.stanford.protege.webprotege.index.DisjointClassesAxiomsIndex;
+import edu.stanford.protege.webprotege.index.DisjointDataPropertiesAxiomsIndex;
+import edu.stanford.protege.webprotege.index.DisjointObjectPropertiesAxiomsIndex;
+import edu.stanford.protege.webprotege.index.EntitiesInOntologySignatureByIriIndex;
+import edu.stanford.protege.webprotege.index.EntitiesInOntologySignatureIndex;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
+import edu.stanford.protege.webprotege.index.EquivalentClassesAxiomsIndex;
+import edu.stanford.protege.webprotege.index.EquivalentDataPropertiesAxiomsIndex;
+import edu.stanford.protege.webprotege.index.EquivalentObjectPropertiesAxiomsIndex;
+import edu.stanford.protege.webprotege.index.IndexUpdatingService;
+import edu.stanford.protege.webprotege.index.IndividualsByTypeIndex;
+import edu.stanford.protege.webprotege.index.InverseObjectPropertyAxiomsIndex;
+import edu.stanford.protege.webprotege.index.NamedIndividualFrameAxiomIndex;
+import edu.stanford.protege.webprotege.index.ObjectPropertyAssertionAxiomsBySubjectIndex;
+import edu.stanford.protege.webprotege.index.ObjectPropertyCharacteristicsIndex;
+import edu.stanford.protege.webprotege.index.ObjectPropertyDomainAxiomsIndex;
+import edu.stanford.protege.webprotege.index.ObjectPropertyRangeAxiomsIndex;
+import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
+import edu.stanford.protege.webprotege.index.OntologyAxiomsIndex;
+import edu.stanford.protege.webprotege.index.OntologySignatureByTypeIndex;
+import edu.stanford.protege.webprotege.index.OntologySignatureIndex;
+import edu.stanford.protege.webprotege.index.ProjectClassAssertionAxiomsByIndividualIndex;
+import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
+import edu.stanford.protege.webprotege.index.ProjectSignatureByTypeIndex;
+import edu.stanford.protege.webprotege.index.ProjectSignatureIndex;
+import edu.stanford.protege.webprotege.index.RootIndex;
+import edu.stanford.protege.webprotege.index.SameIndividualAxiomsIndex;
+import edu.stanford.protege.webprotege.index.SubAnnotationPropertyAxiomsBySubPropertyIndex;
+import edu.stanford.protege.webprotege.index.SubAnnotationPropertyAxiomsBySuperPropertyIndex;
+import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
+import edu.stanford.protege.webprotege.index.SubDataPropertyAxiomsBySubPropertyIndex;
+import edu.stanford.protege.webprotege.index.SubObjectPropertyAxiomsBySubPropertyIndex;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
 import edu.stanford.protege.webprotege.index.impl.RootIndexImpl;
 import edu.stanford.protege.webprotege.index.impl.UpdatableIndex;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.inject.*;
-import edu.stanford.protege.webprotege.inject.project.*;
+import edu.stanford.protege.webprotege.inject.DataDirectoryProvider;
+import edu.stanford.protege.webprotege.inject.OverridableFileFactory;
+import edu.stanford.protege.webprotege.inject.ProjectComponent;
+import edu.stanford.protege.webprotege.inject.ProjectComponentImpl;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
+import edu.stanford.protege.webprotege.inject.project.ChangeHistoryFile;
+import edu.stanford.protege.webprotege.inject.project.ChangeHistoryFileProvider;
+import edu.stanford.protege.webprotege.inject.project.ProjectDirectory;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
+import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryProvider;
+import edu.stanford.protege.webprotege.inject.project.RevisionNumberProvider;
+import edu.stanford.protege.webprotege.inject.project.RootOntologyDocument;
+import edu.stanford.protege.webprotege.inject.project.RootOntologyDocumentProvider;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
-import edu.stanford.protege.webprotege.issues.*;
+import edu.stanford.protege.webprotege.issues.CommentNotificationEmailGenerator;
+import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
+import edu.stanford.protege.webprotege.issues.CommentNotificationEmailer;
+import edu.stanford.protege.webprotege.issues.CommentParticipantsExtractor;
+import edu.stanford.protege.webprotege.issues.DiscussionThreadParticipantsExtractor;
+import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
@@ -66,22 +232,117 @@ import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGenerator
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
 import edu.stanford.protege.webprotege.mansyntax.OntologyAxiomPairChangeGenerator;
 import edu.stanford.protege.webprotege.mansyntax.ShellOntologyChecker;
-import edu.stanford.protege.webprotege.mansyntax.render.*;
-import edu.stanford.protege.webprotege.match.*;
-import edu.stanford.protege.webprotege.merge.*;
+import edu.stanford.protege.webprotege.mansyntax.render.AnnotationPropertyComparatorImpl;
+import edu.stanford.protege.webprotege.mansyntax.render.AnnotationPropertyDomainSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.AnnotationPropertyFrameRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.AnnotationPropertyRangeSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.AnnotationPropertySubPropertyOfSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.AnnotationsSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ClassDisjointWithSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ClassEquivalentToSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ClassFrameRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ClassSubClassOfSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DataPropertyCharacteristicsSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DataPropertyDisjointWithSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DataPropertyDomainSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DataPropertyEquivalentToSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DataPropertyFrameRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DataPropertyRangeSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DataPropertySubPropertyOfSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.DefaultItemStyleProvider;
+import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
+import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityCheckerImpl;
+import edu.stanford.protege.webprotege.mansyntax.render.EntityIRIChecker;
+import edu.stanford.protege.webprotege.mansyntax.render.EntityIRICheckerImpl;
+import edu.stanford.protege.webprotege.mansyntax.render.HighlightedEntityChecker;
+import edu.stanford.protege.webprotege.mansyntax.render.HttpLinkRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.IRIOrdinalProvider;
+import edu.stanford.protege.webprotege.mansyntax.render.ItemStyleProvider;
+import edu.stanford.protege.webprotege.mansyntax.render.LiteralStyle;
+import edu.stanford.protege.webprotege.mansyntax.render.ManchesterSyntaxEntityFrameRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ManchesterSyntaxObjectRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.MarkdownLiteralRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.NamedIndividualDifferentFromSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.NamedIndividualFactsSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.NamedIndividualFrameRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.NamedIndividualSameAsSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.NamedIndividualTypesSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.NestedAnnotationStyle;
+import edu.stanford.protege.webprotege.mansyntax.render.NullHighlightedEntityChecker;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertyCharacteristicsSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertyDisjointWithSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertyDomainSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertyEquivalentToSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertyFrameRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertyInverseOfSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertyRangeSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertySubPropertyChainSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.ObjectPropertySubPropertyOfRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.OntologyAnnotationsSectionRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.OwlOntologyFacadeFactory;
+import edu.stanford.protege.webprotege.match.HierarchyPositionCriteriaMatchableEntityTypesExtractor;
+import edu.stanford.protege.webprotege.match.HierarchyPositionMatchingEngineImpl;
+import edu.stanford.protege.webprotege.match.MatcherFactory;
+import edu.stanford.protege.webprotege.match.MatchingEngine;
+import edu.stanford.protege.webprotege.match.MatchingEngineImpl;
+import edu.stanford.protege.webprotege.match.RelationshipMatcherFactory;
+import edu.stanford.protege.webprotege.merge.AnnotationDiffCalculator;
+import edu.stanford.protege.webprotege.merge.AxiomDiffCalculator;
+import edu.stanford.protege.webprotege.merge.ModifiedProjectOntologiesCalculatorFactory;
+import edu.stanford.protege.webprotege.merge.OntologyDiffCalculator;
+import edu.stanford.protege.webprotege.merge.OntologyPatcher;
+import edu.stanford.protege.webprotege.merge.ProjectOntologiesBuilder;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
-import edu.stanford.protege.webprotege.object.*;
+import edu.stanford.protege.webprotege.object.OWLClassExpressionSelector;
+import edu.stanford.protege.webprotege.object.OWLDataPropertyExpressionSelector;
+import edu.stanford.protege.webprotege.object.OWLIndividualSelector;
+import edu.stanford.protege.webprotege.object.OWLObjectComparatorImpl;
+import edu.stanford.protege.webprotege.object.OWLObjectPropertyExpressionSelector;
+import edu.stanford.protege.webprotege.object.OWLObjectSelector;
+import edu.stanford.protege.webprotege.object.SWRLAtomSelector;
 import edu.stanford.protege.webprotege.owlapi.HasContainsEntityInSignatureImpl;
 import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMapFactory;
 import edu.stanford.protege.webprotege.owlapi.StringFormatterLiteralRendererImpl;
-import edu.stanford.protege.webprotege.project.*;
+import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
+import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarationsLoader;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManagerImpl;
+import edu.stanford.protege.webprotege.project.PrefixDeclarationsStore;
+import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
+import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
+import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
+import edu.stanford.protege.webprotege.renderer.ContextRenderer;
+import edu.stanford.protege.webprotege.renderer.LiteralLangTagTransformer;
+import edu.stanford.protege.webprotege.renderer.LiteralLexicalFormTransformer;
 import edu.stanford.protege.webprotege.renderer.LiteralRenderer;
-import edu.stanford.protege.webprotege.renderer.*;
-import edu.stanford.protege.webprotege.revision.*;
+import edu.stanford.protege.webprotege.renderer.OWLObjectRendererImpl;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
+import edu.stanford.protege.webprotege.renderer.ShortFormAdapter;
+import edu.stanford.protege.webprotege.revision.ChangeHistoryFileFactory;
+import edu.stanford.protege.webprotege.revision.EntitiesByRevisionCache;
+import edu.stanford.protege.webprotege.revision.HasGetRevisionSummary;
+import edu.stanford.protege.webprotege.revision.OntologyChangeRecordTranslator;
+import edu.stanford.protege.webprotege.revision.ProjectChangesManager;
+import edu.stanford.protege.webprotege.revision.RevisionDetailsExtractor;
+import edu.stanford.protege.webprotege.revision.RevisionManager;
+import edu.stanford.protege.webprotege.revision.RevisionManagerImpl;
+import edu.stanford.protege.webprotege.revision.RevisionNumber;
+import edu.stanford.protege.webprotege.revision.RevisionStore;
+import edu.stanford.protege.webprotege.revision.RevisionStoreImpl;
+import edu.stanford.protege.webprotege.revision.RevisionStoreProvider;
 import edu.stanford.protege.webprotege.search.EntitySearcherFactory;
-import edu.stanford.protege.webprotege.shortform.*;
+import edu.stanford.protege.webprotege.shortform.BuiltInShortFormDictionary;
+import edu.stanford.protege.webprotege.shortform.DefaultShortFormAnnotationPropertyIRIs;
+import edu.stanford.protege.webprotege.shortform.DictionaryManager;
+import edu.stanford.protege.webprotege.shortform.DictionaryUpdatesProcessor;
+import edu.stanford.protege.webprotege.shortform.IriShortFormAdapter;
+import edu.stanford.protege.webprotege.shortform.LuceneIndexesDirectory;
+import edu.stanford.protege.webprotege.shortform.MultiLingualDictionary;
+import edu.stanford.protege.webprotege.shortform.MultilingualDictionaryUpdater;
+import edu.stanford.protege.webprotege.shortform.ShortFormCache;
+import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
 import edu.stanford.protege.webprotege.tag.CriteriaBasedTagsManager;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepository;
 import edu.stanford.protege.webprotege.tag.TagRepository;
@@ -95,11 +356,43 @@ import edu.stanford.protege.webprotege.util.IriReplacerFactory;
 import edu.stanford.protege.webprotege.viz.EdgeMatcherFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
-import edu.stanford.protege.webprotege.watches.*;
-import edu.stanford.protege.webprotege.webhook.*;
+import edu.stanford.protege.webprotege.watches.IndirectlyWatchedEntitiesFinder;
+import edu.stanford.protege.webprotege.watches.WatchManager;
+import edu.stanford.protege.webprotege.watches.WatchManagerImpl;
+import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
+import edu.stanford.protege.webprotege.watches.WatchRecordRepository;
+import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
+import edu.stanford.protege.webprotege.watches.WatchTriggeredHandler;
+import edu.stanford.protege.webprotege.watches.WatchTriggeredHandlerImpl;
+import edu.stanford.protege.webprotege.watches.WatchedChangesManager;
+import edu.stanford.protege.webprotege.webhook.CommentNotificationSlackTemplate;
+import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
+import edu.stanford.protege.webprotege.webhook.JsonPayloadWebhookExecutor;
+import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
+import edu.stanford.protege.webprotege.webhook.SlackWebhookRepository;
+import edu.stanford.protege.webprotege.webhook.WebhookExecutor;
+import edu.stanford.protege.webprotege.webhook.WebhookRepository;
 import org.semanticweb.owlapi.expression.OWLOntologyChecker;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.HasContainsEntityInSignature;
+import org.semanticweb.owlapi.model.HasLang;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLAnnotationPropertyProvider;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLEntityProvider;
+import org.semanticweb.owlapi.model.OWLIndividual;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
@@ -133,11 +426,11 @@ public class ProjectBeansConfiguration {
                                       ApplicationContext applicationContext,
                                       EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory) {
         return new ProjectComponentImpl(applicationContext,
-                                        projectId,
-                                        revisionManager,
-                                        projectDisposablesManager,
-                                        actionHandlerRegistry,
-                                        entityFrameFormDataDtoBuilderFactory);
+                projectId,
+                revisionManager,
+                projectDisposablesManager,
+                actionHandlerRegistry,
+                entityFrameFormDataDtoBuilderFactory);
     }
 
     @Bean
@@ -302,12 +595,12 @@ public class ProjectBeansConfiguration {
                                                                     SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
                                                                     EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex) {
         return new DataPropertyHierarchyProviderImpl(projectId,
-                                                     dataProperty,
-                                                     projectOntologiesIndex,
-                                                     axiomsByTypeIndex,
-                                                     ontologySignatureByTypeIndex,
-                                                     subDataPropertyAxiomsBySubPropertyIndex,
-                                                     entitiesInProjectSignatureIndex);
+                dataProperty,
+                projectOntologiesIndex,
+                axiomsByTypeIndex,
+                ontologySignatureByTypeIndex,
+                subDataPropertyAxiomsBySubPropertyIndex,
+                entitiesInProjectSignatureIndex);
     }
 
     @Bean
@@ -319,12 +612,12 @@ public class ProjectBeansConfiguration {
                                                                                      SubAnnotationPropertyAxiomsBySuperPropertyIndex subAnnotationPropertyAxiomsBySuperPropertyIndex,
                                                                                      EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex) {
         return new AnnotationPropertyHierarchyProviderImpl(projectId,
-                                                           owlAnnotationPropertyProvider,
-                                                           projectSignatureByTypeIndex,
-                                                           projectOntologiesIndex,
-                                                           subAnnotationPropertyAxiomsBySubPropertyIndex,
-                                                           subAnnotationPropertyAxiomsBySuperPropertyIndex,
-                                                           entitiesInProjectSignatureIndex);
+                owlAnnotationPropertyProvider,
+                projectSignatureByTypeIndex,
+                projectOntologiesIndex,
+                subAnnotationPropertyAxiomsBySubPropertyIndex,
+                subAnnotationPropertyAxiomsBySuperPropertyIndex,
+                entitiesInProjectSignatureIndex);
     }
 
     @Bean
@@ -421,8 +714,8 @@ public class ProjectBeansConfiguration {
                                                 WebProtegeOntologyIRIShortFormProvider webProtegeOntologyIRIShortFormProvider,
                                                 DefaultOntologyIdManager defaultOntologyIdManager) {
         return new ShellOntologyChecker(projectOntologiesIndex,
-                                        webProtegeOntologyIRIShortFormProvider,
-                                        defaultOntologyIdManager);
+                webProtegeOntologyIRIShortFormProvider,
+                defaultOntologyIdManager);
     }
 
     @Bean
@@ -617,29 +910,29 @@ public class ProjectBeansConfiguration {
                                 IriReplacerFactory p25,
                                 GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher) {
         return new ChangeManager(p1,
-                                 p2,
-                                 p3,
-                                 p4,
-                                 p5,
-                                 p6,
-                                 p7,
-                                 p8,
-                                 p10,
-                                 p11,
-                                 p12,
-                                 p13,
-                                 p14,
-                                 p15,
-                                 p16,
-                                 p17,
-                                 p18,
-                                 p20,
-                                 p21,
-                                 p22,
-                                 p23,
-                                 p24,
-                                 p25,
-                                 p26, eventDispatcher);
+                p2,
+                p3,
+                p4,
+                p5,
+                p6,
+                p7,
+                p8,
+                p10,
+                p11,
+                p12,
+                p13,
+                p14,
+                p15,
+                p16,
+                p17,
+                p18,
+                p20,
+                p21,
+                p22,
+                p23,
+                p24,
+                p25,
+                p26, eventDispatcher);
     }
 
 
@@ -1172,17 +1465,17 @@ public class ProjectBeansConfiguration {
                                                      ChangeManager changeManager,
                                                      DefaultOntologyIdManager defaultOntologyIdManager) {
         return new AddAxiomsDelegateHandler(accessManager,
-                                            changeManager,
-                                            defaultOntologyIdManager);
+                changeManager,
+                defaultOntologyIdManager);
     }
 
     @Bean
     RemoveAxiomsDelegateHandler removeAxiomsDelegateHandler(AccessManager accessManager,
-                                                        ChangeManager changeManager,
-                                                        DefaultOntologyIdManager defaultOntologyIdManager) {
+                                                            ChangeManager changeManager,
+                                                            DefaultOntologyIdManager defaultOntologyIdManager) {
         return new RemoveAxiomsDelegateHandler(accessManager,
-                                            changeManager,
-                                            defaultOntologyIdManager);
+                changeManager,
+                defaultOntologyIdManager);
     }
 
     @Bean
@@ -1213,7 +1506,7 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler<?,?>> actionHandlers) {
+    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler<?, ?>> actionHandlers) {
         return new ProjectActionHandlerRegistry(actionHandlers);
     }
 
@@ -1393,36 +1686,36 @@ public class ProjectBeansConfiguration {
                                                       SameIndividualAxiomsIndex p30,
                                                       DifferentIndividualsAxiomsIndex p31) {
         return new OwlOntologyFacadeFactory(p1,
-                                            p2,
-                                            p3,
-                                            p4,
-                                            p5,
-                                            p6,
-                                            p7,
-                                            p8,
-                                            p9,
-                                            p10,
-                                            p11,
-                                            p12,
-                                            p13,
-                                            p14,
-                                            p15,
-                                            p16,
-                                            p17,
-                                            p18,
-                                            p19,
-                                            p20,
-                                            p21,
-                                            p22,
-                                            p23,
-                                            p24,
-                                            p25,
-                                            p26,
-                                            p27,
-                                            p28,
-                                            p29,
-                                            p30,
-                                            p31);
+                p2,
+                p3,
+                p4,
+                p5,
+                p6,
+                p7,
+                p8,
+                p9,
+                p10,
+                p11,
+                p12,
+                p13,
+                p14,
+                p15,
+                p16,
+                p17,
+                p18,
+                p19,
+                p20,
+                p21,
+                p22,
+                p23,
+                p24,
+                p25,
+                p26,
+                p27,
+                p28,
+                p29,
+                p30,
+                p31);
     }
 
     @Bean
@@ -1608,6 +1901,13 @@ public class ProjectBeansConfiguration {
                                                                               SubDataPropertyAxiomsBySubPropertyIndex p8,
                                                                               SubAnnotationPropertyAxiomsBySubPropertyIndex p9) {
         return new MoveEntityChangeListGeneratorFactory(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    EditParentsChangeListGeneratorFactory editParentsChangeListGeneratorFactory(ProjectOntologiesIndex p1,
+                                                                                SubClassOfAxiomsBySubClassIndex p2,
+                                                                                OWLDataFactory p3) {
+        return new EditParentsChangeListGeneratorFactory(p1, p2, p3);
     }
 
     @Bean

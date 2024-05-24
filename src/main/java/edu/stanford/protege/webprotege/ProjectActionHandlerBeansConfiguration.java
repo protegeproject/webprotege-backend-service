@@ -5,61 +5,199 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
 import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
-import edu.stanford.protege.webprotege.bulkop.*;
-import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.bulkop.ChangeEntityParentsActionHandler;
+import edu.stanford.protege.webprotege.bulkop.EditAnnotationValuesActionHandler;
+import edu.stanford.protege.webprotege.bulkop.EditAnnotationsChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.EditParentsChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.MoveClassesChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.MoveToParentActionHandler;
+import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionHandler;
+import edu.stanford.protege.webprotege.change.CreateAnnotationPropertiesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.CreateClassesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.CreateDataPropertiesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.CreateObjectPropertiesChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.FindAndReplaceIRIPrefixChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.change.GetProjectChangesActionHandler;
+import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.change.RevertRevisionActionHandler;
+import edu.stanford.protege.webprotege.change.RevisionReverterChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.crud.*;
+import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.crud.EntityCrudKitRegistry;
+import edu.stanford.protege.webprotege.crud.GetEntityCrudKitSettingsActionHandler;
+import edu.stanford.protege.webprotege.crud.GetEntityCrudKitsActionHandler;
+import edu.stanford.protege.webprotege.crud.ProjectEntityCrudKitHandlerCache;
+import edu.stanford.protege.webprotege.crud.SetEntityCrudKitSettingsActionHandler;
 import edu.stanford.protege.webprotege.crud.persistence.ProjectEntityCrudKitSettingsRepository;
 import edu.stanford.protege.webprotege.csv.ImportCSVFileActionHandler;
-import edu.stanford.protege.webprotege.dispatch.handlers.*;
-import edu.stanford.protege.webprotege.entity.*;
-import edu.stanford.protege.webprotege.forms.*;
-import edu.stanford.protege.webprotege.frame.*;
+import edu.stanford.protege.webprotege.dispatch.handlers.AddAxiomsActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.AddAxiomsChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.dispatch.handlers.CreateAnnotationPropertiesActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.CreateClassesActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.CreateDataPropertiesActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.CreateObjectPropertiesActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.DeleteAxiomsActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.DeleteEntitiesActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.GetOntologyAnnotationsActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.GetRevisionActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.GetRevisionsActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.GetRootOntologyIdActionHandler;
+import edu.stanford.protege.webprotege.dispatch.handlers.SetOntologyAnnotationsActionHandler;
+import edu.stanford.protege.webprotege.entity.CreateEntityFromFormDataActionHandler;
+import edu.stanford.protege.webprotege.entity.CreateEntityFromFormDataChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
+import edu.stanford.protege.webprotege.entity.GetDeprecatedEntitiesActionHandler;
+import edu.stanford.protege.webprotege.entity.LookupEntitiesActionHandler;
+import edu.stanford.protege.webprotege.entity.MergeEntitiesActionHandler;
+import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.entity.SetEntityDeprecatedDelegateHandler;
+import edu.stanford.protege.webprotege.forms.CopyFormDescriptorsActionHandler;
+import edu.stanford.protege.webprotege.forms.DeleteFormActionHandler;
+import edu.stanford.protege.webprotege.forms.DeprecateEntityByFormActionHandler;
+import edu.stanford.protege.webprotege.forms.DeprecateEntityByFormChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.forms.EntityFormChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.forms.EntityFormManager;
+import edu.stanford.protege.webprotege.forms.EntityFormRepository;
+import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepository;
+import edu.stanford.protege.webprotege.forms.EntityFrameFormDataDtoBuilderFactory;
+import edu.stanford.protege.webprotege.forms.FormsCopierFactory;
+import edu.stanford.protege.webprotege.forms.GetEntityCreationFormsActionHandler;
+import edu.stanford.protege.webprotege.forms.GetEntityDeprecationFormsActionHandler;
+import edu.stanford.protege.webprotege.forms.GetEntityFormDescriptorActionHandler;
+import edu.stanford.protege.webprotege.forms.GetEntityFormsActionHandler;
+import edu.stanford.protege.webprotege.forms.GetProjectFormDescriptorsActionHandler;
+import edu.stanford.protege.webprotege.forms.SetEntityFormDescriptorActionHandler;
+import edu.stanford.protege.webprotege.forms.SetEntityFormsDataActionHandler;
+import edu.stanford.protege.webprotege.forms.SetProjectFormDescriptorsActionHandler;
+import edu.stanford.protege.webprotege.forms.UpdateFormDescriptorActionHandler;
+import edu.stanford.protege.webprotege.frame.CheckManchesterSyntaxFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.ClassFrameProvider;
+import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.frame.FrameComponentSessionRenderer;
+import edu.stanford.protege.webprotege.frame.FrameComponentSessionRendererFactory;
+import edu.stanford.protege.webprotege.frame.GetAnnotationPropertyFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.GetClassFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.GetDataPropertyFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.GetManchesterSyntaxFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.GetManchesterSyntaxFrameCompletionsActionHandler;
+import edu.stanford.protege.webprotege.frame.GetNamedIndividualFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.GetObjectPropertyFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.GetOntologyFramesActionHandler;
+import edu.stanford.protege.webprotege.frame.PlainFrameRenderer;
+import edu.stanford.protege.webprotege.frame.PropertyValue;
+import edu.stanford.protege.webprotege.frame.PropertyValueComparator;
+import edu.stanford.protege.webprotege.frame.SetManchesterSyntaxFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.UpdateAnnotationPropertyFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.UpdateClassFrameActionHandler;
+import edu.stanford.protege.webprotege.frame.UpdateDataPropertyFrameHandler;
+import edu.stanford.protege.webprotege.frame.UpdateNamedIndividualFrameHandler;
+import edu.stanford.protege.webprotege.frame.UpdateObjectPropertyFrameHandler;
 import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
-import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.hierarchy.GetEntityHierarchyChildrenActionHandler;
+import edu.stanford.protege.webprotege.hierarchy.GetEntityHierarchyParentsActionHandler;
+import edu.stanford.protege.webprotege.hierarchy.GetHierarchyPathsToRootActionHandler;
+import edu.stanford.protege.webprotege.hierarchy.GetHierarchyRootsActionHandler;
+import edu.stanford.protege.webprotege.hierarchy.GetHierarchySiblingsActionHandler;
+import edu.stanford.protege.webprotege.hierarchy.GraphNodeRenderer;
+import edu.stanford.protege.webprotege.hierarchy.HierarchyProviderMapper;
+import edu.stanford.protege.webprotege.hierarchy.MoveEntityChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.hierarchy.MoveHierarchyNodeActionHandler;
+import edu.stanford.protege.webprotege.index.AxiomsByReferenceIndex;
+import edu.stanford.protege.webprotege.index.DeprecatedEntitiesIndex;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureIndex;
+import edu.stanford.protege.webprotege.index.IndividualsIndex;
+import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
+import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
-import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
-import edu.stanford.protege.webprotege.issues.*;
+import edu.stanford.protege.webprotege.issues.AddCommentHandler;
+import edu.stanford.protege.webprotege.issues.CommentNotificationEmailer;
+import edu.stanford.protege.webprotege.issues.CreateEntityDiscussionThreadHandler;
+import edu.stanford.protege.webprotege.issues.DeleteEntityCommentHandler;
+import edu.stanford.protege.webprotege.issues.EditCommentActionHandler;
+import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
+import edu.stanford.protege.webprotege.issues.GetCommentedEntitiesActionHandler;
+import edu.stanford.protege.webprotege.issues.GetEntityDiscussionThreadsHandler;
+import edu.stanford.protege.webprotege.issues.SetDiscussionThreadStatusHandler;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.GetProjectLangTagsActionHandler;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
-import edu.stanford.protege.webprotege.mansyntax.render.*;
+import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
+import edu.stanford.protege.webprotege.mansyntax.render.GetEntityHtmlRenderingActionHandler;
+import edu.stanford.protege.webprotege.mansyntax.render.GetEntityRenderingActionHandler;
+import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
+import edu.stanford.protege.webprotege.mansyntax.render.ManchesterSyntaxEntityFrameRenderer;
+import edu.stanford.protege.webprotege.mansyntax.render.OwlOntologyFacadeFactory;
 import edu.stanford.protege.webprotege.match.GetMatchingEntitiesActionHandler;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.match.MatchingEngine;
-import edu.stanford.protege.webprotege.merge.*;
+import edu.stanford.protege.webprotege.merge.ComputeProjectMergeActionHandler;
+import edu.stanford.protege.webprotege.merge.MergeUploadedProjectActionHandler;
+import edu.stanford.protege.webprotege.merge.ModifiedProjectOntologiesCalculatorFactory;
+import edu.stanford.protege.webprotege.merge.OntologyPatcher;
+import edu.stanford.protege.webprotege.merge.ProjectOntologiesBuilder;
 import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddActionHandler;
 import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsActionHandler;
 import edu.stanford.protege.webprotege.merge_add.MergeOntologiesActionHandler;
-import edu.stanford.protege.webprotege.perspective.*;
-import edu.stanford.protege.webprotege.project.*;
+import edu.stanford.protege.webprotege.perspective.GetPerspectiveDetailsActionHandler;
+import edu.stanford.protege.webprotege.perspective.GetPerspectiveLayoutActionHandler;
+import edu.stanford.protege.webprotege.perspective.PerspectivesManager;
+import edu.stanford.protege.webprotege.perspective.ResetPerspectiveLayoutActionHandler;
+import edu.stanford.protege.webprotege.perspective.ResetPerspectivesActionHandler;
+import edu.stanford.protege.webprotege.perspective.SetPerspectiveLayoutActionHandler;
+import edu.stanford.protege.webprotege.perspective.SetPerspectivesActionHandler;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
+import edu.stanford.protege.webprotege.project.GetProjectInfoActionHandler;
+import edu.stanford.protege.webprotege.project.GetProjectPrefixDeclarationsActionHandler;
+import edu.stanford.protege.webprotege.project.PrefixDeclarationsStore;
+import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
+import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
+import edu.stanford.protege.webprotege.project.SetProjectPrefixDeclarationsActionHandler;
+import edu.stanford.protege.webprotege.project.UploadedOntologiesCache;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.projectsettings.GetProjectSettingsActionHandler;
 import edu.stanford.protege.webprotege.projectsettings.SetProjectSettingsActionHandler;
 import edu.stanford.protege.webprotege.renderer.ContextRenderer;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
-import edu.stanford.protege.webprotege.revision.*;
-import edu.stanford.protege.webprotege.search.*;
+import edu.stanford.protege.webprotege.revision.GetHeadRevisionNumberActionHandler;
+import edu.stanford.protege.webprotege.revision.GetRevisionSummariesActionHandler;
+import edu.stanford.protege.webprotege.revision.ProjectChangesManager;
+import edu.stanford.protege.webprotege.revision.RevisionDetailsExtractor;
+import edu.stanford.protege.webprotege.revision.RevisionManager;
+import edu.stanford.protege.webprotege.search.EntitySearchFilterRepository;
+import edu.stanford.protege.webprotege.search.EntitySearcherFactory;
+import edu.stanford.protege.webprotege.search.GetSearchSettingsActionHandler;
+import edu.stanford.protege.webprotege.search.PerformEntitySearchActionHandler;
+import edu.stanford.protege.webprotege.search.SetSearchSettingsActionHandler;
 import edu.stanford.protege.webprotege.sharing.GetProjectSharingSettingsActionHandler;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManager;
 import edu.stanford.protege.webprotege.sharing.SetProjectSharingSettingsActionHandler;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
-import edu.stanford.protege.webprotege.tag.*;
+import edu.stanford.protege.webprotege.tag.GetEntityTagsActionHandler;
+import edu.stanford.protege.webprotege.tag.GetProjectTagsActionHandler;
+import edu.stanford.protege.webprotege.tag.SetProjectTagsActionHandler;
+import edu.stanford.protege.webprotege.tag.TagsManager;
+import edu.stanford.protege.webprotege.tag.UpdateEntityTagsActionHandler;
 import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
 import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
-import edu.stanford.protege.webprotege.viz.*;
+import edu.stanford.protege.webprotege.viz.EdgeMatcherFactory;
+import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
+import edu.stanford.protege.webprotege.viz.EntityGraphSettingsRepository;
+import edu.stanford.protege.webprotege.viz.GetEntityGraphActionHandler;
+import edu.stanford.protege.webprotege.viz.GetUserProjectEntityGraphCriteriaActionHandler;
+import edu.stanford.protege.webprotege.viz.SetEntityGraphActiveFiltersActionHandler;
+import edu.stanford.protege.webprotege.viz.SetUserProjectEntityGraphCriteriaActionHandler;
 import edu.stanford.protege.webprotege.watches.GetWatchesActionHandler;
 import edu.stanford.protege.webprotege.watches.SetWatchesActionHandler;
 import edu.stanford.protege.webprotege.watches.WatchManager;
@@ -78,7 +216,6 @@ import java.util.Comparator;
  * 2021-07-14
  */
 public class ProjectActionHandlerBeansConfiguration {
-
 
 
     @Bean
@@ -140,7 +277,7 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                     PlainFrameRenderer plainFrameRenderer) {
         return new GetAnnotationPropertyFrameActionHandler(p1, p3, plainFrameRenderer);
     }
-    
+
     @Bean
     UpdateAnnotationPropertyFrameActionHandler updateAnnotationPropertyFrameActionHandler(AccessManager p1,
                                                                                           HasApplyChanges p3,
@@ -168,9 +305,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     GetUploadedAndProjectOntologyIdsActionHandler getUploadedAndProjectOntologyIdsActionHandler(AccessManager p1,
-                                                                                ProjectId p2,
-                                                                                UploadedOntologiesCache p3,
-                                                                                ProjectOntologiesBuilder p4) {
+                                                                                                ProjectId p2,
+                                                                                                UploadedOntologiesCache p3,
+                                                                                                ProjectOntologiesBuilder p4) {
         return new GetUploadedAndProjectOntologyIdsActionHandler(p1, p2, p3, p4);
     }
 
@@ -519,12 +656,10 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
 
-
     @Bean
     DeleteEntityCommentHandler deleteEntityCommentActionHandler(EntityDiscussionThreadRepository p1) {
         return new DeleteEntityCommentHandler(p1);
     }
-
 
 
     @Bean
@@ -601,7 +736,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     GetEntityHierarchyParentsActionHandler getClassHierarchyParentsActionHandler(AccessManager p1,
-                                                                                   HierarchyProviderMapper p2,
+                                                                                 HierarchyProviderMapper p2,
                                                                                  RenderingManager p3) {
         return new GetEntityHierarchyParentsActionHandler(p1, p2, p3);
     }
@@ -683,9 +818,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     AddAxiomsActionHandler addAxiomActionHandler(AccessManager p1,
-                                                  ProjectId p2,
-                                                  ChangeManager p3,
-                                                  AddAxiomsChangeListGeneratorFactory p4) {
+                                                 ProjectId p2,
+                                                 ChangeManager p3,
+                                                 AddAxiomsChangeListGeneratorFactory p4) {
         return new AddAxiomsActionHandler(p1, p2, p3, p4);
     }
 
@@ -783,6 +918,13 @@ public class ProjectActionHandlerBeansConfiguration {
         return new MoveToParentActionHandler(p1, p3, p4);
     }
 
+    @Bean
+    ChangeEntityParentsActionHandler changeEntityParentsActionHandler(AccessManager p1,
+
+                                                                      HasApplyChanges p2, EditParentsChangeListGeneratorFactory p3) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3);
+    }
+
 
     @Bean
     GetEntityGraphActionHandler getEntityDotRenderingActionHandler(AccessManager p1,
@@ -791,7 +933,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                    EntityGraphSettingsRepository p4, ObjectMapper p5) {
         return new GetEntityGraphActionHandler(p1, p2, p3, p4, p5);
     }
-
 
 
     @Bean
@@ -975,7 +1116,7 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                  ProjectId p2,
                                                                                  UploadedOntologiesCache p3,
                                                                                  ProjectOntologiesBuilder p4,
-                                                                                 HasApplyChanges p5){
+                                                                                 HasApplyChanges p5) {
         return new ExistingOntologyMergeAddActionHandler(p1, p2, p3, p4, p5);
     }
 }
