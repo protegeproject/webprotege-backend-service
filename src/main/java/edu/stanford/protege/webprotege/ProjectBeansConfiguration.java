@@ -148,6 +148,7 @@ import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyRootProv
 import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyObjectPropertyAncestorChecker;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsByValueIndex;
+import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import edu.stanford.protege.webprotege.index.AnnotationPropertyDomainAxiomsIndex;
 import edu.stanford.protege.webprotege.index.AnnotationPropertyRangeAxiomsIndex;
 import edu.stanford.protege.webprotege.index.AxiomsByEntityReferenceIndex;
@@ -1906,8 +1907,9 @@ public class ProjectBeansConfiguration {
     @Bean
     EditParentsChangeListGeneratorFactory editParentsChangeListGeneratorFactory(ProjectOntologiesIndex p1,
                                                                                 SubClassOfAxiomsBySubClassIndex p2,
-                                                                                OWLDataFactory p3) {
-        return new EditParentsChangeListGeneratorFactory(p1, p2, p3);
+                                                                                OWLDataFactory p3,
+                                                                                AnnotationAssertionAxiomsIndex p4) {
+        return new EditParentsChangeListGeneratorFactory(p1, p2, p3, p4);
     }
 
     @Bean
