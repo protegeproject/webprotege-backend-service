@@ -2,31 +2,18 @@ package edu.stanford.protege.webprotege.bulkop;
 
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.change.AddAxiomChange;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.change.OntologyChangeList;
-import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
+import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
-import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
-import org.semanticweb.owlapi.model.OWLAnnotation;
-import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLClassExpression;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLOntologyID;
-import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -58,9 +45,6 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
     @Nonnull
     private final String commitMessage;
 
-    @Nonnull
-    private final AnnotationAssertionAxiomsIndex axiomProvider;
-
     @Inject
     public EditParentsChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
                                           @Nonnull ImmutableSet<OWLClass> parents,
@@ -68,8 +52,7 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
                                           @Nonnull String commitMessage,
                                           @Nonnull ProjectOntologiesIndex projectOntologies,
                                           @Nonnull SubClassOfAxiomsBySubClassIndex subClassAxiomIndex,
-                                          @Nonnull OWLDataFactory dataFactory,
-                                          @Nonnull AnnotationAssertionAxiomsIndex axiomProvider) {
+                                          @Nonnull OWLDataFactory dataFactory) {
         this.changeRequestId = changeRequestId;
         this.parents = checkNotNull(parents);
         this.entity = checkNotNull(entity);
@@ -77,7 +60,6 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
         this.subClassAxiomIndex = checkNotNull(subClassAxiomIndex);
         this.dataFactory = checkNotNull(dataFactory);
         this.commitMessage = checkNotNull(commitMessage);
-        this.axiomProvider = checkNotNull(axiomProvider);
     }
 
     @Override
@@ -105,13 +87,12 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
 
             Set<OWLClass> parentsToAdd = new HashSet<>(parents);
             parentsToAdd.removeAll(currentParents);
+            addParentsToEntity(parentsToAdd, ontId, changeList);
 
             Set<OWLClass> parentsToRemove = new HashSet<>(currentParents);
             parentsToRemove.removeAll(parents);
-
             removeParentsFromEntity(currentSubClassOfAxiomList, parentsToRemove, ontId, changeList);
 
-            addParentsToEntity(parentsToAdd, ontId, changeList);
 
         });
 
@@ -122,35 +103,31 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
                                          Set<OWLClass> parentsToRemove,
                                          OWLOntologyID ontId,
                                          OntologyChangeList.Builder<Boolean> changeList) {
-        for (OWLSubClassOfAxiom axiom : currentSubClassOfAxiomList) {
-            OWLClassExpression superClass = axiom.getSuperClass();
-            if (superClass instanceof OWLClass && parentsToRemove.contains(superClass)) {
-                removeSubClassOfAxiom(axiom, ontId, changeList);
-            }
-        }
+
+        currentSubClassOfAxiomList.stream()
+                .filter(axiom -> axiom.getSuperClass() instanceof OWLClass && parentsToRemove.contains(axiom.getSuperClass()))
+                .forEach(axiom -> addRemoveAxiomOperationToChangeList(axiom, ontId, changeList));
+
     }
 
     private void addParentsToEntity(Set<OWLClass> parentsToAdd,
                                     OWLOntologyID ontId,
                                     OntologyChangeList.Builder<Boolean> changeList) {
-        for (OWLClass newParent : parentsToAdd) {
-            addSubClassOfAxiom(entity, newParent, ontId, changeList);
-
-        }
+        parentsToAdd.forEach(newParent -> addSubClassOfAxiomToChangeList(entity, newParent, ontId, changeList));
     }
 
-    private void addSubClassOfAxiom(OWLClass subclass,
-                                    OWLClass parent,
-                                    OWLOntologyID ontId,
-                                    OntologyChangeList.Builder<Boolean> changeList) {
-        var newAx = dataFactory.getOWLSubClassOfAxiom(subclass, parent, getAnnotations(subclass));
+    private void addSubClassOfAxiomToChangeList(OWLClass subclass,
+                                                OWLClass parent,
+                                                OWLOntologyID ontId,
+                                                OntologyChangeList.Builder<Boolean> changeList) {
+        var newAx = dataFactory.getOWLSubClassOfAxiom(subclass, parent);
         var addAxiom = AddAxiomChange.of(ontId, newAx);
         changeList.add(addAxiom);
     }
 
-    private void removeSubClassOfAxiom(OWLSubClassOfAxiom ax,
-                                       OWLOntologyID ontId,
-                                       OntologyChangeList.Builder<Boolean> changeList) {
+    private void addRemoveAxiomOperationToChangeList(OWLSubClassOfAxiom ax,
+                                                     OWLOntologyID ontId,
+                                                     OntologyChangeList.Builder<Boolean> changeList) {
         var removeAxiom = RemoveAxiomChange.of(ontId, ax);
         changeList.add(removeAxiom);
     }
@@ -165,10 +142,5 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
         return commitMessage;
-    }
-
-
-    private Set<OWLAnnotation> getAnnotations(OWLClass owlClass) {
-        return axiomProvider.getAnnotationAssertionAxioms(owlClass.getIRI()).map(OWLAnnotationAssertionAxiom::getAnnotation).collect(Collectors.toSet());
     }
 }

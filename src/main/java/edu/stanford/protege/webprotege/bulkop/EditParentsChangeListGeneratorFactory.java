@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
-import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -21,16 +20,13 @@ public class EditParentsChangeListGeneratorFactory {
 
     private final OWLDataFactory dataFactory;
 
-    private final AnnotationAssertionAxiomsIndex axiomProvider;
 
     public EditParentsChangeListGeneratorFactory(ProjectOntologiesIndex projectOntologiesIndex,
                                                  SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex,
-                                                 OWLDataFactory dataFactory,
-                                                 AnnotationAssertionAxiomsIndex axiomProvider) {
+                                                 OWLDataFactory dataFactory) {
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.subClassOfAxiomsBySubClassIndex = subClassOfAxiomsBySubClassIndex;
         this.dataFactory = dataFactory;
-        this.axiomProvider = axiomProvider;
     }
 
     public EditParentsChangeListGenerator create(ChangeRequestId changeRequestId,
@@ -43,7 +39,6 @@ public class EditParentsChangeListGeneratorFactory {
                 commitMessage,
                 projectOntologiesIndex,
                 subClassOfAxiomsBySubClassIndex,
-                dataFactory,
-                axiomProvider);
+                dataFactory);
     }
 }
