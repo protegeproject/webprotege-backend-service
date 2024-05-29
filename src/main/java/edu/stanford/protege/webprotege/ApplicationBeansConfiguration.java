@@ -252,11 +252,6 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    UserDetailsManager getUserDetailsManager(UserRecordRepository userRecordRepository) {
-        return new UserDetailsManagerImpl(userRecordRepository);
-    }
-
-    @Bean
     @Singleton
     DispatchServiceExecutor getDispatchServiceExecutor(ApplicationActionHandlerRegistry actionHandlerRegistry,
                                                                ProjectManager projectManager) {

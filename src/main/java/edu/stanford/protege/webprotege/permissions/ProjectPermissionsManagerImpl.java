@@ -41,10 +41,9 @@ public class ProjectPermissionsManagerImpl implements ProjectPermissionsManager 
                      .filter(Resource::isProject)
                      .forEach(
                              resource ->
-                                     resource.getProjectId().ifPresent(
-                                             projectId -> projectDetailsRepository
-                                                     .findOne(projectId)
-                                                     .ifPresent(result::add)));
+                                     resource.getProjectId()
+                                             .flatMap(projectDetailsRepository::findOne)
+                                             .ifPresent(result::add));
         // Always add owned in case permissions are screwed up - yes?
         // It will be obvious that the permissions are screwed up because the
         // user won't be able to open their own project.

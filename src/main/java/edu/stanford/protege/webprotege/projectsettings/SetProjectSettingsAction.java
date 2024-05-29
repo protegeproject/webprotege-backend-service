@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.projectsettings;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
@@ -18,7 +20,7 @@ public class SetProjectSettingsAction implements ProjectAction<SetProjectSetting
 
     public static final String CHANNEL = "webprotege.projects.SetProjectSettings";
 
-    private final ProjectSettings projectSettings;
+    private ProjectSettings projectSettings;
 
     @Override
     public String getChannel() {
@@ -29,7 +31,12 @@ public class SetProjectSettingsAction implements ProjectAction<SetProjectSetting
         this.projectSettings = checkNotNull(projectSettings);
     }
 
-    public static SetProjectSettingsAction create(ProjectSettings projectSettings) {
+    public SetProjectSettingsAction(){
+
+    }
+
+    @JsonCreator
+    public static SetProjectSettingsAction create(@JsonProperty("projectSettings") ProjectSettings projectSettings) {
         return new SetProjectSettingsAction(projectSettings);
     }
 
