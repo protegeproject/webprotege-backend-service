@@ -1,10 +1,8 @@
 
 package edu.stanford.protege.webprotege.metaproject;
 
-import edu.stanford.protege.webprotege.user.UserDetailsManagerImpl;
-import edu.stanford.protege.webprotege.user.UserRecord;
-import edu.stanford.protege.webprotege.user.UserRecordRepository;
-import edu.stanford.protege.webprotege.user.EmailAddress;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.user.*;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +33,9 @@ public class UserDetailsManagerImpl_TestCase {
     @Mock
     private UserRecord userRecord;
 
+    @Mock
+    private CommandExecutor<UsersQueryRequest, UsersQueryResponse> getUsersExecutor;
+
     private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
     @Before
@@ -49,12 +50,12 @@ public class UserDetailsManagerImpl_TestCase {
         when(userRecordRepository.findOne(userId)).thenReturn(java.util.Optional.of(userRecord));
         when(userRecordRepository.findOneByEmailAddress(email)).thenReturn(java.util.Optional.of(userRecord));
 
-        userDetailsManagerImpl = new UserDetailsManagerImpl(userRecordRepository);
+        userDetailsManagerImpl = new UserDetailsManagerImpl(userRecordRepository, getUsersExecutor);
     }
 
     @Test(expected = NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_Repository_IsNull() {
-        new UserDetailsManagerImpl(null);
+        new UserDetailsManagerImpl(null, getUsersExecutor);
     }
 
     @Test

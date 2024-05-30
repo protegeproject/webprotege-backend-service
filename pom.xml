@@ -82,6 +82,12 @@
             <artifactId>webprotege-entity-data</artifactId>
             <version>0.9.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>webprotege-authorization</artifactId>
+            <version>0.9.4 </version>
+        </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
