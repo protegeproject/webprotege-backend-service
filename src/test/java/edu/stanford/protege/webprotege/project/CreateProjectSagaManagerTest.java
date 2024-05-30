@@ -88,19 +88,22 @@ class CreateProjectSagaManagerTest {
     }
 
     @Test
-    void shouldCreateAndRegisterNewEmptyProject() {
+    void shouldCreateAndRegisterNewEmptyProject() throws InterruptedException {
         manager.execute(newProjectSettings, executionContext);
+        Thread.sleep(300);
+
         verify(projectDetailsManager, times(1)).registerProject(any(ProjectId.class),
                                                                 eq(newProjectSettings));
     }
 
     @Test
-    void shouldCreateAndInitPermissionsOnNewEmptyProject() {
+    void shouldCreateAndInitPermissionsOnNewEmptyProject() throws InterruptedException {
         var newProjectSettings = NewProjectSettings.get(janeDoe,
                                                         "TheProjectDisplayName",
                                                         "en",
                                                         "TheProjectDescription");
         manager.execute(newProjectSettings, executionContext);
+        Thread.sleep(300);
         verify(projectPermissionsInitializer, times(1)).applyDefaultPermissions(any(ProjectId.class),
                                                                                 eq(janeDoe));
     }
