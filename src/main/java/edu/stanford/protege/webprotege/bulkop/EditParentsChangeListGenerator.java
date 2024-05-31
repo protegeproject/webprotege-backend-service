@@ -2,7 +2,10 @@ package edu.stanford.protege.webprotege.bulkop;
 
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
+import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
+import edu.stanford.protege.webprotege.change.ChangeListGenerator;
+import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
@@ -121,15 +124,13 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
                                                 OWLOntologyID ontId,
                                                 OntologyChangeList.Builder<Boolean> changeList) {
         var newAx = dataFactory.getOWLSubClassOfAxiom(subclass, parent);
-        var addAxiom = AddAxiomChange.of(ontId, newAx);
-        changeList.add(addAxiom);
+        changeList.addAxiom(ontId, newAx);
     }
 
     private void addRemoveAxiomOperationToChangeList(OWLSubClassOfAxiom ax,
                                                      OWLOntologyID ontId,
                                                      OntologyChangeList.Builder<Boolean> changeList) {
-        var removeAxiom = RemoveAxiomChange.of(ontId, ax);
-        changeList.add(removeAxiom);
+        changeList.removeAxiom(ontId, ax);
     }
 
     @Override

@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Matthew Horridge
@@ -13,4 +14,8 @@ import java.util.List;
 public interface ClassHierarchyProvider extends HierarchyProvider<OWLClass> {
 
   void handleChanges(List<OntologyChange> changes);
+
+  boolean hasCycle(List<OntologyChange> changes);
+
+  Set<OWLClass> getClassesWithCycle(List<OntologyChange> changes);
 }

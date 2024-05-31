@@ -13,10 +13,7 @@ import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
 import edu.stanford.protege.webprotege.events.EventTranslatorManager;
 import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
-import edu.stanford.protege.webprotege.hierarchy.AnnotationPropertyHierarchyProvider;
-import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
-import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyProvider;
-import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.index.RootIndex;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
@@ -500,6 +497,9 @@ public class ChangeManager implements HasApplyChanges {
         // Generate a description for the changes that were actually applied
         var changeDescription = changeList.getMessage(finalResult);
 
+        if(classHierarchyProvider.hasCycle(changes)){
+            throw new HierarchyCycleException();
+        }
         // Log the changes
         var revision = changeManager.addRevision(userId, changes, changeDescription);
 

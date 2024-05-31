@@ -920,9 +920,10 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     ChangeEntityParentsActionHandler changeEntityParentsActionHandler(AccessManager p1,
-
-                                                                      HasApplyChanges p2, EditParentsChangeListGeneratorFactory p3) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3);
+                                                                      ProjectId p2,
+                                                                      ChangeManager p3,
+                                                                      EditParentsChangeListGeneratorFactory p4) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4);
     }
 
 
