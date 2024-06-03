@@ -4,16 +4,15 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.hierarchy.HierarchyCycleException;
+import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
+import edu.stanford.protege.webprotege.revision.RevisionManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.HashSet;
-import java.util.Set;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
@@ -33,15 +32,25 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     private final EditParentsChangeListGeneratorFactory factory;
 
+    @Nonnull
+    private final RevisionManager revisionManager;
+
+    @Nonnull
+    private final ClassHierarchyProvider classHierarchyProvider;
+
     @Inject
     public ChangeEntityParentsActionHandler(@Nonnull AccessManager accessManager,
                                   @Nonnull ProjectId projectId,
                                   @Nonnull ChangeManager changeManager,
-                                  @Nonnull EditParentsChangeListGeneratorFactory factory) {
+                                  @Nonnull EditParentsChangeListGeneratorFactory factory,
+                                            RevisionManager revisionManager,
+                                            ClassHierarchyProvider classHierarchyProvider) {
         super(accessManager);
         this.projectId = projectId;
         this.changeManager = changeManager;
         this.factory = factory;
+        this.revisionManager = revisionManager;
+        this.classHierarchyProvider = classHierarchyProvider;
     }
 
     @Nonnull
@@ -54,17 +63,21 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     @Override
     public ChangeEntityParentsResult execute(@Nonnull ChangeEntityParentsAction action, @Nonnull ExecutionContext executionContext) {
+        var currentRevision = revisionManager.getCurrentRevision();
         ImmutableSet<OWLClass> parents = action.parents().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
         var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
-        Set<OWLClass> classesWithCycles = new HashSet<>();
-        try{
-//            changeManager.applyChanges(executionContext.userId(), changeListGenerator);
-        }catch (HierarchyCycleException e){
-            //populate classesWithCycles
-        }
-        changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
-        //put cycle classes in response.
+        var result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
+
+        var classesWithCycles = classHierarchyProvider.getClassesWithCycle(result.getChangeList());
+
+        if(!classesWithCycles.isEmpty()){
+            /* create a RevisionReverterChangeListGenerator
+            with currentRevision from above and call changeManager with it.
+             */
+        }
+
+        //put cycle classes in response if any
         return new ChangeEntityParentsResult();
     }
 }

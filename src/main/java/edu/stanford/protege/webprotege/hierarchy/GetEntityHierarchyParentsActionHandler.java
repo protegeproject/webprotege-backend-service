@@ -18,9 +18,6 @@ import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
-/**
- * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
- */
 public class GetEntityHierarchyParentsActionHandler extends AbstractProjectActionHandler<GetHierarchyParentsAction, GetHierarchyParentsResult> {
 
     @Nonnull

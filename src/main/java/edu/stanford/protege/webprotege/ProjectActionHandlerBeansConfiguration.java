@@ -97,6 +97,7 @@ import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameT
 import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.hierarchy.GetEntityHierarchyChildrenActionHandler;
 import edu.stanford.protege.webprotege.hierarchy.GetEntityHierarchyParentsActionHandler;
 import edu.stanford.protege.webprotege.hierarchy.GetHierarchyPathsToRootActionHandler;
@@ -922,8 +923,10 @@ public class ProjectActionHandlerBeansConfiguration {
     ChangeEntityParentsActionHandler changeEntityParentsActionHandler(AccessManager p1,
                                                                       ProjectId p2,
                                                                       ChangeManager p3,
-                                                                      EditParentsChangeListGeneratorFactory p4) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4);
+                                                                      EditParentsChangeListGeneratorFactory p4,
+                                                                      RevisionManager p5,
+                                                                      ClassHierarchyProvider p6) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
 
