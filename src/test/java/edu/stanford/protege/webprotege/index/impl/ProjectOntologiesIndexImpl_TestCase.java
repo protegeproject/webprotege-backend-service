@@ -51,4 +51,11 @@ public class ProjectOntologiesIndexImpl_TestCase {
         impl.applyChanges(ImmutableList.of(RemoveAxiomChange.of(rootOntologyId, axiom)));
         assertThat(impl.getOntologyIds().count(), is(0L));
     }
+
+    @Test
+    public void shouldHandleMultiple() {
+        impl.applyChanges(ImmutableList.of(AddAxiomChange.of(rootOntologyId, axiom)));
+        impl.applyChanges(ImmutableList.of(RemoveAxiomChange.of(rootOntologyId, axiom)));
+        assertThat(impl.getOntologyIds().count(), is(1L));
+    }
 }

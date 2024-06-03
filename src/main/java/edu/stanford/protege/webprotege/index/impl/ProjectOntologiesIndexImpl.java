@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class ProjectOntologiesIndexImpl implements ProjectOntologiesIndex, Updat
     private static final Logger logger = LoggerFactory.getLogger(ProjectOntologiesIndexImpl.class);
 
     @Nonnull
-    private final Set<OWLOntologyID> ontologyIds = new HashSet<>();
+    private final Multiset<OWLOntologyID> ontologyIds = HashMultiset.create();
 
     @Nonnull
     private ImmutableList<OWLOntologyID> cache = ImmutableList.of();
@@ -61,10 +62,10 @@ public class ProjectOntologiesIndexImpl implements ProjectOntologiesIndex, Updat
     public synchronized void applyChanges(@Nonnull ImmutableList<OntologyChange> changes) {
         for(var ontologyChange : changes) {
             if(ontologyChange.isAddAxiom() || ontologyChange.isAddOntologyAnnotation()) {
-                ontologyIds.add(ontologyChange.getOntologyId());
+                ontologyIds.add(ontologyChange.ontologyId());
             }
             else if(ontologyChange.isRemoveAxiom() || ontologyChange.isRemoveOntologyAnnotation()) {
-                ontologyIds.remove(ontologyChange.getOntologyId());
+                ontologyIds.remove(ontologyChange.ontologyId());
             }
         }
         cache = ImmutableList.copyOf(ontologyIds);
