@@ -60,7 +60,10 @@ public class GetEntityHierarchyParentsActionHandler extends AbstractProjectActio
             return emptyResult();
         }
         OWLEntity entity = action.entity();
-        List<OWLEntityData> parents = hierarchyProvider.get().getParents(entity).stream().map(renderingManager::getRendering).collect(Collectors.toList());
+        List<OWLEntityData> parents = hierarchyProvider.get().getParents(entity)
+                .stream()
+                .filter(parent -> !parent.isTopEntity())
+                .map(renderingManager::getRendering).collect(Collectors.toList());
 
         return new GetHierarchyParentsResult(entity, parents);
     }

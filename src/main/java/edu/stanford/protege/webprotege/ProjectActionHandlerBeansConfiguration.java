@@ -924,9 +924,11 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ProjectId p2,
                                                                       ChangeManager p3,
                                                                       EditParentsChangeListGeneratorFactory p4,
-                                                                      RevisionManager p5,
-                                                                      ClassHierarchyProvider p6) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6);
+                                                                      RevisionReverterChangeListGeneratorFactory p5,
+                                                                      RevisionManager p6,
+                                                                      ClassHierarchyProvider p7,
+                                                                      RenderingManager p8) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
 
