@@ -47,13 +47,6 @@ public class ApplicationActionHandlerRegistry_Test {
     }
 
     @Test
-    public void shouldContainCreateNewProjectActionHandler() {
-        var handler = registry.getActionHandler(CreateNewProjectAction.create(ProjectId.generate(),
-                                                                              mock(NewProjectSettings.class)));
-        assertThat(handler, is(notNullValue()));
-    }
-
-    @Test
     public void shouldContainGetApplicationSettingsActionHandler() {
         var handler = registry.getActionHandler(new GetApplicationSettingsAction());
         assertThat(handler, is(notNullValue()));
@@ -79,11 +72,11 @@ public class ApplicationActionHandlerRegistry_Test {
         assertThat(handler, is(notNullValue()));
     }
 
-//    @Test
-//    public void shouldContainGetProjectDetailsActionHandler() {
-//        var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
-//        assertThat(handler, is(notNullValue()));
-//    }
+    @Test
+    public void shouldContainGetProjectDetailsActionHandler() {
+        var handler = registry.getActionHandler(GetProjectDetailsAction.create(ProjectId.generate()));
+        assertThat(handler, is(notNullValue()));
+    }
 
     @Test
     public void shouldContainGetProjectPermissionsActionHandler() {
@@ -98,11 +91,11 @@ public class ApplicationActionHandlerRegistry_Test {
         assertThat(handler, is(notNullValue()));
     }
 
-//    @Test
-//    public void shouldContainLoadProjectActionHandler() {
-//        var handler = registry.getActionHandler(new LoadProjectAction(ProjectId.generate()));
-//        assertThat(handler, is(notNullValue()));
-//    }
+    @Test
+    public void shouldContainLoadProjectActionHandler() {
+        var handler = registry.getActionHandler(new LoadProjectAction(ProjectId.generate()));
+        assertThat(handler, is(notNullValue()));
+    }
 
     @Test
     public void shouldContainMoveProjectsToTrashActionHandler() {
