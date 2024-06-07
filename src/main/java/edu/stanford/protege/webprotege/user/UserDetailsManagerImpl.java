@@ -1,8 +1,10 @@
 package edu.stanford.protege.webprotege.user;
 
+import edu.stanford.protege.webprotege.app.TrackExecutionTime;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -110,6 +112,8 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     }
 
     @Override
+    @Timed(value = "userDetails.getUserByUserIdOrEmail")
+    @TrackExecutionTime
     public Optional<UserId> getUserByUserIdOrEmail(String userNameOrEmail) {
         try{
             List<UserId> response =  getUsersExecutor.execute(new UsersQueryRequest(userNameOrEmail), new ExecutionContext()).get(3, TimeUnit.SECONDS).completions();

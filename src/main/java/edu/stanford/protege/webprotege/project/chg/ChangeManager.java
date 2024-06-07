@@ -221,6 +221,7 @@ public class ChangeManager implements HasApplyChanges {
     @Override
     public <R> ChangeApplicationResult<R> applyChanges(@Nonnull final UserId userId,
                                                        @Nonnull final ChangeListGenerator<R> changeListGenerator) throws PermissionDeniedException {
+
         checkNotNull(userId);
         checkNotNull(changeListGenerator);
 
@@ -239,8 +240,13 @@ public class ChangeManager implements HasApplyChanges {
             // Compute the changes that need to take place.  We don't allow any other writes here because the
             // generation of the changes may depend upon the state of the project
             changeProcesssingLock.lock();
+            long startTimeChangeList = System.currentTimeMillis();
 
             var changeList = changeListGenerator.generateChanges(new ChangeGenerationContext(userId));
+
+            long endtimeChangeList = System.currentTimeMillis();
+            LOGGER.info("Operation changeListGenerator.generateChanges execution time is : " + (endtimeChangeList-startTimeChangeList) +"ms");
+
 
             // We have our changes
             var changes = changeList.getChanges();
@@ -254,6 +260,8 @@ public class ChangeManager implements HasApplyChanges {
             var changesToBeRenamed = new HashSet<OntologyChange>();
             // Changes required to create fresh entities
             var changesToCreateFreshEntities = new ArrayList<OntologyChange>();
+            long startTimeApplyChanges = System.currentTimeMillis();
+
             for(var change : changes) {
                 change.getSignature()
                       .forEach(entityInSignature -> {
@@ -291,6 +299,8 @@ public class ChangeManager implements HasApplyChanges {
 
             }
 
+            long endtimeApplyChanges = System.currentTimeMillis();
+            LOGGER.info("Operation applyChanges execution time is : " + (endtimeApplyChanges-startTimeApplyChanges) +"ms");
 
             var allChangesIncludingRenames = new ArrayList<OntologyChange>();
             var changeRenamer = iriReplacerFactory.create(ImmutableMap.copyOf(tempIri2MintedIri));
@@ -332,12 +342,16 @@ public class ChangeManager implements HasApplyChanges {
                 // Release for reads
                 projectChangeWriteLock.unlock();
             }
+            long startTime = System.currentTimeMillis();
+
             var changeRequestId = changeListGenerator.getChangeRequestId();
             generateAndDispatchHighLevelEvents(changeRequestId, userId,
                                                changeListGenerator,
                                                changeApplicationResult,
                                                eventTranslatorManager,
                                                revision);
+            long endtime = System.currentTimeMillis();
+            LOGGER.info("Operation generateAndDispatchHighLevelEvents execution time is : " + (endtime-startTime) +"ms");
 
         } finally {
             changeProcesssingLock.unlock();
@@ -488,25 +502,57 @@ public class ChangeManager implements HasApplyChanges {
 
 
         var changes = finalResult.getChangeList();
+        long startTime = System.currentTimeMillis();
 
         // Update indexes in response to the changes
         indexUpdater.updateIndexes(ImmutableList.copyOf(changes));
 
-
+        long endtime = System.currentTimeMillis();
+        LOGGER.info("Operation indexUpdater.updateIndexes execution time is : " + (endtime-startTime) +"ms");
+        startTime = System.currentTimeMillis();
         // Update the rendering first so that a proper change message is generated
         activeLanguagesManager.handleChanges(changes);
+        endtime = System.currentTimeMillis();
+        LOGGER.info("Operation activeLanguagesManager.handleChanges execution time is : " + (endtime-startTime) +"ms");
+
+        startTime = System.currentTimeMillis();
         dictionaryUpdatesProcessor.handleChanges(changes);
+        endtime = System.currentTimeMillis();
+        LOGGER.info("Operation dictionaryUpdatesProcessor.handleChanges execution time is : " + (endtime-startTime) +"ms");
 
         // Generate a description for the changes that were actually applied
         var changeDescription = changeList.getMessage(finalResult);
+        startTime = System.currentTimeMillis();
 
         // Log the changes
         var revision = changeManager.addRevision(userId, changes, changeDescription);
+        endtime = System.currentTimeMillis();
+        LOGGER.info("Operation changeManager.addRevision execution time is : " + (endtime-startTime) +"ms");
+
+        startTime = System.currentTimeMillis();
 
         classHierarchyProvider.handleChanges(changes);
+        endtime = System.currentTimeMillis();
+        LOGGER.info("Operation classHierarchyProvider.handleChanges execution time is : " + (endtime-startTime) +"ms");
+
+        startTime = System.currentTimeMillis();
+
         objectPropertyHierarchyProvider.handleChanges(changes);
+        endtime = System.currentTimeMillis();
+        LOGGER.info("Operation objectPropertyHierarchyProvider.handleChanges execution time is : " + (endtime-startTime) +"ms");
+
+        startTime = System.currentTimeMillis();
+
         dataPropertyHierarchyProvider.handleChanges(changes);
+        endtime = System.currentTimeMillis();
+        LOGGER.info("Operation dataPropertyHierarchyProvider.handleChanges execution time is : " + (endtime-startTime) +"ms");
+
+
+        startTime = System.currentTimeMillis();
+
         annotationPropertyHierarchyProvider.handleChanges(changes);
+        endtime = System.currentTimeMillis();
+        LOGGER.info("Operation annotationPropertyHierarchyProvider.handleChanges execution time is : " + (endtime-startTime) +"ms");
 
         return revision;
     }
@@ -544,6 +590,7 @@ public class ChangeManager implements HasApplyChanges {
         });
         if(!eventList.isEmpty()) {
             var packagedProjectChange = new PackagedProjectChangeEvent(projectId, EventId.generate(), eventList);
+            LOGGER.info("ALEX event " + packagedProjectChange);
             eventDispatcher.dispatchEvent(packagedProjectChange);
         }
     }

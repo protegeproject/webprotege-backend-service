@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.graph.Graph;
 import com.google.common.graph.GraphBuilder;
+import edu.stanford.protege.webprotege.app.TrackExecutionTime;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.index.DependentIndex;
 import edu.stanford.protege.webprotege.index.IndexUpdatingService;
@@ -15,8 +16,10 @@ import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
+import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -144,6 +147,10 @@ public class IndexUpdater {
         var updaterTask = new IndexUpdaterTask(projectId, rank, index, revisions, countDownLatch);
         indexUpdaterService.submit(updaterTask);
     }
+
+
+    @TrackExecutionTime
+    @Timed("updateIndexes")
 
     public synchronized void updateIndexes(ImmutableList<OntologyChange> changes) {
         updateIndexesWithRevisions(ImmutableList.of(changes));

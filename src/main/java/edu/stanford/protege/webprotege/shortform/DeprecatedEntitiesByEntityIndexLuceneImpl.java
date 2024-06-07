@@ -8,6 +8,8 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.search.TermQuery;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -24,6 +26,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ProjectSingleton
 public class DeprecatedEntitiesByEntityIndexLuceneImpl implements DeprecatedEntitiesByEntityIndex {
 
+
+    private final static Logger LOGGER  = LoggerFactory.getLogger(DeprecatedEntitiesByEntityIndexLuceneImpl.class);
     @Nonnull
     private final SearcherManager searcherManager;
 
@@ -47,6 +51,8 @@ public class DeprecatedEntitiesByEntityIndexLuceneImpl implements DeprecatedEnti
     }
 
     private boolean isDeprecatedEntity(@Nonnull OWLEntity entity) throws IOException {
+        long startTime = System.currentTimeMillis();
+
         var indexSearcher = searcherManager.acquire();
         try {
             var entityQuery = luceneEntityDocumentTranslator.getEntityDocumentQuery(entity);
@@ -56,9 +62,13 @@ public class DeprecatedEntitiesByEntityIndexLuceneImpl implements DeprecatedEnti
                     .add(deprecatedQuery, BooleanClause.Occur.MUST)
                     .build();
             var totalHits = indexSearcher.search(entityDeprecatedQuery, 1).totalHits;
+            long endtime = System.currentTimeMillis();
+            LOGGER.info("Operation DeprecatedEntitiesByEntityIndexLuceneImpl.isDeprecatedEntity execution time is : " + (endtime-startTime) +"ms");
+
             return totalHits.value > 0;
         } finally {
             searcherManager.release(indexSearcher);
         }
+
     }
 }

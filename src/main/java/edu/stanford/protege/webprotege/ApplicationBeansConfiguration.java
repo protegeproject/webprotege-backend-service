@@ -61,6 +61,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import javax.inject.Provider;
@@ -69,6 +70,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Matthew Horridge
@@ -77,7 +80,14 @@ import java.util.Set;
  */
 @Configuration
 @EnableMongoRepositories
+@EnableAsync
 public class ApplicationBeansConfiguration {
+
+
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(10); // Customize the pool size as needed
+    }
 
     @Bean
     public MongoCustomConversions mongoCustomConversions(DocumentToOwlEntityConverter documentToOwlEntityConverter) {

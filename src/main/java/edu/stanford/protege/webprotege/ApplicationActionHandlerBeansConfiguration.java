@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
+import edu.stanford.protege.webprotege.app.ExecutionTimeAdvice;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
@@ -27,6 +28,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ApplicationActionHandlerBeansConfiguration {
+
+
+    @Bean
+    ExecutionTimeAdvice executionTimeAdvice() {
+        return new ExecutionTimeAdvice();
+    }
 
 
     @Bean
