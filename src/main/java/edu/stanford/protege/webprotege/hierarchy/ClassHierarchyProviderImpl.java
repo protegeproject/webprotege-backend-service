@@ -7,7 +7,8 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.*;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -17,7 +18,8 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 
 /**
@@ -167,7 +169,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         Set<OWLClass> oldTerminalElements = new HashSet<>(rootFinder.getTerminalElements());
         Set<OWLClass> changedClasses = new HashSet<>();
         changedClasses.add(root);
-        var filteredChanges = ClassHierarchyProvider.filterIrrelevantChanges(changes);
+        var filteredChanges = this.filterIrrelevantChanges(changes);
         updateImplicitRoots(filteredChanges);
         for (OntologyChange change : filteredChanges) {
             changedClasses.addAll(change.getSignature()
@@ -175,7 +177,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
                     .filter(OWLEntity::isOWLClass)
                     .filter(entity -> !entity.equals(root))
                     .map(entity -> (OWLClass) entity)
-                    .collect(toList()));
+                    .toList());
         }
         changedClasses.forEach(this::registerNodeChanged);
         rootFinder.getTerminalElements()
@@ -277,5 +279,12 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     @Override
     public boolean isLeaf(OWLClass object) {
         return classHierarchyChildrenAxiomsIndex.isLeaf(object);
+    }
+
+    @Override
+    public List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes) {
+        return changes.stream()
+                .filter(OntologyChange::isAxiomChange)
+                .collect(toList());
     }
 }

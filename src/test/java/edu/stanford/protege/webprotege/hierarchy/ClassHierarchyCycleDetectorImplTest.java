@@ -1,10 +1,8 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.bulkop.ChangeEntityParentsActionHandler;
-import edu.stanford.protege.webprotege.change.*;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.change.AddAxiomChange;
+import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +11,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
-import java.util.stream.Stream;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -26,79 +25,34 @@ public class ClassHierarchyCycleDetectorImplTest {
 
     private ClassHierarchyCycleDetector classHierarchyCycleDetector;
 
-    private ClassHierarchyProviderImpl classHierarchyProvider;
-
     private OWLDataFactory dataFactory = new OWLDataFactoryImpl();
-
-    private OWLClass owlThing = dataFactory.getOWLThing();
-
-    private ProjectId projectId = ProjectId.generate();
-
-
-    @Mock
-    private ProjectOntologiesIndex projectOntologiesIndex;
-
-    @Mock
-    private SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndex;
-
-    @Mock
-    private EquivalentClassesAxiomsIndex equivalentClassesAxiomIndex;
-
-    @Mock
-    private ProjectSignatureByTypeIndex projectSignatureByTypeIndex;
-
-    @Mock
-    private EntitiesInProjectSignatureByIriIndex entitiesInProjectSignatureByIriIndex;
 
     @Mock
     private OWLOntologyID ontologyId;
 
     @Mock
-    private ClassHierarchyChildrenAxiomsIndex classHierarchyChildrenAxiomsIndex;
 
-    private OWLClass clsA, clsA2, clsB, clsC, clsD, clsE;
+    private OWLClass clsA, clsB, clsC;
 
-    private OWLSubClassOfAxiom clsASubClassOfClsB, clsBSubClassOfClsC, clsBSubClassOfClsA;
+    private OWLSubClassOfAxiom clsASubClassOfClsB, clsBSubClassOfClsC, clsBSubClassOfClsA, clsASubClassOfClsC;
 
     @Mock
-    private IRI clsAIri, clsA2Iri, clsBIri, clsCIri, clsDIri, clsEIri;
+    private IRI clsAIri, clsBIri, clsCIri;
+
+    @Mock
+    private ClassHierarchyProviderImpl classHierarchyProvider;
 
     @Before
     public void setUp() {
-        when(projectOntologiesIndex.getOntologyIds())
-                .thenAnswer(invocation -> Stream.of(ontologyId));
 
         clsA = dataFactory.getOWLClass(clsAIri);
-        clsA2 = dataFactory.getOWLClass(clsA2Iri);
         clsB = dataFactory.getOWLClass(clsBIri);
         clsC = dataFactory.getOWLClass(clsCIri);
-        clsD = dataFactory.getOWLClass(clsDIri);
-        clsE = dataFactory.getOWLClass(clsEIri);
 
         clsASubClassOfClsB = dataFactory.getOWLSubClassOfAxiom(clsA, clsB);
         clsBSubClassOfClsC = dataFactory.getOWLSubClassOfAxiom(clsB, clsC);
         clsBSubClassOfClsA = dataFactory.getOWLSubClassOfAxiom(clsB, clsA);
-
-        when(subClassOfAxiomsBySubClassIndex.getSubClassOfAxiomsForSubClass(any(), any()))
-                .thenAnswer(invocation -> Stream.empty());
-        when(subClassOfAxiomsBySubClassIndex.getSubClassOfAxiomsForSubClass(clsA, ontologyId))
-                .thenAnswer(invocation -> ImmutableList.of(clsASubClassOfClsB).stream());
-        when(subClassOfAxiomsBySubClassIndex.getSubClassOfAxiomsForSubClass(clsB, ontologyId))
-                .thenAnswer(invocation -> ImmutableList.of(clsBSubClassOfClsC).stream());
-
-
-        when(projectSignatureByTypeIndex.getSignature(EntityType.CLASS))
-                .thenReturn(Stream.of(clsA, clsA2, clsB, clsC, clsD, clsE));
-
-
-        classHierarchyProvider = new ClassHierarchyProviderImpl(projectId,
-                owlThing,
-                projectOntologiesIndex,
-                subClassOfAxiomsBySubClassIndex,
-                equivalentClassesAxiomIndex,
-                projectSignatureByTypeIndex,
-                entitiesInProjectSignatureByIriIndex,
-                classHierarchyChildrenAxiomsIndex);
+        clsASubClassOfClsC = dataFactory.getOWLSubClassOfAxiom(clsA, clsC);
 
         classHierarchyCycleDetector = new ClassHierarchyCycleDetectorImpl(classHierarchyProvider);
 
@@ -106,14 +60,33 @@ public class ClassHierarchyCycleDetectorImplTest {
 
     @Test
     public void givenHierarchyWhenAddingAxiomThatCreatesCycleThenGetTrueResponseForCycleCheck() {
-        OntologyChangeList.Builder<Boolean> changesListBuilder = new OntologyChangeList.Builder<Boolean>();
+        OntologyChangeList.Builder<Boolean> changesListBuilder = new OntologyChangeList.Builder<>();
         changesListBuilder.add(AddAxiomChange.of(checkNotNull(ontologyId), checkNotNull(clsBSubClassOfClsA)));
+        changesListBuilder.add(AddAxiomChange.of(checkNotNull(ontologyId), checkNotNull(clsASubClassOfClsC)));
 
-        var hasCycle = classHierarchyCycleDetector.hasCycle(changesListBuilder.build(true).getChanges());
+        List<OntologyChange> ontologyChangeList = changesListBuilder.build(true).getChanges();
+
+        when(classHierarchyProvider.filterIrrelevantChanges(ontologyChangeList)).thenReturn(ontologyChangeList);
+
+        when(classHierarchyProvider.isAncestor(any(), any())).thenReturn(true);
+        var hasCycle = classHierarchyCycleDetector.hasCycle(ontologyChangeList);
         assertTrue(hasCycle);
+        verify(classHierarchyProvider, times(1)).isAncestor(any(), any());
     }
 
     @Test
-    public void getClassesWithCycle() {
+    public void givenHierarchyWhenAddingAxiomThatCreatesCycleThenGetResponseWithClassesWithCycles() {
+        OntologyChangeList.Builder<Boolean> changesListBuilder = new OntologyChangeList.Builder<>();
+        changesListBuilder.add(AddAxiomChange.of(checkNotNull(ontologyId), checkNotNull(clsBSubClassOfClsA)));
+        changesListBuilder.add(AddAxiomChange.of(checkNotNull(ontologyId), checkNotNull(clsASubClassOfClsC)));
+
+        List<OntologyChange> ontologyChangeList = changesListBuilder.build(true).getChanges();
+
+        when(classHierarchyProvider.filterIrrelevantChanges(ontologyChangeList)).thenReturn(ontologyChangeList);
+
+        when(classHierarchyProvider.isAncestor(any(), any())).thenReturn(true);
+        var classesWithCycle = classHierarchyCycleDetector.getClassesWithCycle(ontologyChangeList);
+        assertEquals(3, classesWithCycle.size());
+        verify(classHierarchyProvider, times(3)).isAncestor(any(), any());
     }
 }

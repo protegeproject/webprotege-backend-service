@@ -2,15 +2,19 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import org.semanticweb.owlapi.model.*;
-import org.slf4j.*;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider.filterIrrelevantChanges;
 
 @ProjectSingleton
 public class ClassHierarchyCycleDetectorImpl implements ClassHierarchyCycleDetector {
@@ -27,15 +31,15 @@ public class ClassHierarchyCycleDetectorImpl implements ClassHierarchyCycleDetec
 
     @Override
     public boolean hasCycle(List<OntologyChange> changes) {
-        var filteredChangedOwlClasses = filterIrrelevantChanges(changes)
+        var filteredChangedOwlClasses = classHierarchyProvider.filterIrrelevantChanges(changes)
                 .stream()
-//                .filter(OntologyChange::isRemoveAxiom)
-//                .filter(OntologyChange::isAddAxiom)
+                .filter(OntologyChange::isAxiomChange)
                 .flatMap(change -> change.getSignature()
                         .stream()
                         .filter(OWLEntity::isOWLClass)
-                        .filter(entity -> !classHierarchyProvider.getRoots().contains(entity))
-                        .map(entity -> (OWLClass) entity))
+                        .map(OWLEntity::asOWLClass)
+                        .filter(owlClass -> !classHierarchyProvider.getRoots().contains(owlClass))
+                )
                 .toList();
         for (OWLClass changedClass : filteredChangedOwlClasses) {
             if (classHierarchyProvider.isAncestor(changedClass, changedClass)) {
@@ -48,15 +52,16 @@ public class ClassHierarchyCycleDetectorImpl implements ClassHierarchyCycleDetec
     @Override
     public Set<OWLClass> getClassesWithCycle(List<OntologyChange> changes) {
         var result = new HashSet<OWLClass>();
-        var filteredChangedOwlClasses = filterIrrelevantChanges(changes)
+        var filteredChangedOwlClasses = classHierarchyProvider.filterIrrelevantChanges(changes)
                 .stream()
                 .filter(OntologyChange::isAxiomChange)
                 .flatMap(change -> change.getSignature()
                         .stream()
                         .filter(OWLEntity::isOWLClass)
-                        .filter(entity -> !classHierarchyProvider.getRoots().contains(entity))
-                        .map(entity -> (OWLClass) entity))
-                .toList();
+                        .map(OWLEntity::asOWLClass)
+                        .filter(owlClass -> !classHierarchyProvider.getRoots().contains(owlClass))
+                )
+                .collect(Collectors.toSet());
         for (OWLClass changedClass : filteredChangedOwlClasses) {
             if (classHierarchyProvider.isAncestor(changedClass, changedClass)) {
                 result.add(changedClass);
