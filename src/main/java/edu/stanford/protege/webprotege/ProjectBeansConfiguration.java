@@ -111,6 +111,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import javax.annotation.Nonnull;
 import javax.inject.Provider;
 import java.io.File;
 import java.nio.file.Path;
@@ -654,6 +655,11 @@ public class ProjectBeansConfiguration {
                                                       EntitiesInProjectSignatureByIriIndex p7,
                                                       ClassHierarchyChildrenAxiomsIndex p8) {
         return new ClassHierarchyProviderImpl(p1, p2, p3, p4, p5, p6, p7, p8);
+    }
+
+    @Bean
+    ClassHierarchyCycleDetectorImpl classCycleDetectorProvider(@Nonnull ClassHierarchyProvider p1) {
+        return new ClassHierarchyCycleDetectorImpl(p1);
     }
 
     @Bean

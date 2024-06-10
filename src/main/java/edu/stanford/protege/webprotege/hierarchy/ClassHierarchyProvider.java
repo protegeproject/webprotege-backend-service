@@ -3,8 +3,9 @@ package edu.stanford.protege.webprotege.hierarchy;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import org.semanticweb.owlapi.model.OWLClass;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Matthew Horridge
@@ -15,7 +16,9 @@ public interface ClassHierarchyProvider extends HierarchyProvider<OWLClass> {
 
   void handleChanges(List<OntologyChange> changes);
 
-  boolean hasCycle(List<OntologyChange> changes);
-
-  Set<OWLClass> getClassesWithCycle(List<OntologyChange> changes);
+  static List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes) {
+    return changes.stream()
+            .filter(OntologyChange::isAxiomChange)
+            .collect(toList());
+  }
 }

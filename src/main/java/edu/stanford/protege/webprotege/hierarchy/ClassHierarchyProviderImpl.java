@@ -7,8 +7,7 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -18,8 +17,7 @@ import java.util.stream.Stream;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 
 
 /**
@@ -169,7 +167,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         Set<OWLClass> oldTerminalElements = new HashSet<>(rootFinder.getTerminalElements());
         Set<OWLClass> changedClasses = new HashSet<>();
         changedClasses.add(root);
-        var filteredChanges = filterIrrelevantChanges(changes);
+        var filteredChanges = ClassHierarchyProvider.filterIrrelevantChanges(changes);
         updateImplicitRoots(filteredChanges);
         for (OntologyChange change : filteredChanges) {
             changedClasses.addAll(change.getSignature()
@@ -191,50 +189,9 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         notifyNodeChanges();
     }
 
-    @Override
-    public boolean hasCycle(List<OntologyChange> changes) {
-        var filteredChangedOwlClasses = filterIrrelevantChanges(changes)
-                .stream()
-                .filter(change -> change.isRemoveAxiom() || change.isAddAxiom())
-                .flatMap(change -> change.getSignature()
-                        .stream()
-                        .filter(OWLEntity::isOWLClass)
-                        .filter(entity -> !entity.equals(root))
-                        .map(entity -> (OWLClass) entity))
-                .toList();
-        for (OWLClass changedClass : filteredChangedOwlClasses) {
-            if (isAncestor(changedClass, changedClass)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    @Override
-    public Set<OWLClass> getClassesWithCycle(List<OntologyChange> changes) {
-        Set<OWLClass> result = new HashSet<>();
-        var filteredChangedOwlClasses = filterIrrelevantChanges(changes)
-                .stream()
-                .filter(change -> change.isRemoveAxiom() || change.isAddAxiom())
-                .flatMap(change -> change.getSignature()
-                        .stream()
-                        .filter(OWLEntity::isOWLClass)
-                        .filter(entity -> !entity.equals(root))
-                        .map(entity -> (OWLClass) entity))
-                .toList();
-        for (OWLClass changedClass : filteredChangedOwlClasses) {
-            if (isAncestor(changedClass, changedClass)) {
-                result.add(changedClass);
-            }
-        }
-        return result;
-    }
 
-    private List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes) {
-        return changes.stream()
-                .filter(OntologyChange::isAxiomChange)
-                .collect(toList());
-    }
+
 
     private void updateImplicitRoots(List<OntologyChange> changes) {
         Set<OWLClass> possibleTerminalElements = new HashSet<>();
