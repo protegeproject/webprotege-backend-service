@@ -34,10 +34,7 @@ import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
 import edu.stanford.protege.webprotege.diff.Revision2DiffElementsTranslator;
 import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.entity.EntityRenamer;
-import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
+import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.events.*;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.*;
@@ -51,8 +48,8 @@ import edu.stanford.protege.webprotege.index.impl.RootIndexImpl;
 import edu.stanford.protege.webprotege.index.impl.UpdatableIndex;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.inject.*;
-import edu.stanford.protege.webprotege.inject.project.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
+import edu.stanford.protege.webprotege.inject.project.*;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
@@ -454,6 +451,21 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    public IcdReleasedEntityStatusManager getIcdReleasedClassesManager(){
+        return new IcdReleasedEntityStatusManagerImpl();
+    }
+
+    @Bean
+    ReleasedClassesManager getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager){
+        return new ReleasedClassesManagerImpl(icdReleasedEntityStatusManager);
+    }
+
+    @Bean
+    EntityStatusManager getEntityStatusManager(ReleasedClassesManager releasedClassesManager){
+        return new EntityStatusManagerImpl(releasedClassesManager);
+    }
+
+    @Bean
     public RevisionManagerImpl getRevisionSummary(RevisionStore revisionStore) {
         var revisionManager = new RevisionManagerImpl(revisionStore);
         return revisionManager;
@@ -772,8 +784,9 @@ public class ProjectBeansConfiguration {
                                           WatchManager p4,
                                           EntityDiscussionThreadRepository p5,
                                           TagsManager p6,
-                                          LanguageManager p7) {
-        return new EntityNodeRenderer(p1, p2, p3, p4, p5, p6, p7);
+                                          LanguageManager p7,
+                                          EntityStatusManager p8) {
+        return new EntityNodeRenderer(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
     @Bean
