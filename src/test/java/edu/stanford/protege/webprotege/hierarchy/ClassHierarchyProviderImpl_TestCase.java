@@ -1,13 +1,14 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import edu.stanford.protege.webprotege.index.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.*;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
@@ -23,7 +24,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-16
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ClassHierarchyProviderImpl_TestCase {
 
     private ClassHierarchyProviderImpl classHierarchyProvider;
@@ -58,14 +60,21 @@ public class ClassHierarchyProviderImpl_TestCase {
 
     private OWLEquivalentClassesAxiom clsA2EquivalentToClsDandClsE;
 
-    @Mock
     private IRI clsAIri, clsA2Iri, clsBIri, clsCIri, clsDIri, clsEIri;
 
     @Mock
     private ClassHierarchyChildrenAxiomsIndex classHierarchyChildrenAxiomsIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
+        clsAIri = MockingUtils.mockIRI();
+        clsA2Iri = MockingUtils.mockIRI();
+        clsBIri = MockingUtils.mockIRI();
+        clsCIri = MockingUtils.mockIRI();
+        clsDIri = MockingUtils.mockIRI();
+        clsEIri = MockingUtils.mockIRI();
+
+
         when(projectOntologiesIndex.getOntologyIds())
                 .thenAnswer(invocation -> Stream.of(ontologyId));
 
