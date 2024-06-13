@@ -766,8 +766,10 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       RevisionReverterChangeListGeneratorFactory p6,
                                                                       RevisionManager p7,
                                                                       ClassHierarchyProvider p8,
-                                                                      RenderingManager p9) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+                                                                      RenderingManager p9,
+                                                                      ReleasedClassesManager p10,
+                                                                      ClassHierarchyRetiredAncestorDetector p11) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
     }
 
 

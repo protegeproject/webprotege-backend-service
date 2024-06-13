@@ -463,6 +463,11 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    RetiredClassChecker getReleasedClassesIndex(IcdRetiredClassManager icdRetiredClassManager){
+        return new RetiredClassCheckerImpl(icdRetiredClassManager);
+    }
+
+    @Bean
     EntityStatusManager getEntityStatusManager(ReleasedClassesManager releasedClassesManager){
         return new EntityStatusManagerImpl(releasedClassesManager);
     }
@@ -672,6 +677,12 @@ public class ProjectBeansConfiguration {
     @Bean
     ClassHierarchyCycleDetectorImpl classCycleDetectorProvider(@Nonnull ClassHierarchyProvider p1) {
         return new ClassHierarchyCycleDetectorImpl(p1);
+    }
+
+    @Bean
+    ClassHierarchyRetiredAncestorDetectorImpl classHierarchyRetiredAcestorDetector(@Nonnull ClassHierarchyProvider p1,
+                                                                                   @Nonnull RetiredClassChecker p2) {
+        return new ClassHierarchyRetiredAncestorDetectorImpl(p1, p2);
     }
 
     @Bean
