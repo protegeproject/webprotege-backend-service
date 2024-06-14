@@ -16,6 +16,8 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredAncestorDetector;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.*;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
@@ -767,7 +769,7 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       RevisionManager p7,
                                                                       ClassHierarchyProvider p8,
                                                                       RenderingManager p9,
-                                                                      ReleasedClassesManager p10,
+                                                                      ReleasedClassesChecker p10,
                                                                       ClassHierarchyRetiredAncestorDetector p11) {
         return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
     }

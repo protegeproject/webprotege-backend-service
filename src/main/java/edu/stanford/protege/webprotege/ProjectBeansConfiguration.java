@@ -42,6 +42,8 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredAncestorDetectorImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
@@ -458,18 +460,18 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ReleasedClassesManager getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager){
-        return new ReleasedClassesManagerImpl(icdReleasedEntityStatusManager);
+    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager){
+        return new ReleasedClassesCheckerImpl(icdReleasedEntityStatusManager);
     }
 
     @Bean
-    RetiredClassChecker getReleasedClassesIndex(IcdRetiredClassManager icdRetiredClassManager){
-        return new RetiredClassCheckerImpl(icdRetiredClassManager);
+    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index){
+        return new RetiredClassCheckerImpl(index);
     }
 
     @Bean
-    EntityStatusManager getEntityStatusManager(ReleasedClassesManager releasedClassesManager){
-        return new EntityStatusManagerImpl(releasedClassesManager);
+    EntityStatusManager getEntityStatusManager(ReleasedClassesChecker releasedClassesChecker){
+        return new EntityStatusManagerImpl(releasedClassesChecker);
     }
 
     @Bean

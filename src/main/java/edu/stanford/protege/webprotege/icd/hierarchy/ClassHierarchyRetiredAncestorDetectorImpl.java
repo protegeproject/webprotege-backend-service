@@ -1,6 +1,7 @@
-package edu.stanford.protege.webprotege.hierarchy;
+package edu.stanford.protege.webprotege.icd.hierarchy;
 
-import edu.stanford.protege.webprotege.index.RetiredClassChecker;
+import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.RetiredClassChecker;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.*;

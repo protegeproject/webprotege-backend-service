@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.hierarchy;
+package edu.stanford.protege.webprotege.icd.hierarchy;
 
 import org.semanticweb.owlapi.model.OWLClass;
 

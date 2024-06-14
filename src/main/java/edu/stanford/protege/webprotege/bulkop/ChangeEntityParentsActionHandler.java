@@ -6,7 +6,8 @@ import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.index.ReleasedClassesManager;
+import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredAncestorDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -53,7 +54,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     private final RenderingManager renderingManager;
 
     @Nonnull
-    private final ReleasedClassesManager releasedClassesManager;
+    private final ReleasedClassesChecker releasedClassesManager;
 
     @Nonnull
     private final ClassHierarchyRetiredAncestorDetector retiredAncestorDetector;
@@ -69,7 +70,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull RevisionManager revisionManager,
                                             @Nonnull ClassHierarchyProvider classHierarchyProvider,
                                             @Nonnull RenderingManager renderingManager,
-                                            @Nonnull ReleasedClassesManager releasedClassesManager,
+                                            @Nonnull ReleasedClassesChecker releasedClassesManager,
                                             @Nonnull ClassHierarchyRetiredAncestorDetector retiredAncestorDetector) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);

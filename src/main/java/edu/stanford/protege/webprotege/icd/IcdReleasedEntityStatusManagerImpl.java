@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.project;
+package edu.stanford.protege.webprotege.icd;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
