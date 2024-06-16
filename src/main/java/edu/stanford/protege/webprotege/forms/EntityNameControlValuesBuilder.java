@@ -10,6 +10,7 @@ import edu.stanford.protege.webprotege.forms.field.OwlBinding;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.slf4j.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -18,6 +19,8 @@ import java.util.stream.Stream;
 
 @FormDataBuilderSession
 public class EntityNameControlValuesBuilder {
+
+    private static final Logger logger = LoggerFactory.getLogger(EntityNameControlValuesBuilder.class);
 
     @Nonnull
     private final BindingValuesExtractor bindingValuesExtractor;
@@ -47,8 +50,9 @@ public class EntityNameControlValuesBuilder {
                                                                                @Nonnull Optional<FormEntitySubject> subject,
                                                                                @Nonnull OwlBinding theBinding,
                                                                                int depth) {
+        logger.debug("Getting entity name control values for {}", subject);
         var values = bindingValuesExtractor.getBindingValues(subject, theBinding);
-        return values.stream()
+        var dtos = values.stream()
                      // Allow IRIs which correspond to entities
                      .filter(p -> p instanceof OWLEntity || p instanceof IRI)
                      .flatMap(p -> {
@@ -62,6 +66,9 @@ public class EntityNameControlValuesBuilder {
                      .map(renderer::getEntityRendering)
                      .map(entity -> EntityNameControlDataDto.get(entityNameControlDescriptor, entity, depth))
                      .sorted(comparator)
+                         .map(dto -> (FormControlDataDto) dto)
                      .collect(ImmutableList.toImmutableList());
+        logger.debug("Computed {} values: {}", dtos.size(), dtos);
+        return dtos;
     }
 }
