@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.change.OntologyChange;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.Logger;
@@ -90,14 +90,14 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         rebuildIfNecessary();
         // If the object is thing then there are no
         // parents
-        if(object.equals(root)) {
+        if (object.equals(root)) {
             return Collections.emptySet();
         }
         Stream<OWLClass> parentsCombined = getParentsStream(object);
         var parents = parentsCombined.collect(toSet());
         // Thing if the object is a root class
-        if(rootFinder.getTerminalElements()
-                     .contains(object)) {
+        if (rootFinder.getTerminalElements()
+                .contains(object)) {
             parents.add(root);
         }
         return parents;
@@ -111,42 +111,41 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     private Stream<OWLClass> getParentsStream(OWLClass object) {
         var subClassOfAxiomsParents =
                 projectOntologiesIndex.getOntologyIds()
-                                      .flatMap(ontId -> subClassOfAxiomsIndex.getSubClassOfAxiomsForSubClass(object,
-                                                                                                             ontId))
-                                      .map(OWLSubClassOfAxiom::getSuperClass)
-                                      .flatMap(this::asConjunctSet)
-                                      .filter(OWLClassExpression::isNamed)
-                                      .map(OWLClassExpression::asOWLClass);
+                        .flatMap(ontId -> subClassOfAxiomsIndex.getSubClassOfAxiomsForSubClass(object,
+                                ontId))
+                        .map(OWLSubClassOfAxiom::getSuperClass)
+                        .flatMap(this::asConjunctSet)
+                        .filter(OWLClassExpression::isNamed)
+                        .map(OWLClassExpression::asOWLClass);
 
 
         var equivalentClassesAxiomsParents =
                 projectOntologiesIndex.getOntologyIds()
-                                      .flatMap(ontId -> equivalentClassesAxiomsIndex.getEquivalentClassesAxioms(
-                                              object,
-                                              ontId))
-                                      .flatMap(ax -> ax.getClassExpressions()
-                                                       .stream())
-                                      .filter(ce -> !ce.equals(object))
-                                      .flatMap(this::asConjunctSet)
-                                      .filter(OWLClassExpression::isNamed)
-                                      .map(OWLClassExpression::asOWLClass);
+                        .flatMap(ontId -> equivalentClassesAxiomsIndex.getEquivalentClassesAxioms(
+                                object,
+                                ontId))
+                        .flatMap(ax -> ax.getClassExpressions()
+                                .stream())
+                        .filter(ce -> !ce.equals(object))
+                        .flatMap(this::asConjunctSet)
+                        .filter(OWLClassExpression::isNamed)
+                        .map(OWLClassExpression::asOWLClass);
 
         return Stream.concat(subClassOfAxiomsParents, equivalentClassesAxiomsParents);
     }
 
     private void rebuildIfNecessary() {
-        if(stale) {
+        if (stale) {
             rebuildImplicitRoots();
         }
     }
 
     private Stream<OWLClassExpression> asConjunctSet(@Nonnull OWLClassExpression cls) {
-        if(cls instanceof OWLObjectIntersectionOf) {
+        if (cls instanceof OWLObjectIntersectionOf) {
             return ((OWLObjectIntersectionOf) cls).getOperandsAsList()
-                                           .stream()
-                                           .flatMap(this::asConjunctSet);
-        }
-        else {
+                    .stream()
+                    .flatMap(this::asConjunctSet);
+        } else {
             return Stream.of(cls);
         }
     }
@@ -157,7 +156,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         logger.info("{} Rebuilding class hierarchy", projectId);
         rootFinder.clear();
         var signature = projectSignatureByTypeIndex.getSignature(EntityType.CLASS)
-                                                   .collect(toImmutableSet());
+                .collect(toImmutableSet());
         rootFinder.appendTerminalElements(signature);
         rootFinder.finish();
         logger.info("{} Rebuilt class hierarchy in {} ms", projectId, stopwatch.elapsed(MILLISECONDS));
@@ -170,33 +169,31 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         Set<OWLClass> oldTerminalElements = new HashSet<>(rootFinder.getTerminalElements());
         Set<OWLClass> changedClasses = new HashSet<>();
         changedClasses.add(root);
-        var filteredChanges = filterIrrelevantChanges(changes);
+        var filteredChanges = this.filterIrrelevantChanges(changes);
         updateImplicitRoots(filteredChanges);
-        for(OntologyChange change : filteredChanges) {
+        for (OntologyChange change : filteredChanges) {
             changedClasses.addAll(change.getSignature()
-                                        .stream()
-                                        .filter(OWLEntity::isOWLClass)
-                                        .filter(entity -> !entity.equals(root))
-                                        .map(entity -> (OWLClass) entity)
-                                        .collect(toList()));
+                    .stream()
+                    .filter(OWLEntity::isOWLClass)
+                    .filter(entity -> !entity.equals(root))
+                    .map(entity -> (OWLClass) entity)
+                    .toList());
         }
         changedClasses.forEach(this::registerNodeChanged);
         rootFinder.getTerminalElements()
-                  .stream()
-                  .filter(cls -> !oldTerminalElements.contains(cls))
-                  .forEach(this::registerNodeChanged);
+                .stream()
+                .filter(cls -> !oldTerminalElements.contains(cls))
+                .forEach(this::registerNodeChanged);
         oldTerminalElements.stream()
-                           .filter(cls -> !rootFinder.getTerminalElements()
-                                                     .contains(cls))
-                           .forEach(this::registerNodeChanged);
+                .filter(cls -> !rootFinder.getTerminalElements()
+                        .contains(cls))
+                .forEach(this::registerNodeChanged);
         notifyNodeChanges();
     }
 
-    private List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes) {
-        return changes.stream()
-                      .filter(OntologyChange::isAxiomChange)
-                      .collect(toList());
-    }
+
+
+
 
     private void updateImplicitRoots(List<OntologyChange> changes) {
         Set<OWLClass> possibleTerminalElements = new HashSet<>();
@@ -204,24 +201,23 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
 
         // only listen for changes on the appropriate ontologies
         changes.stream()
-               .filter(OntologyChange::isAxiomChange)
-               .forEach(change -> {
-                   boolean remove = change.isRemoveAxiom();
-                   var axiom = change.getAxiomOrThrow();
-                   axiom.getSignature()
-                        .stream()
-                        .filter(OWLEntity::isOWLClass)
-                        .filter(entity -> !entity.equals(root))
-                        .forEach(entity -> {
-                            OWLClass cls = (OWLClass) entity;
-                            if(!remove || containsReference(cls)) {
-                                possibleTerminalElements.add(cls);
-                            }
-                            else {
-                                notInOntologies.add(cls);
-                            }
-                        });
-               });
+                .filter(OntologyChange::isAxiomChange)
+                .forEach(change -> {
+                    boolean remove = change.isRemoveAxiom();
+                    var axiom = change.getAxiomOrThrow();
+                    axiom.getSignature()
+                            .stream()
+                            .filter(OWLEntity::isOWLClass)
+                            .filter(entity -> !entity.equals(root))
+                            .forEach(entity -> {
+                                OWLClass cls = (OWLClass) entity;
+                                if (!remove || containsReference(cls)) {
+                                    possibleTerminalElements.add(cls);
+                                } else {
+                                    notInOntologies.add(cls);
+                                }
+                            });
+                });
 
         possibleTerminalElements.addAll(rootFinder.getTerminalElements());
         possibleTerminalElements.removeAll(notInOntologies);
@@ -250,13 +246,12 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     public synchronized Collection<OWLClass> getChildren(OWLClass object) {
         rebuildIfNecessary();
         Set<OWLClass> result;
-        if(object.equals(root)) {
+        if (object.equals(root)) {
             result = new HashSet<>();
             result.addAll(rootFinder.getTerminalElements());
             result.addAll(extractChildren(object));
             result.remove(object);
-        }
-        else {
+        } else {
             result = extractChildren(object);
             //            result.removeIf(curChild -> getAncestors(object).contains(curChild));
         }
@@ -266,25 +261,30 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
 
     private Set<OWLClass> extractChildren(OWLClass parent) {
         return classHierarchyChildrenAxiomsIndex.getChildrenAxioms(parent)
-                                         .flatMap(ax -> {
-                                             if(ax instanceof OWLSubClassOfAxiom) {
-                                                 return Stream.of(((OWLSubClassOfAxiom) ax).getSubClass().asOWLClass());
-                                             }
-                                             else if(ax instanceof OWLEquivalentClassesAxiom) {
-                                                 return ((OWLEquivalentClassesAxiom) ax).getClassExpressionsAsList()
-                                                         .stream()
-                                                         .filter(IsAnonymous::isNamed)
-                                                         .map(ce -> (OWLClass) ce);
-                                             }
-                                             else {
-                                                 return Stream.empty();
-                                             }
-                                         })
-                                         .collect(toImmutableSet());
+                .flatMap(ax -> {
+                    if (ax instanceof OWLSubClassOfAxiom) {
+                        return Stream.of(((OWLSubClassOfAxiom) ax).getSubClass().asOWLClass());
+                    } else if (ax instanceof OWLEquivalentClassesAxiom) {
+                        return ((OWLEquivalentClassesAxiom) ax).getClassExpressionsAsList()
+                                .stream()
+                                .filter(IsAnonymous::isNamed)
+                                .map(ce -> (OWLClass) ce);
+                    } else {
+                        return Stream.empty();
+                    }
+                })
+                .collect(toImmutableSet());
     }
 
     @Override
     public boolean isLeaf(OWLClass object) {
         return classHierarchyChildrenAxiomsIndex.isLeaf(object);
+    }
+
+    @Override
+    public List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes) {
+        return changes.stream()
+                .filter(OntologyChange::isAxiomChange)
+                .collect(toList());
     }
 }
