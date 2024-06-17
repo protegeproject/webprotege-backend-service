@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class RetiredClassCheckerImplTest {
 
-    private OWLDataFactory dataFactory = new OWLDataFactoryImpl();
+    private final OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
     @Mock
     private AnnotationAssertionAxiomsIndex annotationAssertionAxiomsIndex;
