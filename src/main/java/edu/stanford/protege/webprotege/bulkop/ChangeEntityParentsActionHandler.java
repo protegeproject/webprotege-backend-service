@@ -104,7 +104,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
             //call retired classes check manager to check forEach if it has ancestor. get ancestors for which we have retired and put them in list
             var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
 
-            if(!classesWithRetiredAncestors.isEmpty()){
+            if(isNotEmpty(classesWithRetiredAncestors)){
                 return getResultWithRetiredAncestors(classesWithRetiredAncestors);
             }
         }
@@ -123,6 +123,10 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
         var resultWithCycles = getOwlEntityDataFromOwlClasses(classesWithCycles);
         return getResultWithCycles(classesWithCycles);
+    }
+
+    private boolean isNotEmpty(Set<?> set) {
+        return !set.isEmpty();
     }
 
 
