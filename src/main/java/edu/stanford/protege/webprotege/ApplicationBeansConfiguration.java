@@ -210,6 +210,13 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
+    ProjectCacheManager projectCacheManager(ProjectCache projectCache,
+                                            ApplicationDisposablesManager disposablesManager) {
+        var cacheManager = new ProjectCacheManager(projectCache, disposablesManager);
+        return cacheManager;
+    }
+
+    @Bean
     @Singleton
     ProjectCache getProjectCache(ProjectComponentFactory projectComponentFactory) {
         return new ProjectCache(projectComponentFactory,

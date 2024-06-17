@@ -101,6 +101,7 @@ public class ProjectCache implements HasDispose {
      * Purges projects that have not been access for some given period of time
      */
     public void purgeDormantProjects() {
+        logger.info("Starting sweep to purge dormant projects.  There are {} projects currently in total.", projectId2ProjectComponent.size());
         // No locking needed
         for (ProjectId projectId : getCachedProjectIds()) {
             long time = getLastAccessTime(projectId);
@@ -180,6 +181,7 @@ public class ProjectCache implements HasDispose {
 
     public void purge(ProjectId projectId) {
         try {
+            logger.info("Purging project: {}", projectId);
             writeLock.lock();
             lastAccessLock.writeLock().lock();
             var projectComponent = projectId2ProjectComponent.remove(projectId);

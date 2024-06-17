@@ -141,8 +141,9 @@ public class IndexUpdater {
                             @Nonnull UpdatableIndex index,
                             @Nonnull ImmutableList<ImmutableList<OntologyChange>> revisions,
                             @Nonnull CountDownLatch countDownLatch) {
+        // Just run Task in this thread, for now
         var updaterTask = new IndexUpdaterTask(projectId, rank, index, revisions, countDownLatch);
-        indexUpdaterService.submit(updaterTask);
+        updaterTask.run();
     }
 
     public synchronized void updateIndexes(ImmutableList<OntologyChange> changes) {

@@ -68,7 +68,7 @@ public class ProjectOntologiesIndexImpl implements ProjectOntologiesIndex, Updat
                 ontologyIds.remove(ontologyChange.ontologyId());
             }
         }
-        cache = ImmutableList.copyOf(ontologyIds);
+        cache = ImmutableList.copyOf(ontologyIds.elementSet());
         initialized = true;
     }
 }
