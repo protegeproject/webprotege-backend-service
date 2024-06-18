@@ -43,6 +43,8 @@ import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManager;
+import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManagerImpl;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredAncestorDetectorImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;

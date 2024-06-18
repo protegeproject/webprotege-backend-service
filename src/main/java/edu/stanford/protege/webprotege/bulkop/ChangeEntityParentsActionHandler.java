@@ -121,7 +121,6 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         ChangeListGenerator<Boolean> revisionReverterGenerator = getRevisionReverterChangeListGenerator(revisionManager.getCurrentRevision(), ChangeRequestId.generate());
         changeManager.applyChanges(executionContext.userId(), revisionReverterGenerator);
 
-        var resultWithCycles = getOwlEntityDataFromOwlClasses(classesWithCycles);
         return getResultWithCycles(classesWithCycles);
     }
 
@@ -135,12 +134,12 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     }
 
     private ChangeEntityParentsResult validEmptyResult() {
-        return new ChangeEntityParentsResult(Collections.EMPTY_SET, Collections.EMPTY_SET);
+        return new ChangeEntityParentsResult(Set.of(), Set.of());
     }
 
     private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes){
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(owlEntityDataResult, Collections.EMPTY_SET);
+        return new ChangeEntityParentsResult(owlEntityDataResult, Set.of());
     }
 
     private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {
@@ -151,6 +150,6 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
     private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes){
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(Collections.EMPTY_SET, owlEntityDataResult);
+        return new ChangeEntityParentsResult(Set.of(), owlEntityDataResult);
     }
 }
