@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.entity;
 
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.tag.TagsManager;
 import edu.stanford.protege.webprotege.watches.WatchManager;
@@ -40,13 +40,18 @@ public class EntityNodeRenderer {
     @Nonnull
     private final LanguageManager languageManager;
 
+    @Nonnull
+    private final EntityStatusManager entityStatusManager;
+
     @Inject
     public EntityNodeRenderer(@Nonnull ProjectId projectId,
                               @Nonnull DictionaryManager dictionaryManager,
                               @Nonnull DeprecatedEntityChecker deprecatedEntityChecker,
                               @Nonnull WatchManager watchManager,
                               @Nonnull EntityDiscussionThreadRepository discussionThreadRepository,
-                              @Nonnull TagsManager tagsManager, @Nonnull LanguageManager languageManager) {
+                              @Nonnull TagsManager tagsManager,
+                              @Nonnull LanguageManager languageManager,
+                              @Nonnull EntityStatusManager entityStatusManager) {
         this.projectId = checkNotNull(projectId);
         this.dictionaryManager = checkNotNull(dictionaryManager);
         this.deprecatedEntityChecker = checkNotNull(deprecatedEntityChecker);
@@ -54,10 +59,12 @@ public class EntityNodeRenderer {
         this.discussionThreadRepository = checkNotNull(discussionThreadRepository);
         this.tagsManager = checkNotNull(tagsManager);
         this.languageManager = checkNotNull(languageManager);
+        this.entityStatusManager = entityStatusManager;
     }
 
     /**
      * Renders the node for the specified entity.
+     *
      * @param entity The entity to be rendered.
      * @return The node for the specified entity.
      */
@@ -70,6 +77,7 @@ public class EntityNodeRenderer {
                 deprecatedEntityChecker.isDeprecated(entity),
                 watchManager.getDirectWatches(entity),
                 discussionThreadRepository.getOpenCommentsCount(projectId, entity),
-                tagsManager.getTags(entity));
+                tagsManager.getTags(entity),
+                entityStatusManager.getEntityStatuses(projectId, entity));
     }
 }
