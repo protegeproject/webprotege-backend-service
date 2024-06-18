@@ -71,6 +71,7 @@ public class EntityFormRepositoryImpl_IT {
                               new TextControlDescriptor(
                                       LanguageMap.of("en", "Enter brand name"),
                                       StringType.SIMPLE_STRING,
+                                      "",
                                       LineMode.SINGLE_LINE,
                                       "Pattern",
                                       LanguageMap.of("en", "There's an error")

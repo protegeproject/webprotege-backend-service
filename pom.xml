@@ -12,7 +12,7 @@
 
     <groupId>edu.stanford.protege</groupId>
     <artifactId>webprotege-backend-service</artifactId>
-    <version>1.2.4-SNAPSHOT</version>
+    <version>1.3.4-WHO</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-forms</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.3</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -101,7 +101,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

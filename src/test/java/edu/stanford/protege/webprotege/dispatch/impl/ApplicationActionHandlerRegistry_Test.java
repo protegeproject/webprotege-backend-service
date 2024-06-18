@@ -29,8 +29,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.Mockito.mock;
 
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ApplicationActionHandlerRegistry_Test {
 
     @Autowired
