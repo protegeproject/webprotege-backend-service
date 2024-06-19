@@ -33,7 +33,7 @@ public class ClassHierarchyRetiredClassDetectorImpl implements ClassHierarchyRet
     @Override
     public Set<OWLClass> getRetiredAncestors(OWLClass owlClass) {
         var ancestorsList = classHierarchyProvider.getAncestors(owlClass);
-        return ancestorsList.stream().filter(this::isRetired).collect(Collectors.toSet());
+        return ancestorsList.stream().filter(retiredClassesChecker::isRetired).collect(Collectors.toSet());
     }
 
     @Override
