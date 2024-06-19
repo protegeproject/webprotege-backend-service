@@ -755,8 +755,11 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     MoveToParentActionHandler moveToParentActionHandler(AccessManager p1,
 
-                                                        HasApplyChanges p3, MoveClassesChangeListGeneratorFactory p4) {
-        return new MoveToParentActionHandler(p1, p3, p4);
+                                                        HasApplyChanges p3,
+                                                        MoveClassesChangeListGeneratorFactory p4,
+                                                        ReleasedClassesChecker p5,
+                                                        ClassHierarchyRetiredClassDetector p6) {
+        return new MoveToParentActionHandler(p1, p3, p4, p5, p6);
     }
 
     @Bean

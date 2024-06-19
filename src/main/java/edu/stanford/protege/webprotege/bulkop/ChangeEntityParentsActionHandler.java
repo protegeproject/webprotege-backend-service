@@ -55,7 +55,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     private final RenderingManager renderingManager;
 
     @Nonnull
-    private final ReleasedClassesChecker releasedClassesManager;
+    private final ReleasedClassesChecker releasedClassesChecker;
 
     @Nonnull
     private final ClassHierarchyRetiredClassDetector retiredAncestorDetector;
@@ -71,7 +71,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull RevisionManager revisionManager,
                                             @Nonnull ClassHierarchyProvider classHierarchyProvider,
                                             @Nonnull RenderingManager renderingManager,
-                                            @Nonnull ReleasedClassesChecker releasedClassesManager,
+                                            @Nonnull ReleasedClassesChecker releasedClassesChecker,
                                             @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
@@ -83,7 +83,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.classHierarchyProvider = checkNotNull(classHierarchyProvider);
         this.renderingManager = checkNotNull(renderingManager);
         this.retiredAncestorDetector = retiredAncestorDetector;
-        this.releasedClassesManager = checkNotNull(releasedClassesManager);
+        this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
     }
 
     @Nonnull
@@ -101,7 +101,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
 
         //method if class is released check that we don't add parent that may have parents with retired name
-        if(releasedClassesManager.isReleased(action.entity())){
+        if(releasedClassesChecker.isReleased(action.entity())){
             //call retired classes check manager to check forEach if it has ancestor. get ancestors for which we have retired and put them in list
             var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
 
