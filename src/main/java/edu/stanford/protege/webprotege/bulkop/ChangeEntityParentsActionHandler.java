@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.bulkop;
 
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.*;
@@ -7,7 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.icd.*;
-import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredAncestorDetector;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -57,7 +58,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     private final ReleasedClassesChecker releasedClassesManager;
 
     @Nonnull
-    private final ClassHierarchyRetiredAncestorDetector retiredAncestorDetector;
+    private final ClassHierarchyRetiredClassDetector retiredAncestorDetector;
 
 
     @Inject
@@ -71,7 +72,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull ClassHierarchyProvider classHierarchyProvider,
                                             @Nonnull RenderingManager renderingManager,
                                             @Nonnull ReleasedClassesChecker releasedClassesManager,
-                                            @Nonnull ClassHierarchyRetiredAncestorDetector retiredAncestorDetector) {
+                                            @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.changeManager = checkNotNull(changeManager);
@@ -134,12 +135,12 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     }
 
     private ChangeEntityParentsResult validEmptyResult() {
-        return new ChangeEntityParentsResult(Set.of(), Set.of());
+        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of());
     }
 
     private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes){
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(owlEntityDataResult, Set.of());
+        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of());
     }
 
     private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {
@@ -150,6 +151,6 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
     private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes){
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(Set.of(), owlEntityDataResult);
+        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult);
     }
 }

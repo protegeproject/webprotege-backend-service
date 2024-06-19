@@ -45,7 +45,7 @@ import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManager;
 import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManagerImpl;
-import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredAncestorDetectorImpl;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetectorImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
@@ -684,9 +684,9 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ClassHierarchyRetiredAncestorDetectorImpl classHierarchyRetiredAcestorDetector(@Nonnull ClassHierarchyProvider p1,
-                                                                                   @Nonnull RetiredClassChecker p2) {
-        return new ClassHierarchyRetiredAncestorDetectorImpl(p1, p2);
+    ClassHierarchyRetiredClassDetectorImpl classHierarchyRetiredAcestorDetector(@Nonnull ClassHierarchyProvider p1,
+                                                                                @Nonnull RetiredClassChecker p2) {
+        return new ClassHierarchyRetiredClassDetectorImpl(p1, p2);
     }
 
     @Bean
