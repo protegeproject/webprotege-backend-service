@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
@@ -37,8 +36,10 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
 
     @Inject
     public MoveToParentActionHandler(@Nonnull AccessManager accessManager,
-                                     @Nonnull HasApplyChanges applyChanges,
-                                     @Nonnull MoveClassesChangeListGeneratorFactory factory, @Nonnull ReleasedClassesChecker releasedClassesChecker, @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector, @Nonnull ChangeManager changeManager) {
+                                     @Nonnull MoveClassesChangeListGeneratorFactory factory,
+                                     @Nonnull ReleasedClassesChecker releasedClassesChecker,
+                                     @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
+                                     @Nonnull ChangeManager changeManager) {
         super(accessManager);
         this.factory = factory;
         this.releasedClassesChecker = releasedClassesChecker;
@@ -58,8 +59,8 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
         if (isNotOwlClass(action.entity())) {
             return new MoveEntitiesToParentResult(false);
         }
-        ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
         var isDestinationRetiredClass = false;
+
         if (releasedClassesChecker.isReleased(action.entity())) {
             isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.entity().asOWLClass());
             if (isDestinationRetiredClass) {
@@ -67,6 +68,7 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
             }
         }
 
+        ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
         var changeListGenerator = factory.create(action.changeRequestId(), clses, action.entity().asOWLClass(), action.commitMessage());
         changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 

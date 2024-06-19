@@ -91,7 +91,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>1.0.23</version>
+            <version>1.0.23-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
