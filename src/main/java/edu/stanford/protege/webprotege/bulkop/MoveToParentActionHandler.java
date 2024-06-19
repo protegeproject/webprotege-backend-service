@@ -60,9 +60,7 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
         }
         ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
         var isDestinationRetiredClass = false;
-        //method if class is released check that we don't add parent that may have parents with retired name
         if (releasedClassesChecker.isReleased(action.entity())) {
-            //call retired classes check manager to check forEach if it has ancestor. get ancestors for which we have retired and put them in list
             isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.entity().asOWLClass());
             if (isDestinationRetiredClass) {
                 return new MoveEntitiesToParentResult(isDestinationRetiredClass);

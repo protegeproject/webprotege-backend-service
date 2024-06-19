@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
@@ -17,7 +17,7 @@ import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -100,12 +100,10 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
 
 
-        //method if class is released check that we don't add parent that may have parents with retired name
-        if(releasedClassesChecker.isReleased(action.entity())){
-            //call retired classes check manager to check forEach if it has ancestor. get ancestors for which we have retired and put them in list
+        if (releasedClassesChecker.isReleased(action.entity())) {
             var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
 
-            if(isNotEmpty(classesWithRetiredAncestors)){
+            if (isNotEmpty(classesWithRetiredAncestors)) {
                 return getResultWithRetiredAncestors(classesWithRetiredAncestors);
             }
         }
@@ -117,7 +115,6 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         if (classesWithCycles.isEmpty()) {
             return validEmptyResult();
         }
-
 
         ChangeListGenerator<Boolean> revisionReverterGenerator = getRevisionReverterChangeListGenerator(revisionManager.getCurrentRevision(), ChangeRequestId.generate());
         changeManager.applyChanges(executionContext.userId(), revisionReverterGenerator);
@@ -138,7 +135,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of());
     }
 
-    private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes){
+    private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
         return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of());
     }
@@ -149,7 +146,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                 .collect(Collectors.toSet());
     }
 
-    private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes){
+    private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
         return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult);
     }
