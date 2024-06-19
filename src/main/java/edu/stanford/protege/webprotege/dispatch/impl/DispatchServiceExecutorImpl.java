@@ -134,12 +134,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
         }
 
         try {
-            long startTime = System.currentTimeMillis();
-
             R result = actionHandler.execute(action, executionContext);
-            long endtime = System.currentTimeMillis();
-            logger.info("Operation " + action.getChannel() + " execution time is : " + (endtime-startTime) +"ms");
-
             return DispatchServiceResultContainer.create(result);
         } catch (PermissionDeniedException e) {
             throw e;

@@ -4,7 +4,6 @@ import edu.stanford.protege.webprotege.app.TrackExecutionTime;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import io.micrometer.core.annotation.Timed;
-import org.checkerframework.checker.units.qual.Time;
 
 import javax.annotation.Nonnull;
 

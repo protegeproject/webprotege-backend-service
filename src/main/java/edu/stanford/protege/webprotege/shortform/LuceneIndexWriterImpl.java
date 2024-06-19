@@ -97,21 +97,21 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     public void rebuildIndex() throws IOException {
         inMemoryIndexWriter.deleteAll();
         buildAndWriteIndex(inMemoryIndexWriter);
-        executorService.submit(() -> {
+/*        executorService.submit(() -> {
             try {
                 indexWriter.deleteAll();
                 buildAndWriteIndex(indexWriter);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        });*/
     }
 
     @Override
     public void writeIndex() throws IOException {
 
         buildAndWriteIndex(inMemoryIndexWriter);
-        if(DirectoryReader.indexExists(luceneDirectory)) {
+/*        if(DirectoryReader.indexExists(luceneDirectory)) {
             logger.info("{} Lucene index already exists", projectId);
             return;
         } else {
@@ -122,7 +122,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
                     throw new RuntimeException(e);
                 }
             });
-        }
+        }*/
     }
 
     private void buildAndWriteIndex(IndexWriter indexWriter) throws IOException {
@@ -130,10 +130,9 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
         var stopwatch = Stopwatch.createStarted();
 
         projectSignatureIndex.getSignature()
-                             .peek(this::logProgress)
                              .map(luceneEntityDocumentTranslator::getLuceneDocument)
                              .forEach(document -> this.addDocumentToIndex(document, indexWriter));
-        builtInOwlEntitiesIndex.getBuiltInEntities()
+       builtInOwlEntitiesIndex.getBuiltInEntities()
                                .filter(entity -> !entitiesInProjectSignatureIndex.containsEntityInSignature(entity))
                                .map(luceneEntityDocumentTranslator::getLuceneDocument)
                                 .forEach(document -> this.addDocumentToIndex(document, indexWriter));
@@ -143,13 +142,6 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     }
 
     private int counter = 0;
-
-    private void logProgress(OWLEntity entity) {
-        counter++;
-        if(counter % 10_000 == 0) {
-            logger.info("    {} Lucene index writer: Added {} entities to index", projectId, counter);
-        }
-    }
 
     public void addDocumentToIndex(Document doc, IndexWriter indexWriter) {
         try {
@@ -164,7 +156,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     public void dispose() {
         try {
             inMemoryIndexWriter.close();
-            indexWriter.close();
+            //indexWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

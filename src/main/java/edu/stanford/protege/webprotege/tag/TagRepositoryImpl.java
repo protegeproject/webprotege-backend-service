@@ -12,6 +12,9 @@ import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
@@ -36,6 +39,9 @@ import static java.util.stream.StreamSupport.stream;
  */
 @ProjectSingleton
 public class TagRepositoryImpl implements TagRepository, Repository {
+
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(TagRepositoryImpl.class);
 
     private static final String COLLECTION_NAME = "Tags";
 
@@ -129,9 +135,11 @@ public class TagRepositoryImpl implements TagRepository, Repository {
     }
 
     @Nonnull
+    @Cacheable(value = "findTags", key = "#projectId")
     public List<Tag> findTags(ProjectId projectId) {
         readLock.lock();
         try {
+            LOGGER.info("ALEX intru in find tags");
             Document filter = new Document(Tag.PROJECT_ID, projectId.id());
             FindIterable<Document> documents = getCollection().find(filter);
             Stream<Document> docs = stream(documents.spliterator(), false);

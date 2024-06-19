@@ -76,12 +76,14 @@ public class LuceneIndexUpdaterImpl implements LuceneIndexUpdater {
 
         entities.stream()
                 .map(documentTranslator::getLuceneDocument)
-                .forEach(this::addDocument);
+                .forEach((document) -> {
+                    addDocument(document, indexWriter);
+                });
         indexWriter.commit();
         searcherManager.maybeRefresh();
 
     }
-    private void addDocument(@Nonnull Document document) {
+    private void addDocument(@Nonnull Document document, IndexWriter indexWriter) {
         try {
             indexWriter.addDocument(document);
         } catch (IOException e) {
