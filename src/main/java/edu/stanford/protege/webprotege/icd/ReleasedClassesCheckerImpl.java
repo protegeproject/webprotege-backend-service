@@ -31,6 +31,7 @@ public class ReleasedClassesCheckerImpl implements ReleasedClassesChecker {
 
         if (releasedClassesIris.isEmpty()) {
             releasedClassesIris.addAll(icdReleasedEntityStatusManager.fetchIris());
+            releasedClassesIris.add("http://id.who.int/icd/entity/624443803");
         }
 
         return releasedClassesIris.contains(entity.asOWLClass().getIRI().toString());

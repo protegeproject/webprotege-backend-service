@@ -61,7 +61,9 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
         }
         var isDestinationRetiredClass = false;
 
-        if (releasedClassesChecker.isReleased(action.entity())) {
+        var isAnyClassReleased = action.entities().stream().anyMatch(releasedClassesChecker::isReleased);
+
+        if (isAnyClassReleased) {
             isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.entity().asOWLClass());
             if (isDestinationRetiredClass) {
                 return new MoveEntitiesToParentResult(isDestinationRetiredClass);
