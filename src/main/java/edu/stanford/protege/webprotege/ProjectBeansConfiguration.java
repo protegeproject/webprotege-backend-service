@@ -42,6 +42,10 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManager;
+import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManagerImpl;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetectorImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
@@ -458,13 +462,18 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ReleasedClassesManager getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager){
-        return new ReleasedClassesManagerImpl(icdReleasedEntityStatusManager);
+    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager){
+        return new ReleasedClassesCheckerImpl(icdReleasedEntityStatusManager);
     }
 
     @Bean
-    EntityStatusManager getEntityStatusManager(ReleasedClassesManager releasedClassesManager){
-        return new EntityStatusManagerImpl(releasedClassesManager);
+    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index){
+        return new RetiredClassCheckerImpl(index);
+    }
+
+    @Bean
+    EntityStatusManager getEntityStatusManager(ReleasedClassesChecker releasedClassesChecker){
+        return new EntityStatusManagerImpl(releasedClassesChecker);
     }
 
     @Bean
@@ -672,6 +681,12 @@ public class ProjectBeansConfiguration {
     @Bean
     ClassHierarchyCycleDetectorImpl classCycleDetectorProvider(@Nonnull ClassHierarchyProvider p1) {
         return new ClassHierarchyCycleDetectorImpl(p1);
+    }
+
+    @Bean
+    ClassHierarchyRetiredClassDetectorImpl classHierarchyRetiredAcestorDetector(@Nonnull ClassHierarchyProvider p1,
+                                                                                @Nonnull RetiredClassChecker p2) {
+        return new ClassHierarchyRetiredClassDetectorImpl(p1, p2);
     }
 
     @Bean

@@ -2,13 +2,13 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.change.HasApplyChanges;
-import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
+import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLEntity;
+import edu.stanford.protege.webprotege.project.chg.ChangeManager;
+import org.jetbrains.annotations.NotNull;
+import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -20,17 +20,31 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * Stanford Center for Biomedical Informatics Research
  * 25 Sep 2018
  */
-public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Boolean, MoveEntitiesToParentAction, MoveEntitiesToParentResult> {
+public class MoveToParentActionHandler extends AbstractProjectActionHandler<MoveEntitiesToParentAction, MoveEntitiesToParentResult> {
 
     @Nonnull
     private final MoveClassesChangeListGeneratorFactory factory;
 
+    @Nonnull
+    private final ReleasedClassesChecker releasedClassesChecker;
+
+    @Nonnull
+    private final ClassHierarchyRetiredClassDetector retiredAncestorDetector;
+
+    @Nonnull
+    private final ChangeManager changeManager;
+
     @Inject
     public MoveToParentActionHandler(@Nonnull AccessManager accessManager,
-                                     @Nonnull HasApplyChanges applyChanges,
-                                     @Nonnull MoveClassesChangeListGeneratorFactory factory) {
-        super(accessManager, applyChanges);
+                                     @Nonnull MoveClassesChangeListGeneratorFactory factory,
+                                     @Nonnull ReleasedClassesChecker releasedClassesChecker,
+                                     @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
+                                     @Nonnull ChangeManager changeManager) {
+        super(accessManager);
         this.factory = factory;
+        this.releasedClassesChecker = releasedClassesChecker;
+        this.retiredAncestorDetector = retiredAncestorDetector;
+        this.changeManager = changeManager;
     }
 
     @Nonnull
@@ -39,19 +53,35 @@ public class MoveToParentActionHandler extends AbstractProjectChangeHandler<Bool
         return MoveEntitiesToParentAction.class;
     }
 
+    @NotNull
     @Override
-    protected ChangeListGenerator<Boolean> getChangeListGenerator(MoveEntitiesToParentAction action, ExecutionContext executionContext) {
-        if(action.entity().isOWLClass()) {
-            ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
-            return factory.create(action.changeRequestId(), clses, action.entity().asOWLClass(), action.commitMessage());
+    public MoveEntitiesToParentResult execute(@NotNull MoveEntitiesToParentAction action, @NotNull ExecutionContext executionContext) {
+        if (isNotOwlClass(action.entity())) {
+            return new MoveEntitiesToParentResult(false);
         }
-        return null;
+        var isDestinationRetiredClass = false;
+
+        var isAnyClassReleased = action.entities().stream().anyMatch(releasedClassesChecker::isReleased);
+
+        if (isAnyClassReleased) {
+            isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.entity().asOWLClass());
+            if (isDestinationRetiredClass) {
+                return new MoveEntitiesToParentResult(isDestinationRetiredClass);
+            }
+        }
+
+        ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
+        var changeListGenerator = factory.create(action.changeRequestId(), clses, action.entity().asOWLClass(), action.commitMessage());
+        changeManager.applyChanges(executionContext.userId(), changeListGenerator);
+
+        return new MoveEntitiesToParentResult(isDestinationRetiredClass);
     }
 
-    @Override
-    protected MoveEntitiesToParentResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult,
-                                                            MoveEntitiesToParentAction action,
-                                                            ExecutionContext executionContext) {
-        return new MoveEntitiesToParentResult();
+    private boolean isEntityAnOwlClass(OWLEntity entity) {
+        return entity.isOWLClass();
+    }
+
+    private boolean isNotOwlClass(OWLEntity entity) {
+        return !isEntityAnOwlClass(entity);
     }
 }

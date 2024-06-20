@@ -16,6 +16,8 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.*;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
@@ -599,10 +601,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveHierarchyNodeActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
-
-                                                                   HasApplyChanges p3,
-                                                                   MoveEntityChangeListGeneratorFactory p4) {
-        return new MoveHierarchyNodeActionHandler(p1, p3, p4);
+                                                                   MoveEntityChangeListGeneratorFactory p2,
+                                                                   ReleasedClassesChecker p3,
+                                                                   ClassHierarchyRetiredClassDetector p4,
+                                                                   ChangeManager p5) {
+        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4, p5);
     }
 
 
@@ -752,9 +755,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveToParentActionHandler moveToParentActionHandler(AccessManager p1,
-
-                                                        HasApplyChanges p3, MoveClassesChangeListGeneratorFactory p4) {
-        return new MoveToParentActionHandler(p1, p3, p4);
+                                                        MoveClassesChangeListGeneratorFactory p4,
+                                                        ReleasedClassesChecker p5,
+                                                        ClassHierarchyRetiredClassDetector p6,
+                                                        ChangeManager p7) {
+        return new MoveToParentActionHandler(p1, p4, p5, p6, p7);
     }
 
     @Bean
@@ -766,8 +771,10 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       RevisionReverterChangeListGeneratorFactory p6,
                                                                       RevisionManager p7,
                                                                       ClassHierarchyProvider p8,
-                                                                      RenderingManager p9) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+                                                                      RenderingManager p9,
+                                                                      ReleasedClassesChecker p10,
+                                                                      ClassHierarchyRetiredClassDetector p11) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
     }
 
 

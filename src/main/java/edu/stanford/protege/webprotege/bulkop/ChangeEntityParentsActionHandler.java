@@ -1,11 +1,14 @@
 package edu.stanford.protege.webprotege.bulkop;
 
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -14,7 +17,7 @@ import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -51,6 +54,13 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     private final RenderingManager renderingManager;
 
+    @Nonnull
+    private final ReleasedClassesChecker releasedClassesChecker;
+
+    @Nonnull
+    private final ClassHierarchyRetiredClassDetector retiredAncestorDetector;
+
+
     @Inject
     public ChangeEntityParentsActionHandler(@Nonnull AccessManager accessManager,
                                             @Nonnull ProjectId projectId,
@@ -60,7 +70,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull RevisionReverterChangeListGeneratorFactory revisionRevertFactory,
                                             @Nonnull RevisionManager revisionManager,
                                             @Nonnull ClassHierarchyProvider classHierarchyProvider,
-                                            @Nonnull RenderingManager renderingManager) {
+                                            @Nonnull RenderingManager renderingManager,
+                                            @Nonnull ReleasedClassesChecker releasedClassesChecker,
+                                            @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.changeManager = checkNotNull(changeManager);
@@ -70,6 +82,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.reveisionReverterFactory = checkNotNull(revisionRevertFactory);
         this.classHierarchyProvider = checkNotNull(classHierarchyProvider);
         this.renderingManager = checkNotNull(renderingManager);
+        this.retiredAncestorDetector = retiredAncestorDetector;
+        this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
     }
 
     @Nonnull
@@ -85,20 +99,31 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         var parents = action.parents().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
         var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
 
+
+        if (releasedClassesChecker.isReleased(action.entity())) {
+            var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
+
+            if (isNotEmpty(classesWithRetiredAncestors)) {
+                return getResultWithRetiredAncestors(classesWithRetiredAncestors);
+            }
+        }
+
         var result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
         var classesWithCycles = classCycleDetector.getClassesWithCycle(result.getChangeList());
 
         if (classesWithCycles.isEmpty()) {
-            return resultWithoutCycles();
+            return validEmptyResult();
         }
-
 
         ChangeListGenerator<Boolean> revisionReverterGenerator = getRevisionReverterChangeListGenerator(revisionManager.getCurrentRevision(), ChangeRequestId.generate());
         changeManager.applyChanges(executionContext.userId(), revisionReverterGenerator);
 
-        var resultWithCycles = getOwlEntityDataFromOwlClasses(classesWithCycles);
-        return new ChangeEntityParentsResult(resultWithCycles);
+        return getResultWithCycles(classesWithCycles);
+    }
+
+    private boolean isNotEmpty(Set<?> set) {
+        return !set.isEmpty();
     }
 
 
@@ -106,13 +131,23 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         return reveisionReverterFactory.create(revisionNumber, changeRequestId);
     }
 
-    private static ChangeEntityParentsResult resultWithoutCycles() {
-        return new ChangeEntityParentsResult(Collections.EMPTY_SET);
+    private ChangeEntityParentsResult validEmptyResult() {
+        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of());
+    }
+
+    private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes) {
+        var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
+        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of());
     }
 
     private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {
         return classes.stream()
                 .map(renderingManager::getRendering)
                 .collect(Collectors.toSet());
+    }
+
+    private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes) {
+        var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
+        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult);
     }
 }
