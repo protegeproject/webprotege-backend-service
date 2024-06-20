@@ -601,10 +601,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveHierarchyNodeActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
-
-                                                                   HasApplyChanges p3,
-                                                                   MoveEntityChangeListGeneratorFactory p4) {
-        return new MoveHierarchyNodeActionHandler(p1, p3, p4);
+                                                                   MoveEntityChangeListGeneratorFactory p2,
+                                                                   ReleasedClassesChecker p3,
+                                                                   ClassHierarchyRetiredClassDetector p4,
+                                                                   ChangeManager p5) {
+        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4, p5);
     }
 
 
