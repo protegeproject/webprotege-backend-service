@@ -71,12 +71,10 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectActionHandler
                     return new MoveHierarchyNodeResult(false, isDestinationRetiredClass);
                 }
             }
-
         }
+
         var changeListGenerator = factory.create(action);
         var changeResult = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
-
-
 
         return new MoveHierarchyNodeResult(changeResult.getSubject(), false);
     }
