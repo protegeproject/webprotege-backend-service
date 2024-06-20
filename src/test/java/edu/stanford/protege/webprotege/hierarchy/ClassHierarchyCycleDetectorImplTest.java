@@ -25,13 +25,12 @@ public class ClassHierarchyCycleDetectorImplTest {
 
     private ClassHierarchyCycleDetector classHierarchyCycleDetector;
 
-    private OWLDataFactory dataFactory = new OWLDataFactoryImpl();
+    private final OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
     @Mock
     private OWLOntologyID ontologyId;
 
     @Mock
-
     private OWLClass clsA, clsB, clsC;
 
     private OWLSubClassOfAxiom clsASubClassOfClsB, clsBSubClassOfClsC, clsBSubClassOfClsA, clsASubClassOfClsC;
