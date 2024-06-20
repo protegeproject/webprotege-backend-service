@@ -54,7 +54,7 @@ jobs:
           version_parts[2]=$((version_parts[2] + 1))
           new_base_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
           
-          if [[ "$branch" == "main-who" ]]; then
+          if [[ "$branch" == "main-WHO" ]]; then
             new_version="${new_base_version}-WHO"
           else
             new_version="$new_base_version"
