@@ -8,5 +8,5 @@ public class IcdConstants {
     public final static String LABEL_PROP = NS + "label";
     public final static String TITLE_PROP = NS + "title";
 
-    public final static String LANGUAGE_TERM = NS + "LanguageTerm";
+    public final static String LANGUAGE_TERM_CLS = NS + "LanguageTerm";
 }
