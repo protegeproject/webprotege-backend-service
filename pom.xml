@@ -70,7 +70,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-forms</artifactId>
-            <version>2.0.1-SNAPSHOT</version>
+            <version>1.1.5</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -101,7 +101,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

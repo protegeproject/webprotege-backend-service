@@ -132,32 +132,36 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
                 this needs to be changed. not sure this is the proper way to add a title annotation to an entity class
              */
             if(entityType.equals(CLASS)){
-                IRI propertyIRILabel = IRI.create(IcdConstants.LABEL_PROP);
-                IRI propertyIRITitle = IRI.create(IcdConstants.TITLE_PROP);
-                IRI iriLangTerm = IRI.create(IcdConstants.LANGUAGE_TERM_CLS);
-                var ontologyId = defaultOntologyIdManager.getDefaultOntologyId();
-                OWLClass langTermClass = dataFactory.getOWLClass(iriLangTerm);
-
-                OWLAnnotationProperty labelProperty = dataFactory.getOWLAnnotationProperty(propertyIRILabel);
-                OWLAnnotationProperty titleProperty = dataFactory.getOWLAnnotationProperty(propertyIRITitle);
-
-                OWLLiteral literal = dataFactory.getOWLLiteral(sourceText);
-                OWLNamedIndividual titleIndividual = dataFactory.getOWLNamedIndividual(IRI.create(IcdConstants.NS, "TitleTerm_"+sourceText.replace(" ","_")));
-
-                OWLAnnotationAssertionAxiom titleAxiom = dataFactory.getOWLAnnotationAssertionAxiom(titleProperty, freshEntity.getIRI(), titleIndividual.getIRI());
-                OWLAnnotationAssertionAxiom newLabelAxiom = dataFactory.getOWLAnnotationAssertionAxiom(labelProperty, titleIndividual.getIRI(), literal);
-
-                OWLClassAssertionAxiom langTermAxiom = dataFactory.getOWLClassAssertionAxiom(langTermClass, titleIndividual);
-
-                builder.add(AddAxiomChange.of(ontologyId,langTermAxiom));
-                builder.add(AddAxiomChange.of(ontologyId,titleAxiom));
-                builder.add(AddAxiomChange.of(ontologyId,newLabelAxiom));
+                replaceLabelWithTitle(builder, freshEntity);
             }
 
 
             freshEntities.add(freshEntity);
         }
         return builder.build(freshEntities);
+    }
+
+    private void replaceLabelWithTitle(OntologyChangeList.Builder<Set<E>> builder, E freshEntity) {
+        IRI propertyIRILabel = IRI.create(IcdConstants.LABEL_PROP);
+        IRI propertyIRITitle = IRI.create(IcdConstants.TITLE_PROP);
+        IRI iriLangTerm = IRI.create(IcdConstants.LANGUAGE_TERM_CLS);
+        var ontologyId = defaultOntologyIdManager.getDefaultOntologyId();
+        OWLClass langTermClass = dataFactory.getOWLClass(iriLangTerm);
+
+        OWLAnnotationProperty labelProperty = dataFactory.getOWLAnnotationProperty(propertyIRILabel);
+        OWLAnnotationProperty titleProperty = dataFactory.getOWLAnnotationProperty(propertyIRITitle);
+
+        OWLLiteral literal = dataFactory.getOWLLiteral(sourceText, langTag);
+        OWLNamedIndividual titleIndividual = dataFactory.getOWLNamedIndividual(IRI.create(IcdConstants.NS, "TitleTerm_"+sourceText.replace(" ","_")));
+
+        OWLAnnotationAssertionAxiom titleAxiom = dataFactory.getOWLAnnotationAssertionAxiom(titleProperty, freshEntity.getIRI(), titleIndividual.getIRI());
+        OWLAnnotationAssertionAxiom newLabelAxiom = dataFactory.getOWLAnnotationAssertionAxiom(labelProperty, titleIndividual.getIRI(), literal);
+
+        OWLClassAssertionAxiom langTermAxiom = dataFactory.getOWLClassAssertionAxiom(langTermClass, titleIndividual);
+
+        builder.add(AddAxiomChange.of(ontologyId,langTermAxiom));
+        builder.add(AddAxiomChange.of(ontologyId,titleAxiom));
+        builder.add(AddAxiomChange.of(ontologyId,newLabelAxiom));
     }
 
 

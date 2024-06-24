@@ -81,7 +81,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
                 Integer ordinal = null;
                 if (cursor.hasNext()) {
                     var document = cursor.next();
-                    var currentOrdinal = document.getInteger(FormDescriptorRecord.ORDINAL);
+                    var currentOrdinal = document.getInteger("ordinal");
                     if (currentOrdinal != null) {
                         ordinal = currentOrdinal;
                     }
@@ -130,9 +130,9 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
     public void setProjectFormDescriptors(@Nonnull ProjectId projectId, @Nonnull List<FormDescriptor> formDescriptors) {
         try {
             writeLock.lock();
-            var collection = getCollection();
-            collection.deleteMany(new Document(PROJECT_ID, projectId.id()));
             if (!formDescriptors.isEmpty()) {
+                var collection = getCollection();
+                collection.deleteMany(new Document(PROJECT_ID, projectId.id()));
                 var docs = new ArrayList<Document>();
                 for (int ordinal = 0; ordinal < formDescriptors.size(); ordinal++) {
                     var formDescriptor = formDescriptors.get(ordinal);

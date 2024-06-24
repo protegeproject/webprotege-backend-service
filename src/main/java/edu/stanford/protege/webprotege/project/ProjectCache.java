@@ -70,7 +70,7 @@ public class ProjectCache implements HasDispose {
 
     @Inject
     public ProjectCache(@Nonnull ProjectComponentFactory projectComponentFactory,
-                        @Value("${project.dormantTime:30000}") long dormantProjectTime) {
+                        @Value("${project.dormantTime:120000}") long dormantProjectTime) {
         this.projectComponentFactory = checkNotNull(projectComponentFactory);
         projectIdInterner = Interners.newWeakInterner();
         this.dormantProjectTime = dormantProjectTime;
