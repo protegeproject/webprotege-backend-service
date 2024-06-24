@@ -129,7 +129,7 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
 
             /*
             ToDo:
-                this needs to be changed. not sure this is the proper way to add a title annotation to an entity class
+                see if we can make this prettier
              */
             if(entityType.equals(CLASS)){
                 IRI propertyIRILabel = IRI.create(IcdConstants.LABEL_PROP);
@@ -141,7 +141,7 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
                 OWLAnnotationProperty labelProperty = dataFactory.getOWLAnnotationProperty(propertyIRILabel);
                 OWLAnnotationProperty titleProperty = dataFactory.getOWLAnnotationProperty(propertyIRITitle);
 
-                OWLLiteral literal = dataFactory.getOWLLiteral(sourceText);
+                OWLLiteral literal = dataFactory.getOWLLiteral(sourceText, langTag);
                 OWLNamedIndividual titleIndividual = dataFactory.getOWLNamedIndividual(IRI.create(IcdConstants.NS, "TitleTerm_"+sourceText.replace(" ","_")));
 
                 OWLAnnotationAssertionAxiom titleAxiom = dataFactory.getOWLAnnotationAssertionAxiom(titleProperty, freshEntity.getIRI(), titleIndividual.getIRI());
