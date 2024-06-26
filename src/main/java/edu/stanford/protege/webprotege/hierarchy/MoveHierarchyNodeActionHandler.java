@@ -55,18 +55,18 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectActionHandler
     @NotNull
     @Override
     public MoveHierarchyNodeResult execute(@NotNull MoveHierarchyNodeAction action, @NotNull ExecutionContext executionContext) {
-        var areEntityNodesOfClassType = action.fromNodePath().getFirst().get().getEntity().isOWLClass();
-        if (areEntityNodesOfClassType) {
+        var sourceNode = action.fromNodePath().getLast().orElseGet(null);
+        if (sourceNode != null && sourceNode.getEntity().isOWLClass()) {
             var isDestinationRetiredClass = false;
 
-            var classesToBeMoved = getClassesFromNodePath(action.fromNodePath());
-            var destinationClasses = getClassesFromNodePath(action.toNodeParentPath());
+            var classToBeMoved = sourceNode.getEntity();
+            var destinationClass = action.toNodeParentPath().getLast().get().getEntity();
 
-            var isAnySourceClassReleased = classesToBeMoved.stream().anyMatch(releasedClassesChecker::isReleased);
+            var isSourceClassReleased = releasedClassesChecker.isReleased(classToBeMoved);
 
 
-            if (isAnySourceClassReleased) {
-                isDestinationRetiredClass = destinationClasses.stream().anyMatch(retiredAncestorDetector::isRetired);
+            if (isSourceClassReleased) {
+                isDestinationRetiredClass = retiredAncestorDetector.isRetired(destinationClass.asOWLClass());
                 if (isDestinationRetiredClass) {
                     return new MoveHierarchyNodeResult(false, isDestinationRetiredClass);
                 }
