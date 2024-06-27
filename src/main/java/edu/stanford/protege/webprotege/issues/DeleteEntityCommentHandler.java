@@ -57,7 +57,7 @@ public class DeleteEntityCommentHandler implements ProjectActionHandler<DeleteCo
     @Nonnull
     @Override
     public DeleteCommentResult execute(@Nonnull DeleteCommentAction action, @Nonnull ExecutionContext executionContext) {
-        boolean deleted = repository.deleteComment(action.commentId());
+        boolean deleted = repository.deleteComment(action.projectId(), action.commentId());
         return new DeleteCommentResult(action.commentId(), deleted);
     }
 }

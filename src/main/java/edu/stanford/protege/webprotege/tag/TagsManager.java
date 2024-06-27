@@ -79,7 +79,10 @@ public class TagsManager {
         try {
             readLock.lock();
             Map<TagId, Tag> tagsById = getProjectTagsByTagId();
-            Optional<EntityTags> entityTags = entityTagsRepository.findByEntity(entity, projectId);
+            Optional<EntityTags> entityTags = entityTagsRepository.findByProjectId(projectId)
+                    .get().stream()
+                    .filter(entityTags1 -> entityTags1.getEntity().equals(entity))
+                    .findFirst();
             Stream<TagId> explicitTags = entityTags.map(tags -> tags.getTags().stream())
                                                    .orElse(Stream.empty());
 
@@ -96,16 +99,9 @@ public class TagsManager {
 
     @Nonnull
     private Map<TagId, Tag> getProjectTagsByTagId() {
-        try {
-            readLock.lock();
-            if (projectTags == null) {
-                projectTags = tagRepository.findTags(projectId).stream()
-                                           .collect(toMap(Tag::getTagId, tag -> tag));
-            }
-            return projectTags;
-        } finally {
-            readLock.unlock();
-        }
+        return tagRepository.findTags(projectId).stream()
+                                   .collect(toMap(Tag::getTagId, tag -> tag));
+
     }
 
     /**
@@ -136,12 +132,7 @@ public class TagsManager {
      */
     @Nonnull
     public Collection<Tag> getProjectTags() {
-        try {
-            readLock.lock();
-            return new ArrayList<>(getProjectTagsByTagId().values());
-        } finally {
-            readLock.unlock();
-        }
+        return getProjectTagsByTagId().values();
     }
 
     /**

@@ -18,16 +18,20 @@ import org.apache.lucene.search.SearcherFactory;
 import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.RAMDirectory;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 import javax.inject.Provider;
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Matthew Horridge
@@ -94,11 +98,11 @@ public class LuceneBeansConfiguration {
 
     @Bean
     LuceneIndexImpl luceneIndexImpl(LuceneEntityDocumentTranslator p1,
-                                    SearcherManager p2,
+                                    @Qualifier("inMemorySearchManager") SearcherManager inMemorySearchManager,
                                     LuceneQueryFactory p3,
                                     LuceneDictionaryLanguageValuesMatcher p4,
                                     QueryAnalyzerFactory p5) {
-        return new LuceneIndexImpl(p1, p2, p3, p4, p5);
+        return new LuceneIndexImpl(p1, inMemorySearchManager, p3, p4, p5);
     }
 
     @Bean
@@ -107,11 +111,13 @@ public class LuceneBeansConfiguration {
                                                 LuceneEntityDocumentTranslator p3,
                                                 ProjectSignatureIndex p4,
                                                 EntitiesInProjectSignatureIndex p5,
-                                                IndexWriter p6,
+                                                IndexWriter indexWriter,
                                                 SearcherManager p7,
-                                                BuiltInOwlEntitiesIndex p8) {
+                                                BuiltInOwlEntitiesIndex p8,
+                                                ExecutorService executorService,
+                                                @Qualifier("inMemoryIndexWriter") IndexWriter inMemoryIndexWriter) {
         try {
-            var impl = new LuceneIndexWriterImpl(p1, p2, p3, p4, p5, p6, p7, p8);
+            var impl = new LuceneIndexWriterImpl(p1, p2, p3, p4, p5, indexWriter, p7, p8, executorService, inMemoryIndexWriter);
             impl.writeIndex();
             return impl;
         } catch (IOException e) {
@@ -163,6 +169,31 @@ public class LuceneBeansConfiguration {
         }
     }
 
+    @Bean(name = "inMemoryIndexWriter")
+    public IndexWriter inMemoryIndexWriter(IndexingAnalyzerFactory indexingAnalyzerFactory,
+                                           ProjectDisposablesManager projectDisposablesManager,
+                                           ProjectId projectId) {
+        try {
+            Directory ramDirectory = new RAMDirectory();
+            var indexWriterConfig = new IndexWriterConfig(indexingAnalyzerFactory.get());
+            var indexWriter = new IndexWriter(ramDirectory, indexWriterConfig);
+
+            projectDisposablesManager.register(() -> {
+                try {
+                    indexWriter.close();
+                    logger.info("{} Closed lucene InMemory index writer", projectId);
+                } catch (IOException e) {
+                    logger.error("Error when disposing of Project Lucene IndexWriter", e);
+                }
+            });
+
+            return indexWriter;
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+
+    }
+
     @Bean
     IndexWriterConfig indexingWriterConfig(IndexingAnalyzerFactory indexingAnalyzerFactory) {
         var analyzer = indexingAnalyzerFactory.get();
@@ -212,12 +243,12 @@ public class LuceneBeansConfiguration {
     }
 
 
-    @Bean
-    SearcherManager searcherManager(IndexWriter indexWriter,
+    @Bean("inMemorySearchManager")
+    SearcherManager inMemorySearchManager(@Qualifier("inMemoryIndexWriter") IndexWriter inMemoryIndexWriter,
                                     SearcherFactory searcherFactory,
                                     DisposableObjectManager disposableObjectManager) {
         try {
-            var searchManager = new SearcherManager(indexWriter, searcherFactory);
+            var searchManager = new SearcherManager(inMemoryIndexWriter, searcherFactory);
             disposableObjectManager.register(() -> {
                 try {
                     searchManager.close();
@@ -237,10 +268,12 @@ public class LuceneBeansConfiguration {
     }
 
     @Bean
-    LuceneIndexUpdaterImpl luceneIndexUpdaterImpl(IndexWriter p1,
+    LuceneIndexUpdaterImpl luceneIndexUpdaterImpl(IndexWriter indexWriter,
                                                   Provider<LuceneEntityDocumentTranslator> p2,
-                                                  SearcherManager p3) {
-        return new LuceneIndexUpdaterImpl(p1, p2, p3);
+                                                  SearcherManager p3,
+                                                  @Qualifier("inMemoryIndexWriter") IndexWriter inMemoryIndexWriter,
+                                                  ExecutorService executorService) {
+        return new LuceneIndexUpdaterImpl(indexWriter, inMemoryIndexWriter, p2, p3, executorService);
     }
 
     @Bean

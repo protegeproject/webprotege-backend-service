@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-@JsonTypeName("GetAvailableProjectsWithPermission")
+@JsonTypeName("webprotege.projects.GetAvailableProjectsWithPermission")
 public abstract class GetAvailableProjectsWithPermissionAction implements Action<GetAvailableProjectsWithPermissionResult>, Request<GetAvailableProjectsWithPermissionResult> {
 
     public static final String CHANNEL = "webprotege.projects.GetAvailableProjectsWithPermission";

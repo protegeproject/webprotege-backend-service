@@ -3,7 +3,11 @@ package edu.stanford.protege.webprotege.tag;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.persistence.Repository;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -12,6 +16,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -29,6 +34,9 @@ import static org.springframework.data.mongodb.core.query.Query.query;
  */
 @ProjectSingleton
 public class EntityTagsRepositoryImpl implements EntityTagsRepository, Repository {
+
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(EntityTagsRepositoryImpl.class);
 
     @Nonnull
     private final MongoTemplate mongoTemplate;
@@ -111,6 +119,15 @@ public class EntityTagsRepositoryImpl implements EntityTagsRepository, Repositor
         } finally {
             readLock.unlock();
         }
+    }
+
+    @Override
+    @Cacheable(value = "findByProjectId", key = "#projectId")
+    public Optional<List<EntityTags>> findByProjectId(@NotNull ProjectId projectId) {
+        readLock.lock();
+        Query query = query(where(PROJECT_ID).is(projectId));
+        var result = mongoTemplate.find(query, EntityTags.class);
+        return Optional.of(result);
     }
 
     @Nonnull

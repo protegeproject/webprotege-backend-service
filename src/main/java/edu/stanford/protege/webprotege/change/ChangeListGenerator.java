@@ -1,7 +1,9 @@
 package edu.stanford.protege.webprotege.change;
 
+import edu.stanford.protege.webprotege.app.TrackExecutionTime;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
+import io.micrometer.core.annotation.Timed;
 
 import javax.annotation.Nonnull;
 
@@ -24,6 +26,8 @@ public interface ChangeListGenerator<R> {
      * generating the changes.
      * @return The generated change list and main result bundled up in a {@link OntologyChangeList} object.
      */
+    @TrackExecutionTime
+    @Timed("changeListGenerator.generateChanges")
     OntologyChangeList<R> generateChanges(ChangeGenerationContext context);
 
     R getRenamedResult(R result, RenameMap renameMap);

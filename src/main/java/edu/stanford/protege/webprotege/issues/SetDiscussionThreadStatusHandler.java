@@ -59,7 +59,7 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
                                                    @Nonnull ExecutionContext executionContext) {
         var threadId = action.threadId();
         var status = action.status();
-        var thread = repository.setThreadStatus(threadId, status);
+        var thread = repository.setThreadStatus(threadId,action.projectId(), status);
         int openComments = thread.map(t -> repository.getOpenCommentsCount(projectId, t.getEntity())).orElse(-1);
         eventDispatcher.dispatchEvent(new DiscussionThreadStatusChangedEvent(EventId.generate(),
                                                                              projectId,

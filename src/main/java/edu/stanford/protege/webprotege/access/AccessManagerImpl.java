@@ -76,6 +76,7 @@ public class AccessManagerImpl implements AccessManager {
                                  @Nonnull Resource resource,
                                  @Nonnull Collection<RoleId> roleIds) {
         try {
+
             var response = setAssignedRolesExecutor.execute(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)),
                                                             new ExecutionContext());
             response.get();
