@@ -99,16 +99,9 @@ public class TagsManager {
 
     @Nonnull
     private Map<TagId, Tag> getProjectTagsByTagId() {
-        try {
-            readLock.lock();
-            if (projectTags == null) {
-                projectTags = tagRepository.findTags(projectId).stream()
-                                           .collect(toMap(Tag::getTagId, tag -> tag));
-            }
-            return projectTags;
-        } finally {
-            readLock.unlock();
-        }
+        return tagRepository.findTags(projectId).stream()
+                                   .collect(toMap(Tag::getTagId, tag -> tag));
+
     }
 
     /**
@@ -139,12 +132,7 @@ public class TagsManager {
      */
     @Nonnull
     public Collection<Tag> getProjectTags() {
-        try {
-            readLock.lock();
-            return new ArrayList<>(getProjectTagsByTagId().values());
-        } finally {
-            readLock.unlock();
-        }
+        return getProjectTagsByTagId().values();
     }
 
     /**
