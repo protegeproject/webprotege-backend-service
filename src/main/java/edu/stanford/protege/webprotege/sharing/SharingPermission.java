@@ -25,6 +25,8 @@ public enum SharingPermission implements Serializable {
      */
     EDIT,
 
+    ICD_EDIT,
+
     /**
      * A user can manage a project
      */
