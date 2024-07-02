@@ -22,7 +22,9 @@ public class Roles {
         else if(roles.contains(CAN_EDIT.getRoleId())) {
             return Optional.of(SharingPermission.EDIT);
         }
-        else if(roles.contains(CAN_COMMENT.getRoleId())) {
+        else if(roles.contains(ICD_CAN_EDIT.getRoleId())) {
+            return Optional.of(SharingPermission.ICD_EDIT);
+        }else if(roles.contains(CAN_COMMENT.getRoleId())) {
             return Optional.of(SharingPermission.COMMENT);
         }
         else if(roles.contains(CAN_VIEW.getRoleId())) {
@@ -34,17 +36,13 @@ public class Roles {
     }
 
     public static ImmutableSet<RoleId> fromSharingPermission(SharingPermission sharingPermission) {
-        switch (sharingPermission) {
-            case MANAGE:
-                return ImmutableSet.of(CAN_MANAGE.getRoleId());
-            case EDIT:
-                return ImmutableSet.of(CAN_EDIT.getRoleId());
-            case COMMENT:
-                return ImmutableSet.of(CAN_COMMENT.getRoleId());
-            case VIEW:
-                return ImmutableSet.of(CAN_VIEW.getRoleId());
-            default:
-                return ImmutableSet.of();
-        }
+        return switch (sharingPermission) {
+            case MANAGE -> ImmutableSet.of(CAN_MANAGE.getRoleId());
+            case EDIT -> ImmutableSet.of(CAN_EDIT.getRoleId());
+            case ICD_EDIT -> ImmutableSet.of(ICD_CAN_EDIT.getRoleId());
+            case COMMENT -> ImmutableSet.of(CAN_COMMENT.getRoleId());
+            case VIEW -> ImmutableSet.of(CAN_VIEW.getRoleId());
+            default -> ImmutableSet.of();
+        };
     }
 }
