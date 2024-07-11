@@ -7,9 +7,7 @@ import edu.stanford.protege.webprotege.forms.GridColumnBindingMissingException;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.forms.data.GridCellData;
 import edu.stanford.protege.webprotege.forms.data.GridRowData;
-import edu.stanford.protege.webprotege.forms.field.GridColumnDescriptor;
-import edu.stanford.protege.webprotege.forms.field.GridColumnId;
-import edu.stanford.protege.webprotege.forms.field.OwlBinding;
+import edu.stanford.protege.webprotege.forms.field.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +62,7 @@ public class GridRowDataProcessor_TestCase {
                                              gridCellDataProcessor);
 
         when(columnDescriptor.getId())
-                .thenReturn(mock(GridColumnId.class));
+                .thenReturn(FormRegionId.generate());
 
         when(gridRowData.getCells())
                 .thenReturn(ImmutableList.of(gridCellData));

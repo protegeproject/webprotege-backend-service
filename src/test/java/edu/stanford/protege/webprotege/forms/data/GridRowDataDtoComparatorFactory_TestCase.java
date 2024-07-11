@@ -93,7 +93,7 @@ public class GridRowDataDtoComparatorFactory_TestCase {
     }
 
     public Comparator<GridRowDataDto> createComparatorOrderByColumnIds(GridControlDescriptor gridControlDescriptor,
-                                                                       GridColumnId... columnIds) {
+                                                                       FormRegionId... columnIds) {
         var orderBys = Stream.of(columnIds)
               .map(columnId -> FormRegionOrdering.get(columnId, FormRegionOrderingDirection.ASC))
               .collect(toImmutableSet());
@@ -103,7 +103,7 @@ public class GridRowDataDtoComparatorFactory_TestCase {
     }
 
 
-    private GridControlDescriptor createGridControlDescriptorWithColumns(Map<GridColumnId, FormControlDescriptor> colId2ControlDescriptor) {
+    private GridControlDescriptor createGridControlDescriptorWithColumns(Map<FormRegionId, FormControlDescriptor> colId2ControlDescriptor) {
         var columnDescriptors = colId2ControlDescriptor
                 .entrySet()
                 .stream()
@@ -123,7 +123,7 @@ public class GridRowDataDtoComparatorFactory_TestCase {
     }
 
     private GridColumnDescriptor createGridColumnDescriptor(FormControlDescriptor formControlDescriptor,
-                                                            GridColumnId columnId) {
+                                                            FormRegionId columnId) {
         return GridColumnDescriptor.get(
                 columnId,
                 REQUIRED,
@@ -134,7 +134,7 @@ public class GridRowDataDtoComparatorFactory_TestCase {
         );
     }
 
-    public static GridColumnId generateColumnId() {
-        return GridColumnId.get(UUID.randomUUID().toString());
+    public static FormRegionId generateColumnId() {
+        return FormRegionId.get(UUID.randomUUID().toString());
     }
 }

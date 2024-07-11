@@ -62,7 +62,7 @@ public class EntityFormRepositoryImpl_IT {
         var formId = FormId.generate();
         var formDescriptor = FormDescriptor.builder(formId)
                       .addDescriptor(FormFieldDescriptor.get(
-                              FormFieldId.get(UUID.randomUUID().toString()),
+                              FormRegionId.get(UUID.randomUUID().toString()),
                               OwlPropertyBinding.get(new OWLObjectPropertyImpl(OWLRDFVocabulary.RDFS_COMMENT.getIRI()),
                                                      null),
                               languageMap,

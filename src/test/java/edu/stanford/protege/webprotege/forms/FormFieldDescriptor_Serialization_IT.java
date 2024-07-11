@@ -35,7 +35,7 @@ public class FormFieldDescriptor_Serialization_IT {
     @Test
     public void shouldSerializeElementWithoutOwlBinding() throws IOException {
         var formElementDescriptor = FormFieldDescriptor.get(
-                FormFieldId.get(UUID.randomUUID().toString()),
+                FormRegionId.get(UUID.randomUUID().toString()),
                 null,
                 LanguageMap.empty(),
                 FieldRun.START,
@@ -55,7 +55,7 @@ public class FormFieldDescriptor_Serialization_IT {
     @Test
     public void shouldSerializeElementWithOwlPropertyBinding() throws IOException {
         var formElementDescriptor = FormFieldDescriptor.get(
-                FormFieldId.get(UUID.randomUUID().toString()),
+                FormRegionId.get(UUID.randomUUID().toString()),
                 OwlPropertyBinding.get(new OWLObjectPropertyImpl(IRI.create("http://example.org/prop")), null),
                 LanguageMap.empty(),
                 FieldRun.START,
@@ -76,7 +76,7 @@ public class FormFieldDescriptor_Serialization_IT {
     @Test
     public void shouldSerializeElementWithOwlClassBinding() throws IOException {
         var formElementDescriptor = FormFieldDescriptor.get(
-                FormFieldId.get(UUID.randomUUID().toString()),
+                FormRegionId.get(UUID.randomUUID().toString()),
                 OwlClassBinding.get(),
                 LanguageMap.empty(),
                 FieldRun.START,
@@ -97,7 +97,7 @@ public class FormFieldDescriptor_Serialization_IT {
     @Test
     public void shouldParseWithNoOwlBinding() throws IOException {
         var serializedForm = """
-                {"id":"12345678-1234-1234-1234-123456789abc","label":{},"elementRun":"START","formControlDescriptor":{"type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","lineMode":"SINGLE_LINE","patternViolationErrorMessage":{}},"repeatability":"NON_REPEATABLE","optionality":"REQUIRED","help":{}}""";
+                {"id":"12345678-1234-1234-1234-123456789abc","label":{},"elementRun":"START","control":{"type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","lineMode":"SINGLE_LINE","patternViolationErrorMessage":{}},"repeatability":"NON_REPEATABLE","optionality":"REQUIRED","help":{}}""";
         var deserializedForm = tester.parse(serializedForm);
         assertThat(deserializedForm.getObject().getOwlBinding().isEmpty(), is(true));
 
