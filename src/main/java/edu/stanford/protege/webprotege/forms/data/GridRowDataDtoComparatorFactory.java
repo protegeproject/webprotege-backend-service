@@ -1,10 +1,7 @@
 package edu.stanford.protege.webprotege.forms.data;
 
 import edu.stanford.protege.webprotege.forms.FormRegionOrderingIndex;
-import edu.stanford.protege.webprotege.forms.field.FormRegionOrdering;
-import edu.stanford.protege.webprotege.forms.field.FormRegionOrderingDirection;
-import edu.stanford.protege.webprotege.forms.field.GridColumnId;
-import edu.stanford.protege.webprotege.forms.field.GridControlDescriptor;
+import edu.stanford.protege.webprotege.forms.field.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -37,10 +34,10 @@ public class GridRowDataDtoComparatorFactory {
                                           Optional<FormRegionOrderingDirection> directionOverride) {
         return orderingIndex.getOrderings()
                             .stream()
-                            .filter(this::isColumnOrdering)
+//                            .filter(this::isColumnOrdering)
                             .map(ordering -> {
                                 var leafColumnToTopLevelColumnMap = descriptor.getLeafColumnToTopLevelColumnMap();
-                                var leafColumnId = (GridColumnId) ordering.getRegionId();
+                                var leafColumnId = (FormRegionId) ordering.getRegionId();
                                 var topLevelColumnId = leafColumnToTopLevelColumnMap.get(leafColumnId);
                                 int columnIndex = descriptor.getColumnIndex(topLevelColumnId);
                                 if (columnIndex == -1) {
@@ -61,7 +58,7 @@ public class GridRowDataDtoComparatorFactory {
                                                                                    FIRST_COLUMN));
     }
 
-    private boolean isColumnOrdering(FormRegionOrdering ordering) {
-        return ordering.getRegionId() instanceof GridColumnId;
-    }
+//    private boolean isColumnOrdering(FormRegionOrdering ordering) {
+//        return ordering.getRegionId() instanceof GridColumnId;
+//    }
 }

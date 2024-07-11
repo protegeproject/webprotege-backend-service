@@ -12,7 +12,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +38,11 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
 
     private static final String PROJECT_ID = "projectId";
 
-    private static final String FORM_DESCRIPTOR = "formDescriptor";
+    private static final String FORM = "form";
 
     private static final String FORM_ID = "formId";
 
-    public static final String FORM_DESCRIPTOR__FORM_ID = FORM_DESCRIPTOR + "." + FORM_ID;
+    public static final String FORM__FORM_ID = FORM + "." + FORM_ID;
 
     private final ObjectMapper objectMapper;
 
@@ -64,7 +64,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
     public void deleteFormDescriptor(@Nonnull ProjectId projectId, @Nonnull FormId formId) {
         try {
             writeLock.lock();
-            var query = new Document(PROJECT_ID, projectId.id()).append(FORM_DESCRIPTOR__FORM_ID, formId.getId());
+            var query = new Document(PROJECT_ID, projectId.id()).append(FORM__FORM_ID, formId.getId());
             getCollection().findOneAndDelete(query);
         } finally {
             writeLock.unlock();
@@ -174,17 +174,18 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
     public static Bson getProjectIdFormIdFilter(@Nonnull ProjectId projectId,
                                          @Nonnull FormId formId) {
         var projectIdFilter = Filters.eq(PROJECT_ID, projectId.id());
-        var formIdFilter = Filters.eq(FORM_DESCRIPTOR__FORM_ID, formId.getId());
+        var formIdFilter = Filters.eq(FORM__FORM_ID, formId.getId());
         return Filters.and(projectIdFilter, formIdFilter);
     }
 
+    @PostConstruct
     @Override
     public void ensureIndexes() {
         try {
             writeLock.lock();
             var collection = getCollection();
             var projectIdAsc = Indexes.ascending(PROJECT_ID);
-            var formDescriptor_formId_Asc = Indexes.ascending(FORM_DESCRIPTOR__FORM_ID);
+            var formDescriptor_formId_Asc = Indexes.ascending(FORM__FORM_ID);
             var compoundIndex = Indexes.compoundIndex(projectIdAsc, formDescriptor_formId_Asc);
             var indexOptions = new IndexOptions().unique(true);
             collection.createIndex(compoundIndex, indexOptions);
