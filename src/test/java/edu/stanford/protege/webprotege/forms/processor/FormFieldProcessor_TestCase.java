@@ -5,9 +5,7 @@ import edu.stanford.protege.webprotege.forms.FormFrameBuilder;
 import edu.stanford.protege.webprotege.forms.FormFieldBindingMissingException;
 import edu.stanford.protege.webprotege.forms.data.FormControlData;
 import edu.stanford.protege.webprotege.forms.data.FormFieldData;
-import edu.stanford.protege.webprotege.forms.field.FormFieldDescriptor;
-import edu.stanford.protege.webprotege.forms.field.FormFieldId;
-import edu.stanford.protege.webprotege.forms.field.OwlBinding;
+import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.Page;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,11 +47,11 @@ public class FormFieldProcessor_TestCase {
     @Mock
     private FormFieldDescriptor formFieldDescriptor;
 
-    @Mock
-    private FormFieldId fieldId;
+    private FormRegionId fieldId;
 
     @Before
     public void setUp() {
+        fieldId = FormRegionId.generate();
         formFieldProcessor = new FormFieldProcessor(formControlDataProcessor);
         when(fieldData.getFormFieldDescriptor())
                 .thenReturn(formFieldDescriptor);
