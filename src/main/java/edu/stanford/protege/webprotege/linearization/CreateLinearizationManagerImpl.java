@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.linearization;
 
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.*;
 import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.*;
@@ -18,10 +19,10 @@ public class CreateLinearizationManagerImpl implements CreateLinearizationManage
 
 
     @Override
-    public boolean createLinearizationFromParent(IRI newEntityIri, IRI parentEntityIri) {
+    public boolean createLinearizationFromParent(IRI newEntityIri, IRI parentEntityIri, ProjectId projectId, ExecutionContext executionContext) {
         var response = createLinearizationFromParent.execute(
-                CreateLinearizationFromParentRequest.create(newEntityIri, parentEntityIri),
-                new ExecutionContext()
+                CreateLinearizationFromParentRequest.create(newEntityIri, parentEntityIri, projectId),
+                executionContext
         );
         return response.isDone();
     }

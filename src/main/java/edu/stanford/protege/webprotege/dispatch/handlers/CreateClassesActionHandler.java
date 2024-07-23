@@ -69,9 +69,17 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                                      CreateClassesAction action,
                                                      ExecutionContext executionContext) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
-        classes.forEach(newClass -> createLinearizationManager.createLinearizationFromParent(
+        classes.forEach(newClass ->
+                createLinearizationManager.createLinearizationFromParent(
                         newClass.getIRI(),
-                        action.parents().stream().findFirst().get().getIRI()
+                        /*
+                        ToDo:
+                          check with the team to see how to handle this.
+                          Not sure if all ancesters are here in the parents set or just the immediate parent.
+                         */
+                        action.parents().stream().findFirst().get().getIRI(),
+                        action.projectId(),
+                        executionContext
                 )
         );
         return new CreateClassesResult(
