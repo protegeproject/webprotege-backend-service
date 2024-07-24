@@ -23,6 +23,7 @@ import edu.stanford.protege.webprotege.individuals.*;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
+import edu.stanford.protege.webprotege.lineariazation.LinearizationManager;
 import edu.stanford.protege.webprotege.mansyntax.*;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
 import edu.stanford.protege.webprotege.match.*;
@@ -758,8 +759,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                         MoveClassesChangeListGeneratorFactory p4,
                                                         ReleasedClassesChecker p5,
                                                         ClassHierarchyRetiredClassDetector p6,
-                                                        ChangeManager p7) {
-        return new MoveToParentActionHandler(p1, p4, p5, p6, p7);
+                                                        ChangeManager p7,
+                                                        LinearizationManager p8) {
+        return new MoveToParentActionHandler(p1, p4, p5, p6, p7, p8);
     }
 
     @Bean
@@ -773,8 +775,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ClassHierarchyProvider p8,
                                                                       RenderingManager p9,
                                                                       ReleasedClassesChecker p10,
-                                                                      ClassHierarchyRetiredClassDetector p11) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+                                                                      ClassHierarchyRetiredClassDetector p11,
+                                                                      LinearizationManager p12) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     }
 
 
