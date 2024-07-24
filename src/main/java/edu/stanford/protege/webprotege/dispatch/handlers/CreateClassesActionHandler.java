@@ -74,8 +74,8 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                         newClass.getIRI(),
                         /*
                         ToDo:
-                          check with the team to see how to handle this.
-                          Not sure if all ancesters are here in the parents set or just the immediate parent.
+                          While creating a class the action.parents() set contains only one element: The direct parent of the new created entity.
+                          Check with team to see when we have multiple parents there and how to handle it.
                          */
                         action.parents().stream().findFirst().get().getIRI(),
                         action.projectId(),
