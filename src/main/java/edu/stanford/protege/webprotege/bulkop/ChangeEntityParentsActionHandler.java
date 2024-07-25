@@ -132,7 +132,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
             try {
                 linearizationManager.mergeLinearizationsFromParents(action.entity().getIRI(), parentIris, projectId, executionContext).get();
             } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
+                logger.error("MergeLinearizationsError: " + e);
             }
             return validEmptyResult();
         }

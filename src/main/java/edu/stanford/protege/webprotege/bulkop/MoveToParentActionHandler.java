@@ -94,7 +94,7 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
                     try {
                         completableFuture.get();
                     } catch (InterruptedException | ExecutionException e) {
-                        throw new RuntimeException("MergeLinearizationsError: "+e);
+                        logger.error("MergeLinearizationsError: " + e);
                     }
                 });
 

@@ -16,7 +16,7 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.*;
@@ -605,8 +605,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                    MoveEntityChangeListGeneratorFactory p2,
                                                                    ReleasedClassesChecker p3,
                                                                    ClassHierarchyRetiredClassDetector p4,
-                                                                   ChangeManager p5) {
-        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4, p5);
+                                                                   ChangeManager p5,
+                                                                   LinearizationManager p6) {
+        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
 
