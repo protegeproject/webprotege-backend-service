@@ -20,9 +20,10 @@ import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.*;
-import edu.stanford.protege.webprotege.ipc.EventDispatcher;
+import edu.stanford.protege.webprotege.ipc.*;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
+import edu.stanford.protege.webprotege.linearization.*;
 import edu.stanford.protege.webprotege.mansyntax.*;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
 import edu.stanford.protege.webprotege.match.*;
@@ -207,8 +208,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
                                                           HasApplyChanges p3,
                                                           CreateClassesChangeGeneratorFactory p4,
-                                                          EntityNodeRenderer p5) {
-        return new CreateClassesActionHandler(p1, p3, p4, p5);
+                                                          EntityNodeRenderer p5,
+                                                          CreateLinearizationManager p6) {
+        return new CreateClassesActionHandler(p1, p3, p4, p5, p6);
     }
 
 
