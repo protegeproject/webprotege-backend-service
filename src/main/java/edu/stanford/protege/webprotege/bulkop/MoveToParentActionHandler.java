@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import edu.stanford.protege.webprotege.lineariazation.LinearizationManager;
+import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.*;
@@ -88,7 +88,6 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
         changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
         clses.stream()
-                .parallel()
                 .flatMap(cls -> Stream.of(linearizationManager.mergeLinearizationsFromParents(cls.getIRI(), Set.of(action.entity().getIRI()), action.projectId(), executionContext)))
                 .forEach(completableFuture -> {
                     try {

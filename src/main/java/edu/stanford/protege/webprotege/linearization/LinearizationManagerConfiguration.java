@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.lineariazation;
+package edu.stanford.protege.webprotege.linearization;
 
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
@@ -10,6 +10,11 @@ public class LinearizationManagerConfiguration {
     @Bean
     public CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeWithParentLinearizationsExecutor() {
         return new CommandExecutorImpl<>(MergeWithParentEntitiesResponse.class);
+    }
+
+    @Bean
+    public CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParentExecutor() {
+        return new CommandExecutorImpl<>(CreateLinearizationFromParentResponse.class);
     }
 
 }

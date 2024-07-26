@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import edu.stanford.protege.webprotege.lineariazation.LinearizationManager;
+import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.OWLClass;
