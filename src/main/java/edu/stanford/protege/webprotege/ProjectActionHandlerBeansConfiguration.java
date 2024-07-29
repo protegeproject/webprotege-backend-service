@@ -560,6 +560,11 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetDeprecatedEntitiesActionHandler(p1, p2, p3);
     }
 
+    @Bean
+    GetRenderedOwlEntitiesActionHandler getRenderedOwlEntitiesActionHandler(AccessManager p1, EntityNodeRenderer p2){
+        return new GetRenderedOwlEntitiesActionHandler(p1, p2);
+    }
+
 
     @Bean
     GetClassFrameActionHandler getClassFrameActionHandler(AccessManager p1,
