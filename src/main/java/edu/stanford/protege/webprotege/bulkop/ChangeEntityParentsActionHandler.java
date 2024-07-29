@@ -10,14 +10,17 @@ import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.*;
 import org.semanticweb.owlapi.model.*;
+import org.slf4j.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -29,6 +32,10 @@ import static com.google.common.collect.ImmutableSet.toImmutableSet;
  * 25 Sep 2018
  */
 public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandler<ChangeEntityParentsAction, ChangeEntityParentsResult> {
+
+
+    private final Logger logger = LoggerFactory.getLogger(ChangeEntityParentsActionHandler.class);
+
 
     @Nonnull
     private final ProjectId projectId;
@@ -60,6 +67,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     private final ClassHierarchyRetiredClassDetector retiredAncestorDetector;
 
+    @Nonnull
+    private final LinearizationManager linearizationManager;
+
 
     @Inject
     public ChangeEntityParentsActionHandler(@Nonnull AccessManager accessManager,
@@ -72,7 +82,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull ClassHierarchyProvider classHierarchyProvider,
                                             @Nonnull RenderingManager renderingManager,
                                             @Nonnull ReleasedClassesChecker releasedClassesChecker,
-                                            @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector) {
+                                            @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
+                                            @Nonnull LinearizationManager linearizationManager) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.changeManager = checkNotNull(changeManager);
@@ -84,6 +95,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.renderingManager = checkNotNull(renderingManager);
         this.retiredAncestorDetector = retiredAncestorDetector;
         this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
+        this.linearizationManager = checkNotNull(linearizationManager);
     }
 
     @Nonnull
@@ -113,6 +125,15 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         var classesWithCycles = classCycleDetector.getClassesWithCycle(result.getChangeList());
 
         if (classesWithCycles.isEmpty()) {
+            var parentIris = action.parents()
+                    .stream()
+                    .map(OWLNamedObject::getIRI)
+                    .collect(Collectors.toSet());
+            try {
+                linearizationManager.mergeLinearizationsFromParents(action.entity().getIRI(), parentIris, projectId, executionContext).get();
+            } catch (InterruptedException | ExecutionException e) {
+                logger.error("MergeLinearizationsError: " + e);
+            }
             return validEmptyResult();
         }
 

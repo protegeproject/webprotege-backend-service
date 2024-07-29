@@ -5,12 +5,14 @@ import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import edu.stanford.protege.webprotege.linearization.CreateLinearizationManager;
+import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.slf4j.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
@@ -22,6 +24,8 @@ import static java.util.Arrays.asList;
  */
 public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set<OWLClass>, CreateClassesAction, CreateClassesResult> {
 
+    private final Logger logger = LoggerFactory.getLogger(CreateClassesActionHandler.class);
+
     @Nonnull
     private final CreateClassesChangeGeneratorFactory changeGeneratorFactory;
 
@@ -29,18 +33,19 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
     private final EntityNodeRenderer entityNodeRenderer;
 
     @Nonnull
-    private final CreateLinearizationManager createLinearizationManager;
+    private final LinearizationManager linearizationManager;
 
     @Inject
     public CreateClassesActionHandler(@Nonnull AccessManager accessManager,
 
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull CreateClassesChangeGeneratorFactory changeFactory,
-                                      @Nonnull EntityNodeRenderer entityNodeRenderer, @Nonnull CreateLinearizationManager createLinearizationManager) {
+                                      @Nonnull EntityNodeRenderer entityNodeRenderer,
+                                      @Nonnull LinearizationManager linearizationManager) {
         super(accessManager, applyChanges);
         this.changeGeneratorFactory = checkNotNull(changeFactory);
         this.entityNodeRenderer = checkNotNull(entityNodeRenderer);
-        this.createLinearizationManager = createLinearizationManager;
+        this.linearizationManager = linearizationManager;
     }
 
     @Nonnull
@@ -70,17 +75,23 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                                      ExecutionContext executionContext) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
         classes.forEach(newClass ->
-                createLinearizationManager.createLinearizationFromParent(
-                        newClass.getIRI(),
-                        /*
-                        ToDo:
-                          While creating a class the action.parents() set contains only one element: The direct parent of the new created entity.
-                          Check with team to see when we have multiple parents there and how to handle it.
-                         */
-                        action.parents().stream().findFirst().get().getIRI(),
-                        action.projectId(),
-                        executionContext
-                )
+                {
+                    try {
+                        linearizationManager.createLinearizationFromParent(
+                                newClass.getIRI(),
+                                /*
+                                ToDo:
+                                  While creating a class the action.parents() set contains only one element: The direct parent of the new created entity.
+                                  Check with team to see when we have multiple parents there and how to handle it.
+                                 */
+                                action.parents().stream().findFirst().get().getIRI(),
+                                action.projectId(),
+                                executionContext
+                        ).get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        logger.error("MergeLinearizationsError: " + e);
+                    }
+                }
         );
         return new CreateClassesResult(
                 action.changeRequestId(),

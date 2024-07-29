@@ -5,7 +5,12 @@ import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import org.springframework.context.annotation.*;
 
 @Configuration
-public class LinearizationManagersConfiguration {
+public class LinearizationManagerConfiguration {
+
+    @Bean
+    public CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeWithParentLinearizationsExecutor() {
+        return new CommandExecutorImpl<>(MergeWithParentEntitiesResponse.class);
+    }
 
     @Bean
     public CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParentExecutor() {

@@ -16,14 +16,14 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.*;
-import edu.stanford.protege.webprotege.ipc.*;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
-import edu.stanford.protege.webprotege.linearization.*;
+import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.mansyntax.*;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
 import edu.stanford.protege.webprotege.match.*;
@@ -209,7 +209,7 @@ public class ProjectActionHandlerBeansConfiguration {
                                                           HasApplyChanges p3,
                                                           CreateClassesChangeGeneratorFactory p4,
                                                           EntityNodeRenderer p5,
-                                                          CreateLinearizationManager p6) {
+                                                          LinearizationManager p6) {
         return new CreateClassesActionHandler(p1, p3, p4, p5, p6);
     }
 
@@ -606,8 +606,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                    MoveEntityChangeListGeneratorFactory p2,
                                                                    ReleasedClassesChecker p3,
                                                                    ClassHierarchyRetiredClassDetector p4,
-                                                                   ChangeManager p5) {
-        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4, p5);
+                                                                   ChangeManager p5,
+                                                                   LinearizationManager p6) {
+        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
 
@@ -760,8 +761,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                         MoveClassesChangeListGeneratorFactory p4,
                                                         ReleasedClassesChecker p5,
                                                         ClassHierarchyRetiredClassDetector p6,
-                                                        ChangeManager p7) {
-        return new MoveToParentActionHandler(p1, p4, p5, p6, p7);
+                                                        ChangeManager p7,
+                                                        LinearizationManager p8) {
+        return new MoveToParentActionHandler(p1, p4, p5, p6, p7, p8);
     }
 
     @Bean
@@ -775,8 +777,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ClassHierarchyProvider p8,
                                                                       RenderingManager p9,
                                                                       ReleasedClassesChecker p10,
-                                                                      ClassHierarchyRetiredClassDetector p11) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11);
+                                                                      ClassHierarchyRetiredClassDetector p11,
+                                                                      LinearizationManager p12) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
     }
 
 
