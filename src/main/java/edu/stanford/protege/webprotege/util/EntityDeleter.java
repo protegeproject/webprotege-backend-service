@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
 import edu.stanford.protege.webprotege.change.RemoveOntologyAnnotationChange;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -25,6 +26,7 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-06
  */
+@ProjectSingleton
 public class EntityDeleter {
 
     @Nonnull

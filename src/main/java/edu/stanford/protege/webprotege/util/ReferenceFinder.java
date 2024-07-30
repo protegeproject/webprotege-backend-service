@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.index.AxiomsByReferenceIndex;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -19,6 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-06
  */
+@ProjectSingleton
 public class ReferenceFinder {
 
     @Nonnull

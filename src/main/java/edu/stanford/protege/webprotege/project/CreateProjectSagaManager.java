@@ -76,6 +76,7 @@ public class CreateProjectSagaManager {
                                              }
                                              else {
                                                  // Should be a CompletionException
+                                                 logger.error("Error creating project", e);
                                                  throw new ProjectCreationException(sagaState.getProjectId(),
                                                                                     "Project creation failed",
                                                                                     e.getCause());
@@ -95,7 +96,8 @@ public class CreateProjectSagaManager {
                                             if (e == null) {
                                                 return new CreateNewProjectResult(r.getProjectDetails());
                                             }
-                                            else {
+                                            else {                                                 logger.error("Error creating project", e);
+                                                logger.error("Error creating project", e);
                                                 throw new ProjectCreationException(sagaState.getProjectId(),
                                                                                    "Project creation failed",
                                                                                    e.getCause());
