@@ -68,7 +68,7 @@ public class GetEntityDeprecationFormsActionHandler extends AbstractProjectActio
     @Override
     public GetEntityDeprecationFormsResult execute(@Nonnull GetEntityDeprecationFormsAction action,
                                                    @Nonnull ExecutionContext executionContext) {
-        var entityCreationForms = entityFormManager.getFormDescriptors(action.getEntity(),
+        var entityCreationForms = entityFormManager.getFormDescriptors(action.entity(),
                                                                        action.projectId(),
                                                                        FormPurpose.ENTITY_DEPRECATION);
 
