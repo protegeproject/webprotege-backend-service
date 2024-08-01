@@ -480,9 +480,26 @@
                                 <argument>build</argument>
                                 <argument>-f</argument>
                                 <argument>Dockerfile</argument>
+                                <argument>--build-arg</argument>
+                                <argument>JAR_FILE=${project.artifactId}-${project.version}.jar</argument>
                                 <argument>-t</argument>
                                 <argument>protegeproject/${project.artifactId}:${project.version}</argument>
                                 <argument>.</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>docker-push</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>docker</executable>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <arguments>
+                                <argument>push</argument>
+                                <argument>protegeproject/${project.artifactId}:${project.version}</argument>
                             </arguments>
                         </configuration>
                     </execution>
