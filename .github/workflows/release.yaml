@@ -36,7 +36,7 @@ jobs:
         id: bump
         uses: mickem/gh-action-bump-maven-version@v1
       - name: Build and Publish package
-        run: mvn --batch-mode -Prelease package dockerfile:push
+        run: mvn --batch-mode package install
       - name: Release
         uses: softprops/action-gh-release@v1
         env:
