@@ -3,6 +3,9 @@ package edu.stanford.protege.webprotege.shortform;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -17,6 +20,8 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  */
 public class EntitySearchFilterMatchersFactory {
 
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(EntitySearchFilterMatchersFactory.class);
     @Nonnull
     private final ProjectEntitySearchFiltersManager filtersManager;
 
@@ -31,6 +36,7 @@ public class EntitySearchFilterMatchersFactory {
     }
 
     @Nonnull
+    @Cacheable(value = "searchFilterMatchers")
     public ImmutableList<EntitySearchFilterMatcher> getSearchFilterMatchers() {
         return filtersManager.getSearchFilters()
                       .stream()

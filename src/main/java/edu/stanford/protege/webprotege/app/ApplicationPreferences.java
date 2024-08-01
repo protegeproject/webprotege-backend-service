@@ -34,13 +34,13 @@ public class ApplicationPreferences {
 
     private final long maxUploadSize;
     
-    public ApplicationPreferences(@Nonnull String applicationName,
-                                  @Nonnull String systemNotificationEmailAddress,
-                                  @Nonnull ApplicationLocation applicationLocation,
+    public ApplicationPreferences(String applicationName,
+                                  String systemNotificationEmailAddress,
+                                  ApplicationLocation applicationLocation,
                                   long maxUploadSize) {
-        this.applicationName = checkNotNull(applicationName);
-        this.systemNotificationEmailAddress = checkNotNull(systemNotificationEmailAddress);
-        this.applicationLocation = checkNotNull(applicationLocation);
+        this.applicationName = applicationName == null ? "ICAT-X" : applicationName;
+        this.systemNotificationEmailAddress = systemNotificationEmailAddress == null ? "dummy@email.com" : systemNotificationEmailAddress;
+        this.applicationLocation = applicationLocation == null ? new ApplicationLocation("http","webprotege-local.edu", "/webprotege", 8080) : applicationLocation;
         this.maxUploadSize = maxUploadSize;
     }
 

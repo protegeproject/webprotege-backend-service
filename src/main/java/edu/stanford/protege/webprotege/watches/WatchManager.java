@@ -6,6 +6,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Author: Matthew Horridge<br>
@@ -24,7 +25,7 @@ public interface WatchManager {
      * @return The set of {@link Watch} objects for the specified {@link UserId}.
      * @throws NullPointerException if {@code userId} is {@code null}.
      */
-    Set<Watch> getWatches(@Nonnull UserId userId);
+    Stream<Watch> getWatches(@Nonnull UserId userId);
 
     /**
      * Adds the specified watch for the specified user.

@@ -116,7 +116,7 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
                                            commentCount,
                                            openCommentCount);
         eventDispatcher.dispatchEvent(event);
-        setOutNotifications(thread, comment);
+        //TODO remove this comment when fix the slack webhook and replace with : setOutNotifications(thread, comment);
         List<EntityDiscussionThread> threads = repository.findThreads(projectId, entity);
         return new CreateEntityDiscussionThreadResult(ImmutableList.copyOf(threads));
     }

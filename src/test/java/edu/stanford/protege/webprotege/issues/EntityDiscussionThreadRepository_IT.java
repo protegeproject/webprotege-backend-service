@@ -117,6 +117,7 @@ class EntityDiscussionThreadRepository_IT {
                                       Optional.empty(),
                                       "The body", "The rendered body");
         repository.addCommentToThread(thread.getId(),
+                                      projectId,
                                       theComment);
         Optional<EntityDiscussionThread> foundThread = repository.getThread(thread.getId());
         assertThat(foundThread.get().getComments(), hasItem(theComment));
@@ -124,7 +125,7 @@ class EntityDiscussionThreadRepository_IT {
 
     @Test
     public void shouldCloseThread() {
-        repository.setThreadStatus(thread.getId(), Status.CLOSED);
+        repository.setThreadStatus(thread.getId(),projectId, Status.CLOSED);
         Optional<EntityDiscussionThread> readThread = repository.getThread(thread.getId());
         assertThat(readThread.get().getStatus(), is(Status.CLOSED));
     }
@@ -147,7 +148,7 @@ class EntityDiscussionThreadRepository_IT {
 
     @Test
     public void shouldDeleteCommentById() {
-        repository.deleteComment(comment.getId());
+        repository.deleteComment(projectId, comment.getId());
         Optional<EntityDiscussionThread> updatedThread = repository.getThread(thread.getId());
         assertThat(updatedThread.isPresent(), is(true));
         assertThat(updatedThread.get().getComments(), not(hasItem(comment)));

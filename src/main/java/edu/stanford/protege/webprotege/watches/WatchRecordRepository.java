@@ -27,6 +27,7 @@ public interface WatchRecordRepository extends Repository {
     List<WatchRecord> findWatchRecords(@Nonnull ProjectId projectId,
                                        @Nonnull UserId userId);
 
+    List<WatchRecord> findWatchRecords(ProjectId projectId);
     /**
      * Finds {@link WatchRecord}s for the specified entities.
      * @param entities The entities
