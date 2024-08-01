@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.forms;
 
 
-
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
 
 import javax.annotation.Nonnull;

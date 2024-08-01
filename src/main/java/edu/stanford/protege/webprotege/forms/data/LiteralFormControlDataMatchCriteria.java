@@ -1,8 +1,9 @@
 package edu.stanford.protege.webprotege.forms.data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.criteria.LiteralCriteria;
+import edu.stanford.protege.webprotege.forms.PropertyNames;
 
 import javax.annotation.Nonnull;
 
@@ -15,14 +16,13 @@ import javax.annotation.Nonnull;
 
 public abstract class LiteralFormControlDataMatchCriteria implements PrimitiveFormControlDataMatchCriteria {
 
-    public static final String LITERAL_MATCHES = "literalMatches";
-
+    @JsonCreator
     @Nonnull
-    public static LiteralFormControlDataMatchCriteria get(@Nonnull LiteralCriteria literalCriteria) {
+    public static LiteralFormControlDataMatchCriteria get(@JsonProperty(PropertyNames.CRITERIA) @Nonnull LiteralCriteria literalCriteria) {
         return new AutoValue_LiteralFormControlDataMatchCriteria(literalCriteria);
     }
 
-    @JsonProperty(LITERAL_MATCHES)
+    @JsonProperty(PropertyNames.CRITERIA)
     @Nonnull
     public abstract LiteralCriteria getLexicalValueCriteria();
 

@@ -3,9 +3,9 @@ package edu.stanford.protege.webprotege.forms;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.forms.data.FormSubject;
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
-import edu.stanford.protege.webprotege.common.PageRequest;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -31,19 +31,17 @@ public class FormPageRequestIndex {
     public static FormPageRequestIndex create(@Nonnull ImmutableList<FormPageRequest> pageRequests) {
         checkNotNull(pageRequests);
         Map<Key, FormPageRequest> map = new HashMap<>();
-        for(FormPageRequest pageRequest : pageRequests) {
-            map.put(Key.get(pageRequest.subject(),
-                            pageRequest.regionId(),
-                            pageRequest.sourceType()),
+        for (FormPageRequest pageRequest : pageRequests) {
+            map.put(Key.get(pageRequest.subject(), pageRequest.regionId(), pageRequest.sourceType()),
                     pageRequest);
         }
         return new FormPageRequestIndex(ImmutableMap.copyOf(map));
     }
 
     @Nonnull
-    public PageRequest pageRequest(FormSubject formSubject, FormRegionId id, FormPageRequest.SourceType sourceType) {
+    public PageRequest getPageRequest(FormSubject formSubject, FormRegionId id, FormPageRequest.SourceType sourceType) {
         var formPageRequest = indexMap.get(Key.get(formSubject, id, sourceType));
-        if(formPageRequest != null) {
+        if (formPageRequest != null) {
             return formPageRequest.pageRequest();
         }
         else {

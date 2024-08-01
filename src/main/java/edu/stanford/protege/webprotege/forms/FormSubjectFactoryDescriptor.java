@@ -22,12 +22,10 @@ import java.util.Optional;
 public abstract class FormSubjectFactoryDescriptor {
 
     @JsonCreator
-    public static FormSubjectFactoryDescriptor get(@Nonnull @JsonProperty("entityType") EntityType entityType,
-                                                   @Nullable @JsonProperty("parent") OWLClass parent,
-                                                   @Nonnull @JsonProperty("targetOntologyIri") Optional<IRI> targetOntologyIri) {
-        return new AutoValue_FormSubjectFactoryDescriptor(entityType,
-                                                          parent,
-                                                          targetOntologyIri.orElse(null));
+    public static FormSubjectFactoryDescriptor get(@Nonnull @JsonProperty(PropertyNames.ENTITY_TYPE) EntityType entityType,
+                                                   @Nullable @JsonProperty(PropertyNames.PARENT) OWLClass parent,
+                                                   @Nonnull @JsonProperty(PropertyNames.TARGET_ONTOLOGY_IRI) Optional<IRI> targetOntologyIri) {
+        return new AutoValue_FormSubjectFactoryDescriptor(entityType, parent, targetOntologyIri.orElse(null));
     }
 
     public static String getDefaultGeneratedNamePattern() {
@@ -35,10 +33,11 @@ public abstract class FormSubjectFactoryDescriptor {
     }
 
     @Nonnull
+    @JsonProperty("entityType")
     public abstract EntityType<?> getEntityType();
 
     /**
-     * Gets a list of parents that can be used to position the fresh entity in
+     * Gets a list of parents that can be used to position the fresh term in
      * a hierarchy
      */
     @JsonIgnore
@@ -47,14 +46,16 @@ public abstract class FormSubjectFactoryDescriptor {
         return Optional.ofNullable(getParentInternal());
     }
 
-    @JsonProperty("parent")
+    @JsonProperty(PropertyNames.PARENT)
     @Nullable
     protected abstract OWLClass getParentInternal();
 
     @Nullable
+    @JsonProperty(PropertyNames.TARGET_ONTOLOGY_IRI)
     protected abstract IRI getTargetOntologyIriInternal();
 
     @Nonnull
+    @JsonIgnore
     public Optional<IRI> getTargetOntologyIri() {
         return Optional.ofNullable(getTargetOntologyIriInternal());
     }
