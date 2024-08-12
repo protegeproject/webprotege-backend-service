@@ -64,7 +64,7 @@ public class FormDescriptorDtoTranslator {
                 return GridColumnDescriptorDto.get(column.getId(),
                                                    column.getOptionality(),
                                                    column.getRepeatability(),
-                                                   column.getOwlBinding().orElseThrow(),
+                                                   column.getOwlBinding().orElse(null),
                                                    column.getLabel(),
                                                    column.getFormControlDescriptor().accept(this));
             }
