@@ -94,6 +94,7 @@ import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
+import edu.stanford.protege.webprotege.util.ReferenceFinder;
 import edu.stanford.protege.webprotege.viz.EdgeMatcherFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
@@ -737,6 +738,17 @@ public class ProjectBeansConfiguration {
         return new PropertyValueComparator(p1, p2);
     }
 
+    @Bean
+    public ReferenceFinder referenceFinder(@Nonnull AxiomsByReferenceIndex axiomsIndex,
+                                           @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex){
+        return new ReferenceFinder(axiomsIndex, ontologyAnnotationsIndex);
+    }
+
+    @Bean
+    public EntityDeleter entityDeleter(ReferenceFinder referenceFinder,
+                                       ProjectOntologiesIndex projectOntologiesIndex) {
+        return new EntityDeleter(referenceFinder, projectOntologiesIndex);
+    }
     @Bean
     AxiomSubjectProvider axiomSubjectProvider(OWLObjectSelector<OWLClassExpression> p1,
                                               OWLObjectSelector<OWLObjectPropertyExpression> p2,

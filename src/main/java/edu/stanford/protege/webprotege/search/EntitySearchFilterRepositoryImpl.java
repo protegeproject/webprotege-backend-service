@@ -7,6 +7,9 @@ import com.mongodb.client.model.ReplaceOneModel;
 import com.mongodb.client.model.ReplaceOptions;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.Nonnull;
@@ -24,6 +27,8 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  * 2020-08-15
  */
 public class EntitySearchFilterRepositoryImpl implements EntitySearchFilterRepository {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(EntitySearchFilterRepositoryImpl.class);
 
     private static final String COLLECTION_NAME = "EntitySearchFilters";
 
@@ -69,8 +74,10 @@ public class EntitySearchFilterRepositoryImpl implements EntitySearchFilterRepos
 
     @Nonnull
     @Override
+    @Cacheable(value = "searchFilters", key = "#projectId")
     public ImmutableList<EntitySearchFilter> getSearchFilters(@Nonnull ProjectId projectId) {
         try {
+            LOGGER.info("Entering get search Filters for PRJ " + projectId);
             readLock.lock();
             var filtersByProjectId = new Document(EntitySearchFilter.PROJECT_ID, projectId.id());
             try (var iterator = getCollection().find(filtersByProjectId).iterator()) {

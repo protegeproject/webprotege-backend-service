@@ -104,7 +104,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
                                       rawComment,
                                       renderedComment);
         ThreadId threadId = action.threadId();
-        repository.addCommentToThread(threadId, comment);
+        repository.addCommentToThread(threadId, action.projectId(), comment);
         postCommentPostedEvent(threadId, comment);
         sendOutNotifications(threadId, comment);
         return new AddCommentResult(action.projectId(), threadId, comment, renderedComment);

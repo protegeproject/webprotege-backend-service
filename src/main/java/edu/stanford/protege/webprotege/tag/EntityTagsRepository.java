@@ -6,6 +6,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,6 +30,7 @@ public interface EntityTagsRepository {
     @Nonnull
     Optional<EntityTags> findByEntity(@Nonnull OWLEntity entity, ProjectId projectId);
 
+    Optional<List<EntityTags>> findByProjectId(@Nonnull ProjectId projectId);
     @Nonnull
     Collection<EntityTags> findByTagId(@Nonnull TagId tagId, ProjectId projectId);
 

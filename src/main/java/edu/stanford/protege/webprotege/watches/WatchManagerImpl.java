@@ -5,20 +5,19 @@ import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.watches.WatchType.BRANCH;
-import static java.util.Collections.singleton;
 import static java.util.stream.Collectors.toSet;
 
 /**
@@ -29,8 +28,6 @@ import static java.util.stream.Collectors.toSet;
 @ProjectSingleton
 public class WatchManagerImpl implements WatchManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(WatchManagerImpl.class);
-
     private final ProjectId projectId;
 
     private final WatchRecordRepository repository;
@@ -40,6 +37,8 @@ public class WatchManagerImpl implements WatchManager {
     private final WatchTriggeredHandler watchTriggeredHandler;
 
     private final EventDispatcher eventDispatcher;
+
+    private final Map<IRI, List<Watch>> cache = new ConcurrentHashMap<>();
 
     private boolean attached = false;
 
@@ -54,7 +53,9 @@ public class WatchManagerImpl implements WatchManager {
         this.indirectlyWatchedEntitiesFinder = checkNotNull(indirectlyWatchedEntitiesFinder);
         this.watchTriggeredHandler = checkNotNull(watchTriggeredHandler);
         this.eventDispatcher = checkNotNull(eventDispatcher);
+        populateCache(projectId);
     }
+
 
     public synchronized void attach() {
         if(attached) {
@@ -66,38 +67,73 @@ public class WatchManagerImpl implements WatchManager {
      }
 
     @Override
-    public Set<Watch> getWatches(@Nonnull UserId userId) {
-        return repository.findWatchRecords(projectId, userId).stream()
-                         .map(this::toWatch)
-                         .collect(toSet());
+    public Stream<Watch> getWatches(@Nonnull UserId userId) {
+        return cache.values().stream()
+                .flatMap(Collection::stream)
+                .filter(watch -> watch.getUserId().equals(userId));
+
     }
 
     @Override
     public void addWatch(@Nonnull Watch watch) {
         repository.saveWatchRecord(toWatchRecord(watch));
+
+        List<Watch> watches = cache.get(watch.getEntity().getIRI());
+        if(watches == null) {
+            watches = new ArrayList<>();
+        }
+
+        watches.add(watch);
+        cache.put(watch.getEntity().getIRI(), watches);
+
         eventDispatcher.dispatchEvent(new WatchAddedEvent(EventId.generate(), projectId, watch));
     }
 
     @Override
     public void removeWatch(@Nonnull Watch watch) {
         repository.deleteWatchRecord(toWatchRecord(watch));
+        var existing = cache.get(watch.getEntity().getIRI());
+        if(existing != null) {
+            existing.remove(watch);
+            cache.put(watch.getEntity().getIRI(), existing);
+        }
         eventDispatcher.dispatchEvent(new WatchRemovedEvent(EventId.generate(), projectId, watch));
     }
 
     @Override
     public Set<Watch> getDirectWatches(@Nonnull OWLEntity watchedEntity) {
-        return repository.findWatchRecords(projectId, singleton(watchedEntity)).stream()
-                .map(this::toWatch)
-                .collect(toSet());
+
+        var response = cache.get(watchedEntity.getIRI());
+        if(response != null) {
+            return new HashSet<>(response);
+        }
+
+        return new HashSet<>();
     }
 
     @Override
     public Set<Watch> getDirectWatches(@Nonnull OWLEntity watchedObject, @Nonnull UserId userId) {
-        return repository.findWatchRecords(projectId,
-                                           userId,
-                                           singleton(watchedObject)).stream()
-                         .map(this::toWatch)
-                         .collect(toSet());
+
+        var response = cache.get(watchedObject.getIRI());
+
+        if(response != null) {
+            return response.stream().filter(watch -> watch.getUserId().equals(userId)).collect(toSet());
+        }
+
+        return new HashSet<>();
+    }
+
+    private synchronized void populateCache(ProjectId projectId) {
+        repository.findWatchRecords(projectId).forEach(watchRecord -> {
+            List<Watch> watches = cache.get(watchRecord.getEntity().getIRI());
+            if(watches == null) {
+                watches = new ArrayList<>();
+            }
+
+            watches.add(toWatch(watchRecord));
+            cache.put(watchRecord.getEntity().getIRI(), watches);
+        });
+
     }
 
     private void handleEntityFrameChanged(@Nonnull OWLEntity entity, @Nonnull UserId byUser) {
