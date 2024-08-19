@@ -12,6 +12,7 @@ import javax.inject.Provider;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Collection;
+import java.util.concurrent.ExecutorService;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -25,42 +26,64 @@ public class LuceneIndexUpdaterImpl implements LuceneIndexUpdater {
     @Nonnull
     private final IndexWriter indexWriter;
 
+    private final IndexWriter inMemoryIndexWriter;
+
     @Nonnull
     private final Provider<LuceneEntityDocumentTranslator> documentTranslatorProvider;
 
     @Nonnull
     private final SearcherManager searcherManager;
 
+    private final ExecutorService executorService;
+
     @Inject
     public LuceneIndexUpdaterImpl(@Nonnull IndexWriter indexWriter,
-                                  @Nonnull Provider<LuceneEntityDocumentTranslator> documentTranslatorProvider,
-                                  @Nonnull SearcherManager searcherManager) {
+                                  IndexWriter inMemoryIndexWriter, @Nonnull Provider<LuceneEntityDocumentTranslator> documentTranslatorProvider,
+                                  @Nonnull SearcherManager searcherManager, ExecutorService executorService) {
         this.indexWriter = checkNotNull(indexWriter);
+        this.inMemoryIndexWriter = inMemoryIndexWriter;
         this.documentTranslatorProvider = checkNotNull(documentTranslatorProvider);
+        this.executorService = executorService;
         this.searcherManager = checkNotNull(searcherManager);
     }
 
     @Override
     public void updateIndexForEntities(@Nonnull Collection<OWLEntity> entities) {
         try {
-            var documentTranslator = documentTranslatorProvider.get();
-            var deleteQueries = entities.stream()
-                    .map(documentTranslator::getEntityDocumentQuery)
-                    .toArray(Query[]::new);
+            updateGivenIndexForEntities(inMemoryIndexWriter, entities);
 
-            indexWriter.deleteDocuments(deleteQueries);
+            this.executorService.submit(() -> {
+                try {
+                    updateGivenIndexForEntities(indexWriter, entities);
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
 
-            entities.stream()
-                    .map(documentTranslator::getLuceneDocument)
-                    .forEach(this::addDocument);
-            indexWriter.commit();
-            searcherManager.maybeRefresh();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+
     }
 
-    private void addDocument(@Nonnull Document document) {
+    private void updateGivenIndexForEntities(IndexWriter indexWriter, Collection<OWLEntity> entities) throws IOException {
+        var documentTranslator = documentTranslatorProvider.get();
+        var deleteQueries = entities.stream()
+                .map(documentTranslator::getEntityDocumentQuery)
+                .toArray(Query[]::new);
+
+        indexWriter.deleteDocuments(deleteQueries);
+
+        entities.stream()
+                .map(documentTranslator::getLuceneDocument)
+                .forEach((document) -> {
+                    addDocument(document, indexWriter);
+                });
+        indexWriter.commit();
+        searcherManager.maybeRefresh();
+
+    }
+    private void addDocument(@Nonnull Document document, IndexWriter indexWriter) {
         try {
             indexWriter.addDocument(document);
         } catch (IOException e) {
