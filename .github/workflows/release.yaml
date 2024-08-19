@@ -73,7 +73,7 @@ jobs:
           git push origin HEAD:${GITHUB_REF##*/}
           git push origin ${{ steps.bump.outputs.new_version }}
       - name: Build and Publish package
-        run: mvn --batch-mode -Prelease package dockerfile:push
+        run: mvn --batch-mode package install
       - name: Release
         uses: softprops/action-gh-release@v1
         env:

@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.forms;
 
 
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

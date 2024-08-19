@@ -118,7 +118,7 @@ public class GridControlValuesBuilder {
                                           filterState);
         }
 
-        var pageRequest = rootSubject.map(s -> formPageRequestIndex.pageRequest(s,
+        var pageRequest = rootSubject.map(s -> formPageRequestIndex.getPageRequest(s,
                                                                                formFieldId,
                                                                                FormPageRequest.SourceType.GRID_CONTROL)).orElseGet(PageRequest::requestFirstPage);
         var comparator = comparatorFactory.get(descriptor, Optional.empty());
