@@ -3,29 +3,17 @@ package edu.stanford.protege.webprotege.revision;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.*;
 import edu.stanford.protege.webprotege.axiom.AxiomIRISubjectProvider;
-import edu.stanford.protege.webprotege.change.OntologyChange;
-import edu.stanford.protege.webprotege.change.ProjectChange;
-import edu.stanford.protege.webprotege.diff.DiffElement;
-import edu.stanford.protege.webprotege.diff.DiffElementRenderer;
-import edu.stanford.protege.webprotege.diff.Revision2DiffElementsTranslator;
+import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.*;
+import edu.stanford.protege.webprotege.diff.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.common.Page;
-import edu.stanford.protege.webprotege.common.PageRequest;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.semanticweb.owlapi.model.*;
+import org.slf4j.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import javax.inject.*;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -76,8 +64,7 @@ public class ProjectChangesManager {
         if (change.isAxiomChange()) {
             var axiom = change.getAxiomOrThrow();
             return getSubject(axiom);
-        }
-        else {
+        } else {
             return Optional.empty();
         }
     }
@@ -90,31 +77,22 @@ public class ProjectChangesManager {
     public Page<ProjectChange> getProjectChanges(Optional<OWLEntity> subject,
                                                  PageRequest pageRequest) {
         ImmutableList<Revision> revisions = revisionManager.getRevisions();
-        if (subject.isPresent()) {
-            // We need to scan revisions to find the ones containing a particular subject
-            // We ignore the page request here.
-            // This needs reworking really, but the number of changes per entity is usually small
-            // so this works for now.
-            ImmutableList.Builder<ProjectChange> changes = ImmutableList.builder();
-            for (Revision revision : revisions) {
-                getProjectChangesForRevision(revision, subject, changes);
-            }
-            ImmutableList<ProjectChange> theChanges = changes.build();
-            return Page.create(1, 1, theChanges, theChanges.size());
+
+        // Pages are in reverse order
+        ImmutableList.Builder<ProjectChange> changes = ImmutableList.builder();
+        revisions.reverse().stream()
+                .skip(pageRequest.getSkip())
+                .limit(pageRequest.getPageSize())
+                .forEach(revision -> getProjectChangesForRevision(revision, subject, changes));
+        ImmutableList<ProjectChange> changeList = changes.build();
+        if (changeList.isEmpty()) {
+            return Page.emptyPage();
         }
-        else {
-            // Pages are in reverse order
-            ImmutableList.Builder<ProjectChange> changes = ImmutableList.builder();
-            revisions.reverse().stream()
-                    .skip(pageRequest.getSkip())
-                    .limit(pageRequest.getPageSize())
-                    .forEach(revision -> getProjectChangesForRevision(revision, subject, changes));
-            ImmutableList<ProjectChange> changeList = changes.build();
-            int pageCount = (revisions.size() / pageRequest.getPageSize()) + 1;
-            return Page.create(pageRequest.getPageNumber(),
-                              pageCount,
-                              changeList, changeList.size());
-        }
+
+        int pageCount = (revisions.size() / pageRequest.getPageSize()) + 1;
+        return Page.create(pageRequest.getPageNumber(),
+                pageCount,
+                changeList, changeList.size());
     }
 
     public ImmutableList<ProjectChange> getProjectChangesForSubjectInRevision(OWLEntity subject, Revision revision) {
@@ -126,7 +104,7 @@ public class ProjectChangesManager {
     private void getProjectChangesForRevision(Revision revision,
                                               Optional<OWLEntity> subject,
                                               ImmutableList.Builder<ProjectChange> changesBuilder) {
-        if(!cache.containsRow(revision.getRevisionNumber())) {
+        if (!cache.containsRow(revision.getRevisionNumber())) {
             logger.debug("{} Building cache for revision {}", projectId, revision.getRevisionNumber().getValue());
             var stopwatch = Stopwatch.createStarted();
             var changeRecordsBySubject = getChangesBySubject(revision);
@@ -145,8 +123,7 @@ public class ProjectChangesManager {
             }
             totalChanges = records.size();
             limitedRecords.addAll(records);
-        }
-        else {
+        } else {
             totalChanges = revision.getSize();
             revision.getChanges().stream()
                     .limit(DEFAULT_CHANGE_LIMIT)
@@ -162,8 +139,7 @@ public class ProjectChangesManager {
         int pageCount;
         if (pageElements == 0) {
             pageCount = 1;
-        }
-        else {
+        } else {
             pageCount = totalChanges / pageElements + (totalChanges % pageElements);
         }
         Page<DiffElement<String, String>> page = Page.create(
@@ -197,7 +173,7 @@ public class ProjectChangesManager {
         Comparator<DiffElement<String, OntologyChange>> c =
                 Comparator
                         .comparing((Function<DiffElement<String, OntologyChange>, OntologyChange>)
-                                           DiffElement::getLineElement, changeRecordComparator)
+                                DiffElement::getLineElement, changeRecordComparator)
                         .thenComparing(DiffElement::getDiffOperation)
                         .thenComparing(DiffElement::getSourceDocument);
         diffElements.sort(c);
