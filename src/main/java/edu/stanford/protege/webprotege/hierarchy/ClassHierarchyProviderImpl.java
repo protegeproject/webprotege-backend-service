@@ -88,17 +88,20 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
 
     public synchronized Collection<OWLClass> getParents(OWLClass object) {
         rebuildIfNecessary();
-        // If the object is thing then there are no
-        // parents
+        // If the object is the root then there
+        // are no parents
         if(object.equals(root)) {
             return Collections.emptySet();
         }
         Stream<OWLClass> parentsCombined = getParentsStream(object);
         var parents = parentsCombined.collect(toSet());
         // Thing if the object is a root class
-        if(rootFinder.getTerminalElements()
-                     .contains(object)) {
-            parents.add(root);
+        if (root.isOWLThing()) {
+            // Add orphans, by the semantics of OWL
+            if (rootFinder.getTerminalElements()
+                    .contains(object)) {
+                parents.add(root);
+            }
         }
         return parents;
     }
@@ -199,6 +202,9 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     }
 
     private void updateImplicitRoots(List<OntologyChange> changes) {
+        if(!root.isOWLThing()) {
+
+        }
         Set<OWLClass> possibleTerminalElements = new HashSet<>();
         Set<OWLClass> notInOntologies = new HashSet<>();
 
@@ -237,9 +243,21 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     }
 
     public synchronized boolean containsReference(OWLClass object) {
-        return entitiesInProjectSignatureByIriIndex
+        if(root.equals(object)) {
+            return true;
+        }
+        var containsInSig = entitiesInProjectSignatureByIriIndex
                 .getEntitiesInSignature(object.getIRI())
                 .anyMatch(entity -> entity.equals(object));
+        if(!containsInSig) {
+            return false;
+        }
+        if(root.isOWLThing()) {
+            return true;
+        }
+        else {
+            return !getPathsToRoot(object).isEmpty();
+        }
     }
 
     public synchronized Collection<OWLClass> getRoots() {
@@ -252,7 +270,9 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         Set<OWLClass> result;
         if(object.equals(root)) {
             result = new HashSet<>();
-            result.addAll(rootFinder.getTerminalElements());
+            if (root.isOWLThing()) {
+                result.addAll(rootFinder.getTerminalElements());
+            }
             result.addAll(extractChildren(object));
             result.remove(object);
         }
