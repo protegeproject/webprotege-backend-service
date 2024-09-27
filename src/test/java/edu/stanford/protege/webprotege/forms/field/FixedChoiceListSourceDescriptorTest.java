@@ -31,9 +31,12 @@ class FixedChoiceListSourceDescriptorTest {
     @Test
     void shouldDeserialize() throws IOException {
         var json = """
-                {"@type":"Fixed","choices":[]}
+                {"@type":"Fixed","choices":[{"label":{},"value":{"type":"http://www.w3.org/2001/XMLSchema#string","value":"A"}}]}
                 """;
+
         var read = tester.read(new StringReader(json));
         assertThat(read).isInstanceOf(FixedChoiceListSourceDescriptor.class);
+        var obj = (FixedChoiceListSourceDescriptor) read.getObject();
+        assertThat(obj.getChoices()).hasSize(1);
     }
 }

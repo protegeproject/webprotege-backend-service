@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
 import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
 import edu.stanford.protege.webprotege.bulkop.*;
+import edu.stanford.protege.webprotege.card.GetEntityCardDescriptorsProjectActionHandler;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
@@ -25,7 +26,6 @@ import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGe
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
-import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
@@ -34,6 +34,7 @@ import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
+import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import edu.stanford.protege.webprotege.match.GetMatchingEntitiesActionHandler;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.match.MatchingEngine;
@@ -970,5 +971,10 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                  ProjectOntologiesBuilder p4,
                                                                                  HasApplyChanges p5){
         return new ExistingOntologyMergeAddActionHandler(p1, p2, p3, p4, p5);
+    }
+
+    @Bean
+    GetEntityCardDescriptorsProjectActionHandler getEntityCardDescriptorsProjectActionHandler(AccessManager p1, ProjectId p2, EntityMatcherFactory p3) {
+        return new GetEntityCardDescriptorsProjectActionHandler(p1, p2, p3);
     }
 }

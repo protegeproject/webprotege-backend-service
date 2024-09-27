@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
+import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -24,6 +26,7 @@ public class HierarchyProviderMapper {
         map.put(HierarchyId.OBJECT_PROPERTY_HIERARCHY, objectPropertyHierarchyProvider);
         map.put(HierarchyId.DATA_PROPERTY_HIERARCHY, dataPropertyHierarchyProvider);
         map.put(HierarchyId.ANNOTATION_PROPERTY_HIERARCHY, annotationPropertyHierarchyProvider);
+        map.put(HierarchyId.get("Class(<http://www.example.org/RCszTEkr66WL9b4CsEeOqny>)"), FilteredClassHierarchyProvider.get(classHierarchyProvider, new OWLClassImpl(IRI.create("http://www.example.org/RCszTEkr66WL9b4CsEeOqny"))));
     }
 
     @SuppressWarnings("unchecked")

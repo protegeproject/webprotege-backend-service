@@ -42,6 +42,7 @@ public class SingleChoiceControlValuesBuilder {
                                                                                  @Nonnull Optional<FormEntitySubject> subject,
                                                                                  @Nonnull OwlBinding theBinding, int depth) {
         var values = bindingValuesExtractor.getBindingValues(subject, theBinding);
+        System.out.println("**** GOT VALUE: " + values);
         return values.stream()
                          .flatMap(renderer::toFormControlDataDto)
                          .filter(this::isIncluded)
