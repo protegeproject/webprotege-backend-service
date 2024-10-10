@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.logicaldefinitions;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.frame.PlainPropertyClassValue;
 import edu.stanford.protege.webprotege.index.EquivalentClassesAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
@@ -88,6 +89,8 @@ public class GetLogicalDefinitionsActionHandler extends AbstractProjectActionHan
                                                 getTranslatedNecessaryConditions(necessaryConditions));
     }
 
+
+
     private Stream<Map<OWLClass, Map<OWLObjectProperty, OWLClass>>> getSupercls2Axis2Filler
             (@Nonnull OWLEquivalentClassesAxiom owlEquivalentClassesAxiom,
              OWLClass subject) {
@@ -148,5 +151,13 @@ public class GetLogicalDefinitionsActionHandler extends AbstractProjectActionHan
         } else {
             return Stream.of(cls);
         }
+    }
+
+    private List<LogicalDefinition> getTranslatedLogicalDefinitons(List<Map<OWLClass, Map<OWLObjectProperty, OWLClass>>> logicalDefinitions) {
+        return null;
+    }
+
+    private List<PlainPropertyClassValue> getTranslatedNecessaryConditions(List<Map<OWLObjectProperty, OWLClass>> necessaryConditions) {
+        return null;
     }
 }
