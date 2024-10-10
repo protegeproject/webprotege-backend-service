@@ -84,9 +84,8 @@ public class GetLogicalDefinitionsActionHandler extends AbstractProjectActionHan
                         .flatMap(ce -> Stream.of(getAxis2Filler(ce)))
                         .collect(Collectors.toList());
 
-
-
-        return null;
+        return new GetLogicalDefinitionsResponse(getTranslatedLogicalDefinitons(logicalDefinitions),
+                                                getTranslatedNecessaryConditions(necessaryConditions));
     }
 
     private Stream<Map<OWLClass, Map<OWLObjectProperty, OWLClass>>> getSupercls2Axis2Filler
