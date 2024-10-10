@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.stanford.protege.webprotege.HasSubject;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -14,7 +16,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GetManchesterSyntaxFrameAction implements ProjectAction<GetManchesterSyntaxFrameResult>, HasSubject<OWLEntity> {
 
-    public static final String CHANNEL = "webprotege.mansyntax.GetManchesterSyntaxFrame";
+    public static final String CHANNEL = "webprotege.frames.GetManchesterSyntaxFrame";
 
     private ProjectId projectId;
 
@@ -31,7 +33,8 @@ public class GetManchesterSyntaxFrameAction implements ProjectAction<GetManchest
         this.subject = checkNotNull(subject);
     }
 
-    public static GetManchesterSyntaxFrameAction create(ProjectId projectId, OWLEntity subject) {
+    @JsonCreator
+    public static GetManchesterSyntaxFrameAction create(@JsonProperty("projectId") ProjectId projectId,@JsonProperty("subject") OWLEntity subject) {
         return new GetManchesterSyntaxFrameAction(projectId, subject);
     }
 
