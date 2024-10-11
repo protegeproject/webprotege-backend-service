@@ -61,6 +61,8 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.SendMail;
@@ -1955,6 +1957,24 @@ public class ProjectBeansConfiguration {
                                                   ClassAssertionAxiomsByClassIndex p7, ClassFrameProvider p8,
                                                   MatcherFactory p9) {
         return new BindingValuesExtractor(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    LogicalDefinitionExtractor logicalDefinitionExtractor(@Nonnull ProjectId projectId,
+                                                          @Nonnull RenderingManager renderingManager,
+                                                          @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                          @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex
+    ) {
+        return new LogicalDefinitionExtractor(projectId, renderingManager, projectOntologiesIndex, equivalentClassesAxiomsIndex);
+    }
+
+    @Bean
+    NecessaryConditionsExtractor necessaryConditionsExtractor(@Nonnull ProjectId projectId,
+                                                              @Nonnull RenderingManager renderingManager,
+                                                              @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                              @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex
+    ) {
+        return new NecessaryConditionsExtractor(projectId, renderingManager, projectOntologiesIndex, subClassOfAxiomsIndex);
     }
 
 }
