@@ -25,6 +25,9 @@ import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
+import edu.stanford.protege.webprotege.logicaldefinitions.GetLogicalDefinitionsActionHandler;
+import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
 import edu.stanford.protege.webprotege.mansyntax.*;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
 import edu.stanford.protege.webprotege.match.*;
@@ -988,5 +991,13 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                  ProjectOntologiesBuilder p4,
                                                                                  HasApplyChanges p5) {
         return new ExistingOntologyMergeAddActionHandler(p1, p2, p3, p4, p5);
+    }
+
+    @Bean
+    GetLogicalDefinitionsActionHandler getLogicalDefinitionsActionHandler(AccessManager p1,
+                                                                          LogicalDefinitionExtractor p2,
+                                                                          NecessaryConditionsExtractor p3) {
+        return new GetLogicalDefinitionsActionHandler(p1, p2, p3);
+
     }
 }

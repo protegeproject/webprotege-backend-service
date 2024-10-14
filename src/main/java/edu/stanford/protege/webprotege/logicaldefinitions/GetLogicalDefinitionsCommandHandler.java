@@ -3,9 +3,11 @@ package edu.stanford.protege.webprotege.logicaldefinitions;
 import edu.stanford.protege.webprotege.api.ActionExecutor;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Mono;
 
+@WebProtegeHandler
 public class GetLogicalDefinitionsCommandHandler implements CommandHandler<GetLogicalDefinitionsRequest, GetLogicalDefinitionsResponse >{
 
     private final ActionExecutor executor;

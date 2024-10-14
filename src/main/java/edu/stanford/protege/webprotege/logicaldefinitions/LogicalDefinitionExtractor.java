@@ -1,18 +1,14 @@
 package edu.stanford.protege.webprotege.logicaldefinitions;
 
-import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.frame.PropertyClassValue;
 import edu.stanford.protege.webprotege.frame.State;
 import edu.stanford.protege.webprotege.index.EquivalentClassesAxiomsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -22,7 +18,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Service
 public class LogicalDefinitionExtractor {
 
     private static final Logger logger = LoggerFactory.getLogger(LogicalDefinitionExtractor.class);
