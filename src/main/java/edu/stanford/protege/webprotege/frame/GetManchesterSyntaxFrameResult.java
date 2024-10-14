@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  */
 @AutoValue
 
-@JsonTypeName("GetManchesterSyntaxFrame")
+@JsonTypeName("webprotege.frames.GetManchesterSyntaxFrame")
 public abstract class GetManchesterSyntaxFrameResult implements Result {
 
     private static final String SUBJECT = "subject";
