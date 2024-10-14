@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.Request;
+import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import edu.stanford.protege.webprotege.linearization.CreateLinearizationFromParentResponse;
 import org.semanticweb.owlapi.model.OWLClass;
 
@@ -11,7 +12,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 public record GetLogicalDefinitionsRequest(
         @JsonProperty("projectId") ProjectId projectId,
         @JsonProperty("subject") OWLClass subject
-        ) implements Request<GetLogicalDefinitionsResponse> {
+        ) implements ProjectAction<GetLogicalDefinitionsResponse> {
 
 
     public final static String CHANNEL = "icatx.logicalDefinitions.LogicalDefinition";
