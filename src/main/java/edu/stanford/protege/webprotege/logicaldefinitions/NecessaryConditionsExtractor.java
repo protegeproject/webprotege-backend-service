@@ -91,20 +91,13 @@ public class NecessaryConditionsExtractor {
 
     private List<PropertyClassValue> getTranslatedNecessaryConditions(List<Map<OWLObjectProperty, OWLClass>> necessaryConditionsList) {
 
-        List<PropertyClassValue> axis2FillerTranslated = new ArrayList<PropertyClassValue>();
-
-        for (Map<OWLObjectProperty, OWLClass> axis2Filler : necessaryConditionsList){
-
-            for (OWLObjectProperty axis : axis2Filler.keySet()) {
-                OWLClass filler = axis2Filler.get(axis);
-                PropertyClassValue pcv = PropertyClassValue.get(
-                        renderingManager.getObjectPropertyData(axis),
-                        renderingManager.getClassData(filler),
-                        State.ASSERTED);
-                axis2FillerTranslated.add(pcv);
-            }
-        }
-
-        return axis2FillerTranslated;
+       return necessaryConditionsList.stream()
+                .flatMap(m -> m.entrySet().stream())
+                .map(e -> {
+                    return PropertyClassValue.get(
+                            renderingManager.getObjectPropertyData(e.getKey()),
+                            renderingManager.getClassData(e.getValue()),
+                            State.ASSERTED);
+                }).collect(Collectors.toList());
     }
 }

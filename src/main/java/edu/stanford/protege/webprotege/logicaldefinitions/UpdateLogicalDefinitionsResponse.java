@@ -6,7 +6,6 @@ import edu.stanford.protege.webprotege.frame.PropertyClassValue;
 
 import java.util.List;
 
-@JsonTypeName(GetLogicalDefinitionsAction.CHANNEL)
-public record GetLogicalDefinitionsResponse(List<LogicalDefinition> logicalDefinitions,
-                                            List<PropertyClassValue> necessaryConditions) implements Result {
+@JsonTypeName(UpdateLogicalDefinitionsAction.CHANNEL)
+public record UpdateLogicalDefinitionsResponse() implements Result {
 }
