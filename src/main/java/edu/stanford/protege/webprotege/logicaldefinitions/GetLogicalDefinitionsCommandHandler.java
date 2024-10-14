@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Mono;
 
 @WebProtegeHandler
-public class GetLogicalDefinitionsCommandHandler implements CommandHandler<GetLogicalDefinitionsRequest, GetLogicalDefinitionsResponse >{
+public class GetLogicalDefinitionsCommandHandler implements CommandHandler<GetLogicalDefinitionsAction, GetLogicalDefinitionsResponse >{
 
     private final ActionExecutor executor;
 
@@ -19,16 +19,16 @@ public class GetLogicalDefinitionsCommandHandler implements CommandHandler<GetLo
     @NotNull
     @Override
     public String getChannelName() {
-        return GetLogicalDefinitionsRequest.CHANNEL;
+        return GetLogicalDefinitionsAction.CHANNEL;
     }
 
     @Override
-    public Class<GetLogicalDefinitionsRequest> getRequestClass() {
-        return GetLogicalDefinitionsRequest.class;
+    public Class<GetLogicalDefinitionsAction> getRequestClass() {
+        return GetLogicalDefinitionsAction.class;
     }
 
     @Override
-    public Mono<GetLogicalDefinitionsResponse> handleRequest(GetLogicalDefinitionsRequest request, ExecutionContext executionContext) {
+    public Mono<GetLogicalDefinitionsResponse> handleRequest(GetLogicalDefinitionsAction request, ExecutionContext executionContext) {
         return executor.executeRequest(request, executionContext);
     }
 }
