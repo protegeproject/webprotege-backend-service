@@ -64,18 +64,6 @@ public class NamedHierarchyRepository {
         var doc = mapper.convertValue(record, Document.class);
 
         var collection = mongoTemplate.getCollection(COLLECTION_NAME);
-
-        var plainFound = collection.find();
-        plainFound.forEach(d -> System.err.println("PF: " + d));
-
-
-        var found = collection.find(projectIdFilter);
-        System.err.println(found);
-        found.forEach(f -> System.err.println(f));
-        System.err.println(found.first());;
-
         collection.replaceOne(combinedFilter, doc, new ReplaceOptions().upsert(true));
-
-
     }
 }
