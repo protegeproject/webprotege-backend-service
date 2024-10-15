@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import com.google.common.base.Stopwatch;
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.*;
@@ -28,7 +28,6 @@ import static java.util.stream.Collectors.toSet;
  * Bio-Health Informatics Group<br>
  * Date: 17-Jan-2007<br><br>
  */
-@ProjectSingleton
 public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLClass> implements ClassHierarchyProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(ClassHierarchyProviderImpl.class);
@@ -37,7 +36,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     private final ProjectId projectId;
 
     @Nonnull
-    private final OWLClass root;
+    private final Set<OWLClass> roots;
 
     @Nonnull
     private final TerminalElementFinder<OWLClass> rootFinder;
@@ -67,7 +66,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
 
     @Inject
     public ClassHierarchyProviderImpl(ProjectId projectId,
-                                      @Nonnull @ClassHierarchyRoot OWLClass rootCls,
+                                      @Nonnull @ClassHierarchyRoot Set<OWLClass> roots,
                                       @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                       @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex,
                                       @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex,
@@ -75,7 +74,8 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
                                       @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInProjectSignatureByIriIndex,
                                       @Nonnull ClassHierarchyChildrenAxiomsIndex classHierarchyChildrenAxiomsIndex) {
         this.projectId = checkNotNull(projectId);
-        this.root = checkNotNull(rootCls);
+        this.roots = new LinkedHashSet<>(checkNotNull(roots));
+        checkRoots(roots);
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.subClassOfAxiomsIndex = subClassOfAxiomsIndex;
         this.equivalentClassesAxiomsIndex = equivalentClassesAxiomsIndex;
@@ -86,24 +86,38 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         nodesToUpdate.clear();
     }
 
+    private static void checkRoots(Set<OWLClass> roots) {
+        if(roots.stream().anyMatch(OWLClass::isOWLThing)) {
+            if(roots.size() != 1) {
+                throw new RuntimeException("Bad specification of root classes in class hierarchy.  Specified root classes: " + roots + ".  If owl:Thing is specified as a root then it must be the one and only root.");
+            }
+        }
+
+    }
+
+
     public synchronized Collection<OWLClass> getParents(OWLClass object) {
         rebuildIfNecessary();
         // If the object is the root then there
         // are no parents
-        if(object.equals(root)) {
+        if(roots.contains(object)) {
             return Collections.emptySet();
         }
         Stream<OWLClass> parentsCombined = getParentsStream(object);
         var parents = parentsCombined.collect(toSet());
         // Thing if the object is a root class
-        if (root.isOWLThing()) {
+        if (hasOwlThingAsRoot()) {
             // Add orphans, by the semantics of OWL
             if (rootFinder.getTerminalElements()
                     .contains(object)) {
-                parents.add(root);
+                parents.add(DataFactory.getOWLThing());
             }
         }
         return parents;
+    }
+
+    private boolean hasOwlThingAsRoot() {
+        return roots.stream().anyMatch(OWLClass::isOWLThing);
     }
 
     @Override
@@ -172,16 +186,17 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     public synchronized void handleChanges(@Nonnull List<OntologyChange> changes) {
         Set<OWLClass> oldTerminalElements = new HashSet<>(rootFinder.getTerminalElements());
         Set<OWLClass> changedClasses = new HashSet<>();
-        changedClasses.add(root);
+        changedClasses.addAll(roots);
         var filteredChanges = filterIrrelevantChanges(changes);
         updateImplicitRoots(filteredChanges);
         for(OntologyChange change : filteredChanges) {
             changedClasses.addAll(change.getSignature()
                                         .stream()
                                         .filter(OWLEntity::isOWLClass)
-                                        .filter(entity -> !entity.equals(root))
+                                        .map(OWLEntity::asOWLClass)
+                                        .filter(entity -> !roots.contains(entity))
                                         .map(entity -> (OWLClass) entity)
-                                        .collect(toList()));
+                                        .toList());
         }
         changedClasses.forEach(this::registerNodeChanged);
         rootFinder.getTerminalElements()
@@ -202,8 +217,8 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     }
 
     private void updateImplicitRoots(List<OntologyChange> changes) {
-        if(!root.isOWLThing()) {
-
+        if(!hasOwlThingAsRoot()) {
+            return;
         }
         Set<OWLClass> possibleTerminalElements = new HashSet<>();
         Set<OWLClass> notInOntologies = new HashSet<>();
@@ -217,14 +232,14 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
                    axiom.getSignature()
                         .stream()
                         .filter(OWLEntity::isOWLClass)
-                        .filter(entity -> !entity.equals(root))
+                           .map(OWLEntity::asOWLClass)
+                        .filter(entity -> !roots.contains(entity))
                         .forEach(entity -> {
-                            OWLClass cls = (OWLClass) entity;
-                            if(!remove || containsReference(cls)) {
-                                possibleTerminalElements.add(cls);
+                            if(!remove || containsReference(entity)) {
+                                possibleTerminalElements.add(entity);
                             }
                             else {
-                                notInOntologies.add(cls);
+                                notInOntologies.add(entity);
                             }
                         });
                });
@@ -243,7 +258,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     }
 
     public synchronized boolean containsReference(OWLClass object) {
-        if(root.equals(object)) {
+        if(roots.contains(object)) {
             return true;
         }
         var containsInSig = entitiesInProjectSignatureByIriIndex
@@ -252,7 +267,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         if(!containsInSig) {
             return false;
         }
-        if(root.isOWLThing()) {
+        if(hasOwlThingAsRoot()) {
             return true;
         }
         else {
@@ -262,15 +277,15 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
 
     public synchronized Collection<OWLClass> getRoots() {
         rebuildIfNecessary();
-        return Collections.singleton(root);
+        return Set.copyOf(roots);
     }
 
     public synchronized Collection<OWLClass> getChildren(OWLClass object) {
         rebuildIfNecessary();
         Set<OWLClass> result;
-        if(object.equals(root)) {
+        if(roots.contains(object)) {
             result = new HashSet<>();
-            if (root.isOWLThing()) {
+            if (hasOwlThingAsRoot()) {
                 result.addAll(rootFinder.getTerminalElements());
             }
             result.addAll(extractChildren(object));
@@ -306,5 +321,13 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     @Override
     public boolean isLeaf(OWLClass object) {
         return classHierarchyChildrenAxiomsIndex.isLeaf(object);
+    }
+
+    @Override
+    public boolean contains(Object object) {
+        if(!(object instanceof OWLClass)) {
+            return false;
+        }
+        return containsReference((OWLClass) object);
     }
 }

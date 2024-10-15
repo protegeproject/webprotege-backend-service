@@ -149,7 +149,7 @@ public class FixedRootClassHierarchyProvider_TestCase {
 
 
         classHierarchyProvider = new ClassHierarchyProviderImpl(projectId,
-                clsX_FixedRoot,
+                Set.of(clsX_FixedRoot),
                 projectOntologiesIndex,
                 subClassOfAxiomsBySubClassIndex,
                 equivalentClassesAxiomIndex,

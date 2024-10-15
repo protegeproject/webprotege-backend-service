@@ -25,7 +25,7 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActionHandler<GetHierarchyChildrenAction, GetHierarchyChildrenResult> {
 
     @Nonnull
-    private final HierarchyProviderMapper hierarchyProviderMapper;
+    private final HierarchyProviderManager hierarchyProviderManager;
 
     @Nonnull
     private final DeprecatedEntityChecker deprecatedEntityChecker;
@@ -38,11 +38,11 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
 
     @Inject
     public GetEntityHierarchyChildrenActionHandler(@Nonnull AccessManager accessManager,
-                                                   @Nonnull HierarchyProviderMapper hierarchyProviderMapper,
+                                                   @Nonnull HierarchyProviderManager hierarchyProviderManager,
                                                    @Nonnull DeprecatedEntityChecker deprecatedEntityChecker,
                                                    @Nonnull GraphNodeRenderer nodeRenderer, @Nonnull DictionaryManager dictionaryManager) {
         super(accessManager);
-        this.hierarchyProviderMapper = hierarchyProviderMapper;
+        this.hierarchyProviderManager = hierarchyProviderManager;
         this.deprecatedEntityChecker = deprecatedEntityChecker;
         this.nodeRenderer = nodeRenderer;
         this.dictionaryManager = dictionaryManager;
@@ -67,8 +67,8 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
     @Nonnull
     @Override
     public GetHierarchyChildrenResult execute(@Nonnull GetHierarchyChildrenAction action, @Nonnull ExecutionContext executionContext) {
-        HierarchyId hierarchyId = action.hierarchyId();
-        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderMapper.getHierarchyProvider(hierarchyId);
+        var hierarchyDescriptor = action.hierarchyDescriptor();
+        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderManager.getHierarchyProvider(hierarchyDescriptor);
         if (hierarchyProvider.isEmpty()) {
             return emptyResult();
         }
