@@ -1000,9 +1000,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     }
 
-    UpdateLogicalDefinitionsActionHandler getUpdateLogicalDefinitionsActionHandler(@NotNull AccessManager accessManager,
-                                                                                   @NotNull HasApplyChanges applyChanges,
-                                                                                   @NotNull UpdateLogicalDefinitionsChangeListGeneratorFactory factory) {
-        return new UpdateLogicalDefinitionsActionHandler(accessManager, applyChanges, factory);
+    UpdateLogicalDefinitionsActionHandler getUpdateLogicalDefinitionsActionHandler(AccessManager p1,
+                                                                                   HasApplyChanges p2,
+                                                                                   UpdateLogicalDefinitionsChangeListGeneratorFactory p3) {
+        return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3);
     }
 }
