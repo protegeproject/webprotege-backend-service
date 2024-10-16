@@ -61,8 +61,10 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.logicaldefinitions.LogicalConditions;
 import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.UpdateLogicalDefinitionsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.SendMail;
@@ -460,22 +462,22 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    public IcdReleasedEntityStatusManager getIcdReleasedClassesManager(){
+    public IcdReleasedEntityStatusManager getIcdReleasedClassesManager() {
         return new IcdReleasedEntityStatusManagerImpl();
     }
 
     @Bean
-    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager){
+    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager) {
         return new ReleasedClassesCheckerImpl(icdReleasedEntityStatusManager);
     }
 
     @Bean
-    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index){
+    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index) {
         return new RetiredClassCheckerImpl(index);
     }
 
     @Bean
-    EntityStatusManager getEntityStatusManager(ReleasedClassesChecker releasedClassesChecker){
+    EntityStatusManager getEntityStatusManager(ReleasedClassesChecker releasedClassesChecker) {
         return new EntityStatusManagerImpl(releasedClassesChecker);
     }
 
@@ -742,7 +744,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     public ReferenceFinder referenceFinder(@Nonnull AxiomsByReferenceIndex axiomsIndex,
-                                           @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex){
+                                           @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex) {
         return new ReferenceFinder(axiomsIndex, ontologyAnnotationsIndex);
     }
 
@@ -751,6 +753,7 @@ public class ProjectBeansConfiguration {
                                        ProjectOntologiesIndex projectOntologiesIndex) {
         return new EntityDeleter(referenceFinder, projectOntologiesIndex);
     }
+
     @Bean
     AxiomSubjectProvider axiomSubjectProvider(OWLObjectSelector<OWLClassExpression> p1,
                                               OWLObjectSelector<OWLObjectPropertyExpression> p2,
@@ -1975,6 +1978,17 @@ public class ProjectBeansConfiguration {
                                                               @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex
     ) {
         return new NecessaryConditionsExtractor(projectId, renderingManager, projectOntologiesIndex, subClassOfAxiomsIndex);
+    }
+
+
+    @Bean
+    UpdateLogicalDefinitionsChangeListGeneratorFactory updateLogicalDefinitionsChangeListGeneratorFactory(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                                                                          @Nonnull OWLDataFactory dataFactory,
+                                                                                                          LogicalConditions pristineLogicalConditions,
+                                                                                                          LogicalConditions changedLogicalConditions,
+                                                                                                          @Nonnull OWLClass subject,
+                                                                                                          String commitMessage) {
+        return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory, pristineLogicalConditions, changedLogicalConditions, subject, commitMessage);
     }
 
 }

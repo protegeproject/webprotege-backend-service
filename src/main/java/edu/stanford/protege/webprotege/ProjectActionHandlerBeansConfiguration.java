@@ -25,9 +25,7 @@ import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
-import edu.stanford.protege.webprotege.logicaldefinitions.GetLogicalDefinitionsActionHandler;
-import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
-import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.*;
 import edu.stanford.protege.webprotege.mansyntax.*;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
 import edu.stanford.protege.webprotege.match.*;
@@ -48,6 +46,7 @@ import edu.stanford.protege.webprotege.usage.*;
 import edu.stanford.protege.webprotege.viz.*;
 import edu.stanford.protege.webprotege.watches.*;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
+import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.springframework.context.ApplicationContext;
@@ -999,5 +998,11 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                           NecessaryConditionsExtractor p3) {
         return new GetLogicalDefinitionsActionHandler(p1, p2, p3);
 
+    }
+
+    UpdateLogicalDefinitionsActionHandler getUpdateLogicalDefinitionsActionHandler(@NotNull AccessManager accessManager,
+                                                                                   @NotNull HasApplyChanges applyChanges,
+                                                                                   @NotNull UpdateLogicalDefinitionsChangeListGeneratorFactory factory) {
+        return new UpdateLogicalDefinitionsActionHandler(accessManager, applyChanges, factory);
     }
 }
