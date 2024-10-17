@@ -108,7 +108,7 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
 
         OWLObjectIntersectionOf intersectionOf = dataFactory.getOWLObjectIntersectionOf(classExpressionList.toArray(new OWLClassExpression[0]));
         List<OWLAxiom> axiomList = new ArrayList<OWLAxiom>();
-        axiomList.add(dataFactory.getOWLSubClassOfAxiom(subject, intersectionOf));
+        axiomList.add(dataFactory.getOWLEquivalentClassesAxiom(subject, intersectionOf));
 
         return axiomList.stream();
     }
