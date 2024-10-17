@@ -26,7 +26,7 @@ public class UpdateLogicalDefinitionsActionHandler extends AbstractProjectChange
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(UpdateLogicalDefinitionsAction action, ExecutionContext executionContext) {
         return factory.create(action.changeRequestId(), action.projectId(), action.subject(),
-                action.pristineLogicalConditions(), action.changedLogicalConditions());
+                action.commitMessage(), action.pristineLogicalConditions(), action.changedLogicalConditions());
     }
 
     @Override

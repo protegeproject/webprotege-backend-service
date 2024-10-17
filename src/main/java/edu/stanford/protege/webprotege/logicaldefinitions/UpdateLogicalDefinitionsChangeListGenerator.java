@@ -118,7 +118,7 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
                 .map(pcv -> {
                     return dataFactory.getOWLObjectSomeValuesFrom(pcv.getProperty().getObject(), pcv.getValue().getEntity());
                 })
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.toList());
     }
 
     @Override

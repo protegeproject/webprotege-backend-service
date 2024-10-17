@@ -1983,12 +1983,8 @@ public class ProjectBeansConfiguration {
 
     @Bean
     UpdateLogicalDefinitionsChangeListGeneratorFactory updateLogicalDefinitionsChangeListGeneratorFactory(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
-                                                                                                          @Nonnull OWLDataFactory dataFactory,
-                                                                                                          LogicalConditions pristineLogicalConditions,
-                                                                                                          LogicalConditions changedLogicalConditions,
-                                                                                                          @Nonnull OWLClass subject,
-                                                                                                          String commitMessage) {
-        return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory, pristineLogicalConditions, changedLogicalConditions, subject, commitMessage);
+                                                                                                          @Nonnull OWLDataFactory dataFactory) {
+        return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory);
     }
 
 }

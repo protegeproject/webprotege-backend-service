@@ -1000,6 +1000,8 @@ public class ProjectActionHandlerBeansConfiguration {
 
     }
 
+
+    @Bean
     UpdateLogicalDefinitionsActionHandler getUpdateLogicalDefinitionsActionHandler(AccessManager p1,
                                                                                    HasApplyChanges p2,
                                                                                    UpdateLogicalDefinitionsChangeListGeneratorFactory p3) {

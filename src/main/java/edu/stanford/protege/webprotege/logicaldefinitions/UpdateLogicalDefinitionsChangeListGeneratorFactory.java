@@ -14,33 +14,19 @@ public class UpdateLogicalDefinitionsChangeListGeneratorFactory {
 
     private final OWLDataFactory dataFactory;
 
-    private final LogicalConditions pristineLogicalConditions;
-
-    private final LogicalConditions changedLogicalConditions;
-
-    private final OWLClass subject;
-
-    private final String commitMessage;
 
     public UpdateLogicalDefinitionsChangeListGeneratorFactory(
                             ProjectOntologiesIndex projectOntologiesIndex,
-                            OWLDataFactory dataFactory,
-                            LogicalConditions pristineLogicalConditions,
-                            LogicalConditions changedLogicalConditions,
-                            OWLClass subject,
-                            String commitMessage) {
+                            OWLDataFactory dataFactory) {
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.dataFactory = dataFactory;
-        this.pristineLogicalConditions = pristineLogicalConditions;
-        this.changedLogicalConditions = changedLogicalConditions;
-        this.subject = subject;
-        this.commitMessage = commitMessage;
     }
 
 
     public ChangeListGenerator<Boolean> create(ChangeRequestId changeRequestId,
                                                ProjectId projectId,
                                                OWLClass subject,
+                                               String commitMessage,
                                                LogicalConditions pristineLogicalConditions,
                                                LogicalConditions changedLogicalConditions) {
         return  new UpdateLogicalDefinitionsChangeListGenerator(changeRequestId, dataFactory, projectOntologiesIndex,

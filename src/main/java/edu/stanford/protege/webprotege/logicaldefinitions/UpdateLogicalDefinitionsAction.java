@@ -18,7 +18,7 @@ public record UpdateLogicalDefinitionsAction(
         ) implements ProjectAction<UpdateLogicalDefinitionsResponse> {
 
 
-    public final static String CHANNEL = "icatx.logicalDefinitions.UpdateLogicalDefinitions";
+    public final static String CHANNEL = "icatx.logicalDefinitions.UpdateLogicalDefinition";
 
     @Override
     public String getChannel() {
