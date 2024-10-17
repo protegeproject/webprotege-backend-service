@@ -45,22 +45,22 @@ public class LogicalDefinitionExtractor {
     }
 
     public List<LogicalDefinition> extractLogicalDefinitions(OWLClass subject) {
-        Map<OWLClass, List<Pair<OWLObjectProperty, OWLClass>>> supercls2axis2fillerLogDefMap = new HashMap<OWLClass, List<Pair<OWLObjectProperty, OWLClass>>>();
 
-        List<Map<OWLClass, List<Pair<OWLObjectProperty, OWLClass>>>> logicalDefinitions =
-                projectOntologiesIndex.getOntologyIds()
-                        .flatMap(ontId -> equivalentClassesAxiomsIndex.getEquivalentClassesAxioms(subject, ontId))
-                        .flatMap(eca -> getSupercls2Axis2Filler(eca, subject))
-                        .collect(Collectors.toList());
+        Map<OWLClass, Set<Pair<OWLObjectProperty, OWLClass>>> accumulator = new HashMap<>();
+        projectOntologiesIndex.getOntologyIds()
+                .flatMap(ontId -> equivalentClassesAxiomsIndex.getEquivalentClassesAxioms(subject, ontId))
+                .forEach(owlEquivalentClassesAxiom -> {
+                    getSupercls2Axis2Filler(owlEquivalentClassesAxiom, subject, accumulator);
+                });
 
-        return getTranslatedLogicalDefinitions(logicalDefinitions);
+
+        return getTranslatedLogicalDefinitions(accumulator);
     }
 
-    private Stream<Map<OWLClass, List<Pair<OWLObjectProperty, OWLClass>>>> getSupercls2Axis2Filler
-            (@Nonnull OWLEquivalentClassesAxiom owlEquivalentClassesAxiom,
-             OWLClass subject) {
+    private void  getSupercls2Axis2Filler (@Nonnull OWLEquivalentClassesAxiom owlEquivalentClassesAxiom,
+             OWLClass subject,
+             Map<OWLClass, Set<Pair<OWLObjectProperty, OWLClass>>> accumulator) {
 
-        Map<OWLClass, List<Pair<OWLObjectProperty, OWLClass>>> supercls2axis2fillerLogDefMap = new HashMap<OWLClass, List<Pair<OWLObjectProperty, OWLClass>>>();
 
         List<OWLClassExpression> clsExpressions =
                 owlEquivalentClassesAxiom.getClassExpressions().stream()
@@ -69,7 +69,6 @@ public class LogicalDefinitionExtractor {
                         .collect(Collectors.toList());
 
         OWLClass parent = null;
-        List<Pair<OWLObjectProperty, OWLClass>> axis2FillerList = new ArrayList<Pair<OWLObjectProperty, OWLClass>>();
 
         for (OWLClassExpression clsExp : clsExpressions) {
 
@@ -82,18 +81,19 @@ public class LogicalDefinitionExtractor {
                 parent = ((OWLClass) clsExp);
             }
 
-            Optional<Pair<OWLObjectProperty, OWLClass>> axis2Filler = getAxis2Filler(clsExp);
+            if (parent != null){
+                Set<Pair<OWLObjectProperty, OWLClass>> existingProperties = accumulator.get(parent);
+                if(existingProperties == null) {
+                    existingProperties = new HashSet<>();
+                }
+                Optional<Pair<OWLObjectProperty, OWLClass>> axis2Filler = getAxis2Filler(clsExp);
 
-            if (axis2Filler.isEmpty() == false) {
-                axis2FillerList.add(axis2Filler.get());
+                axis2Filler.ifPresent(existingProperties::add);
+                accumulator.put(parent, existingProperties);
             }
-        }
 
-        if (parent != null && axis2FillerList.isEmpty() == false) {
-            supercls2axis2fillerLogDefMap.put(parent, axis2FillerList);
-        }
 
-        return Stream.of(supercls2axis2fillerLogDefMap);
+        }
     }
 
     private Optional<Pair<OWLObjectProperty, OWLClass>> getAxis2Filler(OWLClassExpression clsExp) {
@@ -123,29 +123,28 @@ public class LogicalDefinitionExtractor {
         }
     }
 
-    private List<LogicalDefinition> getTranslatedLogicalDefinitions(List<Map<OWLClass,
-            List<Pair<OWLObjectProperty, OWLClass>>>> logicalDefinitionsList) {
+    private List<LogicalDefinition> getTranslatedLogicalDefinitions(Map<OWLClass,
+            Set<Pair<OWLObjectProperty, OWLClass>>> logicalDefinitionsList) {
         List<LogicalDefinition> logicalDefinitions = new ArrayList<LogicalDefinition>();
 
-        for (Map<OWLClass, List<Pair<OWLObjectProperty, OWLClass>>> logDef : logicalDefinitionsList) {
 
-            List<PropertyClassValue> axis2FillerTranslated = new ArrayList<PropertyClassValue>();
+        List<PropertyClassValue> axis2FillerTranslated = new ArrayList<PropertyClassValue>();
 
-            for (OWLClass parent : logDef.keySet()) {
-                List<Pair<OWLObjectProperty, OWLClass>> axis2Fillers = logDef.get(parent);
-                for (Pair<OWLObjectProperty, OWLClass> axis2FillerPair : axis2Fillers) {
-                    OWLObjectProperty axis = axis2FillerPair.getFirst();
-                    OWLClass filler = axis2FillerPair.getSecond();
-                    PropertyClassValue pcv = PropertyClassValue.get(
-                            renderingManager.getObjectPropertyData(axis),
-                            renderingManager.getClassData(filler),
-                            State.ASSERTED);
-                    axis2FillerTranslated.add(pcv);
-                }
-
-                logicalDefinitions.add(new LogicalDefinition(renderingManager.getClassData(parent), axis2FillerTranslated));
+        for (OWLClass parent : logicalDefinitionsList.keySet()) {
+            Set<Pair<OWLObjectProperty, OWLClass>> axis2Fillers = logicalDefinitionsList.get(parent);
+            for (Pair<OWLObjectProperty, OWLClass> axis2FillerPair : axis2Fillers) {
+                OWLObjectProperty axis = axis2FillerPair.getFirst();
+                OWLClass filler = axis2FillerPair.getSecond();
+                PropertyClassValue pcv = PropertyClassValue.get(
+                        renderingManager.getObjectPropertyData(axis),
+                        renderingManager.getClassData(filler),
+                        State.ASSERTED);
+                axis2FillerTranslated.add(pcv);
             }
+
+            logicalDefinitions.add(new LogicalDefinition(renderingManager.getClassData(parent), axis2FillerTranslated));
         }
+
 
         return logicalDefinitions;
     }
