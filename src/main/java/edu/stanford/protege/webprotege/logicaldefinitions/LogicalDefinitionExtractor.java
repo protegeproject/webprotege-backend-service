@@ -68,32 +68,24 @@ public class LogicalDefinitionExtractor {
                         .flatMap(this::asConjunctSet)
                         .collect(Collectors.toList());
 
-        OWLClass parent = null;
 
-        for (OWLClassExpression clsExp : clsExpressions) {
+        Optional<OWLClass> parent = clsExpressions.stream().filter(clsExp ->
+                        clsExp instanceof OWLClass && clsExp.isNamed())
+                .map(clsExp -> (OWLClass) clsExp)
+                .findFirst();
 
-            logger.info("Found logical definition expression for " + subject + ": " + clsExp);
-
-            if (clsExp instanceof OWLClass && ((OWLClass) clsExp).isNamed()) {
-                if (parent != null) { //TODO: should we ignore the entire expression at this point? maybe.
-                    logger.warn("Found logical definition with more than one parent: " + clsExp);
-                }
-                parent = ((OWLClass) clsExp);
-            }
-
-            if (parent != null){
-                Set<Pair<OWLObjectProperty, OWLClass>> existingProperties = accumulator.get(parent);
+        parent.ifPresent(p -> {
+            for (OWLClassExpression clsExp : clsExpressions) {
+                Set<Pair<OWLObjectProperty, OWLClass>> existingProperties = accumulator.get(p);
                 if(existingProperties == null) {
                     existingProperties = new HashSet<>();
                 }
                 Optional<Pair<OWLObjectProperty, OWLClass>> axis2Filler = getAxis2Filler(clsExp);
 
                 axis2Filler.ifPresent(existingProperties::add);
-                accumulator.put(parent, existingProperties);
+                accumulator.put(p, existingProperties);
             }
-
-
-        }
+        });
     }
 
     private Optional<Pair<OWLObjectProperty, OWLClass>> getAxis2Filler(OWLClassExpression clsExp) {
