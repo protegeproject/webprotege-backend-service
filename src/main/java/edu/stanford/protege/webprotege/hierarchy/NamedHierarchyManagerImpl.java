@@ -17,15 +17,15 @@ public class NamedHierarchyManagerImpl implements NamedHierarchyManager {
         this.hierarchyRepository = hierarchyRepository;
     }
 
+
     @Override
-    public void saveHierarchy(ProjectId projectId, NamedHierarchy namedHierarchy) {
-        logger.info("Saving hierarchy for project: {} {}", projectId, namedHierarchy);
-        hierarchyRepository.save(projectId, namedHierarchy);
+    public void setNamedHierarchies(ProjectId projectId, List<NamedHierarchy> namedHierarchies) {
+        hierarchyRepository.setNamedHierarchies(projectId, namedHierarchies);
     }
 
     @Override
-    public List<NamedHierarchy> getHierarchies(ProjectId projectId) {
-        var records = hierarchyRepository.find(projectId);
+    public List<NamedHierarchy> getNamedHierarchies(ProjectId projectId) {
+        var records = hierarchyRepository.findNamedHierarchies(projectId);
         var result = new ArrayList<NamedHierarchy>();
         result.addAll(BuiltInHierarchyDescriptors.getBuiltInDescriptors());
         result.addAll(records);

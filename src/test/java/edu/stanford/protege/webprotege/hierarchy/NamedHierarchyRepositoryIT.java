@@ -10,9 +10,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
+@SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
 @ExtendWith(MongoTestExtension.class)
 class NamedHierarchyRepositoryIT {
 
@@ -20,18 +22,23 @@ class NamedHierarchyRepositoryIT {
     private NamedHierarchyRepository repository;
 
     private ProjectId projectId;
-    private NamedHierarchy namedHierarchy;
+    private NamedHierarchy namedHierarchy, otherNamedHierarchy;
 
     @BeforeEach
     void setUp() {
         projectId = ProjectId.generate();
         namedHierarchy = new NamedHierarchy(
+                HierarchyId.get("first"),
+                LanguageMap.of("en", "Hello"),
+                LanguageMap.of("en", "World"),
+                ClassHierarchyDescriptor.create()
+        );
+        otherNamedHierarchy = new NamedHierarchy(
                 HierarchyId.get("other"),
                 LanguageMap.of("en", "Hello"),
                 LanguageMap.of("en", "World"),
                 ClassHierarchyDescriptor.create()
         );
-        repository.save(projectId, namedHierarchy);
     }
 
     @AfterEach
@@ -39,26 +46,20 @@ class NamedHierarchyRepositoryIT {
     }
 
     @Test
-    void findByProjectIdAndNamedHierarchyHierarchyDescriptor() {
-    }
-
-    @Test
     void shouldFindByProjectId() {
-        var found = repository.find(projectId);
+        repository.setNamedHierarchies(projectId, List.of(namedHierarchy));
+        var found = repository.findNamedHierarchies(projectId);
         assertThat(found).hasSize(1);
+        assertThat(found.get(0).hierarchyId()).isEqualTo(HierarchyId.get("first"));
     }
 
-    @Test
-    public void shouldDeletedHierarchy() {
-        repository.delete(projectId, namedHierarchy);
-        var found = repository.find(projectId);
-        assertThat(found).hasSize(0);
-    }
 
     @Test
     public void shouldNotSaveDuplicates() {
-        repository.save(projectId, namedHierarchy);
-        var found = repository.find(projectId);
+        repository.setNamedHierarchies(projectId, List.of(namedHierarchy));
+        repository.setNamedHierarchies(projectId, List.of(otherNamedHierarchy));
+        var found = repository.findNamedHierarchies(projectId);
         assertThat(found).hasSize(1);
+        assertThat(found.get(0).hierarchyId()).isEqualTo(HierarchyId.get("other"));
     }
 }

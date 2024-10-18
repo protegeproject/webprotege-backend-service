@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import reactor.core.publisher.Mono;
 
 @WebProtegeHandler
-public class AddNamedHierarchyCommandHandler implements CommandHandler<AddNamedHierarchyAction, AddNamedHierarchyResponse> {
+public class AddNamedHierarchyCommandHandler implements CommandHandler<SetNamedHierarchiesAction, SetNamedHierarchiesResponse> {
 
     private final ActionExecutor actionExecutor;
 
@@ -19,16 +19,16 @@ public class AddNamedHierarchyCommandHandler implements CommandHandler<AddNamedH
     @NotNull
     @Override
     public String getChannelName() {
-        return AddNamedHierarchyAction.CHANNEL;
+        return SetNamedHierarchiesAction.CHANNEL;
     }
 
     @Override
-    public Class<AddNamedHierarchyAction> getRequestClass() {
-        return AddNamedHierarchyAction.class;
+    public Class<SetNamedHierarchiesAction> getRequestClass() {
+        return SetNamedHierarchiesAction.class;
     }
 
     @Override
-    public Mono<AddNamedHierarchyResponse> handleRequest(AddNamedHierarchyAction request, ExecutionContext executionContext) {
+    public Mono<SetNamedHierarchiesResponse> handleRequest(SetNamedHierarchiesAction request, ExecutionContext executionContext) {
         return actionExecutor.executeRequest(request, executionContext);
     }
 }

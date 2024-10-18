@@ -7,9 +7,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
-
-public class AddNamedHierarchyActionHandler extends AbstractProjectActionHandler<AddNamedHierarchyAction, AddNamedHierarchyResponse> {
+public class AddNamedHierarchyActionHandler extends AbstractProjectActionHandler<SetNamedHierarchiesAction, SetNamedHierarchiesResponse> {
 
     private final NamedHierarchyManager namedHierarchyManager;
 
@@ -20,29 +18,20 @@ public class AddNamedHierarchyActionHandler extends AbstractProjectActionHandler
 
     @NotNull
     @Override
-    public Class<AddNamedHierarchyAction> getActionClass() {
-        return AddNamedHierarchyAction.class;
+    public Class<SetNamedHierarchiesAction> getActionClass() {
+        return SetNamedHierarchiesAction.class;
     }
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(AddNamedHierarchyAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInAction getRequiredExecutableBuiltInAction(SetNamedHierarchiesAction action) {
+        return BuiltInAction.CONFIGURE_HIERARCHIES;
     }
 
     @NotNull
     @Override
-    public AddNamedHierarchyResponse execute(@NotNull AddNamedHierarchyAction action, @NotNull ExecutionContext executionContext) {
-        var pd = namedHierarchyManager.getHierarchies(null);
-
-        var hierarchyId = HierarchyId.get(UUID.randomUUID().toString());
-        var namedHierarchy = new NamedHierarchy(hierarchyId,
-                action.label(),
-                action.description(),
-                action.hierarchyDescriptor());
-        namedHierarchyManager.saveHierarchy(action.projectId(), namedHierarchy);
-
-
-        return new AddNamedHierarchyResponse();
+    public SetNamedHierarchiesResponse execute(@NotNull SetNamedHierarchiesAction action, @NotNull ExecutionContext executionContext) {
+        namedHierarchyManager.setNamedHierarchies(action.projectId(), action.namedHierarchies());
+        return new SetNamedHierarchiesResponse();
     }
 }
