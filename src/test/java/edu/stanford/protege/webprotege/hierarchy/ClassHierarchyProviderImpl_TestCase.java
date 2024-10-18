@@ -6,12 +6,21 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.*;
 import org.mockito.quality.Strictness;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
+import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.util.ShortFormProvider;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,6 +76,20 @@ public class ClassHierarchyProviderImpl_TestCase {
 
     @BeforeEach
     public void setUp() {
+
+        ToStringRenderer.getInstance().setRenderer(new OWLObjectRenderer() {
+            @Override
+            public void setShortFormProvider(@NotNull ShortFormProvider shortFormProvider) {
+
+            }
+
+            @NotNull
+            @Override
+            public String render(@NotNull OWLObject owlObject) {
+                return owlObject.getClass().getSimpleName() + "@" + System.identityHashCode(owlObject);
+            }
+        });
+
         clsAIri = MockingUtils.mockIRI();
         clsA2Iri = MockingUtils.mockIRI();
         clsBIri = MockingUtils.mockIRI();
@@ -118,7 +141,7 @@ public class ClassHierarchyProviderImpl_TestCase {
 
 
         classHierarchyProvider = new ClassHierarchyProviderImpl(projectId,
-                                                                owlThing,
+                                                                Set.of(owlThing),
                                                                 projectOntologiesIndex,
                                                                 subClassOfAxiomsBySubClassIndex,
                                                                 equivalentClassesAxiomIndex,

@@ -180,4 +180,14 @@ public class AnnotationPropertyHierarchyProviderImpl extends AbstractHierarchyPr
                 .forEach(roots::add);
         logger.info("{} Rebuilt annotation property hierarchy provider in {} ms", projectId, stopwatch.elapsed(MILLISECONDS));
     }
+
+    @Override
+    public boolean contains(Object object) {
+        if(object instanceof OWLAnnotationProperty property) {
+            return containsReference(property);
+        }
+        else {
+            return false;
+        }
+    }
 }

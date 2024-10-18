@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.api;
 
 import edu.stanford.protege.webprotege.common.UserId;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 
 /**

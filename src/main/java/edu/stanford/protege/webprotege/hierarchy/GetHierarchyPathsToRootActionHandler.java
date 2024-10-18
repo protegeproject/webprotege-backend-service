@@ -25,17 +25,17 @@ import static java.util.stream.Collectors.toList;
 public class GetHierarchyPathsToRootActionHandler extends AbstractProjectActionHandler<GetHierarchyPathsToRootAction, GetHierarchyPathsToRootResult> {
 
     @Nonnull
-    private final HierarchyProviderMapper hierarchyProviderMapper;
+    private final HierarchyProviderManager hierarchyProviderManager;
 
     @Nonnull
     private final GraphNodeRenderer nodeRenderer;
 
     @Inject
     public GetHierarchyPathsToRootActionHandler(@Nonnull AccessManager accessManager,
-                                                @Nonnull HierarchyProviderMapper hierarchyProviderMapper,
+                                                @Nonnull HierarchyProviderManager hierarchyProviderManager,
                                                 @Nonnull GraphNodeRenderer nodeRenderer) {
         super(accessManager);
-        this.hierarchyProviderMapper = hierarchyProviderMapper;
+        this.hierarchyProviderManager = hierarchyProviderManager;
         this.nodeRenderer = nodeRenderer;
     }
 
@@ -54,7 +54,7 @@ public class GetHierarchyPathsToRootActionHandler extends AbstractProjectActionH
     @Nonnull
     @Override
     public GetHierarchyPathsToRootResult execute(@Nonnull GetHierarchyPathsToRootAction action, @Nonnull ExecutionContext executionContext) {
-        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderMapper.getHierarchyProvider(action.hierarchyId());
+        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderManager.getHierarchyProvider(action.hierarchyDescriptor());
         return hierarchyProvider.map(hp -> {
             Collection<List<OWLEntity>> pathsToRoot = hp.getPathsToRoot(action.entity());
             List<Path<GraphNode<EntityNode>>> result =
@@ -62,7 +62,7 @@ public class GetHierarchyPathsToRootActionHandler extends AbstractProjectActionH
                                .map(pathList -> pathList.stream()
                                                         .map(e -> nodeRenderer.toGraphNode(e, hp))
                                                         .collect(toPath()))
-                               .collect(toList());
+                               .toList();
             return new GetHierarchyPathsToRootResult(result);
         }).orElse(new GetHierarchyPathsToRootResult(Collections.emptyList()));
 
