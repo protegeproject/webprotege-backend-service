@@ -15,14 +15,14 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 public class GetEntityHierarchyParentsActionHandler extends AbstractProjectActionHandler<GetHierarchyParentsAction, GetHierarchyParentsResult> {
 
     @Nonnull
-    private final HierarchyProviderMapper hierarchyProviderMapper;
+    private final HierarchyProviderManager hierarchyProviderMapper;
 
     @Nonnull
     private final RenderingManager renderingManager;
 
     @Inject
     public GetEntityHierarchyParentsActionHandler(@Nonnull AccessManager accessManager,
-                                                  @Nonnull HierarchyProviderMapper hierarchyProviderMapper,
+                                                  @Nonnull HierarchyProviderManager hierarchyProviderMapper,
                                                   @Nonnull RenderingManager renderingManager) {
         super(accessManager);
         this.hierarchyProviderMapper = hierarchyProviderMapper;
@@ -48,8 +48,8 @@ public class GetEntityHierarchyParentsActionHandler extends AbstractProjectActio
     @Nonnull
     @Override
     public GetHierarchyParentsResult execute(@Nonnull GetHierarchyParentsAction action, @Nonnull ExecutionContext executionContext) {
-        var hierarchyId = action.hierarchyId();
-        var hierarchyProvider = hierarchyProviderMapper.getHierarchyProvider(hierarchyId);
+        var hierarchyDescriptor = action.hierarchyDescriptor();
+        var hierarchyProvider = hierarchyProviderMapper.getHierarchyProvider(hierarchyDescriptor);
         if (hierarchyProvider.isEmpty()) {
             return emptyResult();
         }

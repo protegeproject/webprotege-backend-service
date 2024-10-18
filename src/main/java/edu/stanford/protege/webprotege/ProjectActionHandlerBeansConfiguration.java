@@ -599,7 +599,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     GetEntityHierarchyParentsActionHandler getClassHierarchyParentsActionHandler(AccessManager p1,
-                                                                                 HierarchyProviderMapper p2,
+                                                                                 HierarchyProviderManager p2,
                                                                                  RenderingManager p3) {
         return new GetEntityHierarchyParentsActionHandler(p1, p2, p3);
     }
