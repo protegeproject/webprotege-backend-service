@@ -119,11 +119,10 @@ public class LogicalDefinitionExtractor {
             Set<Pair<OWLObjectProperty, OWLClass>>> logicalDefinitionsList) {
         List<LogicalDefinition> logicalDefinitions = new ArrayList<LogicalDefinition>();
 
-
-        List<PropertyClassValue> axis2FillerTranslated = new ArrayList<PropertyClassValue>();
-
         for (OWLClass parent : logicalDefinitionsList.keySet()) {
             Set<Pair<OWLObjectProperty, OWLClass>> axis2Fillers = logicalDefinitionsList.get(parent);
+            List<PropertyClassValue> axis2FillerTranslated = new ArrayList<PropertyClassValue>();
+
             for (Pair<OWLObjectProperty, OWLClass> axis2FillerPair : axis2Fillers) {
                 OWLObjectProperty axis = axis2FillerPair.getFirst();
                 OWLClass filler = axis2FillerPair.getSecond();
