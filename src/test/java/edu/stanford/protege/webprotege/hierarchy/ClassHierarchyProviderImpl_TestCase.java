@@ -3,14 +3,19 @@ package edu.stanford.protege.webprotege.hierarchy;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
+import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.util.ShortFormProvider;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -66,6 +71,20 @@ public class ClassHierarchyProviderImpl_TestCase {
 
     @Before
     public void setUp() {
+
+        ToStringRenderer.getInstance().setRenderer(new OWLObjectRenderer() {
+            @Override
+            public void setShortFormProvider(@NotNull ShortFormProvider shortFormProvider) {
+
+            }
+
+            @NotNull
+            @Override
+            public String render(@NotNull OWLObject owlObject) {
+                return owlObject.getClass().getSimpleName() + "@" + System.identityHashCode(owlObject);
+            }
+        });
+
         when(projectOntologiesIndex.getOntologyIds())
                 .thenAnswer(invocation -> Stream.of(ontologyId));
 
@@ -109,7 +128,7 @@ public class ClassHierarchyProviderImpl_TestCase {
 
 
         classHierarchyProvider = new ClassHierarchyProviderImpl(projectId,
-                                                                owlThing,
+                                                                Set.of(owlThing),
                                                                 projectOntologiesIndex,
                                                                 subClassOfAxiomsBySubClassIndex,
                                                                 equivalentClassesAxiomIndex,

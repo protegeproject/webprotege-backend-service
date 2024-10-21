@@ -74,7 +74,7 @@ public class ProjectViewPlaceTokenizer {
         List<ItemToken> itemTokens = Lists.newArrayList();
         for(Item<?> item : place.getItemSelection()) {
             String typeName = item.getAssociatedType().getName();
-            itemTokens.add(new ItemToken(typeName, item.getItem().toString()));
+            itemTokens.add(new ItemToken(typeName, item.getItemRendering()));
         }
         if (!itemTokens.isEmpty()) {
             String rendering = new ItemTokenizer().renderTokens(itemTokens);

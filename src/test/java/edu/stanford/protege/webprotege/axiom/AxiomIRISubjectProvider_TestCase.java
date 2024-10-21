@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -16,7 +17,6 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -104,7 +104,7 @@ public class AxiomIRISubjectProvider_TestCase {
      * @param <A> The type of axiom.
      */
     private <A extends OWLAxiom> void mockVisit(final OWLAxiom axiom, final Class<A> axiomClass) {
-        when(axiom.accept(any(OWLAxiomVisitorEx.class))).then(new Answer<Object>() {
+        when(axiom.accept(Matchers.any(OWLAxiomVisitorEx.class))).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                 Object visitorImplementation = invocationOnMock.getArguments()[0];

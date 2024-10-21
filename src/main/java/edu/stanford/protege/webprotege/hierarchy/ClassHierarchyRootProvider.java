@@ -5,13 +5,14 @@ import org.semanticweb.owlapi.model.OWLDataFactory;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
+import java.util.Set;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 02/06/15
  */
-public class ClassHierarchyRootProvider implements Provider<OWLClass> {
+public class ClassHierarchyRootProvider implements Provider<Set<OWLClass>> {
 
     private final OWLDataFactory dataFactory;
 
@@ -21,7 +22,7 @@ public class ClassHierarchyRootProvider implements Provider<OWLClass> {
     }
 
     @Override
-    public OWLClass get() {
-        return dataFactory.getOWLThing();
+    public Set<OWLClass> get() {
+        return Set.of(dataFactory.getOWLThing());
     }
 }

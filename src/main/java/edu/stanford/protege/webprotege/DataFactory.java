@@ -363,4 +363,12 @@ public class DataFactory {
             return Optional.of(langTag);
         }
     }
+
+    public static OWLObjectProperty getOWLTopObjectProperty() {
+        return DataFactory.getOWLObjectProperty(OWLRDFVocabulary.OWL_TOP_OBJECT_PROPERTY.getIRI());
+    }
+
+    public static OWLDataProperty getOWLTopDataProperty() {
+        return DataFactory.getOWLDataProperty(OWLRDFVocabulary.OWL_TOP_DATA_PROPERTY.getIRI());
+    }
 }

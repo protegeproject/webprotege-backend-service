@@ -36,7 +36,7 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
     private final ProjectId projectId;
 
     @Nonnull
-    private final HierarchyId hierarchyId;
+    private final HierarchyDescriptor hierarchyDescriptor;
 
 
     public EntityHierarchyChangedEventProxy(@Nonnull GraphModelChangedEvent<? extends OWLEntity> graphModelChangedEvent,
@@ -44,13 +44,13 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
                                             @Nonnull EntityNodeRenderer entityNodeRenderer,
                                             @Nonnull HierarchyProvider<? extends OWLEntity> classHierarchyProvider,
                                             @Nonnull ProjectId projectId,
-                                            @Nonnull HierarchyId hierarchyId) {
+                                            @Nonnull HierarchyDescriptor hierarchyDescriptor) {
         this.graphModelChangedEvent = (GraphModelChangedEvent) graphModelChangedEvent;
         this.renderer = renderer;
         this.entityNodeRenderer = entityNodeRenderer;
         this.hierarchyProvider = (HierarchyProvider) classHierarchyProvider;
         this.projectId = projectId;
-        this.hierarchyId = hierarchyId;
+        this.hierarchyDescriptor = hierarchyDescriptor;
     }
 
     @Nonnull
@@ -109,6 +109,6 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
                  }
              }));
         var mappedEvent = GraphModelChangedEvent.create(mappedChanges.build());
-        return new EntityHierarchyChangedEvent(EventId.generate(), projectId, hierarchyId, mappedEvent);
+        return new EntityHierarchyChangedEvent(EventId.generate(), projectId, hierarchyDescriptor, mappedEvent);
     }
 }

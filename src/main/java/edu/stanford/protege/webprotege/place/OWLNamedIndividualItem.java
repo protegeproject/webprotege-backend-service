@@ -24,6 +24,6 @@ public class OWLNamedIndividualItem extends Item<OWLNamedIndividual> {
 
     @Override
     public String getItemRendering() {
-        return getItem().toString();
+        return getItem().getIRI().toQuotedString();
     }
 }

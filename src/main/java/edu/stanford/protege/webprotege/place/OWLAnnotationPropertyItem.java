@@ -24,6 +24,6 @@ public class OWLAnnotationPropertyItem extends Item<OWLAnnotationProperty> {
 
     @Override
     public String getItemRendering() {
-        return getItem().toString();
+        return getItem().getIRI().toQuotedString();
     }
 }
