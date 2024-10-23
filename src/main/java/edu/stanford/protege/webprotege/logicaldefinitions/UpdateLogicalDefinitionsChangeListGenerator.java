@@ -27,6 +27,8 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     @Nonnull
     private final String commitMessage;
 
+    private String adjustedCommitMessege = "";
+
     private final ChangeRequestId changeRequestId;
 
     private final LogicalConditions pristineLogicalConditions;
@@ -66,6 +68,25 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         return changeList.build(true);
     }
 
+
+    private void generateChangesForLogicalDefinitions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
+        LogicalDefinitionsDiff lcDiff = new LogicalDefinitionsDiff(pristineLogicalConditions.logicalDefinitions(), changedLogicalConditions.logicalDefinitions());
+        lcDiff.executeDiff();
+
+        lcDiff.getAddedStatements().stream()
+                .map(addedLD -> addedToLCCommitMessage(addedLD, "Added Logical Definitions: "))
+                .flatMap(ld -> getLogicalDefinitionAxioms(ld))
+                .map(ax -> AddAxiomChange.of(ontId, ax))
+                .forEach(chg -> changeList.add(chg));
+
+        lcDiff.getRemovedStatements().stream()
+                .map(removedLD -> addedToLCCommitMessage(removedLD, "Removed Logical Definitions: "))
+                .flatMap(ld -> getLogicalDefinitionAxioms(ld))
+                .map(ax -> RemoveAxiomChange.of(ontId, ax))
+                .forEach(chg -> changeList.add(chg));
+    }
+
+
     private void generateChangesForNecessaryConditions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
         NecessaryConditionsDiff ncDiff = new NecessaryConditionsDiff(pristineLogicalConditions.necessaryConditions(), changedLogicalConditions.necessaryConditions());
         ncDiff.executeDiff();;
@@ -75,30 +96,53 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         List<PropertyClassValue> addedStatements = ncDiff.getAddedStatements();
 
         ncDiff.getAddedStatements().stream()
+                    .map(addedNC -> addedToNCCommitMessage(addedNC, "Added Necessary Conditions: "))
                     .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
                     .map(ax -> AddAxiomChange.of(ontId, ax))
                     .forEach(chg -> changeList.add(chg));
 
         ncDiff.getRemovedStatements().stream()
+                .map(removedNC -> addedToNCCommitMessage(removedNC, "Removed Necessary Conditions: "))
                 .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
                 .map(ax -> RemoveAxiomChange.of(ontId, ax))
                 .forEach(chg -> changeList.add(chg));
     }
 
-    private void generateChangesForLogicalDefinitions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
-        LogicalDefinitionsDiff lcDiff = new LogicalDefinitionsDiff(pristineLogicalConditions.logicalDefinitions(), changedLogicalConditions.logicalDefinitions());
-        lcDiff.executeDiff();
 
-        lcDiff.getAddedStatements().stream()
-                .flatMap(ld -> getLogicalDefinitionAxioms(ld))
-                .map(ax -> AddAxiomChange.of(ontId, ax))
-                .forEach(chg -> changeList.add(chg));
+    private LogicalDefinition addedToLCCommitMessage(LogicalDefinition addedLD, String addedTextCategory) {
+        if (adjustedCommitMessege.contains(addedTextCategory) == false) {
+            adjustedCommitMessege = adjustedCommitMessege + addedTextCategory;
+        }
 
-        lcDiff.getRemovedStatements().stream()
-                .flatMap(ld -> getLogicalDefinitionAxioms(ld))
-                .map(ax -> RemoveAxiomChange.of(ontId, ax))
-                .forEach(chg -> changeList.add(chg));
+        adjustedCommitMessege = adjustedCommitMessege + addedLD.logicalDefinitionParent().getBrowserText() + ", ";
+
+        for (PropertyClassValue axis2Filler : addedLD.axis2filler()) {
+            adjustedCommitMessege = adjustedCommitMessege + "(" + axis2Filler.getProperty().getBrowserText() +
+                    axis2Filler.getValue().getBrowserText() + ") ,";
+        }
+
+        adjustedCommitMessege = adjustedCommitMessege.substring(0, adjustedCommitMessege.length() - 2); //removed last ") ,"
+        adjustedCommitMessege = adjustedCommitMessege + "; ";
+
+        return addedLD;
     }
+
+
+    private PropertyClassValue addedToNCCommitMessage(PropertyClassValue addedNC, String addedTextCategory) {
+        if (adjustedCommitMessege.lastIndexOf(", ") == adjustedCommitMessege.length() - 3 ){
+            adjustedCommitMessege = adjustedCommitMessege.substring(0, adjustedCommitMessege.length() - 2); //removed last ") ,"
+        }
+
+        if (adjustedCommitMessege.contains(addedTextCategory) == false) {
+            adjustedCommitMessege = adjustedCommitMessege + addedTextCategory;
+        }
+
+        adjustedCommitMessege = adjustedCommitMessege + "(" + addedNC.getProperty().getBrowserText() +
+                addedNC.getValue().getBrowserText() + "), ";
+
+        return addedNC;
+    }
+
 
     private Stream<OWLAxiom> getLogicalDefinitionAxioms(LogicalDefinition ld) {
         PropertyValue2AxiomTranslator translator = new PropertyValue2AxiomTranslator();
@@ -121,17 +165,27 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public Boolean getRenamedResult(Boolean result, RenameMap renameMap) {
         return result;
     }
 
+
     @NotNull
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
-        //TODO: Generate a detailed commit message
-        return commitMessage;
+        if (adjustedCommitMessege.lastIndexOf(", ") == adjustedCommitMessege.length() - 3 ){
+            adjustedCommitMessege = adjustedCommitMessege.substring(0, adjustedCommitMessege.length() - 2); //removed last ") ,"
+        }
+
+        if (commitMessage != null || commitMessage.isEmpty() == false) {
+           adjustedCommitMessege = commitMessage + " ;" + adjustedCommitMessege;
+        }
+
+       return adjustedCommitMessege;
     }
+
 
     @Override
     public ChangeRequestId getChangeRequestId() {
