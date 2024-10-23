@@ -183,7 +183,7 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     @NotNull
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
-        if (adjustedCommitMessege.lastIndexOf(", ") == adjustedCommitMessege.length() - 3 ){
+       /* if (adjustedCommitMessege.lastIndexOf(", ") == adjustedCommitMessege.length() - 3 ){
             adjustedCommitMessege = adjustedCommitMessege.substring(0, adjustedCommitMessege.length() - 3); //removed last ") ,"
         }
 
@@ -192,6 +192,8 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         }
 
        return adjustedCommitMessege;
+       */
+        return commitMessage;
     }
 
 
