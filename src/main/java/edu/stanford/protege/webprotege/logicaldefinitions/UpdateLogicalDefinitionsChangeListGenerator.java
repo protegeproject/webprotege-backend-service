@@ -2,6 +2,9 @@ package edu.stanford.protege.webprotege.logicaldefinitions;
 
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.common.ShortForm;
+import edu.stanford.protege.webprotege.entity.OWLClassData;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.frame.Mode;
 import edu.stanford.protege.webprotege.frame.PropertyClassValue;
 import edu.stanford.protege.webprotege.frame.translator.PropertyValue2AxiomTranslator;
@@ -13,6 +16,7 @@ import org.semanticweb.owlapi.model.*;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -114,11 +118,11 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
             adjustedCommitMessege = adjustedCommitMessege + addedTextCategory;
         }
 
-        adjustedCommitMessege = adjustedCommitMessege + addedLD.logicalDefinitionParent().getBrowserText() + ", ";
+        adjustedCommitMessege = adjustedCommitMessege + "Superclass: " + getBrowserText(addedLD.logicalDefinitionParent()) + ", ";
 
         for (PropertyClassValue axis2Filler : addedLD.axis2filler()) {
-            adjustedCommitMessege = adjustedCommitMessege + "(" + axis2Filler.getProperty().getBrowserText() +
-                    axis2Filler.getValue().getBrowserText() + ") ,";
+            adjustedCommitMessege = adjustedCommitMessege + "(" + getBrowserText(axis2Filler.getProperty()) + " " +
+                    getBrowserText(axis2Filler.getValue()) + ") ,";
         }
 
         adjustedCommitMessege = adjustedCommitMessege.substring(0, adjustedCommitMessege.length() - 2); //removed last ") ,"
@@ -137,12 +141,16 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
             adjustedCommitMessege = adjustedCommitMessege + addedTextCategory;
         }
 
-        adjustedCommitMessege = adjustedCommitMessege + "(" + addedNC.getProperty().getBrowserText() +
-                addedNC.getValue().getBrowserText() + "), ";
+        adjustedCommitMessege = adjustedCommitMessege + "(" + getBrowserText(addedNC.getProperty()) + " " +
+                getBrowserText(addedNC.getValue()) + "), ";
 
         return addedNC;
     }
 
+    private String getBrowserText(OWLEntityData owlEntityData) {
+        Optional<ShortForm> shortForm = owlEntityData.getShortForms().stream().findFirst();
+        return shortForm.isEmpty() ? owlEntityData.getEntity().getIRI().toQuotedString() : shortForm.get().getShortForm();
+    }
 
     private Stream<OWLAxiom> getLogicalDefinitionAxioms(LogicalDefinition ld) {
         PropertyValue2AxiomTranslator translator = new PropertyValue2AxiomTranslator();
@@ -176,11 +184,11 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
         if (adjustedCommitMessege.lastIndexOf(", ") == adjustedCommitMessege.length() - 3 ){
-            adjustedCommitMessege = adjustedCommitMessege.substring(0, adjustedCommitMessege.length() - 2); //removed last ") ,"
+            adjustedCommitMessege = adjustedCommitMessege.substring(0, adjustedCommitMessege.length() - 3); //removed last ") ,"
         }
 
-        if (commitMessage != null || commitMessage.isEmpty() == false) {
-           adjustedCommitMessege = commitMessage + " ;" + adjustedCommitMessege;
+        if ((commitMessage != null || commitMessage.isEmpty() == false) && commitMessage.equals("Commit") == false) {
+           adjustedCommitMessege = commitMessage + "; " + adjustedCommitMessege;
         }
 
        return adjustedCommitMessege;
