@@ -31,6 +31,7 @@ import edu.stanford.protege.webprotege.match.*;
 import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.merge_add.*;
 import edu.stanford.protege.webprotege.perspective.*;
+import edu.stanford.protege.webprotege.postcoordination.PostcoordinationManager;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.projectsettings.*;
@@ -210,8 +211,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                           HasApplyChanges p3,
                                                           CreateClassesChangeGeneratorFactory p4,
                                                           EntityNodeRenderer p5,
-                                                          LinearizationManager p6) {
-        return new CreateClassesActionHandler(p1, p3, p4, p5, p6);
+                                                          LinearizationManager p6,
+                                                          PostcoordinationManager p7) {
+        return new CreateClassesActionHandler(p1, p3, p4, p5, p6, p7);
     }
 
 

@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
+import edu.stanford.protege.webprotege.postcoordination.PostcoordinationManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.*;
 
@@ -35,17 +36,22 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
     @Nonnull
     private final LinearizationManager linearizationManager;
 
+    @Nonnull
+    private final PostcoordinationManager postcoordinationManager;
+
     @Inject
     public CreateClassesActionHandler(@Nonnull AccessManager accessManager,
 
                                       @Nonnull HasApplyChanges applyChanges,
                                       @Nonnull CreateClassesChangeGeneratorFactory changeFactory,
                                       @Nonnull EntityNodeRenderer entityNodeRenderer,
-                                      @Nonnull LinearizationManager linearizationManager) {
+                                      @Nonnull LinearizationManager linearizationManager,
+                                      @Nonnull PostcoordinationManager postcoordinationManager) {
         super(accessManager, applyChanges);
         this.changeGeneratorFactory = checkNotNull(changeFactory);
         this.entityNodeRenderer = checkNotNull(entityNodeRenderer);
         this.linearizationManager = linearizationManager;
+        this.postcoordinationManager = postcoordinationManager;
     }
 
     @Nonnull
@@ -90,6 +96,21 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                         ).get();
                     } catch (InterruptedException | ExecutionException e) {
                         logger.error("MergeLinearizationsError: " + e);
+                    }
+                    try {
+                        postcoordinationManager.createPostcoordinationFromParent(
+                                newClass.getIRI(),
+                                /*
+                                ToDo:
+                                  While creating a class the action.parents() set contains only one element: The direct parent of the new created entity.
+                                  Check with team to see when we have multiple parents there and how to handle it.
+                                 */
+                                action.parents().stream().findFirst().get().getIRI(),
+                                action.projectId(),
+                                executionContext
+                        ).get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        logger.error("CreatePostcoordinationError: " + e);
                     }
                 }
         );
