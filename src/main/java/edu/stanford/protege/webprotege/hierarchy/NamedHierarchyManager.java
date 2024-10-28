@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface NamedHierarchyManager {
 
-    List<NamedHierarchy> getHierarchies(ProjectId projectId);
+    List<NamedHierarchy> getNamedHierarchies(ProjectId projectId);
 
-    void saveHierarchy(ProjectId projectId, NamedHierarchy namedHierarchy);
+    void setNamedHierarchies(ProjectId projectId, List<NamedHierarchy> namedHierarchies);
 }

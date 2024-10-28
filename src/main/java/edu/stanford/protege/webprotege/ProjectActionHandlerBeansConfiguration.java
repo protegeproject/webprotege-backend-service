@@ -20,7 +20,6 @@ import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.actions.GetClassAncestorsActionHandler;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.individuals.*;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
@@ -51,7 +50,6 @@ import edu.stanford.protege.webprotege.usage.*;
 import edu.stanford.protege.webprotege.viz.*;
 import edu.stanford.protege.webprotege.watches.*;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
-import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.springframework.context.ApplicationContext;
@@ -509,9 +507,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    AddNamedHierarchyActionHandler addNamedHierarchyActionHandler(AccessManager p0,
+    SetNamedHierarchyActionHandler addNamedHierarchyActionHandler(AccessManager p0,
                                                                   NamedHierarchyManager p1) {
-        return new AddNamedHierarchyActionHandler(p0, p1);
+        return new SetNamedHierarchyActionHandler(p0, p1);
     }
 
 
