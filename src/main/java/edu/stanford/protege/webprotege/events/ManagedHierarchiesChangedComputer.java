@@ -32,7 +32,7 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
 
     @Override
     public void prepareForOntologyChanges(List<OntologyChange> submittedChanges) {
-        hierarchyManager.getHierarchies(projectId)
+        hierarchyManager.getNamedHierarchies(projectId)
                 .stream()
                 .map(NamedHierarchy::hierarchyDescriptor)
                 .map(hierarchyProviderManager::getHierarchyChangesComputer)
@@ -42,7 +42,7 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
     @Override
     public void translateOntologyChanges(Revision revision, ChangeApplicationResult<?> changes, List<HighLevelProjectEventProxy> projectEventList, ChangeRequestId changeRequestId) {
         logger.info("Translating changes");
-        hierarchyManager.getHierarchies(projectId)
+        hierarchyManager.getNamedHierarchies(projectId)
                 .stream()
                 .map(NamedHierarchy::hierarchyDescriptor)
                 .map(hierarchyProviderManager::getHierarchyChangesComputer)

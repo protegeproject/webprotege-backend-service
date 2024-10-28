@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.auto.value.AutoValue;
@@ -32,5 +33,10 @@ public abstract class HierarchyId {
     @JsonCreator
     public static HierarchyId get(@Nonnull String id) {
         return new AutoValue_HierarchyId(checkNotNull(id));
+    }
+
+    @JsonIgnore
+    public boolean isBuiltIn() {
+        return this.equals(CLASS_HIERARCHY) || this.equals(OBJECT_PROPERTY_HIERARCHY) || this.equals(DATA_PROPERTY_HIERARCHY) || this.equals(ANNOTATION_PROPERTY_HIERARCHY);
     }
 }

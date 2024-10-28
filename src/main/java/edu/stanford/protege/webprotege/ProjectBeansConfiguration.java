@@ -141,11 +141,11 @@ public class ProjectBeansConfiguration {
                                       ApplicationContext applicationContext,
                                       EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory) {
         return new ProjectComponentImpl(applicationContext,
-                projectId,
-                revisionManager,
-                projectDisposablesManager,
-                actionHandlerRegistry,
-                entityFrameFormDataDtoBuilderFactory);
+                                        projectId,
+                                        revisionManager,
+                                        projectDisposablesManager,
+                                        actionHandlerRegistry,
+                                        entityFrameFormDataDtoBuilderFactory);
     }
 
     @Bean
@@ -310,12 +310,12 @@ public class ProjectBeansConfiguration {
                                                                     SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
                                                                     EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex) {
         return new DataPropertyHierarchyProviderImpl(projectId,
-                dataProperty,
-                projectOntologiesIndex,
-                axiomsByTypeIndex,
-                ontologySignatureByTypeIndex,
-                subDataPropertyAxiomsBySubPropertyIndex,
-                entitiesInProjectSignatureIndex);
+                                                     dataProperty,
+                                                     projectOntologiesIndex,
+                                                     axiomsByTypeIndex,
+                                                     ontologySignatureByTypeIndex,
+                                                     subDataPropertyAxiomsBySubPropertyIndex,
+                                                     entitiesInProjectSignatureIndex);
     }
 
     @Bean
@@ -327,12 +327,12 @@ public class ProjectBeansConfiguration {
                                                                                      SubAnnotationPropertyAxiomsBySuperPropertyIndex subAnnotationPropertyAxiomsBySuperPropertyIndex,
                                                                                      EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex) {
         return new AnnotationPropertyHierarchyProviderImpl(projectId,
-                owlAnnotationPropertyProvider,
-                projectSignatureByTypeIndex,
-                projectOntologiesIndex,
-                subAnnotationPropertyAxiomsBySubPropertyIndex,
-                subAnnotationPropertyAxiomsBySuperPropertyIndex,
-                entitiesInProjectSignatureIndex);
+                                                           owlAnnotationPropertyProvider,
+                                                           projectSignatureByTypeIndex,
+                                                           projectOntologiesIndex,
+                                                           subAnnotationPropertyAxiomsBySubPropertyIndex,
+                                                           subAnnotationPropertyAxiomsBySuperPropertyIndex,
+                                                           entitiesInProjectSignatureIndex);
     }
 
     @Bean
@@ -429,8 +429,8 @@ public class ProjectBeansConfiguration {
                                                 WebProtegeOntologyIRIShortFormProvider webProtegeOntologyIRIShortFormProvider,
                                                 DefaultOntologyIdManager defaultOntologyIdManager) {
         return new ShellOntologyChecker(projectOntologiesIndex,
-                webProtegeOntologyIRIShortFormProvider,
-                defaultOntologyIdManager);
+                                        webProtegeOntologyIRIShortFormProvider,
+                                        defaultOntologyIdManager);
     }
 
     @Bean
@@ -645,29 +645,29 @@ public class ProjectBeansConfiguration {
                                 IriReplacerFactory p25,
                                 GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher) {
         return new ChangeManager(p1,
-                p2,
-                p3,
-                p4,
-                p5,
-                p6,
-                p7,
-                p8,
-                p10,
-                p11,
-                p12,
-                p13,
-                p14,
-                p15,
-                p16,
-                p17,
-                p18,
-                p20,
-                p21,
-                p22,
-                p23,
-                p24,
-                p25,
-                p26, eventDispatcher);
+                                 p2,
+                                 p3,
+                                 p4,
+                                 p5,
+                                 p6,
+                                 p7,
+                                 p8,
+                                 p10,
+                                 p11,
+                                 p12,
+                                 p13,
+                                 p14,
+                                 p15,
+                                 p16,
+                                 p17,
+                                 p18,
+                                 p20,
+                                 p21,
+                                 p22,
+                                 p23,
+                                 p24,
+                                 p25,
+                                 p26, eventDispatcher);
     }
 
 
@@ -1197,17 +1197,17 @@ public class ProjectBeansConfiguration {
                                                      ChangeManager changeManager,
                                                      DefaultOntologyIdManager defaultOntologyIdManager) {
         return new AddAxiomsDelegateHandler(accessManager,
-                changeManager,
-                defaultOntologyIdManager);
+                                            changeManager,
+                                            defaultOntologyIdManager);
     }
 
     @Bean
     RemoveAxiomsDelegateHandler removeAxiomsDelegateHandler(AccessManager accessManager,
-                                                            ChangeManager changeManager,
-                                                            DefaultOntologyIdManager defaultOntologyIdManager) {
+                                                        ChangeManager changeManager,
+                                                        DefaultOntologyIdManager defaultOntologyIdManager) {
         return new RemoveAxiomsDelegateHandler(accessManager,
-                changeManager,
-                defaultOntologyIdManager);
+                                            changeManager,
+                                            defaultOntologyIdManager);
     }
 
     @Bean
@@ -1238,7 +1238,7 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler<?, ?>> actionHandlers) {
+    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler<?,?>> actionHandlers) {
         return new ProjectActionHandlerRegistry(actionHandlers);
     }
 
@@ -1418,36 +1418,36 @@ public class ProjectBeansConfiguration {
                                                       SameIndividualAxiomsIndex p30,
                                                       DifferentIndividualsAxiomsIndex p31) {
         return new OwlOntologyFacadeFactory(p1,
-                p2,
-                p3,
-                p4,
-                p5,
-                p6,
-                p7,
-                p8,
-                p9,
-                p10,
-                p11,
-                p12,
-                p13,
-                p14,
-                p15,
-                p16,
-                p17,
-                p18,
-                p19,
-                p20,
-                p21,
-                p22,
-                p23,
-                p24,
-                p25,
-                p26,
-                p27,
-                p28,
-                p29,
-                p30,
-                p31);
+                                            p2,
+                                            p3,
+                                            p4,
+                                            p5,
+                                            p6,
+                                            p7,
+                                            p8,
+                                            p9,
+                                            p10,
+                                            p11,
+                                            p12,
+                                            p13,
+                                            p14,
+                                            p15,
+                                            p16,
+                                            p17,
+                                            p18,
+                                            p19,
+                                            p20,
+                                            p21,
+                                            p22,
+                                            p23,
+                                            p24,
+                                            p25,
+                                            p26,
+                                            p27,
+                                            p28,
+                                            p29,
+                                            p30,
+                                            p31);
     }
 
     @Bean
