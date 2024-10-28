@@ -2,8 +2,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
@@ -21,8 +20,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({MongoTestExtension.class})
+@Import({WebprotegeBackendMonolithApplication.class, RabbitTestExtension.class})
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectAccessManagerImpl_IT {
 

@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.forms.field;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.forms.ExpansionState;
 import edu.stanford.protege.webprotege.forms.FormDescriptor;
 import edu.stanford.protege.webprotege.forms.FormId;
@@ -8,10 +9,12 @@ import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.io.IOException;
@@ -28,7 +31,9 @@ import static org.hamcrest.Matchers.is;
  * 2019-11-09
  */
 @SpringBootTest
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class,})
 @Import(WebProtegeJacksonApplication.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class SubFormControlDescriptor_IT {
 
     @Autowired

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.viz;
 
 
-import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.jupiter.api.AfterEach;
@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.*;
  * 2019-12-06
  */
 @SpringBootTest
-@ExtendWith({MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityGraphSettingsRepositoryImpl_IT {
 

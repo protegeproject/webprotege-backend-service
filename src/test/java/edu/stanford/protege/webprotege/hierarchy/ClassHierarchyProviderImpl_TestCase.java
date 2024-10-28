@@ -6,16 +6,10 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.*;
 import org.mockito.quality.Strictness;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
-import org.semanticweb.owlapi.io.ToStringRenderer;
+import org.semanticweb.owlapi.io.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
@@ -76,16 +70,13 @@ public class ClassHierarchyProviderImpl_TestCase {
 
     @BeforeEach
     public void setUp() {
-
         ToStringRenderer.getInstance().setRenderer(new OWLObjectRenderer() {
             @Override
-            public void setShortFormProvider(@NotNull ShortFormProvider shortFormProvider) {
-
+            public void setShortFormProvider(ShortFormProvider shortFormProvider) {
             }
 
-            @NotNull
             @Override
-            public String render(@NotNull OWLObject owlObject) {
+            public String render(OWLObject owlObject) {
                 return owlObject.getClass().getSimpleName() + "@" + System.identityHashCode(owlObject);
             }
         });
@@ -96,7 +87,6 @@ public class ClassHierarchyProviderImpl_TestCase {
         clsCIri = MockingUtils.mockIRI();
         clsDIri = MockingUtils.mockIRI();
         clsEIri = MockingUtils.mockIRI();
-
 
         when(projectOntologiesIndex.getOntologyIds())
                 .thenAnswer(invocation -> Stream.of(ontologyId));
@@ -138,17 +128,14 @@ public class ClassHierarchyProviderImpl_TestCase {
         when(classHierarchyChildrenAxiomsIndex.getChildrenAxioms(clsD))
                 .thenAnswer(invocation -> Stream.of(clsA2EquivalentToClsDandClsE));
 
-
-
         classHierarchyProvider = new ClassHierarchyProviderImpl(projectId,
-                                                                Set.of(owlThing),
-                                                                projectOntologiesIndex,
-                                                                subClassOfAxiomsBySubClassIndex,
-                                                                equivalentClassesAxiomIndex,
-                                                                projectSignatureByTypeIndex,
-                                                                entitiesInProjectSignatureByIriIndex,
-                                                                classHierarchyChildrenAxiomsIndex);
-
+                Set.of(owlThing),
+                projectOntologiesIndex,
+                subClassOfAxiomsBySubClassIndex,
+                equivalentClassesAxiomIndex,
+                projectSignatureByTypeIndex,
+                entitiesInProjectSignatureByIriIndex,
+                classHierarchyChildrenAxiomsIndex);
     }
 
     @Test
