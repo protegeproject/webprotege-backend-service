@@ -23,7 +23,6 @@ import static org.semanticweb.owlapi.model.AxiomType.SUB_OBJECT_PROPERTY;
  * Bio-Health Informatics Group<br>
  * Date: 23-Jan-2007<br><br>
  */
-@ProjectSingleton
 public class ObjectPropertyHierarchyProviderImpl extends AbstractOWLPropertyHierarchyProvider<OWLObjectProperty> implements ObjectPropertyHierarchyProvider {
 
     @Nonnull
@@ -66,7 +65,7 @@ public class ObjectPropertyHierarchyProviderImpl extends AbstractOWLPropertyHier
     }
 
     @Override
-    public Collection<OWLObjectProperty> getChildren(OWLObjectProperty object) {
+    public synchronized Collection<OWLObjectProperty> getChildren(OWLObjectProperty object) {
         rebuildIfNecessary();
         if(getRoot().equals(object)) {
             return getChildrenOfRoot();
@@ -95,4 +94,13 @@ public class ObjectPropertyHierarchyProviderImpl extends AbstractOWLPropertyHier
                                      .collect(Collectors.toSet());
     }
 
+    @Override
+    public boolean contains(Object object) {
+        if (object instanceof OWLObjectProperty property) {
+            return containsReference(property);
+        }
+        else {
+            return false;
+        }
+    }
 }

@@ -120,7 +120,9 @@ public enum BuiltInAction {
 
     UPLOAD_AND_MERGE_ADDITIONS,
 
-    EDIT_FORMS;
+    EDIT_FORMS,
+
+    CONFIGURE_HIERARCHIES;
 
 
 

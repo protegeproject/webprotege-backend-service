@@ -26,17 +26,17 @@ import static java.util.stream.Collectors.toList;
 public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler<GetHierarchyRootsAction, GetHierarchyRootsResult> {
 
     @Nonnull
-    private final HierarchyProviderMapper hierarchyProviderMapper;
+    private final HierarchyProviderManager hierarchyProviderManager;
 
     @Nonnull
     private final EntityNodeRenderer renderer;
 
     @Inject
     public GetHierarchyRootsActionHandler(@Nonnull AccessManager accessManager,
-                                          @Nonnull HierarchyProviderMapper hierarchyProviderMapper,
+                                          @Nonnull HierarchyProviderManager hierarchyProviderManager,
                                           @Nonnull EntityNodeRenderer renderer) {
         super(accessManager);
-        this.hierarchyProviderMapper = checkNotNull(hierarchyProviderMapper);
+        this.hierarchyProviderManager = checkNotNull(hierarchyProviderManager);
         this.renderer = checkNotNull(renderer);
     }
 
@@ -55,8 +55,7 @@ public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler
     @Nonnull
     @Override
     public GetHierarchyRootsResult execute(@Nonnull GetHierarchyRootsAction action, @Nonnull ExecutionContext executionContext) {
-        HierarchyId hierarchyId = action.hierarchyId();
-        return hierarchyProviderMapper.getHierarchyProvider(hierarchyId).map(hierarchyProvider -> {
+        return hierarchyProviderManager.getHierarchyProvider(action.hierarchyDescriptor()).map(hierarchyProvider -> {
             Collection<OWLEntity> roots = hierarchyProvider.getRoots();
             List<GraphNode<EntityNode>> rootNodes =
                     roots.stream()
