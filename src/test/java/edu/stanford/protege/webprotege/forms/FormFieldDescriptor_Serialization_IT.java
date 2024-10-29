@@ -1,9 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
-import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
+import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
@@ -96,9 +94,21 @@ public class FormFieldDescriptor_Serialization_IT {
 
     @Test
     public void shouldParseWithNoOwlBinding() throws IOException {
-        var serializedForm = """
-                {"id":"12345678-1234-1234-1234-123456789abc","label":{},"elementRun":"START","control":{"type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","lineMode":"SINGLE_LINE","patternViolationErrorMessage":{}},"repeatability":"NON_REPEATABLE","optionality":"REQUIRED","help":{}}""";
-        var deserializedForm = tester.parse(serializedForm);
+        var formFieldDescriptor = FormFieldDescriptor.get(
+                FormRegionId.get(UUID.randomUUID().toString()),
+                null,
+                LanguageMap.empty(),
+                FieldRun.START,
+                FormFieldDeprecationStrategy.DELETE_VALUES,
+                new TextControlDescriptor(LanguageMap.empty(), StringType.SIMPLE_STRING, "en", LineMode.SINGLE_LINE, "", LanguageMap.empty()),
+                Repeatability.NON_REPEATABLE,
+                Optionality.REQUIRED,
+                true,
+                ExpansionState.COLLAPSED,
+                LanguageMap.empty());
+        var serialized = tester.write(formFieldDescriptor);
+        System.out.println(serialized);
+        var deserializedForm = tester.parse(serialized.getJson());
         assertThat(deserializedForm.getObject().getOwlBinding().isEmpty(), is(true));
 
     }
