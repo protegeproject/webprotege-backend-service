@@ -61,6 +61,10 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.logicaldefinitions.LogicalConditions;
+import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.UpdateLogicalDefinitionsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.SendMail;
@@ -137,11 +141,11 @@ public class ProjectBeansConfiguration {
                                       ApplicationContext applicationContext,
                                       EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory) {
         return new ProjectComponentImpl(applicationContext,
-                projectId,
-                revisionManager,
-                projectDisposablesManager,
-                actionHandlerRegistry,
-                entityFrameFormDataDtoBuilderFactory);
+                                        projectId,
+                                        revisionManager,
+                                        projectDisposablesManager,
+                                        actionHandlerRegistry,
+                                        entityFrameFormDataDtoBuilderFactory);
     }
 
     @Bean
@@ -259,7 +263,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     @ClassHierarchyRoot
-    public OWLClass classHierarchyRoot(ClassHierarchyRootProvider provider) {
+    public Set<OWLClass> classHierarchyRoot(ClassHierarchyRootProvider provider) {
         return provider.get();
     }
 
@@ -306,12 +310,12 @@ public class ProjectBeansConfiguration {
                                                                     SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyAxiomsBySubPropertyIndex,
                                                                     EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex) {
         return new DataPropertyHierarchyProviderImpl(projectId,
-                dataProperty,
-                projectOntologiesIndex,
-                axiomsByTypeIndex,
-                ontologySignatureByTypeIndex,
-                subDataPropertyAxiomsBySubPropertyIndex,
-                entitiesInProjectSignatureIndex);
+                                                     dataProperty,
+                                                     projectOntologiesIndex,
+                                                     axiomsByTypeIndex,
+                                                     ontologySignatureByTypeIndex,
+                                                     subDataPropertyAxiomsBySubPropertyIndex,
+                                                     entitiesInProjectSignatureIndex);
     }
 
     @Bean
@@ -323,12 +327,12 @@ public class ProjectBeansConfiguration {
                                                                                      SubAnnotationPropertyAxiomsBySuperPropertyIndex subAnnotationPropertyAxiomsBySuperPropertyIndex,
                                                                                      EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex) {
         return new AnnotationPropertyHierarchyProviderImpl(projectId,
-                owlAnnotationPropertyProvider,
-                projectSignatureByTypeIndex,
-                projectOntologiesIndex,
-                subAnnotationPropertyAxiomsBySubPropertyIndex,
-                subAnnotationPropertyAxiomsBySuperPropertyIndex,
-                entitiesInProjectSignatureIndex);
+                                                           owlAnnotationPropertyProvider,
+                                                           projectSignatureByTypeIndex,
+                                                           projectOntologiesIndex,
+                                                           subAnnotationPropertyAxiomsBySubPropertyIndex,
+                                                           subAnnotationPropertyAxiomsBySuperPropertyIndex,
+                                                           entitiesInProjectSignatureIndex);
     }
 
     @Bean
@@ -425,8 +429,8 @@ public class ProjectBeansConfiguration {
                                                 WebProtegeOntologyIRIShortFormProvider webProtegeOntologyIRIShortFormProvider,
                                                 DefaultOntologyIdManager defaultOntologyIdManager) {
         return new ShellOntologyChecker(projectOntologiesIndex,
-                webProtegeOntologyIRIShortFormProvider,
-                defaultOntologyIdManager);
+                                        webProtegeOntologyIRIShortFormProvider,
+                                        defaultOntologyIdManager);
     }
 
     @Bean
@@ -458,22 +462,22 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    public IcdReleasedEntityStatusManager getIcdReleasedClassesManager(){
+    public IcdReleasedEntityStatusManager getIcdReleasedClassesManager() {
         return new IcdReleasedEntityStatusManagerImpl();
     }
 
     @Bean
-    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager){
+    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager) {
         return new ReleasedClassesCheckerImpl(icdReleasedEntityStatusManager);
     }
 
     @Bean
-    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index){
+    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index) {
         return new RetiredClassCheckerImpl(index);
     }
 
     @Bean
-    EntityStatusManager getEntityStatusManager(ReleasedClassesChecker releasedClassesChecker){
+    EntityStatusManager getEntityStatusManager(ReleasedClassesChecker releasedClassesChecker) {
         return new EntityStatusManagerImpl(releasedClassesChecker);
     }
 
@@ -641,35 +645,35 @@ public class ProjectBeansConfiguration {
                                 IriReplacerFactory p25,
                                 GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher) {
         return new ChangeManager(p1,
-                p2,
-                p3,
-                p4,
-                p5,
-                p6,
-                p7,
-                p8,
-                p10,
-                p11,
-                p12,
-                p13,
-                p14,
-                p15,
-                p16,
-                p17,
-                p18,
-                p20,
-                p21,
-                p22,
-                p23,
-                p24,
-                p25,
-                p26, eventDispatcher);
+                                 p2,
+                                 p3,
+                                 p4,
+                                 p5,
+                                 p6,
+                                 p7,
+                                 p8,
+                                 p10,
+                                 p11,
+                                 p12,
+                                 p13,
+                                 p14,
+                                 p15,
+                                 p16,
+                                 p17,
+                                 p18,
+                                 p20,
+                                 p21,
+                                 p22,
+                                 p23,
+                                 p24,
+                                 p25,
+                                 p26, eventDispatcher);
     }
 
 
     @Bean
     ClassHierarchyProviderImpl classHierarchyProvider(ProjectId p1,
-                                                      @ClassHierarchyRoot OWLClass p2,
+                                                      @ClassHierarchyRoot Set<OWLClass> p2,
                                                       ProjectOntologiesIndex p3,
                                                       SubClassOfAxiomsBySubClassIndex p4,
                                                       EquivalentClassesAxiomsIndex p5,
@@ -740,7 +744,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     public ReferenceFinder referenceFinder(@Nonnull AxiomsByReferenceIndex axiomsIndex,
-                                           @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex){
+                                           @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex) {
         return new ReferenceFinder(axiomsIndex, ontologyAnnotationsIndex);
     }
 
@@ -749,6 +753,7 @@ public class ProjectBeansConfiguration {
                                        ProjectOntologiesIndex projectOntologiesIndex) {
         return new EntityDeleter(referenceFinder, projectOntologiesIndex);
     }
+
     @Bean
     AxiomSubjectProvider axiomSubjectProvider(OWLObjectSelector<OWLClassExpression> p1,
                                               OWLObjectSelector<OWLObjectPropertyExpression> p2,
@@ -836,35 +841,6 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    OWLClassHierarchyChangeComputer owlClassHierarchyChangeComputer(ProjectId p1,
-                                                                    ClassHierarchyProvider p2,
-                                                                    EntityNodeRenderer p3,
-                                                                    EntityHierarchyChangedEventProxyFactory p4) {
-        return new OWLClassHierarchyChangeComputer(p1, p2, p3, p4);
-    }
-
-    @Bean
-    OWLObjectPropertyHierarchyChangeComputer owlObjectPropertyHierarchyChangeComputer(ProjectId p1,
-                                                                                      ObjectPropertyHierarchyProvider p2,
-                                                                                      EntityNodeRenderer p3) {
-        return new OWLObjectPropertyHierarchyChangeComputer(p1, p2, p3);
-    }
-
-    @Bean
-    OWLDataPropertyHierarchyChangeComputer owlDataPropertyHierarchyChangeComputer(ProjectId p1,
-                                                                                  DataPropertyHierarchyProvider p2,
-                                                                                  EntityNodeRenderer p3) {
-        return new OWLDataPropertyHierarchyChangeComputer(p1, p2, p3);
-    }
-
-    @Bean
-    OWLAnnotationPropertyHierarchyChangeComputer owlAnnotationPropertyHierarchyChangeComputer(ProjectId p1,
-                                                                                              AnnotationPropertyHierarchyProvider p2,
-                                                                                              EntityNodeRenderer p3) {
-        return new OWLAnnotationPropertyHierarchyChangeComputer(p1, p2, p3);
-    }
-
-    @Bean
     EntityDeprecatedChangedEventTranslator entityDeprecatedChangedEventTranslator(ProjectId p1,
                                                                                   DeprecatedEntityChecker p2,
                                                                                   EntitiesInProjectSignatureByIriIndex p3) {
@@ -881,13 +857,10 @@ public class ProjectBeansConfiguration {
     @Bean
     public Set<EventTranslator> eventTranslators(BrowserTextChangedEventComputer c0,
                                                  HighLevelEventGenerator c1,
-                                                 OWLClassHierarchyChangeComputer c2,
-                                                 OWLObjectPropertyHierarchyChangeComputer c3,
-                                                 OWLDataPropertyHierarchyChangeComputer c4,
-                                                 OWLAnnotationPropertyHierarchyChangeComputer c5,
+                                                 ManagedHierarchiesChangedComputer c2,
                                                  EntityDeprecatedChangedEventTranslator c6,
                                                  EntityTagsChangedEventComputer c7) {
-        return ImmutableSet.of(c0, c1, c2, c3, c4, c5, c6, c7);
+        return ImmutableSet.of(c0, c1, c2, c6, c7);
     }
 
     @Bean
@@ -942,6 +915,11 @@ public class ProjectBeansConfiguration {
                                                                         IndividualsByTypeIndex p2,
                                                                         ProjectSignatureIndex p3) {
         return new HierarchyPositionMatchingEngineImpl(p1, p2, p3);
+    }
+
+    @Bean
+    ManagedHierarchiesChangedComputer managedHierarchiesChangedComputer(ProjectId p1, NamedHierarchyManager p2, HierarchyProviderManager p3) {
+        return new ManagedHierarchiesChangedComputer(p1, p2, p3);
     }
 
     @Bean
@@ -1219,17 +1197,17 @@ public class ProjectBeansConfiguration {
                                                      ChangeManager changeManager,
                                                      DefaultOntologyIdManager defaultOntologyIdManager) {
         return new AddAxiomsDelegateHandler(accessManager,
-                changeManager,
-                defaultOntologyIdManager);
+                                            changeManager,
+                                            defaultOntologyIdManager);
     }
 
     @Bean
     RemoveAxiomsDelegateHandler removeAxiomsDelegateHandler(AccessManager accessManager,
-                                                            ChangeManager changeManager,
-                                                            DefaultOntologyIdManager defaultOntologyIdManager) {
+                                                        ChangeManager changeManager,
+                                                        DefaultOntologyIdManager defaultOntologyIdManager) {
         return new RemoveAxiomsDelegateHandler(accessManager,
-                changeManager,
-                defaultOntologyIdManager);
+                                            changeManager,
+                                            defaultOntologyIdManager);
     }
 
     @Bean
@@ -1260,7 +1238,7 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler<?, ?>> actionHandlers) {
+    ProjectActionHandlerRegistry projectActionHandlerRegistry(Set<ProjectActionHandler<?,?>> actionHandlers) {
         return new ProjectActionHandlerRegistry(actionHandlers);
     }
 
@@ -1440,36 +1418,36 @@ public class ProjectBeansConfiguration {
                                                       SameIndividualAxiomsIndex p30,
                                                       DifferentIndividualsAxiomsIndex p31) {
         return new OwlOntologyFacadeFactory(p1,
-                p2,
-                p3,
-                p4,
-                p5,
-                p6,
-                p7,
-                p8,
-                p9,
-                p10,
-                p11,
-                p12,
-                p13,
-                p14,
-                p15,
-                p16,
-                p17,
-                p18,
-                p19,
-                p20,
-                p21,
-                p22,
-                p23,
-                p24,
-                p25,
-                p26,
-                p27,
-                p28,
-                p29,
-                p30,
-                p31);
+                                            p2,
+                                            p3,
+                                            p4,
+                                            p5,
+                                            p6,
+                                            p7,
+                                            p8,
+                                            p9,
+                                            p10,
+                                            p11,
+                                            p12,
+                                            p13,
+                                            p14,
+                                            p15,
+                                            p16,
+                                            p17,
+                                            p18,
+                                            p19,
+                                            p20,
+                                            p21,
+                                            p22,
+                                            p23,
+                                            p24,
+                                            p25,
+                                            p26,
+                                            p27,
+                                            p28,
+                                            p29,
+                                            p30,
+                                            p31);
     }
 
     @Bean
@@ -1636,11 +1614,46 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    HierarchyProviderMapper hierarchyProviderMapper(ClassHierarchyProvider p1,
-                                                    ObjectPropertyHierarchyProvider p2,
-                                                    DataPropertyHierarchyProvider p3,
-                                                    AnnotationPropertyHierarchyProvider p4) {
-        return new HierarchyProviderMapper(p1, p2, p3, p4);
+    HierarchyChangesComputerFactory genericHierarchyChangedComputerFactory(ProjectId p1, EntityNodeRenderer p2, EntityHierarchyChangedEventProxyFactory p3) {
+        return new HierarchyChangesComputerFactory(p1, p2, p3);
+    }
+
+    @Bean
+    HierarchyProviderManager hierarchyProviderMapper(HierarchyProviderFactory p6,
+                                                     HierarchyChangesComputerFactory p7) {
+        return new HierarchyProviderManager(p6, p7);
+    }
+
+    @Bean
+    ClassHierarchyProviderFactory classHierarchyProviderFactory(ProjectId p1, ProjectOntologiesIndex p2, SubClassOfAxiomsBySubClassIndex p3, EquivalentClassesAxiomsIndex p4, ProjectSignatureByTypeIndex p5, EntitiesInProjectSignatureByIriIndex p6, ClassHierarchyChildrenAxiomsIndex p7) {
+        return new ClassHierarchyProviderFactory(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    ObjectPropertyHierarchyProviderFactory objectPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubObjectPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6) {
+        return new ObjectPropertyHierarchyProviderFactory(p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean
+    HierarchyProviderFactory hierarchyProviderFactory(ClassHierarchyProviderFactory p5,
+                                                      AnnotationPropertyHierarchyProviderFactory p6,
+                                                      ObjectPropertyHierarchyProviderFactory p7,
+                                                      DataPropertyHierarchyProviderFactory p8) {
+        return new HierarchyProviderFactory(p5, p6, p7, p8);
+    }
+
+    @Bean
+    AnnotationPropertyHierarchyProviderFactory annotationPropertyHierarchyProviderFactory(ProjectId p1, OWLAnnotationPropertyProvider p2, ProjectSignatureByTypeIndex p3, ProjectOntologiesIndex p4, SubAnnotationPropertyAxiomsBySubPropertyIndex p5, SubAnnotationPropertyAxiomsBySuperPropertyIndex p6, EntitiesInProjectSignatureIndex p7) {
+        return new AnnotationPropertyHierarchyProviderFactory(p1,
+                p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    DataPropertyHierarchyProviderFactory dataPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubDataPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6) {
+        return new DataPropertyHierarchyProviderFactory(p1,
+                p2,
+                p3,
+                p4, p5, p6);
     }
 
 
@@ -1955,6 +1968,31 @@ public class ProjectBeansConfiguration {
                                                   ClassAssertionAxiomsByClassIndex p7, ClassFrameProvider p8,
                                                   MatcherFactory p9) {
         return new BindingValuesExtractor(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    LogicalDefinitionExtractor logicalDefinitionExtractor(@Nonnull ProjectId projectId,
+                                                          @Nonnull RenderingManager renderingManager,
+                                                          @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                          @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex
+    ) {
+        return new LogicalDefinitionExtractor(projectId, renderingManager, projectOntologiesIndex, equivalentClassesAxiomsIndex);
+    }
+
+    @Bean
+    NecessaryConditionsExtractor necessaryConditionsExtractor(@Nonnull ProjectId projectId,
+                                                              @Nonnull RenderingManager renderingManager,
+                                                              @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                              @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex
+    ) {
+        return new NecessaryConditionsExtractor(projectId, renderingManager, projectOntologiesIndex, subClassOfAxiomsIndex);
+    }
+
+
+    @Bean
+    UpdateLogicalDefinitionsChangeListGeneratorFactory updateLogicalDefinitionsChangeListGeneratorFactory(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                                                                          @Nonnull OWLDataFactory dataFactory) {
+        return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory);
     }
 
 }

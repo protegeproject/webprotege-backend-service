@@ -32,4 +32,6 @@ public interface HierarchyProvider<N> extends HasGetAncestors<N> {
     default boolean isParent(N child, N parent) {
         return getParents(child).contains(parent);
     }
+
+    boolean contains(Object object);
 }

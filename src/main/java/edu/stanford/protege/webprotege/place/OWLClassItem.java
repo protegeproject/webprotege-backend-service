@@ -24,6 +24,6 @@ public class OWLClassItem extends Item<OWLClass> {
 
     @Override
     public String getItemRendering() {
-        return getItem().toString();
+        return getItem().getIRI().toQuotedString();
     }
 }

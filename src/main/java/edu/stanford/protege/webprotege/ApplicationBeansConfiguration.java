@@ -16,6 +16,9 @@ import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
+import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
+import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManagerImpl;
+import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyRepository;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -41,7 +44,6 @@ import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.*;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl;
-import edu.stanford.protege.webprotege.storage.MinioFileDownloader;
 import edu.stanford.protege.webprotege.storage.MinioProperties;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
 import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
@@ -573,6 +575,16 @@ public class ApplicationBeansConfiguration {
                           .credentials(properties.getAccessKey(), properties.getSecretKey())
                           .endpoint(properties.getEndPoint())
                           .build();
+    }
+
+    @Bean
+    NamedHierarchyRepository namedHierarchyRepository(ObjectMapper p0, MongoTemplate p1) {
+        return new NamedHierarchyRepository(p0, p1);
+    }
+
+    @Bean
+    NamedHierarchyManager hierarchiesManager(OWLDataFactory dataFactory, NamedHierarchyRepository repository) {
+        return new NamedHierarchyManagerImpl(dataFactory, repository);
     }
 
 }

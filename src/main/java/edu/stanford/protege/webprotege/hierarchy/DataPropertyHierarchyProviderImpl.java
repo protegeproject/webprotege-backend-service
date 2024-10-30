@@ -83,4 +83,13 @@ public class DataPropertyHierarchyProviderImpl extends AbstractOWLPropertyHierar
                                      .collect(toSet());
     }
 
+    @Override
+    public boolean contains(Object object) {
+        if(object instanceof OWLDataProperty property) {
+            return containsReference(property);
+        }
+        else {
+            return false;
+        }
+    }
 }
