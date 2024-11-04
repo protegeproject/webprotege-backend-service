@@ -12,6 +12,8 @@ import edu.stanford.protege.webprotege.common.PrefixedNameDictionaryLanguage;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -30,6 +32,8 @@ public class PerformEntitySearchActionHandler extends AbstractProjectActionHandl
 
     @Nonnull
     private final LanguageManager languageManager;
+
+    private static final Logger logger = LoggerFactory.getLogger(PerformEntitySearchActionHandler.class);
 
     @Inject
     public PerformEntitySearchActionHandler(@Nonnull AccessManager accessManager,
@@ -50,6 +54,7 @@ public class PerformEntitySearchActionHandler extends AbstractProjectActionHandl
     @Override
     public PerformEntitySearchResult execute(@Nonnull PerformEntitySearchAction action,
                                              @Nonnull ExecutionContext executionContext) {
+        logger.info("Performing search: {}", action);
         var entityTypes = action.entityTypes();
         var searchString = action.searchString();
         var languages = ImmutableList.<DictionaryLanguage>builder();
@@ -66,7 +71,8 @@ public class PerformEntitySearchActionHandler extends AbstractProjectActionHandl
                                                           searchString,
                                                           executionContext.userId(),
                                                           languages.build(),
-                                                          searchFilters);
+                                                          searchFilters,
+                action.resultsSetFilter());
         PageRequest pageRequest = action.pageRequest();
         entitySearcher.setPageRequest(pageRequest);
         entitySearcher.invoke();

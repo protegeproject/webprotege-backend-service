@@ -1551,8 +1551,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3) {
-        return new EntitySearcherFactory(p1, p2, p3);
+    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3, MatcherFactory p4) {
+        return new EntitySearcherFactory(p1, p2, p3, p4);
     }
 
     @Bean
