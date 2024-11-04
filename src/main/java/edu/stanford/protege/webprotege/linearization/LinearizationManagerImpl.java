@@ -6,7 +6,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -16,11 +16,14 @@ public class LinearizationManagerImpl implements LinearizationManager {
 
     private final CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeLinearizationsExecutor;
     private final CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent;
+    private final CommandExecutor<GetIrisWithLinearizationRequest, GetIrisWithLinearizationResponse> getIrisWithLinearization;
 
     public LinearizationManagerImpl(CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeLinearizationsExecutor,
-                                    CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent) {
+                                    CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent,
+                                    CommandExecutor<GetIrisWithLinearizationRequest, GetIrisWithLinearizationResponse> getIrisWithLinearization) {
         this.mergeLinearizationsExecutor = mergeLinearizationsExecutor;
         this.createLinearizationFromParent = createLinearizationFromParent;
+        this.getIrisWithLinearization = getIrisWithLinearization;
     }
 
 
@@ -36,6 +39,17 @@ public class LinearizationManagerImpl implements LinearizationManager {
     public CompletableFuture<CreateLinearizationFromParentResponse> createLinearizationFromParent(IRI newEntityIri, IRI parentEntityIri, ProjectId projectId, ExecutionContext executionContext) {
         return createLinearizationFromParent.execute(
                 CreateLinearizationFromParentRequest.create(newEntityIri, parentEntityIri, projectId),
+                executionContext
+        );
+    }
+
+    @Override
+    public CompletableFuture<GetIrisWithLinearizationResponse> getIrisWithLinearization(List<String> iris, ProjectId id, ExecutionContext executionContext) {
+        return getIrisWithLinearization.execute(
+                GetIrisWithLinearizationRequest.create(
+                        iris,
+                        id
+                ),
                 executionContext
         );
     }

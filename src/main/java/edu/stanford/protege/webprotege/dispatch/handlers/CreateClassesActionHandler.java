@@ -95,6 +95,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                 executionContext
                         ).get();
                     } catch (InterruptedException | ExecutionException e) {
+                        Thread.currentThread().interrupt();
                         logger.error("MergeLinearizationsError: " + e);
                     }
                     try {

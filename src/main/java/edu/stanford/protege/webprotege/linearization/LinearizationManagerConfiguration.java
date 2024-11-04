@@ -17,4 +17,9 @@ public class LinearizationManagerConfiguration {
         return new CommandExecutorImpl<>(CreateLinearizationFromParentResponse.class);
     }
 
+    @Bean
+    public CommandExecutor<GetIrisWithLinearizationRequest, GetIrisWithLinearizationResponse> getIrisWithLinearizationExecutor() {
+        return new CommandExecutorImpl<>(GetIrisWithLinearizationResponse.class);
+    }
+
 }
