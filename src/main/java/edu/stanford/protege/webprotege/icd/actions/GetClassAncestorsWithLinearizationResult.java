@@ -16,8 +16,4 @@ public record GetClassAncestorsWithLinearizationResult(@JsonProperty("ancestorsW
         return new GetClassAncestorsWithLinearizationResult(ancestorsWithLinearization);
     }
 
-    @JsonProperty("ancestorTree")
-    public List<OWLEntityData> getAncestorTree() {
-        return ancestorsWithLinearization;
-    }
 }
