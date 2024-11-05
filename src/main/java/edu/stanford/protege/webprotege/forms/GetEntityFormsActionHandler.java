@@ -83,7 +83,6 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
                                .filter(byFormIds(formsFilterList))
                                .map(formDescriptor -> formDataDtoBuilder.toFormData(formSubject, formDescriptor))
                                .collect(toImmutableList());
-
         var entityData = renderingManager.getRendering(entity);
         return new GetEntityFormsResult(entityData, ImmutableList.copyOf(action.formFilters()), forms);
     }
