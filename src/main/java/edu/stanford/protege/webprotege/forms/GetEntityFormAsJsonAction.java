@@ -10,7 +10,9 @@ import static edu.stanford.protege.webprotege.forms.GetEntityFormAsJsonAction.CH
 
 @JsonTypeName(CHANNEL)
 public record GetEntityFormAsJsonAction(@JsonProperty("projectId") ProjectId projectId,
-                                        @JsonProperty("formId") FormId formId) implements ProjectRequest<GetEntityFormAsJsonResult> {
+                                        @JsonProperty("entityIri") String entityIri,
+
+                                        @JsonProperty("formId") String formId) implements ProjectRequest<GetEntityFormAsJsonResult> {
 
     public static final String CHANNEL = "webprotege.forms.GetEntityFormAsJson";
 

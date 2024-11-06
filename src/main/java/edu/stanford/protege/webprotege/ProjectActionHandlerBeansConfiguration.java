@@ -13,6 +13,7 @@ import edu.stanford.protege.webprotege.csv.ImportCSVFileActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.forms.*;
+import edu.stanford.protege.webprotege.forms.json.FormControlDataConverter;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
@@ -962,6 +963,19 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetEntityCreationFormsActionHandler(p1, p2);
     }
 
+
+    @Bean
+    GetEntityFormAsJsonActionHandler getEntityFormAsJsonActionHandler(AccessManager accessManager,
+                                                                      FormControlDataConverter formControlDataConverter,
+                                                                      EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory,
+                                                                      EntityFormRepository entityFormRepository,
+                                                                      ApplicationContext context) {
+        return new GetEntityFormAsJsonActionHandler(accessManager,
+                formControlDataConverter,
+                entityFrameFormDataDtoBuilderFactory,
+                entityFormRepository,
+                context);
+    }
 
     @Bean
     CreateEntityFromFormDataActionHandler createEntityFromFormDataActionHandler(AccessManager p1,

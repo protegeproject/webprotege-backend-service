@@ -155,6 +155,11 @@ public class FormBeansConfiguration {
         return new FormSubjectTranslator(p1);
     }
 
+
+    @Bean
+    FormDataJsonConverter formDataJsonConverter(Provider<FormControlDataConverter> formControlDataConverterProvider) {
+        return new FormDataJsonConverter(formControlDataConverterProvider);
+    }
     @Bean
     FormControlDataConverter formControlDataConverter(EntityNameControlDataConverter p1, GridControlDataConverter p2, ImageControlDataConverter p3, NumberControlDataConverter p4, TextControlDataConverter p5, MultiChoiceControlDataConverter p6, SingleChoiceControlDataConverter p7, FormDataJsonConverter p8) {
         return new FormControlDataConverter(p1, p2, p3, p4, p5, p6, p7, p8);
