@@ -15,16 +15,9 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
 
 public class LogicalConditionsSerializationToFunctionalSyntax {
 
-    private final OWLOntologyManager man;
-    private final OWLClassData clsData;
+    private static  final OWLOntologyManager man = OWLManager.createOWLOntologyManager();
 
-    public LogicalConditionsSerializationToFunctionalSyntax(OWLClassData clsData) {
-        this.clsData = clsData;
-        //you can also just create one ontology manager outside, and pass it as arg
-        this.man = OWLManager.createOWLOntologyManager();
-    }
-
-    public List<String> serializeNecessaryConditions(List<PropertyClassValue> necessaryConditions) throws OWLOntologyCreationException {
+    public static List<String> serializeNecessaryConditions(List<PropertyClassValue> necessaryConditions, OWLClassData clsData) throws OWLOntologyCreationException {
         var ont = man.createOntology();
         List<String> serializedAxes = new ArrayList<String>();
 
@@ -49,7 +42,7 @@ public class LogicalConditionsSerializationToFunctionalSyntax {
         return serializedAxes;
     }
 
-    public List<String> serializeLogicalDefinitions(List<LogicalDefinition> logicalDefinitions) throws OWLOntologyCreationException {
+    public static List<String> serializeLogicalDefinitions(List<LogicalDefinition> logicalDefinitions, OWLClassData clsData) throws OWLOntologyCreationException {
         var ont = man.createOntology();
         List<String> serializedAxes = new ArrayList<String>();
 

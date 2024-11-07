@@ -1021,8 +1021,9 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     GetLogicalDefinitionsActionHandler getLogicalDefinitionsActionHandler(AccessManager p1,
                                                                           LogicalDefinitionExtractor p2,
-                                                                          NecessaryConditionsExtractor p3) {
-        return new GetLogicalDefinitionsActionHandler(p1, p2, p3);
+                                                                          RenderingManager p3,
+                                                                          NecessaryConditionsExtractor p4) {
+        return new GetLogicalDefinitionsActionHandler(p1, p2, p3, p4);
 
     }
 
