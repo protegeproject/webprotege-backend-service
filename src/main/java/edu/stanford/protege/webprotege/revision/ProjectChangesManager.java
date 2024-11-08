@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.diff.*;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.ProjectChangeForEntity;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
@@ -16,6 +17,7 @@ import javax.inject.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.*;
 
 /**
  * Matthew Horridge
@@ -104,15 +106,7 @@ public class ProjectChangesManager {
     private void getProjectChangesForRevision(Revision revision,
                                               Optional<OWLEntity> subject,
                                               ImmutableList.Builder<ProjectChange> changesBuilder) {
-        if (!cache.containsRow(revision.getRevisionNumber())) {
-            logger.debug("{} Building cache for revision {}", projectId, revision.getRevisionNumber().getValue());
-            var stopwatch = Stopwatch.createStarted();
-            var changeRecordsBySubject = getChangesBySubject(revision);
-            changeRecordsBySubject.asMap().forEach((subj, records) -> {
-                cache.put(revision.getRevisionNumber(), subj, ImmutableList.copyOf(records));
-            });
-            logger.debug("{} Cached revision {} in {} ms", projectId, revision.getRevisionNumber().getValue(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
-        }
+        addRevisionToCache(revision);
         List<OntologyChange> limitedRecords = new ArrayList<>();
         final int totalChanges;
         if (subject.isPresent()) {
@@ -156,6 +150,68 @@ public class ProjectChangesManager {
                 totalChanges,
                 page);
         changesBuilder.add(projectChange);
+    }
+
+    public Set<ProjectChangeForEntity> getProjectChangesForEntitiesFromRevision(Revision revision) {
+        addRevisionToCache(revision);
+
+        Map<Optional<IRI>, ImmutableList<OntologyChange>> entries = getEntriesForRevision(revision.getRevisionNumber());
+
+        return entries.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isPresent())
+                .flatMap(
+                        (iriWithOntologyChanges) -> {
+                            List<OntologyChange> ontologyChanges = iriWithOntologyChanges.getValue();
+                            ProjectChange newProjectChange = getProjectChangeForRecords(revision, ontologyChanges, ontologyChanges.size());
+                            ProjectChangeForEntity projectChangeForEntity = ProjectChangeForEntity.create(iriWithOntologyChanges.getKey().get().toString(), newProjectChange);
+                            return Stream.of(projectChangeForEntity);
+                        }
+                ).collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    private void addRevisionToCache(Revision revision) {
+        if (!cache.containsRow(revision.getRevisionNumber())) {
+            logger.debug("{} Building cache for revision {}", projectId, revision.getRevisionNumber().getValue());
+            var stopwatch = Stopwatch.createStarted();
+            var changeRecordsBySubject = getChangesBySubject(revision);
+            changeRecordsBySubject.asMap().forEach((subj, records) -> {
+                cache.put(revision.getRevisionNumber(), subj, ImmutableList.copyOf(records));
+            });
+            logger.debug("{} Cached revision {} in {} ms", projectId, revision.getRevisionNumber().getValue(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        }
+    }
+
+    private ProjectChange getProjectChangeForRecords(Revision revision, List<OntologyChange> limitedRecords, int totalChanges) {
+        Revision2DiffElementsTranslator translator = revision2DiffElementsTranslatorProvider.get();
+        List<DiffElement<String, OntologyChange>> axiomDiffElements = translator.getDiffElementsFromRevision(limitedRecords);
+        sortDiff(axiomDiffElements);
+        List<DiffElement<String, String>> renderedDiffElements = renderDiffElements(axiomDiffElements);
+        int pageElements = renderedDiffElements.size();
+        int pageCount;
+        if (pageElements == 0) {
+            pageCount = 1;
+        } else {
+            pageCount = totalChanges / pageElements + (totalChanges % pageElements);
+        }
+        Page<DiffElement<String, String>> page = Page.create(
+                1,
+                pageCount,
+                renderedDiffElements,
+                totalChanges
+        );
+
+        return ProjectChange.get(
+                revision.getRevisionNumber(),
+                revision.getUserId(),
+                revision.getTimestamp(),
+                revision.getHighLevelDescription(),
+                totalChanges,
+                page);
+    }
+
+    public Map<Optional<IRI>, ImmutableList<OntologyChange>> getEntriesForRevision(RevisionNumber revisionNumber) {
+        return cache.row(revisionNumber);
     }
 
     private List<DiffElement<String, String>> renderDiffElements(List<DiffElement<String, OntologyChange>> axiomDiffElements) {
