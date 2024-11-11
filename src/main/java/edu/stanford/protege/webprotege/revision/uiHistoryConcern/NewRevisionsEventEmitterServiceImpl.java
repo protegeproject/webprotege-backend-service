@@ -18,7 +18,9 @@ public class NewRevisionsEventEmitterServiceImpl implements NewRevisionsEventEmi
 
 
     @Inject
-    public NewRevisionsEventEmitterServiceImpl(ProjectChangesManager changesManager, EventDispatcher eventDispatcher, ProjectId projectId) {
+    public NewRevisionsEventEmitterServiceImpl(ProjectChangesManager changesManager,
+                                               EventDispatcher eventDispatcher,
+                                               ProjectId projectId) {
         this.changesManager = changesManager;
         this.eventDispatcher = eventDispatcher;
         this.projectId = projectId;
@@ -28,11 +30,11 @@ public class NewRevisionsEventEmitterServiceImpl implements NewRevisionsEventEmi
     @Override
     public void emitNewRevisionsEvent(Optional<Revision> revision) {
         revision.ifPresent(rev -> {
-            Set<ProjectChangeForEntity> changeList = changesManager.getProjectChangesForEntitiesFromRevision(rev);
+            Set<ProjectChangeForEntity> changes = changesManager.getProjectChangesForEntitiesFromRevision(rev);
             //Based on axioms in the revision we can determine if the entity was added/deleted or updated
             //e.g. for adding a new entity you have Declaration axiom
             //
-            NewRevisionsEvent revisionsEvent = NewRevisionsEvent.create(EventId.generate(), projectId, changeList);
+            NewRevisionsEvent revisionsEvent = NewRevisionsEvent.create(EventId.generate(), projectId, changes);
             eventDispatcher.dispatchEvent(revisionsEvent);
         });
     }

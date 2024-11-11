@@ -1523,8 +1523,9 @@ public class ProjectBeansConfiguration {
                                                 RevisionManager p2,
                                                 RenderingManager p3,
                                                 Comparator<OntologyChange> p4,
-                                                Provider<Revision2DiffElementsTranslator> p5) {
-        return new ProjectChangesManager(p1, p2, p3, p4, p5);
+                                                Provider<Revision2DiffElementsTranslator> p5,
+                                                EntitiesInProjectSignatureByIriIndex p6) {
+        return new ProjectChangesManager(p1, p2, p3, p4, p5, p6);
     }
 
     @Bean
