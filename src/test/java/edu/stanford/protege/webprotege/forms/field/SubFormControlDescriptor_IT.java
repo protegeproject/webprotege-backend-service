@@ -35,7 +35,7 @@ public class SubFormControlDescriptor_IT {
     @Test
     public void shouldSerializeAndDeserialize() throws IOException {
         var formDescriptor = new FormDescriptor(FormId.get("12345678-1234-1234-1234-123456789abc"),
-                LanguageMap.of("en", "The sub form"),
+                                                LanguageMap.of("en", "The sub form"),
                 singletonList(
                         FormFieldDescriptor.get(
                                 FormRegionId.generate(),

@@ -103,7 +103,7 @@ class CreateProjectSagaManagerTest {
                                                         "en",
                                                         "TheProjectDescription");
         manager.execute(newProjectSettings, executionContext);
-        Thread.sleep(300);
+        Thread.sleep(600);
         verify(projectPermissionsInitializer, times(1)).applyDefaultPermissions(any(ProjectId.class),
                                                                                 eq(janeDoe));
     }
