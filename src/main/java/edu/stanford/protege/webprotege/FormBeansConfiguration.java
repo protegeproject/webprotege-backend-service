@@ -17,6 +17,7 @@ import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.ContextRenderer;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
+import edu.stanford.protege.webprotege.shortform.MultiLingualDictionary;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntityByTypeProvider;
@@ -218,5 +219,56 @@ public class FormBeansConfiguration {
     @Bean
     JsonNameExtractor jsonNameExtractor(ProjectAnnotationAssertionAxiomsBySubjectIndex p1) {
         return new JsonNameExtractor(p1);
+    }
+
+
+    @Bean
+    Json2TextControlData json2TextControlData(OWLDataFactory p1) {
+        return new Json2TextControlData(p1);
+    }
+
+    @Bean
+    Json2Entity json2Entity(OWLDataFactory p1, MultiLingualDictionary p2) {
+        return new Json2Entity(p1, p2);
+    }
+
+    @Bean
+    Json2EntityNameControlData json2EntityNameControlData(Json2Entity p1) {
+        return new Json2EntityNameControlData(p1);
+    }
+
+    @Bean
+    Json2FormControlData json2FormControlData(OWLDataFactory p1, Json2TextControlData p2, Json2NumberControlData p3, Json2SingleChoiceControlData p4, Json2MultiChoiceControlData p5, Json2EntityNameControlData p6, Json2ImageControlData p7, Json2GridControlData p8, Json2SubFormControlData p9) {
+        return new Json2FormControlData(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    Json2FormData json2FormData(Json2FormControlData p1) {
+        return new Json2FormData(p1);
+    }
+
+    @Bean
+    Json2GridControlData json2GridControlData(Provider<Json2FormData> p1, OWLDataFactory p2) {
+        return new Json2GridControlData(p1, p2);
+    }
+
+    @Bean
+    Json2ImageControlData json2ImageControlData() {
+        return new Json2ImageControlData();
+    }
+
+    @Bean
+    Json2MultiChoiceControlData json2MultiChoiceControlData(Json2Entity p1, PrimitiveFormControlDataConverter p2) {
+        return new Json2MultiChoiceControlData(p1, p2);
+    }
+
+    @Bean
+    Json2NumberControlData json2NumberControlData() {
+        return new Json2NumberControlData();
+    }
+
+    @Bean
+    Json2SingleChoiceControlData json2SingleChoiceControlData(Json2Entity p1, PrimitiveFormControlDataConverter p2) {
+        return new Json2SingleChoiceControlData(p1, p2);
     }
 }

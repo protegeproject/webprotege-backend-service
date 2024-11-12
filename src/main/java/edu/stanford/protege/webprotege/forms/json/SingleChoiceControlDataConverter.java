@@ -23,5 +23,4 @@ public class SingleChoiceControlDataConverter {
                 .map(primitiveFormControlDataConverter::convert)
                 .orElse(nodeFactory.nullNode());
     }
-
 }
