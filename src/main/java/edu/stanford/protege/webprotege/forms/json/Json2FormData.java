@@ -45,7 +45,7 @@ public class Json2FormData {
                 var fieldArray = (ArrayNode) fieldValue;
                 var dataList = new ArrayList<FormControlData>();
                 fieldArray.forEach(element -> {
-                    var elementData = json2FormControlData.convert(fieldValue, controlDescriptor);
+                    var elementData = json2FormControlData.convert(element, controlDescriptor);
                     elementData.ifPresent(dataList::add);
                 });
                 var formControlDataPage = Page.of(ImmutableList.copyOf(dataList));
