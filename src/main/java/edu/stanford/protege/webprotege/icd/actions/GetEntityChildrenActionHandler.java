@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.icd.actions;
 
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
@@ -24,21 +24,16 @@ public class GetEntityChildrenActionHandler extends AbstractProjectActionHandler
     @Nonnull
     private final DictionaryManager dictionaryManager;
 
-    @Nonnull
-    private final EntitiesInProjectSignatureByIriIndex entitiesInProjectSignatureByIriIndex;
-
 
     public GetEntityChildrenActionHandler(@Nonnull AccessManager accessManager,
                                           @Nonnull HierarchyProviderManager hierarchyProviderManager,
                                           @Nonnull DeprecatedEntityChecker deprecatedEntityChecker,
-                                          @Nonnull DictionaryManager dictionaryManager,
-                                          @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInProjectSignatureByIriIndex) {
+                                          @Nonnull DictionaryManager dictionaryManager) {
         super(accessManager);
 
         this.hierarchyProviderManager = hierarchyProviderManager;
         this.deprecatedEntityChecker = deprecatedEntityChecker;
         this.dictionaryManager = dictionaryManager;
-        this.entitiesInProjectSignatureByIriIndex = entitiesInProjectSignatureByIriIndex;
     }
 
     @NotNull
@@ -51,28 +46,23 @@ public class GetEntityChildrenActionHandler extends AbstractProjectActionHandler
     @Override
     public GetEntityChildrenResult execute(@NotNull GetEntityChildrenAction action, @NotNull ExecutionContext executionContext) {
         var hierarchyDescriptor = action.hierarchyDescriptor();
-        var parentOptional = entitiesInProjectSignatureByIriIndex.getEntitiesInSignature(action.classIri()).findFirst();
+
+        var parentClass = DataFactory.getOWLClass(action.classIri());
         Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderManager.getHierarchyProvider(hierarchyDescriptor);
         if (hierarchyProvider.isEmpty()) {
             return emptyResult();
         }
 
-        if (parentOptional.isPresent()) {
-            var parent = parentOptional.get();
-
-            List<IRI> children = hierarchyProvider.get().getChildren(parent).stream()
-                    // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
-                    // owl:topDataProperty
-                    .filter(child -> isNotDeprecatedTopLevelEntity(parent, child))
-                    .sorted(comparingShortFormIgnoringCase())
-                    .map(OWLEntity::getIRI)
-                    .toList();
+        List<IRI> children = hierarchyProvider.get().getChildren(parentClass).stream()
+                // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
+                // owl:topDataProperty
+                .filter(child -> isNotDeprecatedTopLevelEntity(parentClass, child))
+                .sorted(comparingShortFormIgnoringCase())
+                .map(OWLEntity::getIRI)
+                .toList();
 
 
-            return GetEntityChildrenResult.create(children);
-        }
-
-        return emptyResult();
+        return GetEntityChildrenResult.create(children);
     }
 
     private Comparator<OWLEntity> comparingShortFormIgnoringCase() {

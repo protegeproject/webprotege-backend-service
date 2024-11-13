@@ -1024,8 +1024,7 @@ public class ProjectActionHandlerBeansConfiguration {
     GetEntityChildrenActionHandler getEntityChildrenActionHandler(AccessManager p1,
                                                                   HierarchyProviderManager p2,
                                                                   DeprecatedEntityChecker p3,
-                                                                  DictionaryManager p4,
-                                                                  EntitiesInProjectSignatureByIriIndex p5) {
-        return new GetEntityChildrenActionHandler(p1,p2,p3,p4,p5);
+                                                                  DictionaryManager p4) {
+        return new GetEntityChildrenActionHandler(p1,p2,p3,p4);
     }
 }
