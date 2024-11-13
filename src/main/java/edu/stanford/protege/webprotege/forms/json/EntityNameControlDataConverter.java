@@ -20,5 +20,4 @@ public class EntityNameControlDataConverter {
     public JsonNode convert(@Nonnull EntityNameControlData entityNameControlData) {
         return entityNameControlData.getEntity().map(entityConverter::convert).orElse(nodeFactory.nullNode());
     }
-
 }
