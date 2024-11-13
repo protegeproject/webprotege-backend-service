@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.forms.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 
