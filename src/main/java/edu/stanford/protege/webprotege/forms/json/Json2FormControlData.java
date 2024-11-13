@@ -1,10 +1,13 @@
 package edu.stanford.protege.webprotege.forms.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import edu.stanford.protege.webprotege.forms.data.FormControlData;
 import edu.stanford.protege.webprotege.forms.field.*;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Json2FormControlData {
@@ -40,6 +43,50 @@ public class Json2FormControlData {
     }
 
 
+    public List<? extends FormControlData> convertFromArray(ArrayNode jsonFieldData, FormControlDescriptor formControlDescriptor) {
+        return formControlDescriptor.accept(new FormControlDescriptorVisitor<List<? extends FormControlData>>() {
+            @Override
+            public List<? extends FormControlData> visit(TextControlDescriptor textControlDescriptor) {
+                return new ArrayList<>();
+            }
+
+            @Override
+            public List<? extends FormControlData> visit(NumberControlDescriptor numberControlDescriptor) {
+                return new ArrayList<>();
+            }
+
+            @Override
+            public List<? extends FormControlData> visit(SingleChoiceControlDescriptor singleChoiceControlDescriptor) {
+                return new ArrayList<>();
+            }
+
+            @Override
+            public List<? extends FormControlData> visit(MultiChoiceControlDescriptor multiChoiceControlDescriptor) {
+                return json2MultiChoiceControlData.convert(jsonFieldData, multiChoiceControlDescriptor);
+            }
+
+            @Override
+            public List<? extends FormControlData> visit(EntityNameControlDescriptor entityNameControlDescriptor) {
+                return json2EntityNameControlData.convertAsList(jsonFieldData, entityNameControlDescriptor);
+            }
+
+            @Override
+            public List<? extends FormControlData> visit(ImageControlDescriptor imageControlDescriptor) {
+                return new ArrayList<>();
+            }
+
+            @Override
+            public List<? extends FormControlData> visit(GridControlDescriptor gridControlDescriptor) {
+                return json2GridControlData.convert(jsonFieldData, gridControlDescriptor);
+            }
+
+            @Override
+            public List<? extends FormControlData> visit(SubFormControlDescriptor subFormControlDescriptor) {
+                return new ArrayList<>();
+            }
+        });
+    }
+
     public Optional<? extends FormControlData> convert(JsonNode jsonFieldData,
                                                                    FormControlDescriptor formControlDescriptor) {
         return formControlDescriptor.accept(new FormControlDescriptorVisitor<>() {
@@ -60,7 +107,7 @@ public class Json2FormControlData {
 
             @Override
             public Optional<? extends FormControlData> visit(MultiChoiceControlDescriptor multiChoiceControlDescriptor) {
-                return json2MultiChoiceControlData.convert(jsonFieldData, multiChoiceControlDescriptor);
+                return Optional.empty();
             }
 
             @Override
@@ -75,7 +122,7 @@ public class Json2FormControlData {
 
             @Override
             public Optional<? extends FormControlData> visit(GridControlDescriptor gridControlDescriptor) {
-                return json2GridControlData.convert(jsonFieldData, gridControlDescriptor);
+                return Optional.empty();
             }
 
             @Override

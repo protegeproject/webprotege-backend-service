@@ -43,7 +43,7 @@ public class Json2FormData {
             if(fieldValue.isArray()) {
                 // Multiple values in resulting data array
                 var fieldArray = (ArrayNode) fieldValue;
-                var dataList = new ArrayList<FormControlData>();
+                var dataList = new ArrayList<FormControlData>(json2FormControlData.convertFromArray(fieldArray, controlDescriptor));
                 fieldArray.forEach(element -> {
                     var elementData = json2FormControlData.convert(element, controlDescriptor);
                     elementData.ifPresent(dataList::add);
@@ -58,6 +58,7 @@ public class Json2FormData {
                 fieldData.map(d -> FormFieldData.get(fieldDescriptor, Page.of(ImmutableList.of(d)))).ifPresent(formFieldDataList::add);
             }
         });
+
         return Optional.of(FormData.get(Optional.of(FormEntitySubject.get(subject)),
                 formDescriptor,
                 formFieldDataList.build()));

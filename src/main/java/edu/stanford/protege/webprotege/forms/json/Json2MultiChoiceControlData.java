@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.forms.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.forms.data.MultiChoiceControlData;
 import edu.stanford.protege.webprotege.forms.data.PrimitiveFormControlData;
@@ -11,6 +12,7 @@ import edu.stanford.protege.webprotege.forms.field.MultiChoiceControlDescriptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 public class Json2MultiChoiceControlData {
@@ -24,11 +26,8 @@ public class Json2MultiChoiceControlData {
         this.primitiveFormControlDataConverter = primitiveFormControlDataConverter;
     }
 
-    public Optional<MultiChoiceControlData> convert(JsonNode node, MultiChoiceControlDescriptor descriptor) {
+    public List<MultiChoiceControlData> convert(ArrayNode node, MultiChoiceControlDescriptor descriptor) {
         // This is an array
-        if(!node.isArray()) {
-            return Optional.empty();
-        }
         var elementIt = node.elements();
         var choices = new ArrayList<PrimitiveFormControlData>();
         var sourceDescriptor = descriptor.getSource();
@@ -47,7 +46,7 @@ public class Json2MultiChoiceControlData {
                     choices.add(data);
                 }
             });
-            return Optional.of(MultiChoiceControlData.get(descriptor, ImmutableList.copyOf(choices)));
+            return ImmutableList.of(MultiChoiceControlData.get(descriptor, ImmutableList.copyOf(choices)));
         }
         else if(sourceDescriptor instanceof DynamicChoiceListSourceDescriptor dynamicChoiceDescriptor) {
             // All entities
@@ -56,10 +55,10 @@ public class Json2MultiChoiceControlData {
                 var entity = json2Entity.convert(element);
                 entity.ifPresent(e -> entities.add(PrimitiveFormControlData.get(e)));
             });
-            return Optional.of(MultiChoiceControlData.get(descriptor, ImmutableList.copyOf(entities)));
+            return ImmutableList.of(MultiChoiceControlData.get(descriptor, ImmutableList.copyOf(entities)));
         }
         else {
-            return Optional.empty();
+            return ImmutableList.of();
         }
 
     }

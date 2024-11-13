@@ -253,7 +253,7 @@ public class FormBeansConfiguration {
     }
 
     @Bean
-    Json2GridControlData json2GridControlData(Provider<Json2FormData> p1, OWLDataFactory p2) {
+    Json2GridControlData json2GridControlData(Provider<Json2FormControlData> p1, OWLDataFactory p2) {
         return new Json2GridControlData(p1, p2);
     }
 
@@ -275,5 +275,10 @@ public class FormBeansConfiguration {
     @Bean
     Json2SingleChoiceControlData json2SingleChoiceControlData(Json2Entity p1, PrimitiveFormControlDataConverter p2) {
         return new Json2SingleChoiceControlData(p1, p2);
+    }
+
+    @Bean
+    Json2SubFormControlData json2SubFormControlData(Provider<Json2FormData> p1, OWLDataFactory p2) {
+        return new Json2SubFormControlData(p1, p2);
     }
 }

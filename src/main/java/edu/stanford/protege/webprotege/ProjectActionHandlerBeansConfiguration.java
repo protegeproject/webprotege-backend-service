@@ -14,6 +14,7 @@ import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.forms.json.FormControlDataConverter;
+import edu.stanford.protege.webprotege.forms.json.Json2FormData;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
@@ -65,6 +66,7 @@ import java.util.Comparator;
  * 2021-07-14
  */
 public class ProjectActionHandlerBeansConfiguration {
+
 
 
     @Bean
@@ -813,6 +815,7 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
 
+
     @Bean
     GetEntityCrudKitsActionHandler getEntityCrudKitsActionHandler(EntityCrudKitRegistry p1,
                                                                   ProjectEntityCrudKitHandlerCache p2) {
@@ -899,6 +902,16 @@ public class ProjectActionHandlerBeansConfiguration {
         return new SetEntityFormDescriptorActionHandler(p1, p2, p3);
     }
 
+    @Bean
+    SetEntityFormDataFromJsonActionHandler setEntityFormDataFromJsonActionHandler(AccessManager p1,
+                                                                                  HasApplyChanges p2,
+                                                                                  EntityFormRepository p3,
+                                                                                  Json2FormData p4,
+                                                                                  EntityFrameFormDataDtoBuilderFactory p5,
+                                                                                  ApplicationContext p6,
+                                                                                  EntityFormChangeListGeneratorFactory p7){
+        return new SetEntityFormDataFromJsonActionHandler(p1, p2, p3, p4, p5, p6, p7);
+    }
     @Bean
     GetEntityHtmlRenderingActionHandler getEntityHtmlRenderingActionHandler(AccessManager p1,
                                                                             ManchesterSyntaxEntityFrameRenderer p2,

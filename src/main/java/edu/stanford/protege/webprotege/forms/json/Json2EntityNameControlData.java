@@ -1,9 +1,12 @@
 package edu.stanford.protege.webprotege.forms.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import edu.stanford.protege.webprotege.forms.data.EntityNameControlData;
 import edu.stanford.protege.webprotege.forms.field.EntityNameControlDescriptor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Json2EntityNameControlData {

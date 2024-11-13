@@ -24,7 +24,7 @@ public class Json2SubFormControlData {
         var json2FormData = json2FormDataProvider.get();
         var iriString = jsonFieldData.get("@id").textValue();
         var subject = subFormControlDescriptor.getFormDescriptor().getSubjectFactoryDescriptor()
-                .map(sf -> dataFactory.getOWLEntity(sf.getEntityType(), IRI.create(iriString)))
+                .map(sf -> dataFactory.getOWLEntity(sf.getEntityType(), IRI.create(iriString == null ? "" : iriString)))
                 .orElse(null);
         return json2FormData.convert(subject, jsonFieldData, subFormControlDescriptor.getFormDescriptor());
     }
