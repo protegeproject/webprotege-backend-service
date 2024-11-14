@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.entity;
 
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.tag.TagsManager;
 import edu.stanford.protege.webprotege.watches.WatchManager;
@@ -66,7 +66,6 @@ public class EntityNodeRenderer {
 
     /**
      * Renders the node for the specified entity.
-     *
      * @param entity The entity to be rendered.
      * @return The node for the specified entity.
      */
