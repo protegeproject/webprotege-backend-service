@@ -13,6 +13,7 @@ import edu.stanford.protege.webprotege.csv.ImportCSVFileActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.forms.*;
+import edu.stanford.protege.webprotege.forms.json.FormControlDataConverter;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
@@ -964,6 +965,19 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
+    GetEntityFormAsJsonActionHandler getEntityFormAsJsonActionHandler(AccessManager accessManager,
+                                                                      FormControlDataConverter formControlDataConverter,
+                                                                      EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory,
+                                                                      EntityFormRepository entityFormRepository,
+                                                                      ApplicationContext context) {
+        return new GetEntityFormAsJsonActionHandler(accessManager,
+                formControlDataConverter,
+                entityFrameFormDataDtoBuilderFactory,
+                entityFormRepository,
+                context);
+    }
+
+    @Bean
     CreateEntityFromFormDataActionHandler createEntityFromFormDataActionHandler(AccessManager p1,
 
                                                                                 HasApplyChanges p3,
@@ -1007,8 +1021,9 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     GetLogicalDefinitionsActionHandler getLogicalDefinitionsActionHandler(AccessManager p1,
                                                                           LogicalDefinitionExtractor p2,
-                                                                          NecessaryConditionsExtractor p3) {
-        return new GetLogicalDefinitionsActionHandler(p1, p2, p3);
+                                                                          RenderingManager p3,
+                                                                          NecessaryConditionsExtractor p4) {
+        return new GetLogicalDefinitionsActionHandler(p1, p2, p3, p4);
 
     }
 
