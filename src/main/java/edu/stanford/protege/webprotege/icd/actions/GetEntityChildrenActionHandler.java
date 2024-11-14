@@ -45,10 +45,9 @@ public class GetEntityChildrenActionHandler extends AbstractProjectActionHandler
     @NotNull
     @Override
     public GetEntityChildrenResult execute(@NotNull GetEntityChildrenAction action, @NotNull ExecutionContext executionContext) {
-        var hierarchyDescriptor = action.hierarchyDescriptor();
 
         var parentClass = DataFactory.getOWLClass(action.classIri());
-        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderManager.getHierarchyProvider(hierarchyDescriptor);
+        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderManager.getHierarchyProvider(ClassHierarchyDescriptor.create());
         if (hierarchyProvider.isEmpty()) {
             return emptyResult();
         }
