@@ -12,7 +12,7 @@
 
     <groupId>edu.stanford.protege</groupId>
     <artifactId>webprotege-backend-service</artifactId>
-    <version>2.0.3-WHO</version>
+    <version>2.0.6-WHO</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,11 +66,6 @@
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-common</artifactId>
             <version>0.9.8</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.protege</groupId>
-            <artifactId>webprotege-forms</artifactId>
-            <version>1.1.7</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>

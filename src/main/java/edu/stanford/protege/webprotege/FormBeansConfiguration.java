@@ -5,7 +5,9 @@ import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFac
 import edu.stanford.protege.webprotege.entity.CreateEntityFromFormDataChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.forms.*;
+import edu.stanford.protege.webprotege.forms.json.*;
 import edu.stanford.protege.webprotege.forms.processor.*;
+import edu.stanford.protege.webprotege.forms.processor.FormDataConverter;
 import edu.stanford.protege.webprotege.frame.EmptyEntityFrameFactory;
 import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.index.*;
@@ -151,5 +153,75 @@ public class FormBeansConfiguration {
     @Bean
     FormSubjectTranslator formSubjectTranslator(OWLDataFactory p1) {
         return new FormSubjectTranslator(p1);
+    }
+
+
+    @Bean
+    FormDataJsonConverter formDataJsonConverter(Provider<FormControlDataConverter> formControlDataConverterProvider) {
+        return new FormDataJsonConverter(formControlDataConverterProvider);
+    }
+    @Bean
+    FormControlDataConverter formControlDataConverter(EntityNameControlDataConverter p1, GridControlDataConverter p2, ImageControlDataConverter p3, NumberControlDataConverter p4, TextControlDataConverter p5, MultiChoiceControlDataConverter p6, SingleChoiceControlDataConverter p7, FormDataJsonConverter p8) {
+        return new FormControlDataConverter(p1, p2, p3, p4, p5, p6, p7, p8);
+    }
+
+    @Bean
+    EntityNameControlDataConverter entityNameControlDataConverter(EntityConverter p1) {
+        return new EntityNameControlDataConverter(p1);
+    }
+
+    @Bean
+    GridControlDataConverter gridControlDataConverter(Provider<FormControlDataConverter> p1) {
+        return new GridControlDataConverter(p1);
+    }
+
+    @Bean
+    ImageControlDataConverter imageControlDataConverter() {
+        return new ImageControlDataConverter();
+    }
+
+    @Bean
+    TextControlDataConverter textControlDataConverter() {
+        return new TextControlDataConverter();
+    }
+
+    @Bean
+    NumberControlDataConverter numberControlDataConverter(LiteralConverter p1) {
+        return new NumberControlDataConverter(p1);
+    }
+
+    @Bean
+    LiteralConverter literalConverter() {
+        return new LiteralConverter();
+    }
+
+    @Bean
+    MultiChoiceControlDataConverter multiChoiceControlDataConverter(PrimitiveFormControlDataConverter p1) {
+        return new MultiChoiceControlDataConverter(p1);
+    }
+
+    @Bean
+    SingleChoiceControlDataConverter singleChoiceControlDataConverter(PrimitiveFormControlDataConverter p1) {
+        return new SingleChoiceControlDataConverter(p1);
+    }
+
+    @Bean
+    PrimitiveFormControlDataConverter primitiveFormControlDataConverter(LiteralConverter p1, IriConverter p2, EntityConverter p3) {
+        return new PrimitiveFormControlDataConverter(p1, p2, p3);
+    }
+
+    @Bean
+    IriConverter iriConverter(JsonNameExtractor p1) {
+        return new IriConverter(p1);
+    }
+
+    @Bean
+    EntityConverter entityConverter(JsonNameExtractor p1) {
+        return new EntityConverter(p1);
+    }
+
+    @Bean
+    JsonNameExtractor jsonNameExtractor(ProjectAnnotationAssertionAxiomsBySubjectIndex p1) {
+        return new JsonNameExtractor(p1);
     }
 }

@@ -6,9 +6,10 @@ import edu.stanford.protege.webprotege.axiom.AxiomIRISubjectProvider;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.diff.*;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.revision.uiHistoryConcern.ProjectChangeForEntity;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
@@ -43,17 +44,21 @@ public class ProjectChangesManager {
 
     private final Table<RevisionNumber, Optional<IRI>, ImmutableList<OntologyChange>> cache = HashBasedTable.create();
 
+    private final EntitiesInProjectSignatureByIriIndex entitiesInProjectSignature;
+
     @Inject
     public ProjectChangesManager(ProjectId projectId,
                                  @Nonnull RevisionManager revisionManager,
                                  @Nonnull RenderingManager browserTextProvider,
                                  @Nonnull Comparator<OntologyChange> changeRecordComparator,
-                                 @Nonnull Provider<Revision2DiffElementsTranslator> revision2DiffElementsTranslatorProvider) {
+                                 @Nonnull Provider<Revision2DiffElementsTranslator> revision2DiffElementsTranslatorProvider,
+                                 @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInProjectSignature) {
         this.projectId = projectId;
         this.revisionManager = revisionManager;
         this.browserTextProvider = browserTextProvider;
         this.changeRecordComparator = changeRecordComparator;
         this.revision2DiffElementsTranslatorProvider = revision2DiffElementsTranslatorProvider;
+        this.entitiesInProjectSignature = entitiesInProjectSignature;
     }
 
     private static Multimap<Optional<IRI>, OntologyChange> getChangesBySubject(Revision revision) {
@@ -163,11 +168,24 @@ public class ProjectChangesManager {
                 .flatMap(
                         (iriWithOntologyChanges) -> {
                             List<OntologyChange> ontologyChanges = iriWithOntologyChanges.getValue();
+                            IRI subjectIri = iriWithOntologyChanges.getKey().get();
                             ProjectChange newProjectChange = getProjectChangeForRecords(revision, ontologyChanges, ontologyChanges.size());
-                            ProjectChangeForEntity projectChangeForEntity = ProjectChangeForEntity.create(iriWithOntologyChanges.getKey().get().toString(), newProjectChange);
+                            var changeType = getChangeTypeForRecordWithSubject(subjectIri, ontologyChanges);
+
+                            ProjectChangeForEntity projectChangeForEntity = ProjectChangeForEntity.create(subjectIri.toString(), changeType, newProjectChange);
                             return Stream.of(projectChangeForEntity);
                         }
                 ).collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    private ChangeType getChangeTypeForRecordWithSubject(IRI subjectIri, List<OntologyChange> ontologyChanges) {
+        if (ontologyChanges.stream().anyMatch(change -> change.isAxiomChange() && change.isChangeFor(AxiomType.DECLARATION))) {
+            return ChangeType.CREATE_ENTITY;
+        }
+        if (entitiesInProjectSignature.getEntitiesInSignature(subjectIri).findAny().isEmpty()) {
+            return ChangeType.DELETE_ENTITY;
+        }
+        return ChangeType.UPDATE_ENTITY;
     }
 
     private void addRevisionToCache(Revision revision) {
@@ -175,9 +193,10 @@ public class ProjectChangesManager {
             logger.debug("{} Building cache for revision {}", projectId, revision.getRevisionNumber().getValue());
             var stopwatch = Stopwatch.createStarted();
             var changeRecordsBySubject = getChangesBySubject(revision);
-            changeRecordsBySubject.asMap().forEach((subj, records) -> {
-                cache.put(revision.getRevisionNumber(), subj, ImmutableList.copyOf(records));
-            });
+            changeRecordsBySubject.asMap()
+                    .forEach(
+                            (subj, records) -> cache.put(revision.getRevisionNumber(), subj, ImmutableList.copyOf(records))
+                    );
             logger.debug("{} Cached revision {} in {} ms", projectId, revision.getRevisionNumber().getValue(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
         }
     }
