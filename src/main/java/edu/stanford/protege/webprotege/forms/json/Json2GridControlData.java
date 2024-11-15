@@ -46,20 +46,29 @@ public class Json2GridControlData {
     }
 
     private GridRowData convertRowNode(GridControlDescriptor descriptor, JsonNode rowNode) {
-        var subjectNode = rowNode.get("@id") == null ? "" : rowNode.get("@id").asText();
-        var entitySubjectEntity = descriptor.getSubjectFactoryDescriptor()
-                .map(s -> dataFactory.getOWLEntity(s.getEntityType(), IRI.create(subjectNode)))
-                .map(FormEntitySubject::get);
+        var subjectNode = rowNode.get("@id") == null ? null : rowNode.get("@id");
+        Optional<FormEntitySubject> entitySubjectEntity = Optional.empty();
+        if(subjectNode != null && !subjectNode.isNull() && !subjectNode.asText().isEmpty()) {
+            entitySubjectEntity = descriptor.getSubjectFactoryDescriptor()
+                    .map(s -> dataFactory.getOWLEntity(s.getEntityType(), IRI.create(subjectNode.asText())))
+                    .map(FormEntitySubject::get);
+        }
 
         var colNodes = (ObjectNode) rowNode;
         var rowCellData = new ArrayList<GridCellData>();
+        colNodes.remove("@id");
+
         for (int j = 0; j < colNodes.size(); j++) {
             var colDescriptor = descriptor.getColumns().get(j);
             var colNode = colNodes.get(colDescriptor.getLabel().get("json"));
             var colData = convertColumnNode(colNode, colDescriptor);
             rowCellData.add(colData);
         }
-        return GridRowData.get(entitySubjectEntity.orElse(null), ImmutableList.copyOf(rowCellData));
+        FormEntitySubject subject = null;
+        if(entitySubjectEntity.isPresent()){
+            subject = entitySubjectEntity.get();
+        }
+        return GridRowData.get(subject, ImmutableList.copyOf(rowCellData));
     }
 
     private GridCellData convertColumnNode(JsonNode colNode, GridColumnDescriptor colDescriptor) {

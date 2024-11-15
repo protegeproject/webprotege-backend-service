@@ -58,8 +58,8 @@ public class Json2FormData {
                 fieldData.map(d -> FormFieldData.get(fieldDescriptor, Page.of(ImmutableList.of(d)))).ifPresent(formFieldDataList::add);
             }
         });
-
-        return Optional.of(FormData.get(Optional.of(FormEntitySubject.get(subject)),
+        Optional<FormEntitySubject> formEntitySubject = subject != null ? Optional.of(FormEntitySubject.get(subject)) : Optional.empty();
+        return Optional.of(FormData.get(formEntitySubject,
                 formDescriptor,
                 formFieldDataList.build()));
     }

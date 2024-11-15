@@ -35,7 +35,8 @@ public class SetEntityFormDataFromJsonActionHandler extends AbstractProjectChang
                                                   EntityFormRepository entityFormRepository,
                                                   Json2FormData json2FormData,
                                                   EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory,
-                                                  ApplicationContext applicationContext, EntityFormChangeListGeneratorFactory changeListGeneratorFactory) {
+                                                  ApplicationContext applicationContext,
+                                                  EntityFormChangeListGeneratorFactory changeListGeneratorFactory) {
         super(accessManager, applyChanges);
         this.entityFormRepository = entityFormRepository;
         this.json2FormData = json2FormData;
