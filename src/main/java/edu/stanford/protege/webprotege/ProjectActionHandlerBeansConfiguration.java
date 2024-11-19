@@ -1054,4 +1054,13 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                         ProjectDetailsManager p2) {
         return new GetIsExistingProjectActionHandler(p1,p2);
     }
+
+    @Bean
+    CreateClassesFromApiActionHandler createClassesFromApiAction(AccessManager p1,
+                                                                 HasApplyChanges p2,
+                                                                 CreateClassesChangeGeneratorFactory p3,
+                                                                 LinearizationManager p4,
+                                                                 PostcoordinationManager p5) {
+        return new CreateClassesFromApiActionHandler(p1, p2, p3, p4, p5);
+    }
 }
