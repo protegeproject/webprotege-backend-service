@@ -1042,4 +1042,10 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                   DictionaryManager p4) {
         return new GetEntityChildrenActionHandler(p1,p2,p3,p4);
     }
+
+    @Bean
+    FilterExistingEntitiesActionHandler filterExistingEntitiesActionHandler(AccessManager p1,
+                                                                  ClassHierarchyProvider p2) {
+        return new FilterExistingEntitiesActionHandler(p1,p2);
+    }
 }
