@@ -1048,4 +1048,10 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                   ClassHierarchyProvider p2) {
         return new FilterExistingEntitiesActionHandler(p1,p2);
     }
+
+    @Bean
+    GetIsExistingProjectActionHandler getIsExistingProjectActionHandler(AccessManager p1,
+                                                                        ProjectDetailsManager p2) {
+        return new GetIsExistingProjectActionHandler(p1,p2);
+    }
 }
