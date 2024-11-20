@@ -21,10 +21,7 @@ import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.actions.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
-import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
-import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
+import edu.stanford.protege.webprotege.individuals.*;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
@@ -1062,5 +1059,11 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                  LinearizationManager p4,
                                                                  PostcoordinationManager p5) {
         return new CreateClassesFromApiActionHandler(p1, p2, p3, p4, p5);
+    }
+
+    @Bean
+    GetEntityCommentsActionHandler getEntityCommentsActionHandler(EntityDiscussionThreadRepository p1,
+                                                                  AccessManager p2) {
+        return new GetEntityCommentsActionHandler(p1, p2);
     }
 }
