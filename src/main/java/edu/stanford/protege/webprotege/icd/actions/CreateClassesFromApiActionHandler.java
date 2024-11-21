@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.postcoordination.PostcoordinationManager;
+import edu.stanford.protege.webprotege.project.ProjectDetailsManager;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
@@ -36,6 +37,9 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
     @Nonnull
     private final PostcoordinationManager postcoordinationManager;
 
+    @Nonnull
+    private final ProjectDetailsManager projectDetailsManager;
+
 
     @Inject
     public CreateClassesFromApiActionHandler(@Nonnull AccessManager accessManager,
@@ -43,11 +47,12 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
                                              @Nonnull HasApplyChanges applyChanges,
                                              @Nonnull CreateClassesChangeGeneratorFactory changeFactory,
                                              @Nonnull LinearizationManager linearizationManager,
-                                             @Nonnull PostcoordinationManager postcoordinationManager) {
+                                             @Nonnull PostcoordinationManager postcoordinationManager, @Nonnull ProjectDetailsManager projectDetailsManager) {
         super(accessManager, applyChanges);
         this.changeGeneratorFactory = checkNotNull(changeFactory);
         this.linearizationManager = linearizationManager;
         this.postcoordinationManager = postcoordinationManager;
+        this.projectDetailsManager = projectDetailsManager;
     }
 
     @Nonnull
@@ -65,10 +70,13 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
 
     @Override
     protected ChangeListGenerator<Set<OWLClass>> getChangeListGenerator(CreateClassesFromApiAction action, ExecutionContext executionContext) {
-        var owlClassParents = action.parents().stream()
+        var owlClassParents = action.parent().stream()
                 .map(DataFactory::getOWLClass)
                 .collect(ImmutableSet.toImmutableSet());
-        var language = action.langTag() != null ? action.langTag() : "en";
+        var language = action.langTag();
+        if (language == null || language.isEmpty()) {
+            language = projectDetailsManager.getProjectSettings(action.projectId()).getDefaultLanguage().getLang();
+        }
         return changeGeneratorFactory.create(action.sourceText(),
                 language,
                 owlClassParents,
@@ -86,7 +94,7 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
                     try {
                         linearizationManager.mergeLinearizationsFromParents(
                                 newClass.getIRI(),
-                                action.parents().stream().map(IRI::create).collect(Collectors.toSet()),
+                                action.parent().stream().map(IRI::create).collect(Collectors.toSet()),
                                 action.projectId(),
                                 executionContext
                         ).get();
@@ -96,7 +104,7 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
                     try {
                         postcoordinationManager.createPostcoordinationFromParent(
                                 newClass.getIRI(),
-                                IRI.create(action.parents().stream().findFirst().get()),
+                                IRI.create(action.parent().stream().findFirst().get()),
                                 action.projectId(),
                                 executionContext
                         ).get();

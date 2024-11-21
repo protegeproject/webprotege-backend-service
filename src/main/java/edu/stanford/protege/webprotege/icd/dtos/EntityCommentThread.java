@@ -6,15 +6,15 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import java.util.List;
 
 public record EntityCommentThread(@JsonProperty("projectId") ProjectId projectId,
-                                  @JsonProperty("entityIri") String entityIri,
+                                  @JsonProperty("entityIRI") String entityIRI,
                                   @JsonProperty("status") String status,
                                   @JsonProperty("comments") List<EntityComment> entityComments) {
 
     public static EntityCommentThread create(ProjectId projectId,
-                                             String entityIri,
+                                             String entityIRI,
                                              String status,
                                              List<EntityComment> entityComments) {
-        return new EntityCommentThread(projectId, entityIri, status, entityComments);
+        return new EntityCommentThread(projectId, entityIRI, status, entityComments);
     }
 
 }

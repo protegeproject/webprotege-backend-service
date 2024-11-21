@@ -1057,8 +1057,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                  HasApplyChanges p2,
                                                                  CreateClassesChangeGeneratorFactory p3,
                                                                  LinearizationManager p4,
-                                                                 PostcoordinationManager p5) {
-        return new CreateClassesFromApiActionHandler(p1, p2, p3, p4, p5);
+                                                                 PostcoordinationManager p5,
+                                                                 ProjectDetailsManager p6) {
+        return new CreateClassesFromApiActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
     @Bean

@@ -41,7 +41,7 @@ public class EntityCommentThreadMapperTest {
 
         assertNotNull(result);
         assertEquals(projectId, result.projectId());
-        assertEquals("entity1", result.entityIri());
+        assertEquals("entity1", result.entityIRI());
         assertEquals("OPEN", result.status());
         assertEquals(2, result.entityComments().size());
 
@@ -68,7 +68,7 @@ public class EntityCommentThreadMapperTest {
 
         assertNotNull(result);
         assertEquals(projectId, result.projectId());
-        assertEquals("entity2", result.entityIri());
+        assertEquals("entity2", result.entityIRI());
         assertEquals("CLOSED", result.status());
         assertTrue(result.entityComments().isEmpty());
     }
