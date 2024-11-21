@@ -1,8 +1,10 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.jetbrains.annotations.NotNull;
 import edu.stanford.protege.webprotege.index.*;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.*;
 import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.io.*;
+import org.semanticweb.owlapi.io.OWLObjectRenderer;
+import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
@@ -72,11 +76,13 @@ public class ClassHierarchyProviderImpl_TestCase {
     public void setUp() {
         ToStringRenderer.getInstance().setRenderer(new OWLObjectRenderer() {
             @Override
-            public void setShortFormProvider(ShortFormProvider shortFormProvider) {
+            public void setShortFormProvider(@NotNull ShortFormProvider shortFormProvider) {
+
             }
 
+            @NotNull
             @Override
-            public String render(OWLObject owlObject) {
+            public String render(@NotNull OWLObject owlObject) {
                 return owlObject.getClass().getSimpleName() + "@" + System.identityHashCode(owlObject);
             }
         });

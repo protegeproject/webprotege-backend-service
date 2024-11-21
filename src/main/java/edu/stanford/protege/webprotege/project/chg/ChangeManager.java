@@ -21,6 +21,7 @@ import edu.stanford.protege.webprotege.owlapi.*;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.*;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
 import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.util.*;
 import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
@@ -132,6 +133,8 @@ public class ChangeManager implements HasApplyChanges {
 
     private final OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
 
+    private final NewRevisionsEventEmitterService newRevisionsEmitter;
+
     @Inject
     public ChangeManager(@Nonnull ProjectId projectId,
                          @Nonnull OWLDataFactory dataFactory,
@@ -157,7 +160,8 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                          @Nonnull IriReplacerFactory iriReplacerFactory,
                          @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator,
-                         @Nonnull EventDispatcher eventDispatcher) {
+                         @Nonnull EventDispatcher eventDispatcher,
+                         @Nonnull NewRevisionsEventEmitterService newRevisionsEmitter) {
         this.projectId = projectId;
         this.dataFactory = dataFactory;
         this.dictionaryUpdatesProcessor = dictionaryUpdatesProcessor;
@@ -183,6 +187,7 @@ public class ChangeManager implements HasApplyChanges {
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.iriReplacerFactory = iriReplacerFactory;
         this.generatedAnnotationsGenerator = generatedAnnotationsGenerator;
+        this.newRevisionsEmitter = newRevisionsEmitter;
     }
 
     /**
@@ -246,6 +251,7 @@ public class ChangeManager implements HasApplyChanges {
                               throwCreatePermissionDeniedIfNecessary(entityInSignature, userId);
                               changesToBeRenamed.add(change);
                               var tempIri = entityInSignature.getIRI();
+                              //see this
                               if(!tempIri2MintedIri.containsKey(tempIri)) {
                                   var freshEntityIri = FreshEntityIri.parse(tempIri.toString());
                                   var shortName = freshEntityIri.getSuppliedName();
@@ -253,6 +259,7 @@ public class ChangeManager implements HasApplyChanges {
                                   if(!shortName.isEmpty()) {
                                       langTag = Optional.of(freshEntityIri.getLangTag());
                                   }
+                                  //use this to get only classes
                                   var entityType = entityInSignature.getEntityType();
                                   var discriminator = freshEntityIri.getDiscriminator();
                                   var parents = freshEntityIri.getParentEntities(dataFactory, entityType);
@@ -264,8 +271,10 @@ public class ChangeManager implements HasApplyChanges {
                                                                  parents,
                                                                  entityType);
                                   changesToCreateFreshEntities.addAll(creator.getChanges());
+                                  //we can get the entity from here
                                   var mintedIri = creator.getEntity()
                                                          .getIRI();
+                                  //contain the values for new created entities
                                   tempIri2MintedIri.put(tempIri, mintedIri);
                               }
                           }
@@ -288,6 +297,8 @@ public class ChangeManager implements HasApplyChanges {
                     allChangesIncludingRenames.add(change);
                 }
             }
+
+
 
             allChangesIncludingRenames.addAll(changesToCreateFreshEntities);
 
@@ -323,6 +334,8 @@ public class ChangeManager implements HasApplyChanges {
                                                changeApplicationResult,
                                                eventTranslatorManager,
                                                revision);
+
+            newRevisionsEmitter.emitNewRevisionsEvent(revision);
 
         } finally {
             changeProcesssingLock.unlock();

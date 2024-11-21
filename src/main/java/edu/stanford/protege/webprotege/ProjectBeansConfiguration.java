@@ -61,7 +61,6 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
-import edu.stanford.protege.webprotege.logicaldefinitions.LogicalConditions;
 import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.UpdateLogicalDefinitionsChangeListGeneratorFactory;
@@ -86,6 +85,7 @@ import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.LiteralRenderer;
 import edu.stanford.protege.webprotege.renderer.*;
 import edu.stanford.protege.webprotege.revision.*;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
 import edu.stanford.protege.webprotege.search.EntitySearcherFactory;
 import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.tag.CriteriaBasedTagsManager;
@@ -643,7 +643,9 @@ public class ProjectBeansConfiguration {
                                 IndexUpdater p23,
                                 DefaultOntologyIdManager p24,
                                 IriReplacerFactory p25,
-                                GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher) {
+                                GeneratedAnnotationsGenerator p26,
+                                EventDispatcher p27,
+                                NewRevisionsEventEmitterService p28) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -667,7 +669,16 @@ public class ProjectBeansConfiguration {
                                  p23,
                                  p24,
                                  p25,
-                                 p26, eventDispatcher);
+                                 p26,
+                                 p27,
+                                 p28);
+    }
+
+    @Bean
+    NewRevisionsEventEmitterService newRevisionsEventEmitterService(ProjectChangesManager p1,
+                                                                    EventDispatcher p2,
+                                                                    ProjectId p3) {
+        return new NewRevisionsEventEmitterServiceImpl(p1, p2, p3);
     }
 
 
@@ -1512,8 +1523,9 @@ public class ProjectBeansConfiguration {
                                                 RevisionManager p2,
                                                 RenderingManager p3,
                                                 Comparator<OntologyChange> p4,
-                                                Provider<Revision2DiffElementsTranslator> p5) {
-        return new ProjectChangesManager(p1, p2, p3, p4, p5);
+                                                Provider<Revision2DiffElementsTranslator> p5,
+                                                EntitiesInProjectSignatureByIriIndex p6) {
+        return new ProjectChangesManager(p1, p2, p3, p4, p5, p6);
     }
 
     @Bean

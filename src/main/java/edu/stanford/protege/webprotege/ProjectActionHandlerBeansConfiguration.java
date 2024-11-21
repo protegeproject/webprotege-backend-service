@@ -19,13 +19,10 @@ import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
-import edu.stanford.protege.webprotege.icd.actions.GetClassAncestorsActionHandler;
+import edu.stanford.protege.webprotege.icd.actions.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
-import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
-import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
+import edu.stanford.protege.webprotege.individuals.*;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
@@ -1046,5 +1043,41 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                    HasApplyChanges p2,
                                                                                    UpdateLogicalDefinitionsChangeListGeneratorFactory p3) {
         return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3);
+    }
+
+    @Bean
+    GetEntityChildrenActionHandler getEntityChildrenActionHandler(AccessManager p1,
+                                                                  HierarchyProviderManager p2,
+                                                                  DeprecatedEntityChecker p3,
+                                                                  DictionaryManager p4) {
+        return new GetEntityChildrenActionHandler(p1,p2,p3,p4);
+    }
+
+    @Bean
+    FilterExistingEntitiesActionHandler filterExistingEntitiesActionHandler(AccessManager p1,
+                                                                  ClassHierarchyProvider p2) {
+        return new FilterExistingEntitiesActionHandler(p1,p2);
+    }
+
+    @Bean
+    GetIsExistingProjectActionHandler getIsExistingProjectActionHandler(AccessManager p1,
+                                                                        ProjectDetailsManager p2) {
+        return new GetIsExistingProjectActionHandler(p1,p2);
+    }
+
+    @Bean
+    CreateClassesFromApiActionHandler createClassesFromApiAction(AccessManager p1,
+                                                                 HasApplyChanges p2,
+                                                                 CreateClassesChangeGeneratorFactory p3,
+                                                                 LinearizationManager p4,
+                                                                 PostcoordinationManager p5,
+                                                                 ProjectDetailsManager p6) {
+        return new CreateClassesFromApiActionHandler(p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean
+    GetEntityCommentsActionHandler getEntityCommentsActionHandler(EntityDiscussionThreadRepository p1,
+                                                                  AccessManager p2) {
+        return new GetEntityCommentsActionHandler(p1, p2);
     }
 }
