@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.forms.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.TextNode;
 import edu.stanford.protege.webprotege.forms.data.FormControlData;
 import edu.stanford.protege.webprotege.forms.data.GridControlData;
 import org.jetbrains.annotations.NotNull;
@@ -34,6 +35,9 @@ public class GridControlDataConverter {
                 .map(row -> {
                     var cells = row.getCells();
                     var rowNode = nodeFactory.objectNode();
+                    if(row.getSubject().isPresent()){
+                        rowNode.set("@id", new TextNode(row.getSubject().get().getIri().toString()));
+                    }
                     for (int i = 0; i < columnDescriptors.size(); i++) {
                         var columnDescriptor = columnDescriptors.get(i);
                         var columnKey = columnDescriptor.getLabel().asMap().getOrDefault(JSON_LANG, "col" + i);
