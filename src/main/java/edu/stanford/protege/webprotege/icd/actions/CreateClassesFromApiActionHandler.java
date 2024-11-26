@@ -17,7 +17,6 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
@@ -70,16 +69,14 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
 
     @Override
     protected ChangeListGenerator<Set<OWLClass>> getChangeListGenerator(CreateClassesFromApiAction action, ExecutionContext executionContext) {
-        var owlClassParents = action.parent().stream()
-                .map(DataFactory::getOWLClass)
-                .collect(ImmutableSet.toImmutableSet());
+        var owlClassParent = DataFactory.getOWLClass(action.parent());
         var language = action.langTag();
         if (language == null || language.isEmpty()) {
             language = projectDetailsManager.getProjectSettings(action.projectId()).getDefaultLanguage().getLang();
         }
         return changeGeneratorFactory.create(action.sourceText(),
                 language,
-                owlClassParents,
+                ImmutableSet.of(owlClassParent),
                 action.changeRequestId());
     }
 
@@ -92,19 +89,19 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
         classes.forEach(newClass ->
                 {
                     try {
-                        linearizationManager.mergeLinearizationsFromParents(
+                        linearizationManager.createLinearizationFromParent(
                                 newClass.getIRI(),
-                                action.parent().stream().map(IRI::create).collect(Collectors.toSet()),
+                                IRI.create(action.parent()),
                                 action.projectId(),
                                 executionContext
                         ).get();
                     } catch (InterruptedException | ExecutionException e) {
-                        logger.error("MergeLinearizationsError: " + e);
+                        logger.error("CreateLinearizationsError: " + e);
                     }
                     try {
                         postcoordinationManager.createPostcoordinationFromParent(
                                 newClass.getIRI(),
-                                IRI.create(action.parent().stream().findFirst().get()),
+                                IRI.create(action.parent()),
                                 action.projectId(),
                                 executionContext
                         ).get();
