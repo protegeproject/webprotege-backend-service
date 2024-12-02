@@ -2,6 +2,8 @@ package edu.stanford.protege.webprotege.shortform;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.common.*;
+import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
+import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterId;
 import org.apache.lucene.document.Document;
@@ -15,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import java.io.IOException;
@@ -52,18 +55,22 @@ public class LuceneIndexImpl implements LuceneIndex {
 
     @Nonnull
     private final QueryAnalyzerFactory queryAnalyzerFactory;
+    @Nonnull
+    private final MatcherFactory matcherFactory;
 
     @Inject
     public LuceneIndexImpl(@Nonnull LuceneEntityDocumentTranslator luceneEntityDocumentTranslator,
                            @Nonnull SearcherManager searcherManager,
                            @Nonnull LuceneQueryFactory queryFactory,
                            @Nonnull LuceneDictionaryLanguageValuesMatcher luceneDictionaryLanguageValuesMatcher,
-                           @Nonnull QueryAnalyzerFactory queryAnalyzerFactory) {
+                           @Nonnull QueryAnalyzerFactory queryAnalyzerFactory,
+                           @Nonnull MatcherFactory matcherFactory) {
         this.luceneEntityDocumentTranslator = luceneEntityDocumentTranslator;
         this.searcherManager = searcherManager;
         this.queryFactory = queryFactory;
         this.luceneDictionaryLanguageValuesMatcher = luceneDictionaryLanguageValuesMatcher;
         this.queryAnalyzerFactory = queryAnalyzerFactory;
+        this.matcherFactory = matcherFactory;
     }
 
     @Nonnull
@@ -106,7 +113,8 @@ public class LuceneIndexImpl implements LuceneIndex {
                                                          @Nonnull List<DictionaryLanguage> dictionaryLanguages,
                                                          @Nonnull List<EntitySearchFilter> searchFilters,
                                                          @Nonnull Set<EntityType<?>> entityTypes,
-                                                         @Nonnull PageRequest pageRequest) throws IOException, ParseException {
+                                                         @Nonnull PageRequest pageRequest,
+                                                         @Nullable EntityMatchCriteria resultsSetFilter) throws IOException, ParseException {
         var indexSearcher = searcherManager.acquire();
         //        indexSearcher.setSimilarity(new EntityBasedSimilarity());
         try {
@@ -141,9 +149,13 @@ public class LuceneIndexImpl implements LuceneIndex {
             var topDocs = indexSearcher.search(query, Integer.MAX_VALUE);
             explain(query, topDocs, indexSearcher);
             var languagesSet = ImmutableSet.copyOf(dictionaryLanguages);
+            var matcher = matcherFactory.getMatcher(resultsSetFilter);
+
             var page = getDictionaryLanguageValues(dictionaryLanguages,
                                                    indexSearcher,
-                                                   topDocs).collect(PageCollector.toPage(pageRequest.getPageNumber(),
+                                                   topDocs)
+                    .filter(p -> matcher.matches(p.getEntity()))
+                    .collect(PageCollector.toPage(pageRequest.getPageNumber(),
                                                                                          pageRequest.getPageSize()));
             return page.map(pg -> pg.transform(entityShortForms -> {
                 var matches = luceneDictionaryLanguageValuesMatcher.getShortFormMatches(entityShortForms,

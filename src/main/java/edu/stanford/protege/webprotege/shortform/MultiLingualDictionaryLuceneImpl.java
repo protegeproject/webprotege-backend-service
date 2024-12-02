@@ -6,11 +6,13 @@ import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.EntityShortFormMatches;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageRequest;
+import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Set;
@@ -71,10 +73,11 @@ public class MultiLingualDictionaryLuceneImpl implements MultiLingualDictionary 
                                                                 @Nonnull Set<EntityType<?>> entityTypes,
                                                                 @Nonnull List<DictionaryLanguage> languages,
                                                                 @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
-                                                                @Nonnull PageRequest pageRequest) {
+                                                                @Nonnull PageRequest pageRequest,
+                                                                @Nullable EntityMatchCriteria resultsSetFilter) {
         return searchableMultiLingualShortFormDictionary.getShortFormsContaining(searchStrings,
                                                                                  entityTypes,
-                                                                                 languages, searchFilters, pageRequest);
+                                                                                 languages, searchFilters, pageRequest, resultsSetFilter);
     }
 }
 
