@@ -21,7 +21,7 @@ public class GetAllOwlClassesCommandHandler implements CommandHandler<GetAllOwlC
     @Nonnull
     @Override
     public String getChannelName() {
-        return GetAvailableProjectsForApiAction.CHANNEL;
+        return GetAllOwlClassesAction.CHANNEL;
     }
 
     @Override
