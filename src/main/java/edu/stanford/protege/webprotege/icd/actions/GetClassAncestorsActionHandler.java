@@ -9,12 +9,10 @@ import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.jetbrains.annotations.NotNull;
-import org.semanticweb.owlapi.model.OWLClass;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @JsonTypeName("webprotege.entities.GetClassAncestors")
 public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler<GetClassAncestorsAction, GetClassAncestorsResult> {
@@ -38,19 +36,15 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
     @NotNull
     @Override
     public GetClassAncestorsResult execute(@NotNull GetClassAncestorsAction action, @NotNull ExecutionContext executionContext) {
-        AncestorHierarchyNode<OWLClass> classTree = classHierarchyProvider.getAncestorsTree(new OWLClassImpl(action.classIri()));
-
-        AncestorHierarchyNode<OWLEntityData> entityDataTree = mapToEntityData(classTree);
-        return new GetClassAncestorsResult(entityDataTree);
-    }
-
-    private AncestorHierarchyNode<OWLEntityData> mapToEntityData(AncestorHierarchyNode<OWLClass> ancestorHierarchyNode) {
+        List<AncestorHierarchyNode<OWLEntityData>> ancestors =  classHierarchyProvider.getAncestors(new OWLClassImpl(action.classIri())).stream().map(owlCLass -> {
+            OWLEntityData entityData = renderingManager.getRendering(owlCLass);
+            AncestorHierarchyNode<OWLEntityData> resp = new AncestorHierarchyNode<>();
+            resp.setNode(entityData);
+            return resp;
+        }).toList();
         AncestorHierarchyNode<OWLEntityData> response = new AncestorHierarchyNode<>();
-        response.setNode(renderingManager.getRendering(ancestorHierarchyNode.getNode()));
-        response.setChildren(new ArrayList<>());
-        for(AncestorHierarchyNode<OWLClass> child: ancestorHierarchyNode.getChildren()) {
-            response.getChildren().add(mapToEntityData(child));
-        }
-        return response;
+        response.setNode(renderingManager.getRendering(new OWLClassImpl(action.classIri())));
+        response.setChildren(ancestors);
+        return new GetClassAncestorsResult(new AncestorHierarchyNode<>());
     }
 }
