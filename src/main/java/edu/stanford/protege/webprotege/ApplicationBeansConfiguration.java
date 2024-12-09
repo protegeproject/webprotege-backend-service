@@ -189,12 +189,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectDirectoryFactory getProjectDirectoryFactory() {
-        return new ProjectDirectoryFactory(getDataDirectory());
-    }
-
-    private File getDataDirectory() {
-        return null;
+    ProjectDirectoryFactory getProjectDirectoryFactory(DataDirectoryProvider dataDirectoryProvider) {
+        return new ProjectDirectoryFactory(dataDirectoryProvider.get());
     }
 
     @Bean

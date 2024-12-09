@@ -1165,13 +1165,17 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    ProjectBackupDirectoryProvider projectBackupDirectoryProvider(ProjectId projectId){
+        return new ProjectBackupDirectoryProvider(projectId);
+    }
+
+    @Bean
     @LuceneIndexesDirectory
     Path luceneIndexesDirectory(DataDirectoryProvider dataDirectoryProvider) {
         var dataDirectory = dataDirectoryProvider.get().toPath();
         return dataDirectory.resolve("lucene-indexes");
 
     }
-
     @Bean
     ActiveLanguagesManagerImpl activeLanguagesManager(ProjectId p1,
                                                       AxiomsByEntityReferenceIndex p2,
