@@ -36,7 +36,7 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
     @NotNull
     @Override
     public GetClassAncestorsResult execute(@NotNull GetClassAncestorsAction action, @NotNull ExecutionContext executionContext) {
-        List<AncestorHierarchyNode<OWLEntityData>> ancestors =  classHierarchyProvider.getAncestors(new OWLClassImpl(action.classIri())).stream().map(owlCLass -> {
+        List<AncestorHierarchyNode<OWLEntityData>> ancestors =  classHierarchyProvider.getParents(new OWLClassImpl(action.classIri())).stream().map(owlCLass -> {
             OWLEntityData entityData = renderingManager.getRendering(owlCLass);
             AncestorHierarchyNode<OWLEntityData> resp = new AncestorHierarchyNode<>();
             resp.setNode(entityData);
@@ -45,6 +45,7 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
         AncestorHierarchyNode<OWLEntityData> response = new AncestorHierarchyNode<>();
         response.setNode(renderingManager.getRendering(new OWLClassImpl(action.classIri())));
         response.setChildren(ancestors);
-        return new GetClassAncestorsResult(new AncestorHierarchyNode<>());
+        return new GetClassAncestorsResult(response);
     }
 }
+
