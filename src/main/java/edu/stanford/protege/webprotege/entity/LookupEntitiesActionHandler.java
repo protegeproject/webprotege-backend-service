@@ -1,12 +1,14 @@
 package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.criteria.EntityTypeIsOneOfCriteria;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
@@ -103,7 +105,8 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
         var result = dictionaryManager.getShortFormsContaining(searchStrings,
                                                                entityLookupRequest.getSearchedEntityTypes(),
                                                                languageManager.getLanguages(), ImmutableList.of(),
-                                                               PageRequest.requestFirstPage());
+                                                               PageRequest.requestFirstPage(),
+                EntityTypeIsOneOfCriteria.get(ImmutableSet.copyOf(entityLookupRequest.getSearchedEntityTypes())));
 
         List<EntityLookupResult> lookupResults = new ArrayList<>();
         for (var match : result.getPageElements()) {
