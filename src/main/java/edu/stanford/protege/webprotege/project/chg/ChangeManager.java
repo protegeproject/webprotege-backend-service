@@ -86,6 +86,8 @@ public class ChangeManager implements HasApplyChanges {
     @Nonnull
     private final RootIndex rootIndex;
 
+    private final ProjectRevisionRepository projectRevisionRepository;
+
     @Nonnull
     private final DictionaryManager dictionaryManager;
 
@@ -161,7 +163,8 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull IriReplacerFactory iriReplacerFactory,
                          @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator,
                          @Nonnull EventDispatcher eventDispatcher,
-                         @Nonnull NewRevisionsEventEmitterService newRevisionsEmitter) {
+                         @Nonnull NewRevisionsEventEmitterService newRevisionsEmitter,
+                         @Nonnull ProjectRevisionRepository projectRevisionRepository) {
         this.projectId = projectId;
         this.dataFactory = dataFactory;
         this.dictionaryUpdatesProcessor = dictionaryUpdatesProcessor;
@@ -172,6 +175,7 @@ public class ChangeManager implements HasApplyChanges {
         this.projectChangedWebhookInvoker = projectChangedWebhookInvoker;
         this.eventTranslatorManagerProvider = eventTranslatorManagerProvider;
         this.entityCrudKitHandlerCache = entityCrudKitHandlerCache;
+        this.projectRevisionRepository = projectRevisionRepository;
         this.eventDispatcher = eventDispatcher;
         this.changeManager = changeManager;
         this.rootIndex = rootIndex;
@@ -335,7 +339,9 @@ public class ChangeManager implements HasApplyChanges {
                                                eventTranslatorManager,
                                                revision);
 
-            newRevisionsEmitter.emitNewRevisionsEvent(revision);
+            revision.ifPresent(value -> projectRevisionRepository.save(new ProjectRevision(projectId, changeRequestId, userId, value.getRevisionNumber())));
+
+            newRevisionsEmitter.emitNewRevisionsEvent(revision, changeRequestId);
 
         } finally {
             changeProcesssingLock.unlock();
