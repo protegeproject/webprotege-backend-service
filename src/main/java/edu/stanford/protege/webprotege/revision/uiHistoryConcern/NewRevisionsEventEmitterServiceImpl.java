@@ -28,13 +28,13 @@ public class NewRevisionsEventEmitterServiceImpl implements NewRevisionsEventEmi
 
 
     @Override
-    public void emitNewRevisionsEvent(Optional<Revision> revision) {
+    public void emitNewRevisionsEvent(Optional<Revision> revision, ChangeRequestId changeRequestId) {
         revision.ifPresent(rev -> {
             Set<ProjectChangeForEntity> changes = changesManager.getProjectChangesForEntitiesFromRevision(rev);
             //Based on axioms in the revision we can determine if the entity was added/deleted or updated
             //e.g. for adding a new entity you have Declaration axiom
             //
-            NewRevisionsEvent revisionsEvent = NewRevisionsEvent.create(EventId.generate(), projectId, changes);
+            NewRevisionsEvent revisionsEvent = NewRevisionsEvent.create(EventId.generate(), projectId, changes, changeRequestId);
             eventDispatcher.dispatchEvent(revisionsEvent);
         });
     }
