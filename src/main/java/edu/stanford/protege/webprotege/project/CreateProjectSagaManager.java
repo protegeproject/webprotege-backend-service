@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.common.BlobLocation;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest;
@@ -16,8 +17,7 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.*;
 
 /**
  * Matthew Horridge
@@ -34,6 +34,7 @@ public class CreateProjectSagaManager {
     private final CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor;
 
     private final CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor;
+    private final CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
 
     private final MinioFileDownloader fileDownloader;
 
@@ -45,12 +46,14 @@ public class CreateProjectSagaManager {
     public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager,
                                     CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
+                                    CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
                                     ProjectPermissionsInitializer projectPermissionsInitializer) {
         this.projectDetailsManager = projectDetailsManager;
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
+        this.prepareBinaryFileBackupForUseExecutor = prepareBinaryFileBackupForUseExecutor;
         this.revisionHistoryReplacer = revisionHistoryReplacer;
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
@@ -65,6 +68,8 @@ public class CreateProjectSagaManager {
             return createEmptyProject(new SagaState(ProjectId.generate(), newProjectSettings, executionContext));
         }
     }
+
+
 
     private CompletableFuture<CreateNewProjectResult> createEmptyProject(SagaState sagaState) {
         logger.info("Creating an empty project: {}", sagaState.newProjectSettings);
@@ -103,6 +108,41 @@ public class CreateProjectSagaManager {
                                                                                    e.getCause());
                                             }
                                         });
+    }
+
+    public CompletableFuture<CreateNewProjectFromProjectBackupResult> executeFromBackup(NewProjectSettings newProjectSettings, ExecutionContext executionContext) {
+        if (newProjectSettings.hasSourceDocument()) {
+            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext));
+        }
+        return null;
+    }
+
+    private CompletableFuture<CreateNewProjectFromProjectBackupResult> createProjectFromBackupFile(SagaStateWithSources sagaState) {
+        logger.info("Creating an empty project: {}", sagaState.getNewProjectSettings());
+        return prepareBackupFilesForRestore(sagaState)
+                .thenCompose(this::downloadRevisionHistory)
+                .thenCompose(this::copyRevisionHistoryToProject)
+                .thenCompose(this::registerProject)
+                .thenCompose(this::initializeProjectPermissions)
+                .thenCompose(this::retrieveProjectDetails)
+                .handle((r, e) -> {
+                    if (e == null) {
+                        return new CreateNewProjectFromProjectBackupResult(r.getProjectDetails());
+                    }
+                    else {
+                        // Should be a CompletionException
+                        logger.error("Error creating project", e);
+                        throw new ProjectCreationException(sagaState.getProjectId(),
+                                "Project creation failed",
+                                e.getCause());
+                    }
+                });
+    }
+
+    private CompletableFuture<SagaStateWithSources> prepareBackupFilesForRestore(SagaStateWithSources sagaState) {
+        var createHistoryRequest = sagaState.createPrepareBackupFilesForUseRequest();
+        return prepareBinaryFileBackupForUseExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
+                .thenApply(sagaState::handleBackupFilesReady);
     }
 
     private CompletableFuture<SagaState> retrieveProjectDetails(SagaState sagaState) {
@@ -228,6 +268,15 @@ public class CreateProjectSagaManager {
         public SagaStateWithSources handleProcessUploadedOntologiesResponse(ProcessUploadedOntologiesResponse response) {
             this.ontologyDocumentLocations = response.ontologies();
             return this;
+        }
+
+        public SagaStateWithSources handleBackupFilesReady(PrepareBackupFilesForUseResponse response) {
+            this.revisionHistoryLocation = response.binaryFileLocation();
+            return this;
+        }
+
+        public PrepareBackupFilesForUseRequest createPrepareBackupFilesForUseRequest() {
+            return new PrepareBackupFilesForUseRequest(getNewProjectSettings().sourceDocument());
         }
 
     }
