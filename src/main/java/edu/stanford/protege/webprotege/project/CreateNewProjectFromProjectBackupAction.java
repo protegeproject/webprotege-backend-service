@@ -30,10 +30,9 @@ public record CreateNewProjectFromProjectBackupAction(
         if (obj == this) {
             return true;
         }
-        if (!(obj instanceof CreateNewProjectFromProjectBackupAction)) {
+        if (!(obj instanceof CreateNewProjectFromProjectBackupAction other)) {
             return false;
         }
-        CreateNewProjectFromProjectBackupAction other = (CreateNewProjectFromProjectBackupAction) obj;
         return this.newProjectId.equals(other.newProjectId) && this.newProjectSettings.equals(other.newProjectSettings);
     }
 
