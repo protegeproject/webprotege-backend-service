@@ -9,5 +9,5 @@ import java.util.Set;
 import static edu.stanford.protege.webprotege.icd.actions.CreateClassesFromApiAction.CHANNEL;
 
 @JsonTypeName(CHANNEL)
-public record CreateClassesFromApiResult(ChangeRequestId changeRequestId, ProjectId projectId, Set<String> newEntityIris) implements Response, Result {
+public record CreateClassesFromApiResult(ChangeRequestId changeRequestId, ProjectId projectId, String newEntityIri) implements Response, Result {
 }
