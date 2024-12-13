@@ -229,4 +229,63 @@ class CreateProjectSagaManagerTest {
                 .thenReturn(CompletableFuture.supplyAsync(() -> null));
         return revisionHistoryLocation;
     }
+
+
+    @Test
+    void shouldCreateProjectFromBackupFile() throws ExecutionException, InterruptedException {
+        var revisionHistoryLocation = mockPrepareBackupFileAndDownload();
+
+        when(projectPermissionsInitializer.applyDefaultPermissions(any(ProjectId.class), any(UserId.class)))
+                .thenReturn(CompletableFuture.completedFuture(null));
+
+        when(projectDetailsManager.getProjectDetails(any(ProjectId.class)))
+                .thenReturn(projectDetails);
+
+        var response = manager.executeFromBackup(newProjectSettingsWithSources, executionContext);
+        var result = response.get();
+
+        assertNotNull(result);
+        assertEquals(projectDetails, result.projectDetails());
+
+        verify(prepareBinaryFileBackupForUseExecutor, times(1)).execute(any(), eq(executionContext));
+        verify(fileDownloader, times(1)).downloadFile(eq(revisionHistoryLocation));
+        verify(revisionHistoryReplacer, times(1)).replaceRevisionHistory(any(ProjectId.class), any(Path.class));
+        verify(projectDetailsManager, times(1)).registerProject(any(ProjectId.class), eq(newProjectSettingsWithSources));
+        verify(projectPermissionsInitializer, times(1)).applyDefaultPermissions(any(ProjectId.class), eq(janeDoe));
+    }
+
+    @Test
+    void shouldHandleErrorDuringBackupFilePreparation() throws InterruptedException {
+        var errorForTest = new RuntimeException("Error during backup preparation");
+        when(prepareBinaryFileBackupForUseExecutor.execute(any(), eq(executionContext)))
+                .thenReturn(CompletableFuture.failedFuture(errorForTest));
+
+        try {
+            var response = manager.executeFromBackup(newProjectSettingsWithSources, executionContext);
+            response.get(); // This should throw an exception
+            fail("Expected ExecutionException");
+        } catch (ExecutionException e) {
+            assertThat(e.getCause()).isInstanceOf(ProjectCreationException.class);
+            assertThat(e.getCause().getCause()).isEqualTo(errorForTest);
+        }
+
+        verify(fileDownloader, never()).downloadFile(any());
+        verify(revisionHistoryReplacer, never()).replaceRevisionHistory(any(ProjectId.class), any(Path.class));
+        verify(projectDetailsManager, never()).registerProject(any(ProjectId.class), eq(newProjectSettingsWithSources));
+        verify(projectPermissionsInitializer, never()).applyDefaultPermissions(any(ProjectId.class), eq(janeDoe));
+    }
+
+
+    @Nonnull
+    private BlobLocation mockPrepareBackupFileAndDownload() {
+        var revisionHistoryLocation = new BlobLocation("testbucket", "backup-history");
+        when(prepareBinaryFileBackupForUseExecutor.execute(any(), eq(executionContext)))
+                .thenReturn(CompletableFuture.completedFuture(new PrepareBackupFilesForUseResponse(revisionHistoryLocation)));
+        var revisionHistoryPath = Path.of("/tmp/revision-history");
+        when(fileDownloader.downloadFile(revisionHistoryLocation))
+                .thenReturn(CompletableFuture.completedFuture(revisionHistoryPath));
+        when(revisionHistoryReplacer.replaceRevisionHistory(any(ProjectId.class), eq(revisionHistoryPath)))
+                .thenReturn(CompletableFuture.completedFuture(null));
+        return revisionHistoryLocation;
+    }
 }
