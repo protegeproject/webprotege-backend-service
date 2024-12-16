@@ -5,9 +5,8 @@ import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.Result;
 
 import static com.google.common.base.MoreObjects.toStringHelper;
-import static edu.stanford.protege.webprotege.icd.projects.PrepareBackupFilesForUseRequest.CHANNEL;
 
-@JsonTypeName(CHANNEL)
+@JsonTypeName(CreateNewProjectFromProjectBackupAction.CHANNEL)
 public record CreateNewProjectFromProjectBackupResult(
         @JsonProperty("projectDetails") ProjectDetails projectDetails
 ) implements Result {
