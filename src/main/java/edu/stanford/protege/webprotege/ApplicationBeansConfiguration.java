@@ -299,6 +299,12 @@ public class ApplicationBeansConfiguration {
         return new ProjectDetailsRepository(mongoTemplate, objectMapper);
     }
 
+    @Singleton
+    @Bean
+    ProjectRevisionRepository projectRevisionRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
+        return new ProjectRevisionRepository(mongoTemplate, objectMapper);
+    }
+
     @Bean
     @Singleton
     SlackWebhookRepository getSlackWebhookRepository(MongoTemplate mongoTemplate) {

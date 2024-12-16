@@ -458,7 +458,6 @@ public class ProjectActionHandlerBeansConfiguration {
         return new RevertRevisionActionHandler(p1, p3, p4, p5);
     }
 
-
     @Bean
     GetPerspectiveLayoutActionHandler getPerspectiveLayoutActionHandler(PerspectivesManager p1) {
         return new GetPerspectiveLayoutActionHandler(p1);

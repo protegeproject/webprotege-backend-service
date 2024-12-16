@@ -645,7 +645,8 @@ public class ProjectBeansConfiguration {
                                 IriReplacerFactory p25,
                                 GeneratedAnnotationsGenerator p26,
                                 EventDispatcher p27,
-                                NewRevisionsEventEmitterService p28) {
+                                NewRevisionsEventEmitterService p28,
+                                ProjectRevisionRepository p29) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -671,7 +672,8 @@ public class ProjectBeansConfiguration {
                                  p25,
                                  p26,
                                  p27,
-                                 p28);
+                                 p28,
+                                 p29);
     }
 
     @Bean
