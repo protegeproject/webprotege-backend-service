@@ -85,35 +85,37 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
                                                             CreateClassesFromApiAction action,
                                                             ExecutionContext executionContext) {
 
-        Set<OWLClass> classes = changeApplicationResult.getSubject();
-        classes.forEach(newClass ->
-                {
-                    try {
-                        linearizationManager.createLinearizationFromParent(
-                                newClass.getIRI(),
-                                IRI.create(action.parent()),
-                                action.projectId(),
-                                executionContext
-                        ).get();
-                    } catch (InterruptedException | ExecutionException e) {
-                        logger.error("CreateLinearizationsError: " + e);
-                    }
-                    try {
-                        postcoordinationManager.createPostcoordinationFromParent(
-                                newClass.getIRI(),
-                                IRI.create(action.parent()),
-                                action.projectId(),
-                                executionContext
-                        ).get();
-                    } catch (InterruptedException | ExecutionException e) {
-                        logger.error("CreatePostcoordinationError: " + e);
-                    }
-                }
-        );
-        return new CreateClassesFromApiResult(
-                action.changeRequestId(),
-                action.projectId(),
-                classes.stream().map(OWLClass::toStringID).collect(toImmutableSet())
-        );
+        if (changeApplicationResult.getSubject().size() == 0) {
+            logger.error("Missing subject on create class from api with parent : " + action.parent());
+            throw new RuntimeException("Missing subject on create class from api with parent : " + action.parent());
+        } else {
+            OWLClass newClass = changeApplicationResult.getSubject().stream().findFirst().get();
+            try {
+                linearizationManager.createLinearizationFromParent(
+                        newClass.getIRI(),
+                        IRI.create(action.parent()),
+                        action.projectId(),
+                        executionContext
+                ).get();
+            } catch (InterruptedException | ExecutionException e) {
+                logger.error("CreateLinearizationsError: " + e);
+            }
+            try {
+                postcoordinationManager.createPostcoordinationFromParent(
+                        newClass.getIRI(),
+                        IRI.create(action.parent()),
+                        action.projectId(),
+                        executionContext
+                ).get();
+            } catch (InterruptedException | ExecutionException e) {
+                logger.error("CreatePostcoordinationError: " + e);
+            }
+            return new CreateClassesFromApiResult(
+                    action.changeRequestId(),
+                    action.projectId(),
+                    newClass.toStringID()
+            );
+        }
     }
+
 }
