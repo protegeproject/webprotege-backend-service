@@ -19,6 +19,7 @@ import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManagerImpl;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyRepository;
+import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -189,12 +190,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectDirectoryFactory getProjectDirectoryFactory() {
-        return new ProjectDirectoryFactory(getDataDirectory());
-    }
-
-    private File getDataDirectory() {
-        return null;
+    ProjectDirectoryFactory getProjectDirectoryFactory(DataDirectoryProvider dataDirectoryProvider) {
+        return new ProjectDirectoryFactory(dataDirectoryProvider.get());
     }
 
     @Bean
@@ -573,6 +570,11 @@ public class ApplicationBeansConfiguration {
     @Bean
     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> executorForCreateInitialRevisionHistory() {
         return new CommandExecutorImpl<>(CreateInitialRevisionHistoryResponse.class);
+    }
+
+    @Bean
+    CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> executorForPrepareBackupFilesForUse() {
+        return new CommandExecutorImpl<>(PrepareBackupFilesForUseResponse.class);
     }
 
     @Bean

@@ -142,7 +142,7 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
                 OWLAnnotationProperty titleProperty = dataFactory.getOWLAnnotationProperty(propertyIRITitle);
 
                 OWLLiteral literal = dataFactory.getOWLLiteral(sourceText, langTag);
-                OWLNamedIndividual titleIndividual = dataFactory.getOWLNamedIndividual(IRI.create(IcdConstants.NS, "TitleTerm_"+sourceText.replace(" ","_")));
+                OWLNamedIndividual titleIndividual = dataFactory.getOWLNamedIndividual(IRI.create(IcdConstants.NS, "TitleTerm_"+UUID.randomUUID()));
 
                 OWLAnnotationAssertionAxiom titleAxiom = dataFactory.getOWLAnnotationAssertionAxiom(titleProperty, freshEntity.getIRI(), titleIndividual.getIRI());
                 OWLAnnotationAssertionAxiom newLabelAxiom = dataFactory.getOWLAnnotationAssertionAxiom(labelProperty, titleIndividual.getIRI(), literal);
