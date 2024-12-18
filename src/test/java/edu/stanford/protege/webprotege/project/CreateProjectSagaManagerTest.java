@@ -46,6 +46,8 @@ class CreateProjectSagaManagerTest {
 
     @Mock
     private CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
+    @Mock
+    private CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor;
 
     @Mock
     private MinioFileDownloader fileDownloader;
@@ -74,7 +76,7 @@ class CreateProjectSagaManagerTest {
                                                processOntologiesExecutor,
                                                createInitialRevisionHistoryExecutor,
                                                prepareBinaryFileBackupForUseExecutor,
-                                               fileDownloader,
+                createProjectSmallFilesExecutor, fileDownloader,
                                                revisionHistoryReplacer,
                                                projectPermissionsInitializer);
         janeDoe = UserId.valueOf("JaneDoe");
