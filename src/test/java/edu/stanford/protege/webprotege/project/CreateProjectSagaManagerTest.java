@@ -76,7 +76,8 @@ class CreateProjectSagaManagerTest {
                                                processOntologiesExecutor,
                                                createInitialRevisionHistoryExecutor,
                                                prepareBinaryFileBackupForUseExecutor,
-                createProjectSmallFilesExecutor, fileDownloader,
+                                               createProjectSmallFilesExecutor,
+                                               fileDownloader,
                                                revisionHistoryReplacer,
                                                projectPermissionsInitializer);
         janeDoe = UserId.valueOf("JaneDoe");
@@ -238,6 +239,9 @@ class CreateProjectSagaManagerTest {
         var revisionHistoryLocation = mockPrepareBackupFileAndDownload();
 
         when(projectPermissionsInitializer.applyDefaultPermissions(any(ProjectId.class), any(UserId.class)))
+                .thenReturn(CompletableFuture.completedFuture(null));
+
+        when(createProjectSmallFilesExecutor.execute(any(), eq(executionContext)))
                 .thenReturn(CompletableFuture.completedFuture(null));
 
         when(projectDetailsManager.getProjectDetails(any(ProjectId.class)))
