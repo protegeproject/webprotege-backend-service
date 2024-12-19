@@ -578,6 +578,11 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
+    CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> executorForCreateProjectSmallFiles() {
+        return new CommandExecutorImpl<>(CreateProjectSmallFilesResponse.class);
+    }
+
+    @Bean
     MinioClient minioClient(MinioProperties properties) {
         return MinioClient.builder()
                           .credentials(properties.getAccessKey(), properties.getSecretKey())

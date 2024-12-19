@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 /**
  * Matthew Horridge
@@ -30,6 +30,8 @@ public class CreateProjectSagaManager {
     private final CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor;
     private final CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
 
+    private final CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor;
+
     private final MinioFileDownloader fileDownloader;
 
     private final RevisionHistoryReplacer revisionHistoryReplacer;
@@ -41,6 +43,7 @@ public class CreateProjectSagaManager {
                                     CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
                                     CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor,
+                                    CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
                                     ProjectPermissionsInitializer projectPermissionsInitializer) {
@@ -48,6 +51,7 @@ public class CreateProjectSagaManager {
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
         this.prepareBinaryFileBackupForUseExecutor = prepareBinaryFileBackupForUseExecutor;
+        this.createProjectSmallFilesExecutor = createProjectSmallFilesExecutor;
         this.revisionHistoryReplacer = revisionHistoryReplacer;
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
@@ -113,6 +117,7 @@ public class CreateProjectSagaManager {
         return prepareBackupFilesForRestore(sagaState)
                 .thenCompose(this::downloadRevisionHistory)
                 .thenCompose(this::copyRevisionHistoryToProject)
+                .thenCompose(this::createProjectSmallFiles)
                 .thenCompose(this::registerProject)
                 .thenCompose(this::initializeProjectPermissions)
                 .thenCompose(this::retrieveProjectDetails)
@@ -127,6 +132,12 @@ public class CreateProjectSagaManager {
                                 e.getCause());
                     }
                 });
+    }
+
+    private CompletableFuture<SagaStateWithSources> createProjectSmallFiles(SagaStateWithSources sagaState) {
+        var createHistoryRequest = sagaState.createProjectSmallFiles();
+        return createProjectSmallFilesExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
+                .thenApply(response -> sagaState);
     }
 
     private CompletableFuture<SagaStateWithSources> prepareBackupFilesForRestore(SagaStateWithSources sagaState) {
@@ -269,6 +280,9 @@ public class CreateProjectSagaManager {
             return new PrepareBackupFilesForUseRequest(getProjectId(), getNewProjectSettings().sourceDocument());
         }
 
+        public CreateProjectSmallFilesRequest createProjectSmallFiles() {
+            return new CreateProjectSmallFilesRequest(getProjectId());
+        }
     }
 
 }
