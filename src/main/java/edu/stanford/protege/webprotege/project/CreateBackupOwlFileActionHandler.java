@@ -24,7 +24,7 @@ public class CreateBackupOwlFileActionHandler extends AbstractProjectActionHandl
     @NotNull
     @Override
     public CreateBackupOwlFileResponse execute(@NotNull CreateBackupOwlFileAction action, @NotNull ExecutionContext executionContext) {
-        projectBackupManager.createBackup();
-        return new CreateBackupOwlFileResponse();
+        String backupFileLocation = projectBackupManager.createBackup();
+        return new CreateBackupOwlFileResponse(backupFileLocation);
     }
 }

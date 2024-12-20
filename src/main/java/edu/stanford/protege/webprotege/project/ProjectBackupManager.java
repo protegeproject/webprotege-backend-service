@@ -25,7 +25,7 @@ public class ProjectBackupManager {
         this.backupDirectoryProvider = backupDirectoryProvider;
     }
 
-    public void createBackup() {
+    public String createBackup() {
         String currentDate = LocalDate.now().toString();
         Path sourcePath = new File(projectDirectoryProvider.get().getAbsolutePath()+ "/change-data/change-data.binary").toPath();
         Path targetDir = new File(backupDirectoryProvider.get().getAbsolutePath() + "/" + currentDate).toPath();
@@ -37,8 +37,10 @@ public class ProjectBackupManager {
             }
 
             Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+            return targetPath.toAbsolutePath().toString();
         } catch (IOException e) {
             LOGGER.error("Error saving the backup file occurred", e);
+            throw new RuntimeException("Error saving the backup file occurred", e);
         }
     }
 
