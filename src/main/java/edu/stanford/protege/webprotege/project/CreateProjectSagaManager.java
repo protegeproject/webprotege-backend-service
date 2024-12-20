@@ -1,23 +1,17 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.common.BlobLocation;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.ipc.CommandExecutor;
-import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest;
-import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesResponse;
-import edu.stanford.protege.webprotege.revision.CreateInitialRevisionHistoryRequest;
-import edu.stanford.protege.webprotege.revision.CreateInitialRevisionHistoryResponse;
+import edu.stanford.protege.webprotege.common.*;
+import edu.stanford.protege.webprotege.icd.projects.*;
+import edu.stanford.protege.webprotege.ipc.*;
+import edu.stanford.protege.webprotege.ontology.*;
+import edu.stanford.protege.webprotege.revision.*;
 import edu.stanford.protege.webprotege.storage.MinioFileDownloader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Matthew Horridge
@@ -34,6 +28,7 @@ public class CreateProjectSagaManager {
     private final CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor;
 
     private final CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor;
+    private final CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
 
     private final MinioFileDownloader fileDownloader;
 
@@ -45,12 +40,14 @@ public class CreateProjectSagaManager {
     public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager,
                                     CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
+                                    CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
                                     ProjectPermissionsInitializer projectPermissionsInitializer) {
         this.projectDetailsManager = projectDetailsManager;
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
+        this.prepareBinaryFileBackupForUseExecutor = prepareBinaryFileBackupForUseExecutor;
         this.revisionHistoryReplacer = revisionHistoryReplacer;
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
@@ -60,72 +57,105 @@ public class CreateProjectSagaManager {
     public CompletableFuture<CreateNewProjectResult> execute(NewProjectSettings newProjectSettings, ExecutionContext executionContext) {
         if (newProjectSettings.hasSourceDocument()) {
             return createProjectFromSources(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext));
-        }
-        else {
+        } else {
             return createEmptyProject(new SagaState(ProjectId.generate(), newProjectSettings, executionContext));
         }
     }
 
+
     private CompletableFuture<CreateNewProjectResult> createEmptyProject(SagaState sagaState) {
         logger.info("Creating an empty project: {}", sagaState.newProjectSettings);
         return registerProject(sagaState).thenCompose(this::initializeProjectPermissions)
-                                         .thenCompose(this::retrieveProjectDetails)
-                                         .handle((r, e) -> {
-                                             if (e == null) {
-                                                 return new CreateNewProjectResult(r.getProjectDetails());
-                                             }
-                                             else {
-                                                 // Should be a CompletionException
-                                                 logger.error("Error creating project", e);
-                                                 throw new ProjectCreationException(sagaState.getProjectId(),
-                                                                                    "Project creation failed",
-                                                                                    e.getCause());
-                                             }
-                                         });
+                .thenCompose(this::retrieveProjectDetails)
+                .handle((r, e) -> {
+                    if (e == null) {
+                        return new CreateNewProjectResult(r.getProjectDetails());
+                    } else {
+                        // Should be a CompletionException
+                        logger.error("Error creating project", e);
+                        throw new ProjectCreationException(sagaState.getProjectId(),
+                                "Project creation failed",
+                                e.getCause());
+                    }
+                });
     }
 
     private CompletableFuture<CreateNewProjectResult> createProjectFromSources(SagaStateWithSources sagaState) {
         logger.info("Creating a project from sources: {}", sagaState.getNewProjectSettings());
         return processSources(sagaState).thenCompose(this::createInitialRevisionHistory)
-                                        .thenCompose(this::downloadRevisionHistory)
-                                        .thenCompose(this::copyRevisionHistoryToProject)
-                                        .thenCompose(this::registerProject)
-                                        .thenCompose(this::initializeProjectPermissions)
-                                        .thenCompose(this::retrieveProjectDetails)
-                                        .handle((r, e) -> {
-                                            if (e == null) {
-                                                return new CreateNewProjectResult(r.getProjectDetails());
-                                            }
-                                            else {                                                 logger.error("Error creating project", e);
-                                                logger.error("Error creating project", e);
-                                                throw new ProjectCreationException(sagaState.getProjectId(),
-                                                                                   "Project creation failed",
-                                                                                   e.getCause());
-                                            }
-                                        });
+                .thenCompose(this::downloadRevisionHistory)
+                .thenCompose(this::copyRevisionHistoryToProject)
+                .thenCompose(this::registerProject)
+                .thenCompose(this::initializeProjectPermissions)
+                .thenCompose(this::retrieveProjectDetails)
+                .handle((r, e) -> {
+                    if (e == null) {
+                        return new CreateNewProjectResult(r.getProjectDetails());
+                    } else {
+                        logger.error("Error creating project", e);
+                        logger.error("Error creating project", e);
+                        throw new ProjectCreationException(sagaState.getProjectId(),
+                                "Project creation failed",
+                                e.getCause());
+                    }
+                });
+    }
+
+    public CompletableFuture<CreateNewProjectFromProjectBackupResult> executeFromBackup(NewProjectSettings newProjectSettings, ExecutionContext executionContext) {
+        if (newProjectSettings.hasSourceDocument()) {
+            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext));
+        }
+        return null;
+    }
+
+    private CompletableFuture<CreateNewProjectFromProjectBackupResult> createProjectFromBackupFile(SagaStateWithSources sagaState) {
+        logger.info("Creating an empty project: {}", sagaState.getNewProjectSettings());
+        return prepareBackupFilesForRestore(sagaState)
+                .thenCompose(this::downloadRevisionHistory)
+                .thenCompose(this::copyRevisionHistoryToProject)
+                .thenCompose(this::registerProject)
+                .thenCompose(this::initializeProjectPermissions)
+                .thenCompose(this::retrieveProjectDetails)
+                .handle((r, e) -> {
+                    if (e == null) {
+                        return new CreateNewProjectFromProjectBackupResult(r.getProjectDetails());
+                    } else {
+                        // Should be a CompletionException
+                        logger.error("Error creating project", e);
+                        throw new ProjectCreationException(sagaState.getProjectId(),
+                                "Project creation failed",
+                                e.getCause());
+                    }
+                });
+    }
+
+    private CompletableFuture<SagaStateWithSources> prepareBackupFilesForRestore(SagaStateWithSources sagaState) {
+        var createHistoryRequest = sagaState.createPrepareBackupFilesForUseRequest();
+        return prepareBinaryFileBackupForUseExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
+                .thenApply(sagaState::handleBackupFilesReady);
     }
 
     private CompletableFuture<SagaState> retrieveProjectDetails(SagaState sagaState) {
         return CompletableFuture.supplyAsync(() -> projectDetailsManager.getProjectDetails(sagaState.getProjectId()))
-                                .thenApply(sagaState::setProjectDetails);
+                .thenApply(sagaState::setProjectDetails);
     }
 
     private CompletableFuture<SagaState> initializeProjectPermissions(SagaState sagaState) {
         var projectOwner = sagaState.getNewProjectSettings().getProjectOwner();
         return projectPermissionsInitializer.applyDefaultPermissions(sagaState.getProjectId(), projectOwner)
-                                            .thenApply(r -> sagaState);
+                .thenApply(r -> sagaState);
     }
 
     private CompletableFuture<SagaStateWithSources> processSources(SagaStateWithSources sagaState) {
         var request = sagaState.createProcessUploadedOntologiesRequest();
         return processOntologiesExecutor.execute(request, sagaState.getExecutionContext())
-                                        .thenApply(sagaState::handleProcessUploadedOntologiesResponse);
+                .thenApply(sagaState::handleProcessUploadedOntologiesResponse);
     }
 
     private CompletableFuture<SagaStateWithSources> createInitialRevisionHistory(SagaStateWithSources sagaState) {
         var createHistoryRequest = sagaState.createCreateInitialRevisionHistoryRequest();
         return createInitialRevisionHistoryExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
-                                                   .thenApply(sagaState::handleCreateInitialRevisionHistoryResponse);
+                .thenApply(sagaState::handleCreateInitialRevisionHistoryResponse);
     }
 
     private CompletableFuture<SagaStateWithSources> downloadRevisionHistory(SagaStateWithSources sagaState) {
@@ -134,8 +164,8 @@ public class CreateProjectSagaManager {
 
     private CompletableFuture<SagaStateWithSources> copyRevisionHistoryToProject(SagaStateWithSources sagaState) {
         return revisionHistoryReplacer.replaceRevisionHistory(sagaState.getProjectId(),
-                                                              sagaState.getRevisionHistoryPath())
-                                      .thenApply(r -> sagaState);
+                        sagaState.getRevisionHistoryPath())
+                .thenApply(r -> sagaState);
     }
 
     private CompletableFuture<SagaState> registerProject(SagaState sagaState) {
@@ -181,7 +211,7 @@ public class CreateProjectSagaManager {
 
         public ProjectDetails getProjectDetails() {
             if (projectDetails == null) {
-                throw  new IllegalStateException("ProjectDetails is null");
+                throw new IllegalStateException("ProjectDetails is null");
             }
             return projectDetails;
         }
@@ -228,6 +258,15 @@ public class CreateProjectSagaManager {
         public SagaStateWithSources handleProcessUploadedOntologiesResponse(ProcessUploadedOntologiesResponse response) {
             this.ontologyDocumentLocations = response.ontologies();
             return this;
+        }
+
+        public SagaStateWithSources handleBackupFilesReady(PrepareBackupFilesForUseResponse response) {
+            this.revisionHistoryLocation = response.binaryFileLocation();
+            return this;
+        }
+
+        public PrepareBackupFilesForUseRequest createPrepareBackupFilesForUseRequest() {
+            return new PrepareBackupFilesForUseRequest(getProjectId(), getNewProjectSettings().sourceDocument());
         }
 
     }

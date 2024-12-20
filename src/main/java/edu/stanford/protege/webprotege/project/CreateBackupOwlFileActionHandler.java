@@ -5,6 +5,8 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 
+import java.nio.file.Path;
+
 public class CreateBackupOwlFileActionHandler extends AbstractProjectActionHandler<CreateBackupOwlFileAction, CreateBackupOwlFileResponse> {
 
     private final ProjectBackupManager projectBackupManager;
@@ -24,7 +26,7 @@ public class CreateBackupOwlFileActionHandler extends AbstractProjectActionHandl
     @NotNull
     @Override
     public CreateBackupOwlFileResponse execute(@NotNull CreateBackupOwlFileAction action, @NotNull ExecutionContext executionContext) {
-        String backupFileLocation = projectBackupManager.createBackup();
-        return new CreateBackupOwlFileResponse(backupFileLocation);
+        Path owlBackupFile  = projectBackupManager.createBackup();
+        return new CreateBackupOwlFileResponse(owlBackupFile.toString());
     }
 }
