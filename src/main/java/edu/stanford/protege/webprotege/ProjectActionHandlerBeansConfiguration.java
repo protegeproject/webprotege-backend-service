@@ -23,6 +23,8 @@ import edu.stanford.protege.webprotege.icd.actions.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.*;
+import edu.stanford.protege.webprotege.inject.ProjectBackupDirectoryProvider;
+import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryProvider;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.lang.*;
@@ -739,6 +741,18 @@ public class ProjectActionHandlerBeansConfiguration {
                                                             ProjectDetailsManager p2,
                                                             ActiveLanguagesManager p3) {
         return new GetProjectInfoActionHandler(p1, p2, p3);
+    }
+
+    @Bean
+    public ProjectBackupManager getProjectBackupManager(ProjectDirectoryProvider p1,
+                                                        ProjectBackupDirectoryProvider p2) {
+        return new ProjectBackupManager(p1, p2);
+    }
+
+    @Bean
+    CreateBackupOwlFileActionHandler createBackupOwlFileActionHandler(AccessManager p1,
+                                                                      ProjectBackupManager p2) {
+        return new CreateBackupOwlFileActionHandler(p1, p2);
     }
 
 
