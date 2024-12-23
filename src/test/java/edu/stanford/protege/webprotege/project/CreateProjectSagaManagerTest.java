@@ -46,6 +46,8 @@ class CreateProjectSagaManagerTest {
 
     @Mock
     private CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
+    @Mock
+    private CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor;
 
     @Mock
     private MinioFileDownloader fileDownloader;
@@ -74,6 +76,7 @@ class CreateProjectSagaManagerTest {
                                                processOntologiesExecutor,
                                                createInitialRevisionHistoryExecutor,
                                                prepareBinaryFileBackupForUseExecutor,
+                                               createProjectSmallFilesExecutor,
                                                fileDownloader,
                                                revisionHistoryReplacer,
                                                projectPermissionsInitializer);
@@ -236,6 +239,9 @@ class CreateProjectSagaManagerTest {
         var revisionHistoryLocation = mockPrepareBackupFileAndDownload();
 
         when(projectPermissionsInitializer.applyDefaultPermissions(any(ProjectId.class), any(UserId.class)))
+                .thenReturn(CompletableFuture.completedFuture(null));
+
+        when(createProjectSmallFilesExecutor.execute(any(), eq(executionContext)))
                 .thenReturn(CompletableFuture.completedFuture(null));
 
         when(projectDetailsManager.getProjectDetails(any(ProjectId.class)))

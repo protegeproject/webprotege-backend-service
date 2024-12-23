@@ -181,6 +181,7 @@ import edu.stanford.protege.webprotege.watches.SetWatchesResult;
         @Type(SetUserProjectEntityGraphSettingsResult.class),
         @Type(UpdateEntityTagsResult.class),
         @Type(UpdateFormDescriptorResult.class),
+        @Type(CreateNewProjectFromProjectBackupResult.class),
 })
 public interface Result extends Response {
 
