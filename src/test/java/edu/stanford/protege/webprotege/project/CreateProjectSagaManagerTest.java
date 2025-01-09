@@ -39,6 +39,9 @@ class CreateProjectSagaManagerTest {
     private ProjectDetailsManager projectDetailsManager;
 
     @Mock
+    private ProjectBranchManager projectBranchManager;
+
+    @Mock
     private CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor;
 
     @Mock
@@ -73,7 +76,7 @@ class CreateProjectSagaManagerTest {
     @BeforeEach
     void setUp() {
         manager = new CreateProjectSagaManager(projectDetailsManager,
-                                               processOntologiesExecutor,
+                projectBranchManager, processOntologiesExecutor,
                                                createInitialRevisionHistoryExecutor,
                                                prepareBinaryFileBackupForUseExecutor,
                                                createProjectSmallFilesExecutor,
@@ -247,7 +250,7 @@ class CreateProjectSagaManagerTest {
         when(projectDetailsManager.getProjectDetails(any(ProjectId.class)))
                 .thenReturn(projectDetails);
 
-        var response = manager.executeFromBackup(newProjectSettingsWithSources, executionContext);
+        var response = manager.executeFromBackup(newProjectSettingsWithSources, "someBranch", executionContext);
         var result = response.get();
 
         assertNotNull(result);
@@ -267,7 +270,7 @@ class CreateProjectSagaManagerTest {
                 .thenReturn(CompletableFuture.failedFuture(errorForTest));
 
         try {
-            var response = manager.executeFromBackup(newProjectSettingsWithSources, executionContext);
+            var response = manager.executeFromBackup(newProjectSettingsWithSources, "someBranch", executionContext);
             response.get(); // This should throw an exception
             fail("Expected ExecutionException");
         } catch (ExecutionException e) {
