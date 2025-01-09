@@ -111,6 +111,12 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         var parents = action.parents().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
         var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
 
+        var currentParents = classHierarchyProvider.getParents(action.entity());
+        var newParents = action.parents();
+
+        var removedParents = getRemovedParents(action.entity(), action.parents());
+
+        linearizationManager.createLinearizationFromParent()
 
         if (releasedClassesChecker.isReleased(action.entity())) {
             var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
