@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 

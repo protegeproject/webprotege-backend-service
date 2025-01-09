@@ -2,19 +2,20 @@ package edu.stanford.protege.webprotege.match;
 
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 public final class LeafClassMatcherFactory {
-  private final Provider<ClassHierarchyProvider> hierarchyProviderProvider;
+
+  private final ClassHierarchyProvider hierarchyProviderProvider;
 
   @Inject
-  public LeafClassMatcherFactory(Provider<ClassHierarchyProvider> hierarchyProviderProvider) {
+  public LeafClassMatcherFactory(ClassHierarchyProvider hierarchyProviderProvider) {
     this.hierarchyProviderProvider = checkNotNull(hierarchyProviderProvider, 1);
   }
 
   public LeafClassMatcher create() {
-    return new LeafClassMatcher(checkNotNull(hierarchyProviderProvider.get(), 1));
+    return new LeafClassMatcher(checkNotNull(hierarchyProviderProvider, 1));
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

@@ -7,8 +7,8 @@ import edu.stanford.protege.webprotege.index.NamedIndividualFrameAxiomIndex;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;

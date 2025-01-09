@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 

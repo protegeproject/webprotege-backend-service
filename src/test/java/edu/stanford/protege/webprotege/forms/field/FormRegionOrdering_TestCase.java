@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.forms.field;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 
 import static org.hamcrest.MatcherAssert.assertThat;

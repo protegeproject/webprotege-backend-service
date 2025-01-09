@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.forms.data;
 import com.google.common.collect.Comparators;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 
 public class GridCellDataDtoComparator implements Comparator<GridCellDataDto> {

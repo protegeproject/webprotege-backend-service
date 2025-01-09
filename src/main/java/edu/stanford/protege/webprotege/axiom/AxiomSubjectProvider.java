@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.object.OWLObjectSelector;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;

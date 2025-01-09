@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
 import org.semanticweb.owlapi.util.OntologyAxiomPair;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Set;
 

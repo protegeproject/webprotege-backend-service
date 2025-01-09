@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.forms;
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
-import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.forms.field.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-01
  */
-@SpringBootTest
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({WebprotegeBackendMonolithApplication.class})
 @ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)

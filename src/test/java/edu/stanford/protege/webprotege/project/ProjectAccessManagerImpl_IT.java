@@ -20,7 +20,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@SpringBootTest
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({WebprotegeBackendMonolithApplication.class})
 @ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)

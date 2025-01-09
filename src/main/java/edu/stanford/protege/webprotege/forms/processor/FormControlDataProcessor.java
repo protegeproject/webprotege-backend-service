@@ -5,8 +5,8 @@ import edu.stanford.protege.webprotege.forms.data.*;
 import edu.stanford.protege.webprotege.forms.field.OwlBinding;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 /**
  * Matthew Horridge

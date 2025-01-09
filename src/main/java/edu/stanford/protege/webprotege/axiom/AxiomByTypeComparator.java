@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.axiom;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;

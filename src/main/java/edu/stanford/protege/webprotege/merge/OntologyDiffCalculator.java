@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.project.Ontology;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Matthew Horridge

@@ -6,8 +6,8 @@ import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 

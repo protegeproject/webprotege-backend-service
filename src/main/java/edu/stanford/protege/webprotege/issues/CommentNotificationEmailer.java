@@ -14,7 +14,7 @@ import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.common.UserId;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

@@ -2,18 +2,20 @@ package edu.stanford.protege.webprotege.match;
 
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import org.hamcrest.MatcherAssert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -21,7 +23,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 12 Jun 2018
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AnnotationValuesAreNotDisjointMatcher_TestCase {
 
     private AnnotationValuesAreNotDisjointMatcher matcher;
@@ -52,7 +55,7 @@ public class AnnotationValuesAreNotDisjointMatcher_TestCase {
     @Mock
     private IRI iri;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         matcher = new AnnotationValuesAreNotDisjointMatcher(hasAxioms, propAMatcher, propBMatcher);
 

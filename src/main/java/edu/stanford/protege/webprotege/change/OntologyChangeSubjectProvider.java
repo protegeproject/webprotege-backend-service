@@ -9,7 +9,7 @@ import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.util.AxiomSubjectProvider;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;

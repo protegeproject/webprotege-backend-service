@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.inject;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.io.File;
 import java.nio.file.Path;
 

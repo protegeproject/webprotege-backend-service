@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.api;
 import com.google.common.hash.Hashing;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.nio.charset.StandardCharsets;
 
 /**

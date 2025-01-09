@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.revision.Revision;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 import static org.semanticweb.owlapi.model.AxiomType.ANNOTATION_ASSERTION;
