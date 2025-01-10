@@ -70,6 +70,9 @@ class CreateProjectSagaManagerTest {
     @Mock
     private ProjectDetails projectDetails;
 
+    @Mock
+    private ProjectBranch projectBranch;
+
     private ExecutionContext executionContext;
 
 
@@ -260,6 +263,7 @@ class CreateProjectSagaManagerTest {
         verify(fileDownloader, times(1)).downloadFile(eq(revisionHistoryLocation));
         verify(revisionHistoryReplacer, times(1)).replaceRevisionHistory(any(ProjectId.class), any(Path.class));
         verify(projectDetailsManager, times(1)).registerProject(any(ProjectId.class), eq(newProjectSettingsWithSources));
+        verify(projectBranchManager, times(1)).registerBranchMapping(any(ProjectId.class), eq("someBranch"));
         verify(projectPermissionsInitializer, times(1)).applyDefaultPermissions(any(ProjectId.class), eq(janeDoe));
     }
 
@@ -281,6 +285,7 @@ class CreateProjectSagaManagerTest {
         verify(fileDownloader, never()).downloadFile(any());
         verify(revisionHistoryReplacer, never()).replaceRevisionHistory(any(ProjectId.class), any(Path.class));
         verify(projectDetailsManager, never()).registerProject(any(ProjectId.class), eq(newProjectSettingsWithSources));
+        verify(projectBranchManager, never()).registerBranchMapping(any(ProjectId.class), eq("someBranch"));
         verify(projectPermissionsInitializer, never()).applyDefaultPermissions(any(ProjectId.class), eq(janeDoe));
     }
 
