@@ -25,10 +25,14 @@ public class CreateProjectSagaManager {
 
     private final ProjectDetailsManager projectDetailsManager;
 
+    private final ProjectBranchManager projectBranchManager;
+
     private final CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor;
 
     private final CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor;
     private final CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
+
+    private final CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor;
 
     private final MinioFileDownloader fileDownloader;
 
@@ -38,16 +42,19 @@ public class CreateProjectSagaManager {
 
 
     public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager,
-                                    CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
+                                    ProjectBranchManager projectBranchManager, CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
                                     CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor,
+                                    CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
                                     ProjectPermissionsInitializer projectPermissionsInitializer) {
         this.projectDetailsManager = projectDetailsManager;
+        this.projectBranchManager = projectBranchManager;
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
         this.prepareBinaryFileBackupForUseExecutor = prepareBinaryFileBackupForUseExecutor;
+        this.createProjectSmallFilesExecutor = createProjectSmallFilesExecutor;
         this.revisionHistoryReplacer = revisionHistoryReplacer;
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
@@ -101,18 +108,20 @@ public class CreateProjectSagaManager {
                 });
     }
 
-    public CompletableFuture<CreateNewProjectFromProjectBackupResult> executeFromBackup(NewProjectSettings newProjectSettings, ExecutionContext executionContext) {
+    public CompletableFuture<CreateNewProjectFromProjectBackupResult> executeFromBackup(NewProjectSettings newProjectSettings, String branchName, ExecutionContext executionContext) {
         if (newProjectSettings.hasSourceDocument()) {
-            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext));
+            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext), branchName);
         }
         return null;
     }
 
-    private CompletableFuture<CreateNewProjectFromProjectBackupResult> createProjectFromBackupFile(SagaStateWithSources sagaState) {
+    private CompletableFuture<CreateNewProjectFromProjectBackupResult> createProjectFromBackupFile(SagaStateWithSources sagaState, String branchName) {
         logger.info("Creating an empty project: {}", sagaState.getNewProjectSettings());
         return prepareBackupFilesForRestore(sagaState)
                 .thenCompose(this::downloadRevisionHistory)
                 .thenCompose(this::copyRevisionHistoryToProject)
+                .thenCompose(this::createProjectSmallFiles)
+                .thenCompose((sagaStateWithSources) -> this.mapProjectToBranch(sagaStateWithSources, branchName))
                 .thenCompose(this::registerProject)
                 .thenCompose(this::initializeProjectPermissions)
                 .thenCompose(this::retrieveProjectDetails)
@@ -127,6 +136,19 @@ public class CreateProjectSagaManager {
                                 e.getCause());
                     }
                 });
+    }
+
+    private CompletableFuture<SagaStateWithSources> mapProjectToBranch(SagaStateWithSources sagaState, String branchName) {
+        return CompletableFuture.supplyAsync(() -> {
+            projectBranchManager.registerBranchMapping(sagaState.getProjectId(), branchName);
+            return sagaState;
+        });
+    }
+
+    private CompletableFuture<SagaStateWithSources> createProjectSmallFiles(SagaStateWithSources sagaState) {
+        var createHistoryRequest = sagaState.createProjectSmallFiles();
+        return createProjectSmallFilesExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
+                .thenApply(response -> sagaState);
     }
 
     private CompletableFuture<SagaStateWithSources> prepareBackupFilesForRestore(SagaStateWithSources sagaState) {
@@ -269,6 +291,9 @@ public class CreateProjectSagaManager {
             return new PrepareBackupFilesForUseRequest(getProjectId(), getNewProjectSettings().sourceDocument());
         }
 
+        public CreateProjectSmallFilesRequest createProjectSmallFiles() {
+            return new CreateProjectSmallFilesRequest(getProjectId());
+        }
     }
 
 }
