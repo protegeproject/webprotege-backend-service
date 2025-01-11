@@ -2,14 +2,12 @@ package edu.stanford.protege.webprotege.icd.actions;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.index.OntologyAxiomsSignatureIndex;
 import edu.stanford.protege.webprotege.index.ProjectAxiomsSignatureIndex;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLNamedObject;
-import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import javax.inject.Inject;
 import java.util.List;

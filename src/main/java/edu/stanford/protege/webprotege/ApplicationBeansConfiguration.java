@@ -301,13 +301,6 @@ public class ApplicationBeansConfiguration {
 
     @Singleton
     @Bean
-    ProjectBranchRepository getProjectBranchRepository(MongoTemplate mongoTemplate,
-                                                         ObjectMapper objectMapper) {
-        return new ProjectBranchRepository(mongoTemplate, objectMapper);
-    }
-
-    @Singleton
-    @Bean
     ProjectRevisionRepository projectRevisionRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
         return new ProjectRevisionRepository(mongoTemplate, objectMapper);
     }
@@ -585,8 +578,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> executorForCreateProjectSmallFiles() {
-        return new CommandExecutorImpl<>(CreateProjectSmallFilesResponse.class);
+    CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> executorForCreateProjectSmallFiles() {
+        return new CommandExecutorImpl<>(CreateNewReproducibleProjectResponse.class);
     }
 
     @Bean

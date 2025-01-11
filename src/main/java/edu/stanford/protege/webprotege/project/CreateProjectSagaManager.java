@@ -25,14 +25,13 @@ public class CreateProjectSagaManager {
 
     private final ProjectDetailsManager projectDetailsManager;
 
-    private final ProjectBranchManager projectBranchManager;
 
     private final CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor;
 
     private final CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor;
     private final CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
 
-    private final CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor;
+    private final CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> notifyOnNewReproducibleProject;
 
     private final MinioFileDownloader fileDownloader;
 
@@ -41,20 +40,18 @@ public class CreateProjectSagaManager {
     private final ProjectPermissionsInitializer projectPermissionsInitializer;
 
 
-    public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager,
-                                    ProjectBranchManager projectBranchManager, CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
+    public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager, CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
                                     CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor,
-                                    CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor,
+                                    CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> createProjectSmallFilesExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
                                     ProjectPermissionsInitializer projectPermissionsInitializer) {
         this.projectDetailsManager = projectDetailsManager;
-        this.projectBranchManager = projectBranchManager;
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
         this.prepareBinaryFileBackupForUseExecutor = prepareBinaryFileBackupForUseExecutor;
-        this.createProjectSmallFilesExecutor = createProjectSmallFilesExecutor;
+        this.notifyOnNewReproducibleProject = createProjectSmallFilesExecutor;
         this.revisionHistoryReplacer = revisionHistoryReplacer;
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
@@ -120,8 +117,7 @@ public class CreateProjectSagaManager {
         return prepareBackupFilesForRestore(sagaState)
                 .thenCompose(this::downloadRevisionHistory)
                 .thenCompose(this::copyRevisionHistoryToProject)
-                .thenCompose(this::createProjectSmallFiles)
-                .thenCompose((sagaStateWithSources) -> this.mapProjectToBranch(sagaStateWithSources, branchName))
+                .thenCompose(state -> this.notifyVersioningForReproducibleProject(state, branchName))
                 .thenCompose(this::registerProject)
                 .thenCompose(this::initializeProjectPermissions)
                 .thenCompose(this::retrieveProjectDetails)
@@ -138,16 +134,9 @@ public class CreateProjectSagaManager {
                 });
     }
 
-    private CompletableFuture<SagaStateWithSources> mapProjectToBranch(SagaStateWithSources sagaState, String branchName) {
-        return CompletableFuture.supplyAsync(() -> {
-            projectBranchManager.registerBranchMapping(sagaState.getProjectId(), branchName);
-            return sagaState;
-        });
-    }
-
-    private CompletableFuture<SagaStateWithSources> createProjectSmallFiles(SagaStateWithSources sagaState) {
-        var createHistoryRequest = sagaState.createProjectSmallFiles();
-        return createProjectSmallFilesExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
+    private CompletableFuture<SagaStateWithSources> notifyVersioningForReproducibleProject(SagaStateWithSources sagaState, String branchName) {
+        var createReproducibleProjectRequest = sagaState.notifyOnNewReproducibleProject(branchName);
+        return notifyOnNewReproducibleProject.execute(createReproducibleProjectRequest, sagaState.getExecutionContext())
                 .thenApply(response -> sagaState);
     }
 
@@ -291,8 +280,8 @@ public class CreateProjectSagaManager {
             return new PrepareBackupFilesForUseRequest(getProjectId(), getNewProjectSettings().sourceDocument());
         }
 
-        public CreateProjectSmallFilesRequest createProjectSmallFiles() {
-            return new CreateProjectSmallFilesRequest(getProjectId());
+        public CreateNewReproducibleProjectRequest notifyOnNewReproducibleProject(String branchName) {
+            return new CreateNewReproducibleProjectRequest(getProjectId(), branchName);
         }
     }
 
