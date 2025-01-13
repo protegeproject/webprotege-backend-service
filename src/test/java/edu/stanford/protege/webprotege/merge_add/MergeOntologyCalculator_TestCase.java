@@ -2,11 +2,13 @@ package edu.stanford.protege.webprotege.merge_add;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.project.Ontology;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -15,12 +17,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class MergeOntologyCalculator_TestCase {
 
     private MergeOntologyCalculator mergeCalculator;
@@ -43,7 +45,7 @@ public class MergeOntologyCalculator_TestCase {
     @Mock
     private OWLOntologyID ontologyIDA, ontologyIDB, ontologyIDC, ontologyIDD, ontologyIDE;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mergeCalculator = new MergeOntologyCalculator();
 

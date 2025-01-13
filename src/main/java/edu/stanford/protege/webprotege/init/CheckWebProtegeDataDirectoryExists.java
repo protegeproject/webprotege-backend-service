@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.init;
 
 import edu.stanford.protege.webprotege.inject.DataDirectory;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.File;
 
 import static com.google.common.base.Preconditions.checkNotNull;

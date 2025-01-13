@@ -1,14 +1,16 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.index.*;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.*;
@@ -20,7 +22,7 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -28,7 +30,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-16
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ClassHierarchyProviderImpl_TestCase {
 
     private ClassHierarchyProviderImpl classHierarchyProvider;
@@ -69,7 +72,7 @@ public class ClassHierarchyProviderImpl_TestCase {
     @Mock
     private ClassHierarchyChildrenAxiomsIndex classHierarchyChildrenAxiomsIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         ToStringRenderer.getInstance().setRenderer(new OWLObjectRenderer() {

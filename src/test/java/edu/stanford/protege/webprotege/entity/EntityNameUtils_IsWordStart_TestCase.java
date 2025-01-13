@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.entity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,21 +14,27 @@ import static org.junit.Assert.assertEquals;
  */
 public class EntityNameUtils_IsWordStart_TestCase {
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionForNullString() {
+    @Test
+public void shouldThrowNullPointerExceptionForNullString() {
+    assertThrows(NullPointerException.class, () -> { 
         EntityNameUtils.isWordStart(null, 0);
-    }
+     });
+}
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldThrowIndexOutOfBoundsExceptionForNegativeStart() {
+    @Test
+public void shouldThrowIndexOutOfBoundsExceptionForNegativeStart() {
+    assertThrows(IndexOutOfBoundsException.class, () -> { 
         EntityNameUtils.isWordStart(" ", -1);
-    }
+     });
+}
 
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldThrowIndexOutOfBoundsExceptionForStartEqualToStringLength() {
+    @Test
+public void shouldThrowIndexOutOfBoundsExceptionForStartEqualToStringLength() {
+    assertThrows(IndexOutOfBoundsException.class, () -> { 
         EntityNameUtils.isWordStart(" ", 1);
-    }
+     });
+}
 
 
     @Test

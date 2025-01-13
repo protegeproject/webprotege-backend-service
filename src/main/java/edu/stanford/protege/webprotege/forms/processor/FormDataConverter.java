@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.frame.EntityFrame;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

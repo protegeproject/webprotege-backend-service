@@ -2,11 +2,13 @@ package edu.stanford.protege.webprotege.renderer;
 
 import edu.stanford.protege.webprotege.mansyntax.render.AnnotationPropertyComparatorImpl;
 import edu.stanford.protege.webprotege.mansyntax.render.IRIOrdinalProvider;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.util.ShortFormProvider;
@@ -19,7 +21,8 @@ import static org.mockito.Mockito.when;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 04/10/2014
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AnnotationPropertyComparatorImpl_TestCase {
 
     @Mock
@@ -36,7 +39,7 @@ public class AnnotationPropertyComparatorImpl_TestCase {
 
     private AnnotationPropertyComparatorImpl comparator;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         comparator = new AnnotationPropertyComparatorImpl(sfp, iriOrdinalProvider);
 

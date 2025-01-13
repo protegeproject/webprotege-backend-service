@@ -9,8 +9,8 @@ import edu.stanford.protege.webprotege.forms.field.GridColumnDescriptor;
 import edu.stanford.protege.webprotege.forms.field.OwlBinding;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

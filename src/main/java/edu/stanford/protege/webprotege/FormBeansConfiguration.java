@@ -21,7 +21,7 @@ import org.semanticweb.owlapi.model.OWLEntityByTypeProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 
 /**
  * Matthew Horridge

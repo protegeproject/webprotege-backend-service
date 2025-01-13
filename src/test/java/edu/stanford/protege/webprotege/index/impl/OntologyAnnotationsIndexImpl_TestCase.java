@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.index.impl;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddOntologyAnnotationChange;
 import edu.stanford.protege.webprotege.change.RemoveOntologyAnnotationChange;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 
 import java.util.Collections;
@@ -24,7 +26,8 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Annot
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-06
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OntologyAnnotationsIndexImpl_TestCase {
 
     private OntologyAnnotationsIndexImpl impl;
@@ -41,7 +44,7 @@ public class OntologyAnnotationsIndexImpl_TestCase {
 
     private OWLAnnotationProperty property, otherProperty;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         property = AnnotationProperty(mock(IRI.class));
         otherProperty = AnnotationProperty(mock(IRI.class));

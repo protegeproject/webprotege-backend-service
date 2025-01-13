@@ -15,7 +15,7 @@ import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Set;
 

@@ -5,11 +5,15 @@ import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.*;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.*;
@@ -25,7 +29,8 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FixedRootClassHierarchyProvider_TestCase {
 
     private ClassHierarchyProviderImpl classHierarchyProvider;
@@ -64,7 +69,7 @@ public class FixedRootClassHierarchyProvider_TestCase {
     @Mock
     private ClassHierarchyChildrenAxiomsIndex classHierarchyChildrenAxiomsIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ToStringRenderer.getInstance().setRenderer(new OWLObjectRenderer() {
             @Override
