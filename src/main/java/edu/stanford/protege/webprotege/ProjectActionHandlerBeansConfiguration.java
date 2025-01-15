@@ -18,6 +18,7 @@ import edu.stanford.protege.webprotege.forms.json.Json2FormData;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.actions.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
@@ -807,12 +808,12 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ClassHierarchyCycleDetector p5,
                                                                       RevisionReverterChangeListGeneratorFactory p6,
                                                                       RevisionManager p7,
-                                                                      ClassHierarchyProvider p8,
                                                                       RenderingManager p9,
                                                                       ReleasedClassesChecker p10,
                                                                       ClassHierarchyRetiredClassDetector p11,
-                                                                      LinearizationManager p12) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12);
+                                                                      LinearizationManager p12,
+                                                                      LinearizationParentChecker p13) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p9, p10, p11, p12, p13);
     }
 
 

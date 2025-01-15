@@ -17,4 +17,9 @@ public class LinearizationManagerConfiguration {
         return new CommandExecutorImpl<>(CreateLinearizationFromParentResponse.class);
     }
 
+    @Bean
+    public CommandExecutor<GetParentThatIsLinearizationPathParentRequest, GetParentThatIsLinearizationPathParentResponse> isAnyParentLinearizationParentExecutor() {
+        return new CommandExecutorImpl<>(GetParentThatIsLinearizationPathParentResponse.class);
+    }
+
 }
