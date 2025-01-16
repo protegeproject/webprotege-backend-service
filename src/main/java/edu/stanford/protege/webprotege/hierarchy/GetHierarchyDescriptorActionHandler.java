@@ -43,6 +43,7 @@ public class GetHierarchyDescriptorActionHandler extends AbstractProjectActionHa
     @Override
     public GetHierarchyDescriptorResponse execute(@Nonnull GetHierarchyDescriptorRequest action, @Nonnull ExecutionContext executionContext) {
         var displayContext = action.displayContext();
+        logger.info("GetHierarchyDescriptorRequest: {}", action);
         var userId = executionContext.userId();
         var actionClosure = accessManager.getActionClosure(Subject.forUser(userId), ProjectResource.forProject(action.projectId()), executionContext);
         logger.info("GetHierarchyDescriptor: {}", actionClosure);
