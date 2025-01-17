@@ -3,33 +3,23 @@ package edu.stanford.protege.webprotege.bulkop;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.change.RevisionReverterChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.common.ChangeRequestId;
-import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
-import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyCycleDetector;
-import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
-import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
-import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
+import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import edu.stanford.protege.webprotege.revision.RevisionManager;
-import edu.stanford.protege.webprotege.revision.RevisionNumber;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLEntity;
-import org.semanticweb.owlapi.model.OWLNamedObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import edu.stanford.protege.webprotege.revision.*;
+import org.semanticweb.owlapi.model.*;
+import org.slf4j.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -61,6 +51,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     private final RevisionManager revisionManager;
 
     @Nonnull
+    private final ClassHierarchyProvider classHierarchyProvider;
+
+    @Nonnull
     private final ClassHierarchyCycleDetector classCycleDetector;
 
     @Nonnull
@@ -90,6 +83,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull ClassHierarchyCycleDetector classCycleDetector,
                                             @Nonnull RevisionReverterChangeListGeneratorFactory revisionRevertFactory,
                                             @Nonnull RevisionManager revisionManager,
+                                            @Nonnull ClassHierarchyProvider classHierarchyProvider,
                                             @Nonnull RenderingManager renderingManager,
                                             @Nonnull ReleasedClassesChecker releasedClassesChecker,
                                             @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
@@ -102,6 +96,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.classCycleDetector = checkNotNull(classCycleDetector);
         this.revisionManager = checkNotNull(revisionManager);
         this.reveisionReverterFactory = checkNotNull(revisionRevertFactory);
+        this.classHierarchyProvider = checkNotNull(classHierarchyProvider);
         this.renderingManager = checkNotNull(renderingManager);
         this.retiredAncestorDetector = retiredAncestorDetector;
         this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
@@ -119,10 +114,24 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     @Override
     public ChangeEntityParentsResult execute(@Nonnull ChangeEntityParentsAction action, @Nonnull ExecutionContext executionContext) {
-        var parentThatisLinearizationParent = linParentChecker.getParentThatIsLinearizationPathParent(action.entity().getIRI(), action.parents().stream().map(OWLClass::getIRI).collect(Collectors.toSet()));
+        Set<IRI> newParents = action.parents()
+                .stream()
+                .map(OWLNamedObject::getIRI)
+                .collect(Collectors.toSet());
+        Set<IRI> currentParents = classHierarchyProvider.getParents(action.entity())
+                .stream()
+                .map(OWLNamedObject::getIRI)
+                .collect(Collectors.toSet());
+        Set<IRI> removedParents = currentParents
+                .stream()
+                .filter(parent -> !newParents.contains(parent))
+                .collect(Collectors.toSet());
+        var parentThatisLinearizationParent = linParentChecker.getParentThatIsLinearizationPathParent(action.entity().getIRI(),
+                removedParents,
+                projectId);
 
-        if (parentThatisLinearizationParent.isPresent()) {
-            return getResultWithParentAsLinearizationPathParent(parentThatisLinearizationParent.get());
+        if (!parentThatisLinearizationParent.isEmpty()) {
+            return getResultWithParentAsLinearizationPathParent(parentThatisLinearizationParent);
         }
 
         var parents = action.parents().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
@@ -170,12 +179,12 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     }
 
     private ChangeEntityParentsResult validEmptyResult() {
-        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(), Optional.empty());
+        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(), ImmutableSet.of());
     }
 
     private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of(), Optional.empty());
+        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of(), ImmutableSet.of());
     }
 
     private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {
@@ -186,12 +195,13 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
     private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult, Optional.empty());
+        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult, ImmutableSet.of());
     }
 
-    private ChangeEntityParentsResult getResultWithParentAsLinearizationPathParent(IRI parentIri) {
-        var parentClass = DataFactory.getOWLClass(parentIri);
-        var parentEntityDataResult = getOwlEntityDataFromOwlClasses(Set.of(parentClass)).stream().findFirst();
+    private ChangeEntityParentsResult getResultWithParentAsLinearizationPathParent(Set<IRI> parentIris) {
+        Set<OWLClass> parentClasses = parentIris.stream().map(DataFactory::getOWLClass).collect(Collectors.toSet());
+        var parentEntityDataResult = getOwlEntityDataFromOwlClasses(parentClasses);
+
         return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(), parentEntityDataResult);
     }
 }

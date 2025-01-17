@@ -8,22 +8,22 @@ import org.semanticweb.owlapi.model.IRI;
 
 import java.util.Set;
 
-@JsonTypeName(GetParentThatIsLinearizationPathParentRequest.CHANNEL)
-public record GetParentThatIsLinearizationPathParentRequest(
+@JsonTypeName(GetParentsThatAreLinearizationPathParents.CHANNEL)
+public record GetParentsThatAreLinearizationPathParents(
         @JsonProperty("currentEntityIri") IRI currentEntityIri,
         @JsonProperty("parentEntityIris") Set<IRI> parentEntityIris,
         @JsonProperty("projectId") ProjectId projectId
-) implements Request<GetParentThatIsLinearizationPathParentResponse> {
+) implements Request<GetParentsThatAreLinearizationPathParentsResponse> {
 
-    public final static String CHANNEL = "webprotege.linearization.GetParentThatIsLinearizationPathParent";
+    public final static String CHANNEL = "webprotege.linearization.GetParentsThatAreLinearizationPathParents";
 
     @Override
     public String getChannel() {
         return CHANNEL;
     }
 
-    public static GetParentThatIsLinearizationPathParentRequest create(IRI currentEntityIri, Set<IRI> parentEntityIris, ProjectId projectId) {
-        return new GetParentThatIsLinearizationPathParentRequest(currentEntityIri, parentEntityIris, projectId);
+    public static GetParentsThatAreLinearizationPathParents create(IRI currentEntityIri, Set<IRI> parentEntityIris, ProjectId projectId) {
+        return new GetParentsThatAreLinearizationPathParents(currentEntityIri, parentEntityIris, projectId);
     }
 
 }

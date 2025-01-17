@@ -1,14 +1,11 @@
 package edu.stanford.protege.webprotege.linearization;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.ipc.CommandExecutor;
-import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.ipc.*;
 import org.semanticweb.owlapi.model.IRI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -19,14 +16,14 @@ public class LinearizationManagerImpl implements LinearizationManager {
 
     private final CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeLinearizationsExecutor;
     private final CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent;
-    private final CommandExecutor<GetParentThatIsLinearizationPathParentRequest, GetParentThatIsLinearizationPathParentResponse> isAnyParentLinearizationParent;
+    private final CommandExecutor<GetParentsThatAreLinearizationPathParents, GetParentsThatAreLinearizationPathParentsResponse> areParentsLinearizationParents;
 
     public LinearizationManagerImpl(CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeLinearizationsExecutor,
                                     CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent,
-                                    CommandExecutor<GetParentThatIsLinearizationPathParentRequest, GetParentThatIsLinearizationPathParentResponse> isAnyParentLinearizationParent) {
+                                    CommandExecutor<GetParentsThatAreLinearizationPathParents, GetParentsThatAreLinearizationPathParentsResponse> areParentsLinearizationParents) {
         this.mergeLinearizationsExecutor = mergeLinearizationsExecutor;
         this.createLinearizationFromParent = createLinearizationFromParent;
-        this.isAnyParentLinearizationParent = isAnyParentLinearizationParent;
+        this.areParentsLinearizationParents = areParentsLinearizationParents;
     }
 
 
@@ -47,10 +44,10 @@ public class LinearizationManagerImpl implements LinearizationManager {
     }
 
     @Override
-    public CompletableFuture<Optional<IRI>> getParentThatIsLinearizationPathParent(IRI owlIri, Set<IRI> parentsIris, ProjectId projectId, ExecutionContext executionContext) {
-        return isAnyParentLinearizationParent.execute(
-                GetParentThatIsLinearizationPathParentRequest.create(owlIri, parentsIris, projectId),
+    public CompletableFuture<Set<IRI>> getParentsThatAreLinearizationPathParents(IRI owlIri, Set<IRI> parentsIris, ProjectId projectId, ExecutionContext executionContext) {
+        return areParentsLinearizationParents.execute(
+                GetParentsThatAreLinearizationPathParents.create(owlIri, parentsIris, projectId),
                 executionContext
-        ).thenApply(GetParentThatIsLinearizationPathParentResponse::parentAsLinearizationPathParent);
+        ).thenApply(GetParentsThatAreLinearizationPathParentsResponse::parentsThatAreLinearizationPathParents);
     }
 }
