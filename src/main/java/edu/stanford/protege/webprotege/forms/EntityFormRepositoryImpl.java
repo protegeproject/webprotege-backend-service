@@ -69,6 +69,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
             writeLock.lock();
             var query = new Document(PROJECT_ID, projectId.id()).append(FORM__FORM_ID, formId.getId());
             getCollection().findOneAndDelete(query);
+            formDescriptorCache.remove(formId);
         } finally {
             writeLock.unlock();
         }
