@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.stanford.protege.webprotege.common.Response;
 
 @JsonTypeName(GetHierarchyDescriptorRequest.CHANNEL)
-public record GetHierarchyDescriptorResponse(@JsonProperty("descriptor") HierarchyDescriptor hierarchyDescriptor) implements Response {
+public record GetHierarchyDescriptorResponse(@JsonProperty("hierarchyDescriptor") HierarchyDescriptor hierarchyDescriptor) implements Response {
 }
