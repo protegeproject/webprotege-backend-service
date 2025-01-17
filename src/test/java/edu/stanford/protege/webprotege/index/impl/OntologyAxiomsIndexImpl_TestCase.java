@@ -1,10 +1,12 @@
 package edu.stanford.protege.webprotege.index.impl;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -15,7 +17,8 @@ import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,7 +27,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-20
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OntologyAxiomsIndexImpl_TestCase {
 
     private OntologyAxiomsIndexImpl impl;
@@ -38,7 +42,7 @@ public class OntologyAxiomsIndexImpl_TestCase {
     @Mock
     private AxiomsByTypeIndexImpl axiomsByTypeIndexImpl;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         impl = new OntologyAxiomsIndexImpl(axiomsByTypeIndexImpl);
 
@@ -67,10 +71,12 @@ public class OntologyAxiomsIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getAxioms(null);
-    }
+     });
+}
 
     @Test
     public void shouldContainAxiom() {
@@ -101,26 +107,34 @@ public class OntologyAxiomsIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIsNullInContainsAxiom() {
+    @Test
+public void shouldThrowNpeIfOntologyIsNullInContainsAxiom() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.containsAxiom(axiom, null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfAxiomIsNullInContainsAxiom() {
+    @Test
+public void shouldThrowNpeIfAxiomIsNullInContainsAxiom() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.containsAxiom(null, ontologyId);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIsNullInContainsAxiomIgnoreAnnotations() {
+    @Test
+public void shouldThrowNpeIfOntologyIsNullInContainsAxiomIgnoreAnnotations() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.containsAxiomIgnoreAnnotations(axiom, null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfAxiomIsNullInContainsAxiomIgnoreAnnotations() {
+    @Test
+public void shouldThrowNpeIfAxiomIsNullInContainsAxiomIgnoreAnnotations() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.containsAxiomIgnoreAnnotations(null, ontologyId);
-    }
+     });
+}
 }

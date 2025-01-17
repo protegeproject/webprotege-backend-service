@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.revision.RevisionManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;

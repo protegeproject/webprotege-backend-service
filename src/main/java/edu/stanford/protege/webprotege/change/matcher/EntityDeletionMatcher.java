@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
 import edu.stanford.protege.webprotege.change.description.DeletedEntities;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 

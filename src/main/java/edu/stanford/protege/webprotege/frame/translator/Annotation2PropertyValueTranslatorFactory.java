@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame.translator;
 
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @Generated(
   value = "com.google.auto.factory.processor.AutoFactoryProcessor",

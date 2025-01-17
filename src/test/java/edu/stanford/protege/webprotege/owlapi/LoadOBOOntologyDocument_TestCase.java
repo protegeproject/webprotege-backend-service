@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.owlapi;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.formats.OBODocumentFormat;
 import org.semanticweb.owlapi.model.*;
 

@@ -6,8 +6,8 @@ import edu.stanford.protege.webprotege.hierarchy.HasGetAncestors;
 import edu.stanford.protege.webprotege.index.ClassFrameAxiomsIndex;
 import edu.stanford.protege.webprotege.match.RelationshipMatcherFactory;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.OWLClass;
 
 @Generated(

@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.index.impl;
 import edu.stanford.protege.webprotege.index.ClassAssertionAxiomsByIndividualIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -18,7 +20,8 @@ import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -27,7 +30,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ProjectClassAssertionAxiomsByIndividualIndexImpl_TestCase {
 
     private ProjectClassAssertionAxiomsByIndividualIndexImpl impl;
@@ -47,7 +51,7 @@ public class ProjectClassAssertionAxiomsByIndividualIndexImpl_TestCase {
     @Mock
     private OWLIndividual individual;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         impl = new ProjectClassAssertionAxiomsByIndividualIndexImpl(projectOntologiesIndex,
                                                                     classAssertionAxiomsIndex);
@@ -77,8 +81,10 @@ public class ProjectClassAssertionAxiomsByIndividualIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfIndividualIsNull() {
+    @Test
+public void shouldThrowNpeIfIndividualIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getClassAssertionAxioms(null);
-    }
+     });
+}
 }

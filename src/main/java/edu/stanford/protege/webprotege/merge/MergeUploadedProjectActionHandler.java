@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.UploadedOntologiesCache;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Arrays;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;

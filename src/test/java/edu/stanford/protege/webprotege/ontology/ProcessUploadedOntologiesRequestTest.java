@@ -1,20 +1,14 @@
 package edu.stanford.protege.webprotege.ontology;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.csv.DocumentId;
 import org.junit.jupiter.api.BeforeEach;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.json.JsonContent;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import org.junit.jupiter.api.BeforeEach;
-import org.springframework.boot.test.autoconfigure.json.JsonTest;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ProcessUploadedOntologiesRequestTest {
 

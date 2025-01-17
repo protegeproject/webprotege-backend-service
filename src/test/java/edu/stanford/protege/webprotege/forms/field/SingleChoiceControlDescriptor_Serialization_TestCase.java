@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.forms.field;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.forms.data.LiteralFormControlData;
-import edu.stanford.protege.webprotege.common.LanguageMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

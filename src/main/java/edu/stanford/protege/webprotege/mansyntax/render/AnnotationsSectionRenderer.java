@@ -10,7 +10,7 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;

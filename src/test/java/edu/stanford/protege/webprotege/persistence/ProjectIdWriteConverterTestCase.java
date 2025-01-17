@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.persistence;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 

@@ -2,17 +2,19 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RecentProjectRecord_TestCase {
 
     private RecentProjectRecord recentProjectRecord;
@@ -21,16 +23,18 @@ public class RecentProjectRecord_TestCase {
 
     private long timestamp = 1L;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         recentProjectRecord = new RecentProjectRecord(projectId, timestamp);
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new RecentProjectRecord(null, timestamp);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_projectId() {

@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.common.PageRequest;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;

@@ -6,8 +6,8 @@ import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectI
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import java.util.Optional;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;

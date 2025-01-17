@@ -4,7 +4,7 @@ import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLIndividual;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 
 /**

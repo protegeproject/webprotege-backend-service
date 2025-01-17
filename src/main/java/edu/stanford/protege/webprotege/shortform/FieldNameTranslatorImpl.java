@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.shortform;
 import edu.stanford.protege.webprotege.common.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames.*;
 import static java.util.stream.Collectors.joining;

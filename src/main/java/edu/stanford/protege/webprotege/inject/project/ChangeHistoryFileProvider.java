@@ -4,8 +4,8 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.ChangeHistoryFileFactory;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.io.File;
 
 import static com.google.common.base.Preconditions.checkNotNull;

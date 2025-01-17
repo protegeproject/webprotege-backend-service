@@ -2,21 +2,25 @@ package edu.stanford.protege.webprotege.viz;
 
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.MockingUtils;
-import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.entity.OWLNamedIndividualData;
 import edu.stanford.protege.webprotege.entity.OWLObjectPropertyData;
+import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.semanticweb.owlapi.model.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLOntologyID;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyAssertionAxiomImpl;
 
 import javax.annotation.Nonnull;
@@ -24,8 +28,8 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.matches;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
@@ -35,7 +39,8 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
  * Stanford Center for Biomedical Informatics Research
  * 2019-10-01
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class EntityGraphBuilder_TestCase {
 
     private static final int EDGE_LIMIT = 2000;
@@ -65,7 +70,7 @@ public class EntityGraphBuilder_TestCase {
 
     private EdgeMatcher edgeMatcher = edge -> true;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         graphBuilder = new EntityGraphBuilder(renderingManager,
                                               projectOntologiesIndex,
