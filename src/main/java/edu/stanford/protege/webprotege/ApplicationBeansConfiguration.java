@@ -19,6 +19,7 @@ import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManagerImpl;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyRepository;
+import edu.stanford.protege.webprotege.hierarchy.ProjectHierarchyDescriptorRulesRepositoryImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -570,6 +571,11 @@ public class ApplicationBeansConfiguration {
     @Bean
     NamedHierarchyManager hierarchiesManager(OWLDataFactory dataFactory, NamedHierarchyRepository repository) {
         return new NamedHierarchyManagerImpl(dataFactory, repository);
+    }
+
+    @Bean
+    ProjectHierarchyDescriptorRulesRepositoryImpl projectHierarchyDescriptorRulesRepository(MongoTemplate p1, ObjectMapper p2) {
+        return new ProjectHierarchyDescriptorRulesRepositoryImpl(p1, p2);
     }
 
 }

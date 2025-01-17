@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.perspective.PerspectiveId;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,6 @@ class HierarchyDescriptorRuleTest {
     @Test
     void shouldThrowException_whenAnyParameterIsNull() {
         var hierarchyDescriptor = ClassHierarchyDescriptor.create(Set.of());
-
         assertThatThrownBy(() -> new HierarchyDescriptorRule(null, Set.of(), Set.of(), hierarchyDescriptor))
                 .isInstanceOf(NullPointerException.class);
 
@@ -45,6 +45,7 @@ class HierarchyDescriptorRuleTest {
     @Test
     void create_shouldReturnInstanceWithEmptySets() {
         var hierarchyDescriptor = ClassHierarchyDescriptor.create(Set.of());
+        var projectId = ProjectId.generate();
         var rule = HierarchyDescriptorRule.create(hierarchyDescriptor);
 
         assertThat(rule.matchedActions()).isEmpty();
@@ -65,11 +66,13 @@ class HierarchyDescriptorRuleTest {
                 hierarchyDescriptor
         );
 
-        var json = jsonTester.write(rule).getJson();
-        System.out.println(json);
-        assertThat(json).contains("action1", perspectiveUuid, formUuid);
+        var content = jsonTester.write(rule);
+        assertThat(content).extractingJsonPathArrayValue("matchedActions").contains("action1");
+        assertThat(content).extractingJsonPathArrayValue("matchedPerspectiveIds").contains(perspectiveUuid);
+        assertThat(content).extractingJsonPathArrayValue("matchedFormIds").contains(formUuid);
+        System.out.println(content.getJson());
 
-        var deserializedRule = jsonTester.parseObject(json);
+        var deserializedRule = jsonTester.parseObject(content.getJson());
         assertThat(deserializedRule).isEqualTo(rule);
     }
 }

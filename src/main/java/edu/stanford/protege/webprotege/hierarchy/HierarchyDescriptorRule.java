@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.perspective.PerspectiveId;
 
@@ -33,7 +34,6 @@ public record HierarchyDescriptorRule(
 
     /**
      * Constructs a {@code HierarchyDescriptorRule} while ensuring that all parameters are non-null.
-     *
      * @param matchedActions        the set of {@link ActionId} instances that are matched by this rule
      * @param matchedPerspectiveIds the set of {@link PerspectiveId} instances that are matched by this rule
      * @param matchedFormIds        the set of {@link FormId} instances that are matched by this rule
@@ -53,7 +53,6 @@ public record HierarchyDescriptorRule(
     /**
      * Creates a {@code HierarchyDescriptorRule} with empty sets for all matching criteria
      * and the specified {@link HierarchyDescriptor}.  This rule will always match any criteria.
-     *
      * @param hierarchyDescriptor the {@link HierarchyDescriptor} associated with this rule
      * @return a new {@code HierarchyDescriptorRule} with empty sets and the given {@link HierarchyDescriptor}
      * @throws NullPointerException if {@code hierarchyDescriptor} is {@code null}
