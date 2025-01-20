@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.*;
-import edu.stanford.protege.webprotege.bulkop.MoveToParentActionHandler;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
@@ -26,7 +25,7 @@ import static org.glassfish.jersey.internal.guava.Preconditions.checkNotNull;
  */
 public class MoveHierarchyNodeActionHandler extends AbstractProjectActionHandler<MoveHierarchyNodeAction, MoveHierarchyNodeResult> {
 
-    private final Logger logger = LoggerFactory.getLogger(MoveToParentActionHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(MoveHierarchyNodeActionHandler.class);
 
     private final MoveEntityChangeListGeneratorFactory factory;
 

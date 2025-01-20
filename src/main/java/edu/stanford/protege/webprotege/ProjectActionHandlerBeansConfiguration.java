@@ -801,6 +801,19 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
+    MoveToParentIcdActionHandler moveToParentIcdActionHandler(AccessManager p1,
+                                                        MoveClassesChangeListGeneratorFactory p4,
+                                                        ReleasedClassesChecker p5,
+                                                        ClassHierarchyRetiredClassDetector p6,
+                                                        ChangeManager p7,
+                                                        LinearizationManager p8,
+                                                              LinearizationParentChecker p9,
+                                                              RenderingManager p10,
+                                                              ClassHierarchyProvider p11) {
+        return new MoveToParentIcdActionHandler(p1, p4, p5, p6, p7, p8, p9, p10, p11);
+    }
+
+    @Bean
     ChangeEntityParentsActionHandler changeEntityParentsActionHandler(AccessManager p1,
                                                                       ProjectId p2,
                                                                       ChangeManager p3,
