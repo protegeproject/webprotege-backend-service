@@ -792,12 +792,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveToParentActionHandler moveToParentActionHandler(AccessManager p1,
-                                                        MoveClassesChangeListGeneratorFactory p4,
-                                                        ReleasedClassesChecker p5,
-                                                        ClassHierarchyRetiredClassDetector p6,
-                                                        ChangeManager p7,
-                                                        LinearizationManager p8) {
-        return new MoveToParentActionHandler(p1, p4, p5, p6, p7, p8);
+                                                        ChangeManager p2,
+                                                        MoveClassesChangeListGeneratorFactory p3) {
+        return new MoveToParentActionHandler(p1, p2, p3);
     }
 
     @Bean

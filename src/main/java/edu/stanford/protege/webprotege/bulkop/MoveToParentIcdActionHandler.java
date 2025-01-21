@@ -1,26 +1,36 @@
 package edu.stanford.protege.webprotege.bulkop;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
-import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
+import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.jetbrains.annotations.NotNull;
-import org.semanticweb.owlapi.model.*;
-import org.slf4j.*;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLNamedObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
@@ -109,14 +119,16 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
                             .map(OWLNamedObject::getIRI)
                             .filter(parent -> !parent.equals(action.parentEntity().getIRI()))
                             .collect(Collectors.toSet());
-
                     linParentChecker.getParentThatIsLinearizationPathParent(entity.getIRI(),
                                     currentParents,
                                     action.projectId())
                             .forEach(linPathParent -> {
                                 Set<IRI> entitySet = entitiesWithParentLinPathParent.get(linPathParent);
                                 if (entitySet == null) {
-                                    entitiesWithParentLinPathParent.put(linPathParent, Set.of(entity.getIRI()));
+                                    entitiesWithParentLinPathParent.put(
+                                            linPathParent,
+                                            new HashSet<>(Set.of(entity.getIRI()))
+                                    );
                                     return;
                                 }
                                 entitySet.add(entity.getIRI());
@@ -155,12 +167,12 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
     }
 
     private MoveEntitiesToParentIcdResult getResultWithParentAsLinearizationPathParent(Map<IRI, Set<IRI>> parentsThatAreLinPathParent) {
-        ImmutableMap<OWLEntityData, ImmutableSet<OWLEntityData>> result = parentsThatAreLinPathParent
+        ImmutableMap<String, ImmutableSet<OWLEntityData>> result = parentsThatAreLinPathParent
                 .entrySet()
                 .stream()
                 .collect(
                         ImmutableMap.toImmutableMap(
-                                entry -> renderingManager.getRendering(DataFactory.getOWLClass(entry.getKey())),
+                                entry -> renderingManager.getRendering(DataFactory.getOWLClass(entry.getKey())).getBrowserText(),
                                 entry -> {
                                     Set<OWLClass> parentClasses = entry.getValue().stream().map(DataFactory::getOWLClass).collect(Collectors.toSet());
                                     var parentEntityDataResult = getOwlEntityDataFromOwlClasses(parentClasses);
