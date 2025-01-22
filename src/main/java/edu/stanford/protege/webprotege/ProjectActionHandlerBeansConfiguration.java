@@ -625,12 +625,21 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveHierarchyNodeActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
+                                                                   ChangeManager p2,
+                                                                   MoveEntityChangeListGeneratorFactory p3) {
+        return new MoveHierarchyNodeActionHandler(p1, p2, p3);
+    }
+
+
+    @Bean
+    MoveHierarchyNodeIcdActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
                                                                    MoveEntityChangeListGeneratorFactory p2,
                                                                    ReleasedClassesChecker p3,
                                                                    ClassHierarchyRetiredClassDetector p4,
                                                                    ChangeManager p5,
-                                                                   LinearizationManager p6) {
-        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4, p5, p6);
+                                                                   LinearizationManager p6,
+                                                                      LinearizationParentChecker p7) {
+        return new MoveHierarchyNodeIcdActionHandler(p1, p2, p3, p4, p5, p6, p7);
     }
 
 
