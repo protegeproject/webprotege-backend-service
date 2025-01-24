@@ -3,9 +3,9 @@ package edu.stanford.protege.webprotege.search;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.criteria.EntityIsDeprecatedCriteria;
 import edu.stanford.protege.webprotege.criteria.EntityIsNotDeprecatedCriteria;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +19,9 @@ import java.util.UUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 
-@SpringBootTest
-@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class,})
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class,})
 public class EntitySearchFilterRepositoryImpl_IT {
 
     @Autowired

@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.shortform.LocalNameExtractor;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URLEncoder;
 import java.util.Optional;
 

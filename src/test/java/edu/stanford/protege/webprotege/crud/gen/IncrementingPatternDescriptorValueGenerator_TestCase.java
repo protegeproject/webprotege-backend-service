@@ -2,11 +2,13 @@ package edu.stanford.protege.webprotege.crud.gen;
 
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsByValueIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -18,10 +20,12 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class IncrementingPatternDescriptorValueGenerator_TestCase {
 
     public static final int STARTING_VALUE = 9876;
@@ -48,7 +52,7 @@ public class IncrementingPatternDescriptorValueGenerator_TestCase {
     @Mock
     private OWLOntologyID ontologyId;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         generator = new IncrementingPatternDescriptorValueGenerator(
                 dataFactory,
@@ -90,18 +94,22 @@ public class IncrementingPatternDescriptorValueGenerator_TestCase {
         assertThat(value.getDatatype().isString(), is(true));
     }
 
-    @Test(expected = IllegalFormatException.class)
+    @Test
     public void shouldThrowExceptionForInvalidPatternWithTooManyArguments() {
-        when(descriptor.getFormat())
-                .thenReturn("Hello %d %s");
-        generator.generateNextValue(property, descriptor);
+        assertThrows(IllegalFormatException.class, () -> {
+            when(descriptor.getFormat())
+                    .thenReturn("Hello %d %s");
+            generator.generateNextValue(property, descriptor);
+        });
     }
 
-    @Test(expected = IllegalFormatException.class)
+    @Test
     public void shouldThrowExceptionForMalformedPattern() {
-        when(descriptor.getFormat())
-                .thenReturn("Hello %1");
-        generator.generateNextValue(property, descriptor);
+        assertThrows(IllegalFormatException.class, () -> {
+            when(descriptor.getFormat())
+                    .thenReturn("Hello %1");
+            generator.generateNextValue(property, descriptor);
+        });
     }
 
 

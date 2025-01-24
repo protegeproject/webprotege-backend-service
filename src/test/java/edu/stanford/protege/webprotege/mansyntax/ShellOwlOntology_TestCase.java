@@ -1,10 +1,12 @@
 package edu.stanford.protege.webprotege.mansyntax;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import uk.ac.manchester.cs.owl.owlapi.OWLOntologyImpl;
@@ -18,7 +20,8 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-22
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ShellOwlOntology_TestCase {
 
     private ShellOwlOntology ontology;
@@ -26,7 +29,7 @@ public class ShellOwlOntology_TestCase {
     @Mock
     private OWLOntologyID ontologyId;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ontology = ShellOwlOntology.get(ontologyId);
     }

@@ -7,17 +7,18 @@ import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +27,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-29
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RevisionReverterChangeListGenerator_TestCase {
 
     private RevisionReverterChangeListGenerator generator;
@@ -45,7 +47,7 @@ public class RevisionReverterChangeListGenerator_TestCase {
     @Mock
     private OntologyChange changeO, inverseChange0, change1, inverseChange1;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         var changes = ImmutableList.of(changeO, change1);
         generator = new RevisionReverterChangeListGenerator(revisionNumber,

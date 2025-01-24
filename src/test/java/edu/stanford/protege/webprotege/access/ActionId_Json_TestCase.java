@@ -2,8 +2,10 @@ package edu.stanford.protege.webprotege.access;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.authorization.ActionId;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -19,7 +21,7 @@ public class ActionId_Json_TestCase {
 
     private ActionId actionId;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         actionId = new ActionId(ID);
     }

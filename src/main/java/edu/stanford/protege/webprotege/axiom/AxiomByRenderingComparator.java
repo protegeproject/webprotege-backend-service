@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.axiom;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 
 import static com.google.common.base.Preconditions.checkNotNull;

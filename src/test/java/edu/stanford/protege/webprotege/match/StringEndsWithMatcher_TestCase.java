@@ -1,11 +1,13 @@
 package edu.stanford.protege.webprotege.match;
 
 import edu.stanford.protege.webprotege.criteria.StringEndsWithCriteria;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -16,7 +18,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2020-06-23
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class StringEndsWithMatcher_TestCase {
 
     public static final boolean DO_NOT_IGNORE_CASE = false;
@@ -28,7 +31,7 @@ public class StringEndsWithMatcher_TestCase {
     @Mock
     private StringEndsWithCriteria criteria;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         matcher = new StringEndsWithMatcher(criteria);
     }

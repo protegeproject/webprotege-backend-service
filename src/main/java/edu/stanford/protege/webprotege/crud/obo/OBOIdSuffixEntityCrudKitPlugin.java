@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixKit;
 import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixSettings;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

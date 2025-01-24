@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.frame;
 import edu.stanford.protege.webprotege.hierarchy.HasHasAncestor;
 import org.semanticweb.owlapi.model.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.regex.Pattern;
 
 /**

@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collections;
 import java.util.List;
 

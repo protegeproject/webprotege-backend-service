@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.match;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -15,7 +15,7 @@ public class StringContainsRepeatedWhiteSpaceMatcher_TestCase {
 
     private StringContainsRepeatedWhiteSpaceMatcher matcher;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         matcher = new StringContainsRepeatedWhiteSpaceMatcher();
     }

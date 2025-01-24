@@ -4,21 +4,18 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.common.AnnotationAssertionDictionaryLanguage;
-import edu.stanford.protege.webprotege.crud.ChangeSetEntityCrudSession;
-import edu.stanford.protege.webprotege.crud.EntityCrudContext;
-import edu.stanford.protege.webprotege.crud.EntityIriPrefixResolver;
-import edu.stanford.protege.webprotege.crud.PrefixedNameExpander;
-import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.protege.webprotege.crud.EntityShortForm;
+import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.Namespaces;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
@@ -37,13 +34,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 16/04/2014
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class UuidEntityCrudKitHandlerTestCase {
 
     public static final String PREFIX = "http://stuff/";
@@ -89,7 +87,7 @@ public class UuidEntityCrudKitHandlerTestCase {
 
     private EntityType<?> entityType = EntityType.CLASS;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         dictionaryLanguage = AnnotationAssertionDictionaryLanguage.get(annotationPropertyIri, "en");
         when(crudContext.getTargetOntologyId()).thenReturn(ontologyId);

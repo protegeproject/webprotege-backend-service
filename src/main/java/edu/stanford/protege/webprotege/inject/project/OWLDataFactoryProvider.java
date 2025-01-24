@@ -3,8 +3,8 @@ package edu.stanford.protege.webprotege.inject.project;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 
 /**
  * Matthew Horridge

@@ -4,7 +4,7 @@ import com.google.common.collect.Comparators;
 import edu.stanford.protege.webprotege.forms.field.FormRegionOrderingDirection;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 import java.util.Optional;
 

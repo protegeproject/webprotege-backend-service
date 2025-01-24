@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.forms.field.ChoiceDescriptorDto;
 import edu.stanford.protege.webprotege.forms.field.ChoiceListSourceDescriptor;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 

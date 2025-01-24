@@ -13,7 +13,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 import java.util.stream.Stream;
 

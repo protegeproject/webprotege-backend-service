@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.project.Ontology;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -1,17 +1,22 @@
 package edu.stanford.protege.webprotege.forms.data;
 
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.entity.*;
+import edu.stanford.protege.webprotege.entity.IRIData;
+import edu.stanford.protege.webprotege.entity.OWLClassData;
+import edu.stanford.protege.webprotege.entity.OWLLiteralData;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.*;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.Import;
-import uk.ac.manchester.cs.owl.owlapi.*;
+import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

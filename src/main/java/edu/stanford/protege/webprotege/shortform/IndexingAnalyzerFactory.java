@@ -2,10 +2,11 @@ package edu.stanford.protege.webprotege.shortform;
 
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.apache.lucene.analysis.Analyzer;
+import org.springframework.beans.factory.ObjectProvider;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

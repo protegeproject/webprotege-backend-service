@@ -1,8 +1,8 @@
 package edu.stanford.protege.webprotege.access;
 
 import edu.stanford.protege.webprotege.authorization.Subject;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
@@ -21,7 +21,7 @@ public class Subject_SpecificUser_TestCase {
 
     private Subject subject;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         subject = Subject.forUser(THE_USER);
     }

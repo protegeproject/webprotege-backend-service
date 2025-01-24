@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.frame.*;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;

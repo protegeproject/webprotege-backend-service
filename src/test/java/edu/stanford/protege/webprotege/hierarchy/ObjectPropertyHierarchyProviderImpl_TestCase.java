@@ -1,12 +1,14 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import edu.stanford.protege.webprotege.index.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
@@ -25,7 +27,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-22
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ObjectPropertyHierarchyProviderImpl_TestCase {
 
     private ObjectPropertyHierarchyProviderImpl provider;
@@ -61,7 +64,7 @@ public class ObjectPropertyHierarchyProviderImpl_TestCase {
     private OntologySignatureByTypeIndex ontologySignatureByTypeIndex;
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         when(projectOntologiesIndex.getOntologyIds())

@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.mail;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.mail.MessagingException;
 import java.util.logging.Logger;
 

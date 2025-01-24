@@ -4,18 +4,16 @@ package edu.stanford.protege.webprotege.owlapi.change;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.OntologyChange;
-import edu.stanford.protege.webprotege.revision.Revision;
-import edu.stanford.protege.webprotege.revision.RevisionManagerImpl;
-import edu.stanford.protege.webprotege.revision.RevisionStore;
-import edu.stanford.protege.webprotege.revision.RevisionNumber;
-import edu.stanford.protege.webprotege.revision.RevisionSummary;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import edu.stanford.protege.webprotege.revision.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -26,9 +24,11 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RevisionManagerImpl_TestCase {
 
     public static final String HIGHLEVEL_DESC = "HIGHLEVEL_DESC";
@@ -51,7 +51,7 @@ public class RevisionManagerImpl_TestCase {
     @Mock
     private ImmutableList<OntologyChange> changes;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         manager = new RevisionManagerImpl(revisionStore);
         when(revisionStore.getCurrentRevisionNumber()).thenReturn(revisionNumber);
@@ -65,10 +65,12 @@ public class RevisionManagerImpl_TestCase {
         when(revision.getRevisionNumber()).thenReturn(revisionNumber);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_revisionStore_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_revisionStore_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new RevisionManagerImpl(null);
-    }
+     });
+}
 
     @Test
     public void should_getCurrentRevision() {

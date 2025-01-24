@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class ProjectLuceneDirectoryPathSupplier_TestCase {
 
@@ -18,7 +18,7 @@ public class ProjectLuceneDirectoryPathSupplier_TestCase {
 
     private ProjectId projectId = ProjectId.valueOf("12345678-1234-1234-1234-123456789abc");
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         pathSupplier = new ProjectLuceneDirectoryPathSupplier(baseDirectoryPath, projectId);
     }

@@ -3,10 +3,11 @@ package edu.stanford.protege.webprotege.frame;
 import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.mansyntax.render.OwlOntologyFacade;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxFrameRenderer;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 
 import java.io.StringWriter;
@@ -23,7 +24,7 @@ public class OwlOntologyFacade_ManchesterSyntaxAxioms_TestCase {
 
     private ManchesterOWLSyntaxFrameRenderer frameRenderer;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         var ontologyFacade = new OwlOntologyFacade(mock(OWLOntologyID.class),
                                                    mock(OntologyAnnotationsIndex.class),

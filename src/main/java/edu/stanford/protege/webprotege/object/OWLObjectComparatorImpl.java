@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObject;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 
 /**

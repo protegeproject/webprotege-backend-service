@@ -10,6 +10,8 @@ import edu.stanford.protege.webprotege.criteria.EntityTypeIsOneOfCriteria;
 import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.semanticweb.owlapi.model.EntityType;
 
 import java.io.IOException;

@@ -3,18 +3,20 @@ package edu.stanford.protege.webprotege.index.impl;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.RemoveAxiomChange;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLDatatypeImpl;
 
 import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
@@ -24,7 +26,8 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-07
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AxiomsByEntityReferenceIndexImpl_TestCase {
 
     AxiomsByEntityReferenceIndexImpl impl;
@@ -59,7 +62,7 @@ public class AxiomsByEntityReferenceIndexImpl_TestCase {
     @Mock
     private OWLEntityProvider entityProvider;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(entityProvider.getOWLClass(cls.getIRI()))
                 .thenReturn(cls);
@@ -135,16 +138,20 @@ public class AxiomsByEntityReferenceIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNPEForNullOntology() {
+    @Test
+public void shouldThrowNPEForNullOntology() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getReferencingAxioms(null, ontologyId);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldNPEForNullOntologyId() {
+    @Test
+public void shouldNPEForNullOntologyId() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getReferencingAxioms(cls, null);
-    }
+     });
+}
 
     @Test
     public void shouldGetClassInSignatureWithIri() {

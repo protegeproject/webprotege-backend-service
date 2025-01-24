@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.user;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 /**
  * Matthew Horridge

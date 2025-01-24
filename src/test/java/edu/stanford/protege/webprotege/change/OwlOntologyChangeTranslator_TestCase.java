@@ -1,16 +1,16 @@
 package edu.stanford.protege.webprotege.change;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLOntologyChange;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 
 /**
@@ -18,7 +18,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-29
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OwlOntologyChangeTranslator_TestCase {
 
     private OwlOntologyChangeTranslator translator;
@@ -32,7 +33,7 @@ public class OwlOntologyChangeTranslator_TestCase {
     @Mock
     private OntologyChange ontologyChange;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         translator = new OwlOntologyChangeTranslator(visitor);
         when(change.accept(visitor))

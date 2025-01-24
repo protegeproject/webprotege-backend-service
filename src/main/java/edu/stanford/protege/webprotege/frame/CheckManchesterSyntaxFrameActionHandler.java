@@ -14,7 +14,7 @@ import org.semanticweb.owlapi.manchestersyntax.renderer.ParserException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.frame.ManchesterSyntaxFrameParseResult.CHANGED;
 import static edu.stanford.protege.webprotege.frame.ManchesterSyntaxFrameParseResult.UNCHANGED;

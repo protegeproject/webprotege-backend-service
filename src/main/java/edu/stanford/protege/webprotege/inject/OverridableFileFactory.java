@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.inject;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.File;
 
 import static com.google.common.base.Preconditions.checkNotNull;

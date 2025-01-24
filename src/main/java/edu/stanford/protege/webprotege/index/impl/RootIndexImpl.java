@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.index.OntologyAxiomsIndex;
 import edu.stanford.protege.webprotege.index.RootIndex;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;

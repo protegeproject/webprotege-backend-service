@@ -5,7 +5,7 @@ import org.semanticweb.owlapi.model.OWLPrimitive;
 import org.semanticweb.owlapi.model.OWLProperty;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Matthew Horridge

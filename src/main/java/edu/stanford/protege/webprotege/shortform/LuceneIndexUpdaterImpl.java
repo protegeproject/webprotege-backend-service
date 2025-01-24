@@ -5,10 +5,11 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SearcherManager;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.springframework.beans.factory.ObjectProvider;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Collection;

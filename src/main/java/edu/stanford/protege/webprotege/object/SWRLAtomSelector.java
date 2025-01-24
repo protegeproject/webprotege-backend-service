@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.object;
 
 import org.semanticweb.owlapi.model.SWRLAtom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 import java.util.Optional;
 

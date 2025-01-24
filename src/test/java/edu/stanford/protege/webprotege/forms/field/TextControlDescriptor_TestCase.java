@@ -3,10 +3,8 @@ package edu.stanford.protege.webprotege.forms.field;
 
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import org.hamcrest.Matchers;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -42,10 +40,12 @@ public class TextControlDescriptor_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-//    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_stringType_IsNull() {
+//    @Test
+public void shouldThrowNullPointerExceptionIf_stringType_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new TextControlDescriptor(placeholder, null, specificLangTag, lineMode, pattern, patternViolationErrorMessage);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_stringType() {
@@ -53,10 +53,12 @@ public class TextControlDescriptor_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-//    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_lineMode_IsNull() {
+//    @Test
+public void shouldThrowNullPointerExceptionIf_lineMode_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new TextControlDescriptor(placeholder, stringType, specificLangTag, null, pattern, patternViolationErrorMessage);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_lineMode() {
@@ -64,10 +66,12 @@ public class TextControlDescriptor_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-//    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_pattern_IsNull() {
+//    @Test
+public void shouldThrowNullPointerExceptionIf_pattern_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new TextControlDescriptor(placeholder, stringType, specificLangTag, lineMode, null, patternViolationErrorMessage);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_pattern() {
@@ -75,10 +79,12 @@ public class TextControlDescriptor_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-//    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_patternViolationErrorMessage_IsNull() {
+//    @Test
+public void shouldThrowNullPointerExceptionIf_patternViolationErrorMessage_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new TextControlDescriptor(placeholder, stringType, specificLangTag, lineMode, pattern, null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_patternViolationErrorMessage() {

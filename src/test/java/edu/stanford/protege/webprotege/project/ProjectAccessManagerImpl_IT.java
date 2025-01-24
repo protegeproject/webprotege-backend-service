@@ -19,8 +19,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-@SpringBootTest
-@Import({WebprotegeBackendMonolithApplication.class, RabbitTestExtension.class})
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
+@Import({WebprotegeBackendMonolithApplication.class})
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectAccessManagerImpl_IT {

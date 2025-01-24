@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.HashSet;

@@ -1,15 +1,16 @@
 package edu.stanford.protege.webprotege.crud;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.match.HierarchyPositionCriteriaMatchableEntityTypesExtractor;
 import edu.stanford.protege.webprotege.criteria.*;
-import org.junit.Before;
-import org.junit.Test;
+import edu.stanford.protege.webprotege.match.HierarchyPositionCriteriaMatchableEntityTypesExtractor;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.EntityType;
 
 import static edu.stanford.protege.webprotege.MockingUtils.mockOWLClass;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.emptyIterable;
+import static org.junit.Assert.assertThat;
 
 public class HierarchyPositionCriteriaMatchableEntityTypesExtractor_TestCase {
 
@@ -21,7 +22,7 @@ public class HierarchyPositionCriteriaMatchableEntityTypesExtractor_TestCase {
     private final InstanceOfCriteria instanceOfCriteria = InstanceOfCriteria.get(mockOWLClass(),
                                                                                  HierarchyFilterType.DIRECT);
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         extractor = new HierarchyPositionCriteriaMatchableEntityTypesExtractor();
     }

@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.entity;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
+import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.search.SearchType;
 import org.semanticweb.owlapi.model.EntityType;
 
@@ -37,7 +38,7 @@ public class EntityLookupRequest implements Serializable {
     private SearchType searchType = SearchType.getDefault();
 
     private ImmutableSet<EntityType<?>> searchedEntityTypes = ImmutableSet.of();
-    
+
     private int searchLimit = DEFAULT_MATCH_LIMIT;
 
 

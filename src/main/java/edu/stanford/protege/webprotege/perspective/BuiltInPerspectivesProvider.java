@@ -2,13 +2,13 @@ package edu.stanford.protege.webprotege.perspective;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
+import jakarta.inject.Provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -50,14 +50,14 @@ public class BuiltInPerspectivesProvider {
                                                                                       OWL_PROPERTIES);
 
     @Nonnull
-    private final Provider<BuiltInPerspectiveLoader> loaderFactory;
+    private final Provider<BuiltInPerspectiveLoader> loader;
 
     @Nonnull
     private ImmutableList<BuiltInPerspective> loadedPerspectives = ImmutableList.of();
 
     @Inject
-    public BuiltInPerspectivesProvider(@Nonnull Provider<BuiltInPerspectiveLoader> loaderFactory) {
-        this.loaderFactory = checkNotNull(loaderFactory);
+    public BuiltInPerspectivesProvider(@Nonnull Provider<BuiltInPerspectiveLoader> loader) {
+        this.loader = checkNotNull(loader);
     }
 
     @Nonnull
@@ -81,8 +81,7 @@ public class BuiltInPerspectivesProvider {
     @Nullable
     private BuiltInPerspective load(String path) {
         try {
-            var loader = loaderFactory.get();
-            return loader.load(path);
+            return loader.get().load(path);
         } catch (Exception e) {
             logger.error("Could not load perspective: {}", path, e);
             return null;
