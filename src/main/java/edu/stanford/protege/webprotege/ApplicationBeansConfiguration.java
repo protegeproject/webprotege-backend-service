@@ -578,8 +578,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> executorForCreateProjectSmallFiles() {
-        return new CommandExecutorImpl<>(CreateProjectSmallFilesResponse.class);
+    CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> executorForCreateProjectSmallFiles() {
+        return new CommandExecutorImpl<>(CreateNewReproducibleProjectResponse.class);
     }
 
     @Bean

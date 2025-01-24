@@ -1066,6 +1066,11 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetEntityChildrenActionHandler(p1,p2,p3,p4);
     }
 
+
+    @Bean
+    GetAllOwlClassesActionHandler getAllOwlClassesActionHandler(AccessManager p1, ProjectAxiomsSignatureIndex p2) {
+        return new GetAllOwlClassesActionHandler(p1, p2);
+    }
     @Bean
     FilterExistingEntitiesActionHandler filterExistingEntitiesActionHandler(AccessManager p1,
                                                                   ClassHierarchyProvider p2) {
