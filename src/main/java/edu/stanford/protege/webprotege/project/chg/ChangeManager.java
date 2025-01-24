@@ -25,11 +25,12 @@ import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEve
 import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.util.*;
 import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.*;
 import java.util.*;
 import java.util.concurrent.locks.*;
 

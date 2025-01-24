@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
@@ -28,7 +29,6 @@ import static org.hamcrest.Matchers.is;
 @JsonTest
 @Import({WebProtegeJacksonApplication.class,})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 public class SubFormControlDescriptor_IT {
 
     @Autowired

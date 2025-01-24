@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.*;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
 import edu.stanford.protege.webprotege.criteria.MultiMatchType;

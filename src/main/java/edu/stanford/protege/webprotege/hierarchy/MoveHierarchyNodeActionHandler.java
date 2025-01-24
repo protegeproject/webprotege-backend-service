@@ -17,8 +17,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
-import static org.glassfish.jersey.internal.guava.Preconditions.checkNotNull;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
