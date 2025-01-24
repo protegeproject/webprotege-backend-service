@@ -15,7 +15,7 @@ import edu.stanford.protege.webprotege.renderer.RenderingManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;

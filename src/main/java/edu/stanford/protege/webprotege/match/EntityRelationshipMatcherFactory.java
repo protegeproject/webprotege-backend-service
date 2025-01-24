@@ -5,25 +5,25 @@ import edu.stanford.protege.webprotege.frame.translator.AxiomPropertyValueTransl
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.PropertyAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 public final class EntityRelationshipMatcherFactory {
-  private final Provider<ProjectOntologiesIndex> projectOntologiesIndexProvider;
+  private final ProjectOntologiesIndex projectOntologiesIndexProvider;
 
-  private final Provider<SubClassOfAxiomsBySubClassIndex> subClassOfAxiomsBySubClassIndexProvider;
+  private final SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndexProvider;
 
-  private final Provider<PropertyAssertionAxiomsBySubjectIndex>
+  private final PropertyAssertionAxiomsBySubjectIndex
       propertyAssertionAxiomsBySubjectIndexProvider;
 
-  private final Provider<AxiomPropertyValueTranslator> axiomTranslatorProvider;
+  private final AxiomPropertyValueTranslator axiomTranslatorProvider;
 
   @Inject
   public EntityRelationshipMatcherFactory(
-      Provider<ProjectOntologiesIndex> projectOntologiesIndexProvider,
-      Provider<SubClassOfAxiomsBySubClassIndex> subClassOfAxiomsBySubClassIndexProvider,
-      Provider<PropertyAssertionAxiomsBySubjectIndex> propertyAssertionAxiomsBySubjectIndexProvider,
-      Provider<AxiomPropertyValueTranslator> axiomTranslatorProvider) {
+      ProjectOntologiesIndex projectOntologiesIndexProvider,
+      SubClassOfAxiomsBySubClassIndex subClassOfAxiomsBySubClassIndexProvider,
+      PropertyAssertionAxiomsBySubjectIndex propertyAssertionAxiomsBySubjectIndexProvider,
+      AxiomPropertyValueTranslator axiomTranslatorProvider) {
     this.projectOntologiesIndexProvider = checkNotNull(projectOntologiesIndexProvider, 1);
     this.subClassOfAxiomsBySubClassIndexProvider =
         checkNotNull(subClassOfAxiomsBySubClassIndexProvider, 2);
@@ -35,12 +35,12 @@ public final class EntityRelationshipMatcherFactory {
   public EntityRelationshipMatcher create(
           RelationshipPresence relationshipPresence, PropertyValueMatcher propertyValueMatcher) {
     return new EntityRelationshipMatcher(
-        checkNotNull(projectOntologiesIndexProvider.get(), 1),
+        checkNotNull(projectOntologiesIndexProvider, 1),
         checkNotNull(relationshipPresence, 2),
         checkNotNull(propertyValueMatcher, 3),
-        checkNotNull(subClassOfAxiomsBySubClassIndexProvider.get(), 4),
-        checkNotNull(propertyAssertionAxiomsBySubjectIndexProvider.get(), 5),
-        checkNotNull(axiomTranslatorProvider.get(), 6));
+        checkNotNull(subClassOfAxiomsBySubClassIndexProvider, 4),
+        checkNotNull(propertyAssertionAxiomsBySubjectIndexProvider, 5),
+        checkNotNull(axiomTranslatorProvider, 6));
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

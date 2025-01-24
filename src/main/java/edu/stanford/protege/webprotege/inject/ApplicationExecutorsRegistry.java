@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.inject;
 import edu.stanford.protege.webprotege.app.ApplicationDisposablesManager;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;

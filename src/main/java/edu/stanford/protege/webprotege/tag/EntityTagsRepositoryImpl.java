@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;

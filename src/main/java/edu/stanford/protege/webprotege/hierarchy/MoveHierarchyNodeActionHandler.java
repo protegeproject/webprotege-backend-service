@@ -13,10 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.*;
 
-import javax.annotation.*;
-import javax.inject.Inject;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 import static org.glassfish.jersey.internal.guava.Preconditions.checkNotNull;

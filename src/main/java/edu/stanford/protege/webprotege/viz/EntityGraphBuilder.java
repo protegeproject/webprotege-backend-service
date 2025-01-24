@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.util.ClassExpression;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.*;
 import java.util.stream.Stream;
 

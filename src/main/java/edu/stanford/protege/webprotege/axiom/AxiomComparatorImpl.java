@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.axiom;
 import com.google.common.collect.Ordering;
 import org.semanticweb.owlapi.model.OWLAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.Comparator;
 

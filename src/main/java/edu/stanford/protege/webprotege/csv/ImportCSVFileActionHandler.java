@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;

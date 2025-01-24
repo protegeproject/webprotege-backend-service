@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.crud.obo;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -13,7 +13,7 @@ public class OboIdSessionTestCase {
 
     private OBOIdSession session;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         session = new OBOIdSession();
     }

@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.Optional;
 

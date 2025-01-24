@@ -1,10 +1,12 @@
 package edu.stanford.protege.webprotege.entity;
 
 import edu.stanford.protege.webprotege.DataFactory;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -18,7 +20,8 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 14/12/15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class DeclarationParser_TestCase {
 
 
@@ -26,7 +29,7 @@ public class DeclarationParser_TestCase {
 
     private DeclarationParser parser;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         parser = new DeclarationParser(DataFactory.get());
     }

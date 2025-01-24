@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.axiom;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.AxiomType;
 
 import java.util.List;

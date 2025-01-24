@@ -6,7 +6,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.common.*;
+import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
+import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.shortform.SearchString;
 import org.semanticweb.owlapi.model.EntityType;
@@ -73,6 +75,10 @@ public class EntitySearcher {
     private final ImmutableList<EntitySearchFilter> searchFilters;
 
     private final EntityNodeRenderer entityNodeRenderer;
+    @Nonnull
+    private final EntityMatchCriteria resultsSetFilter;
+    @Nonnull
+    private final MatcherFactory matcherFactory;
 
 
     public EntitySearcher(@Nonnull ProjectId projectId,
@@ -82,7 +88,9 @@ public class EntitySearcher {
                           @Nonnull UserId userId,
                           @Nonnull ImmutableList<DictionaryLanguage> searchLanguages,
                           ImmutableList<EntitySearchFilter> searchFilters,
-                          @Nonnull EntityNodeRenderer entityNodeRenderer) {
+                          @Nonnull EntityNodeRenderer entityNodeRenderer,
+                          @Nonnull EntityMatchCriteria resultsSetFilter,
+                          @Nonnull MatcherFactory matcherFactory) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.dictionaryManager = checkNotNull(dictionaryManager);
@@ -95,6 +103,8 @@ public class EntitySearcher {
         this.searchLanguages = checkNotNull(searchLanguages);
         this.searchFilters = checkNotNull(searchFilters);
         this.entityNodeRenderer = entityNodeRenderer;
+        this.resultsSetFilter = resultsSetFilter;
+        this.matcherFactory = checkNotNull(matcherFactory);
     }
 
     public void setPageRequest(@Nonnull PageRequest pageRequest) {
@@ -118,7 +128,8 @@ public class EntitySearcher {
                                                                       entityTypes,
                                                                       searchLanguages,
                                                                       searchFilters,
-                                                                      pageRequest);
+                                                                      pageRequest,
+                resultsSetFilter);
         results = entityMatches.transform(matches -> {
             var entity = matches.getEntity();
             var shortForms = dictionaryManager.getShortForms(entity);

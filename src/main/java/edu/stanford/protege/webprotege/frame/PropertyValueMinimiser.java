@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.frame;
 import com.google.common.collect.Lists;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;

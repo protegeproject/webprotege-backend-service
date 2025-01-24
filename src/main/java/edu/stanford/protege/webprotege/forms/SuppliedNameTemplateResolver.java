@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.forms;
 
 import org.semanticweb.owlapi.model.EntityType;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.UUID;
 
 /**
