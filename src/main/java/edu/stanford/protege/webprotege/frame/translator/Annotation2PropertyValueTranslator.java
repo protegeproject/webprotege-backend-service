@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.frame.State;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collections;
 import java.util.Set;
 

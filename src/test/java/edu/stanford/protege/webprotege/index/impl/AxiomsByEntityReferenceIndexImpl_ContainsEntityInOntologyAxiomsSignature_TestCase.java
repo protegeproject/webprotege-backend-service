@@ -2,19 +2,21 @@ package edu.stanford.protege.webprotege.index.impl;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntityProvider;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Class;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.SubClassOf;
@@ -24,7 +26,8 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.SubCl
  * Stanford Center for Biomedical Informatics Research
  * 2019-09-16
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AxiomsByEntityReferenceIndexImpl_ContainsEntityInOntologyAxiomsSignature_TestCase {
 
     private AxiomsByEntityReferenceIndexImpl impl;
@@ -45,7 +48,7 @@ public class AxiomsByEntityReferenceIndexImpl_ContainsEntityInOntologyAxiomsSign
 
     private OWLClass superCls;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         subCls = Class(subClsIri);
         superCls = Class(superClsIri);
@@ -65,16 +68,20 @@ public class AxiomsByEntityReferenceIndexImpl_ContainsEntityInOntologyAxiomsSign
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfEntityIsNull() {
+    @Test
+public void shouldThrowNpeIfEntityIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.containsEntityInOntologyAxiomsSignature(null, ontologyId);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.containsEntityInOntologyAxiomsSignature(subCls, null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnFalseForUnknownEntity() {

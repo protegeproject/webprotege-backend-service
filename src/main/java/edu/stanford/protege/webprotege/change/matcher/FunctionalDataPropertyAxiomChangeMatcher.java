@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.change.description.SetDataPropertyFunctio
 import edu.stanford.protege.webprotege.change.description.UnsetDataPropertyFunctional;
 import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 

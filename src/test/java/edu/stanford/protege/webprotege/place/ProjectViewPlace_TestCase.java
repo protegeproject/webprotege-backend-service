@@ -5,13 +5,19 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.perspective.PerspectiveId;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-@RunWith(org.mockito.runners.MockitoJUnitRunner.class)
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ProjectViewPlace_TestCase {
 
     private ProjectViewPlace projectViewPlace;
@@ -24,25 +30,29 @@ public class ProjectViewPlace_TestCase {
     @Mock
     private ItemSelection itemSelection;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         projectViewPlace = new ProjectViewPlace(projectId, perspectiveId, itemSelection);
     }
 
-    @Test(expected = java.lang.NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_projectId_IsNull() {
+    assertThrows(java.lang.NullPointerException.class, () -> { 
         new ProjectViewPlace(null, perspectiveId, itemSelection);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_projectId() {
         MatcherAssert.assertThat(projectViewPlace.projectId(), Matchers.is(this.projectId));
     }
 
-    @Test(expected = java.lang.NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_perspectiveId_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_perspectiveId_IsNull() {
+    assertThrows(java.lang.NullPointerException.class, () -> { 
         new ProjectViewPlace(projectId, null, itemSelection);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_perspectiveId() {

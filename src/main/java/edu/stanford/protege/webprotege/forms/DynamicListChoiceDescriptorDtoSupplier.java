@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.criteria.HierarchyPositionCriteria;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import java.util.HashMap;
 import java.util.Map;

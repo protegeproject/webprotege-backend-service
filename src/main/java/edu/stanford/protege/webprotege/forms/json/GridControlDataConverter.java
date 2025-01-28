@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.forms.data.GridControlData;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 
 public class GridControlDataConverter {
 

@@ -2,11 +2,13 @@ package edu.stanford.protege.webprotege.owlapi;
 
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsBySubjectIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLAnnotationSubject;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -18,7 +20,8 @@ import java.util.stream.Stream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -27,7 +30,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 27/01/15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ProjectAnnotationAssertionAxiomsBySubjectIndexImpl_TestCase {
 
     private ProjectAnnotationAssertionAxiomsBySubjectIndexImpl impl;
@@ -47,7 +51,7 @@ public class ProjectAnnotationAssertionAxiomsBySubjectIndexImpl_TestCase {
     @Mock
     private OWLOntologyID ontologyId;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(ontologiesIndex.getOntologyIds())
                 .thenReturn(Stream.of(ontologyId));
@@ -73,8 +77,10 @@ public class ProjectAnnotationAssertionAxiomsBySubjectIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfSubjectIsNull() {
+    @Test
+public void shouldThrowNpeIfSubjectIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getAnnotationAssertionAxioms(null);
-    }
+     });
+}
 }

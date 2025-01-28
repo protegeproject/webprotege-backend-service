@@ -1,24 +1,26 @@
 package edu.stanford.protege.webprotege.forms.processor;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.forms.FormFrameBuilder;
 import edu.stanford.protege.webprotege.forms.FormDescriptor;
+import edu.stanford.protege.webprotege.forms.FormFrameBuilder;
 import edu.stanford.protege.webprotege.forms.FormSubjectFactoryDescriptor;
 import edu.stanford.protege.webprotege.forms.FormSubjectFactoryDescriptorMissingException;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.forms.data.FormFieldData;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 /**
@@ -26,7 +28,8 @@ import static org.mockito.Mockito.*;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-26
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FormDataProcessor_TestCase {
 
     private FormDataProcessor processor;
@@ -52,7 +55,7 @@ public class FormDataProcessor_TestCase {
     @Mock
     private FormSubjectFactoryDescriptor subjectFactoryDescriptor;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         processor = new FormDataProcessor(() -> formFrameBuilder,
                                           formFieldProcessor);
@@ -93,10 +96,12 @@ public class FormDataProcessor_TestCase {
                 .setSubjectFactoryDescriptor(subjectFactoryDescriptor);
     }
 
-    @Test(expected = FormSubjectFactoryDescriptorMissingException.class)
-    public void shouldThrowExceptionIfSubjectFactoryDescriptorIsMissing() {
+    @Test
+public void shouldThrowExceptionIfSubjectFactoryDescriptorIsMissing() {
+    assertThrows(FormSubjectFactoryDescriptorMissingException.class, () -> { 
         when(formDescriptor.getSubjectFactoryDescriptor())
                 .thenReturn(Optional.empty());
         processor.processFormData(formData, true);
-    }
+     });
+}
 }

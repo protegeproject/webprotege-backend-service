@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.forms.data.PrimitiveFormControlData;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Matthew Horridge

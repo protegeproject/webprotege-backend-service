@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;

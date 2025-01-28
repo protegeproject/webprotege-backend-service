@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.entity;
 import com.google.common.base.Splitter;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 /**

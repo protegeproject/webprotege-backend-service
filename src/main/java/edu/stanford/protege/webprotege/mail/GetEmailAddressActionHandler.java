@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.user.EmailAddress;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 /**

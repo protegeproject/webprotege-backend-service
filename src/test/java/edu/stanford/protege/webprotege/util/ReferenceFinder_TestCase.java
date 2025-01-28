@@ -2,11 +2,13 @@ package edu.stanford.protege.webprotege.util;
 
 import edu.stanford.protege.webprotege.index.AxiomsByReferenceIndex;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 
 import java.util.Collections;
@@ -15,7 +17,8 @@ import java.util.stream.Stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,7 +27,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-08
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ReferenceFinder_TestCase {
 
     private ReferenceFinder referenceFinder;
@@ -65,7 +69,7 @@ public class ReferenceFinder_TestCase {
     @Mock
     private OWLAnnotationProperty annoationAnnotationProperty;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(entity.getIRI()).thenReturn(entityIri);
 
@@ -138,16 +142,20 @@ public class ReferenceFinder_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfEntitySetIsNull() {
+    @Test
+public void shouldThrowNpeIfEntitySetIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         referenceFinder.getReferenceSet(null, ontologyId);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         referenceFinder.getReferenceSet(Collections.singleton(entity), null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnEmptyResultForEmptyEntitiesSet() {

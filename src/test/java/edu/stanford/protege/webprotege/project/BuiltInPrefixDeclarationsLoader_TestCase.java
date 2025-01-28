@@ -3,7 +3,9 @@ package edu.stanford.protege.webprotege.project;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.inject.OverridableFileFactory;
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import java.io.File;
 

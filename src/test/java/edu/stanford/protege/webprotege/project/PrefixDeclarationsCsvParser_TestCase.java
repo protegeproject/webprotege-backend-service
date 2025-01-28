@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class PrefixDeclarationsCsvParser_TestCase {
 
     private PrefixDeclarationsCsvParser parser;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         parser = new PrefixDeclarationsCsvParser();
     }

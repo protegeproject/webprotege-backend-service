@@ -13,7 +13,8 @@ import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
+
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;

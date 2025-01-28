@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.HasDispose;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

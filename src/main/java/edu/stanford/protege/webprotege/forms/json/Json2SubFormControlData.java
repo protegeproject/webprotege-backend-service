@@ -7,7 +7,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 import java.util.Optional;
 
 public class Json2SubFormControlData {

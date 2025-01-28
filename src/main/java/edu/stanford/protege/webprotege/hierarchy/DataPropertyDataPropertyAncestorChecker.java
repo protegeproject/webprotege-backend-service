@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import org.semanticweb.owlapi.model.OWLDataProperty;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 26/02/2014

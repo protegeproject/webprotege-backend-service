@@ -5,7 +5,6 @@ import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.Test;
 
-
 import java.io.IOException;
 
 /**

@@ -3,21 +3,18 @@ package edu.stanford.protege.webprotege.crud.supplied;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
-import edu.stanford.protege.webprotege.crud.ChangeSetEntityCrudSession;
-import edu.stanford.protege.webprotege.crud.EntityCrudContext;
-import edu.stanford.protege.webprotege.crud.EntityIriPrefixResolver;
-import edu.stanford.protege.webprotege.crud.PrefixedNameExpander;
-import edu.stanford.protege.webprotege.crud.EntityCrudKitPrefixSettings;
-import edu.stanford.protege.webprotege.crud.EntityShortForm;
-import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.crud.*;
+import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
 import org.hamcrest.core.Is;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.Namespaces;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
@@ -32,14 +29,14 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 16/04/2014
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class SuppliedNameSuffixEntityCrudKitHandlerTestCase {
 
     public static final String PREFIX = "http://stuff/";
@@ -81,7 +78,7 @@ public class SuppliedNameSuffixEntityCrudKitHandlerTestCase {
 
     private EntityType<?> entityType = EntityType.CLASS;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         OWLDataFactoryImpl dataFactory = new OWLDataFactoryImpl();
         when(suffixSettings.getWhiteSpaceTreatment()).thenReturn(whiteSpaceTreatment);

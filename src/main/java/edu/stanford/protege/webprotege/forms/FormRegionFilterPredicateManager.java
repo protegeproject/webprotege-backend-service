@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.forms.field.FormRegionId;
 import edu.stanford.protege.webprotege.match.Matcher;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;

@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.forms.data;
 import com.google.common.collect.Comparators;
 import org.semanticweb.owlapi.model.IRI;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 import java.util.Optional;
 

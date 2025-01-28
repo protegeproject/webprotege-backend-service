@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.validators.ApplicationPermission
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.REBUILD_PERMISSIONS;
 

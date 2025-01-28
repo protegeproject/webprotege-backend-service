@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.perspective;
 import org.semanticweb.owlapi.model.EntityType;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static org.semanticweb.owlapi.model.EntityType.*;
 

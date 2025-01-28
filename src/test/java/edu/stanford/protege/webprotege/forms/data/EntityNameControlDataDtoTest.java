@@ -1,18 +1,17 @@
 package edu.stanford.protege.webprotege.forms.data;
 
-import edu.stanford.protege.webprotege.forms.field.*;
+import edu.stanford.protege.webprotege.forms.field.EntityNameControlDescriptor;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.Import;
-import uk.ac.manchester.cs.owl.owlapi.OWLLiteralImpl;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @JsonTest
 @Import(WebProtegeJacksonApplication.class)

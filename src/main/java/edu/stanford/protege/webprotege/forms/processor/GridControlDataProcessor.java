@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.forms.data.GridRowData;
 import edu.stanford.protege.webprotege.forms.field.OwlBinding;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Matthew Horridge

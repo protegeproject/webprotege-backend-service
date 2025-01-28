@@ -8,7 +8,7 @@ import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
 * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 19/03/2014

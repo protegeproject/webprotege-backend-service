@@ -1,12 +1,14 @@
 package edu.stanford.protege.webprotege.index.impl;
 
-import edu.stanford.protege.webprotege.index.AxiomsByTypeIndex;
 import edu.stanford.protege.webprotege.frame.ObjectPropertyCharacteristic;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import edu.stanford.protege.webprotege.index.AxiomsByTypeIndex;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 
 import java.util.stream.Stream;
@@ -15,7 +17,8 @@ import static edu.stanford.protege.webprotege.frame.ObjectPropertyCharacteristic
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.semanticweb.owlapi.model.AxiomType.*;
@@ -25,7 +28,8 @@ import static org.semanticweb.owlapi.model.AxiomType.*;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-10
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ObjectPropertyCharacteristicsIndexImpl_TestCase {
 
     private ObjectPropertyCharacteristicsIndexImpl impl;
@@ -39,7 +43,7 @@ public class ObjectPropertyCharacteristicsIndexImpl_TestCase {
     @Mock
     private AxiomsByTypeIndex axiomsByTypeIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(axiomsByTypeIndex.getAxiomsByType(any(), any()))
                 .thenAnswer(invocation -> Stream.empty());
@@ -161,21 +165,27 @@ public class ObjectPropertyCharacteristicsIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfPropertyIsNull() {
+    @Test
+public void shouldThrowNpeIfPropertyIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.hasCharacteristic(null, FUNCTIONAL, ontologyId);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfCharacteristicIsNull() {
+    @Test
+public void shouldThrowNpeIfCharacteristicIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.hasCharacteristic(property, null, ontologyId);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.hasCharacteristic(property, FUNCTIONAL, null);
-    }
+     });
+}
 }
 

@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 /**

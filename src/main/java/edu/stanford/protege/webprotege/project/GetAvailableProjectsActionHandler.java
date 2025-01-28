@@ -16,7 +16,7 @@ import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserActivityRecord;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

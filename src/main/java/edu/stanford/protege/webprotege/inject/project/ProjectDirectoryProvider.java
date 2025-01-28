@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.inject.project;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
 
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.io.File;
 
 /**

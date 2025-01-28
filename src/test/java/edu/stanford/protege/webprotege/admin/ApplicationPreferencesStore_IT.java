@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.admin;
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.app.ApplicationLocation;
 import edu.stanford.protege.webprotege.app.ApplicationPreferences;
 import edu.stanford.protege.webprotege.app.ApplicationPreferencesStore;
-import edu.stanford.protege.webprotege.app.ApplicationLocation;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

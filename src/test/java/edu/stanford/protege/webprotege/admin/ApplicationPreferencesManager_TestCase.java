@@ -1,18 +1,16 @@
 package edu.stanford.protege.webprotege.admin;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.app.ApplicationPreferences;
-import edu.stanford.protege.webprotege.app.ApplicationPreferencesStore;
-import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.app.ApplicationLocation;
-import edu.stanford.protege.webprotege.app.ApplicationSettings;
+import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_ALLOWED;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_NOT_ALLOWED;
@@ -31,7 +29,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 18 Mar 2017
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ApplicationPreferencesManager_TestCase {
 
     public static final String THE_APP_NAME = "TheAppName";
@@ -52,7 +51,7 @@ public class ApplicationPreferencesManager_TestCase {
     @Mock
     private ApplicationLocation applicationLocation;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         manager = new ApplicationSettingsManager(accessManager,
                                                  applicationPreferencesStore);

@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

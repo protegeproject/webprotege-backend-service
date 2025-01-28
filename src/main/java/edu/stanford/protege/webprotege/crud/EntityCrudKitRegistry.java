@@ -4,7 +4,7 @@ import com.google.common.collect.Maps;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

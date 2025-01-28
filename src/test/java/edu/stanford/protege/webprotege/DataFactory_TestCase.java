@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLClass;
 

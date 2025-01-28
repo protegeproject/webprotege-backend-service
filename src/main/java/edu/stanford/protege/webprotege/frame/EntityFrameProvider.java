@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTrans
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Matthew Horridge

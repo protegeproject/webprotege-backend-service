@@ -8,7 +8,7 @@ import org.semanticweb.owlapi.model.OWLDocumentFormat;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.*;
 import java.util.Optional;
 

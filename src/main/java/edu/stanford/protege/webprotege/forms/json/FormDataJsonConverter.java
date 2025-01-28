@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
 import org.semanticweb.owlapi.model.IRI;
 
 import javax.annotation.Nonnull;
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 
 public class FormDataJsonConverter {
 

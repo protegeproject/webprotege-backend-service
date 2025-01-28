@@ -1,11 +1,13 @@
 package edu.stanford.protege.webprotege.persistence;
 
 import com.mongodb.DBObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -19,7 +21,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 27 Jul 16
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OWLEntityWriteConverter_TestCase {
 
     private OWLEntityWriteConverter converter;
@@ -29,7 +32,7 @@ public class OWLEntityWriteConverter_TestCase {
 
     private IRI iri = IRI.create("http://the.entity.iri");
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         converter = new OWLEntityWriteConverter();
         when(entity.getIRI()).thenReturn(iri);

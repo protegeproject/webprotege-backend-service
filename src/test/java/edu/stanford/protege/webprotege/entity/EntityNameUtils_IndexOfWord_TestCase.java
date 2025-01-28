@@ -1,8 +1,9 @@
 package edu.stanford.protege.webprotege.entity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Author: Matthew Horridge<br>
@@ -13,32 +14,42 @@ import static org.junit.Assert.assertEquals;
 public class EntityNameUtils_IndexOfWord_TestCase {
 
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionForNullString() {
+    @Test
+public void shouldThrowNullPointerExceptionForNullString() {
+    assertThrows(NullPointerException.class, () -> { 
         EntityNameUtils.indexOfWord(null, 1);
-    }
+     });
+}
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldThrowIndexOutOfBoundsExceptionForStartLessThanZero() {
+    @Test
+public void shouldThrowIndexOutOfBoundsExceptionForStartLessThanZero() {
+    assertThrows(IndexOutOfBoundsException.class, () -> { 
         EntityNameUtils.indexOfWord("x", -1);
-    }
+     });
+}
 
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldThrowIndexOutOfBoundsExceptionForStartEqualToStringLength() {
+    @Test
+public void shouldThrowIndexOutOfBoundsExceptionForStartEqualToStringLength() {
+    assertThrows(IndexOutOfBoundsException.class, () -> { 
         EntityNameUtils.indexOfWord("x", -1);
-    }
+     });
+}
 
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldThrowIndexOutOfBoundsExceptionForStartGreaterThanStringLength() {
+    @Test
+public void shouldThrowIndexOutOfBoundsExceptionForStartGreaterThanStringLength() {
+    assertThrows(IndexOutOfBoundsException.class, () -> { 
         EntityNameUtils.indexOfWord("x", 2);
-    }
+     });
+}
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void shouldThrowIndexOutOfBoundsExceptionForEmptyString() {
+    @Test
+public void shouldThrowIndexOutOfBoundsExceptionForEmptyString() {
+    assertThrows(IndexOutOfBoundsException.class, () -> { 
         EntityNameUtils.indexOfWord("", 0);
-    }
+     });
+}
 
     @Test
     public void shouldReturnZeroForNonQuotedStringAndStartIndexOfZero() {

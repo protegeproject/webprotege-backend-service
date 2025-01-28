@@ -8,7 +8,8 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-import static org.glassfish.jersey.internal.guava.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 
 public class EntityStatusManagerImpl implements EntityStatusManager {
 

@@ -1,17 +1,22 @@
 package edu.stanford.protege.webprotege.forms.data;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.entity.IRIData;
-import edu.stanford.protege.webprotege.forms.field.*;
+import edu.stanford.protege.webprotege.forms.field.FixedChoiceListSourceDescriptor;
+import edu.stanford.protege.webprotege.forms.field.SingleChoiceControlDescriptor;
+import edu.stanford.protege.webprotege.forms.field.SingleChoiceControlType;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.*;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.Import;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.StringReader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

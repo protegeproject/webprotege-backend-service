@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.forms;
 import edu.stanford.protege.webprotege.forms.field.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 

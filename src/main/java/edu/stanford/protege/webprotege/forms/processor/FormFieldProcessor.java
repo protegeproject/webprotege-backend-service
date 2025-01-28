@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.forms.FormFrameBuilder;
 import edu.stanford.protege.webprotege.forms.data.FormFieldData;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * Matthew Horridge
