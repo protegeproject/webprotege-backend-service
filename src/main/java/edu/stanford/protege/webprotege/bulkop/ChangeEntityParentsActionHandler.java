@@ -134,7 +134,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
             return getResultWithParentAsLinearizationPathParent(parentThatisLinearizationParent);
         }
 
-        var parents = action.parents().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
+        var parents = action.parents().stream().collect(toImmutableSet());
 
         if (releasedClassesChecker.isReleased(action.entity())) {
             var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
