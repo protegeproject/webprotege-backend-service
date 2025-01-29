@@ -104,7 +104,7 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
         var isAnyClassReleased = action.entities().stream().anyMatch(releasedClassesChecker::isReleased);
 
         if (isAnyClassReleased) {
-            isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.parentEntity().asOWLClass());
+            isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.parentEntity());
             if (isDestinationRetiredClass) {
                 return new MoveEntitiesToParentIcdResult(isDestinationRetiredClass, ImmutableMap.of());
             }
@@ -141,7 +141,7 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
             return getResultWithParentAsLinearizationPathParent(entitiesWithParentLinPathParent);
         }
 
-        ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
+        ImmutableSet<OWLClass> clses = action.entities().stream().collect(toImmutableSet());
         var changeListGenerator = factory.create(action.changeRequestId(), clses, action.parentEntity().asOWLClass(), action.commitMessage());
         changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
