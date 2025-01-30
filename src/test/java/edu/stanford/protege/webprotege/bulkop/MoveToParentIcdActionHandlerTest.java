@@ -2,6 +2,8 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
+import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
@@ -12,6 +14,7 @@ import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassD
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.linearization.MergeWithParentEntitiesResponse;
+import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +30,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -69,6 +73,13 @@ class MoveToParentIcdActionHandlerTest {
     private MoveToParentIcdActionHandler actionHandler;
     private ExecutionContext executionContext;
 
+    @Mock
+    private ChangeApplicationResult<Boolean> changeApplicationResult;
+    @Mock
+    private List<OntologyChange> ontologyChangeList;
+    @Mock
+    private RenameMap renameMap;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -83,6 +94,10 @@ class MoveToParentIcdActionHandlerTest {
                 linParentChecker,
                 renderingManager,
                 classHierarchyProvider);
+
+        when(changeApplicationResult.getRenameMap()).thenReturn(renameMap);
+        when(changeApplicationResult.getChangeList()).thenReturn(ontologyChangeList);
+        when(changeApplicationResult.getSubject()).thenReturn(true);
     }
 
     private OWLClass mockOwlEntityAsClass(OWLEntity entity, String iri) {
@@ -95,23 +110,6 @@ class MoveToParentIcdActionHandlerTest {
         when(owlClass.asOWLClass()).thenReturn(owlClass);
         when(owlClass.toStringID()).thenReturn(iri);
         return owlClass;
-    }
-
-    @Test
-    void GIVEN_nonOwlClassParent_WHEN_executeCalled_THEN_returnsFailure() {
-
-        OWLEntity entity = mock(OWLEntity.class);
-        OWLClass entityClass = mockOwlEntityAsClass(entity, "http://example.org/entity");
-        OWLEntity parent = mock(OWLEntity.class);
-        OWLClass parentClass = mockOwlEntityAsClass(parent, "http://example.org/parent");
-        MoveEntitiesToParentIcdAction action = new MoveEntitiesToParentIcdAction(null, projectId, ImmutableSet.of(entityClass), parentClass, "Test Commit Message");
-
-        when(parent.isOWLClass()).thenReturn(false);
-
-        MoveEntitiesToParentIcdResult result = actionHandler.execute(action, executionContext);
-
-        assertFalse(result.isDestinationRetiredClass());
-        assertTrue(result.entitiesForWhichParentIsLinPathParent().isEmpty());
     }
 
     @Test
@@ -143,7 +141,7 @@ class MoveToParentIcdActionHandlerTest {
 
         MoveEntitiesToParentIcdAction action = new MoveEntitiesToParentIcdAction(null, projectId, ImmutableSet.of(mockOwlEntityAsClass(entity, "http://example.org/entity")), parentClass, "Test Commit Message");
 
-        when(changeManager.applyChanges(any(), any())).thenReturn(null);
+        doReturn(changeApplicationResult).when(changeManager).applyChanges(any(), any());
         when(linearizationManager.mergeLinearizationsFromParents(any(), any(), any(), any()))
                 .thenReturn(CompletableFuture.completedFuture(null));
 
@@ -159,9 +157,10 @@ class MoveToParentIcdActionHandlerTest {
         OWLEntity newParent = mock(OWLEntity.class);
         OWLEntity currParent = mock(OWLEntity.class);
         String currentParentIri = "http://example.org/parent";
+        String newParentIri = "http://example.org/newParent";
         OWLClass entityClass = mockOwlEntityAsClass(entity, "http://example.org/entity");
         OWLClass currParentClass = mockOwlEntityAsClass(currParent, currentParentIri);
-        OWLClass newParentClass = mockOwlEntityAsClass(currParent, currentParentIri);
+        OWLClass newParentClass = mockOwlEntityAsClass(newParent, newParentIri);
 
         when(classHierarchyProvider.getParents(any())).thenReturn(Set.of(currParentClass));
 

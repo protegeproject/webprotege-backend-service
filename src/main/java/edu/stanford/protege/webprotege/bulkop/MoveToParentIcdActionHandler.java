@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
+import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
@@ -95,10 +96,6 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
     @NotNull
     @Override
     public MoveEntitiesToParentIcdResult execute(@NotNull MoveEntitiesToParentIcdAction action, @NotNull ExecutionContext executionContext) {
-        if (isNotOwlClass(action.parentEntity())) {
-            return new MoveEntitiesToParentIcdResult(false, ImmutableMap.of());
-        }
-
         var isDestinationRetiredClass = false;
 
         var isAnyClassReleased = action.entities().stream().anyMatch(releasedClassesChecker::isReleased);
@@ -143,27 +140,21 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
 
         ImmutableSet<OWLClass> clses = action.entities().stream().collect(toImmutableSet());
         var changeListGenerator = factory.create(action.changeRequestId(), clses, action.parentEntity().asOWLClass(), action.commitMessage());
-        changeManager.applyChanges(executionContext.userId(), changeListGenerator);
+        ChangeApplicationResult<Boolean> result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
-        clses.stream()
-                .flatMap(cls -> Stream.of(linearizationManager.mergeLinearizationsFromParents(cls.getIRI(), Set.of(action.parentEntity().getIRI()), action.projectId(), executionContext)))
-                .forEach(completableFuture -> {
-                    try {
-                        completableFuture.get();
-                    } catch (InterruptedException | ExecutionException e) {
-                        logger.error("MergeLinearizationsError: " + e);
-                    }
-                });
+        if(result.getSubject()){
+            clses.stream()
+                    .flatMap(cls -> Stream.of(linearizationManager.mergeLinearizationsFromParents(cls.getIRI(), Set.of(action.parentEntity().getIRI()), action.projectId(), executionContext)))
+                    .forEach(completableFuture -> {
+                        try {
+                            completableFuture.get();
+                        } catch (InterruptedException | ExecutionException e) {
+                            logger.error("MergeLinearizationsError: " + e);
+                        }
+                    });
+        }
 
         return new MoveEntitiesToParentIcdResult(isDestinationRetiredClass, ImmutableMap.of());
-    }
-
-    private boolean isEntityAnOwlClass(OWLEntity entity) {
-        return entity.isOWLClass();
-    }
-
-    private boolean isNotOwlClass(OWLEntity entity) {
-        return !isEntityAnOwlClass(entity);
     }
 
     private MoveEntitiesToParentIcdResult getResultWithParentAsLinearizationPathParent(Map<IRI, Set<IRI>> parentsThatAreLinPathParent) {
