@@ -16,11 +16,14 @@ public class LinearizationManagerImpl implements LinearizationManager {
 
     private final CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeLinearizationsExecutor;
     private final CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent;
+    private final CommandExecutor<GetParentsThatAreLinearizationPathParents, GetParentsThatAreLinearizationPathParentsResponse> areParentsLinearizationParents;
 
     public LinearizationManagerImpl(CommandExecutor<MergeWithParentEntitiesRequest, MergeWithParentEntitiesResponse> mergeLinearizationsExecutor,
-                                    CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent) {
+                                    CommandExecutor<CreateLinearizationFromParentRequest, CreateLinearizationFromParentResponse> createLinearizationFromParent,
+                                    CommandExecutor<GetParentsThatAreLinearizationPathParents, GetParentsThatAreLinearizationPathParentsResponse> areParentsLinearizationParents) {
         this.mergeLinearizationsExecutor = mergeLinearizationsExecutor;
         this.createLinearizationFromParent = createLinearizationFromParent;
+        this.areParentsLinearizationParents = areParentsLinearizationParents;
     }
 
 
@@ -38,5 +41,13 @@ public class LinearizationManagerImpl implements LinearizationManager {
                 CreateLinearizationFromParentRequest.create(newEntityIri, parentEntityIri, projectId),
                 executionContext
         );
+    }
+
+    @Override
+    public CompletableFuture<Set<IRI>> getParentsThatAreLinearizationPathParents(IRI owlIri, Set<IRI> parentsIris, ProjectId projectId, ExecutionContext executionContext) {
+        return areParentsLinearizationParents.execute(
+                GetParentsThatAreLinearizationPathParents.create(owlIri, parentsIris, projectId),
+                executionContext
+        ).thenApply(GetParentsThatAreLinearizationPathParentsResponse::parentsThatAreLinearizationPathParents);
     }
 }

@@ -1,13 +1,14 @@
 package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
+import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
@@ -70,6 +71,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     private final LinearizationManager linearizationManager;
 
+    @Nonnull
+    private final LinearizationParentChecker linParentChecker;
+
 
     @Inject
     public ChangeEntityParentsActionHandler(@Nonnull AccessManager accessManager,
@@ -83,7 +87,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull RenderingManager renderingManager,
                                             @Nonnull ReleasedClassesChecker releasedClassesChecker,
                                             @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
-                                            @Nonnull LinearizationManager linearizationManager) {
+                                            @Nonnull LinearizationManager linearizationManager,
+                                            @Nonnull LinearizationParentChecker linParentChecker) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.changeManager = checkNotNull(changeManager);
@@ -96,6 +101,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.retiredAncestorDetector = retiredAncestorDetector;
         this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
         this.linearizationManager = checkNotNull(linearizationManager);
+        this.linParentChecker = linParentChecker;
     }
 
     @Nonnull
@@ -108,9 +114,27 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     @Override
     public ChangeEntityParentsResult execute(@Nonnull ChangeEntityParentsAction action, @Nonnull ExecutionContext executionContext) {
-        var parents = action.parents().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
-        var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
+        Set<IRI> newParents = action.parents()
+                .stream()
+                .map(OWLNamedObject::getIRI)
+                .collect(Collectors.toSet());
+        Set<IRI> currentParents = classHierarchyProvider.getParents(action.entity())
+                .stream()
+                .map(OWLNamedObject::getIRI)
+                .collect(Collectors.toSet());
+        Set<IRI> removedParents = currentParents
+                .stream()
+                .filter(parent -> !newParents.contains(parent))
+                .collect(Collectors.toSet());
+        var parentThatisLinearizationParent = linParentChecker.getParentThatIsLinearizationPathParent(action.entity().getIRI(),
+                removedParents,
+                projectId);
 
+        if (!parentThatisLinearizationParent.isEmpty()) {
+            return getResultWithParentAsLinearizationPathParent(parentThatisLinearizationParent);
+        }
+
+        var parents = action.parents().stream().collect(toImmutableSet());
 
         if (releasedClassesChecker.isReleased(action.entity())) {
             var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
@@ -119,6 +143,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                 return getResultWithRetiredAncestors(classesWithRetiredAncestors);
             }
         }
+
+        var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
 
         var result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
@@ -153,12 +179,12 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     }
 
     private ChangeEntityParentsResult validEmptyResult() {
-        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of());
+        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(), ImmutableSet.of());
     }
 
     private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of());
+        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of(), ImmutableSet.of());
     }
 
     private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {
@@ -169,6 +195,13 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
     private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult);
+        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult, ImmutableSet.of());
+    }
+
+    private ChangeEntityParentsResult getResultWithParentAsLinearizationPathParent(Set<IRI> parentIris) {
+        Set<OWLClass> parentClasses = parentIris.stream().map(DataFactory::getOWLClass).collect(Collectors.toSet());
+        var parentEntityDataResult = getOwlEntityDataFromOwlClasses(parentClasses);
+
+        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(), parentEntityDataResult);
     }
 }
