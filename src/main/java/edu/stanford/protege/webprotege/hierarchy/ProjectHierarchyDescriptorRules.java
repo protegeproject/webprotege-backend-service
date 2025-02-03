@@ -8,11 +8,11 @@ import org.springframework.data.annotation.Id;
 import java.util.List;
 import java.util.Objects;
 
-public record ProjectHierarchyDescriptorRules(@JsonProperty("projectId") @Id ProjectId projectId,
+public record ProjectHierarchyDescriptorRules(@JsonProperty("_id") @Id ProjectId projectId,
                                               @JsonProperty("rules") List<HierarchyDescriptorRule> rules) {
 
     @JsonCreator
-    public ProjectHierarchyDescriptorRules(@JsonProperty("projectId") ProjectId projectId,
+    public ProjectHierarchyDescriptorRules(@JsonProperty("_id") ProjectId projectId,
                                            @JsonProperty("rules") List<HierarchyDescriptorRule> rules) {
         this.projectId = Objects.requireNonNull(projectId, "projectId cannot be null");
         this.rules = Objects.requireNonNull(rules, "rules cannot be null");

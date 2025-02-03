@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.persistence.Repository;
 
 import java.util.Optional;
 
-public interface ProjectHierarchyDescriptorRulesRepository extends Repository {
+public interface HierarchyDescriptorRulesRepository extends Repository {
 
     void save(ProjectHierarchyDescriptorRules rules);
 

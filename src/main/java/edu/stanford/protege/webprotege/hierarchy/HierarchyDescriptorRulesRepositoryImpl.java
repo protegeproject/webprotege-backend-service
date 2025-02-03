@@ -2,29 +2,30 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.InsertOneOptions;
 import com.mongodb.client.model.ReplaceOptions;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.bson.BsonDocument;
+import edu.stanford.protege.webprotege.perspective.PerspectiveId;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
+import org.semanticweb.owlapi.model.IRI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
+import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
-import java.util.Optional;
+import java.util.*;
 
-public class ProjectHierarchyDescriptorRulesRepositoryImpl implements ProjectHierarchyDescriptorRulesRepository {
+public class HierarchyDescriptorRulesRepositoryImpl implements HierarchyDescriptorRulesRepository {
 
-    public static final String COLLECTION_NAME = "ProjectHierarchyDescriptorRules";
+    public static final String COLLECTION_NAME = "HierarchyDescriptorRules";
 
     private final MongoTemplate mongoTemplate;
 
     private final ObjectMapper objectMapper;
 
-    public ProjectHierarchyDescriptorRulesRepositoryImpl(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
+    public HierarchyDescriptorRulesRepositoryImpl(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
         this.mongoTemplate = mongoTemplate;
         this.objectMapper = objectMapper;
     }
@@ -53,7 +54,7 @@ public class ProjectHierarchyDescriptorRulesRepositoryImpl implements ProjectHie
 
     @Override
     public Optional<ProjectHierarchyDescriptorRules> find(ProjectId projectId) {
-        var query = Query.query(Criteria.where("projectId").is(projectId.id()));
+        var query = Query.query(Criteria.where("_id").is(projectId.id()));
         var found = getCollection().find(query.getQueryObject()).first();
         return Optional.ofNullable(found).map(o -> objectMapper.convertValue(o, ProjectHierarchyDescriptorRules.class));
     }

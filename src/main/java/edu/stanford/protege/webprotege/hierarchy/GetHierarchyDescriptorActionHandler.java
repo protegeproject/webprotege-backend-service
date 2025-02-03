@@ -17,14 +17,16 @@ import java.util.Set;
 
 public class GetHierarchyDescriptorActionHandler extends AbstractProjectActionHandler<GetHierarchyDescriptorRequest, GetHierarchyDescriptorResponse> {
 
+    private final AccessManager accessManager;
 
-    private AccessManager accessManager;
+    private static final Logger logger = LoggerFactory.getLogger(GetHierarchyDescriptorActionHandler.class);
 
-    private Logger logger = LoggerFactory.getLogger(GetHierarchyDescriptorActionHandler.class);
+    private final HierarchyDescriptorRuleSelector ruleSelector;
 
-    public GetHierarchyDescriptorActionHandler(@Nonnull AccessManager accessManager) {
+    public GetHierarchyDescriptorActionHandler(@Nonnull AccessManager accessManager, HierarchyDescriptorRuleSelector ruleSelector) {
         super(accessManager);
         this.accessManager = accessManager;
+        this.ruleSelector = ruleSelector;
     }
 
     @Nonnull
@@ -43,12 +45,13 @@ public class GetHierarchyDescriptorActionHandler extends AbstractProjectActionHa
     @Override
     public GetHierarchyDescriptorResponse execute(@Nonnull GetHierarchyDescriptorRequest action, @Nonnull ExecutionContext executionContext) {
         var displayContext = action.displayContext();
-        logger.info("GetHierarchyDescriptorRequest: {}", action);
+        logger.debug("GetHierarchyDescriptorRequest: {}", action);
         var userId = executionContext.userId();
         var actionClosure = accessManager.getActionClosure(Subject.forUser(userId), ProjectResource.forProject(action.projectId()), executionContext);
-        logger.info("GetHierarchyDescriptor: {}", actionClosure);
-        return new GetHierarchyDescriptorResponse(ClassHierarchyDescriptor.create(
-                Set.of(new OWLClassImpl(IRI.create("http://www.example.org/RBdOBCXUNWSHBJN16omh8h5")))
-        ));
+        logger.debug("Action closure: {}", actionClosure);
+        var selectedRule = ruleSelector.selectRule(action.projectId(), displayContext, actionClosure);
+        logger.debug("Selected rule: {}", selectedRule);
+        var hierarchyDescriptor = selectedRule.map(HierarchyDescriptorRule::hierarchyDescriptor).orElse(null);
+        return new GetHierarchyDescriptorResponse(hierarchyDescriptor);
     }
 }

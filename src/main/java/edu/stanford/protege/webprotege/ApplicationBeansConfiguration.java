@@ -16,10 +16,7 @@ import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManagerImpl;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyRepository;
-import edu.stanford.protege.webprotege.hierarchy.ProjectHierarchyDescriptorRulesRepositoryImpl;
+import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -574,8 +571,21 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectHierarchyDescriptorRulesRepositoryImpl projectHierarchyDescriptorRulesRepository(MongoTemplate p1, ObjectMapper p2) {
-        return new ProjectHierarchyDescriptorRulesRepositoryImpl(p1, p2);
+    HierarchyDescriptorRulesRepositoryImpl projectHierarchyDescriptorRulesRepository(MongoTemplate p1, ObjectMapper p2) {
+        var repo = new HierarchyDescriptorRulesRepositoryImpl(p1, p2);
+        repo.ensureIndexes();
+        return repo;
     }
+
+    @Bean
+    HierarchyDescriptorRuleSelector hierarchyDescriptorRuleSelector(HierarchyDescriptorRulesRepository p1, HierarchyDescriptorRuleDisplayContextMatcher p2) {
+        return new HierarchyDescriptorRuleSelector(p1, p2);
+    }
+
+    @Bean
+    HierarchyDescriptorRuleDisplayContextMatcher hierarchyDescriptorRuleDisplayContextMatcher() {
+        return new HierarchyDescriptorRuleDisplayContextMatcher();
+    }
+
 
 }

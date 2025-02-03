@@ -5,16 +5,14 @@ import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
 @WebProtegeHandler
-public class GetHierarchyDescriptorCommandHandler implements CommandHandler<GetHierarchyDescriptorRequest, GetHierarchyDescriptorResponse> {
+public class GetHierarchyDescriptorRulesCommandHandler implements CommandHandler<GetProjectHierarchyDescriptorRulesRequest, GetProjectHierarchyDescriptorRulesResponse> {
 
     private final ActionExecutor actionExecutor;
 
-    public GetHierarchyDescriptorCommandHandler(ActionExecutor actionExecutor) {
+    public GetHierarchyDescriptorRulesCommandHandler(ActionExecutor actionExecutor) {
         this.actionExecutor = actionExecutor;
     }
 
@@ -25,12 +23,12 @@ public class GetHierarchyDescriptorCommandHandler implements CommandHandler<GetH
     }
 
     @Override
-    public Class<GetHierarchyDescriptorRequest> getRequestClass() {
-        return GetHierarchyDescriptorRequest.class;
+    public Class<GetProjectHierarchyDescriptorRulesRequest> getRequestClass() {
+        return GetProjectHierarchyDescriptorRulesRequest.class;
     }
 
     @Override
-    public Mono<GetHierarchyDescriptorResponse> handleRequest(GetHierarchyDescriptorRequest request, ExecutionContext executionContext) {
+    public Mono<GetProjectHierarchyDescriptorRulesResponse> handleRequest(GetProjectHierarchyDescriptorRulesRequest request, ExecutionContext executionContext) {
         return actionExecutor.executeRequest(request, executionContext);
     }
 }

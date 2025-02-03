@@ -1,7 +1,9 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
+import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,19 +14,18 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
 @ExtendWith(MongoTestExtension.class)
-class ProjectHierarchyDescriptorRulesRepositoryImplIT {
+class HierarchyDescriptorRulesRepositoryImplIT {
 
-    public static final String COLLECTION_NAME = "ProjectHierarchyDescriptorRules";
+    public static final String COLLECTION_NAME = "HierarchyDescriptorRules";
 
     @Autowired
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private ProjectHierarchyDescriptorRulesRepositoryImpl repository;
+    private HierarchyDescriptorRulesRepositoryImpl repository;
 
     private ProjectId projectId;
 
@@ -36,12 +37,16 @@ class ProjectHierarchyDescriptorRulesRepositoryImplIT {
         var rules = new ArrayList<HierarchyDescriptorRule>();
         projectRules = new ProjectHierarchyDescriptorRules(projectId, rules);
 
+
+        var collection = mongoTemplate.getCollection(COLLECTION_NAME);
+        collection.drop();
     }
 
     @Test
     void shouldSaveProjectRules() {
         repository.save(projectRules);
-        var savedRules = mongoTemplate.getCollection(COLLECTION_NAME).find().iterator().next();
+        var collection = mongoTemplate.getCollection(COLLECTION_NAME);
+        var savedRules = collection.find().iterator().next();
         assertThat(savedRules).isNotNull();
         assertThat(savedRules.get("_id")).isEqualTo(projectId.id());
     }
