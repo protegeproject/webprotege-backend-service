@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.stanford.protege.webprotege.common.Response;
 import edu.stanford.protege.webprotege.dispatch.Result;
 

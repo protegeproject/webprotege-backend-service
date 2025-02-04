@@ -113,7 +113,7 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
             return new CreateClassesFromApiResult(
                     action.changeRequestId(),
                     action.projectId(),
-                    newClass.toStringID()
+                    newClass.getIRI().toString()
             );
         }
     }
