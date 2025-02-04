@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Matthew Horridge
@@ -25,12 +25,13 @@ public class CreateProjectSagaManager {
 
     private final ProjectDetailsManager projectDetailsManager;
 
+
     private final CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor;
 
     private final CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor;
     private final CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
 
-    private final CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor;
+    private final CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> notifyOnNewReproducibleProject;
 
     private final MinioFileDownloader fileDownloader;
 
@@ -39,11 +40,10 @@ public class CreateProjectSagaManager {
     private final ProjectPermissionsInitializer projectPermissionsInitializer;
     private final EventDispatcher eventDispatcher;
 
-    public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager,
-                                    CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
+    public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager, CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
                                     CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor,
-                                    CommandExecutor<CreateProjectSmallFilesRequest, CreateProjectSmallFilesResponse> createProjectSmallFilesExecutor,
+                                    CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> createProjectSmallFilesExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
                                     ProjectPermissionsInitializer projectPermissionsInitializer, EventDispatcher eventDispatcher) {
@@ -51,7 +51,7 @@ public class CreateProjectSagaManager {
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
         this.prepareBinaryFileBackupForUseExecutor = prepareBinaryFileBackupForUseExecutor;
-        this.createProjectSmallFilesExecutor = createProjectSmallFilesExecutor;
+        this.notifyOnNewReproducibleProject = createProjectSmallFilesExecutor;
         this.revisionHistoryReplacer = revisionHistoryReplacer;
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
@@ -107,19 +107,19 @@ public class CreateProjectSagaManager {
                 });
     }
 
-    public CompletableFuture<CreateNewProjectFromProjectBackupResult> executeFromBackup(NewProjectSettings newProjectSettings, ExecutionContext executionContext) {
+    public CompletableFuture<CreateNewProjectFromProjectBackupResult> executeFromBackup(NewProjectSettings newProjectSettings, String branchName, ExecutionContext executionContext) {
         if (newProjectSettings.hasSourceDocument()) {
-            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext));
+            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext), branchName);
         }
         return null;
     }
 
-    private CompletableFuture<CreateNewProjectFromProjectBackupResult> createProjectFromBackupFile(SagaStateWithSources sagaState) {
+    private CompletableFuture<CreateNewProjectFromProjectBackupResult> createProjectFromBackupFile(SagaStateWithSources sagaState, String branchName) {
         logger.info("Creating an empty project: {}", sagaState.getNewProjectSettings());
         return prepareBackupFilesForRestore(sagaState)
                 .thenCompose(this::downloadRevisionHistory)
                 .thenCompose(this::copyRevisionHistoryToProject)
-                .thenCompose(this::createProjectSmallFiles)
+                .thenCompose(state -> this.notifyVersioningForReproducibleProject(state, branchName))
                 .thenCompose(this::registerProject)
                 .thenCompose(this::initializeProjectPermissions)
                 .thenCompose(this::retrieveProjectDetails)
@@ -137,9 +137,9 @@ public class CreateProjectSagaManager {
                 });
     }
 
-    private CompletableFuture<SagaStateWithSources> createProjectSmallFiles(SagaStateWithSources sagaState) {
-        var createHistoryRequest = sagaState.createProjectSmallFiles();
-        return createProjectSmallFilesExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
+    private CompletableFuture<SagaStateWithSources> notifyVersioningForReproducibleProject(SagaStateWithSources sagaState, String branchName) {
+        var createReproducibleProjectRequest = sagaState.notifyOnNewReproducibleProject(branchName);
+        return notifyOnNewReproducibleProject.execute(createReproducibleProjectRequest, sagaState.getExecutionContext())
                 .thenApply(response -> sagaState);
     }
 
@@ -283,8 +283,8 @@ public class CreateProjectSagaManager {
             return new PrepareBackupFilesForUseRequest(getProjectId(), getNewProjectSettings().sourceDocument());
         }
 
-        public CreateProjectSmallFilesRequest createProjectSmallFiles() {
-            return new CreateProjectSmallFilesRequest(getProjectId());
+        public CreateNewReproducibleProjectRequest notifyOnNewReproducibleProject(String branchName) {
+            return new CreateNewReproducibleProjectRequest(getProjectId(), branchName);
         }
     }
 
