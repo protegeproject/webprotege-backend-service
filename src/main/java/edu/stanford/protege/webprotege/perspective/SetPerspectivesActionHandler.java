@@ -47,7 +47,7 @@ public class SetPerspectivesActionHandler extends AbstractProjectActionHandler<S
     public SetPerspectivesResult execute(@Nonnull SetPerspectivesAction action, @Nonnull ExecutionContext executionContext) {
         var projectId = action.projectId();
         var userId = action.getUserId();
-        var perspectiveDescriptors = action.perspectiveIds();
+        var perspectiveDescriptors = action.perspectives();
         var executingUser = executionContext.userId();
         if(userId.isPresent()) {
             perspectivesManager.setPerspectives(projectId, userId.get(), perspectiveDescriptors);

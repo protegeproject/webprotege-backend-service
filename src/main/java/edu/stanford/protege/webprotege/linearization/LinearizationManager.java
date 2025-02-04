@@ -12,4 +12,6 @@ public interface LinearizationManager {
 
     CompletableFuture<CreateLinearizationFromParentResponse> createLinearizationFromParent(IRI newEntityIri, IRI parentEntityIri, ProjectId id, ExecutionContext executionContext);
 
+    CompletableFuture<Set<IRI>> getParentsThatAreLinearizationPathParents(IRI owlIri, Set<IRI> parentsIris, ProjectId id, ExecutionContext executionContext);
+
 }
