@@ -14,7 +14,7 @@ import org.semanticweb.owlapi.manchestersyntax.renderer.ManchesterOWLSyntaxOWLOb
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Set;
 
 /**

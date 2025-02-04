@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.common.ProjectId;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;

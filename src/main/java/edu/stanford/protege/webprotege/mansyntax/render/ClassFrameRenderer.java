@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 /**

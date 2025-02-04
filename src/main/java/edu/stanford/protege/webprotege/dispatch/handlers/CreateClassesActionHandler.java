@@ -11,8 +11,9 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import java.util.*;
+import jakarta.inject.Inject;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;

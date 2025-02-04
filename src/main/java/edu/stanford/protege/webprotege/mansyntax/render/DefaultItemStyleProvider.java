@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.mansyntax.render;
 
 import org.semanticweb.owlapi.model.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 /**

@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.forms.data;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 
 public class NumberControlDataDtoComparator implements Comparator<NumberControlDataDto> {

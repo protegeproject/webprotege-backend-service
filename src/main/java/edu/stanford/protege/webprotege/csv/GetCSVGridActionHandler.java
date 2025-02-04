@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.inject.UploadsDirectory;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 

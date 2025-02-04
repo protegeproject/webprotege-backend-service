@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.*;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
+
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;

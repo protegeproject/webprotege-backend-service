@@ -2,15 +2,19 @@
 package edu.stanford.protege.webprotege.lang;
 
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class LanguageCode_TestCase {
 
     private LanguageCode languageCode;
@@ -19,26 +23,30 @@ public class LanguageCode_TestCase {
 
     private String name = "The name";
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         languageCode = new LanguageCode(lang, name);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_lang_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_lang_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new LanguageCode(null, name);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_lang() {
         assertThat(languageCode.getLang(), is(this.lang));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_name_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_name_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new LanguageCode(lang, null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_name() {

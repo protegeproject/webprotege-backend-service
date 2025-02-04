@@ -4,7 +4,7 @@ import com.google.common.base.Charsets;
 import org.semanticweb.owlapi.model.IRI;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.net.URLDecoder;
 
 import static com.google.common.base.Preconditions.checkNotNull;

@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.entity;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsByValueIndex;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -21,7 +23,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class SubjectClosureResolver_TestCase {
 
     private SubjectClosureResolver resolver;
@@ -50,7 +53,7 @@ public class SubjectClosureResolver_TestCase {
     private OWLOntologyID ontologyId;
 
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         resolver = new SubjectClosureResolver(axiomsByValueIndex,
                                               projectOntologiesIndex,

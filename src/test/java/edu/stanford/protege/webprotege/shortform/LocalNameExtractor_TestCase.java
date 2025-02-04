@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.shortform;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
 
 import java.net.URI;
@@ -18,7 +18,7 @@ public class LocalNameExtractor_TestCase {
 
     private LocalNameExtractor extractor;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         extractor = new LocalNameExtractor();
         URI uri;

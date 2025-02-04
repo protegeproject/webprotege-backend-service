@@ -2,20 +2,15 @@ package edu.stanford.protege.webprotege;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.entity.*;
-import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.csv.DocumentId;
+import edu.stanford.protege.webprotege.entity.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.XSDVocabulary;
 import uk.ac.manchester.cs.owl.owlapi.*;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.UUID;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Author: Matthew Horridge<br>
