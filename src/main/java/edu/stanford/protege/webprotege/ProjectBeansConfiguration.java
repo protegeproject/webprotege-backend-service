@@ -21,10 +21,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.crud.gen.IncrementingPatternDescriptorValueGenerator;
-import edu.stanford.protege.webprotege.crud.icatx.IcatxEntityCrudKitPlugin;
-import edu.stanford.protege.webprotege.crud.icatx.IcatxGenerationSuffixKit;
-import edu.stanford.protege.webprotege.crud.icatx.IcatxSuffixEntityCrudKitHandlerFactory;
-import edu.stanford.protege.webprotege.crud.icatx.IcatxSuffixSettings;
+import edu.stanford.protege.webprotege.crud.icatx.*;
 import edu.stanford.protege.webprotege.crud.obo.OBOIdSuffixEntityCrudKitHandlerFactory;
 import edu.stanford.protege.webprotege.crud.obo.OBOIdSuffixEntityCrudKitPlugin;
 import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixKit;
@@ -59,6 +56,7 @@ import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGe
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
 import edu.stanford.protege.webprotege.inject.project.*;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
@@ -999,8 +997,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    IcatxSuffixEntityCrudKitHandlerFactory icatxSuffixEntityCrudKitHandlerFactory(EntityIriPrefixResolver p1, OWLDataFactory p2) {
-        return new IcatxSuffixEntityCrudKitHandlerFactory(p1, p2);
+    IcatxSuffixEntityCrudKitHandlerFactory icatxSuffixEntityCrudKitHandlerFactory(EntityIriPrefixResolver p1, OWLDataFactory p2, CommandExecutor<GetUniqueIdRequest, GetUniqueIdResponse> p3) {
+        return new IcatxSuffixEntityCrudKitHandlerFactory(p1, p2, p3);
     }
 
     @Bean

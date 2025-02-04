@@ -8,20 +8,29 @@ import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.DictionaryLanguageVisitor;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsSettings;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 
 public class IcatxSuffixEntityCrudKitHandler implements EntityCrudKitHandler<IcatxSuffixSettings, ChangeSetEntityCrudSession> {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(IcatxSuffixEntityCrudKitHandler.class);
+
     private final IcatxSuffixSettings icatxSuffixSettings;
 
     private final EntityCrudKitPrefixSettings entityCrudKitPrefixSettings;
+
+    private final CommandExecutor<GetUniqueIdRequest, GetUniqueIdResponse> uniqueIdExecutor;
 
     private final OWLDataFactory dataFactory;
 
@@ -30,9 +39,10 @@ public class IcatxSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Ica
 
     public IcatxSuffixEntityCrudKitHandler(IcatxSuffixSettings icatxSuffixSettings,
                                            EntityCrudKitPrefixSettings entityCrudKitPrefixSettings,
-                                           OWLDataFactory dataFactory, @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
+                                           CommandExecutor<GetUniqueIdRequest, GetUniqueIdResponse> uniqueIdExecutor, OWLDataFactory dataFactory, @Nonnull EntityIriPrefixResolver entityIriPrefixResolver) {
         this.icatxSuffixSettings = icatxSuffixSettings;
         this.entityCrudKitPrefixSettings = entityCrudKitPrefixSettings;
+        this.uniqueIdExecutor = uniqueIdExecutor;
         this.dataFactory = dataFactory;
         this.entityIriPrefixResolver = entityIriPrefixResolver;
     }
@@ -74,11 +84,14 @@ public class IcatxSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Ica
         if (iriPrefix.equalsIgnoreCase(entityCrudKitPrefixSettings.getIRIPrefix())) {
             newIri = IRI.create(entityCrudKitPrefixSettings.getIRIPrefix(), UUID.randomUUID().toString());
         } else {
-            Random random = new Random();
-            int randomNineDigit = 100_000_000 + random.nextInt(900_000_000);
-            newIri = IRI.create(iriPrefix, String.valueOf(randomNineDigit));
+            try {
+                GetUniqueIdResponse response = uniqueIdExecutor.execute(new GetUniqueIdRequest(iriPrefix), new ExecutionContext()).get();
+                newIri = IRI.create(response.uniqueId());
+            } catch (InterruptedException | ExecutionException e) {
+                LOGGER.error("Error fetching unique id ", e);
+                throw new RuntimeException("Error fetching unique id ", e);
+            }
         }
-
 
         var entity = dataFactory.getOWLEntity(entityType, newIri);
         var labellingLiteral = getLabellingLiteral(newIri.toString(), langTag, dictionaryLanguage);
