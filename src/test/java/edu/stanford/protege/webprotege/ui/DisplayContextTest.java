@@ -23,7 +23,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringBootTest(properties = "webprotege.rabbitmq.event-subscribe=false")
+@JsonTest(properties = "webprotege.rabbitmq.event-subscribe=false")
 @Import(WebProtegeJacksonApplication.class)
 @AutoConfigureJsonTesters
 class DisplayContextTest {
