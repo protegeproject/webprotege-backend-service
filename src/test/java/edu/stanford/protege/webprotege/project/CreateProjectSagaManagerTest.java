@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.csv.DocumentId;
 import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest;
 import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesResponse;
@@ -68,6 +69,9 @@ class CreateProjectSagaManagerTest {
     private ProjectDetails projectDetails;
 
     private ExecutionContext executionContext;
+    @Mock
+    private EventDispatcher eventDispatcher;
+
 
 
     @BeforeEach
@@ -79,7 +83,8 @@ class CreateProjectSagaManagerTest {
                                                createProjectSmallFilesExecutor,
                                                fileDownloader,
                                                revisionHistoryReplacer,
-                                               projectPermissionsInitializer);
+                                               projectPermissionsInitializer,
+                eventDispatcher);
         janeDoe = UserId.valueOf("JaneDoe");
         executionContext = new ExecutionContext(janeDoe, "");
         newProjectSettings = NewProjectSettings.get(janeDoe,

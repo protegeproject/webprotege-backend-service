@@ -21,6 +21,10 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.crud.gen.IncrementingPatternDescriptorValueGenerator;
+import edu.stanford.protege.webprotege.crud.icatx.IcatxEntityCrudKitPlugin;
+import edu.stanford.protege.webprotege.crud.icatx.IcatxGenerationSuffixKit;
+import edu.stanford.protege.webprotege.crud.icatx.IcatxSuffixEntityCrudKitHandlerFactory;
+import edu.stanford.protege.webprotege.crud.icatx.IcatxSuffixSettings;
 import edu.stanford.protege.webprotege.crud.obo.OBOIdSuffixEntityCrudKitHandlerFactory;
 import edu.stanford.protege.webprotege.crud.obo.OBOIdSuffixEntityCrudKitPlugin;
 import edu.stanford.protege.webprotege.crud.oboid.OboIdSuffixKit;
@@ -971,6 +975,11 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    IcatxGenerationSuffixKit icatxGenerationSuffixKit() {
+        return new IcatxGenerationSuffixKit();
+    }
+
+    @Bean
     HierarchyPositionCriteriaMatchableEntityTypesExtractor hierarchyPositionCriteriaMatchableEntityTypesExtractor() {
         return new HierarchyPositionCriteriaMatchableEntityTypesExtractor();
     }
@@ -990,8 +999,19 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    IcatxSuffixEntityCrudKitHandlerFactory icatxSuffixEntityCrudKitHandlerFactory(EntityIriPrefixResolver p1, OWLDataFactory p2) {
+        return new IcatxSuffixEntityCrudKitHandlerFactory(p1, p2);
+    }
+
+    @Bean
     public OBOIdSuffixEntityCrudKitPlugin oboIdPlugin(OboIdSuffixKit p1, OBOIdSuffixEntityCrudKitHandlerFactory p2) {
         return new OBOIdSuffixEntityCrudKitPlugin(p1, p2);
+    }
+
+    @Bean
+    public IcatxEntityCrudKitPlugin icatxEntityCrudKitPlugin(IcatxGenerationSuffixKit p1,
+                                                             IcatxSuffixEntityCrudKitHandlerFactory p2) {
+        return new IcatxEntityCrudKitPlugin(p1, p2);
     }
 
     @Bean
