@@ -72,7 +72,7 @@ public class IcatxSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Ica
         var iriPrefix = entityIriPrefixResolver.getIriPrefix(entityCrudKitPrefixSettings, entityType, parents);
         IRI newIri = null;
         if (iriPrefix.equalsIgnoreCase(entityCrudKitPrefixSettings.getIRIPrefix())) {
-            newIri = IRI.create(EntityCrudKitPrefixSettings.DEFAULT_IRI_PREFIX, UUID.randomUUID().toString());
+            newIri = IRI.create(entityCrudKitPrefixSettings.getIRIPrefix(), UUID.randomUUID().toString());
         } else {
             Random random = new Random();
             int randomNineDigit = 100_000_000 + random.nextInt(900_000_000);
