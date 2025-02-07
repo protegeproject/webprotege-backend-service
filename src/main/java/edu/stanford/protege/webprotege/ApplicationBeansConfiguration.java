@@ -75,6 +75,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.*;
 
 /**
  * Matthew Horridge
@@ -600,4 +601,8 @@ public class ApplicationBeansConfiguration {
         return new NamedHierarchyManagerImpl(dataFactory, repository);
     }
 
+    @Bean
+    public ReadWriteLock readWriteLock() {
+        return new ReentrantReadWriteLock(true);
+    }
 }
