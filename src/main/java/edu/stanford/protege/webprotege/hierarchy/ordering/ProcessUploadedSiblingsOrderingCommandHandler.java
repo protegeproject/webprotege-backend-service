@@ -10,11 +10,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.function.Consumer;
 
-/**
- * Matthew Horridge
- * Stanford Center for Biomedical Informatics Research
- * 2024-05-03
- */
+
 @WebProtegeHandler
 public class ProcessUploadedSiblingsOrderingCommandHandler implements CommandHandler<ProcessUploadedSiblingsOrderingAction, ProcessUploadedSiblingsOrderingResponse> {
 
@@ -52,7 +48,7 @@ public class ProcessUploadedSiblingsOrderingCommandHandler implements CommandHan
         var stream = orderedChildrenDocumentService.fetchFromDocument(request.uploadedDocumentId().getDocumentId());
 
         readWriteLock.executeWriteLock(() -> {
-            Consumer<List<OrderedChildren>> batchProcessor = projectOrderedChildrenService.createBatchProcessorForSavingPaginatedOrderedChildren(request.projectId());
+            Consumer<List<OrderedChildren>> batchProcessor = projectOrderedChildrenService.createBatchProcessorForImportingPaginatedOrderedChildren(request.projectId());
             stream.collect(StreamUtils.batchCollector(100, batchProcessor));
         });
 

@@ -14,7 +14,7 @@ public class ProjectOrderedChildrenMapper {
                         child.orderedChild(),
                         projectId,
                         orderedChildren.entityUri(),
-                        userId.id(),
+                        userId!=null?userId.id():null,
                         child.orderedChildIndex()
                 ))
                 .collect(Collectors.toSet());

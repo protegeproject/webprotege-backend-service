@@ -1,13 +1,21 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
-import com.mongodb.client.model.InsertOneModel;
+import com.mongodb.client.model.BulkWriteOptions;
+import com.mongodb.client.model.UpdateOneModel;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
 
 @Repository
 public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChildrenRepository {
@@ -23,10 +31,37 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
     }
 
     @Override
-    public void bulkWriteDocuments(List<InsertOneModel<Document>> listOfInsertOneModelDocument) {
+    public void bulkWriteDocuments(List<UpdateOneModel<Document>> listOfUpdateOneModelDocument) {
         readWriteLock.executeWriteLock(() -> {
             var collection = mongoTemplate.getCollection(ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
-            collection.bulkWrite(listOfInsertOneModelDocument);
+            collection.bulkWrite(listOfUpdateOneModelDocument, new BulkWriteOptions().ordered(false));
         });
     }
+
+    @Override
+    public Set<String> findExistingEntries(List<ProjectOrderedChildren> childrenToCheck) {
+        Query query = new Query();
+
+        List<Criteria> criteriaList = childrenToCheck.stream()
+                .map(child -> Criteria.where(PARENT_URI).is(child.parentUri())
+                        .and(ENTITY_URI).is(child.entityUri())
+                        .and(PROJECT_ID).is(child.projectId().toString()))
+                .toList();
+
+        if (!criteriaList.isEmpty()) {
+            query.addCriteria(new Criteria().orOperator(criteriaList.toArray(new Criteria[0])));
+        }
+
+        query.fields().include(PARENT_URI, ENTITY_URI, PROJECT_ID);
+
+        List<Document> results = readWriteLock.executeReadLock(
+                () -> mongoTemplate.find(query, Document.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION)
+        );
+
+
+        return results.stream()
+                .map(doc -> doc.getString(PARENT_URI) + "|" + doc.getString(ENTITY_URI) + "|" + doc.getString(PROJECT_ID))
+                .collect(Collectors.toSet());
+    }
+
 }
