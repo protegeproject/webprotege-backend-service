@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.*;
 import java.util.List;
 
 public record OrderedChildren(@JsonProperty("orderedChildren") List<OrderedChild> orderedChildren,
-                              @JsonProperty("entityUri") String entityUri) {
+                              @JsonProperty("entityURI") String entityUri) {
 }

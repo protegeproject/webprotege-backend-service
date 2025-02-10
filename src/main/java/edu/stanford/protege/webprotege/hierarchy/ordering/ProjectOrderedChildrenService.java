@@ -8,9 +8,9 @@ import java.util.function.Consumer;
 
 public interface ProjectOrderedChildrenService {
 
-    Consumer<List<OrderedChildren>> createBatchProcessorForSavingPaginatedOrderedChildren(ProjectId projectId);
+    Consumer<List<OrderedChildren>> createBatchProcessorForImportingPaginatedOrderedChildren(ProjectId projectId);
 
-    void saveMultipleProjectOrderedChildren(Set<ProjectOrderedChildren> siblingsOrderingsToBeSaved);
+    void importMultipleProjectOrderedChildren(Set<ProjectOrderedChildren> siblingsOrderingsToBeSaved);
 
     Set<ProjectOrderedChildren> createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId);
 }
