@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import com.mongodb.client.model.BulkWriteOptions;
 import com.mongodb.client.model.UpdateOneModel;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -45,7 +46,7 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
         List<Criteria> criteriaList = childrenToCheck.stream()
                 .map(child -> Criteria.where(PARENT_URI).is(child.parentUri())
                         .and(ENTITY_URI).is(child.entityUri())
-                        .and(PROJECT_ID).is(child.projectId().toString()))
+                        .and(PROJECT_ID).is(child.projectId().id()))
                 .toList();
 
         if (!criteriaList.isEmpty()) {
@@ -63,5 +64,16 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
                 .map(doc -> doc.getString(PARENT_URI) + "|" + doc.getString(ENTITY_URI) + "|" + doc.getString(PROJECT_ID))
                 .collect(Collectors.toSet());
     }
+
+
+    @Override
+    public List<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, String parentUri) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(ProjectOrderedChildren.PROJECT_ID).is(projectId.id())
+                .and(ProjectOrderedChildren.PARENT_URI).is(parentUri));
+
+        return readWriteLock.executeReadLock(() -> mongoTemplate.find(query, ProjectOrderedChildren.class));
+    }
+
 
 }

@@ -20,6 +20,7 @@ import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTransla
 import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
@@ -77,7 +78,6 @@ import java.util.Comparator;
  * 2021-07-14
  */
 public class ProjectActionHandlerBeansConfiguration {
-
 
 
     @Bean
@@ -139,7 +139,7 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                     PlainFrameRenderer plainFrameRenderer) {
         return new GetAnnotationPropertyFrameActionHandler(p1, p3, plainFrameRenderer);
     }
-    
+
     @Bean
     UpdateAnnotationPropertyFrameActionHandler updateAnnotationPropertyFrameActionHandler(AccessManager p1,
                                                                                           HasApplyChanges p3,
@@ -525,7 +525,6 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
 
-
     @Bean
     DeleteEntityCommentHandler deleteEntityCommentActionHandler(EntityDiscussionThreadRepository p1) {
         return new DeleteEntityCommentHandler(p1);
@@ -601,8 +600,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                    HierarchyProviderManager p2,
                                                                                    DeprecatedEntityChecker p3,
                                                                                    GraphNodeRenderer p4,
-                                                                                   DictionaryManager p5) {
-        return new GetEntityHierarchyChildrenActionHandler(p1, p2, p3, p4, p5);
+                                                                                   DictionaryManager p5,
+                                                                                   ProjectOrderedChildrenRepository p6) {
+        return new GetEntityHierarchyChildrenActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
 
@@ -626,7 +626,7 @@ public class ProjectActionHandlerBeansConfiguration {
     MoveHierarchyNodeActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
 
                                                                    HasApplyChanges p3,
-                                                                   MoveEntityChangeListGeneratorFactory p4) {
+                                                                      MoveEntityChangeListGeneratorFactory p4) {
         return new MoveHierarchyNodeActionHandler(p1, p3, p4);
     }
 
@@ -790,7 +790,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                    EntityGraphSettingsRepository p4, ObjectMapper p5) {
         return new GetEntityGraphActionHandler(p1, p2, p3, p4, p5);
     }
-
 
 
     @Bean
