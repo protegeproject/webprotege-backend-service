@@ -3,7 +3,8 @@ package edu.stanford.protege.webprotege;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
-import edu.stanford.protege.webprotege.axiom.*;
+import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
+import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
 import edu.stanford.protege.webprotege.bulkop.*;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -16,41 +17,63 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.forms.json.FormControlDataConverter;
 import edu.stanford.protege.webprotege.forms.json.Json2FormData;
 import edu.stanford.protege.webprotege.frame.*;
-import edu.stanford.protege.webprotege.frame.translator.*;
+import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
+import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.actions.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.index.*;
-import edu.stanford.protege.webprotege.individuals.*;
+import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
+import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
+import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
 import edu.stanford.protege.webprotege.inject.ProjectBackupDirectoryProvider;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryProvider;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
-import edu.stanford.protege.webprotege.lang.*;
+import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
+import edu.stanford.protege.webprotege.lang.GetProjectLangTagsActionHandler;
+import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.logicaldefinitions.*;
-import edu.stanford.protege.webprotege.mansyntax.*;
+import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
+import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
-import edu.stanford.protege.webprotege.match.*;
+import edu.stanford.protege.webprotege.match.GetMatchingEntitiesActionHandler;
+import edu.stanford.protege.webprotege.match.MatcherFactory;
+import edu.stanford.protege.webprotege.match.MatchingEngine;
 import edu.stanford.protege.webprotege.merge.*;
-import edu.stanford.protege.webprotege.merge_add.*;
+import edu.stanford.protege.webprotege.merge_add.ExistingOntologyMergeAddActionHandler;
+import edu.stanford.protege.webprotege.merge_add.GetUploadedAndProjectOntologyIdsActionHandler;
+import edu.stanford.protege.webprotege.merge_add.MergeOntologiesActionHandler;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.postcoordination.PostcoordinationManager;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
-import edu.stanford.protege.webprotege.projectsettings.*;
-import edu.stanford.protege.webprotege.renderer.*;
+import edu.stanford.protege.webprotege.projectsettings.GetProjectSettingsActionHandler;
+import edu.stanford.protege.webprotege.projectsettings.SetProjectSettingsActionHandler;
+import edu.stanford.protege.webprotege.renderer.ContextRenderer;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
 import edu.stanford.protege.webprotege.revision.*;
 import edu.stanford.protege.webprotege.search.*;
-import edu.stanford.protege.webprotege.sharing.*;
-import edu.stanford.protege.webprotege.shortform.*;
+import edu.stanford.protege.webprotege.sharing.GetProjectSharingSettingsActionHandler;
+import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManager;
+import edu.stanford.protege.webprotege.sharing.SetProjectSharingSettingsActionHandler;
+import edu.stanford.protege.webprotege.shortform.DictionaryManager;
+import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
 import edu.stanford.protege.webprotege.tag.*;
-import edu.stanford.protege.webprotege.usage.*;
+import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
+import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
 import edu.stanford.protege.webprotege.viz.*;
-import edu.stanford.protege.webprotege.watches.*;
+import edu.stanford.protege.webprotege.watches.GetWatchesActionHandler;
+import edu.stanford.protege.webprotege.watches.SetWatchesActionHandler;
+import edu.stanford.protege.webprotege.watches.WatchManager;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
@@ -66,7 +89,6 @@ import java.util.Comparator;
  * 2021-07-14
  */
 public class ProjectActionHandlerBeansConfiguration {
-
 
 
     @Bean
@@ -515,7 +537,6 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
 
-
     @Bean
     DeleteEntityCommentHandler deleteEntityCommentActionHandler(EntityDiscussionThreadRepository p1) {
         return new DeleteEntityCommentHandler(p1);
@@ -578,7 +599,7 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
-    GetRenderedOwlEntitiesActionHandler getRenderedOwlEntitiesActionHandler(AccessManager p1, EntityNodeRenderer p2){
+    GetRenderedOwlEntitiesActionHandler getRenderedOwlEntitiesActionHandler(AccessManager p1, EntityNodeRenderer p2) {
         return new GetRenderedOwlEntitiesActionHandler(p1, p2);
     }
 
@@ -595,8 +616,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                    HierarchyProviderManager p2,
                                                                                    DeprecatedEntityChecker p3,
                                                                                    GraphNodeRenderer p4,
-                                                                                   DictionaryManager p5) {
-        return new GetEntityHierarchyChildrenActionHandler(p1, p2, p3, p4, p5);
+                                                                                   DictionaryManager p5,
+                                                                                   ProjectOrderedChildrenRepository p6) {
+        return new GetEntityHierarchyChildrenActionHandler(p1, p2, p3, p4, p5, p6);
     }
 
     @Bean
@@ -633,11 +655,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveHierarchyNodeIcdActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
-                                                                   MoveEntityChangeListGeneratorFactory p2,
-                                                                   ReleasedClassesChecker p3,
-                                                                   ClassHierarchyRetiredClassDetector p4,
-                                                                   ChangeManager p5,
-                                                                   LinearizationManager p6,
+                                                                      MoveEntityChangeListGeneratorFactory p2,
+                                                                      ReleasedClassesChecker p3,
+                                                                      ClassHierarchyRetiredClassDetector p4,
+                                                                      ChangeManager p5,
+                                                                      LinearizationManager p6,
                                                                       LinearizationParentChecker p7) {
         return new MoveHierarchyNodeIcdActionHandler(p1, p2, p3, p4, p5, p6, p7);
     }
@@ -808,11 +830,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveToParentIcdActionHandler moveToParentIcdActionHandler(AccessManager p1,
-                                                        MoveClassesChangeListGeneratorFactory p4,
-                                                        ReleasedClassesChecker p5,
-                                                        ClassHierarchyRetiredClassDetector p6,
-                                                        ChangeManager p7,
-                                                        LinearizationManager p8,
+                                                              MoveClassesChangeListGeneratorFactory p4,
+                                                              ReleasedClassesChecker p5,
+                                                              ClassHierarchyRetiredClassDetector p6,
+                                                              ChangeManager p7,
+                                                              LinearizationManager p8,
                                                               LinearizationParentChecker p9,
                                                               RenderingManager p10,
                                                               ClassHierarchyProvider p11) {
@@ -844,7 +866,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                    EntityGraphSettingsRepository p4, ObjectMapper p5) {
         return new GetEntityGraphActionHandler(p1, p2, p3, p4, p5);
     }
-
 
 
     @Bean
@@ -923,7 +944,7 @@ public class ProjectActionHandlerBeansConfiguration {
     GetClassAncestorsActionHandler getClassAncestorsActionHandler(AccessManager p1,
                                                                   ClassHierarchyProvider p2,
                                                                   RenderingManager p3) {
-        return new GetClassAncestorsActionHandler(p1,p2,p3);
+        return new GetClassAncestorsActionHandler(p1, p2, p3);
     }
 
     @Bean
@@ -940,9 +961,10 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                   Json2FormData p4,
                                                                                   EntityFrameFormDataDtoBuilderFactory p5,
                                                                                   ApplicationContext p6,
-                                                                                  EntityFormChangeListGeneratorFactory p7){
+                                                                                  EntityFormChangeListGeneratorFactory p7) {
         return new SetEntityFormDataFromJsonActionHandler(p1, p2, p3, p4, p5, p6, p7);
     }
+
     @Bean
     GetEntityHtmlRenderingActionHandler getEntityHtmlRenderingActionHandler(AccessManager p1,
                                                                             ManchesterSyntaxEntityFrameRenderer p2,
@@ -1084,7 +1106,7 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                   HierarchyProviderManager p2,
                                                                   DeprecatedEntityChecker p3,
                                                                   DictionaryManager p4) {
-        return new GetEntityChildrenActionHandler(p1,p2,p3,p4);
+        return new GetEntityChildrenActionHandler(p1, p2, p3, p4);
     }
 
 
@@ -1092,16 +1114,17 @@ public class ProjectActionHandlerBeansConfiguration {
     GetAllOwlClassesActionHandler getAllOwlClassesActionHandler(AccessManager p1, ProjectAxiomsSignatureIndex p2) {
         return new GetAllOwlClassesActionHandler(p1, p2);
     }
+
     @Bean
     FilterExistingEntitiesActionHandler filterExistingEntitiesActionHandler(AccessManager p1,
-                                                                  ClassHierarchyProvider p2) {
-        return new FilterExistingEntitiesActionHandler(p1,p2);
+                                                                            ClassHierarchyProvider p2) {
+        return new FilterExistingEntitiesActionHandler(p1, p2);
     }
 
     @Bean
     GetIsExistingProjectActionHandler getIsExistingProjectActionHandler(AccessManager p1,
                                                                         ProjectDetailsManager p2) {
-        return new GetIsExistingProjectActionHandler(p1,p2);
+        return new GetIsExistingProjectActionHandler(p1, p2);
     }
 
     @Bean

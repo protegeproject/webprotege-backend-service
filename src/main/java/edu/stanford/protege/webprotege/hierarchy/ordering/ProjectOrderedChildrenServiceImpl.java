@@ -1,14 +1,19 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.model.*;
-import edu.stanford.protege.webprotege.common.*;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOneModel;
+import com.mongodb.client.model.UpdateOptions;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -54,7 +59,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
 
             List<UpdateOneModel<Document>> operations = projectOrderedChildrenToBeSaved.stream()
                     .filter(orderedChildren -> {
-                        String fullKey = orderedChildren.parentUri() + "|" + orderedChildren.entityUri() + "|" + orderedChildren.projectId().toString();
+                        String fullKey = orderedChildren.parentUri() + "|" + orderedChildren.entityUri() + "|" + orderedChildren.projectId().id();
                         return !existingEntries.contains(fullKey);
                     })
                     .map(orderedChildren -> {
@@ -63,7 +68,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                                 Filters.and(
                                         Filters.eq(PARENT_URI, orderedChildren.parentUri()),
                                         Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
-                                        Filters.eq(PROJECT_ID, orderedChildren.projectId().toString())
+                                        Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
                                 ),
                                 new Document("$setOnInsert", doc),
                                 new UpdateOptions().upsert(true)
