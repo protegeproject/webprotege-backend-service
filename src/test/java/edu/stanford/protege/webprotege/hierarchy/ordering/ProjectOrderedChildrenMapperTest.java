@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,18 +16,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectOrderedChildrenMapperTest {
 
     @Test
-    void GIVEN_orderedChildrenWithMultipleEntries_WHEN_mapToProjectOrderedChildren_THEN_shouldMapCorrectly() {
-        OrderedChild child1 = new OrderedChild("child-1", "10000000");
-        OrderedChild child2 = new OrderedChild("child-2", "20000000");
+    void GIVEN_orderedChildrenWithMultipleEntries_WHEN_mapToProjectOrderedChildren_THEN_shouldMapCorrectlyAndSortByIndex() {
+        OrderedChild child1 = new OrderedChild("child-1", "20000000");
+        OrderedChild child2 = new OrderedChild("child-2", "10000000"); // This should be sorted before child1
         OrderedChildren orderedChildren = new OrderedChildren(List.of(child1, child2), "parent-entity-uri");
         ProjectId projectId = new ProjectId("test-project-id");
         UserId userId = new UserId("test-user-id");
 
-        Set<ProjectOrderedChildren> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+        ProjectOrderedChildren result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
 
-        assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(poc -> poc.entityUri().equals("child-1") && poc.index().equals("10000000")));
-        assertTrue(result.stream().anyMatch(poc -> poc.entityUri().equals("child-2") && poc.index().equals("20000000")));
+        assertEquals("parent-entity-uri", result.entityUri());
+        assertEquals("test-project-id", result.projectId().id());
+        assertEquals("test-user-id", result.userId());
+        assertEquals(2, result.children().size());
+
+        assertEquals("child-2", result.children().get(0)); // Sorted first by index
+        assertEquals("child-1", result.children().get(1));
     }
 
     @Test
@@ -37,20 +40,26 @@ class ProjectOrderedChildrenMapperTest {
         OrderedChildren orderedChildren = new OrderedChildren(List.of(child), "parent-entity-uri");
         ProjectId projectId = new ProjectId("test-project-id");
 
-        Set<ProjectOrderedChildren> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, null);
+        ProjectOrderedChildren result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, null);
 
-        assertEquals(1, result.size());
-        assertNull(result.iterator().next().userId());
+        assertEquals("parent-entity-uri", result.entityUri());
+        assertEquals("test-project-id", result.projectId().id());
+        assertNull(result.userId());
+        assertEquals(1, result.children().size());
+        assertEquals("child-1", result.children().get(0));
     }
 
     @Test
-    void GIVEN_emptyOrderedChildrenList_WHEN_mapToProjectOrderedChildren_THEN_shouldReturnEmptySet() {
+    void GIVEN_emptyOrderedChildrenList_WHEN_mapToProjectOrderedChildren_THEN_shouldReturnEmptyChildrenList() {
         OrderedChildren orderedChildren = new OrderedChildren(List.of(), "parent-entity-uri");
         ProjectId projectId = new ProjectId("test-project-id");
         UserId userId = new UserId("test-user-id");
 
-        Set<ProjectOrderedChildren> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+        ProjectOrderedChildren result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
 
-        assertTrue(result.isEmpty());
+        assertEquals("parent-entity-uri", result.entityUri());
+        assertEquals("test-project-id", result.projectId().id());
+        assertEquals("test-user-id", result.userId());
+        assertTrue(result.children().isEmpty());
     }
 }
