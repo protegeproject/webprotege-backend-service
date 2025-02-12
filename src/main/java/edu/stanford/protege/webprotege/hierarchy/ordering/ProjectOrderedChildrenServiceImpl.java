@@ -11,9 +11,7 @@ import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -39,7 +37,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
         return page -> {
             if (isNotEmpty(page)) {
                 var siblingsOrderingsToBeSaved = page.stream()
-                        .flatMap(orderedChildren -> createProjectOrderedChildren(orderedChildren, projectId, null).stream())
+                        .map(orderedChildren -> createProjectOrderedChildren(orderedChildren, projectId, null))
                         .collect(Collectors.toSet());
 
                 importMultipleProjectOrderedChildren(siblingsOrderingsToBeSaved);
@@ -59,14 +57,13 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
 
             List<UpdateOneModel<Document>> operations = projectOrderedChildrenToBeSaved.stream()
                     .filter(orderedChildren -> {
-                        String fullKey = orderedChildren.parentUri() + "|" + orderedChildren.entityUri() + "|" + orderedChildren.projectId().id();
+                        String fullKey = orderedChildren.entityUri() + "|" + orderedChildren.projectId().id();
                         return !existingEntries.contains(fullKey);
                     })
                     .map(orderedChildren -> {
                         Document doc = objectMapper.convertValue(orderedChildren, Document.class);
                         return new UpdateOneModel<Document>(
                                 Filters.and(
-                                        Filters.eq(PARENT_URI, orderedChildren.parentUri()),
                                         Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
                                         Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
                                 ),
@@ -83,7 +80,52 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     }
 
     @Override
-    public Set<ProjectOrderedChildren> createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
+    public ProjectOrderedChildren createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
         return ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+    }
+
+    public void addChildToParent(ProjectId projectId, String parentUri, String newChildUri) {
+        readWriteLock.executeWriteLock(() -> {
+            Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
+
+            if (existingEntry.isPresent()) {
+                ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
+                        existingEntry.get().entityUri(),
+                        projectId,
+                        new ArrayList<>(existingEntry.get().children()),
+                        existingEntry.get().userId()
+                );
+                updatedEntry.children().add(newChildUri);
+                repository.update(updatedEntry);
+            } else {
+                ProjectOrderedChildren newEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(newChildUri), null);
+                repository.save(newEntry);
+            }
+        });
+    }
+
+    public void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove) {
+        readWriteLock.executeWriteLock(() -> {
+            Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
+
+            if (existingEntry.isPresent()) {
+                List<String> updatedChildren = new ArrayList<>(existingEntry.get().children());
+                boolean removed = updatedChildren.remove(childUriToRemove);
+
+                if (removed) {
+                    if (updatedChildren.isEmpty()) {
+                        repository.delete(existingEntry.get());
+                    } else {
+                        ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
+                                existingEntry.get().entityUri(),
+                                projectId,
+                                updatedChildren,
+                                existingEntry.get().userId()
+                        );
+                        repository.update(updatedEntry);
+                    }
+                }
+            }
+        });
     }
 }
