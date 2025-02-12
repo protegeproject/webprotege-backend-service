@@ -84,21 +84,21 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
         OWLEntity parent = action.entity();
         GraphNode parentNode = nodeRenderer.toGraphNode(parent, hierarchyProvider.get());
 
-        EntityChildrenOrdering orderedChildrenList = repository.findOrderedChildren(action.projectId(), parent.toStringID());
+        Optional<EntityChildrenOrdering> orderedChildren = repository.findOrderedChildren(action.projectId(), parent.toStringID());
 
+        List<String> orderedEntityUris = orderedChildren.map(ProjectOrderedChildren::children).orElse(Collections.emptyList());
 
         Page<GraphNode<EntityNode>> page = hierarchyProvider.get().getChildren(parent).stream()
                 // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
                 // owl:topDataProperty
                 .filter(child -> isNotDeprecatedTopLevelEntity(parent, child))
-                .sorted(comparingUsingOrderingAndShortForm(orderedChildrenList))
+                .sorted(comparingUsingOrderList(orderedEntityUris))
                 .collect(PageCollector.toPage(action.pageRequest().getPageNumber(), 2000))
                 .map(pg -> pg.transform(child -> nodeRenderer.toGraphNode(child, hierarchyProvider.get())))
                 .orElse(Page.emptyPage());
 
         return new GetHierarchyChildrenResult(parentNode, page);
     }
-
 
     private Comparator<OWLEntity> comparingShortFormIgnoringCase() {
         return (o1, o2) -> {
@@ -108,16 +108,12 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
         };
     }
 
-    private Comparator<OWLEntity> comparingUsingOrderingAndShortForm(EntityChildrenOrdering ordering) {
-        return Comparator
-                .comparingInt((OWLEntity child) -> {
-                    var order = Integer.MAX_VALUE;
-                    if(ordering != null) {
-                        order = ordering.children().indexOf(child.getIRI().toString());
-                    }
-                    return order == -1 ? Integer.MAX_VALUE : order;
-                })
-                .thenComparing(comparingShortFormIgnoringCase());
+    private Comparator<OWLEntity> comparingUsingOrderList(List<String> orderList) {
+        return Comparator.comparingInt((OWLEntity child) -> {
+            String iri = child.toStringID();
+            int index = orderList.indexOf(iri);
+            return index == -1 ? Integer.MAX_VALUE : index;
+        }).thenComparing(comparingShortFormIgnoringCase());
     }
 
     private boolean isNotDeprecatedTopLevelEntity(OWLEntity parent, OWLEntity child) {

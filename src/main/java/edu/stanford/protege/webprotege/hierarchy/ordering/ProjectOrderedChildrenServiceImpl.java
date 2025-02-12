@@ -11,11 +11,9 @@ import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering.*;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
@@ -38,10 +36,11 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     public Consumer<List<OrderedChildren>> createBatchProcessorForImportingPaginatedOrderedChildren(ProjectId projectId) {
         return page -> {
             if (isNotEmpty(page)) {
+                var siblingsOrderingsToBeSaved = page.stream()
+                        .map(orderedChildren -> createProjectOrderedChildren(orderedChildren, projectId, null))
+                        .collect(Collectors.toSet());
 
-                var orderingSettings = new HashSet<>(createProjectOrderedChildren(page, projectId, null));
-
-                importMultipleProjectOrderedChildren(orderingSettings);
+                importMultipleProjectOrderedChildren(siblingsOrderingsToBeSaved);
 
             }
         };
@@ -81,7 +80,52 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     }
 
     @Override
-    public Set<EntityChildrenOrdering> createProjectOrderedChildren(List<OrderedChildren> orderedChildren, ProjectId projectId, UserId userId) {
+    public EntityChildrenOrdering createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
         return ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+    }
+
+    public void addChildToParent(ProjectId projectId, String parentUri, String newChildUri) {
+        readWriteLock.executeWriteLock(() -> {
+            Optional<EntityChildrenOrdering> existingEntry = repository.findOrderedChildren(projectId, parentUri);
+
+            if (existingEntry.isPresent()) {
+                EntityChildrenOrdering updatedEntry = new EntityChildrenOrdering(
+                        existingEntry.get().entityUri(),
+                        projectId,
+                        new ArrayList<>(existingEntry.get().children()),
+                        existingEntry.get().userId()
+                );
+                updatedEntry.children().add(newChildUri);
+                repository.update(updatedEntry);
+            } else {
+                EntityChildrenOrdering newEntry = new EntityChildrenOrdering(parentUri, projectId, List.of(newChildUri), null);
+                repository.save(newEntry);
+            }
+        });
+    }
+
+    public void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove) {
+        readWriteLock.executeWriteLock(() -> {
+            Optional<EntityChildrenOrdering> existingEntry = repository.findOrderedChildren(projectId, parentUri);
+
+            if (existingEntry.isPresent()) {
+                List<String> updatedChildren = new ArrayList<>(existingEntry.get().children());
+                boolean removed = updatedChildren.remove(childUriToRemove);
+
+                if (removed) {
+                    if (updatedChildren.isEmpty()) {
+                        repository.delete(existingEntry.get());
+                    } else {
+                        EntityChildrenOrdering updatedEntry = new ProjectOrderedChildren(
+                                existingEntry.get().entityUri(),
+                                projectId,
+                                updatedChildren,
+                                existingEntry.get().userId()
+                        );
+                        repository.update(updatedEntry);
+                    }
+                }
+            }
+        });
     }
 }

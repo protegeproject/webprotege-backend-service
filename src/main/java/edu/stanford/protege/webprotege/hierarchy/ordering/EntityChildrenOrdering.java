@@ -23,7 +23,6 @@ public record EntityChildrenOrdering(
 ) {
     public static final String ORDERED_CHILDREN_COLLECTION = "EntityChildrenOrdering";
     public static final String PROJECT_ID = "projectId";
-    public static final String PARENT_URI = "parentUri";
     public static final String ENTITY_URI = "entityUri";
     public static final String USER_ID = "userId";
     public static final String CHILDREN = "children";

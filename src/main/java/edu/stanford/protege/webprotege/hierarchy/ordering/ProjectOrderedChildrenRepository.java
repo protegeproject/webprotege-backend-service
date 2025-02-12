@@ -4,8 +4,7 @@ import com.mongodb.client.model.UpdateOneModel;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public interface ProjectOrderedChildrenRepository {
 
@@ -13,7 +12,11 @@ public interface ProjectOrderedChildrenRepository {
 
     Set<String> findExistingEntries(List<EntityChildrenOrdering> childrenToCheck);
 
-    EntityChildrenOrdering findOrderedChildren(ProjectId projectId, String parentUri);
+    Optional<EntityChildrenOrdering> findOrderedChildren(ProjectId projectId, String entityUri);
 
-    void saveOrUpdate(EntityChildrenOrdering ordering);
+    void save(EntityChildrenOrdering projectOrderedChildren);
+
+    void delete(EntityChildrenOrdering projectOrderedChildren);
+
+    void update(EntityChildrenOrdering updatedEntry);
 }

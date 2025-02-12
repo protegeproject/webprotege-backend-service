@@ -67,7 +67,6 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
         Mockito.doAnswer(invocation -> new ByteArrayInputStream(testJsonContent.getBytes()))
                 .when(minioFileDownloader).fetchDocument(anyString());
-
     }
 
     @Test
@@ -79,13 +78,17 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
         assertNotNull(response, "Response should not be null");
 
-        List<EntityChildrenOrdering> persistedChildren = mongoTemplate.findAll(EntityChildrenOrdering.class);
-        assertFalse(persistedChildren.isEmpty(), "Processed children should be saved to MongoDB");
+        List<EntityChildrenOrdering> persistedParents = mongoTemplate.findAll(EntityChildrenOrdering.class);
+        assertFalse(persistedParents.isEmpty(), "Processed parents should be saved to MongoDB");
 
-        for (EntityChildrenOrdering child : persistedChildren) {
-            Query query = new Query(Criteria.where(EntityChildrenOrdering.ENTITY_URI).is(child.entityUri()));
-            long count = mongoTemplate.count(query, EntityChildrenOrdering.class);
-            assertTrue(count > 0, "Data should be persisted in MongoDB");
+        for (EntityChildrenOrdering parent : persistedParents) {
+            assertNotNull(parent.children(), "Children list should not be null");
+
+            Query query = new Query(Criteria.where(EntityChildrenOrdering.ENTITY_URI).is(parent.entityUri()));
+            EntityChildrenOrdering storedParent = mongoTemplate.findOne(query, EntityChildrenOrdering.class);
+
+            assertNotNull(storedParent, "Parent entity should be present in MongoDB");
+            assertEquals(parent.children().size(), storedParent.children().size(), "Child count should match stored data");
         }
 
         Mockito.verify(orderedChildrenDocumentService, Mockito.times(1)).fetchFromDocument(documentId);
@@ -98,13 +101,21 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
         commandHandler.handleRequest(request, executionContext).block();
 
-        long initialCount = mongoTemplate.count(new Query(), EntityChildrenOrdering.class);
+        List<EntityChildrenOrdering> initialParents = mongoTemplate.findAll(EntityChildrenOrdering.class);
 
         commandHandler.handleRequest(request, executionContext).block();
 
-        long finalCount = mongoTemplate.count(new Query(), EntityChildrenOrdering.class);
+        List<EntityChildrenOrdering> finalParents = mongoTemplate.findAll(EntityChildrenOrdering.class);
 
-        assertEquals(initialCount, finalCount, "Executing twice should not create duplicate records");
+        assertEquals(initialParents.size(), finalParents.size(), "Parent entity count should remain the same");
+
+        for (EntityChildrenOrdering parent : finalParents) {
+            Query query = new Query(Criteria.where(EntityChildrenOrdering.ENTITY_URI).is(parent.entityUri()));
+            EntityChildrenOrdering storedParent = mongoTemplate.findOne(query, EntityChildrenOrdering.class);
+
+            assertNotNull(storedParent, "Parent entity should exist in MongoDB");
+            assertEquals(parent.children().size(), storedParent.children().size(), "Child list should not have duplicates");
+        }
 
         Mockito.verify(orderedChildrenDocumentService, Mockito.times(2)).fetchFromDocument(documentId);
     }

@@ -12,5 +12,7 @@ public interface ProjectOrderedChildrenService {
 
     void importMultipleProjectOrderedChildren(Set<EntityChildrenOrdering> siblingsOrderingsToBeSaved);
 
-    Set<EntityChildrenOrdering> createProjectOrderedChildren(List<OrderedChildren> orderedChildren, ProjectId projectId, UserId userId);
+    EntityChildrenOrdering createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId);
+
+    void addChildToParent(ProjectId projectId, String parentUri, String newChildUri);
 }

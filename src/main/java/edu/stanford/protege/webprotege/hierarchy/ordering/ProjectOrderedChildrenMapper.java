@@ -1,24 +1,25 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
-import edu.stanford.protege.webprotege.common.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChild;
-import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectOrderedChildrenMapper {
 
-    public static Set<EntityChildrenOrdering> mapToProjectOrderedChildren(List<OrderedChildren> orderedChildren,
-                                                                          ProjectId projectId,
-                                                                          UserId userId) {
-        return orderedChildren.stream()
-                .map(child -> new EntityChildrenOrdering(
-                        child.entityUri(),
-                        projectId,
-                        child.orderedChildren().stream().sorted(Comparator.comparing(OrderedChild::orderedChildIndex)).map(OrderedChild::orderedChild).toList(),
-                        userId!=null?userId.id():null
-                ))
-                .collect(Collectors.toSet());
+    public static EntityChildrenOrdering mapToProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
+        List<String> sortedChildren = orderedChildren.orderedChildren().stream()
+                .sorted(Comparator.comparingInt(c -> Integer.parseInt(c.orderedChildIndex())))
+                .map(OrderedChild::orderedChild)
+                .collect(Collectors.toList());
+
+        return new EntityChildrenOrdering(
+                orderedChildren.entityUri(),
+                projectId,
+                sortedChildren,
+                userId != null ? userId.id() : null
+        );
     }
 }
