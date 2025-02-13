@@ -1,22 +1,20 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
-import com.mongodb.client.model.BulkWriteOptions;
-import com.mongodb.client.model.UpdateOneModel;
+import com.mongodb.client.model.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
 
-@Repository
+@ProjectSingleton
 public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChildrenRepository {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ProjectOrderedChildrenRepositoryImpl.class);

@@ -42,6 +42,7 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManager;
 import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManagerImpl;
@@ -61,6 +62,7 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.UpdateLogicalDefinitionsChangeListGeneratorFactory;
@@ -685,7 +687,7 @@ public class ProjectBeansConfiguration {
 
 
     @Bean
-    ClassHierarchyProviderImpl classHierarchyProvider(ProjectId p1,
+    ClassHierarchyProvider classHierarchyProvider(ProjectId p1,
                                                       @ClassHierarchyRoot Set<OWLClass> p2,
                                                       ProjectOntologiesIndex p3,
                                                       SubClassOfAxiomsBySubClassIndex p4,
@@ -2011,6 +2013,13 @@ public class ProjectBeansConfiguration {
     UpdateLogicalDefinitionsChangeListGeneratorFactory updateLogicalDefinitionsChangeListGeneratorFactory(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                                                                                           @Nonnull OWLDataFactory dataFactory) {
         return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory);
+    }
+
+    @Bean
+    ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
+                                                                @Nonnull ReadWriteLockService readWriteLockService,
+                                                                @Nonnull ClassHierarchyProvider classHierarchyProvider) {
+        return new ProjectOrderedChildrenManager(projectOrderedChildrenService, readWriteLockService, classHierarchyProvider);
     }
 
 }

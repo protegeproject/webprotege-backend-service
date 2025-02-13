@@ -22,7 +22,7 @@ import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTransla
 import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
 import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.actions.*;
@@ -648,8 +648,9 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     MoveHierarchyNodeActionHandler sMoveHierarchyNodeActionHandler(AccessManager p1,
                                                                    ChangeManager p2,
-                                                                   MoveEntityChangeListGeneratorFactory p3) {
-        return new MoveHierarchyNodeActionHandler(p1, p2, p3);
+                                                                   MoveEntityChangeListGeneratorFactory p3,
+                                                                   ProjectOrderedChildrenManager p4) {
+        return new MoveHierarchyNodeActionHandler(p1, p2, p3, p4);
     }
 
 
@@ -823,9 +824,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     MoveToParentActionHandler moveToParentActionHandler(AccessManager p1,
-                                                        ChangeManager p2,
-                                                        MoveClassesChangeListGeneratorFactory p3) {
-        return new MoveToParentActionHandler(p1, p2, p3);
+                                                        MoveClassesChangeListGeneratorFactory p2,
+                                                        ProjectOrderedChildrenManager p3,
+                                                        ChangeManager p4,
+                                                        ClassHierarchyProvider p5) {
+        return new MoveToParentActionHandler(p1, p2, p3, p4, p5);
     }
 
     @Bean
