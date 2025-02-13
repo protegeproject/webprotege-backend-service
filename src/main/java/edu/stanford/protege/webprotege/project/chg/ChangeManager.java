@@ -26,12 +26,18 @@ import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.util.*;
 import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
 import org.semanticweb.owlapi.model.*;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.ObjectProvider;
 
 import javax.annotation.Nonnull;
-import javax.inject.*;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.util.*;
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInAction.*;
@@ -255,7 +261,6 @@ public class ChangeManager implements HasApplyChanges {
                               throwCreatePermissionDeniedIfNecessary(entityInSignature, userId);
                               changesToBeRenamed.add(change);
                               var tempIri = entityInSignature.getIRI();
-                              //see this
                               if(!tempIri2MintedIri.containsKey(tempIri)) {
                                   var freshEntityIri = FreshEntityIri.parse(tempIri.toString());
                                   var shortName = freshEntityIri.getSuppliedName();
@@ -263,7 +268,6 @@ public class ChangeManager implements HasApplyChanges {
                                   if(!shortName.isEmpty()) {
                                       langTag = Optional.of(freshEntityIri.getLangTag());
                                   }
-                                  //use this to get only classes
                                   var entityType = entityInSignature.getEntityType();
                                   var discriminator = freshEntityIri.getDiscriminator();
                                   var parents = freshEntityIri.getParentEntities(dataFactory, entityType);
@@ -275,10 +279,8 @@ public class ChangeManager implements HasApplyChanges {
                                                                  parents,
                                                                  entityType);
                                   changesToCreateFreshEntities.addAll(creator.getChanges());
-                                  //we can get the entity from here
                                   var mintedIri = creator.getEntity()
                                                          .getIRI();
-                                  //contain the values for new created entities
                                   tempIri2MintedIri.put(tempIri, mintedIri);
                               }
                           }
@@ -301,8 +303,6 @@ public class ChangeManager implements HasApplyChanges {
                     allChangesIncludingRenames.add(change);
                 }
             }
-
-
 
             allChangesIncludingRenames.addAll(changesToCreateFreshEntities);
 

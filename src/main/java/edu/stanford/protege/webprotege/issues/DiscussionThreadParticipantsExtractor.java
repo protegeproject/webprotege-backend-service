@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.common.UserId;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;

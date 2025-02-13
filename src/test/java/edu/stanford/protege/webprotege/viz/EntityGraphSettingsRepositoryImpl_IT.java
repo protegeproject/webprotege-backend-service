@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.viz;
 
 
-import edu.stanford.protege.webprotege.*;
+import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.jupiter.api.AfterEach;
@@ -14,14 +14,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-06
  */
-@SpringBootTest
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityGraphSettingsRepositoryImpl_IT {

@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.forms;
 
-import javax.inject.Scope;
+import jakarta.inject.Scope;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

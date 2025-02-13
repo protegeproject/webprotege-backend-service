@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.DataDirectoryProvider;
 import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
+import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -26,12 +27,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
-import javax.inject.Provider;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.concurrent.ExecutorService;
+
+import jakarta.inject.Provider;
 
 /**
  * Matthew Horridge

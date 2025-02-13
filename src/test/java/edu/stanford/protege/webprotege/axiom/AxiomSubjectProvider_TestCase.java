@@ -3,12 +3,14 @@ package edu.stanford.protege.webprotege.axiom;
 import edu.stanford.protege.webprotege.object.OWLObjectSelector;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.stubbing.Answer;
 import org.semanticweb.owlapi.model.*;
 
@@ -17,7 +19,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +29,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 31/01/15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AxiomSubjectProvider_TestCase {
 
 
@@ -83,7 +87,7 @@ public class AxiomSubjectProvider_TestCase {
 
     private AxiomSubjectProvider subjectProvider;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         subjectProvider = new AxiomSubjectProvider(
                 classExpressionSelector,
@@ -134,8 +138,9 @@ public class AxiomSubjectProvider_TestCase {
     }
 
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_ClassExpressionSelector_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_ClassExpressionSelector_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new AxiomSubjectProvider(
                 null,
                 objectPropertyExpressionSelector,
@@ -143,10 +148,12 @@ public class AxiomSubjectProvider_TestCase {
                 individualSelector,
                 atomSelector
         );
-    }
+     });
+}
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_ObjectPropertyExpressionSelector_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_ObjectPropertyExpressionSelector_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new AxiomSubjectProvider(
                 classExpressionSelector,
                 null,
@@ -154,10 +161,12 @@ public class AxiomSubjectProvider_TestCase {
                 individualSelector,
                 atomSelector
         );
-    }
+     });
+}
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_DataPropertyExpressionSelector_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_DataPropertyExpressionSelector_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new AxiomSubjectProvider(
                 classExpressionSelector,
                 objectPropertyExpressionSelector,
@@ -165,10 +174,12 @@ public class AxiomSubjectProvider_TestCase {
                 individualSelector,
                 atomSelector
         );
-    }
+     });
+}
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_IndividualSelector_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_IndividualSelector_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new AxiomSubjectProvider(
                 classExpressionSelector,
                 objectPropertyExpressionSelector,
@@ -176,10 +187,12 @@ public class AxiomSubjectProvider_TestCase {
                 null,
                 atomSelector
         );
-    }
+     });
+}
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_AtomSelector_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_AtomSelector_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new AxiomSubjectProvider(
                 classExpressionSelector,
                 objectPropertyExpressionSelector,
@@ -187,7 +200,8 @@ public class AxiomSubjectProvider_TestCase {
                 individualSelector,
                 null
         );
-    }
+     });
+}
 
     @Test
     public void shouldProvide_OWLDeclarationAxiom_Subject() {

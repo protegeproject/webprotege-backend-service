@@ -13,9 +13,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import jakarta.inject.Inject;
+import java.util.List;
+import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.issues.EntityDiscussionThread.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;

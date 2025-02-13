@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.filemanager;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

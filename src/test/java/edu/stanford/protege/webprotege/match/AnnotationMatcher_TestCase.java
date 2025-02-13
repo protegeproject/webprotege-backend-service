@@ -1,10 +1,12 @@
 package edu.stanford.protege.webprotege.match;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
@@ -18,7 +20,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 7 Jun 2018
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AnnotationMatcher_TestCase {
 
     private AnnotationMatcher matcher;
@@ -38,7 +41,7 @@ public class AnnotationMatcher_TestCase {
     @Mock
     private OWLAnnotation theAnnotation;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         matcher = new AnnotationMatcher(propertyMatcher, valueMatcher);
 

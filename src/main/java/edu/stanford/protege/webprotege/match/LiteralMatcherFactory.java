@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.criteria.*;
 import org.semanticweb.owlapi.model.OWLLiteral;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 

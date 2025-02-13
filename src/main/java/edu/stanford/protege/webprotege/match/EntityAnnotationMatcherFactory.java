@@ -3,8 +3,8 @@ package edu.stanford.protege.webprotege.match;
 import edu.stanford.protege.webprotege.criteria.AnnotationPresence;
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 
 @Generated(
@@ -12,18 +12,18 @@ import org.semanticweb.owlapi.model.OWLAnnotation;
   comments = "https://github.com/google/auto/tree/master/factory"
 )
 public final class EntityAnnotationMatcherFactory {
-  private final Provider<AnnotationAssertionAxiomsIndex> axiomProviderProvider;
+  private final AnnotationAssertionAxiomsIndex axiomProviderProvider;
 
   @Inject
   public EntityAnnotationMatcherFactory(
-      Provider<AnnotationAssertionAxiomsIndex> axiomProviderProvider) {
+      AnnotationAssertionAxiomsIndex axiomProviderProvider) {
     this.axiomProviderProvider = checkNotNull(axiomProviderProvider, 1);
   }
 
   public EntityAnnotationMatcher create(
       Matcher<OWLAnnotation> annotationMatcher, AnnotationPresence annotationPresence) {
     return new EntityAnnotationMatcher(
-        checkNotNull(axiomProviderProvider.get(), 1),
+        checkNotNull(axiomProviderProvider, 1),
         checkNotNull(annotationMatcher, 2),
         checkNotNull(annotationPresence, 3));
   }

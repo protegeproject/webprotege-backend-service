@@ -3,16 +3,18 @@ package edu.stanford.protege.webprotege.issues;
 import com.github.mustachejava.DefaultMustacheFactory;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
-import edu.stanford.protege.webprotege.filemanager.FileContents;
-import edu.stanford.protege.webprotege.templates.TemplateEngine;
-import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
+import edu.stanford.protege.webprotege.filemanager.FileContents;
+import edu.stanford.protege.webprotege.templates.TemplateEngine;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -20,7 +22,6 @@ import java.io.File;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -28,7 +29,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 10 Mar 2017
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class CommentNotificationEmailGenerator_TestCase {
 
     public static final String TEMPLATE_FILE_CONTENTS = "{{project.displayName}} {{comment.createdBy.id}}";
@@ -69,7 +71,7 @@ public class CommentNotificationEmailGenerator_TestCase {
 
     private ProjectId projectId = ProjectId.generate();
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(templateFile.getContents()).thenReturn(TEMPLATE_FILE_CONTENTS);
         when(applicationNameSupplier.get())

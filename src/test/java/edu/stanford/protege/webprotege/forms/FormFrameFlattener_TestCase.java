@@ -3,25 +3,26 @@ package edu.stanford.protege.webprotege.forms;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-27
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class FormFrameFlattener_TestCase {
 
     private FormFrameFlattener formFrameFlattener;
@@ -40,7 +41,7 @@ public class FormFrameFlattener_TestCase {
 
     private FormFrame parentFrame;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         formFrameFlattener = new FormFrameFlattener();
 

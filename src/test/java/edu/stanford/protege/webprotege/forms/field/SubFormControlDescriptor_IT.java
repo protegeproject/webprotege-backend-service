@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
@@ -24,8 +25,9 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-09
  */
-@JsonTest
-@Import({WebProtegeJacksonApplication.class,})
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
+@Import(WebProtegeJacksonApplication.class)
+@ExtendWith(MongoTestExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class SubFormControlDescriptor_IT {
 

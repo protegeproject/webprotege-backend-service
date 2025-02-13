@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.core.ResolvableType;
 

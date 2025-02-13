@@ -1,16 +1,17 @@
 package edu.stanford.protege.webprotege.forms.field;
 
-import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.LanguageMap;
-import edu.stanford.protege.webprotege.forms.*;
+import edu.stanford.protege.webprotege.forms.FormDescriptor;
+import edu.stanford.protege.webprotege.forms.FormId;
 import org.junit.jupiter.api.Test;
-import org.semanticweb.owlapi.model.EntityType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.*;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

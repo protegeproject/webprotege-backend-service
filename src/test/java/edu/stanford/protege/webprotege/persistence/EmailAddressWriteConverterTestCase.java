@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.persistence;
 
 import edu.stanford.protege.webprotege.user.EmailAddress;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static junit.framework.Assert.assertEquals;
 

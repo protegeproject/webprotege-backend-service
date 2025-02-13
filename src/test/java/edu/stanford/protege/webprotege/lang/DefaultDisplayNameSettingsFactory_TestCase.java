@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.lang;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -17,7 +17,7 @@ public class DefaultDisplayNameSettingsFactory_TestCase {
 
     private DefaultDisplayNameSettingsFactory factory;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         factory = new DefaultDisplayNameSettingsFactory();
     }

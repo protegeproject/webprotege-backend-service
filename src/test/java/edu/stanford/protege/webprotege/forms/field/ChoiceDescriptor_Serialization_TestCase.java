@@ -1,16 +1,14 @@
 package edu.stanford.protege.webprotege.forms.field;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.forms.data.PrimitiveFormControlData;
 import edu.stanford.protege.webprotege.common.LanguageMap;
+import edu.stanford.protege.webprotege.forms.data.PrimitiveFormControlData;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import java.io.IOException;
