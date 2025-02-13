@@ -1,16 +1,12 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.access.*;
+import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.*;
 import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
@@ -42,7 +38,12 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(MoveHierarchyNodeAction action, ExecutionContext executionContext) {
-        return factory.create(action);
+        return factory.create(
+                action.fromNodePath(),
+                action.toNodeParentPath(),
+                action.dropType(),
+                action.changeRequestId()
+        );
     }
 
     @Override
@@ -50,7 +51,7 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
                                                          MoveHierarchyNodeAction action,
                                                          ExecutionContext executionContext) {
         if (changeApplicationResult.getSubject()) {
-            projectOrderedChildrenManager.moveHierarchyNode(action);
+            projectOrderedChildrenManager.moveHierarchyNode(action.fromNodePath(), action.toNodeParentPath());
         }
         return new MoveHierarchyNodeResult(changeApplicationResult.getSubject());
     }

@@ -100,7 +100,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                 repository.update(updatedEntry);
             } else {
                 ProjectOrderedChildren newEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(newChildUri), null);
-                repository.save(newEntry);
+                repository.insert(newEntry);
             }
         });
     }
