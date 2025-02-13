@@ -6,10 +6,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import edu.stanford.protege.webprotege.forms.data.FormControlData;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.IRI;
 
 import javax.annotation.Nonnull;
-import javax.inject.Provider;
 
 public class FormDataJsonConverter {
 

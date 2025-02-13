@@ -104,6 +104,7 @@ import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
 import edu.stanford.protege.webprotege.watches.*;
 import edu.stanford.protege.webprotege.webhook.*;
+import jakarta.annotation.Nonnull;
 import org.semanticweb.owlapi.expression.OWLOntologyChecker;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.*;

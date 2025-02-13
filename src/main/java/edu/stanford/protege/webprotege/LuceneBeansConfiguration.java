@@ -102,8 +102,9 @@ public class LuceneBeansConfiguration {
                                     @Qualifier("inMemorySearchManager") SearcherManager inMemorySearchManager,
                                     LuceneQueryFactory p3,
                                     LuceneDictionaryLanguageValuesMatcher p4,
-                                    QueryAnalyzerFactory p5) {
-        return new LuceneIndexImpl(p1, inMemorySearchManager, p3, p4, p5);
+                                    QueryAnalyzerFactory p5,
+                                    MatcherFactory p6) {
+        return new LuceneIndexImpl(p1, inMemorySearchManager, p3, p4, p5,p6);
     }
 
     @Bean

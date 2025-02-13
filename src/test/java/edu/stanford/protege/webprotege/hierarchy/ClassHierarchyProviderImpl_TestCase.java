@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.*;
 import org.jetbrains.annotations.NotNull;

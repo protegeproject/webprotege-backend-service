@@ -1,10 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
-import edu.stanford.protege.webprotege.MockingUtils;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.LangTagFilter;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;

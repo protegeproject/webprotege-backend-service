@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.viz;
 
 
 import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.jupiter.api.AfterEach;

@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
