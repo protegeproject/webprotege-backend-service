@@ -4,8 +4,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingResult;
-import edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,13 +12,13 @@ import javax.inject.Inject;
 
 public class SaveEntityChildrenOrderingActionHandler  extends AbstractProjectActionHandler<SaveEntityChildrenOrderingAction, SaveEntityChildrenOrderingResult> {
 
-    private final ProjectOrderedChildrenRepository repository;
+    private final ProjectOrderedChildrenService service;
 
     @Inject
     public SaveEntityChildrenOrderingActionHandler(@NotNull AccessManager accessManager,
-                                                   ProjectOrderedChildrenRepository repository) {
+                                                   ProjectOrderedChildrenService service) {
         super(accessManager);
-        this.repository = repository;
+        this.service = service;
     }
 
     @NotNull
@@ -31,21 +30,8 @@ public class SaveEntityChildrenOrderingActionHandler  extends AbstractProjectAct
     @NotNull
     @Override
     public SaveEntityChildrenOrderingResult execute(@NotNull SaveEntityChildrenOrderingAction action, @NotNull ExecutionContext executionContext) {
-        EntityChildrenOrdering entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
 
-        if(entityChildrenOrdering == null) {
-            entityChildrenOrdering = new EntityChildrenOrdering(action.entityIri().toString(),
-                    action.projectId(),
-                    action.orderedChildren(),
-                    executionContext.userId().id());
-        } else {
-            entityChildrenOrdering = new EntityChildrenOrdering(entityChildrenOrdering.entityUri(),
-                    entityChildrenOrdering.projectId(),
-                    action.orderedChildren(),
-                    entityChildrenOrdering.userId());
-        }
-
-        repository.saveOrUpdate(entityChildrenOrdering);
+        service.updateEntity(action, executionContext.userId());
 
         return new SaveEntityChildrenOrderingResult();
     }

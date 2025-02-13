@@ -6,9 +6,11 @@ import com.mongodb.client.model.UpdateOneModel;
 import com.mongodb.client.model.UpdateOptions;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
+import org.semanticweb.owlapi.model.IRI;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -104,6 +106,22 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
         });
     }
 
+    @Override
+    public void updateEntity(SaveEntityChildrenOrderingAction action, UserId userId) {
+        Optional<EntityChildrenOrdering> entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
+        EntityChildrenOrdering orderToBeSaved;
+        orderToBeSaved = entityChildrenOrdering.map(ordering -> new EntityChildrenOrdering(ordering.entityUri(),
+                ordering.projectId(),
+                action.orderedChildren(),
+                ordering.userId())).
+                orElseGet(() -> new EntityChildrenOrdering(action.entityIri().toString(),
+                action.projectId(),
+                action.orderedChildren(),
+                userId.id()));
+
+        repository.update(orderToBeSaved);
+    }
+
     public void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove) {
         readWriteLock.executeWriteLock(() -> {
             Optional<EntityChildrenOrdering> existingEntry = repository.findOrderedChildren(projectId, parentUri);
@@ -116,7 +134,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                     if (updatedChildren.isEmpty()) {
                         repository.delete(existingEntry.get());
                     } else {
-                        EntityChildrenOrdering updatedEntry = new ProjectOrderedChildren(
+                        EntityChildrenOrdering updatedEntry = new EntityChildrenOrdering(
                                 existingEntry.get().entityUri(),
                                 projectId,
                                 updatedChildren,

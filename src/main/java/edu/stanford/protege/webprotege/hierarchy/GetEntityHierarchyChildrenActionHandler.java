@@ -16,7 +16,10 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
+
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
@@ -86,7 +89,7 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
 
         Optional<EntityChildrenOrdering> orderedChildren = repository.findOrderedChildren(action.projectId(), parent.toStringID());
 
-        List<String> orderedEntityUris = orderedChildren.map(ProjectOrderedChildren::children).orElse(Collections.emptyList());
+        List<String> orderedEntityUris = orderedChildren.map(EntityChildrenOrdering::children).orElse(Collections.emptyList());
 
         Page<GraphNode<EntityNode>> page = hierarchyProvider.get().getChildren(parent).stream()
                 // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
