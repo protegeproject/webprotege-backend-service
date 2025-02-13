@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
@@ -69,6 +70,9 @@ class MoveHierarchyNodeIcdActionHandlerTest {
     @Mock
     private RenameMap renameMap;
 
+    @Mock
+    private ProjectOrderedChildrenManager projectOrderedChildrenManager;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -82,8 +86,8 @@ class MoveHierarchyNodeIcdActionHandlerTest {
                 retiredAncestorDetector,
                 changeManager,
                 linearizationManager,
-                linParentChecker
-        );
+                linParentChecker,
+                projectOrderedChildrenManager);
 
         when(changeApplicationResult.getRenameMap()).thenReturn(renameMap);
         when(changeApplicationResult.getChangeList()).thenReturn(ontologyChangeList);
