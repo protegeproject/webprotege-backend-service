@@ -10,7 +10,7 @@ public interface ProjectOrderedChildrenService {
 
     Consumer<List<OrderedChildren>> createBatchProcessorForImportingPaginatedOrderedChildren(ProjectId projectId);
 
-    void importMultipleProjectOrderedChildren(Set<ProjectOrderedChildren> siblingsOrderingsToBeSaved);
+    void importMultipleProjectOrderedChildren(Set<EntityChildrenOrdering> siblingsOrderingsToBeSaved);
 
-    Set<ProjectOrderedChildren> createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId);
+    Set<EntityChildrenOrdering> createProjectOrderedChildren(List<OrderedChildren> orderedChildren, ProjectId projectId, UserId userId);
 }

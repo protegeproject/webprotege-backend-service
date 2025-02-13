@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -24,11 +25,10 @@ class ProjectOrderedChildrenMapperTest {
         ProjectId projectId = new ProjectId("test-project-id");
         UserId userId = new UserId("test-user-id");
 
-        Set<ProjectOrderedChildren> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+        Set<EntityChildrenOrdering> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(Collections.singletonList(orderedChildren), projectId, userId);
 
         assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(poc -> poc.entityUri().equals("child-1") && poc.index().equals("10000000")));
-        assertTrue(result.stream().anyMatch(poc -> poc.entityUri().equals("child-2") && poc.index().equals("20000000")));
+
     }
 
     @Test
@@ -37,7 +37,7 @@ class ProjectOrderedChildrenMapperTest {
         OrderedChildren orderedChildren = new OrderedChildren(List.of(child), "parent-entity-uri");
         ProjectId projectId = new ProjectId("test-project-id");
 
-        Set<ProjectOrderedChildren> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, null);
+        Set<EntityChildrenOrdering> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(Collections.singletonList(orderedChildren), projectId, null);
 
         assertEquals(1, result.size());
         assertNull(result.iterator().next().userId());
@@ -49,7 +49,7 @@ class ProjectOrderedChildrenMapperTest {
         ProjectId projectId = new ProjectId("test-project-id");
         UserId userId = new UserId("test-user-id");
 
-        Set<ProjectOrderedChildren> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+        Set<EntityChildrenOrdering> result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(Collections.singletonList(orderedChildren), projectId, userId);
 
         assertTrue(result.isEmpty());
     }

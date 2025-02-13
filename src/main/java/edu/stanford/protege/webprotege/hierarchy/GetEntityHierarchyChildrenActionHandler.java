@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.EntityNode;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren;
+import edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
@@ -17,10 +17,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
@@ -87,20 +84,14 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
         OWLEntity parent = action.entity();
         GraphNode parentNode = nodeRenderer.toGraphNode(parent, hierarchyProvider.get());
 
-        List<ProjectOrderedChildren> orderedChildrenList = repository.findOrderedChildren(action.projectId(), parent.toStringID());
+        EntityChildrenOrdering orderedChildrenList = repository.findOrderedChildren(action.projectId(), parent.toStringID());
 
-        Map<String, Integer> orderMap = orderedChildrenList.stream()
-                .collect(Collectors.toMap(
-                                ProjectOrderedChildren::entityUri,
-                                child -> Integer.parseInt(child.index())
-                        )
-                );
 
         Page<GraphNode<EntityNode>> page = hierarchyProvider.get().getChildren(parent).stream()
                 // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
                 // owl:topDataProperty
                 .filter(child -> isNotDeprecatedTopLevelEntity(parent, child))
-                .sorted(comparingUsingOrderingAndShortForm(orderMap))
+                .sorted(comparingUsingOrderingAndShortForm(orderedChildrenList))
                 .collect(PageCollector.toPage(action.pageRequest().getPageNumber(), 2000))
                 .map(pg -> pg.transform(child -> nodeRenderer.toGraphNode(child, hierarchyProvider.get())))
                 .orElse(Page.emptyPage());
@@ -117,11 +108,16 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
         };
     }
 
-    private Comparator<OWLEntity> comparingUsingOrderingAndShortForm(Map<String, Integer> orderMap) {
+    private Comparator<OWLEntity> comparingUsingOrderingAndShortForm(EntityChildrenOrdering ordering) {
         return Comparator
-                .comparingInt((OWLEntity child) -> orderMap.getOrDefault(child.getIRI().toString(), Integer.MAX_VALUE))
+                .comparingInt((OWLEntity child) -> {
+                    var order = Integer.MAX_VALUE;
+                    if(ordering != null) {
+                        order = ordering.children().indexOf(child.getIRI().toString());
+                    }
+                    return order == -1 ? Integer.MAX_VALUE : order;
+                })
                 .thenComparing(comparingShortFormIgnoringCase());
-
     }
 
     private boolean isNotDeprecatedTopLevelEntity(OWLEntity parent, OWLEntity child) {

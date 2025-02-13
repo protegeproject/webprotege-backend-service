@@ -11,7 +11,9 @@ public interface ProjectOrderedChildrenRepository {
 
     void bulkWriteDocuments(List<UpdateOneModel<Document>> listOfUpdateOneModelDocument);
 
-    Set<String> findExistingEntries(List<ProjectOrderedChildren> childrenToCheck);
+    Set<String> findExistingEntries(List<EntityChildrenOrdering> childrenToCheck);
 
-    List<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, String parentUri);
+    EntityChildrenOrdering findOrderedChildren(ProjectId projectId, String parentUri);
+
+    void saveOrUpdate(EntityChildrenOrdering ordering);
 }

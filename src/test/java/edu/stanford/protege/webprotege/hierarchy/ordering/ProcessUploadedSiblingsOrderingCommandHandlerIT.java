@@ -60,7 +60,7 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
     @BeforeEach
     void setUp() throws IOException {
-        mongoTemplate.dropCollection(ProjectOrderedChildren.class);
+        mongoTemplate.dropCollection(EntityChildrenOrdering.class);
 
         String jsonFilePath = "src/test/resources/orderedSiblingsTest.json";
         testJsonContent = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
@@ -79,12 +79,12 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
         assertNotNull(response, "Response should not be null");
 
-        List<ProjectOrderedChildren> persistedChildren = mongoTemplate.findAll(ProjectOrderedChildren.class);
+        List<EntityChildrenOrdering> persistedChildren = mongoTemplate.findAll(EntityChildrenOrdering.class);
         assertFalse(persistedChildren.isEmpty(), "Processed children should be saved to MongoDB");
 
-        for (ProjectOrderedChildren child : persistedChildren) {
-            Query query = new Query(Criteria.where(ProjectOrderedChildren.PARENT_URI).is(child.parentUri()));
-            long count = mongoTemplate.count(query, ProjectOrderedChildren.class);
+        for (EntityChildrenOrdering child : persistedChildren) {
+            Query query = new Query(Criteria.where(EntityChildrenOrdering.ENTITY_URI).is(child.entityUri()));
+            long count = mongoTemplate.count(query, EntityChildrenOrdering.class);
             assertTrue(count > 0, "Data should be persisted in MongoDB");
         }
 
@@ -98,11 +98,11 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
         commandHandler.handleRequest(request, executionContext).block();
 
-        long initialCount = mongoTemplate.count(new Query(), ProjectOrderedChildren.class);
+        long initialCount = mongoTemplate.count(new Query(), EntityChildrenOrdering.class);
 
         commandHandler.handleRequest(request, executionContext).block();
 
-        long finalCount = mongoTemplate.count(new Query(), ProjectOrderedChildren.class);
+        long finalCount = mongoTemplate.count(new Query(), EntityChildrenOrdering.class);
 
         assertEquals(initialCount, finalCount, "Executing twice should not create duplicate records");
 
