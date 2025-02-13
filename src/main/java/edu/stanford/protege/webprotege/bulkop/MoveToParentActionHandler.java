@@ -1,10 +1,9 @@
 package edu.stanford.protege.webprotege.bulkop;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.dispatch.*;
+import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -14,7 +13,6 @@ import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -59,7 +57,7 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
     }
 
     protected ChangeListGenerator<Boolean> getChangeListGenerator(MoveEntitiesToParentAction action) {
-        if(action.entity().isOWLClass()) {
+        if (action.entity().isOWLClass()) {
             ImmutableSet<OWLClass> clses = action.entities().stream().map(OWLEntity::asOWLClass).collect(toImmutableSet());
             return factory.create(action.changeRequestId(), clses, action.entity().asOWLClass(), action.commitMessage());
         }
@@ -84,8 +82,8 @@ public class MoveToParentActionHandler extends AbstractProjectActionHandler<Move
         var changeListGenerator = getChangeListGenerator(action);
         ChangeApplicationResult<Boolean> result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
-        if(result.getSubject()){
-            projectOrderedChildrenManager.moveEntitiesToParent(action, entitiesWithPreviousParents);
+        if (result.getSubject()) {
+            projectOrderedChildrenManager.moveEntitiesToParent(action.entity(), action.entities(), entitiesWithPreviousParents);
         }
         return new MoveEntitiesToParentResult();
     }
