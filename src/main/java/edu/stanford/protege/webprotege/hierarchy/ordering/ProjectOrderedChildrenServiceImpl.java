@@ -26,7 +26,8 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     private final ReadWriteLockService readWriteLock;
 
     public ProjectOrderedChildrenServiceImpl(ObjectMapper objectMapper,
-                                             ProjectOrderedChildrenRepository repository, ReadWriteLockService readWriteLock) {
+                                             ProjectOrderedChildrenRepository repository,
+                                             ReadWriteLockService readWriteLock) {
         this.objectMapper = objectMapper;
         this.repository = repository;
         this.readWriteLock = readWriteLock;

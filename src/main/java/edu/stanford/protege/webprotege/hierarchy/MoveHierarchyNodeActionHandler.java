@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
 import javax.annotation.Nonnull;
@@ -20,14 +21,17 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY
 public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler<Boolean, MoveHierarchyNodeAction, MoveHierarchyNodeResult> {
 
     private final MoveEntityChangeListGeneratorFactory factory;
+    private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
 
     @Inject
     public MoveHierarchyNodeActionHandler(@Nonnull AccessManager accessManager,
 
                                           @Nonnull HasApplyChanges applyChanges,
-                                          @Nonnull MoveEntityChangeListGeneratorFactory factory) {
+                                          @Nonnull MoveEntityChangeListGeneratorFactory factory,
+                                          ProjectOrderedChildrenManager projectOrderedChildrenManager) {
         super(accessManager, applyChanges);
         this.factory = factory;
+        this.projectOrderedChildrenManager = projectOrderedChildrenManager;
     }
 
     @Nonnull
@@ -45,6 +49,9 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
     protected MoveHierarchyNodeResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult,
                                                          MoveHierarchyNodeAction action,
                                                          ExecutionContext executionContext) {
+        if (changeApplicationResult.getSubject()) {
+            projectOrderedChildrenManager.moveHierarchyNode(action);
+        }
         return new MoveHierarchyNodeResult(changeApplicationResult.getSubject());
     }
 
