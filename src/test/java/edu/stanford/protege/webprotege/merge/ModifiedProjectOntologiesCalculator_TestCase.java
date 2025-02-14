@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.merge;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.project.Ontology;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -20,7 +22,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 02/03/15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ModifiedProjectOntologiesCalculator_TestCase {
 
 
@@ -38,7 +41,7 @@ public class ModifiedProjectOntologiesCalculator_TestCase {
     @Mock
     private OntologyDiff ontologyDiff;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         var projectOntologies = ImmutableSet.of(projectOntology);
         var externalOntologies = ImmutableSet.of(externalOntology);

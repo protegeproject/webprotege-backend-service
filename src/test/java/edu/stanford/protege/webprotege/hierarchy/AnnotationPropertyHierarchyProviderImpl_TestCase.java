@@ -1,12 +1,14 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import edu.stanford.protege.webprotege.index.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLAnnotationPropertyImpl;
 import uk.ac.manchester.cs.owl.owlapi.OWLSubAnnotationPropertyOfAxiomImpl;
@@ -17,7 +19,7 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.createAnnotationProperty;
 
@@ -26,7 +28,8 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.creat
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-16
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AnnotationPropertyHierarchyProviderImpl_TestCase {
 
     private AnnotationPropertyHierarchyProviderImpl provider;
@@ -60,7 +63,7 @@ public class AnnotationPropertyHierarchyProviderImpl_TestCase {
     @Mock
     private SubAnnotationPropertyAxiomsBySuperPropertyIndex subPropertyAxiomsBySuperPropertyIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         when(annotationPropertyProvider.getOWLAnnotationProperty(any()))

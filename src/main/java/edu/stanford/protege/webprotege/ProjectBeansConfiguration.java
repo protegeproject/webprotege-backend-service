@@ -112,6 +112,7 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -119,8 +120,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import javax.annotation.Nonnull;
-import javax.inject.Provider;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.Provider;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -1623,8 +1624,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3) {
-        return new EntitySearcherFactory(p1, p2, p3);
+    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3, MatcherFactory p4) {
+        return new EntitySearcherFactory(p1, p2, p3, p4);
     }
 
     @Bean

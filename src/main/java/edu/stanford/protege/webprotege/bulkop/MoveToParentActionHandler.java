@@ -11,8 +11,8 @@ import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.*;
 
-import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 

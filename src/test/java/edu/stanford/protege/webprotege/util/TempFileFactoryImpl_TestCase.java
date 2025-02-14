@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.util;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;

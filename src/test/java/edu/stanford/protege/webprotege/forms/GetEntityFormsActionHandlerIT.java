@@ -1,7 +1,10 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.*;
+import edu.stanford.protege.webprotege.IndexUpdaterServiceTestConfiguration;
+import edu.stanford.protege.webprotege.MockingUtils;
+import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.LangTagFilter;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -12,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
-@SpringBootTest
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class})
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 class GetEntityFormsActionHandlerIT {

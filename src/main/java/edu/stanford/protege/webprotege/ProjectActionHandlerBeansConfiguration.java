@@ -80,7 +80,7 @@ import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 import java.util.Comparator;
 
 /**

@@ -1,8 +1,9 @@
 package edu.stanford.protege.webprotege.entity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Author: Matthew Horridge<br>
@@ -12,10 +13,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class EntityNameChar_TestCase {
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfStringIsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIfStringIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         EntityNameCharType.getType(null, 0);
-    }
+     });
+}
 
     @Test
     public void shouldReturnEscapingQuoteForSingleQuoteAtIndexZero() {

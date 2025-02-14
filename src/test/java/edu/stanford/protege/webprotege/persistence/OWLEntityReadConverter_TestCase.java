@@ -1,11 +1,15 @@
 package edu.stanford.protege.webprotege.persistence;
 
 import com.mongodb.DBObject;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -19,7 +23,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 27 Jul 16
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OWLEntityReadConverter_TestCase {
 
     private OWLEntityReadConverter converter;
@@ -29,7 +34,7 @@ public class OWLEntityReadConverter_TestCase {
     @Mock
     private DBObject dbObject;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         converter = new OWLEntityReadConverter();
         when(dbObject.get("iri")).thenReturn(iri.toString());
@@ -83,15 +88,19 @@ public class OWLEntityReadConverter_TestCase {
         assertThat(entity.getIRI(), is(iri));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionOnMissingIRIPropertyValue() {
+    @Test
+public void shouldThrowExceptionOnMissingIRIPropertyValue() {
+    assertThrows(IllegalArgumentException.class, () -> { 
         when(dbObject.get("type")).thenReturn(EntityType.CLASS.getName());
         when(dbObject.get("iri")).thenReturn(null);
         converter.convert(dbObject);
-    }
+     });
+}
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionOnMissingTypePropertyValue() {
+    @Test
+public void shouldThrowExceptionOnMissingTypePropertyValue() {
+    assertThrows(IllegalArgumentException.class, () -> { 
         converter.convert(dbObject);
-    }
+     });
+}
 }

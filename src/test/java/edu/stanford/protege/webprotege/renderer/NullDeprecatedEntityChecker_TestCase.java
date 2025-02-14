@@ -1,10 +1,12 @@
 package edu.stanford.protege.webprotege.renderer;
 
 import edu.stanford.protege.webprotege.mansyntax.render.NullDeprecatedEntityChecker;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,14 +21,15 @@ import static org.mockito.Mockito.mock;
  * Stanford Center for Biomedical Informatics Research
  * 29/01/15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class NullDeprecatedEntityChecker_TestCase {
 
 
     private NullDeprecatedEntityChecker checker;
 
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         checker = NullDeprecatedEntityChecker.get();
     }

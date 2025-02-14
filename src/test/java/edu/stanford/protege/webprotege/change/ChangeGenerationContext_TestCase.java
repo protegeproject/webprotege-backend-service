@@ -1,38 +1,41 @@
 package edu.stanford.protege.webprotege.change;
 
 import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-29
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ChangeGenerationContext_TestCase {
 
     private ChangeGenerationContext context;
 
     private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
-    @Before
+    @BeforeEach
     public void setUp() {
         context = new ChangeGenerationContext(userId);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfUserIdIsNull() {
+    @Test
+public void shouldThrowNpeIfUserIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new ChangeGenerationContext(null);
-    }
+     });
+}
 
     @Test
     public void shouldGetUserId() {

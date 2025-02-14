@@ -10,8 +10,8 @@ import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
-import javax.annotation.*;
-import javax.inject.Inject;
+import jakarta.annotation.*;
+import jakarta.inject.Inject;
 import java.util.*;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;

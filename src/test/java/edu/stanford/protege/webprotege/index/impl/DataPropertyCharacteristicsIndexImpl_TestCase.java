@@ -1,18 +1,25 @@
 package edu.stanford.protege.webprotege.index.impl;
 
 import edu.stanford.protege.webprotege.index.AxiomsByTypeIndex;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.semanticweb.owlapi.model.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLFunctionalDataPropertyAxiom;
+import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +28,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-10
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class DataPropertyCharacteristicsIndexImpl_TestCase {
 
     private DataPropertyCharacteristicsIndexImpl impl;
@@ -38,7 +46,7 @@ public class DataPropertyCharacteristicsIndexImpl_TestCase {
     @Mock
     private OWLFunctionalDataPropertyAxiom axiom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(axiom.getProperty())
                 .thenReturn(property);
@@ -75,15 +83,19 @@ public class DataPropertyCharacteristicsIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfPropertyIsNull() {
+    @Test
+public void shouldThrowNpeIfPropertyIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.isFunctional(null, ontologyId);
-    }
+     });
+}
 
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.isFunctional(property, null);
-    }
+     });
+}
 }

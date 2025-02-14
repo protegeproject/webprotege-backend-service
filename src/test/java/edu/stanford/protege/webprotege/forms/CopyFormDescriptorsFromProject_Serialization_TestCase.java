@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableList;
-
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.Test;

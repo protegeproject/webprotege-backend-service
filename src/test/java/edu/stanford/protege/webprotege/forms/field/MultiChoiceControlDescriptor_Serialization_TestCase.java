@@ -1,13 +1,12 @@
 package edu.stanford.protege.webprotege.forms.field;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.forms.data.LiteralFormControlData;
-import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.*;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
+import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.Import;
 

@@ -2,33 +2,37 @@ package edu.stanford.protege.webprotege.access;
 
 
 import edu.stanford.protege.webprotege.authorization.RoleId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class RoleId_TestCase {
 
     private RoleId roleId;
 
     private String id = "The id";
 
-    @Before
+    @BeforeEach
     public void setUp() {
         roleId = new RoleId(id);
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_id_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_id_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new RoleId(null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_id() {

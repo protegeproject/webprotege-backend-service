@@ -2,11 +2,15 @@ package edu.stanford.protege.webprotege.index.impl;
 
 import edu.stanford.protege.webprotege.index.EntitiesInOntologySignatureIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -22,7 +26,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-17
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class EntitiesInProjectSignatureIndexImpl_TestCase {
 
     private EntitiesInProjectSignatureIndexImpl impl;
@@ -39,7 +44,7 @@ public class EntitiesInProjectSignatureIndexImpl_TestCase {
     @Mock
     private EntitiesInOntologySignatureIndex entitiesInOntologySignatureIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         impl = new EntitiesInProjectSignatureIndexImpl(projectOntologiesIndex,
                                                        entitiesInOntologySignatureIndex);
@@ -75,9 +80,11 @@ public class EntitiesInProjectSignatureIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfEntityIsNull() {
+    @Test
+public void shouldThrowNpeIfEntityIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.containsEntityInSignature(null);
-    }
+     });
+}
 
 }

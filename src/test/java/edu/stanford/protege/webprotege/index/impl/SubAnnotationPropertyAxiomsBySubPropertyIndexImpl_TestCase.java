@@ -1,19 +1,25 @@
 package edu.stanford.protege.webprotege.index.impl;
 
 import edu.stanford.protege.webprotege.index.AxiomsByTypeIndex;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.semanticweb.owlapi.model.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLOntologyID;
+import org.semanticweb.owlapi.model.OWLSubAnnotationPropertyOfAxiom;
 
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -22,7 +28,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class SubAnnotationPropertyAxiomsBySubPropertyIndexImpl_TestCase {
 
     private SubAnnotationPropertyAxiomsBySubPropertyIndexImpl impl;
@@ -39,7 +46,7 @@ public class SubAnnotationPropertyAxiomsBySubPropertyIndexImpl_TestCase {
     @Mock
     private AxiomsByTypeIndex axiomsByTypeIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(axiom.getSubProperty())
                 .thenReturn(property);
@@ -74,14 +81,18 @@ public class SubAnnotationPropertyAxiomsBySubPropertyIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeForNullOntologyId() {
+    @Test
+public void shouldThrowNpeForNullOntologyId() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getSubPropertyOfAxioms(property, null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeForNullProperty() {
+    @Test
+public void shouldThrowNpeForNullProperty() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getSubPropertyOfAxioms(null, ontologyID);
-    }
+     });
+}
 }

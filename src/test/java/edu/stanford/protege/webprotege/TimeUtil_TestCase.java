@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.startsWith;
  * 08/12/15
  */
 
-@Ignore
+@Disabled
 public class TimeUtil_TestCase {
 
     public static final long ONE_SECOND = 1000;

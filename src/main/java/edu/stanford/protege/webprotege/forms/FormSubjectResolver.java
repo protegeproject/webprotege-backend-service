@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.forms.data.FormSubject;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;

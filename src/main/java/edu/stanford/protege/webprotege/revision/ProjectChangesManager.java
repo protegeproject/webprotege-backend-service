@@ -13,7 +13,13 @@ import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 import javax.inject.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;

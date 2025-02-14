@@ -1,11 +1,15 @@
 
 package edu.stanford.protege.webprotege.change;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -13,7 +17,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ProjectChangeTimestampComparator_TestCase {
 
     private ProjectChangeTimestampComparator comparator;
@@ -23,7 +28,7 @@ public class ProjectChangeTimestampComparator_TestCase {
     @Mock
     private ProjectChange projectChange2;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         comparator = new ProjectChangeTimestampComparator();
     }

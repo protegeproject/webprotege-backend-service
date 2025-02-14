@@ -7,17 +7,18 @@ import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.index.impl.*;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManagerImpl;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.semanticweb.owlapi.model.IRI;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.SKOSVocabulary;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
@@ -26,7 +27,6 @@ import static edu.stanford.protege.webprotege.entity.MergedEntityTreatment.DELET
 import static edu.stanford.protege.webprotege.entity.MergedEntityTreatment.DEPRECATE_MERGED_ENTITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.Class;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
 
 /**
@@ -34,7 +34,8 @@ import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
  * Stanford Center for Biomedical Informatics Research
  * 12 Mar 2018
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class MergeEntitiesChangeListGenerator_TestCase {
 
     private ProjectId projectId = ProjectId.generate();
@@ -87,7 +88,7 @@ public class MergeEntitiesChangeListGenerator_TestCase {
 
     private AxiomsByTypeIndexImpl axiomsByTypeIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         dataFactory = new OWLDataFactoryImpl();
         IRI iriA = IRI.create("http://ontology.org/A");

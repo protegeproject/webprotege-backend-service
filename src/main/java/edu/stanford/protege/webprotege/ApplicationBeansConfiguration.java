@@ -67,9 +67,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.scheduling.annotation.EnableAsync;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
-import javax.annotation.Nonnull;
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -126,11 +126,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     public TempFileFactoryImpl provideTempFileFactory() {
         return new TempFileFactoryImpl();
-    }
-
-    @Bean
-    public DefaultMustacheFactory providesMustacheFactory() {
-        return new DefaultMustacheFactory();
     }
 
     @Bean
