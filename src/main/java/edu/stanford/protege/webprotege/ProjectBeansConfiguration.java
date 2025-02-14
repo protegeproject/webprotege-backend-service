@@ -2018,9 +2018,8 @@ public class ProjectBeansConfiguration {
     @Bean
     ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
                                                                 @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
-                                                                @Nonnull ReadWriteLockService readWriteLockService,
-                                                                @Nonnull ClassHierarchyProvider classHierarchyProvider) {
-        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, classHierarchyProvider);
+                                                                @Nonnull ReadWriteLockService readWriteLockService) {
+        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
     }
 
 }
