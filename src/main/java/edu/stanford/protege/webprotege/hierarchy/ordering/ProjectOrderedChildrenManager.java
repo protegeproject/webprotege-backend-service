@@ -16,22 +16,19 @@ public class ProjectOrderedChildrenManager {
 
     private final ReadWriteLockService readWriteLockService;
 
-    private final ClassHierarchyProvider classHierarchyProvider;
 
     @Inject
     public ProjectOrderedChildrenManager(ProjectId projectId, ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
-                                         ReadWriteLockService readWriteLockService,
-                                         ClassHierarchyProvider classHierarchyProvider) {
+                                         ReadWriteLockService readWriteLockService) {
         this.projectId = projectId;
         this.projectOrderedChildrenService = projectOrderedChildrenService;
         this.readWriteLockService = readWriteLockService;
-        this.classHierarchyProvider = classHierarchyProvider;
     }
 
-    public void moveHierarchyNode(Path<EntityNode> fromNodePath, Path<EntityNode> toNodeParentPath) {
-        String entityUri = fromNodePath.getLast().get().getEntity().toStringID();
-        String fromParentUri = fromNodePath.getLastPredecessor().get().getEntity().toStringID();
-        String toParentUri = toNodeParentPath.getLast().get().getEntity().toStringID();
+    public void moveHierarchyNode(OWLEntity fromEntity, OWLEntity toEntity, OWLEntity childEntity) {
+        String entityUri = childEntity.toStringID();
+        String fromParentUri = fromEntity.toStringID();
+        String toParentUri = toEntity.toStringID();
 
         readWriteLockService.executeWriteLock(() -> {
             projectOrderedChildrenService.removeChildFromParent(projectId, fromParentUri, entityUri);

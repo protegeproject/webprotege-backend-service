@@ -51,7 +51,11 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
                                                          MoveHierarchyNodeAction action,
                                                          ExecutionContext executionContext) {
         if (changeApplicationResult.getSubject()) {
-            projectOrderedChildrenManager.moveHierarchyNode(action.fromNodePath(), action.toNodeParentPath());
+            projectOrderedChildrenManager.moveHierarchyNode(
+                    action.fromNodePath().getLastPredecessor().get().getEntity(),
+                    action.toNodeParentPath().getLast().get().getEntity(),
+                    action.fromNodePath().getLast().get().getEntity()
+            );
         }
         return new MoveHierarchyNodeResult(changeApplicationResult.getSubject());
     }
