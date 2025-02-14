@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.common.BlobLocation;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.csv.DocumentId;
+import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest;
@@ -47,6 +48,12 @@ class CreateProjectSagaManagerTest {
     private CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor;
 
     @Mock
+    private CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor;
+
+    @Mock
+    private CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> createProjectSmallFilesExecutor;
+
+    @Mock
     private MinioFileDownloader fileDownloader;
 
     @Mock
@@ -72,6 +79,8 @@ class CreateProjectSagaManagerTest {
         manager = new CreateProjectSagaManager(projectDetailsManager,
                                                processOntologiesExecutor,
                                                createInitialRevisionHistoryExecutor,
+                                               prepareBinaryFileBackupForUseExecutor,
+                                               createProjectSmallFilesExecutor,
                                                fileDownloader,
                                                revisionHistoryReplacer,
                                                projectPermissionsInitializer);
