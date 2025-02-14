@@ -2,7 +2,11 @@ package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -10,8 +14,9 @@ import org.springframework.data.mongodb.core.query.Update;
 
 import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static edu.stanford.protege.webprotege.issues.EntityDiscussionThread.*;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -27,8 +32,9 @@ import static org.springframework.data.mongodb.core.query.Update.update;
 public class EntityDiscussionThreadRepository {
 
     public static final String MATCHED_COMMENT_PATH = "comments.$";
-
     private final MongoTemplate mongoTemplate;
+
+    private Map<ProjectId, Map<IRI, List<Comment>>> cache = new ConcurrentHashMap<>();
 
     @Inject
     public EntityDiscussionThreadRepository(@Nonnull MongoTemplate mongoTemplate) {
@@ -51,27 +57,53 @@ public class EntityDiscussionThreadRepository {
 
     public int getOpenCommentsCount(@Nonnull ProjectId projectId,
                                     @Nonnull OWLEntity entity) {
-        var query = query(where(PROJECT_ID).is(projectId)
-                      .and(ENTITY).is(entity).and(STATUS).is(Status.OPEN));
-        return mongoTemplate.find(query, EntityDiscussionThread.class)
-                        .stream().map(thread -> thread.getComments().size())
-                        .reduce((left, right) -> left + right)
-                        .orElse(0);
+        List<Comment> comments = getOpenedCommentsForProject(projectId).get(entity.getIRI());
+        return comments == null ? 0 : comments.size();
     }
+
+
+    public synchronized Map<IRI, List<Comment>> getOpenedCommentsForProject(ProjectId projectId) {
+        Map<IRI, List<Comment>> response = this.cache.get(projectId);
+        if(response != null) {
+            return response;
+        } else {
+            response = new HashMap<>();
+        }
+
+        var query = query(where(PROJECT_ID).is(projectId)
+                .and(STATUS).is(Status.OPEN));
+        Map<IRI, List<Comment>> finalResponse = response;
+        mongoTemplate.find(query, EntityDiscussionThread.class)
+                .forEach(entityDiscussionThread -> {
+                    List<Comment> existingComments = finalResponse.get(entityDiscussionThread.getEntity().getIRI());
+                    if(existingComments == null) {
+                        existingComments = new ArrayList<>();
+                    }
+                    existingComments.addAll(entityDiscussionThread.getComments());
+                    finalResponse.put(entityDiscussionThread.getEntity().getIRI(), existingComments);
+                });
+        this.cache.put(projectId, response);
+        return response;
+    }
+
 
     public void saveThread(@Nonnull EntityDiscussionThread thread) {
         mongoTemplate.save(thread);
     }
 
     public void addCommentToThread(@Nonnull ThreadId threadId,
+                                   @Nonnull ProjectId projectId,
                                    @Nonnull Comment comment) {
         var query = createQueryForThread(threadId);
+        this.cache.remove(projectId);
         mongoTemplate.updateFirst(query, new Update().push(COMMENTS, comment), EntityDiscussionThread.class);
     }
 
     public Optional<EntityDiscussionThread> setThreadStatus(@Nonnull ThreadId threadId,
+                                                            ProjectId projectId,
                                                             @Nonnull Status status) {
         var query = createQueryForThread(threadId);
+        this.cache.remove(projectId);
         mongoTemplate.updateFirst(query, update(STATUS, status), EntityDiscussionThread.class);
         return Optional.ofNullable(mongoTemplate.findOne(query, EntityDiscussionThread.class));
     }
@@ -102,8 +134,9 @@ public class EntityDiscussionThreadRepository {
         return Optional.ofNullable(mongoTemplate.findOne(query, EntityDiscussionThread.class));
     }
 
-    public boolean deleteComment(CommentId commentId) {
+    public boolean deleteComment(ProjectId projectId, CommentId commentId) {
         var query = query(where(COMMENTS_ID).is(commentId));
+        this.cache.remove(projectId);
         return mongoTemplate.updateFirst(query, new Update().pull(COMMENTS, query(where("_id").is(commentId))),
                                   EntityDiscussionThread.class).getModifiedCount() == 1;
     }

@@ -16,9 +16,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.*;
 import jakarta.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -55,6 +54,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
     private final Lock readLock = readWriteLock.readLock();
 
     private final Lock writeLock = readWriteLock.writeLock();
+    Map<FormId, FormDescriptor> formDescriptorCache = new HashMap<>();
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EntityFormRepositoryImpl.class);
 
@@ -70,6 +70,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
             writeLock.lock();
             var query = new Document(PROJECT_ID, projectId.id()).append(FORM__FORM_ID, formId.getId());
             getCollection().findOneAndDelete(query);
+            formDescriptorCache.remove(formId);
         } finally {
             writeLock.unlock();
         }
@@ -99,6 +100,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
                 var filter = getProjectIdFormIdFilter(projectId, formDescriptor.getFormId());
                 getCollection()
                         .findOneAndReplace(filter, document, new FindOneAndReplaceOptions().upsert(true));
+                formDescriptorCache.remove(formDescriptor.getFormId());
             }
         } finally {
             writeLock.unlock();
@@ -143,6 +145,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
                     var record = FormDescriptorRecord.get(projectId, formDescriptor, ordinal);
                     var recordDocument = objectMapper.convertValue(record, Document.class);
                     docs.add(recordDocument);
+                    formDescriptorCache.remove(formDescriptor.getFormId());
                 }
             }
             collection.deleteMany(new Document(PROJECT_ID, projectId.id()));
@@ -162,6 +165,9 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
 
     @Override
     public Optional<FormDescriptor> findFormDescriptor(@Nonnull ProjectId projectId, @Nonnull FormId formId) {
+        if(formDescriptorCache.get(formId) != null) {
+            return Optional.of(formDescriptorCache.get(formId));
+        }
         try {
             readLock.lock();
             Bson filter = getProjectIdFormIdFilter(projectId, formId);
@@ -173,6 +179,7 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
             }
             else {
                 var formRecord = objectMapper.convertValue(foundFormDocument, FormDescriptorRecord.class);
+                formDescriptorCache.put(formRecord.getFormDescriptor().getFormId(), formRecord.getFormDescriptor());
                 return Optional.of(formRecord.getFormDescriptor());
             }
         } finally {

@@ -1,8 +1,7 @@
 package edu.stanford.protege.webprotege.webhook;
 
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +28,7 @@ import static org.hamcrest.Matchers.is;
  * 8 Jun 2017
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
-@ExtendWith({MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class,})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class SlackWebhookRepository_IT {
 

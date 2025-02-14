@@ -3,9 +3,7 @@ package edu.stanford.protege.webprotege.forms.field;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.common.LanguageMap;
-import edu.stanford.protege.webprotege.forms.ExpansionState;
-import edu.stanford.protege.webprotege.forms.FormDescriptor;
-import edu.stanford.protege.webprotege.forms.FormId;
+import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +11,7 @@ import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.DirtiesContext;
 import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.io.IOException;
@@ -30,6 +29,7 @@ import static org.hamcrest.Matchers.is;
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import(WebProtegeJacksonApplication.class)
 @ExtendWith(MongoTestExtension.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class SubFormControlDescriptor_IT {
 
     @Autowired
@@ -39,30 +39,30 @@ public class SubFormControlDescriptor_IT {
     public void shouldSerializeAndDeserialize() throws IOException {
         var formDescriptor = new FormDescriptor(FormId.get("12345678-1234-1234-1234-123456789abc"),
                                                 LanguageMap.of("en", "The sub form"),
-                                                singletonList(
-                                                        FormFieldDescriptor.get(
-                                                                FormRegionId.generate(),
-                                                                OwlPropertyBinding.get(new OWLObjectPropertyImpl(
-                                                                                               OWLRDFVocabulary.RDFS_LABEL.getIRI()),
-                                                                                       null),
-                                                                LanguageMap.of("en", "The Label"),
-                                                                FieldRun.START,
-                                                                FormFieldDeprecationStrategy.LEAVE_VALUES_INTACT,
-                                                                new TextControlDescriptor(
-                                                                        LanguageMap.empty(),
-                                                                        StringType.SIMPLE_STRING,
-                                                                        "en",
-                                                                        LineMode.SINGLE_LINE,
-                                                                        "Pattern",
-                                                                        LanguageMap.empty()
-                                                                ),
-                                                                Repeatability.NON_REPEATABLE,
-                                                                Optionality.REQUIRED,
-                                                                true,
-                                                                ExpansionState.COLLAPSED,
-                                                                LanguageMap.empty()
-                                                        )
-                                                ), Optional.empty());
+                singletonList(
+                        FormFieldDescriptor.get(
+                                FormRegionId.generate(),
+                                OwlPropertyBinding.get(new OWLObjectPropertyImpl(
+                                                OWLRDFVocabulary.RDFS_LABEL.getIRI()),
+                                        null),
+                                LanguageMap.of("en", "The Label"),
+                                FieldRun.START,
+                                FormFieldDeprecationStrategy.LEAVE_VALUES_INTACT,
+                                new TextControlDescriptor(
+                                        LanguageMap.empty(),
+                                        StringType.SIMPLE_STRING,
+                                        "en",
+                                        LineMode.SINGLE_LINE,
+                                        "Pattern",
+                                        LanguageMap.empty()
+                                ),
+                                Repeatability.NON_REPEATABLE,
+                                Optionality.REQUIRED,
+                                true,
+                                ExpansionState.COLLAPSED,
+                                LanguageMap.empty()
+                        )
+                ), Optional.empty());
         SubFormControlDescriptor descriptor = new SubFormControlDescriptor(formDescriptor);
         var serialized = objectMapper.writeValueAsString(descriptor);
         System.out.println(serialized);

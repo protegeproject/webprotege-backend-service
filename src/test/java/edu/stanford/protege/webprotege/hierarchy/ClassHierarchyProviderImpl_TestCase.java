@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.MockingUtils;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.*;
 import org.jetbrains.annotations.NotNull;
@@ -66,7 +67,6 @@ public class ClassHierarchyProviderImpl_TestCase {
 
     private OWLEquivalentClassesAxiom clsA2EquivalentToClsDandClsE;
 
-    @Mock
     private IRI clsAIri, clsA2Iri, clsBIri, clsCIri, clsDIri, clsEIri;
 
     @Mock
@@ -74,7 +74,6 @@ public class ClassHierarchyProviderImpl_TestCase {
 
     @BeforeEach
     public void setUp() {
-
         ToStringRenderer.getInstance().setRenderer(new OWLObjectRenderer() {
             @Override
             public void setShortFormProvider(@NotNull ShortFormProvider shortFormProvider) {
@@ -87,6 +86,13 @@ public class ClassHierarchyProviderImpl_TestCase {
                 return owlObject.getClass().getSimpleName() + "@" + System.identityHashCode(owlObject);
             }
         });
+
+        clsAIri = MockingUtils.mockIRI();
+        clsA2Iri = MockingUtils.mockIRI();
+        clsBIri = MockingUtils.mockIRI();
+        clsCIri = MockingUtils.mockIRI();
+        clsDIri = MockingUtils.mockIRI();
+        clsEIri = MockingUtils.mockIRI();
 
         when(projectOntologiesIndex.getOntologyIds())
                 .thenAnswer(invocation -> Stream.of(ontologyId));
@@ -128,17 +134,14 @@ public class ClassHierarchyProviderImpl_TestCase {
         when(classHierarchyChildrenAxiomsIndex.getChildrenAxioms(clsD))
                 .thenAnswer(invocation -> Stream.of(clsA2EquivalentToClsDandClsE));
 
-
-
         classHierarchyProvider = new ClassHierarchyProviderImpl(projectId,
-                                                                Set.of(owlThing),
-                                                                projectOntologiesIndex,
-                                                                subClassOfAxiomsBySubClassIndex,
-                                                                equivalentClassesAxiomIndex,
-                                                                projectSignatureByTypeIndex,
-                                                                entitiesInProjectSignatureByIriIndex,
-                                                                classHierarchyChildrenAxiomsIndex);
-
+                Set.of(owlThing),
+                projectOntologiesIndex,
+                subClassOfAxiomsBySubClassIndex,
+                equivalentClassesAxiomIndex,
+                projectSignatureByTypeIndex,
+                entitiesInProjectSignatureByIriIndex,
+                classHierarchyChildrenAxiomsIndex);
     }
 
     @Test

@@ -3,7 +3,8 @@ name: Release
 on:
   push:
     branches:
-      - main*
+      - main
+      - main-WHO
 
 jobs:
   build:
@@ -32,9 +33,45 @@ jobs:
           server-id: docker.io
           server-username: DOCKER_USERNAME
           server-password: DOCKER_PASSWORD
+      - name: Get current version
+        id: get-version
+        run: |
+          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "Current version: $current_version"
+          echo "::set-output name=current_version::$current_version"
       - name: Bump version
         id: bump
-        uses: mickem/gh-action-bump-maven-version@v1
+        run: |
+          current_version=${{ steps.get-version.outputs.current_version }}
+          branch=${GITHUB_REF##*/}
+          echo "Current branch: $branch"
+          
+          # Extract the base version without suffix
+          base_version=$(echo $current_version | sed -E 's/(-.*)?$//')
+          
+          # Increment the base version (assuming semantic versioning)
+          IFS='.' read -r -a version_parts <<< "$base_version"
+          version_parts[2]=$((version_parts[2] + 1))
+          new_base_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
+          
+          if [[ "$branch" == "main-WHO" ]]; then
+            new_version="${new_base_version}-WHO"
+          else
+            new_version="$new_base_version"
+          fi
+          
+          echo "New version: $new_version"
+          mvn versions:set -DnewVersion=$new_version -DgenerateBackupPoms=false
+          echo "::set-output name=new_version::$new_version"
+      - name: Commit new version
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pom.xml
+          git commit -m "Bump version to ${{ steps.bump.outputs.new_version }}"
+          git tag ${{ steps.bump.outputs.new_version }}
+          git push origin HEAD:${GITHUB_REF##*/}
+          git push origin ${{ steps.bump.outputs.new_version }}
       - name: Build and Publish package
         run: mvn --batch-mode package install
       - name: Release
@@ -42,7 +79,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.bump.outputs.tag }}
+          tag_name: ${{ steps.bump.outputs.new_version }}
           generate_release_notes: true
 
 env:

@@ -1,13 +1,12 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
-import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
 import edu.stanford.protege.webprotege.criteria.MultiMatchType;
 import edu.stanford.protege.webprotege.criteria.SubClassOfCriteria;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,7 @@ import static org.hamcrest.Matchers.is;
  */
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({WebprotegeBackendMonolithApplication.class})
-@ExtendWith({MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class EntityFormSelectorRepositoryImpl_IT {
 

@@ -1,8 +1,7 @@
 package edu.stanford.protege.webprotege.watches;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.junit.jupiter.api.AfterEach;
@@ -31,7 +30,7 @@ import static org.hamcrest.Matchers.is;
  * 19 Apr 2017
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
-@ExtendWith({MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class WatchRecordRepository_IT {

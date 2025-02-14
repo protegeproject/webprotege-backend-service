@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.project.chg;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.*;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
@@ -11,28 +10,20 @@ import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.crud.*;
 import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
-import edu.stanford.protege.webprotege.events.EventTranslatorManager;
-import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
-import edu.stanford.protege.webprotege.hierarchy.AnnotationPropertyHierarchyProvider;
-import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
-import edu.stanford.protege.webprotege.hierarchy.DataPropertyHierarchyProvider;
-import edu.stanford.protege.webprotege.hierarchy.ObjectPropertyHierarchyProvider;
+import edu.stanford.protege.webprotege.events.*;
+import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.index.RootIndex;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
-import edu.stanford.protege.webprotege.owlapi.OWLEntityCreator;
-import edu.stanford.protege.webprotege.owlapi.RenameMap;
-import edu.stanford.protege.webprotege.owlapi.RenameMapFactory;
+import edu.stanford.protege.webprotege.owlapi.*;
 import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
 import edu.stanford.protege.webprotege.project.*;
-import edu.stanford.protege.webprotege.revision.Revision;
-import edu.stanford.protege.webprotege.revision.RevisionManager;
-import edu.stanford.protege.webprotege.shortform.DictionaryManager;
-import edu.stanford.protege.webprotege.shortform.DictionaryUpdatesProcessor;
-import edu.stanford.protege.webprotege.util.IriReplacer;
-import edu.stanford.protege.webprotege.util.IriReplacerFactory;
+import edu.stanford.protege.webprotege.revision.*;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
+import edu.stanford.protege.webprotege.shortform.*;
+import edu.stanford.protege.webprotege.util.*;
 import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.Logger;
@@ -101,6 +92,8 @@ public class ChangeManager implements HasApplyChanges {
     @Nonnull
     private final RootIndex rootIndex;
 
+    private final ProjectRevisionRepository projectRevisionRepository;
+
     @Nonnull
     private final DictionaryManager dictionaryManager;
 
@@ -148,6 +141,8 @@ public class ChangeManager implements HasApplyChanges {
 
     private final OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
 
+    private final NewRevisionsEventEmitterService newRevisionsEmitter;
+
     @Inject
     public ChangeManager(@Nonnull ProjectId projectId,
                          @Nonnull OWLDataFactory dataFactory,
@@ -173,7 +168,9 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                          @Nonnull IriReplacerFactory iriReplacerFactory,
                          @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator,
-                         @Nonnull EventDispatcher eventDispatcher) {
+                         @Nonnull EventDispatcher eventDispatcher,
+                         @Nonnull NewRevisionsEventEmitterService newRevisionsEmitter,
+                         @Nonnull ProjectRevisionRepository projectRevisionRepository) {
         this.projectId = projectId;
         this.dataFactory = dataFactory;
         this.dictionaryUpdatesProcessor = dictionaryUpdatesProcessor;
@@ -184,6 +181,7 @@ public class ChangeManager implements HasApplyChanges {
         this.projectChangedWebhookInvoker = projectChangedWebhookInvoker;
         this.eventTranslatorManagerProvider = eventTranslatorManagerProvider;
         this.entityCrudKitHandlerCache = entityCrudKitHandlerCache;
+        this.projectRevisionRepository = projectRevisionRepository;
         this.eventDispatcher = eventDispatcher;
         this.changeManager = changeManager;
         this.rootIndex = rootIndex;
@@ -199,6 +197,7 @@ public class ChangeManager implements HasApplyChanges {
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.iriReplacerFactory = iriReplacerFactory;
         this.generatedAnnotationsGenerator = generatedAnnotationsGenerator;
+        this.newRevisionsEmitter = newRevisionsEmitter;
     }
 
     /**
@@ -339,6 +338,10 @@ public class ChangeManager implements HasApplyChanges {
                                                changeApplicationResult,
                                                eventTranslatorManager,
                                                revision);
+
+            revision.ifPresent(value -> projectRevisionRepository.save(new ProjectRevision(projectId, changeRequestId, userId, value.getRevisionNumber())));
+
+            newRevisionsEmitter.emitNewRevisionsEvent(revision, changeRequestId);
 
         } finally {
             changeProcesssingLock.unlock();
@@ -500,7 +503,6 @@ public class ChangeManager implements HasApplyChanges {
 
         // Generate a description for the changes that were actually applied
         var changeDescription = changeList.getMessage(finalResult);
-
         // Log the changes
         var revision = changeManager.addRevision(userId, changes, changeDescription);
 

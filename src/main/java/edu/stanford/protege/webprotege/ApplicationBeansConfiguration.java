@@ -19,6 +19,7 @@ import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManagerImpl;
 import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyRepository;
+import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -299,6 +300,12 @@ public class ApplicationBeansConfiguration {
         return new ProjectDetailsRepository(mongoTemplate, objectMapper);
     }
 
+    @Singleton
+    @Bean
+    ProjectRevisionRepository projectRevisionRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
+        return new ProjectRevisionRepository(mongoTemplate, objectMapper);
+    }
+
     @Bean
     @Singleton
     SlackWebhookRepository getSlackWebhookRepository(MongoTemplate mongoTemplate) {
@@ -564,6 +571,16 @@ public class ApplicationBeansConfiguration {
     @Bean
     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> executorForCreateInitialRevisionHistory() {
         return new CommandExecutorImpl<>(CreateInitialRevisionHistoryResponse.class);
+    }
+
+    @Bean
+    CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> executorForPrepareBackupFilesForUse() {
+        return new CommandExecutorImpl<>(PrepareBackupFilesForUseResponse.class);
+    }
+
+    @Bean
+    CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> executorForCreateProjectSmallFiles() {
+        return new CommandExecutorImpl<>(CreateNewReproducibleProjectResponse.class);
     }
 
     @Bean

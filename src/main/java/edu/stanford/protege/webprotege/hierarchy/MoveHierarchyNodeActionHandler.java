@@ -38,7 +38,12 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(MoveHierarchyNodeAction action, ExecutionContext executionContext) {
-        return factory.create(action);
+        return factory.create(
+                action.fromNodePath(),
+                action.toNodeParentPath(),
+                action.dropType(),
+                action.changeRequestId()
+        );
     }
 
     @Override

@@ -11,6 +11,7 @@ import edu.stanford.protege.webprotege.axiom.*;
 import edu.stanford.protege.webprotege.axioms.AddAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.axioms.RemoveAxiomsDelegateHandler;
 import edu.stanford.protege.webprotege.bulkop.EditAnnotationsChangeListGeneratorFactory;
+import edu.stanford.protege.webprotege.bulkop.EditParentsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.MoveClassesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.bulkop.SetAnnotationValueActionChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
@@ -34,16 +35,17 @@ import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
 import edu.stanford.protege.webprotege.diff.Revision2DiffElementsTranslator;
 import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
-import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.entity.EntityRenamer;
-import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
+import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.events.*;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.*;
+import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManager;
+import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManagerImpl;
+import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetectorImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
@@ -51,14 +53,17 @@ import edu.stanford.protege.webprotege.index.impl.RootIndexImpl;
 import edu.stanford.protege.webprotege.index.impl.UpdatableIndex;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.inject.*;
-import edu.stanford.protege.webprotege.inject.project.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
+import edu.stanford.protege.webprotege.inject.project.*;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
+import edu.stanford.protege.webprotege.logicaldefinitions.UpdateLogicalDefinitionsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.SendMail;
@@ -80,6 +85,7 @@ import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.LiteralRenderer;
 import edu.stanford.protege.webprotege.renderer.*;
 import edu.stanford.protege.webprotege.revision.*;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
 import edu.stanford.protege.webprotege.search.EntitySearcherFactory;
 import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.tag.CriteriaBasedTagsManager;
@@ -92,11 +98,13 @@ import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
+import edu.stanford.protege.webprotege.util.ReferenceFinder;
 import edu.stanford.protege.webprotege.viz.EdgeMatcherFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
 import edu.stanford.protege.webprotege.watches.*;
 import edu.stanford.protege.webprotege.webhook.*;
+import jakarta.annotation.Nonnull;
 import org.semanticweb.owlapi.expression.OWLOntologyChecker;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.*;
@@ -455,6 +463,26 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    public IcdReleasedEntityStatusManager getIcdReleasedClassesManager() {
+        return new IcdReleasedEntityStatusManagerImpl();
+    }
+
+    @Bean
+    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager) {
+        return new ReleasedClassesCheckerImpl(icdReleasedEntityStatusManager);
+    }
+
+    @Bean
+    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index) {
+        return new RetiredClassCheckerImpl(index);
+    }
+
+    @Bean
+    EntityStatusManager getEntityStatusManager(ReleasedClassesChecker releasedClassesChecker) {
+        return new EntityStatusManagerImpl(releasedClassesChecker);
+    }
+
+    @Bean
     public RevisionManagerImpl getRevisionSummary(RevisionStore revisionStore) {
         var revisionManager = new RevisionManagerImpl(revisionStore);
         return revisionManager;
@@ -616,7 +644,10 @@ public class ProjectBeansConfiguration {
                                 IndexUpdater p23,
                                 DefaultOntologyIdManager p24,
                                 IriReplacerFactory p25,
-                                GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher) {
+                                GeneratedAnnotationsGenerator p26,
+                                EventDispatcher p27,
+                                NewRevisionsEventEmitterService p28,
+                                ProjectRevisionRepository p29) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -640,7 +671,17 @@ public class ProjectBeansConfiguration {
                                  p23,
                                  p24,
                                  p25,
-                                 p26, eventDispatcher);
+                                 p26,
+                                 p27,
+                                 p28,
+                                 p29);
+    }
+
+    @Bean
+    NewRevisionsEventEmitterService newRevisionsEventEmitterService(ProjectChangesManager p1,
+                                                                    EventDispatcher p2,
+                                                                    ProjectId p3) {
+        return new NewRevisionsEventEmitterServiceImpl(p1, p2, p3);
     }
 
 
@@ -654,6 +695,17 @@ public class ProjectBeansConfiguration {
                                                       EntitiesInProjectSignatureByIriIndex p7,
                                                       ClassHierarchyChildrenAxiomsIndex p8) {
         return new ClassHierarchyProviderImpl(p1, p2, p3, p4, p5, p6, p7, p8);
+    }
+
+    @Bean
+    ClassHierarchyCycleDetectorImpl classCycleDetectorProvider(@Nonnull ClassHierarchyProvider p1) {
+        return new ClassHierarchyCycleDetectorImpl(p1);
+    }
+
+    @Bean
+    ClassHierarchyRetiredClassDetectorImpl classHierarchyRetiredAcestorDetector(@Nonnull ClassHierarchyProvider p1,
+                                                                                @Nonnull RetiredClassChecker p2) {
+        return new ClassHierarchyRetiredClassDetectorImpl(p1, p2);
     }
 
     @Bean
@@ -702,6 +754,18 @@ public class ProjectBeansConfiguration {
     @Bean
     PropertyValueComparator propertyValueComparator(Comparator<? super OWLAnnotationProperty> p1, HasLang p2) {
         return new PropertyValueComparator(p1, p2);
+    }
+
+    @Bean
+    public ReferenceFinder referenceFinder(@Nonnull AxiomsByReferenceIndex axiomsIndex,
+                                           @Nonnull OntologyAnnotationsIndex ontologyAnnotationsIndex) {
+        return new ReferenceFinder(axiomsIndex, ontologyAnnotationsIndex);
+    }
+
+    @Bean
+    public EntityDeleter entityDeleter(ReferenceFinder referenceFinder,
+                                       ProjectOntologiesIndex projectOntologiesIndex) {
+        return new EntityDeleter(referenceFinder, projectOntologiesIndex);
     }
 
     @Bean
@@ -773,8 +837,9 @@ public class ProjectBeansConfiguration {
                                           WatchManager p4,
                                           EntityDiscussionThreadRepository p5,
                                           TagsManager p6,
-                                          LanguageManager p7) {
-        return new EntityNodeRenderer(p1, p2, p3, p4, p5, p6, p7);
+                                          LanguageManager p7,
+                                          EntityStatusManager p8) {
+        return new EntityNodeRenderer(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
     @Bean
@@ -1103,13 +1168,17 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    ProjectBackupDirectoryProvider projectBackupDirectoryProvider(ProjectId projectId){
+        return new ProjectBackupDirectoryProvider(projectId);
+    }
+
+    @Bean
     @LuceneIndexesDirectory
     Path luceneIndexesDirectory(DataDirectoryProvider dataDirectoryProvider) {
         var dataDirectory = dataDirectoryProvider.get().toPath();
         return dataDirectory.resolve("lucene-indexes");
 
     }
-
     @Bean
     ActiveLanguagesManagerImpl activeLanguagesManager(ProjectId p1,
                                                       AxiomsByEntityReferenceIndex p2,
@@ -1461,8 +1530,9 @@ public class ProjectBeansConfiguration {
                                                 RevisionManager p2,
                                                 RenderingManager p3,
                                                 Comparator<OntologyChange> p4,
-                                                Provider<Revision2DiffElementsTranslator> p5) {
-        return new ProjectChangesManager(p1, p2, p3, p4, p5);
+                                                Provider<Revision2DiffElementsTranslator> p5,
+                                                EntitiesInProjectSignatureByIriIndex p6) {
+        return new ProjectChangesManager(p1, p2, p3, p4, p5, p6);
     }
 
     @Bean
@@ -1572,7 +1642,7 @@ public class ProjectBeansConfiguration {
                                                      HierarchyChangesComputerFactory p7) {
         return new HierarchyProviderManager(p6, p7);
     }
-    
+
     @Bean
     ClassHierarchyProviderFactory classHierarchyProviderFactory(ProjectId p1, ProjectOntologiesIndex p2, SubClassOfAxiomsBySubClassIndex p3, EquivalentClassesAxiomsIndex p4, ProjectSignatureByTypeIndex p5, EntitiesInProjectSignatureByIriIndex p6, ClassHierarchyChildrenAxiomsIndex p7) {
         return new ClassHierarchyProviderFactory(p1, p2, p3, p4, p5, p6, p7);
@@ -1617,6 +1687,13 @@ public class ProjectBeansConfiguration {
                                                                               SubDataPropertyAxiomsBySubPropertyIndex p8,
                                                                               SubAnnotationPropertyAxiomsBySubPropertyIndex p9) {
         return new MoveEntityChangeListGeneratorFactory(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    EditParentsChangeListGeneratorFactory editParentsChangeListGeneratorFactory(ProjectOntologiesIndex p1,
+                                                                                SubClassOfAxiomsBySubClassIndex p2,
+                                                                                OWLDataFactory p3) {
+        return new EditParentsChangeListGeneratorFactory(p1, p2, p3);
     }
 
     @Bean
@@ -1911,4 +1988,30 @@ public class ProjectBeansConfiguration {
                                                   MatcherFactory p9) {
         return new BindingValuesExtractor(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }
+
+    @Bean
+    LogicalDefinitionExtractor logicalDefinitionExtractor(@Nonnull ProjectId projectId,
+                                                          @Nonnull RenderingManager renderingManager,
+                                                          @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                          @Nonnull EquivalentClassesAxiomsIndex equivalentClassesAxiomsIndex
+    ) {
+        return new LogicalDefinitionExtractor(projectId, renderingManager, projectOntologiesIndex, equivalentClassesAxiomsIndex);
+    }
+
+    @Bean
+    NecessaryConditionsExtractor necessaryConditionsExtractor(@Nonnull ProjectId projectId,
+                                                              @Nonnull RenderingManager renderingManager,
+                                                              @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                              @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex
+    ) {
+        return new NecessaryConditionsExtractor(projectId, renderingManager, projectOntologiesIndex, subClassOfAxiomsIndex);
+    }
+
+
+    @Bean
+    UpdateLogicalDefinitionsChangeListGeneratorFactory updateLogicalDefinitionsChangeListGeneratorFactory(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
+                                                                                                          @Nonnull OWLDataFactory dataFactory) {
+        return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory);
+    }
+
 }

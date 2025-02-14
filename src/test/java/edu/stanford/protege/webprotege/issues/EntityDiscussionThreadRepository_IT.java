@@ -2,9 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
-import edu.stanford.protege.webprotege.MockingUtils;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
@@ -38,7 +36,7 @@ import static org.hamcrest.core.IsNot.not;
  * a running version of MongoDB.
  */
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
-@ExtendWith({MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 class EntityDiscussionThreadRepository_IT {
@@ -117,6 +115,7 @@ class EntityDiscussionThreadRepository_IT {
                                       Optional.empty(),
                                       "The body", "The rendered body");
         repository.addCommentToThread(thread.getId(),
+                                      projectId,
                                       theComment);
         Optional<EntityDiscussionThread> foundThread = repository.getThread(thread.getId());
         assertThat(foundThread.get().getComments(), hasItem(theComment));
@@ -124,7 +123,7 @@ class EntityDiscussionThreadRepository_IT {
 
     @Test
     public void shouldCloseThread() {
-        repository.setThreadStatus(thread.getId(), Status.CLOSED);
+        repository.setThreadStatus(thread.getId(),projectId, Status.CLOSED);
         Optional<EntityDiscussionThread> readThread = repository.getThread(thread.getId());
         assertThat(readThread.get().getStatus(), is(Status.CLOSED));
     }
@@ -147,7 +146,7 @@ class EntityDiscussionThreadRepository_IT {
 
     @Test
     public void shouldDeleteCommentById() {
-        repository.deleteComment(comment.getId());
+        repository.deleteComment(projectId, comment.getId());
         Optional<EntityDiscussionThread> updatedThread = repository.getThread(thread.getId());
         assertThat(updatedThread.isPresent(), is(true));
         assertThat(updatedThread.get().getComments(), not(hasItem(comment)));

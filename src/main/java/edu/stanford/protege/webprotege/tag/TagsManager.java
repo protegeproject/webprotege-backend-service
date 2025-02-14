@@ -79,7 +79,10 @@ public class TagsManager {
         try {
             readLock.lock();
             Map<TagId, Tag> tagsById = getProjectTagsByTagId();
-            Optional<EntityTags> entityTags = entityTagsRepository.findByEntity(entity, projectId);
+            Optional<EntityTags> entityTags = entityTagsRepository.findByProjectId(projectId)
+                    .get().stream()
+                    .filter(entityTags1 -> entityTags1.getEntity().equals(entity))
+                    .findFirst();
             Stream<TagId> explicitTags = entityTags.map(tags -> tags.getTags().stream())
                                                    .orElse(Stream.empty());
 

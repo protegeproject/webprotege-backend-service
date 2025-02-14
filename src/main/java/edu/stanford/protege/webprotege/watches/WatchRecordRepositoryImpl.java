@@ -70,6 +70,13 @@ public class WatchRecordRepositoryImpl implements WatchRecordRepository {
         return getWatchRecords(query);
     }
 
+    @Override
+    public List<WatchRecord> findWatchRecords(ProjectId projectId) {
+        var query = new Document()
+                .append(PROJECT_ID, projectId.id());
+        return getWatchRecords(query);
+    }
+
     /**
      * Finds {@link WatchRecord}s for the specified entities.
      *

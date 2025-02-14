@@ -5,13 +5,11 @@ import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityShortFormsParser;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
+import edu.stanford.protege.webprotege.icd.IcdConstants;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import org.semanticweb.owlapi.model.EntityType;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.Namespaces;
 
 import javax.annotation.Nonnull;
@@ -128,6 +126,35 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
                 var ontologyId = defaultOntologyIdManager.getDefaultOntologyId();
                 builder.add(AddAxiomChange.of(ontologyId, axiom));
             }
+
+            /*
+            ToDo:
+                see if we can make this prettier
+             */
+            if(entityType.equals(CLASS)){
+                IRI propertyIRILabel = IRI.create(IcdConstants.LABEL_PROP);
+                IRI propertyIRITitle = IRI.create(IcdConstants.TITLE_PROP);
+                IRI iriLangTerm = IRI.create(IcdConstants.LANGUAGE_TERM_CLS);
+                var ontologyId = defaultOntologyIdManager.getDefaultOntologyId();
+                OWLClass langTermClass = dataFactory.getOWLClass(iriLangTerm);
+
+                OWLAnnotationProperty labelProperty = dataFactory.getOWLAnnotationProperty(propertyIRILabel);
+                OWLAnnotationProperty titleProperty = dataFactory.getOWLAnnotationProperty(propertyIRITitle);
+
+                OWLLiteral literal = dataFactory.getOWLLiteral(sourceText, langTag);
+                OWLNamedIndividual titleIndividual = dataFactory.getOWLNamedIndividual(IRI.create(IcdConstants.NS, "TitleTerm_"+UUID.randomUUID()));
+
+                OWLAnnotationAssertionAxiom titleAxiom = dataFactory.getOWLAnnotationAssertionAxiom(titleProperty, freshEntity.getIRI(), titleIndividual.getIRI());
+                OWLAnnotationAssertionAxiom newLabelAxiom = dataFactory.getOWLAnnotationAssertionAxiom(labelProperty, titleIndividual.getIRI(), literal);
+
+                OWLClassAssertionAxiom langTermAxiom = dataFactory.getOWLClassAssertionAxiom(langTermClass, titleIndividual);
+
+                builder.add(AddAxiomChange.of(ontologyId,langTermAxiom));
+                builder.add(AddAxiomChange.of(ontologyId,titleAxiom));
+                builder.add(AddAxiomChange.of(ontologyId,newLabelAxiom));
+            }
+
+
             freshEntities.add(freshEntity);
         }
         return builder.build(freshEntities);

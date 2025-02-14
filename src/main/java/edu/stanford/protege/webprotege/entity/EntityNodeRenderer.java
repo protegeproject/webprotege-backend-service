@@ -42,13 +42,18 @@ public class EntityNodeRenderer {
     @Nonnull
     private final LanguageManager languageManager;
 
+    @Nonnull
+    private final EntityStatusManager entityStatusManager;
+
     @Inject
     public EntityNodeRenderer(@Nonnull ProjectId projectId,
                               @Nonnull DictionaryManager dictionaryManager,
                               @Nonnull DeprecatedEntityChecker deprecatedEntityChecker,
                               @Nonnull WatchManager watchManager,
                               @Nonnull EntityDiscussionThreadRepository discussionThreadRepository,
-                              @Nonnull TagsManager tagsManager, @Nonnull LanguageManager languageManager) {
+                              @Nonnull TagsManager tagsManager,
+                              @Nonnull LanguageManager languageManager,
+                              @Nonnull EntityStatusManager entityStatusManager) {
         this.projectId = checkNotNull(projectId);
         this.dictionaryManager = checkNotNull(dictionaryManager);
         this.deprecatedEntityChecker = checkNotNull(deprecatedEntityChecker);
@@ -56,6 +61,7 @@ public class EntityNodeRenderer {
         this.discussionThreadRepository = checkNotNull(discussionThreadRepository);
         this.tagsManager = checkNotNull(tagsManager);
         this.languageManager = checkNotNull(languageManager);
+        this.entityStatusManager = entityStatusManager;
     }
 
     /**
@@ -73,6 +79,6 @@ public class EntityNodeRenderer {
                 watchManager.getDirectWatches(entity),
                 discussionThreadRepository.getOpenCommentsCount(projectId, entity),
                 tagsManager.getTags(entity),
-                Set.of());
+                entityStatusManager.getEntityStatuses(projectId, entity));
     }
 }

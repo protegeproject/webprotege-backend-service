@@ -3,31 +3,24 @@ package edu.stanford.protege.webprotege.revision;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.*;
 import edu.stanford.protege.webprotege.axiom.AxiomIRISubjectProvider;
-import edu.stanford.protege.webprotege.change.OntologyChange;
-import edu.stanford.protege.webprotege.change.ProjectChange;
-import edu.stanford.protege.webprotege.diff.DiffElement;
-import edu.stanford.protege.webprotege.diff.DiffElementRenderer;
-import edu.stanford.protege.webprotege.diff.Revision2DiffElementsTranslator;
+import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.*;
+import edu.stanford.protege.webprotege.diff.*;
+import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.common.Page;
-import edu.stanford.protege.webprotege.common.PageRequest;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
+import org.semanticweb.owlapi.model.*;
+import org.slf4j.*;
 
 import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.*;
 
 /**
  * Matthew Horridge
@@ -53,17 +46,21 @@ public class ProjectChangesManager {
 
     private final Table<RevisionNumber, Optional<IRI>, ImmutableList<OntologyChange>> cache = HashBasedTable.create();
 
+    private final EntitiesInProjectSignatureByIriIndex entitiesInProjectSignature;
+
     @Inject
     public ProjectChangesManager(ProjectId projectId,
                                  @Nonnull RevisionManager revisionManager,
                                  @Nonnull RenderingManager browserTextProvider,
                                  @Nonnull Comparator<OntologyChange> changeRecordComparator,
-                                 @Nonnull Provider<Revision2DiffElementsTranslator> revision2DiffElementsTranslatorProvider) {
+                                 @Nonnull Provider<Revision2DiffElementsTranslator> revision2DiffElementsTranslatorProvider,
+                                 @Nonnull EntitiesInProjectSignatureByIriIndex entitiesInProjectSignature) {
         this.projectId = projectId;
         this.revisionManager = revisionManager;
         this.browserTextProvider = browserTextProvider;
         this.changeRecordComparator = changeRecordComparator;
         this.revision2DiffElementsTranslatorProvider = revision2DiffElementsTranslatorProvider;
+        this.entitiesInProjectSignature = entitiesInProjectSignature;
     }
 
     private static Multimap<Optional<IRI>, OntologyChange> getChangesBySubject(Revision revision) {
@@ -76,8 +73,7 @@ public class ProjectChangesManager {
         if (change.isAxiomChange()) {
             var axiom = change.getAxiomOrThrow();
             return getSubject(axiom);
-        }
-        else {
+        } else {
             return Optional.empty();
         }
     }
@@ -90,31 +86,22 @@ public class ProjectChangesManager {
     public Page<ProjectChange> getProjectChanges(Optional<OWLEntity> subject,
                                                  PageRequest pageRequest) {
         ImmutableList<Revision> revisions = revisionManager.getRevisions();
-        if (subject.isPresent()) {
-            // We need to scan revisions to find the ones containing a particular subject
-            // We ignore the page request here.
-            // This needs reworking really, but the number of changes per entity is usually small
-            // so this works for now.
-            ImmutableList.Builder<ProjectChange> changes = ImmutableList.builder();
-            for (Revision revision : revisions) {
-                getProjectChangesForRevision(revision, subject, changes);
-            }
-            ImmutableList<ProjectChange> theChanges = changes.build();
-            return Page.create(1, 1, theChanges, theChanges.size());
+
+        // Pages are in reverse order
+        ImmutableList.Builder<ProjectChange> changes = ImmutableList.builder();
+        revisions.reverse().stream()
+                .skip(pageRequest.getSkip())
+                .limit(pageRequest.getPageSize())
+                .forEach(revision -> getProjectChangesForRevision(revision, subject, changes));
+        ImmutableList<ProjectChange> changeList = changes.build();
+        if (changeList.isEmpty()) {
+            return Page.emptyPage();
         }
-        else {
-            // Pages are in reverse order
-            ImmutableList.Builder<ProjectChange> changes = ImmutableList.builder();
-            revisions.reverse().stream()
-                    .skip(pageRequest.getSkip())
-                    .limit(pageRequest.getPageSize())
-                    .forEach(revision -> getProjectChangesForRevision(revision, subject, changes));
-            ImmutableList<ProjectChange> changeList = changes.build();
-            int pageCount = (revisions.size() / pageRequest.getPageSize()) + 1;
-            return Page.create(pageRequest.getPageNumber(),
-                              pageCount,
-                              changeList, changeList.size());
-        }
+
+        int pageCount = (revisions.size() / pageRequest.getPageSize()) + 1;
+        return Page.create(pageRequest.getPageNumber(),
+                pageCount,
+                changeList, changeList.size());
     }
 
     public ImmutableList<ProjectChange> getProjectChangesForSubjectInRevision(OWLEntity subject, Revision revision) {
@@ -126,15 +113,7 @@ public class ProjectChangesManager {
     private void getProjectChangesForRevision(Revision revision,
                                               Optional<OWLEntity> subject,
                                               ImmutableList.Builder<ProjectChange> changesBuilder) {
-        if(!cache.containsRow(revision.getRevisionNumber())) {
-            logger.debug("{} Building cache for revision {}", projectId, revision.getRevisionNumber().getValue());
-            var stopwatch = Stopwatch.createStarted();
-            var changeRecordsBySubject = getChangesBySubject(revision);
-            changeRecordsBySubject.asMap().forEach((subj, records) -> {
-                cache.put(revision.getRevisionNumber(), subj, ImmutableList.copyOf(records));
-            });
-            logger.debug("{} Cached revision {} in {} ms", projectId, revision.getRevisionNumber().getValue(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
-        }
+        addRevisionToCache(revision);
         List<OntologyChange> limitedRecords = new ArrayList<>();
         final int totalChanges;
         if (subject.isPresent()) {
@@ -145,8 +124,7 @@ public class ProjectChangesManager {
             }
             totalChanges = records.size();
             limitedRecords.addAll(records);
-        }
-        else {
+        } else {
             totalChanges = revision.getSize();
             revision.getChanges().stream()
                     .limit(DEFAULT_CHANGE_LIMIT)
@@ -162,8 +140,7 @@ public class ProjectChangesManager {
         int pageCount;
         if (pageElements == 0) {
             pageCount = 1;
-        }
-        else {
+        } else {
             pageCount = totalChanges / pageElements + (totalChanges % pageElements);
         }
         Page<DiffElement<String, String>> page = Page.create(
@@ -182,6 +159,82 @@ public class ProjectChangesManager {
         changesBuilder.add(projectChange);
     }
 
+    public Set<ProjectChangeForEntity> getProjectChangesForEntitiesFromRevision(Revision revision) {
+        addRevisionToCache(revision);
+
+        Map<Optional<IRI>, ImmutableList<OntologyChange>> entries = getEntriesForRevision(revision.getRevisionNumber());
+
+        return entries.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isPresent())
+                .flatMap(
+                        (iriWithOntologyChanges) -> {
+                            List<OntologyChange> ontologyChanges = iriWithOntologyChanges.getValue();
+                            IRI subjectIri = iriWithOntologyChanges.getKey().get();
+                            ProjectChange newProjectChange = getProjectChangeForRecords(revision, ontologyChanges, ontologyChanges.size());
+                            var changeType = getChangeTypeForRecordWithSubject(subjectIri, ontologyChanges);
+
+                            ProjectChangeForEntity projectChangeForEntity = ProjectChangeForEntity.create(subjectIri.toString(), changeType, newProjectChange);
+                            return Stream.of(projectChangeForEntity);
+                        }
+                ).collect(Collectors.toCollection(TreeSet::new));
+    }
+
+    private ChangeType getChangeTypeForRecordWithSubject(IRI subjectIri, List<OntologyChange> ontologyChanges) {
+        if (ontologyChanges.stream().anyMatch(change -> change.isAxiomChange() && change.isChangeFor(AxiomType.DECLARATION))) {
+            return ChangeType.CREATE_ENTITY;
+        }
+        if (entitiesInProjectSignature.getEntitiesInSignature(subjectIri).findAny().isEmpty()) {
+            return ChangeType.DELETE_ENTITY;
+        }
+        return ChangeType.UPDATE_ENTITY;
+    }
+
+    private void addRevisionToCache(Revision revision) {
+        if (!cache.containsRow(revision.getRevisionNumber())) {
+            logger.debug("{} Building cache for revision {}", projectId, revision.getRevisionNumber().getValue());
+            var stopwatch = Stopwatch.createStarted();
+            var changeRecordsBySubject = getChangesBySubject(revision);
+            changeRecordsBySubject.asMap()
+                    .forEach(
+                            (subj, records) -> cache.put(revision.getRevisionNumber(), subj, ImmutableList.copyOf(records))
+                    );
+            logger.debug("{} Cached revision {} in {} ms", projectId, revision.getRevisionNumber().getValue(), stopwatch.elapsed(TimeUnit.MILLISECONDS));
+        }
+    }
+
+    private ProjectChange getProjectChangeForRecords(Revision revision, List<OntologyChange> limitedRecords, int totalChanges) {
+        Revision2DiffElementsTranslator translator = revision2DiffElementsTranslatorProvider.get();
+        List<DiffElement<String, OntologyChange>> axiomDiffElements = translator.getDiffElementsFromRevision(limitedRecords);
+        sortDiff(axiomDiffElements);
+        List<DiffElement<String, String>> renderedDiffElements = renderDiffElements(axiomDiffElements);
+        int pageElements = renderedDiffElements.size();
+        int pageCount;
+        if (pageElements == 0) {
+            pageCount = 1;
+        } else {
+            pageCount = totalChanges / pageElements + (totalChanges % pageElements);
+        }
+        Page<DiffElement<String, String>> page = Page.create(
+                1,
+                pageCount,
+                renderedDiffElements,
+                totalChanges
+        );
+
+        return ProjectChange.get(
+                revision.getRevisionNumber(),
+                revision.getUserId(),
+                revision.getTimestamp(),
+                revision.getHighLevelDescription(),
+                totalChanges,
+                page);
+    }
+
+    public Map<Optional<IRI>, ImmutableList<OntologyChange>> getEntriesForRevision(RevisionNumber revisionNumber) {
+        return cache.row(revisionNumber);
+    }
+
     private List<DiffElement<String, String>> renderDiffElements(List<DiffElement<String, OntologyChange>> axiomDiffElements) {
 
         List<DiffElement<String, String>> diffElements = new ArrayList<>();
@@ -197,7 +250,7 @@ public class ProjectChangesManager {
         Comparator<DiffElement<String, OntologyChange>> c =
                 Comparator
                         .comparing((Function<DiffElement<String, OntologyChange>, OntologyChange>)
-                                           DiffElement::getLineElement, changeRecordComparator)
+                                DiffElement::getLineElement, changeRecordComparator)
                         .thenComparing(DiffElement::getDiffOperation)
                         .thenComparing(DiffElement::getSourceDocument);
         diffElements.sort(c);
