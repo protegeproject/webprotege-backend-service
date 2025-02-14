@@ -1,10 +1,8 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.entity.EntityNode;
-import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
-import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.*;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -43,5 +41,10 @@ public class ProjectOrderedChildrenManager {
             entitiesWithPreviousParents.forEach((childUri, parents) -> parents.forEach(parent -> projectOrderedChildrenService.removeChildFromParent(projectId, parent, childUri)));
             entitiesToBeMoved.forEach(entity -> projectOrderedChildrenService.addChildToParent(projectId, newParentIri, entity.toStringID()));
         });
+    }
+
+    public void changeEntityParents(IRI entity, Set<IRI> removedParents, Set<IRI> newParents) {
+        removedParents.forEach(removedParent -> projectOrderedChildrenService.removeChildFromParent(projectId, removedParent.toString(), entity.toString()));
+        newParents.forEach(newParent -> projectOrderedChildrenService.addChildToParent(projectId, newParent.toString(), entity.toString()));
     }
 }

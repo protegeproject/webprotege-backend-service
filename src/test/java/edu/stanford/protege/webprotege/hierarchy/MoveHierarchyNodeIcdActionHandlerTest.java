@@ -143,6 +143,13 @@ class MoveHierarchyNodeIcdActionHandlerTest {
                 toNodeParentPath,
                 DropType.MOVE);
 
+        var previousParent = mock(EntityNode.class);
+        var previousParentEntity = mock(OWLEntity.class);
+        var previousParentIri = IRI.create("http://example.org/previousParent");
+        when(fromNodePath.getLastPredecessor()).thenReturn(java.util.Optional.of(previousParent));
+        when(previousParent.getEntity()).thenReturn(previousParentEntity);
+        when(previousParentEntity.getIRI()).thenReturn(previousParentIri);
+
         var entityNode = mock(EntityNode.class);
         var entity = mock(OWLEntity.class);
         var sourceIri = IRI.create("http://example.org/destination");

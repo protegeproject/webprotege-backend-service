@@ -10,6 +10,7 @@ import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyCycleDetector;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
@@ -87,6 +88,9 @@ class ChangeEntityParentsActionHandlerTest {
 
     private ExecutionContext executionContext;
 
+    @Mock
+    private ProjectOrderedChildrenManager projectOrderedChildrenManager;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -115,8 +119,8 @@ class ChangeEntityParentsActionHandlerTest {
                 releasedClassesChecker,
                 retiredClassDetector,
                 linearizationManager,
-                linearizationParentChecker
-        );
+                linearizationParentChecker,
+                projectOrderedChildrenManager);
     }
 
     private OWLClass mockOwlEntityAsClass(OWLEntity entity, String iri) {
@@ -174,6 +178,7 @@ class ChangeEntityParentsActionHandlerTest {
         ChangeEntityParentsAction action = new ChangeEntityParentsAction(null, projectId, parents, entityClass, "Test Commit Message");
 
         ChangeApplicationResult<Boolean> mockChangeResult = mock(ChangeApplicationResult.class);
+        when(mockChangeResult.getSubject()).thenReturn(true);
 
         when(changeManager.applyChanges(any(), any())).thenAnswer(invocation -> mockChangeResult);
         when(mockChangeResult.getChangeList()).thenReturn(new ArrayList<>());
