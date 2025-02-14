@@ -1,16 +1,13 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.UpdateOneModel;
-import com.mongodb.client.model.UpdateOptions;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.common.UserId;
+import com.mongodb.client.model.*;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -18,13 +15,13 @@ import java.util.stream.Collectors;
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
-@Service
 public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildrenService {
 
     private final ObjectMapper objectMapper;
     private final ProjectOrderedChildrenRepository repository;
     private final ReadWriteLockService readWriteLock;
 
+    @Inject
     public ProjectOrderedChildrenServiceImpl(ObjectMapper objectMapper,
                                              ProjectOrderedChildrenRepository repository,
                                              ReadWriteLockService readWriteLock) {
