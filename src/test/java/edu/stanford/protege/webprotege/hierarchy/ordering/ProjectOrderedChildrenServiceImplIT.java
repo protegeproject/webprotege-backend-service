@@ -75,7 +75,7 @@ public class ProjectOrderedChildrenServiceImplIT {
 
         ProjectOrderedChildren projectOrderedChildren = service.createProjectOrderedChildren(orderedChildren, projectId, null);
 
-        service.importMultipleProjectOrderedChildren(Set.of(projectOrderedChildren));
+        service.importMultipleProjectOrderedChildren(Set.of(projectOrderedChildren),false);
 
         List<ProjectOrderedChildren> storedEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
         assertFalse(storedEntries.isEmpty(), "ProjectOrderedChildren should be saved in MongoDB");
