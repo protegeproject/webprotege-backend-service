@@ -84,6 +84,9 @@ public class IcatxSuffixEntityCrudKitHandlerTestCase {
         when(entityIriPrefixResolver.getIriPrefix(eq(prefixSettings), eq(EntityType.CLASS), any()))
                 .thenReturn(DEFAULT_PREFIX);
         when(entityShortForm.getShortForm()).thenReturn("A");
+        GetUniqueIdRequest request = new GetUniqueIdRequest(MATCHES_RULE_PREFIX);
+        when(uniqueIdExecutor.execute(any(), any())).thenReturn(CompletableFuture.supplyAsync(() -> new GetUniqueIdResponse(MATCHES_RULE_PREFIX + "22323")));
+
         OWLClass cls = handler.create(session, EntityType.CLASS, entityShortForm, Optional.of("en"), ImmutableList.of(),
                 crudContext,
                 builder);
