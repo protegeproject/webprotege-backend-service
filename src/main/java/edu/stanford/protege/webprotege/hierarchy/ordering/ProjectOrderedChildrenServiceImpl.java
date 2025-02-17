@@ -31,51 +31,69 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     }
 
     @Override
-    public Consumer<List<OrderedChildren>> createBatchProcessorForImportingPaginatedOrderedChildren(ProjectId projectId) {
+    public Consumer<List<OrderedChildren>> createBatchProcessorForImportingPaginatedOrderedChildren(ProjectId projectId, boolean overrideExisting) {
         return page -> {
             if (isNotEmpty(page)) {
                 var siblingsOrderingsToBeSaved = page.stream()
                         .map(orderedChildren -> createProjectOrderedChildren(orderedChildren, projectId, null))
                         .collect(Collectors.toSet());
 
-                importMultipleProjectOrderedChildren(siblingsOrderingsToBeSaved);
+                importMultipleProjectOrderedChildren(siblingsOrderingsToBeSaved, overrideExisting);
 
             }
         };
     }
 
     @Override
-    public void importMultipleProjectOrderedChildren(Set<ProjectOrderedChildren> projectOrderedChildrenToBeSaved) {
+    public void importMultipleProjectOrderedChildren(Set<ProjectOrderedChildren> projectOrderedChildrenToBeSaved, boolean overrideExisting) {
         if (projectOrderedChildrenToBeSaved.isEmpty()) {
             return;
         }
 
         readWriteLock.executeWriteLock(() -> {
-            Set<String> existingEntries = repository.findExistingEntries(new ArrayList<>(projectOrderedChildrenToBeSaved));
+            List<UpdateOneModel<Document>> operations;
+            if (overrideExisting) {
+                operations = projectOrderedChildrenToBeSaved.stream()
+                        .map(orderedChildren -> {
+                            Document doc = objectMapper.convertValue(orderedChildren, Document.class);
+                            return new UpdateOneModel<Document>(
+                                    Filters.and(
+                                            Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
+                                            Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
+                                    ),
+                                    new Document("$set", doc),
+                                    new UpdateOptions().upsert(true)
+                            );
+                        })
+                        .toList();
 
-            List<UpdateOneModel<Document>> operations = projectOrderedChildrenToBeSaved.stream()
-                    .filter(orderedChildren -> {
-                        String fullKey = orderedChildren.entityUri() + "|" + orderedChildren.projectId().id();
-                        return !existingEntries.contains(fullKey);
-                    })
-                    .map(orderedChildren -> {
-                        Document doc = objectMapper.convertValue(orderedChildren, Document.class);
-                        return new UpdateOneModel<Document>(
-                                Filters.and(
-                                        Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
-                                        Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
-                                ),
-                                new Document("$setOnInsert", doc),
-                                new UpdateOptions().upsert(true)
-                        );
-                    })
-                    .toList();
+            } else {
+                Set<String> existingEntries = repository.findExistingEntries(new ArrayList<>(projectOrderedChildrenToBeSaved));
 
+                operations = projectOrderedChildrenToBeSaved.stream()
+                        .filter(orderedChildren -> {
+                            String fullKey = orderedChildren.entityUri() + "|" + orderedChildren.projectId().id();
+                            return !existingEntries.contains(fullKey);
+                        })
+                        .map(orderedChildren -> {
+                            Document doc = objectMapper.convertValue(orderedChildren, Document.class);
+                            return new UpdateOneModel<Document>(
+                                    Filters.and(
+                                            Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
+                                            Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
+                                    ),
+                                    new Document("$setOnInsert", doc),
+                                    new UpdateOptions().upsert(true)
+                            );
+                        })
+                        .toList();
+            }
             if (!operations.isEmpty()) {
                 repository.bulkWriteDocuments(operations);
             }
         });
     }
+
 
     @Override
     public ProjectOrderedChildren createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
