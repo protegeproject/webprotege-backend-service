@@ -38,7 +38,7 @@ public class CreateProjectSagaManager {
     private final RevisionHistoryReplacer revisionHistoryReplacer;
 
     private final ProjectPermissionsInitializer projectPermissionsInitializer;
-
+    private final EventDispatcher eventDispatcher;
 
     public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager, CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
@@ -46,7 +46,7 @@ public class CreateProjectSagaManager {
                                     CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> createProjectSmallFilesExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
-                                    ProjectPermissionsInitializer projectPermissionsInitializer) {
+                                    ProjectPermissionsInitializer projectPermissionsInitializer, EventDispatcher eventDispatcher) {
         this.projectDetailsManager = projectDetailsManager;
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
@@ -55,6 +55,7 @@ public class CreateProjectSagaManager {
         this.revisionHistoryReplacer = revisionHistoryReplacer;
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
+        this.eventDispatcher = eventDispatcher;
     }
 
 
@@ -94,6 +95,7 @@ public class CreateProjectSagaManager {
                 .thenCompose(this::retrieveProjectDetails)
                 .handle((r, e) -> {
                     if (e == null) {
+                        eventDispatcher.dispatchEvent(new NewProjectEvent(r.projectId, EventId.generate()));
                         return new CreateNewProjectResult(r.getProjectDetails());
                     } else {
                         logger.error("Error creating project", e);
@@ -123,6 +125,7 @@ public class CreateProjectSagaManager {
                 .thenCompose(this::retrieveProjectDetails)
                 .handle((r, e) -> {
                     if (e == null) {
+                        eventDispatcher.dispatchEvent(new NewProjectEvent(r.projectId, EventId.generate()));
                         return new CreateNewProjectFromProjectBackupResult(r.getProjectDetails());
                     } else {
                         // Should be a CompletionException

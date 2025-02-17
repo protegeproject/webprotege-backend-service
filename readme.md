@@ -1,7 +1,7 @@
 WebProtégé
 ==========
 
-What is WebProtégé?
+What is WebProtégé? 
 -------------------
 
 WebProtégé is a free, open source collaborative ontology development environment.
