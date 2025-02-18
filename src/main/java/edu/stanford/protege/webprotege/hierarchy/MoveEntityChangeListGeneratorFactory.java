@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -51,8 +52,14 @@ public class MoveEntityChangeListGeneratorFactory {
         this.p10 = p10;
     }
 
-    public MoveEntityChangeListGenerator create(MoveHierarchyNodeAction action) {
-        return new MoveEntityChangeListGenerator(action,
+    public MoveEntityChangeListGenerator create(Path<EntityNode> fromNodePath,
+                                                Path<EntityNode> toNodeParentPath,
+                                                DropType dropType,
+                                                ChangeRequestId changeRequestId) {
+        return new MoveEntityChangeListGenerator(fromNodePath,
+                                                 toNodeParentPath,
+                                                 dropType,
+                                                 changeRequestId,
                                                  p2,
                                                  p3,
                                                  p4,

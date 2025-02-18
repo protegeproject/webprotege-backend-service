@@ -1,0 +1,73 @@
+{
+	"orderedChildren": [
+		{
+			"orderedChildren": [],
+			"entityURI": "http://id.who.int/icd/entity/1439203351"
+		},
+		{
+			"orderedChildren": [
+				{
+					"orderedChild": "http://id.who.int/icd/entity/584727666",
+					"orderedChildIndex": "1000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1200746980",
+					"orderedChildIndex": "500000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1450667151",
+					"orderedChildIndex": "3000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/859611419",
+					"orderedChildIndex": "4000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1087517327",
+					"orderedChildIndex": "5000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/630849307",
+					"orderedChildIndex": "6000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1362407398",
+					"orderedChildIndex": "7000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/880763504",
+					"orderedChildIndex": "8000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1226209074",
+					"orderedChildIndex": "9000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1989598922",
+					"orderedChildIndex": "10000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1215364226",
+					"orderedChildIndex": "11000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1904958001",
+					"orderedChildIndex": "12000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/1631699847",
+					"orderedChildIndex": "13000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/513742856",
+					"orderedChildIndex": "14000000"
+				},
+				{
+					"orderedChild": "http://id.who.int/icd/entity/744340136",
+					"orderedChildIndex": "15000000"
+				}
+			],
+			"entityURI": "http://id.who.int/icd/entity/360081115"
+		}
+	]
+}
