@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -54,17 +55,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
             List<UpdateOneModel<Document>> operations;
             if (overrideExisting) {
                 operations = projectOrderedChildrenToBeSaved.stream()
-                        .map(orderedChildren -> {
-                            Document doc = objectMapper.convertValue(orderedChildren, Document.class);
-                            return new UpdateOneModel<Document>(
-                                    Filters.and(
-                                            Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
-                                            Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
-                                    ),
-                                    new Document("$set", doc),
-                                    new UpdateOptions().upsert(true)
-                            );
-                        })
+                        .map(orderedChildren -> mapToUpdateOneModelWithInsertType(orderedChildren, "$set"))
                         .toList();
 
             } else {
@@ -75,23 +66,26 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                             String fullKey = orderedChildren.entityUri() + "|" + orderedChildren.projectId().id();
                             return !existingEntries.contains(fullKey);
                         })
-                        .map(orderedChildren -> {
-                            Document doc = objectMapper.convertValue(orderedChildren, Document.class);
-                            return new UpdateOneModel<Document>(
-                                    Filters.and(
-                                            Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
-                                            Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
-                                    ),
-                                    new Document("$setOnInsert", doc),
-                                    new UpdateOptions().upsert(true)
-                            );
-                        })
+                        .map(orderedChildren -> mapToUpdateOneModelWithInsertType(orderedChildren, "$setOnInsert"))
                         .toList();
             }
             if (!operations.isEmpty()) {
                 repository.bulkWriteDocuments(operations);
             }
         });
+    }
+
+    @NotNull
+    private UpdateOneModel<Document> mapToUpdateOneModelWithInsertType(ProjectOrderedChildren orderedChildren, String insertType) {
+        Document doc = objectMapper.convertValue(orderedChildren, Document.class);
+        return new UpdateOneModel<>(
+                Filters.and(
+                        Filters.eq(ENTITY_URI, orderedChildren.entityUri()),
+                        Filters.eq(PROJECT_ID, orderedChildren.projectId().id())
+                ),
+                new Document(insertType, doc),
+                new UpdateOptions().upsert(true)
+        );
     }
 
 
