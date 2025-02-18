@@ -1,22 +1,20 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
-import com.mongodb.client.model.BulkWriteOptions;
-import com.mongodb.client.model.UpdateOneModel;
+import com.mongodb.client.model.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering.*;
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
 
-@Repository
+@ProjectSingleton
 public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChildrenRepository {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ProjectOrderedChildrenRepositoryImpl.class);
@@ -32,13 +30,13 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
     @Override
     public void bulkWriteDocuments(List<UpdateOneModel<Document>> listOfUpdateOneModelDocument) {
         readWriteLock.executeWriteLock(() -> {
-            var collection = mongoTemplate.getCollection(EntityChildrenOrdering.ORDERED_CHILDREN_COLLECTION);
+            var collection = mongoTemplate.getCollection(ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
             collection.bulkWrite(listOfUpdateOneModelDocument, new BulkWriteOptions().ordered(false));
         });
     }
 
     @Override
-    public Set<String> findExistingEntries(List<EntityChildrenOrdering> childrenToCheck) {
+    public Set<String> findExistingEntries(List<ProjectOrderedChildren> childrenToCheck) {
         Query query = new Query();
 
         List<Criteria> criteriaList = childrenToCheck.stream()
@@ -53,7 +51,7 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
         query.fields().include(ENTITY_URI, PROJECT_ID);
 
         List<Document> results = readWriteLock.executeReadLock(
-                () -> mongoTemplate.find(query, Document.class, EntityChildrenOrdering.ORDERED_CHILDREN_COLLECTION)
+                () -> mongoTemplate.find(query, Document.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION)
         );
 
 
@@ -64,20 +62,25 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
 
 
     @Override
-    public Optional<EntityChildrenOrdering> findOrderedChildren(ProjectId projectId, String entityUri) {
+    public Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, String entityUri) {
         Query query = new Query();
         query.addCriteria(Criteria.where(PROJECT_ID).is(projectId.id()).and(ENTITY_URI).is(entityUri));
 
-        return readWriteLock.executeReadLock(() -> Optional.ofNullable(mongoTemplate.findOne(query, EntityChildrenOrdering.class)));
+        return readWriteLock.executeReadLock(() -> Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class)));
     }
 
     @Override
-    public void save(EntityChildrenOrdering projectOrderedChildren) {
+    public void save(ProjectOrderedChildren projectOrderedChildren) {
         readWriteLock.executeWriteLock(() -> mongoTemplate.save(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
     }
 
     @Override
-    public void update(EntityChildrenOrdering updatedEntry) {
+    public void insert(ProjectOrderedChildren projectOrderedChildren) {
+        readWriteLock.executeWriteLock(() -> mongoTemplate.insert(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
+    }
+
+    @Override
+    public void update(ProjectOrderedChildren updatedEntry) {
         Query query = new Query();
         query.addCriteria(Criteria.where(PROJECT_ID).is(updatedEntry.projectId().id())
                 .and(ENTITY_URI).is(updatedEntry.entityUri()));
@@ -91,13 +94,13 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
 
 
     @Override
-    public void delete(EntityChildrenOrdering projectOrderedChildren) {
+    public void delete(ProjectOrderedChildren projectOrderedChildren) {
         readWriteLock.executeWriteLock(() -> {
             Query query = new Query();
             query.addCriteria(Criteria.where(PROJECT_ID).is(projectOrderedChildren.projectId().id())
                     .and(ENTITY_URI).is(projectOrderedChildren.entityUri()));
 
-            mongoTemplate.remove(query, EntityChildrenOrdering.class, ORDERED_CHILDREN_COLLECTION);
+            mongoTemplate.remove(query, ProjectOrderedChildren.class, ORDERED_CHILDREN_COLLECTION);
         });
     }
 

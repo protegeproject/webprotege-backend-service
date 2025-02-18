@@ -20,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
-@Import({WebprotegeBackendMonolithApplication.class})
+@Import({WebprotegeBackendMonolithApplication.class, RabbitTestExtension.class})
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class ProjectAccessManagerImpl_IT {

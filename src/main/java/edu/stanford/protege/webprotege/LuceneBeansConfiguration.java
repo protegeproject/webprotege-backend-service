@@ -104,7 +104,7 @@ public class LuceneBeansConfiguration {
                                     LuceneDictionaryLanguageValuesMatcher p4,
                                     QueryAnalyzerFactory p5,
                                     MatcherFactory p6) {
-        return new LuceneIndexImpl(p1, inMemorySearchManager, p3, p4, p5,p6);
+        return new LuceneIndexImpl(p1, inMemorySearchManager, p3, p4, p5, p6);
     }
 
     @Bean

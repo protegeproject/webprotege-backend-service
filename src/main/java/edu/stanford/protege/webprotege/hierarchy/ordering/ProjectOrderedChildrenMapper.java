@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 
 public class ProjectOrderedChildrenMapper {
 
-    public static EntityChildrenOrdering mapToProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
+    public static ProjectOrderedChildren mapToProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
         List<String> sortedChildren = orderedChildren.orderedChildren().stream()
                 .sorted(Comparator.comparingInt(c -> Integer.parseInt(c.orderedChildIndex())))
                 .map(OrderedChild::orderedChild)
                 .collect(Collectors.toList());
 
-        return new EntityChildrenOrdering(
+        return new ProjectOrderedChildren(
                 orderedChildren.entityUri(),
                 projectId,
                 sortedChildren,

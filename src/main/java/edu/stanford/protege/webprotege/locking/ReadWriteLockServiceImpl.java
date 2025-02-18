@@ -1,12 +1,12 @@
 package edu.stanford.protege.webprotege.locking;
 
 import edu.stanford.protege.webprotege.ReadWriteLockConfig;
-import org.springframework.stereotype.Service;
+import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReadWriteLock;
 
-@Service
+@ApplicationSingleton
 public class ReadWriteLockServiceImpl implements ReadWriteLockService{
 
     private final ReadWriteLockConfig config;

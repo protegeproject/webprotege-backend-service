@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
@@ -46,6 +47,9 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
     @Nonnull
     private final LinearizationParentChecker linParentChecker;
 
+    @Nonnull
+    private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
+
 
     @Inject
     public MoveHierarchyNodeIcdActionHandler(@Nonnull AccessManager accessManager,
@@ -54,7 +58,8 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
                                              @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
                                              @Nonnull ChangeManager changeManager,
                                              @Nonnull LinearizationManager linearizationManager,
-                                             @Nonnull LinearizationParentChecker linParentChecker) {
+                                             @Nonnull LinearizationParentChecker linParentChecker,
+                                             @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager) {
         super(accessManager);
         this.factory = checkNotNull(factory);
         this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
@@ -62,6 +67,7 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
         this.changeManager = checkNotNull(changeManager);
         this.linearizationManager = linearizationManager;
         this.linParentChecker = linParentChecker;
+        this.projectOrderedChildrenManager = projectOrderedChildrenManager;
     }
 
     @Nonnull
@@ -131,6 +137,11 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
                         destinationNode.get().getBrowserText(),
                         e);
             }
+            projectOrderedChildrenManager.moveHierarchyNode(
+                    action.fromNodePath().getLastPredecessor().get().getEntity(),
+                    action.toNodeParentPath().getLast().get().getEntity(),
+                    action.fromNodePath().getLast().get().getEntity()
+            );
         }
 
         return new MoveHierarchyNodeIcdResult(changeResult.getSubject(), false, false);

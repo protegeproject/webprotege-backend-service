@@ -10,9 +10,8 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
@@ -28,6 +27,8 @@ import static java.util.stream.Collectors.toSet;
  */
 @ProjectSingleton
 public class WatchManagerImpl implements WatchManager {
+
+    private static final Logger logger = LoggerFactory.getLogger(WatchManagerImpl.class);
 
     private final ProjectId projectId;
 

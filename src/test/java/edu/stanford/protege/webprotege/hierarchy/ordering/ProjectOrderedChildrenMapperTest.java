@@ -23,7 +23,7 @@ class ProjectOrderedChildrenMapperTest {
         ProjectId projectId = new ProjectId("test-project-id");
         UserId userId = new UserId("test-user-id");
 
-        EntityChildrenOrdering result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+        ProjectOrderedChildren result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
 
         assertEquals("parent-entity-uri", result.entityUri());
         assertEquals("test-project-id", result.projectId().id());
@@ -40,7 +40,7 @@ class ProjectOrderedChildrenMapperTest {
         OrderedChildren orderedChildren = new OrderedChildren(List.of(child), "parent-entity-uri");
         ProjectId projectId = new ProjectId("test-project-id");
 
-        EntityChildrenOrdering result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, null);
+        ProjectOrderedChildren result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, null);
 
         assertEquals("parent-entity-uri", result.entityUri());
         assertEquals("test-project-id", result.projectId().id());
@@ -55,7 +55,7 @@ class ProjectOrderedChildrenMapperTest {
         ProjectId projectId = new ProjectId("test-project-id");
         UserId userId = new UserId("test-user-id");
 
-        EntityChildrenOrdering result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
+        ProjectOrderedChildren result = ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
 
         assertEquals("parent-entity-uri", result.entityUri());
         assertEquals("test-project-id", result.projectId().id());

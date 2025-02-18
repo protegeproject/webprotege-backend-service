@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
@@ -25,10 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -65,6 +63,9 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
     @Nonnull
     private final ClassHierarchyProvider classHierarchyProvider;
 
+    @Nonnull
+    private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
+
 
     @Inject
     public MoveToParentIcdActionHandler(@Nonnull AccessManager accessManager,
@@ -75,7 +76,8 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
                                         @Nonnull LinearizationManager linearizationManager,
                                         @Nonnull LinearizationParentChecker linParentChecker,
                                         @Nonnull RenderingManager renderingManager,
-                                        @Nonnull ClassHierarchyProvider classHierarchyProvider) {
+                                        @Nonnull ClassHierarchyProvider classHierarchyProvider,
+                                        @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager) {
         super(accessManager);
         this.factory = factory;
         this.releasedClassesChecker = releasedClassesChecker;
@@ -85,6 +87,7 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
         this.linParentChecker = linParentChecker;
         this.renderingManager = renderingManager;
         this.classHierarchyProvider = classHierarchyProvider;
+        this.projectOrderedChildrenManager = projectOrderedChildrenManager;
     }
 
     @Nonnull
@@ -138,6 +141,17 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
             return getResultWithParentAsLinearizationPathParent(entitiesWithParentLinPathParent);
         }
 
+        Map<String, List<String>> entitiesWithPreviousParents = action.entities()
+                .stream()
+                .collect(Collectors.toMap(
+                                (OWLEntity::toStringID),
+                                (entity -> classHierarchyProvider.getParents(entity)
+                                        .stream()
+                                        .map(OWLEntity::toStringID)
+                                        .toList())
+                        )
+                );
+
         ImmutableSet<OWLClass> clses = action.entities().stream().collect(toImmutableSet());
         var changeListGenerator = factory.create(action.changeRequestId(), clses, action.parentEntity().asOWLClass(), action.commitMessage());
         ChangeApplicationResult<Boolean> result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
@@ -152,6 +166,7 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
                             logger.error("MergeLinearizationsError: " + e);
                         }
                     });
+            projectOrderedChildrenManager.moveEntitiesToParent(action.parentEntity(),action.entities(), entitiesWithPreviousParents);
         }
 
         return new MoveEntitiesToParentIcdResult(isDestinationRetiredClass, ImmutableMap.of());

@@ -3,7 +3,9 @@ package edu.stanford.protege.webprotege.forms.field;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.common.LanguageMap;
-import edu.stanford.protege.webprotege.forms.*;
+import edu.stanford.protege.webprotege.forms.ExpansionState;
+import edu.stanford.protege.webprotege.forms.FormDescriptor;
+import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,9 +28,8 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-09
  */
-@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
-@Import(WebProtegeJacksonApplication.class)
-@ExtendWith(MongoTestExtension.class)
+@JsonTest
+@Import({WebProtegeJacksonApplication.class,})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class SubFormControlDescriptor_IT {
 
