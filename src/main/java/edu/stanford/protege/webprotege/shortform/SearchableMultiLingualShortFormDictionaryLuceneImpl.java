@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.EntityShortFormMatches;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageRequest;
+import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.EntityType;
@@ -13,7 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import javax.annotation.Nullable;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -43,11 +45,12 @@ public class SearchableMultiLingualShortFormDictionaryLuceneImpl implements Sear
                                                                 @Nonnull Set<EntityType<?>> entityTypes,
                                                                 @Nonnull List<DictionaryLanguage> languages,
                                                                 @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
-                                                                @Nonnull PageRequest pageRequest) {
+                                                                @Nonnull PageRequest pageRequest,
+                                                                @Nonnull EntityMatchCriteria resultsSetFilter) {
         try {
             var stopwatch = Stopwatch.createStarted();
             // TODO: Rewrite entity types
-            var entities = luceneIndex.search(searchStrings, languages, searchFilters, entityTypes, pageRequest);
+            var entities = luceneIndex.search(searchStrings, languages, searchFilters, entityTypes, pageRequest, resultsSetFilter);
             var elapsedTimeMs = stopwatch.elapsed().toMillis();
             if(entities.isPresent()) {
                 var resultsPage = entities.get();

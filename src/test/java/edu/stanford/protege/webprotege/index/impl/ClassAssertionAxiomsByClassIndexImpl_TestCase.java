@@ -2,11 +2,15 @@ package edu.stanford.protege.webprotege.index.impl;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -23,7 +27,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-19
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ClassAssertionAxiomsByClassIndexImpl_TestCase {
 
     private ClassAssertionAxiomsByClassIndexImpl impl;
@@ -37,7 +42,7 @@ public class ClassAssertionAxiomsByClassIndexImpl_TestCase {
     @Mock
     private OWLClassAssertionAxiom axiom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(axiom.getClassExpression())
                 .thenReturn(cls);
@@ -64,15 +69,19 @@ public class ClassAssertionAxiomsByClassIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeForNullOntologyId() {
+    @Test
+public void shouldThrowNpeForNullOntologyId() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getClassAssertionAxioms(cls, null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeForNullClass() {
+    @Test
+public void shouldThrowNpeForNullClass() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getClassAssertionAxioms(null, ontologyID);
-    }
+     });
+}
 
 }

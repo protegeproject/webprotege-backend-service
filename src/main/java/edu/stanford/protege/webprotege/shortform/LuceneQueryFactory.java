@@ -6,7 +6,7 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.search.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.ArrayList;

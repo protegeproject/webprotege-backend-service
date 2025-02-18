@@ -6,7 +6,7 @@ import org.apache.lucene.document.StringField;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames.BUILT_IN_FALSE;
 import static edu.stanford.protege.webprotege.shortform.EntityDocumentFieldNames.BUILT_IN_TRUE;

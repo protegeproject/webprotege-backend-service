@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.match;
 
 import edu.stanford.protege.webprotege.criteria.NumericPredicate;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class NumericValueMatcher_TestCase {
 
-    @Before
+    @BeforeEach
     public void setUp() {
     }
 

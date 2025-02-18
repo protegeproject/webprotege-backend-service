@@ -13,7 +13,7 @@ import edu.stanford.protege.webprotege.match.MatchingEngine;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.springframework.context.annotation.Bean;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 
 /**
  * Matthew Horridge

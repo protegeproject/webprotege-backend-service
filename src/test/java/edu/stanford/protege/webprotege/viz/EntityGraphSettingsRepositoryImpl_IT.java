@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.*;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-06
  */
-@SpringBootTest
+@SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class EntityGraphSettingsRepositoryImpl_IT {

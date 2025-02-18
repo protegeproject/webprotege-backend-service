@@ -1,17 +1,18 @@
 package edu.stanford.protege.webprotege.place;
 
-import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.DataFactory;
-import edu.stanford.protege.webprotege.app.ApplicationScheme;
-import edu.stanford.protege.webprotege.perspective.EntityTypePerspectiveMapper;
+import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.perspective.EntityTypePerspectiveMapper;
 import edu.stanford.protege.webprotege.perspective.PerspectiveId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -29,7 +30,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 10 Mar 2017
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class PlaceUrl_TestCase {
 
     public static final String THE_APPLICATION_HOST = "the.application.host";
@@ -68,9 +70,9 @@ public class PlaceUrl_TestCase {
     @Mock
     private ApplicationSchemeSupplier schemeProvider;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
-        when(typeMapper.getPerspectiveId(Matchers.any())).thenReturn(PerspectiveId.get("12345678-1234-1234-1234-123456789abc"));
+        when(typeMapper.getPerspectiveId(ArgumentMatchers.any())).thenReturn(PerspectiveId.get("12345678-1234-1234-1234-123456789abc"));
         when(typeMapper.getDefaultPerspectiveId()).thenReturn(PerspectiveId.get("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"));
 
         when(hostProvider.get()).thenReturn(THE_APPLICATION_HOST);

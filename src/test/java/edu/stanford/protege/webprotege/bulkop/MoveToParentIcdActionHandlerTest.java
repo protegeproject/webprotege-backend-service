@@ -2,37 +2,26 @@ package edu.stanford.protege.webprotege.bulkop;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.OntologyChange;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
-import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
-import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
+import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import edu.stanford.protege.webprotege.linearization.LinearizationManager;
-import edu.stanford.protege.webprotege.linearization.MergeWithParentEntitiesResponse;
+import edu.stanford.protege.webprotege.linearization.*;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.*;
+import org.mockito.junit.jupiter.*;
 import org.mockito.quality.Strictness;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,6 +69,9 @@ class MoveToParentIcdActionHandlerTest {
     @Mock
     private RenameMap renameMap;
 
+    @Mock
+    private ProjectOrderedChildrenManager projectOrderedChildrenManager;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -93,7 +85,7 @@ class MoveToParentIcdActionHandlerTest {
                 linearizationManager,
                 linParentChecker,
                 renderingManager,
-                classHierarchyProvider);
+                classHierarchyProvider, projectOrderedChildrenManager);
 
         when(changeApplicationResult.getRenameMap()).thenReturn(renameMap);
         when(changeApplicationResult.getChangeList()).thenReturn(ontologyChangeList);

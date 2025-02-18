@@ -1,15 +1,15 @@
 package edu.stanford.protege.webprotege.issues.events;
 
 import edu.stanford.protege.webprotege.DataFactory;
-import edu.stanford.protege.webprotege.issues.mention.*;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.issues.mention.*;
 import org.hamcrest.Description;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.Is;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.EntityType;
 
 import java.util.List;
@@ -18,10 +18,6 @@ import static edu.stanford.protege.webprotege.issues.events.MentionParser_TestCa
 import static edu.stanford.protege.webprotege.issues.events.MentionParser_TestCase.ParsedIssueMentionMatcher.mentionedIssue;
 import static edu.stanford.protege.webprotege.issues.events.MentionParser_TestCase.ParsedRevisionMentionMatcher.mentionedRevision;
 import static edu.stanford.protege.webprotege.issues.events.MentionParser_TestCase.ParsedUserIdMentionMatcher.mentionedUserId;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.core.Is.is;
 
 /**
  * Matthew Horridge
@@ -32,7 +28,7 @@ public class MentionParser_TestCase {
 
     private MentionParser parser;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         parser = new MentionParser();
     }

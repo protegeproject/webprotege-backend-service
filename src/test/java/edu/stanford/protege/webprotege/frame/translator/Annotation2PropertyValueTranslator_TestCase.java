@@ -4,11 +4,13 @@ import edu.stanford.protege.webprotege.frame.PlainPropertyAnnotationValue;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
 import edu.stanford.protege.webprotege.frame.State;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -24,7 +26,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-14
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class Annotation2PropertyValueTranslator_TestCase {
 
     private Annotation2PropertyValueTranslator translator;
@@ -38,7 +41,7 @@ public class Annotation2PropertyValueTranslator_TestCase {
     @Mock
     private IRI iri;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         translator = new Annotation2PropertyValueTranslator();
     }

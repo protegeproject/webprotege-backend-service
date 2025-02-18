@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.mansyntax.render;
 import com.google.common.base.MoreObjects;
 import org.semanticweb.owlapi.model.OWLEntity;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 /**
  * Matthew Horridge

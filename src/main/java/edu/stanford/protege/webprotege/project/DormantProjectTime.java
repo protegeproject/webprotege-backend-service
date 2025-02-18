@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
-import javax.inject.Qualifier;
+import jakarta.inject.Qualifier;
 
 /**
  * Matthew Horridge

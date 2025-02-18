@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.mansyntax.render;
 
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 25/02/2014

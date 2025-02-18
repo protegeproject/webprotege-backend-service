@@ -4,16 +4,20 @@ package edu.stanford.protege.webprotege.user;
 import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(org.mockito.runners.MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GetUserIdCompletionsResult_TestCase {
 
     private GetUserIdCompletionsResult result;
@@ -22,7 +26,7 @@ public class GetUserIdCompletionsResult_TestCase {
 
     private List<UserId> possibleItemCompletions;
 
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception
     {
@@ -30,10 +34,12 @@ public class GetUserIdCompletionsResult_TestCase {
         result = GetUserIdCompletionsResult.create(possibleItemCompletions);
     }
 
-    @Test(expected = java.lang.NullPointerException.class)
     public void shouldThrowNullPointerExceptionIf_possibleItemCompletions_IsNull() {
-        GetUserIdCompletionsResult.create(null);
+        assertThrows(NullPointerException.class, () -> {
+            GetUserIdCompletionsResult.create(null);
+        });
     }
+
 
     @Test
     public void shouldBeEqualToSelf() {

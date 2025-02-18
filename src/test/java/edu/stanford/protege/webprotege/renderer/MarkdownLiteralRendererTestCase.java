@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.renderer;
 
 import edu.stanford.protege.webprotege.mansyntax.render.MarkdownLiteralRenderer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

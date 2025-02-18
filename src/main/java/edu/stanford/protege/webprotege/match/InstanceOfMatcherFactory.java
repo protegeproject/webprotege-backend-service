@@ -6,25 +6,25 @@ import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.ProjectSignatureByTypeIndex;
 import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.OWLClass;
 
 public final class InstanceOfMatcherFactory {
-  private final Provider<ClassHierarchyProvider> hierarchyProviderProvider;
+  private final ClassHierarchyProvider hierarchyProviderProvider;
 
-  private final Provider<ProjectOntologiesIndex> projectOntologiesIndexProvider;
+  private final ProjectOntologiesIndex projectOntologiesIndexProvider;
 
-  private final Provider<ClassAssertionAxiomsByClassIndex> classAssertionsByClassProvider;
+  private final ClassAssertionAxiomsByClassIndex classAssertionsByClassProvider;
 
-  private final Provider<ProjectSignatureByTypeIndex> projectSignatureByTypeProvider;
+  private final ProjectSignatureByTypeIndex projectSignatureByTypeProvider;
 
   @Inject
   public InstanceOfMatcherFactory(
-      Provider<ClassHierarchyProvider> hierarchyProviderProvider,
-      Provider<ProjectOntologiesIndex> projectOntologiesIndexProvider,
-      Provider<ClassAssertionAxiomsByClassIndex> classAssertionsByClassProvider,
-      Provider<ProjectSignatureByTypeIndex> projectSignatureByTypeProvider) {
+      ClassHierarchyProvider hierarchyProviderProvider,
+      ProjectOntologiesIndex projectOntologiesIndexProvider,
+      ClassAssertionAxiomsByClassIndex classAssertionsByClassProvider,
+      ProjectSignatureByTypeIndex projectSignatureByTypeProvider) {
     this.hierarchyProviderProvider = checkNotNull(hierarchyProviderProvider, 1);
     this.projectOntologiesIndexProvider = checkNotNull(projectOntologiesIndexProvider, 2);
     this.classAssertionsByClassProvider = checkNotNull(classAssertionsByClassProvider, 3);
@@ -33,10 +33,10 @@ public final class InstanceOfMatcherFactory {
 
   public InstanceOfMatcher create(OWLClass target, HierarchyFilterType filterType) {
     return new InstanceOfMatcher(
-        checkNotNull(hierarchyProviderProvider.get(), 1),
-        checkNotNull(projectOntologiesIndexProvider.get(), 2),
-        checkNotNull(classAssertionsByClassProvider.get(), 3),
-        checkNotNull(projectSignatureByTypeProvider.get(), 4),
+        checkNotNull(hierarchyProviderProvider, 1),
+        checkNotNull(projectOntologiesIndexProvider, 2),
+        checkNotNull(classAssertionsByClassProvider, 3),
+        checkNotNull(projectSignatureByTypeProvider, 4),
         checkNotNull(target, 5),
         checkNotNull(filterType, 6));
   }

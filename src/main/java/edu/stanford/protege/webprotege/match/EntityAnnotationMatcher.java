@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Stream;

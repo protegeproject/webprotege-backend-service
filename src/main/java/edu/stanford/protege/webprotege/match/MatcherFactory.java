@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 

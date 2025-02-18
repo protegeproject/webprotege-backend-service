@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.forms.data;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import java.util.Comparator;
 
 import static com.google.common.base.Preconditions.checkNotNull;

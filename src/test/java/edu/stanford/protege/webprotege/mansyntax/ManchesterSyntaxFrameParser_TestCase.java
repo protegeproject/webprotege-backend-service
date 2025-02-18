@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.mansyntax;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.expression.OWLOntologyChecker;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OntologyAxiomPair;
@@ -28,7 +30,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-22
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ManchesterSyntaxFrameParser_TestCase {
 
     private static final String CLASS_A_SUB_CLASS_OF_B = "Class: A  SubClassOf: B";
@@ -63,7 +66,7 @@ public class ManchesterSyntaxFrameParser_TestCase {
     @Mock
     private ProjectOntologiesIndex projectOntologiesIndex;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         dataFactory = new OWLDataFactoryImpl();
 

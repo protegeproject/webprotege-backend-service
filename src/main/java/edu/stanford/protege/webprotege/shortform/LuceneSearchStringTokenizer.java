@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.shortform;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.HashSet;

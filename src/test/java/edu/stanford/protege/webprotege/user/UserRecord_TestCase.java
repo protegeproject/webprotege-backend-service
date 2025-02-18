@@ -3,18 +3,20 @@ package edu.stanford.protege.webprotege.user;
 
 import edu.stanford.protege.webprotege.common.UserId;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class UserRecord_TestCase {
 
     private UserRecord userRecord;
@@ -27,45 +29,53 @@ public class UserRecord_TestCase {
 
     private String avatarUrl = "The avatarUrl";
 
-    @Before
+    @BeforeEach
     public void setUp() {
         userRecord = new UserRecord(userId, realName, emailAddress, avatarUrl);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
+    assertThrows(NullPointerException.class, () -> {
         new UserRecord(null, realName, emailAddress, avatarUrl);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_userId() {
         assertThat(userRecord.getUserId(), is(this.userId));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_realName_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_realName_IsNull() {
+    assertThrows(NullPointerException.class, () -> {
         new UserRecord(userId, null, emailAddress, avatarUrl);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_realName() {
         assertThat(userRecord.getRealName(), is(this.realName));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_emailAddress_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_emailAddress_IsNull() {
+    assertThrows(NullPointerException.class, () -> {
         new UserRecord(userId, realName, null, avatarUrl);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_emailAddress() {
         assertThat(userRecord.getEmailAddress(), is(this.emailAddress));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_avatarUrl_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_avatarUrl_IsNull() {
+    assertThrows(NullPointerException.class, () -> {
         new UserRecord(userId, realName, emailAddress, null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_avatarUrl() {

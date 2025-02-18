@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.concurrent.TimeUnit;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;

@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_OBJECT_COMMENT;

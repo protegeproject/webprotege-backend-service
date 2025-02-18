@@ -4,11 +4,12 @@ package edu.stanford.protege.webprotege.access;
 import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.authorization.RoleId;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.List;
 
@@ -16,9 +17,10 @@ import static java.util.Collections.singletonList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class Role_TestCase {
 
     private Role role;
@@ -31,7 +33,7 @@ public class Role_TestCase {
 
     private List<ActionId> actions;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         parents = singletonList(parentRoleId);
         actions = singletonList(actionId);
@@ -39,10 +41,12 @@ public class Role_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_roleId_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_roleId_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new Role(null, parents, actions);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_roleId() {
@@ -50,10 +54,12 @@ public class Role_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_parents_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_parents_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new Role(roleId, null, actions);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_parents() {
@@ -61,10 +67,12 @@ public class Role_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_actions_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_actions_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new Role(roleId, parents, null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_actions() {

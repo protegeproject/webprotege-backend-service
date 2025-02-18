@@ -5,7 +5,7 @@ import edu.stanford.protege.webprotege.change.matcher.ChangeSummary;
 import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

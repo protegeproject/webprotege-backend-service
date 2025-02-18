@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.change.description.AddedSameAs;
 import edu.stanford.protege.webprotege.change.description.RemovedSameAs;
 import org.semanticweb.owlapi.model.OWLSameIndividualAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 

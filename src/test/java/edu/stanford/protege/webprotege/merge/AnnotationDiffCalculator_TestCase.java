@@ -2,15 +2,18 @@ package edu.stanford.protege.webprotege.merge;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.project.Ontology;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 /**
@@ -18,7 +21,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-20
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AnnotationDiffCalculator_TestCase {
 
 
@@ -33,7 +37,7 @@ public class AnnotationDiffCalculator_TestCase {
     @Mock
     private OWLAnnotation annotationA, annotationB, annotationC;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         calculator = new AnnotationDiffCalculator();
         when(fromOnt.getAnnotations())
@@ -57,14 +61,18 @@ public class AnnotationDiffCalculator_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfFromOntologyIsNull() {
+    @Test
+public void shouldThrowNpeIfFromOntologyIsNull() {
+    assertThrows(NullPointerException.class, () -> {
         calculator.computeDiff(null, toOnt);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfToOntologyIsNull() {
+    @Test
+public void shouldThrowNpeIfToOntologyIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         calculator.computeDiff(fromOnt, null);
-    }
+     });
+}
 }

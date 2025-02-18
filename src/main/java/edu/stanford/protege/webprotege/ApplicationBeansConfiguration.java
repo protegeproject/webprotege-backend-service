@@ -18,9 +18,8 @@ import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManagerImpl;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyRepository;
+import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
@@ -30,6 +29,7 @@ import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessagingExceptionHandlerImpl;
 import edu.stanford.protege.webprotege.mail.SendMailImpl;
@@ -69,14 +69,16 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.scheduling.annotation.EnableAsync;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.locks.*;
 
 /**
  * Matthew Horridge
@@ -126,11 +128,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     public TempFileFactoryImpl provideTempFileFactory() {
         return new TempFileFactoryImpl();
-    }
-
-    @Bean
-    public DefaultMustacheFactory providesMustacheFactory() {
-        return new DefaultMustacheFactory();
     }
 
     @Bean
@@ -604,6 +601,30 @@ public class ApplicationBeansConfiguration {
     @Bean
     NamedHierarchyManager hierarchiesManager(OWLDataFactory dataFactory, NamedHierarchyRepository repository) {
         return new NamedHierarchyManagerImpl(dataFactory, repository);
+    }
+
+    @Bean
+    public ReadWriteLock readWriteLock() {
+        return new ReentrantReadWriteLock(true);
+    }
+
+    @Bean
+    ReadWriteLockService readWriteLockService(@Nonnull ReadWriteLockConfig config,
+                                              @Nonnull ReadWriteLock readWriteLock) {
+        return new ReadWriteLockServiceImpl(config, readWriteLock);
+    }
+
+    @Bean
+    ProjectOrderedChildrenRepositoryImpl projectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate,
+                                                                              ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate, readWriteLock);
+    }
+
+    @Bean
+    ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
+                                                                @Nonnull ProjectOrderedChildrenRepository repository,
+                                                                @Nonnull ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
     }
 
 }

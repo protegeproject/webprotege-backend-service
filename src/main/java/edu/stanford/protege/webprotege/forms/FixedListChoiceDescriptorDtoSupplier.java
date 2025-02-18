@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.forms.field.ChoiceDescriptorDto;
 import edu.stanford.protege.webprotege.forms.field.FixedChoiceListSourceDescriptor;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;

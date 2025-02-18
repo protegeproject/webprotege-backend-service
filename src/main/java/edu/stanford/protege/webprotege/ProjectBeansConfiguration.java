@@ -43,6 +43,7 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManager;
 import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManagerImpl;
@@ -63,6 +64,7 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.UpdateLogicalDefinitionsChangeListGeneratorFactory;
@@ -112,6 +114,7 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -119,8 +122,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import javax.annotation.Nonnull;
-import javax.inject.Provider;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.Provider;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -687,7 +690,7 @@ public class ProjectBeansConfiguration {
 
 
     @Bean
-    ClassHierarchyProviderImpl classHierarchyProvider(ProjectId p1,
+    ClassHierarchyProvider classHierarchyProvider(ProjectId p1,
                                                       @ClassHierarchyRoot Set<OWLClass> p2,
                                                       ProjectOntologiesIndex p3,
                                                       SubClassOfAxiomsBySubClassIndex p4,
@@ -1639,8 +1642,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3) {
-        return new EntitySearcherFactory(p1, p2, p3);
+    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3, MatcherFactory p4) {
+        return new EntitySearcherFactory(p1, p2, p3, p4);
     }
 
     @Bean
@@ -2029,6 +2032,13 @@ public class ProjectBeansConfiguration {
     UpdateLogicalDefinitionsChangeListGeneratorFactory updateLogicalDefinitionsChangeListGeneratorFactory(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                                                                                           @Nonnull OWLDataFactory dataFactory) {
         return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory);
+    }
+
+    @Bean
+    ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
+                                                                @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
+                                                                @Nonnull ReadWriteLockService readWriteLockService) {
+        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
     }
 
 }

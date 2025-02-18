@@ -35,7 +35,7 @@ import static org.hamcrest.core.IsNot.not;
  * An integration test for the repo that stores entity discussion thread.  This test requires
  * a running version of MongoDB.
  */
-@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class)
+@SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @SuppressWarnings("OptionalGetWithoutIsPresent")

@@ -2,35 +2,32 @@
 package edu.stanford.protege.webprotege.admin;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.app.ApplicationSettings;
-import edu.stanford.protege.webprotege.app.ApplicationSettingsManager;
-import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
-import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
-import edu.stanford.protege.webprotege.app.GetApplicationSettingsResult;
+import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_APPLICATION_SETTINGS;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GetApplicationPreferencesActionHandler_TestCase {
 
 
@@ -58,7 +55,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     public GetApplicationPreferencesActionHandler_TestCase() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(applicationSettingsManager.getApplicationSettings()).thenReturn(applicationSettings);
     }
@@ -80,7 +77,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
         assertThat(result.settings(), is(applicationSettings));
     }
 
-    @After
+    @AfterEach
     public void tearDown(){
         Mockito.reset(accessManager, applicationSettingsManager, applicationSettings);
     }

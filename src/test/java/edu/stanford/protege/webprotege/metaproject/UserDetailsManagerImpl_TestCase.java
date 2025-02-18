@@ -1,22 +1,27 @@
 
 package edu.stanford.protege.webprotege.metaproject;
 
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.user.*;
-import edu.stanford.protege.webprotege.common.UserId;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@RunWith(org.mockito.junit.MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class UserDetailsManagerImpl_TestCase {
 
     private UserDetailsManagerImpl userDetailsManagerImpl;
@@ -38,7 +43,7 @@ public class UserDetailsManagerImpl_TestCase {
 
     private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
-    @Before
+    @BeforeEach
     public void setUp()
     {
         userRecords.clear();
@@ -53,10 +58,12 @@ public class UserDetailsManagerImpl_TestCase {
         userDetailsManagerImpl = new UserDetailsManagerImpl(userRecordRepository, getUsersExecutor);
     }
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_Repository_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_Repository_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new UserDetailsManagerImpl(null, getUsersExecutor);
-    }
+     });
+}
 
     @Test
     public void should_getEmail() {

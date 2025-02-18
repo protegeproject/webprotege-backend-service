@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.dispatch.impl;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Set;
 
 /**

@@ -3,8 +3,8 @@ package edu.stanford.protege.webprotege.viz;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 
 @Generated(
   value = "com.google.auto.factory.processor.AutoFactoryProcessor",

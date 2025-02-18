@@ -17,7 +17,7 @@ import edu.stanford.protege.webprotege.project.ProjectDetailsRepository;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_OBJECT_COMMENT;

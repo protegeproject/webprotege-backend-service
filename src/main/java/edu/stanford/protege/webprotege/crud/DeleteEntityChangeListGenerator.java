@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.util.EntityDeleter;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collections;
 
 import static com.google.common.base.Preconditions.checkNotNull;

@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.shortform;
 
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.hasItems;
+import static org.junit.Assert.assertThat;
 
 public class IndexingAnalyzerWrapper_TestCase {
 
@@ -20,7 +20,7 @@ public class IndexingAnalyzerWrapper_TestCase {
 
     public static final String FIELD_NAME = "theField";
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         analyzer = new IndexingAnalyzerWrapper(MIN_GRAM_SIZE, MAX_GRAM_SIZE);
     }
