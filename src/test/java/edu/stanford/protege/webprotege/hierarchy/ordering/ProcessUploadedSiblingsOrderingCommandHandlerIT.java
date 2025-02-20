@@ -60,7 +60,7 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
     @BeforeEach
     void setUp() throws IOException {
-        mongoTemplate.dropCollection(EntityChildrenOrdering.class);
+        mongoTemplate.dropCollection(ProjectOrderedChildren.class);
 
         String jsonFilePath = "src/test/resources/orderedSiblingsTest.json";
         testJsonContent = new String(Files.readAllBytes(Paths.get(jsonFilePath)));
@@ -78,14 +78,14 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
         assertNotNull(response, "Response should not be null");
 
-        List<EntityChildrenOrdering> persistedParents = mongoTemplate.findAll(EntityChildrenOrdering.class);
+        List<ProjectOrderedChildren> persistedParents = mongoTemplate.findAll(ProjectOrderedChildren.class);
         assertFalse(persistedParents.isEmpty(), "Processed parents should be saved to MongoDB");
 
-        for (EntityChildrenOrdering parent : persistedParents) {
+        for (ProjectOrderedChildren parent : persistedParents) {
             assertNotNull(parent.children(), "Children list should not be null");
 
-            Query query = new Query(Criteria.where(EntityChildrenOrdering.ENTITY_URI).is(parent.entityUri()));
-            EntityChildrenOrdering storedParent = mongoTemplate.findOne(query, EntityChildrenOrdering.class);
+            Query query = new Query(Criteria.where(ProjectOrderedChildren.ENTITY_URI).is(parent.entityUri()));
+            ProjectOrderedChildren storedParent = mongoTemplate.findOne(query, ProjectOrderedChildren.class);
 
             assertNotNull(storedParent, "Parent entity should be present in MongoDB");
             assertEquals(parent.children().size(), storedParent.children().size(), "Child count should match stored data");
@@ -101,17 +101,17 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
         commandHandler.handleRequest(request, executionContext).block();
 
-        List<EntityChildrenOrdering> initialParents = mongoTemplate.findAll(EntityChildrenOrdering.class);
+        List<ProjectOrderedChildren> initialParents = mongoTemplate.findAll(ProjectOrderedChildren.class);
 
         commandHandler.handleRequest(request, executionContext).block();
 
-        List<EntityChildrenOrdering> finalParents = mongoTemplate.findAll(EntityChildrenOrdering.class);
+        List<ProjectOrderedChildren> finalParents = mongoTemplate.findAll(ProjectOrderedChildren.class);
 
         assertEquals(initialParents.size(), finalParents.size(), "Parent entity count should remain the same");
 
-        for (EntityChildrenOrdering parent : finalParents) {
-            Query query = new Query(Criteria.where(EntityChildrenOrdering.ENTITY_URI).is(parent.entityUri()));
-            EntityChildrenOrdering storedParent = mongoTemplate.findOne(query, EntityChildrenOrdering.class);
+        for (ProjectOrderedChildren parent : finalParents) {
+            Query query = new Query(Criteria.where(ProjectOrderedChildren.ENTITY_URI).is(parent.entityUri()));
+            ProjectOrderedChildren storedParent = mongoTemplate.findOne(query, ProjectOrderedChildren.class);
 
             assertNotNull(storedParent, "Parent entity should exist in MongoDB");
             assertEquals(parent.children().size(), storedParent.children().size(), "Child list should not have duplicates");

@@ -6,7 +6,6 @@ import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.EntityNode;
-import edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -88,9 +87,9 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
         OWLEntity parent = action.entity();
         GraphNode parentNode = nodeRenderer.toGraphNode(parent, hierarchyProvider.get());
 
-        Optional<EntityChildrenOrdering> orderedChildren = repository.findOrderedChildren(action.projectId(), parent.toStringID());
+        Optional<ProjectOrderedChildren> orderedChildren = repository.findOrderedChildren(action.projectId(), parent.toStringID());
 
-        List<String> orderedEntityUris = orderedChildren.map(EntityChildrenOrdering::children).orElse(Collections.emptyList());
+        List<String> orderedEntityUris = orderedChildren.map(ProjectOrderedChildren::children).orElse(Collections.emptyList());
 
         Page<GraphNode<EntityNode>> page = hierarchyProvider.get().getChildren(parent).stream()
                 // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty

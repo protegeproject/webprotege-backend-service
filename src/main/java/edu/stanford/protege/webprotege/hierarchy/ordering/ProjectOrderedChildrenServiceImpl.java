@@ -10,23 +10,15 @@ import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderi
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
-import org.semanticweb.owlapi.model.IRI;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.ENTITY_URI;
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.PROJECT_ID;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
-import static edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering.*;
-import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
-
-@Service
 public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildrenService {
 
     private final ObjectMapper objectMapper;

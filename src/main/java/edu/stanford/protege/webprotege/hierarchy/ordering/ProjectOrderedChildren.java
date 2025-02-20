@@ -10,18 +10,18 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 
-@Document(collection = EntityChildrenOrdering.ORDERED_CHILDREN_COLLECTION)
+@Document(collection = ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION)
 @CompoundIndex(name = "unique_parent_entity_project",
-        def = "{'"+ EntityChildrenOrdering.ENTITY_URI+ "': 1, " +
-        "'"+ EntityChildrenOrdering.PROJECT_ID+"': 1}",
+        def = "{'"+ ProjectOrderedChildren.ENTITY_URI+ "': 1, " +
+        "'"+ ProjectOrderedChildren.PROJECT_ID+"': 1}",
         unique = true)
-public record EntityChildrenOrdering(
+public record ProjectOrderedChildren(
         @Indexed(name = ENTITY_URI+"_idx") @JsonProperty(ENTITY_URI) String entityUri,
         @Indexed(name = PROJECT_ID+"_idx") @JsonProperty(PROJECT_ID) ProjectId projectId,
         @JsonProperty(CHILDREN) List<String> children,
         @Nullable @JsonProperty(USER_ID) String userId
 ) {
-    public static final String ORDERED_CHILDREN_COLLECTION = "EntityChildrenOrdering";
+    public static final String ORDERED_CHILDREN_COLLECTION = "ProjectOrderedChildren";
     public static final String PROJECT_ID = "projectId";
     public static final String ENTITY_URI = "entityUri";
     public static final String USER_ID = "userId";

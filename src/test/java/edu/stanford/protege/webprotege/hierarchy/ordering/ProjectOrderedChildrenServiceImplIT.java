@@ -25,7 +25,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
 
-import static edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering.ENTITY_URI;
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.ENTITY_URI;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -91,8 +91,8 @@ public class ProjectOrderedChildrenServiceImplIT {
 
     @Test
     public void GIVEN_newOrderOnChildren_WHEN_updateEntity_THEN_newOrderIsSaved(){
-        EntityChildrenOrdering initialEntry = new EntityChildrenOrdering(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
-        mongoTemplate.insert(initialEntry, EntityChildrenOrdering.ORDERED_CHILDREN_COLLECTION);
+        ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
+        mongoTemplate.insert(initialEntry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
 
         SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
                 IRI.create(initialEntry.entityUri()),
@@ -100,10 +100,10 @@ public class ProjectOrderedChildrenServiceImplIT {
 
         service.updateEntity(action, null);
 
-        List<EntityChildrenOrdering> storedEntries = mongoTemplate.findAll(EntityChildrenOrdering.class);
+        List<ProjectOrderedChildren> storedEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
         assertFalse(storedEntries.isEmpty(), "EntityChildrenOrdering should be saved in MongoDB");
 
-        EntityChildrenOrdering retrieved = storedEntries.get(0);
+        ProjectOrderedChildren retrieved = storedEntries.get(0);
         assertEquals(parentUri, retrieved.entityUri(), "Parent URI should match");
         assertEquals(3, retrieved.children().size(), "Should have two children stored");
         assertTrue(retrieved.children().contains(childUri1), "Should contain childUri1");
