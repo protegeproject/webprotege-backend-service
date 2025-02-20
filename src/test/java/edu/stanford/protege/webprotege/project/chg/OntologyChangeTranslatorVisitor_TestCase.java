@@ -1,24 +1,28 @@
 package edu.stanford.protege.webprotege.project.chg;
 
 import edu.stanford.protege.webprotege.change.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-29
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OntologyChangeTranslatorVisitor_TestCase {
 
     private OntologyChangeTranslatorVisitor visitor;
@@ -41,7 +45,7 @@ public class OntologyChangeTranslatorVisitor_TestCase {
     @Mock
     private OWLImportsDeclaration importsDeclaration;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(ontologyManager.getOntology(ontologyId))
                 .thenReturn(ontology);
@@ -58,11 +62,13 @@ public class OntologyChangeTranslatorVisitor_TestCase {
         assertThat(addAxiomOwlOntologyChange.getAxiom(), is(axiom));
     }
 
-    @Test(expected = UnknownOWLOntologyException.class)
-    public void shouldVisitAddAxiomChangeWithUnknownOntology() {
+    @Test
+public void shouldVisitAddAxiomChangeWithUnknownOntology() {
+    assertThrows(UnknownOWLOntologyException.class, () -> { 
         var addAxiomChange = AddAxiomChange.of(otherOntologyId, axiom);
         visitor.visit(addAxiomChange);
-    }
+     });
+}
 
     @Test
     public void shouldVisitRemoveAxiomChangeWithKnownOntology() {
@@ -73,11 +79,13 @@ public class OntologyChangeTranslatorVisitor_TestCase {
         assertThat(removeAxiomOwlOntologyChange.getAxiom(), is(axiom));
     }
 
-    @Test(expected = UnknownOWLOntologyException.class)
-    public void shouldVisitRemoveAxiomChangeWithUnknownOntology() {
+    @Test
+public void shouldVisitRemoveAxiomChangeWithUnknownOntology() {
+    assertThrows(UnknownOWLOntologyException.class, () -> { 
         var removeAxiomChange = RemoveAxiomChange.of(otherOntologyId, axiom);
         visitor.visit(removeAxiomChange);
-    }
+     });
+}
 
     @Test
     public void shouldVisitAddOntologyAnnotationChangeWithKnownOntology() {
@@ -88,11 +96,13 @@ public class OntologyChangeTranslatorVisitor_TestCase {
         assertThat(addOntologyAnnotationOwlOntologyChange.getAnnotation(), is(ontologyAnnotation));
     }
 
-    @Test(expected = UnknownOWLOntologyException.class)
-    public void shouldVisitAddOntologyAnnotationChangeWithUnknownOntology() {
+    @Test
+public void shouldVisitAddOntologyAnnotationChangeWithUnknownOntology() {
+    assertThrows(UnknownOWLOntologyException.class, () -> { 
         var addOntologyAnnotationChange = AddOntologyAnnotationChange.of(otherOntologyId, ontologyAnnotation);
         visitor.visit(addOntologyAnnotationChange);
-    }
+     });
+}
 
     @Test
     public void shouldVisitRemoveOntologyAnnotationChangeWithKnownOntology() {
@@ -105,11 +115,13 @@ public class OntologyChangeTranslatorVisitor_TestCase {
     
     
 
-    @Test(expected = UnknownOWLOntologyException.class)
-    public void shouldVisitRemoveOntologyAnnotationChangeWithUnknownOntology() {
+    @Test
+public void shouldVisitRemoveOntologyAnnotationChangeWithUnknownOntology() {
+    assertThrows(UnknownOWLOntologyException.class, () -> { 
         var removeOntologyAnnotationChange = RemoveOntologyAnnotationChange.of(otherOntologyId, ontologyAnnotation);
         visitor.visit(removeOntologyAnnotationChange);
-    }
+     });
+}
 
 
 
@@ -122,11 +134,13 @@ public class OntologyChangeTranslatorVisitor_TestCase {
         assertThat(addImportsOwlOntologyChange.getImportDeclaration(), is(importsDeclaration));
     }
 
-    @Test(expected = UnknownOWLOntologyException.class)
-    public void shouldVisitAddImportsChangeWithUnknownOntology() {
+    @Test
+public void shouldVisitAddImportsChangeWithUnknownOntology() {
+    assertThrows(UnknownOWLOntologyException.class, () -> { 
         var addImportsChange = AddImportChange.of(otherOntologyId, importsDeclaration);
         visitor.visit(addImportsChange);
-    }
+     });
+}
 
     @Test
     public void shouldVisitRemoveImportsChangeWithKnownOntology() {
@@ -137,16 +151,20 @@ public class OntologyChangeTranslatorVisitor_TestCase {
         assertThat(removeImportsOwlOntologyChange.getImportDeclaration(), is(importsDeclaration));
     }
 
-    @Test(expected = UnknownOWLOntologyException.class)
-    public void shouldVisitRemoveImportsChangeWithUnknownOntology() {
+    @Test
+public void shouldVisitRemoveImportsChangeWithUnknownOntology() {
+    assertThrows(UnknownOWLOntologyException.class, () -> { 
         var removeImportsChange = RemoveImportChange.of(otherOntologyId, importsDeclaration);
         visitor.visit(removeImportsChange);
-    }
+     });
+}
 
-    @Test(expected = RuntimeException.class)
-    public void shouldThrowRuntimeExceptionForDefaultValue() {
+    @Test
+public void shouldThrowRuntimeExceptionForDefaultValue() {
+    assertThrows(RuntimeException.class, () -> { 
         visitor.getDefaultReturnValue();
-    }
+     });
+}
 
     private <C extends OWLOntologyChange> C assertThatChangeIsOfClass(OWLOntologyChange owlOntologyChange, Class<C> cls) {
         assertThat(owlOntologyChange, is(instanceOf(cls)));

@@ -2,20 +2,24 @@ package edu.stanford.protege.webprotege.index.impl;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 
 import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AnnotationAssertionAxiomsByValueIndexImpl_TestCase {
 
     @Mock
@@ -35,7 +39,7 @@ public class AnnotationAssertionAxiomsByValueIndexImpl_TestCase {
 
     private AnnotationAssertionAxiomsByValueIndexImpl index;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         index = new AnnotationAssertionAxiomsByValueIndexImpl();
     }
@@ -63,14 +67,18 @@ public class AnnotationAssertionAxiomsByValueIndexImpl_TestCase {
     }
 
     /** @noinspection ConstantConditions*/
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfAxiomIsNull() {
+    @Test
+public void shouldThrowNpeIfAxiomIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         index.getAxiomsByValue(null, ontologyId);
-    }
+     });
+}
 
     /** @noinspection ConstantConditions*/
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         index.getAxiomsByValue(iriValue, null);
-    }
+     });
+}
 }

@@ -15,7 +15,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.entity.MergedEntityTreatment.DEPRECATE_MERGED_ENTITY;

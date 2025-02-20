@@ -11,7 +11,7 @@ import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -183,8 +183,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
 
     public synchronized void handleChanges(@Nonnull List<OntologyChange> changes) {
         Set<OWLClass> oldTerminalElements = new HashSet<>(rootFinder.getTerminalElements());
-        Set<OWLClass> changedClasses = new HashSet<>();
-        changedClasses.addAll(roots);
+        Set<OWLClass> changedClasses = new HashSet<>(roots);
         var filteredChanges = filterIrrelevantChanges(changes);
         updateImplicitRoots(filteredChanges);
         for (OntologyChange change : filteredChanges) {

@@ -3,11 +3,13 @@ package edu.stanford.protege.webprotege.merge;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 /**
@@ -23,7 +26,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-21
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OntologyDiff2Changes_TestCase {
 
     @Mock
@@ -55,7 +59,7 @@ public class OntologyDiff2Changes_TestCase {
 
     private OntologyDiff2OntologyChanges diff2Changes;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(ontologyDiff.getAxiomDiff())
                 .thenReturn(axiomDiff);
@@ -103,8 +107,10 @@ public class OntologyDiff2Changes_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfOntologyDiffIsNull() {
+    @Test
+public void shouldThrowNpeIfOntologyDiffIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         diff2Changes.getOntologyChangesFromDiff(null);
-    }
+     });
+}
 }

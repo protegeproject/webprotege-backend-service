@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.renderer;
 
 import edu.stanford.protege.webprotege.mansyntax.render.ImageLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.LinkInfo;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,7 +18,7 @@ public class ImageLinkRendererTestCase {
 
     private ImageLinkRenderer renderer;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         renderer = new ImageLinkRenderer();
     }

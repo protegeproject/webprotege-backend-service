@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -74,6 +75,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     private final LinearizationParentChecker linParentChecker;
 
+    @Nonnull
+    private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
+
 
     @Inject
     public ChangeEntityParentsActionHandler(@Nonnull AccessManager accessManager,
@@ -88,7 +92,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull ReleasedClassesChecker releasedClassesChecker,
                                             @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
                                             @Nonnull LinearizationManager linearizationManager,
-                                            @Nonnull LinearizationParentChecker linParentChecker) {
+                                            @Nonnull LinearizationParentChecker linParentChecker,
+                                            @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.changeManager = checkNotNull(changeManager);
@@ -102,6 +107,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
         this.linearizationManager = checkNotNull(linearizationManager);
         this.linParentChecker = linParentChecker;
+        this.projectOrderedChildrenManager = projectOrderedChildrenManager;
     }
 
     @Nonnull
@@ -150,7 +156,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
         var classesWithCycles = classCycleDetector.getClassesWithCycle(result.getChangeList());
 
-        if (classesWithCycles.isEmpty()) {
+        if (result.getSubject() &&
+                classesWithCycles.isEmpty()) {
             var parentIris = action.parents()
                     .stream()
                     .map(OWLNamedObject::getIRI)
@@ -160,6 +167,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
             } catch (InterruptedException | ExecutionException e) {
                 logger.error("MergeLinearizationsError: " + e);
             }
+            projectOrderedChildrenManager.changeEntityParents(action.entity().getIRI(),removedParents,newParents);
             return validEmptyResult();
         }
 

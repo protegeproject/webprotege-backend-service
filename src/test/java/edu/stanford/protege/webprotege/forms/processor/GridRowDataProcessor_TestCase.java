@@ -7,19 +7,23 @@ import edu.stanford.protege.webprotege.forms.GridColumnBindingMissingException;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.forms.data.GridCellData;
 import edu.stanford.protege.webprotege.forms.data.GridRowData;
-import edu.stanford.protege.webprotege.forms.field.*;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import edu.stanford.protege.webprotege.forms.field.FormRegionId;
+import edu.stanford.protege.webprotege.forms.field.GridColumnDescriptor;
+import edu.stanford.protege.webprotege.forms.field.OwlBinding;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.Optional;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -27,7 +31,8 @@ import static org.mockito.Mockito.*;
  * Stanford Center for Biomedical Informatics Research
  * 2020-04-26
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GridRowDataProcessor_TestCase {
 
     private GridRowDataProcessor processor;
@@ -56,7 +61,7 @@ public class GridRowDataProcessor_TestCase {
     @Mock
     private OwlBinding columnBinding;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         processor = new GridRowDataProcessor(() -> rowformFrameBuilder,
                                              gridCellDataProcessor);
@@ -117,8 +122,9 @@ public class GridRowDataProcessor_TestCase {
                 .processGridCellData(rowformFrameBuilder, columnBinding, gridCellData);
     }
 
-    @Test(expected = GridColumnBindingMissingException.class)
-    public void shouldThrowMissingBindingException() {
+    @Test
+public void shouldThrowMissingBindingException() {
+    assertThrows(GridColumnBindingMissingException.class, () -> { 
         when(columnDescriptor.getOwlBinding())
                 .thenReturn(Optional.empty());
         processor.processGridRowData(binding,
@@ -126,5 +132,6 @@ public class GridRowDataProcessor_TestCase {
                                      ImmutableList.of(columnDescriptor),
                                      formFrameBuilder,
                                      gridRowData);
-    }
+     });
+}
 }

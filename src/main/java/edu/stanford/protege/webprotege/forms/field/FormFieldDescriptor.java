@@ -1,9 +1,6 @@
 package edu.stanford.protege.webprotege.forms.field;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.forms.*;
@@ -21,7 +18,6 @@ import static edu.stanford.protege.webprotege.forms.PropertyNames.*;
  * 30/03/16
  */
 @JsonPropertyOrder({ID, OWL_BINDING, LABEL, FIELD_RUN, CONTROL, REPEATABILITY, OPTIONALITY, READ_ONLY, HELP})
-
 @AutoValue
 public abstract class FormFieldDescriptor implements HasFormRegionId, HasRepeatability, BoundControlDescriptor {
 

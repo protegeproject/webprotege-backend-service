@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.forms.field.GridControlDescriptor;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

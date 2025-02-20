@@ -2,11 +2,15 @@ package edu.stanford.protege.webprotege.index.impl;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -17,7 +21,7 @@ import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -26,7 +30,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-22
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class DisjointClassesAxiomsIndexImpl_TestCase {
 
     private DisjointClassesAxiomsIndexImpl impl;
@@ -40,7 +45,7 @@ public class DisjointClassesAxiomsIndexImpl_TestCase {
     @Mock
     private OWLDisjointClassesAxiom axiom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(axiom.getClassExpressions())
                 .thenReturn(Collections.singleton(cls));
@@ -67,15 +72,19 @@ public class DisjointClassesAxiomsIndexImpl_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeForNullOntologyId() {
+    @Test
+public void shouldThrowNpeForNullOntologyId() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getDisjointClassesAxioms(cls, null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeForNullClass() {
+    @Test
+public void shouldThrowNpeForNullClass() {
+    assertThrows(NullPointerException.class, () -> { 
         impl.getDisjointClassesAxioms(null, ontologyID);
-    }
+     });
+}
 
 }

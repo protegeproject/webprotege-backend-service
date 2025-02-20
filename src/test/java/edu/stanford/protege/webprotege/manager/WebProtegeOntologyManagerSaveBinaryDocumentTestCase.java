@@ -1,10 +1,9 @@
 package edu.stanford.protege.webprotege.manager;
 
 import edu.stanford.protege.webprotege.owlapi.WebProtegeOWLManager;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.semanticweb.binaryowl.owlapi.BinaryOWLOntologyDocumentFormat;
 import org.semanticweb.owlapi.model.*;
 
@@ -16,14 +15,14 @@ import java.io.IOException;
  */
 public class WebProtegeOntologyManagerSaveBinaryDocumentTestCase {
 
-    @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    @TempDir
+    public File temporaryFolder;
 
     private File ontologyDocumentFile;
 
-    @Before
+    @BeforeEach
     public void setUp() throws IOException {
-        ontologyDocumentFile = temporaryFolder.newFile();
+        ontologyDocumentFile = new File(temporaryFolder, "ontology.ttl");
     }
 
     /**
