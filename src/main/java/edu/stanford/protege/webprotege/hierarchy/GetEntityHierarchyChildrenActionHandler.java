@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;

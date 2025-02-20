@@ -12,6 +12,7 @@ import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -22,10 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.ENTITY_URI;
 import static org.junit.jupiter.api.Assertions.*;
@@ -139,11 +137,7 @@ public class ProjectOrderedChildrenServiceImplIT {
         service.addChildToParent(projectId, newParentUri, newChildUri);
 
         Query query = new Query(Criteria.where("entityUri").is(newParentUri));
-<<<<<<< HEAD
-        Optional<EntityChildrenOrdering> newEntry = Optional.ofNullable(mongoTemplate.findOne(query, EntityChildrenOrdering.class));
-=======
         Optional<ProjectOrderedChildren> newEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
 
         assertTrue(newEntry.isPresent(), "New parent entry should be created");
         assertEquals(1, newEntry.get().children().size(), "There should be one child");
@@ -152,21 +146,14 @@ public class ProjectOrderedChildrenServiceImplIT {
 
     @Test
     public void GIVEN_existingParentWithChildren_WHEN_removeChild_THEN_childIsRemoved() {
-<<<<<<< HEAD
-        EntityChildrenOrdering initialEntry = new EntityChildrenOrdering(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
-=======
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
         mongoTemplate.insert(initialEntry);
 
         service.removeChildFromParent(projectId, parentUri, childUri2);
 
         Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
-<<<<<<< HEAD
-        Optional<EntityChildrenOrdering> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, EntityChildrenOrdering.class));
-=======
+
         Optional<ProjectOrderedChildren> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
 
         assertTrue(updatedEntry.isPresent(), "Parent entry should still exist");
         assertEquals(2, updatedEntry.get().children().size(), "One child should be removed");
@@ -177,21 +164,15 @@ public class ProjectOrderedChildrenServiceImplIT {
 
     @Test
     public void GIVEN_existingParentWithOneChild_WHEN_removeChild_THEN_parentEntryIsDeleted() {
-<<<<<<< HEAD
-        EntityChildrenOrdering initialEntry = new EntityChildrenOrdering(parentUri, projectId, List.of(childUri1), null);
-=======
+
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), null);
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
         mongoTemplate.insert(initialEntry);
 
         service.removeChildFromParent(projectId, parentUri, childUri1);
 
         Query query = new Query(Criteria.where("entityUri").is(parentUri));
-<<<<<<< HEAD
-        Optional<EntityChildrenOrdering> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, EntityChildrenOrdering.class));
-=======
+
         Optional<ProjectOrderedChildren> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
 
         assertFalse(updatedEntry.isPresent(), "Parent entry should be deleted when last child is removed");
     }
@@ -200,21 +181,15 @@ public class ProjectOrderedChildrenServiceImplIT {
     public void GIVEN_nonExistingParent_WHEN_removeChild_THEN_nothingHappens() {
         service.removeChildFromParent(projectId, parentUri, childUri1);
 
-<<<<<<< HEAD
-        List<EntityChildrenOrdering> allEntries = mongoTemplate.findAll(EntityChildrenOrdering.class);
-=======
+
         List<ProjectOrderedChildren> allEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
         assertTrue(allEntries.isEmpty(), "No changes should be made if parent entry does not exist");
     }
 
     @Test
     public void GIVEN_existingParent_WHEN_removeNonExistingChild_THEN_noChangesMade() {
-<<<<<<< HEAD
-        EntityChildrenOrdering initialEntry = new EntityChildrenOrdering(parentUri, projectId, List.of(childUri1, childUri2), null);
-=======
+
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2), null);
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
         mongoTemplate.insert(initialEntry);
 
         // Attempt to remove a child that does not exist
@@ -222,11 +197,8 @@ public class ProjectOrderedChildrenServiceImplIT {
 
         // Retrieve updated entry
         Query query = new Query(Criteria.where("entityUri").is(parentUri));
-<<<<<<< HEAD
-        Optional<EntityChildrenOrdering> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, EntityChildrenOrdering.class));
-=======
+
         Optional<ProjectOrderedChildren> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
->>>>>>> origin/154-support-sibling-ordering-in-the-class-trees
 
         assertTrue(updatedEntry.isPresent(), "Parent entry should still exist");
         assertEquals(2, updatedEntry.get().children().size(), "No child should be removed");

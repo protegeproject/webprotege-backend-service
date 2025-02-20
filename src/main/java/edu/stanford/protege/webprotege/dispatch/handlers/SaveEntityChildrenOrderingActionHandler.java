@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 
+
 public class SaveEntityChildrenOrderingActionHandler  extends AbstractProjectActionHandler<SaveEntityChildrenOrderingAction, SaveEntityChildrenOrderingResult> {
 
     private final ProjectOrderedChildrenService service;

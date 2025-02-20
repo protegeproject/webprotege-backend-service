@@ -99,7 +99,6 @@ public class CreateProjectSagaManager {
                         return new CreateNewProjectResult(r.getProjectDetails());
                     } else {
                         logger.error("Error creating project", e);
-                        logger.error("Error creating project", e);
                         throw new ProjectCreationException(sagaState.getProjectId(),
                                 "Project creation failed",
                                 e.getCause());
@@ -157,17 +156,22 @@ public class CreateProjectSagaManager {
     private CompletableFuture<SagaState> initializeProjectPermissions(SagaState sagaState) {
         var projectOwner = sagaState.getNewProjectSettings().getProjectOwner();
         return projectPermissionsInitializer.applyDefaultPermissions(sagaState.getProjectId(), projectOwner)
-                .thenApply(r -> sagaState);
+                .thenApply(r -> {
+                    logger.info("Initialized project permissions");
+                    return sagaState;
+                });
     }
 
     private CompletableFuture<SagaStateWithSources> processSources(SagaStateWithSources sagaState) {
         var request = sagaState.createProcessUploadedOntologiesRequest();
+        logger.info("Processing initial sources");
         return processOntologiesExecutor.execute(request, sagaState.getExecutionContext())
                 .thenApply(sagaState::handleProcessUploadedOntologiesResponse);
     }
 
     private CompletableFuture<SagaStateWithSources> createInitialRevisionHistory(SagaStateWithSources sagaState) {
         var createHistoryRequest = sagaState.createCreateInitialRevisionHistoryRequest();
+        logger.info("Creating initial revision history");
         return createInitialRevisionHistoryExecutor.execute(createHistoryRequest, sagaState.getExecutionContext())
                 .thenApply(sagaState::handleCreateInitialRevisionHistoryResponse);
     }
@@ -177,13 +181,19 @@ public class CreateProjectSagaManager {
     }
 
     private CompletableFuture<SagaStateWithSources> copyRevisionHistoryToProject(SagaStateWithSources sagaState) {
+
         return revisionHistoryReplacer.replaceRevisionHistory(sagaState.getProjectId(),
                         sagaState.getRevisionHistoryPath())
-                .thenApply(r -> sagaState);
+                .thenApply(r -> {
+                    logger.info("Copy revision history to project");
+                    return sagaState;
+                });
     }
 
     private CompletableFuture<SagaState> registerProject(SagaState sagaState) {
+
         return CompletableFuture.supplyAsync(() -> {
+            logger.info("Registering project");
             projectDetailsManager.registerProject(sagaState.getProjectId(), sagaState.getNewProjectSettings());
             return sagaState;
         });
@@ -219,6 +229,7 @@ public class CreateProjectSagaManager {
         }
 
         public SagaState setProjectDetails(ProjectDetails projectDetails) {
+            logger.info("Set project details");
             this.projectDetails = projectDetails;
             return this;
         }
@@ -252,6 +263,7 @@ public class CreateProjectSagaManager {
         }
 
         public SagaStateWithSources setRevisionHistoryPath(Path revisionHistoryPath) {
+            logger.info("Downloaded revision history");
             this.revisionHistoryPath = revisionHistoryPath;
             return this;
         }

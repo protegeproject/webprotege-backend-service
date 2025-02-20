@@ -624,12 +624,4 @@ public class ApplicationBeansConfiguration {
                                                                               ReadWriteLockService readWriteLock) {
         return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate, readWriteLock);
     }
-
-    @Bean
-    ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
-                                                                @Nonnull ProjectOrderedChildrenRepository repository,
-                                                                @Nonnull ReadWriteLockService readWriteLock) {
-        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
-    }
-
 }
