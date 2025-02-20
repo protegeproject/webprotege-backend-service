@@ -13,9 +13,15 @@ import org.bson.Document;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.ENTITY_URI;
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.PROJECT_ID;
+import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering.*;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
@@ -49,7 +55,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     }
 
     @Override
-    public void importMultipleProjectOrderedChildren(Set<EntityChildrenOrdering> projectOrderedChildrenToBeSaved) {
+    public void importMultipleProjectOrderedChildren(Set<ProjectOrderedChildren> projectOrderedChildrenToBeSaved) {
         if (projectOrderedChildrenToBeSaved.isEmpty()) {
             return;
         }
@@ -82,16 +88,16 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     }
 
     @Override
-    public EntityChildrenOrdering createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
+    public ProjectOrderedChildren createProjectOrderedChildren(OrderedChildren orderedChildren, ProjectId projectId, UserId userId) {
         return ProjectOrderedChildrenMapper.mapToProjectOrderedChildren(orderedChildren, projectId, userId);
     }
 
     public void addChildToParent(ProjectId projectId, String parentUri, String newChildUri) {
         readWriteLock.executeWriteLock(() -> {
-            Optional<EntityChildrenOrdering> existingEntry = repository.findOrderedChildren(projectId, parentUri);
+            Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
 
             if (existingEntry.isPresent()) {
-                EntityChildrenOrdering updatedEntry = new EntityChildrenOrdering(
+                ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
                         existingEntry.get().entityUri(),
                         projectId,
                         new ArrayList<>(existingEntry.get().children()),
@@ -100,31 +106,34 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                 updatedEntry.children().add(newChildUri);
                 repository.update(updatedEntry);
             } else {
-                EntityChildrenOrdering newEntry = new EntityChildrenOrdering(parentUri, projectId, List.of(newChildUri), null);
-                repository.save(newEntry);
+                ProjectOrderedChildren newEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(newChildUri), null);
+                repository.insert(newEntry);
             }
         });
     }
 
     @Override
     public void updateEntity(SaveEntityChildrenOrderingAction action, UserId userId) {
-        Optional<EntityChildrenOrdering> entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
-        EntityChildrenOrdering orderToBeSaved;
-        orderToBeSaved = entityChildrenOrdering.map(ordering -> new EntityChildrenOrdering(ordering.entityUri(),
-                ordering.projectId(),
-                action.orderedChildren(),
-                ordering.userId())).
-                orElseGet(() -> new EntityChildrenOrdering(action.entityIri().toString(),
-                action.projectId(),
-                action.orderedChildren(),
-                userId.id()));
+        Optional<ProjectOrderedChildren> entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
+        if(entityChildrenOrdering.isPresent()) {
+            ProjectOrderedChildren orderToBeSaved = entityChildrenOrdering.map(ordering -> new ProjectOrderedChildren(ordering.entityUri(),
+                    ordering.projectId(),
+                    action.orderedChildren(),
+                    ordering.userId())).get();
+            repository.update(orderToBeSaved);
 
-        repository.update(orderToBeSaved);
+        } else {
+            ProjectOrderedChildren orderedChildren = new ProjectOrderedChildren(action.entityIri().toString(),
+                    action.projectId(),
+                    action.orderedChildren(),
+                    userId.id());
+            repository.insert(orderedChildren);
+        }
     }
 
     public void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove) {
         readWriteLock.executeWriteLock(() -> {
-            Optional<EntityChildrenOrdering> existingEntry = repository.findOrderedChildren(projectId, parentUri);
+            Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
 
             if (existingEntry.isPresent()) {
                 List<String> updatedChildren = new ArrayList<>(existingEntry.get().children());
@@ -134,7 +143,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                     if (updatedChildren.isEmpty()) {
                         repository.delete(existingEntry.get());
                     } else {
-                        EntityChildrenOrdering updatedEntry = new EntityChildrenOrdering(
+                        ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
                                 existingEntry.get().entityUri(),
                                 projectId,
                                 updatedChildren,

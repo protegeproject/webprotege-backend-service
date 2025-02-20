@@ -66,6 +66,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.scheduling.annotation.EnableAsync;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
+import jakarta.annotation.Nonnull;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 import java.io.File;
@@ -588,4 +589,17 @@ public class ApplicationBeansConfiguration {
     public ReadWriteLock readWriteLock() {
         return new ReentrantReadWriteLock(true);
     }
+    @Bean
+    ProjectOrderedChildrenRepositoryImpl projectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate,
+                                                                              ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate, readWriteLock);
+    }
+
+    @Bean
+    ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
+                                                                @Nonnull ProjectOrderedChildrenRepository repository,
+                                                                @Nonnull ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
+    }
+
 }
