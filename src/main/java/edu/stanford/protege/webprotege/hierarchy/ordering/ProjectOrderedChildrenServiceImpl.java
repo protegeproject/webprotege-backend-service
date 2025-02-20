@@ -7,6 +7,8 @@ import com.mongodb.client.model.UpdateOptions;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
+import com.mongodb.client.model.*;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
@@ -26,7 +28,8 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     private final ReadWriteLockService readWriteLock;
 
     public ProjectOrderedChildrenServiceImpl(ObjectMapper objectMapper,
-                                             ProjectOrderedChildrenRepository repository, ReadWriteLockService readWriteLock) {
+                                             ProjectOrderedChildrenRepository repository,
+                                             ReadWriteLockService readWriteLock) {
         this.objectMapper = objectMapper;
         this.repository = repository;
         this.readWriteLock = readWriteLock;

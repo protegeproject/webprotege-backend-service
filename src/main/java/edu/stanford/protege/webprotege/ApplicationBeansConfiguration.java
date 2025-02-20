@@ -16,13 +16,8 @@ import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManagerImpl;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyRepository;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepositoryImpl;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
+import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -31,7 +26,7 @@ import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
-import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessagingExceptionHandlerImpl;
 import edu.stanford.protege.webprotege.mail.SendMailImpl;
@@ -594,6 +589,13 @@ public class ApplicationBeansConfiguration {
     public ReadWriteLock readWriteLock() {
         return new ReentrantReadWriteLock(true);
     }
+
+    @Bean
+    ReadWriteLockService readWriteLockService(@Nonnull ReadWriteLockConfig config,
+                                              @Nonnull ReadWriteLock readWriteLock) {
+        return new ReadWriteLockServiceImpl(config, readWriteLock);
+    }
+
     @Bean
     ProjectOrderedChildrenRepositoryImpl projectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate,
                                                                               ReadWriteLockService readWriteLock) {

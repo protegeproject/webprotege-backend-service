@@ -44,6 +44,7 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
@@ -59,6 +60,7 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.SendMail;
@@ -112,6 +114,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import jakarta.inject.Provider;
+
+import jakarta.annotation.Nonnull;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -645,7 +649,7 @@ public class ProjectBeansConfiguration {
 
 
     @Bean
-    ClassHierarchyProviderImpl classHierarchyProvider(ProjectId p1,
+    ClassHierarchyProvider classHierarchyProvider(ProjectId p1,
                                                       @ClassHierarchyRoot Set<OWLClass> p2,
                                                       ProjectOntologiesIndex p3,
                                                       SubClassOfAxiomsBySubClassIndex p4,
@@ -1572,7 +1576,7 @@ public class ProjectBeansConfiguration {
                                                      HierarchyChangesComputerFactory p7) {
         return new HierarchyProviderManager(p6, p7);
     }
-    
+
     @Bean
     ClassHierarchyProviderFactory classHierarchyProviderFactory(ProjectId p1, ProjectOntologiesIndex p2, SubClassOfAxiomsBySubClassIndex p3, EquivalentClassesAxiomsIndex p4, ProjectSignatureByTypeIndex p5, EntitiesInProjectSignatureByIriIndex p6, ClassHierarchyChildrenAxiomsIndex p7) {
         return new ClassHierarchyProviderFactory(p1, p2, p3, p4, p5, p6, p7);
@@ -1910,5 +1914,12 @@ public class ProjectBeansConfiguration {
                                                   ClassAssertionAxiomsByClassIndex p7, ClassFrameProvider p8,
                                                   MatcherFactory p9) {
         return new BindingValuesExtractor(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+    }
+
+    @Bean
+    ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
+                                                                @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
+                                                                @Nonnull ReadWriteLockService readWriteLockService) {
+        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
     }
 }
