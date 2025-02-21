@@ -17,7 +17,10 @@ import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepositoryImpl;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -56,6 +59,7 @@ import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
 import io.minio.MinioClient;
+import jakarta.annotation.Nonnull;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -66,7 +70,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.scheduling.annotation.EnableAsync;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
-import javax.annotation.Nonnull;
 import jakarta.inject.Provider;
 import jakarta.inject.Singleton;
 import java.io.File;
@@ -608,5 +611,23 @@ public class ApplicationBeansConfiguration {
                                                                 @Nonnull ReadWriteLockService readWriteLock) {
         return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
     }
+
+    @Bean
+    HierarchyDescriptorRulesRepositoryImpl projectHierarchyDescriptorRulesRepository(MongoTemplate p1, ObjectMapper p2) {
+        var repo = new HierarchyDescriptorRulesRepositoryImpl(p1, p2);
+        repo.ensureIndexes();
+        return repo;
+    }
+
+    @Bean
+    HierarchyDescriptorRuleSelector hierarchyDescriptorRuleSelector(HierarchyDescriptorRulesRepository p1, HierarchyDescriptorRuleDisplayContextMatcher p2) {
+        return new HierarchyDescriptorRuleSelector(p1, p2);
+    }
+
+    @Bean
+    HierarchyDescriptorRuleDisplayContextMatcher hierarchyDescriptorRuleDisplayContextMatcher() {
+        return new HierarchyDescriptorRuleDisplayContextMatcher();
+    }
+
 
 }
