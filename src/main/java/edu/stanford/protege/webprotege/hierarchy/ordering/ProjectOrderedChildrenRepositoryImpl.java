@@ -8,13 +8,14 @@ import org.bson.Document;
 import org.slf4j.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
 
-@ProjectSingleton
+@Repository
 public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChildrenRepository {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ProjectOrderedChildrenRepositoryImpl.class);

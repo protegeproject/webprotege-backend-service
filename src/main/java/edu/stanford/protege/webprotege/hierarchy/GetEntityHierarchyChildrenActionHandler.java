@@ -4,9 +4,7 @@ import edu.stanford.protege.webprotege.access.*;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.EntityNode;
-import edu.stanford.protege.webprotege.hierarchy.ordering.EntityChildrenOrdering;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
@@ -15,6 +13,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import jakarta.annotation.*;
 import jakarta.inject.Inject;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
@@ -68,7 +67,6 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
     protected BuiltInAction getRequiredExecutableBuiltInAction(GetHierarchyChildrenAction action) {
         return VIEW_PROJECT;
     }
-
 
     @Nonnull
     @Override

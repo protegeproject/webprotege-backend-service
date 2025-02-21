@@ -19,8 +19,8 @@ import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.projects.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -624,4 +624,12 @@ public class ApplicationBeansConfiguration {
                                                                               ReadWriteLockService readWriteLock) {
         return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate, readWriteLock);
     }
+
+    @Bean
+    ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
+                                                                @Nonnull ProjectOrderedChildrenRepository repository,
+                                                                @Nonnull ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
+    }
+
 }
