@@ -12,8 +12,8 @@ import java.util.List;
 
 @Document(collection = ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION)
 @CompoundIndex(name = "unique_parent_entity_project",
-        def = "{'"+ProjectOrderedChildren.ENTITY_URI+"': 1, " +
-        "'"+ProjectOrderedChildren.PROJECT_ID+"': 1}",
+        def = "{'"+ ProjectOrderedChildren.ENTITY_URI+ "': 1, " +
+        "'"+ ProjectOrderedChildren.PROJECT_ID+"': 1}",
         unique = true)
 public record ProjectOrderedChildren(
         @Indexed(name = ENTITY_URI+"_idx") @JsonProperty(ENTITY_URI) String entityUri,
@@ -23,8 +23,8 @@ public record ProjectOrderedChildren(
 ) {
     public static final String ORDERED_CHILDREN_COLLECTION = "ProjectOrderedChildren";
     public static final String PROJECT_ID = "projectId";
-    public static final String CHILDREN = "children";
     public static final String ENTITY_URI = "entityUri";
     public static final String USER_ID = "userId";
+    public static final String CHILDREN = "children";
 }
 
