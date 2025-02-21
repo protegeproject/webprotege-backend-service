@@ -25,6 +25,7 @@ import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessagingExceptionHandlerImpl;
 import edu.stanford.protege.webprotege.mail.SendMailImpl;
@@ -61,6 +62,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import jakarta.inject.Provider;
@@ -69,6 +71,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.*;
 
 /**
  * Matthew Horridge
@@ -77,7 +82,14 @@ import java.util.Set;
  */
 @Configuration
 @EnableMongoRepositories
+@EnableAsync
 public class ApplicationBeansConfiguration {
+
+
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(10); // Customize the pool size as needed
+    }
 
     @Bean
     public MongoCustomConversions mongoCustomConversions(DocumentToOwlEntityConverter documentToOwlEntityConverter) {
@@ -111,6 +123,11 @@ public class ApplicationBeansConfiguration {
     @Bean
     public TempFileFactoryImpl provideTempFileFactory() {
         return new TempFileFactoryImpl();
+    }
+
+    @Bean
+    public DefaultMustacheFactory providesMustacheFactory() {
+        return new DefaultMustacheFactory();
     }
 
     @Bean
@@ -172,12 +189,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectDirectoryFactory getProjectDirectoryFactory() {
-        return new ProjectDirectoryFactory(getDataDirectory());
-    }
-
-    private File getDataDirectory() {
-        return null;
+    ProjectDirectoryFactory getProjectDirectoryFactory(DataDirectoryProvider dataDirectoryProvider) {
+        return new ProjectDirectoryFactory(dataDirectoryProvider.get());
     }
 
     @Bean
@@ -568,6 +581,30 @@ public class ApplicationBeansConfiguration {
     @Bean
     NamedHierarchyManager hierarchiesManager(OWLDataFactory dataFactory, NamedHierarchyRepository repository) {
         return new NamedHierarchyManagerImpl(dataFactory, repository);
+    }
+
+    @Bean
+    public ReadWriteLock readWriteLock() {
+        return new ReentrantReadWriteLock(true);
+    }
+
+    @Bean
+    ReadWriteLockService readWriteLockService(@Nonnull ReadWriteLockConfig config,
+                                              @Nonnull ReadWriteLock readWriteLock) {
+        return new ReadWriteLockServiceImpl(config, readWriteLock);
+    }
+
+    @Bean
+    ProjectOrderedChildrenRepositoryImpl projectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate,
+                                                                              ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate, readWriteLock);
+    }
+
+    @Bean
+    ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
+                                                                @Nonnull ProjectOrderedChildrenRepository repository,
+                                                                @Nonnull ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
     }
 
     @Bean

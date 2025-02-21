@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 
-
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
@@ -19,7 +18,6 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Collections.emptySet;
 
 /**
@@ -30,9 +28,17 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
 
     private final OWLDataFactory dataFactory;
 
-    private final MoveHierarchyNodeAction action;
-
     private final MessageFormatter msg;
+
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
+    @Nonnull
+    private final Path<EntityNode> fromNodePath;
+    @Nonnull
+    private final Path<EntityNode> toNodeParentPath;
+    @Nonnull
+    private final DropType dropType;
 
     @Nonnull
     private final ProjectOntologiesIndex projectOntologiesIndex;
@@ -56,7 +62,10 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
     private final SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyOfAxiomsIndex;
 
     @Inject
-    public MoveEntityChangeListGenerator(@Nonnull MoveHierarchyNodeAction action,
+    public MoveEntityChangeListGenerator(@Nonnull Path<EntityNode> fromNodePath,
+                                         @Nonnull Path<EntityNode> toNodeParentPath,
+                                         @Nonnull DropType dropType,
+                                         @Nonnull ChangeRequestId changeRequestId,
                                          @Nonnull OWLDataFactory dataFactory,
                                          @Nonnull MessageFormatter msg,
                                          @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
@@ -66,9 +75,12 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
                                          @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyOfAxiomsIndex,
                                          @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyOfAxiomsIndex,
                                          @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyOfAxiomsIndex) {
+        this.changeRequestId = changeRequestId;
         this.dataFactory = dataFactory;
-        this.action = checkNotNull(action);
         this.msg = msg;
+        this.fromNodePath = fromNodePath;
+        this.toNodeParentPath = toNodeParentPath;
+        this.dropType = dropType;
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.equivalentClassesAxiomsIndex = equivalentClassesAxiomsIndex;
@@ -80,7 +92,7 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
 
     @Override
     public ChangeRequestId getChangeRequestId() {
-        return action.changeRequestId();
+        return changeRequestId;
     }
 
     private static OntologyChangeList<Boolean> notMoved() {
@@ -113,40 +125,35 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
 
     @Override
     public OntologyChangeList<Boolean> generateChanges(ChangeGenerationContext context) {
-        Path<EntityNode> fromPath = action.fromNodePath();
-        Optional<OWLEntity> move = fromPath.getLast().map(EntityNode::getEntity);
+        Optional<OWLEntity> move = fromNodePath.getLast().map(EntityNode::getEntity);
         if (move.isEmpty()) {
             return notMoved();
         }
-        Optional<EntityNode> lastPredecessor = fromPath.getLastPredecessor();
+        Optional<EntityNode> lastPredecessor = fromNodePath.getLastPredecessor();
         OWLEntity moveEntity = move.get();
         Optional<OWLEntity> fromParent = lastPredecessor.map(EntityNode::getEntity);
-        Optional<OWLEntity> toParent = action.toNodeParentPath().getLast().map(EntityNode::getEntity);
+        Optional<OWLEntity> toParent = toNodeParentPath.getLast().map(EntityNode::getEntity);
         if (isClassHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveClass(moveEntity.asOWLClass(),
-                             fromParent.map(OWLEntity::asOWLClass),
-                             toParent.map(OWLEntity::asOWLClass),
-                             action.dropType());
-        }
-        else if (isObjectPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
+                    fromParent.map(OWLEntity::asOWLClass),
+                    toParent.map(OWLEntity::asOWLClass),
+                    dropType);
+        } else if (isObjectPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveObjectProperty(moveEntity.asOWLObjectProperty(),
-                                      fromParent.map(OWLEntity::asOWLObjectProperty),
-                                      toParent.map(OWLEntity::asOWLObjectProperty),
-                                      action.dropType());
-        }
-        else if (isDataPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
+                    fromParent.map(OWLEntity::asOWLObjectProperty),
+                    toParent.map(OWLEntity::asOWLObjectProperty),
+                    dropType);
+        } else if (isDataPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveDataProperty(moveEntity.asOWLDataProperty(),
-                                    fromParent.map(OWLEntity::asOWLDataProperty),
-                                    toParent.map(OWLEntity::asOWLDataProperty),
-                                    action.dropType());
-        }
-        else if (isAnnotationPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
+                    fromParent.map(OWLEntity::asOWLDataProperty),
+                    toParent.map(OWLEntity::asOWLDataProperty),
+                    dropType);
+        } else if (isAnnotationPropertyHierarchyMove(moveEntity, fromParent, toParent)) {
             return moveAnnotationProperty(moveEntity.asOWLAnnotationProperty(),
-                                          fromParent.map(OWLEntity::asOWLAnnotationProperty),
-                                          toParent.map(OWLEntity::asOWLAnnotationProperty),
-                                          action.dropType());
-        }
-        else {
+                    fromParent.map(OWLEntity::asOWLAnnotationProperty),
+                    toParent.map(OWLEntity::asOWLAnnotationProperty),
+                    dropType);
+        } else {
             return notMoved();
         }
 
@@ -168,12 +175,12 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
             return notMoved();
         }
         return moveEntity(moveClass,
-                          fromParentClass,
-                          toParentClass,
-                          dropType,
-                          (ontId, cls) -> subClassOfAxiomsIndex.getSubClassOfAxiomsForSubClass(cls, ontId),
-                          ax -> Optional.of(ax.getSuperClass()).equals(fromParentClass),
-                          dataFactory::getOWLSubClassOfAxiom
+                fromParentClass,
+                toParentClass,
+                dropType,
+                (ontId, cls) -> subClassOfAxiomsIndex.getSubClassOfAxiomsForSubClass(cls, ontId),
+                ax -> Optional.of(ax.getSuperClass()).equals(fromParentClass),
+                dataFactory::getOWLSubClassOfAxiom
         );
     }
 
@@ -182,12 +189,12 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
                                                            @Nonnull Optional<OWLObjectProperty> toParent,
                                                            @Nonnull DropType dropType) {
         return moveEntity(moveProperty,
-                          fromParent,
-                          toParent,
-                          dropType,
-                          (ontId, prop) -> subObjectPropertyOfAxiomsIndex.getSubPropertyOfAxioms(prop, ontId),
-                          ax -> Optional.of(ax.getSuperProperty()).equals(fromParent),
-                          dataFactory::getOWLSubObjectPropertyOfAxiom
+                fromParent,
+                toParent,
+                dropType,
+                (ontId, prop) -> subObjectPropertyOfAxiomsIndex.getSubPropertyOfAxioms(prop, ontId),
+                ax -> Optional.of(ax.getSuperProperty()).equals(fromParent),
+                dataFactory::getOWLSubObjectPropertyOfAxiom
         );
     }
 
@@ -196,12 +203,12 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
                                                          @Nonnull Optional<OWLDataProperty> toParent,
                                                          @Nonnull DropType dropType) {
         return moveEntity(moveProperty,
-                          fromParent,
-                          toParent,
-                          dropType,
-                          (ontId, prop) -> subDataPropertyOfAxiomsIndex.getSubPropertyOfAxioms(prop, ontId),
-                          ax -> Optional.of(ax.getSuperProperty()).equals(fromParent),
-                          dataFactory::getOWLSubDataPropertyOfAxiom
+                fromParent,
+                toParent,
+                dropType,
+                (ontId, prop) -> subDataPropertyOfAxiomsIndex.getSubPropertyOfAxioms(prop, ontId),
+                ax -> Optional.of(ax.getSuperProperty()).equals(fromParent),
+                dataFactory::getOWLSubDataPropertyOfAxiom
         );
     }
 
@@ -210,26 +217,27 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
                                                                @Nonnull Optional<OWLAnnotationProperty> toParent,
                                                                @Nonnull DropType dropType) {
         return moveEntity(moveProperty,
-                          fromParent,
-                          toParent,
-                          dropType,
-                          (ontId, prop) -> subAnnotationPropertyOfAxiomsIndex.getSubPropertyOfAxioms(prop, ontId),
-                          ax -> ax.getSubProperty().equals(moveProperty) && Optional.of(ax.getSuperProperty()).equals(fromParent),
-                          dataFactory::getOWLSubAnnotationPropertyOfAxiom
+                fromParent,
+                toParent,
+                dropType,
+                (ontId, prop) -> subAnnotationPropertyOfAxiomsIndex.getSubPropertyOfAxioms(prop, ontId),
+                ax -> ax.getSubProperty().equals(moveProperty) && Optional.of(ax.getSuperProperty()).equals(fromParent),
+                dataFactory::getOWLSubAnnotationPropertyOfAxiom
         );
     }
 
     /**
      * Move/copy an entity from one parent to another parent.
-     * @param move The entity to move/copy (the child).
-     * @param toParent The parent to move/copy the entity to.
-     * @param dropType Whether the operation is a move or a copy
-     * @param axiomExtractor An extractor that can select candidate axiomsSource for removal from an ontology (axiomsSource that
-     *                       potentially specify the current parent).
-     * @param axiomFilter A filter that filters axiomsSource for remove (to remove the child from its existing parent).
+     *
+     * @param move                    The entity to move/copy (the child).
+     * @param toParent                The parent to move/copy the entity to.
+     * @param dropType                Whether the operation is a move or a copy
+     * @param axiomExtractor          An extractor that can select candidate axiomsSource for removal from an ontology (axiomsSource that
+     *                                potentially specify the current parent).
+     * @param axiomFilter             A filter that filters axiomsSource for remove (to remove the child from its existing parent).
      * @param reparentingAxiomFactory A factory that can create axiomsSource to reposition the child under its new parent.
-     * @param <A> The axiom type.
-     * @param <E> The entity type.
+     * @param <A>                     The axiom type.
+     * @param <E>                     The entity type.
      * @return A list of changes for moving or copying the entity.
      */
     private <A extends OWLAxiom, E extends OWLEntity>
@@ -245,12 +253,12 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
         Set<OWLAxiom> removedAxioms = new HashSet<>();
         if (dropType == DropType.MOVE && fromParent.isPresent()) {
             projectOntologiesIndex.getOntologyIds()
-                          .forEach(ontId -> moveEntityInOntology(ontId, move, toParent,
-                                                                 axiomExtractor,
-                                                                 axiomFilter,
-                                                                 reparentingAxiomFactory,
-                                                                 changeList,
-                                                                 removedAxioms));
+                    .forEach(ontId -> moveEntityInOntology(ontId, move, toParent,
+                            axiomExtractor,
+                            axiomFilter,
+                            reparentingAxiomFactory,
+                            changeList,
+                            removedAxioms));
         }
         if (removedAxioms.isEmpty()) {
             toParent.ifPresent(par -> {
@@ -272,17 +280,17 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
                               @Nonnull OntologyChangeList.Builder<Boolean> changeList,
                               @Nonnull Set<OWLAxiom> removedAxioms) {
         axiomExtractor.apply(ontId, move)
-                      .filter(axiomFilter::test)
-                      .forEach(ax -> {
-                          changeList.add(RemoveAxiomChange.of(ontId, ax));
-                          removedAxioms.add(ax);
-                          toParent.ifPresent(par -> {
-                              A parAx = reparentingAxiomFactory.createReparentingAxiom(move,
-                                                                                       par,
-                                                                                       ax.getAnnotations());
-                              changeList.add(AddAxiomChange.of(ontId, parAx));
-                          });
-                      });
+                .filter(axiomFilter::test)
+                .forEach(ax -> {
+                    changeList.add(RemoveAxiomChange.of(ontId, ax));
+                    removedAxioms.add(ax);
+                    toParent.ifPresent(par -> {
+                        A parAx = reparentingAxiomFactory.createReparentingAxiom(move,
+                                par,
+                                ax.getAnnotations());
+                        changeList.add(AddAxiomChange.of(ontId, parAx));
+                    });
+                });
     }
 
     @Override
@@ -311,10 +319,10 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
-        String type = action.fromNodePath().getLast().map(node -> node.getEntity().getEntityType().getPrintName().toLowerCase()).orElse("entity");
-        String entity = action.fromNodePath().getLast().map(EntityNode::getBrowserText).orElse("");
-        String from = action.fromNodePath().getLastPredecessor().map(EntityNode::getBrowserText).orElse("root");
-        String to = action.toNodeParentPath().getLast().map(EntityNode::getBrowserText).orElse("root");
+        String type = fromNodePath.getLast().map(node -> node.getEntity().getEntityType().getPrintName().toLowerCase()).orElse("entity");
+        String entity = fromNodePath.getLast().map(EntityNode::getBrowserText).orElse("");
+        String from = fromNodePath.getLastPredecessor().map(EntityNode::getBrowserText).orElse("root");
+        String to = toNodeParentPath.getLast().map(EntityNode::getBrowserText).orElse("root");
         return msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
     }
 }
