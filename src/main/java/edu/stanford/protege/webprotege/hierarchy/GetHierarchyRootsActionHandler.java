@@ -11,6 +11,9 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -24,6 +27,8 @@ import static java.util.stream.Collectors.toList;
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 30 Nov 2017
  */
 public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler<GetHierarchyRootsAction, GetHierarchyRootsResult> {
+
+    private final Logger logger = LoggerFactory.getLogger(GetHierarchyRootsActionHandler.class);
 
     @Nonnull
     private final HierarchyProviderManager hierarchyProviderManager;
@@ -55,6 +60,7 @@ public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler
     @Nonnull
     @Override
     public GetHierarchyRootsResult execute(@Nonnull GetHierarchyRootsAction action, @Nonnull ExecutionContext executionContext) {
+        logger.debug("GetHierarchyRoots: {}", action);
         return hierarchyProviderManager.getHierarchyProvider(action.hierarchyDescriptor()).map(hierarchyProvider -> {
             Collection<OWLEntity> roots = hierarchyProvider.getRoots();
             List<GraphNode<EntityNode>> rootNodes =

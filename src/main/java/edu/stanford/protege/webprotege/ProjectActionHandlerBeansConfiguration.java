@@ -978,4 +978,14 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                  HasApplyChanges p5){
         return new ExistingOntologyMergeAddActionHandler(p1, p2, p3, p4, p5);
     }
+
+    @Bean
+    GetHierarchyDescriptorActionHandler getHierarchyDescriptorActionHandler(AccessManager p1, HierarchyDescriptorRuleSelector p2) {
+        return new GetHierarchyDescriptorActionHandler(p1, p2);
+    }
+
+    @Bean
+    GetProjectHierarchyDescriptorRulesActionHandler getProjectHierarchyDescriptorRulesActionHandler(AccessManager p1, HierarchyDescriptorRulesRepository p2) {
+        return new GetProjectHierarchyDescriptorRulesActionHandler(p1, p2);
+    }
 }
