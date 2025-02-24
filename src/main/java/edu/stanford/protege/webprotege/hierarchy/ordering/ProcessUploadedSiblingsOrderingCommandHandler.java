@@ -48,7 +48,7 @@ public class ProcessUploadedSiblingsOrderingCommandHandler implements CommandHan
         var stream = orderedChildrenDocumentService.fetchFromDocument(request.uploadedDocumentId().getDocumentId());
 
         readWriteLock.executeWriteLock(() -> {
-            Consumer<List<OrderedChildren>> batchProcessor = projectOrderedChildrenService.createBatchProcessorForImportingPaginatedOrderedChildren(request.projectId());
+            Consumer<List<OrderedChildren>> batchProcessor = projectOrderedChildrenService.createBatchProcessorForImportingPaginatedOrderedChildren(request.projectId(), request.overrideExisting());
             stream.collect(StreamUtils.batchCollector(100, batchProcessor));
         });
 

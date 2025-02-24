@@ -1,24 +1,19 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.MongoTestExtension;
-import edu.stanford.protege.webprotege.RabbitTestExtension;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
+import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
-import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChild;
-import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.*;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.*;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -74,7 +69,7 @@ public class ProjectOrderedChildrenServiceImplIT {
 
         ProjectOrderedChildren projectOrderedChildren = service.createProjectOrderedChildren(orderedChildren, projectId, null);
 
-        service.importMultipleProjectOrderedChildren(Set.of(projectOrderedChildren));
+        service.importMultipleProjectOrderedChildren(Set.of(projectOrderedChildren), false);
 
         List<ProjectOrderedChildren> storedEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
         assertFalse(storedEntries.isEmpty(), "ProjectOrderedChildren should be saved in MongoDB");
@@ -84,9 +79,9 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(3, retrieved.children().size(), "Should have two children stored");
         assertTrue(retrieved.children().contains(childUri1), "Should contain childUri1");
         assertTrue(retrieved.children().contains(childUri2), "Should contain childUri2");
-        assertEquals(retrieved.children().get(0),childUri2);
-        assertEquals(retrieved.children().get(1),childUri3);
-        assertEquals(retrieved.children().get(2),childUri1);
+        assertEquals(retrieved.children().get(0), childUri2);
+        assertEquals(retrieved.children().get(1), childUri3);
+        assertEquals(retrieved.children().get(2), childUri1);
     }
 
     @Test
@@ -113,6 +108,147 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(retrieved.children().get(2),childUri1);
 
     }
+    @Test
+    public void GIVEN_existingParent_WHEN_overrideExistingTrue_THEN_childrenAreUpdated() {
+        ProjectOrderedChildren existingEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), null);
+        mongoTemplate.insert(existingEntry);
+
+        OrderedChildren orderedChildren = new OrderedChildren(List.of(
+                new OrderedChild(childUri2, "1000000"),
+                new OrderedChild(childUri3, "2000000")), parentUri);
+
+        ProjectOrderedChildren updatedEntry = service.createProjectOrderedChildren(orderedChildren, projectId, null);
+
+        service.importMultipleProjectOrderedChildren(Set.of(updatedEntry), true);
+
+        Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
+        Optional<ProjectOrderedChildren> result = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
+
+        assertTrue(result.isPresent(), "Parent should still exist in DB");
+        assertEquals(2, result.get().children().size(), "Children should be replaced");
+        assertTrue(result.get().children().contains(childUri2), "Child2 should be present");
+        assertTrue(result.get().children().contains(childUri3), "Child3 should be present");
+    }
+
+    @Test
+    public void GIVEN_existingParent_WHEN_overrideExistingFalse_THEN_childrenAreNotUpdated() {
+        ProjectOrderedChildren existingEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), null);
+        mongoTemplate.insert(existingEntry);
+
+        OrderedChildren orderedChildren = new OrderedChildren(
+                List.of(
+                        new OrderedChild(childUri2, "1000000"),
+                        new OrderedChild(childUri3, "2000000")
+                ),
+                parentUri
+        );
+
+        ProjectOrderedChildren updatedEntry = service.createProjectOrderedChildren(orderedChildren, projectId, null);
+
+        service.importMultipleProjectOrderedChildren(Set.of(updatedEntry), false);
+
+        Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
+        Optional<ProjectOrderedChildren> result = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
+
+        assertTrue(result.isPresent(), "Parent should still exist in DB");
+        assertEquals(1, result.get().children().size(), "Children should not be replaced");
+        assertTrue(result.get().children().contains(childUri1), "Child1 should remain");
+    }
+
+    @Test
+    public void GIVEN_noExistingParent_WHEN_overrideExistingTrue_THEN_entryIsCreated() {
+        OrderedChildren orderedChildren = new OrderedChildren(
+                List.of(
+                        new OrderedChild(childUri1, "1000000"),
+                        new OrderedChild(childUri2, "2000000")
+                ),
+                parentUri
+        );
+
+        ProjectOrderedChildren newEntry = service.createProjectOrderedChildren(orderedChildren, projectId, null);
+
+        service.importMultipleProjectOrderedChildren(Set.of(newEntry), true);
+
+        Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
+        Optional<ProjectOrderedChildren> result = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
+
+        assertTrue(result.isPresent(), "New parent should be created");
+        assertEquals(2, result.get().children().size(), "All children should be stored");
+    }
+
+    @Test
+    public void GIVEN_noExistingParent_WHEN_overrideExistingFalse_THEN_entryIsCreated() {
+        OrderedChildren orderedChildren = new OrderedChildren(
+                List.of(
+                        new OrderedChild(childUri1, "1000000"),
+                        new OrderedChild(childUri2, "2000000")
+                ),
+                parentUri
+        );
+
+        ProjectOrderedChildren newEntry = service.createProjectOrderedChildren(orderedChildren, projectId, null);
+
+        service.importMultipleProjectOrderedChildren(Set.of(newEntry), false);
+
+        Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
+        Optional<ProjectOrderedChildren> result = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
+
+        assertTrue(result.isPresent(), "New parent should be created");
+        assertEquals(2, result.get().children().size(), "All children should be stored");
+    }
+
+    @Test
+    public void GIVEN_multipleExistingParents_WHEN_overrideExistingTrue_THEN_allAreUpdated() {
+        ProjectOrderedChildren parent1 = new ProjectOrderedChildren("http://example.com/entity/parent1", projectId, List.of(childUri1), null);
+        ProjectOrderedChildren parent2 = new ProjectOrderedChildren("http://example.com/entity/parent2", projectId, List.of(childUri2), null);
+        mongoTemplate.insertAll(List.of(parent1,parent2));
+
+        OrderedChildren updatedChildren1 = new OrderedChildren(List.of(new OrderedChild(childUri3, "1000000")), "http://example.com/entity/parent1");
+        OrderedChildren updatedChildren2 = new OrderedChildren(List.of(new OrderedChild(childUri1, "2000000")), "http://example.com/entity/parent2");
+
+        ProjectOrderedChildren updatedParent1 = service.createProjectOrderedChildren(updatedChildren1, projectId, null);
+        ProjectOrderedChildren updatedParent2 = service.createProjectOrderedChildren(updatedChildren2, projectId, null);
+
+        service.importMultipleProjectOrderedChildren(Set.of(updatedParent1, updatedParent2), true);
+
+        Optional<ProjectOrderedChildren> result1 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent1")), ProjectOrderedChildren.class));
+        Optional<ProjectOrderedChildren> result2 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent2")), ProjectOrderedChildren.class));
+
+        assertTrue(result1.isPresent());
+        assertEquals(1, result1.get().children().size());
+        assertTrue(result1.get().children().contains(childUri3));
+
+        assertTrue(result2.isPresent());
+        assertEquals(1, result2.get().children().size());
+        assertTrue(result2.get().children().contains(childUri1));
+    }
+
+    @Test
+    public void GIVEN_multipleExistingParents_WHEN_overrideExistingFalse_THEN_onlyNewEntriesAreInserted() {
+        ProjectOrderedChildren parent1 = new ProjectOrderedChildren("http://example.com/entity/parent1", projectId, List.of(childUri1), null);
+        mongoTemplate.insert(parent1);
+
+        OrderedChildren updatedChildren1 = new OrderedChildren(List.of(new OrderedChild(childUri3, "1000000")), "http://example.com/entity/parent1");
+        OrderedChildren updatedChildren2 = new OrderedChildren(List.of(new OrderedChild(childUri2, "2000000")), "http://example.com/entity/parent2");
+
+        ProjectOrderedChildren updatedParent1 = service.createProjectOrderedChildren(updatedChildren1, projectId, null);
+        ProjectOrderedChildren updatedParent2 = service.createProjectOrderedChildren(updatedChildren2, projectId, null);
+
+        service.importMultipleProjectOrderedChildren(Set.of(updatedParent1, updatedParent2), false);
+
+        Optional<ProjectOrderedChildren> result1 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent1")), ProjectOrderedChildren.class));
+        Optional<ProjectOrderedChildren> result2 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent2")), ProjectOrderedChildren.class));
+
+        assertTrue(result1.isPresent());
+        assertEquals(1, result1.get().children().size());
+        assertTrue(result1.get().children().contains(childUri1));
+
+        assertTrue(result2.isPresent());
+        assertEquals(1, result2.get().children().size());
+        assertTrue(result2.get().children().contains(childUri2));
+    }
+
+
     @Test
     public void GIVEN_existingParent_WHEN_addChildToParent_THEN_childIsAppended() {
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), null);
@@ -151,7 +287,6 @@ public class ProjectOrderedChildrenServiceImplIT {
         service.removeChildFromParent(projectId, parentUri, childUri2);
 
         Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
-
         Optional<ProjectOrderedChildren> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
 
         assertTrue(updatedEntry.isPresent(), "Parent entry should still exist");
@@ -163,14 +298,12 @@ public class ProjectOrderedChildrenServiceImplIT {
 
     @Test
     public void GIVEN_existingParentWithOneChild_WHEN_removeChild_THEN_parentEntryIsDeleted() {
-
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), null);
         mongoTemplate.insert(initialEntry);
 
         service.removeChildFromParent(projectId, parentUri, childUri1);
 
         Query query = new Query(Criteria.where("entityUri").is(parentUri));
-
         Optional<ProjectOrderedChildren> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
 
         assertFalse(updatedEntry.isPresent(), "Parent entry should be deleted when last child is removed");
@@ -180,23 +313,18 @@ public class ProjectOrderedChildrenServiceImplIT {
     public void GIVEN_nonExistingParent_WHEN_removeChild_THEN_nothingHappens() {
         service.removeChildFromParent(projectId, parentUri, childUri1);
 
-
         List<ProjectOrderedChildren> allEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
         assertTrue(allEntries.isEmpty(), "No changes should be made if parent entry does not exist");
     }
 
     @Test
     public void GIVEN_existingParent_WHEN_removeNonExistingChild_THEN_noChangesMade() {
-
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2), null);
         mongoTemplate.insert(initialEntry);
 
-        // Attempt to remove a child that does not exist
         service.removeChildFromParent(projectId, parentUri, childUri3);
 
-        // Retrieve updated entry
         Query query = new Query(Criteria.where("entityUri").is(parentUri));
-
         Optional<ProjectOrderedChildren> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
 
         assertTrue(updatedEntry.isPresent(), "Parent entry should still exist");

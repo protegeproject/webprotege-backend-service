@@ -64,7 +64,7 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
     @Test
     public void GIVEN_uploadedDocument_WHEN_handleRequestCalled_THEN_batchesAreProcessedAndPersisted() {
-        var request = new ProcessUploadedSiblingsOrderingAction(projectId, new DocumentId(documentId));
+        var request = new ProcessUploadedSiblingsOrderingAction(projectId, new DocumentId(documentId),false);
         var executionContext = new ExecutionContext();
 
         var response = commandHandler.handleRequest(request, executionContext).block();
@@ -89,7 +89,7 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
 
     @Test
     public void GIVEN_uploadedDocument_WHEN_handleRequestCalledTwice_THEN_noDuplicatesAreCreated() {
-        var request = new ProcessUploadedSiblingsOrderingAction(projectId, new DocumentId(documentId));
+        var request = new ProcessUploadedSiblingsOrderingAction(projectId, new DocumentId(documentId), false);
         var executionContext = new ExecutionContext();
 
         commandHandler.handleRequest(request, executionContext).block();
@@ -111,5 +111,47 @@ public class ProcessUploadedSiblingsOrderingCommandHandlerIT {
         }
 
         Mockito.verify(orderedChildrenDocumentService, Mockito.times(2)).fetchFromDocument(documentId);
+    }
+
+    @Test
+    public void GIVEN_uploadedDocument_WHEN_overrideExistingFalse_THEN_onlyNewEntriesAreAdded() {
+        String parentUri = "http://id.who.int/icd/entity/360081115";
+        List<String> existingChildren = List.of("http://id.who.int/icd/entity/oldChild");
+        ProjectOrderedChildren existingEntry = new ProjectOrderedChildren(parentUri, projectId, existingChildren, null);
+
+        mongoTemplate.insert(existingEntry);
+
+        var request = new ProcessUploadedSiblingsOrderingAction(projectId, new DocumentId(documentId), false);
+        var executionContext = new ExecutionContext();
+        commandHandler.handleRequest(request, executionContext).block();
+
+        Query query = new Query(Criteria.where(ProjectOrderedChildren.ENTITY_URI).is(parentUri));
+        ProjectOrderedChildren storedEntry = mongoTemplate.findOne(query, ProjectOrderedChildren.class);
+
+        assertNotNull(storedEntry, "Parent should still exist after processing");
+        assertEquals(existingChildren, storedEntry.children(), "Existing children should remain");
+
+        Mockito.verify(orderedChildrenDocumentService, Mockito.times(1)).fetchFromDocument(documentId);
+    }
+
+    @Test
+    public void GIVEN_uploadedDocument_WHEN_overrideExistingTrue_THEN_existingDataIsOverwritten() {
+        String parentUri = "http://id.who.int/icd/entity/360081115";
+        List<String> existingChildren = List.of("http://id.who.int/icd/entity/oldChild");
+        ProjectOrderedChildren existingEntry = new ProjectOrderedChildren(parentUri, projectId, existingChildren, null);
+        mongoTemplate.insert(existingEntry);
+
+        var request = new ProcessUploadedSiblingsOrderingAction(projectId, new DocumentId(documentId), true);
+        var executionContext = new ExecutionContext();
+        commandHandler.handleRequest(request, executionContext).block();
+
+        Query query = new Query(Criteria.where(ProjectOrderedChildren.ENTITY_URI).is(parentUri));
+        ProjectOrderedChildren storedEntry = mongoTemplate.findOne(query, ProjectOrderedChildren.class);
+
+        assertNotNull(storedEntry, "Parent should still exist after processing");
+        assertNotEquals(existingChildren, storedEntry.children(), "Children should be completely replaced");
+        assertEquals(15, storedEntry.children().size(), "Children should match the test JSON file");
+        assertFalse(storedEntry.children().containsAll(existingChildren));
+        Mockito.verify(orderedChildrenDocumentService, Mockito.times(1)).fetchFromDocument(documentId);
     }
 }
