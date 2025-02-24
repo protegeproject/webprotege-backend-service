@@ -1,14 +1,14 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.bson.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.ArrayList;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
+@Import({WebprotegeBackendMonolithApplication.class})
 @ExtendWith(MongoTestExtension.class)
 class HierarchyDescriptorRulesRepositoryImplIT {
 
