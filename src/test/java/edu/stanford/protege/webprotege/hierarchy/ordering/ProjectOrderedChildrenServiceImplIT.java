@@ -3,10 +3,12 @@ package edu.stanford.protege.webprotege.hierarchy.ordering;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.*;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -82,6 +84,30 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(retrieved.children().get(2), childUri1);
     }
 
+    @Test
+    public void GIVEN_newOrderOnChildren_WHEN_updateEntity_THEN_newOrderIsSaved(){
+        ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
+        mongoTemplate.insert(initialEntry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+
+        SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
+                IRI.create(initialEntry.entityUri()),
+                Arrays.asList(childUri3, childUri2, childUri1));
+
+        service.updateEntity(action, null);
+
+        List<ProjectOrderedChildren> storedEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
+        assertFalse(storedEntries.isEmpty(), "EntityChildrenOrdering should be saved in MongoDB");
+
+        ProjectOrderedChildren retrieved = storedEntries.get(0);
+        assertEquals(parentUri, retrieved.entityUri(), "Parent URI should match");
+        assertEquals(3, retrieved.children().size(), "Should have two children stored");
+        assertTrue(retrieved.children().contains(childUri1), "Should contain childUri1");
+        assertTrue(retrieved.children().contains(childUri2), "Should contain childUri2");
+        assertEquals(retrieved.children().get(0),childUri3);
+        assertEquals(retrieved.children().get(1),childUri2);
+        assertEquals(retrieved.children().get(2),childUri1);
+
+    }
     @Test
     public void GIVEN_existingParent_WHEN_overrideExistingTrue_THEN_childrenAreUpdated() {
         ProjectOrderedChildren existingEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), null);
