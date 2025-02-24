@@ -9,6 +9,8 @@ import edu.stanford.protege.webprotege.access.RoleOracle;
 import edu.stanford.protege.webprotege.access.RoleOracleImpl;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
+import edu.stanford.protege.webprotege.crud.icatx.GetUniqueIdRequest;
+import edu.stanford.protege.webprotege.crud.icatx.GetUniqueIdResponse;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
@@ -579,6 +581,10 @@ public class ApplicationBeansConfiguration {
         return new CommandExecutorImpl<>(CreateNewReproducibleProjectResponse.class);
     }
 
+    @Bean
+    CommandExecutor<GetUniqueIdRequest, GetUniqueIdResponse> executorForGetUniqueId(){
+        return new CommandExecutorImpl<>(GetUniqueIdResponse.class);
+    }
     @Bean
     MinioClient minioClient(MinioProperties properties) {
         return MinioClient.builder()
