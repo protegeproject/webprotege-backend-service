@@ -6,9 +6,9 @@ import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderi
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingResult;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import jakarta.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
-import javax.inject.Inject;
 
 
 public class SaveEntityChildrenOrderingActionHandler  extends AbstractProjectActionHandler<SaveEntityChildrenOrderingAction, SaveEntityChildrenOrderingResult> {
