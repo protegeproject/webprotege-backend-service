@@ -16,6 +16,8 @@ public interface ProjectOrderedChildrenRepository {
 
     Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, String entityUri, UserId userId);
 
+    void save(ProjectOrderedChildren projectOrderedChildren);
+
     void insert(ProjectOrderedChildren projectOrderedChildren);
 
     void delete(ProjectOrderedChildren projectOrderedChildren);

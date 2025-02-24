@@ -3,10 +3,12 @@ package edu.stanford.protege.webprotege.hierarchy.ordering;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.*;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -176,12 +178,19 @@ public class ProjectOrderedChildrenServiceImplIT {
         ProjectOrderedChildren parent1 = new ProjectOrderedChildren("http://example.com/entity/parent1", projectId, List.of(childUri1), null);
         ProjectOrderedChildren parent2 = new ProjectOrderedChildren("http://example.com/entity/parent2", projectId, List.of(childUri2), null);
         mongoTemplate.insertAll(List.of(parent1,parent2));
+    public void GIVEN_newOrderOnChildren_WHEN_updateEntity_THEN_newOrderIsSaved(){
+        ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
+        mongoTemplate.insert(initialEntry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
 
         OrderedChildren updatedChildren1 = new OrderedChildren(List.of(new OrderedChild(childUri3, "1000000")), "http://example.com/entity/parent1");
         OrderedChildren updatedChildren2 = new OrderedChildren(List.of(new OrderedChild(childUri1, "2000000")), "http://example.com/entity/parent2");
+        SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
+                IRI.create(initialEntry.entityUri()),
+                Arrays.asList(childUri3, childUri2, childUri1));
 
         ProjectOrderedChildren updatedParent1 = service.createProjectOrderedChildren(updatedChildren1, projectId, null);
         ProjectOrderedChildren updatedParent2 = service.createProjectOrderedChildren(updatedChildren2, projectId, null);
+        service.updateEntity(action, null);
 
         service.importMultipleProjectOrderedChildren(Set.of(updatedParent1, updatedParent2), true);
 
@@ -221,8 +230,19 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(1, result2.get().children().size());
         assertTrue(result2.get().children().contains(childUri2));
     }
+        List<ProjectOrderedChildren> storedEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
+        assertFalse(storedEntries.isEmpty(), "EntityChildrenOrdering should be saved in MongoDB");
 
+        ProjectOrderedChildren retrieved = storedEntries.get(0);
+        assertEquals(parentUri, retrieved.entityUri(), "Parent URI should match");
+        assertEquals(3, retrieved.children().size(), "Should have two children stored");
+        assertTrue(retrieved.children().contains(childUri1), "Should contain childUri1");
+        assertTrue(retrieved.children().contains(childUri2), "Should contain childUri2");
+        assertEquals(retrieved.children().get(0),childUri3);
+        assertEquals(retrieved.children().get(1),childUri2);
+        assertEquals(retrieved.children().get(2),childUri1);
 
+    }
     @Test
     public void GIVEN_existingParent_WHEN_addChildToParent_THEN_childIsAppended() {
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), null);
@@ -261,6 +281,7 @@ public class ProjectOrderedChildrenServiceImplIT {
         service.removeChildFromParent(projectId, parentUri, childUri2);
 
         Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
+
         Optional<ProjectOrderedChildren> updatedEntry = Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
 
         assertTrue(updatedEntry.isPresent(), "Parent entry should still exist");
