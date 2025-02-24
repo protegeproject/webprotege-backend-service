@@ -178,9 +178,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     GetUploadedAndProjectOntologyIdsActionHandler getUploadedAndProjectOntologyIdsActionHandler(AccessManager p1,
-                                                                                                ProjectId p2,
-                                                                                                UploadedOntologiesCache p3,
-                                                                                                ProjectOntologiesBuilder p4) {
+                                                                                ProjectId p2,
+                                                                                UploadedOntologiesCache p3,
+                                                                                ProjectOntologiesBuilder p4) {
         return new GetUploadedAndProjectOntologyIdsActionHandler(p1, p2, p3, p4);
     }
 
@@ -481,6 +481,7 @@ public class ProjectActionHandlerBeansConfiguration {
         return new RevertRevisionActionHandler(p1, p3, p4, p5);
     }
 
+
     @Bean
     GetPerspectiveLayoutActionHandler getPerspectiveLayoutActionHandler(PerspectivesManager p1) {
         return new GetPerspectiveLayoutActionHandler(p1);
@@ -531,9 +532,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    SetNamedHierarchyActionHandler addNamedHierarchyActionHandler(AccessManager p0,
+    AddNamedHierarchyActionHandler addNamedHierarchyActionHandler(AccessManager p0,
                                                                   NamedHierarchyManager p1) {
-        return new SetNamedHierarchyActionHandler(p0, p1);
+        return new AddNamedHierarchyActionHandler(p0, p1);
     }
 
 
@@ -541,6 +542,7 @@ public class ProjectActionHandlerBeansConfiguration {
     DeleteEntityCommentHandler deleteEntityCommentActionHandler(EntityDiscussionThreadRepository p1) {
         return new DeleteEntityCommentHandler(p1);
     }
+
 
 
     @Bean
@@ -718,9 +720,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     AddAxiomsActionHandler addAxiomActionHandler(AccessManager p1,
-                                                 ProjectId p2,
-                                                 ChangeManager p3,
-                                                 AddAxiomsChangeListGeneratorFactory p4) {
+                                                  ProjectId p2,
+                                                  ChangeManager p3,
+                                                  AddAxiomsChangeListGeneratorFactory p4) {
         return new AddAxiomsActionHandler(p1, p2, p3, p4);
     }
 
@@ -1086,8 +1088,18 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                  ProjectId p2,
                                                                                  UploadedOntologiesCache p3,
                                                                                  ProjectOntologiesBuilder p4,
-                                                                                 HasApplyChanges p5) {
+                                                                                 HasApplyChanges p5){
         return new ExistingOntologyMergeAddActionHandler(p1, p2, p3, p4, p5);
+    }
+
+    @Bean
+    GetHierarchyDescriptorActionHandler getHierarchyDescriptorActionHandler(AccessManager p1, HierarchyDescriptorRuleSelector p2) {
+        return new GetHierarchyDescriptorActionHandler(p1, p2);
+    }
+
+    @Bean
+    GetProjectHierarchyDescriptorRulesActionHandler getProjectHierarchyDescriptorRulesActionHandler(AccessManager p1, HierarchyDescriptorRulesRepository p2) {
+        return new GetProjectHierarchyDescriptorRulesActionHandler(p1, p2);
     }
 
     @Bean

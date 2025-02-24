@@ -1199,6 +1199,7 @@ public class ProjectBeansConfiguration {
         return dataDirectory.resolve("lucene-indexes");
 
     }
+
     @Bean
     ActiveLanguagesManagerImpl activeLanguagesManager(ProjectId p1,
                                                       AxiomsByEntityReferenceIndex p2,

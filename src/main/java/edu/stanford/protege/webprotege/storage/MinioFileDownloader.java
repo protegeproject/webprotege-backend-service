@@ -6,7 +6,7 @@ import io.minio.MinioClient;
 import io.minio.errors.*;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;

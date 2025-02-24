@@ -627,4 +627,22 @@ public class ApplicationBeansConfiguration {
         return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
     }
 
+    @Bean
+    HierarchyDescriptorRulesRepositoryImpl projectHierarchyDescriptorRulesRepository(MongoTemplate p1, ObjectMapper p2) {
+        var repo = new HierarchyDescriptorRulesRepositoryImpl(p1, p2);
+        repo.ensureIndexes();
+        return repo;
+    }
+
+    @Bean
+    HierarchyDescriptorRuleSelector hierarchyDescriptorRuleSelector(HierarchyDescriptorRulesRepository p1, HierarchyDescriptorRuleDisplayContextMatcher p2) {
+        return new HierarchyDescriptorRuleSelector(p1, p2);
+    }
+
+    @Bean
+    HierarchyDescriptorRuleDisplayContextMatcher hierarchyDescriptorRuleDisplayContextMatcher() {
+        return new HierarchyDescriptorRuleDisplayContextMatcher();
+    }
+
+
 }

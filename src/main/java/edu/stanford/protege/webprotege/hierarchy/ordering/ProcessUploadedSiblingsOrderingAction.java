@@ -8,7 +8,8 @@ import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 
 @JsonTypeName(ProcessUploadedSiblingsOrderingAction.CHANNEL)
 public record ProcessUploadedSiblingsOrderingAction(@JsonProperty("projectId") ProjectId projectId,
-                                                    @JsonProperty("documentId") DocumentId uploadedDocumentId) implements ProjectAction<ProcessUploadedSiblingsOrderingResponse> {
+                                                    @JsonProperty("documentId") DocumentId uploadedDocumentId,
+                                                    @JsonProperty("overrideExisting") boolean overrideExisting) implements ProjectAction<ProcessUploadedSiblingsOrderingResponse> {
 
     public final static String CHANNEL = "webprotege.hierarchies.ProcessUploadedSiblingsOrdering";
 
