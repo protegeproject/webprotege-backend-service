@@ -174,62 +174,16 @@ public class ProjectOrderedChildrenServiceImplIT {
     }
 
     @Test
-    public void GIVEN_multipleExistingParents_WHEN_overrideExistingTrue_THEN_allAreUpdated() {
-        ProjectOrderedChildren parent1 = new ProjectOrderedChildren("http://example.com/entity/parent1", projectId, List.of(childUri1), null);
-        ProjectOrderedChildren parent2 = new ProjectOrderedChildren("http://example.com/entity/parent2", projectId, List.of(childUri2), null);
-        mongoTemplate.insertAll(List.of(parent1,parent2));
     public void GIVEN_newOrderOnChildren_WHEN_updateEntity_THEN_newOrderIsSaved(){
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
         mongoTemplate.insert(initialEntry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
 
-        OrderedChildren updatedChildren1 = new OrderedChildren(List.of(new OrderedChild(childUri3, "1000000")), "http://example.com/entity/parent1");
-        OrderedChildren updatedChildren2 = new OrderedChildren(List.of(new OrderedChild(childUri1, "2000000")), "http://example.com/entity/parent2");
         SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
                 IRI.create(initialEntry.entityUri()),
                 Arrays.asList(childUri3, childUri2, childUri1));
 
-        ProjectOrderedChildren updatedParent1 = service.createProjectOrderedChildren(updatedChildren1, projectId, null);
-        ProjectOrderedChildren updatedParent2 = service.createProjectOrderedChildren(updatedChildren2, projectId, null);
         service.updateEntity(action, null);
 
-        service.importMultipleProjectOrderedChildren(Set.of(updatedParent1, updatedParent2), true);
-
-        Optional<ProjectOrderedChildren> result1 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent1")), ProjectOrderedChildren.class));
-        Optional<ProjectOrderedChildren> result2 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent2")), ProjectOrderedChildren.class));
-
-        assertTrue(result1.isPresent());
-        assertEquals(1, result1.get().children().size());
-        assertTrue(result1.get().children().contains(childUri3));
-
-        assertTrue(result2.isPresent());
-        assertEquals(1, result2.get().children().size());
-        assertTrue(result2.get().children().contains(childUri1));
-    }
-
-    @Test
-    public void GIVEN_multipleExistingParents_WHEN_overrideExistingFalse_THEN_onlyNewEntriesAreInserted() {
-        ProjectOrderedChildren parent1 = new ProjectOrderedChildren("http://example.com/entity/parent1", projectId, List.of(childUri1), null);
-        mongoTemplate.insert(parent1);
-
-        OrderedChildren updatedChildren1 = new OrderedChildren(List.of(new OrderedChild(childUri3, "1000000")), "http://example.com/entity/parent1");
-        OrderedChildren updatedChildren2 = new OrderedChildren(List.of(new OrderedChild(childUri2, "2000000")), "http://example.com/entity/parent2");
-
-        ProjectOrderedChildren updatedParent1 = service.createProjectOrderedChildren(updatedChildren1, projectId, null);
-        ProjectOrderedChildren updatedParent2 = service.createProjectOrderedChildren(updatedChildren2, projectId, null);
-
-        service.importMultipleProjectOrderedChildren(Set.of(updatedParent1, updatedParent2), false);
-
-        Optional<ProjectOrderedChildren> result1 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent1")), ProjectOrderedChildren.class));
-        Optional<ProjectOrderedChildren> result2 = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where(ENTITY_URI).is("http://example.com/entity/parent2")), ProjectOrderedChildren.class));
-
-        assertTrue(result1.isPresent());
-        assertEquals(1, result1.get().children().size());
-        assertTrue(result1.get().children().contains(childUri1));
-
-        assertTrue(result2.isPresent());
-        assertEquals(1, result2.get().children().size());
-        assertTrue(result2.get().children().contains(childUri2));
-    }
         List<ProjectOrderedChildren> storedEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
         assertFalse(storedEntries.isEmpty(), "EntityChildrenOrdering should be saved in MongoDB");
 
