@@ -10,12 +10,15 @@ import java.util.List;
 
 @JsonTypeName("webprotege.cards.GetEntityCardDescriptors")
 public record GetEntityCardDescriptorsResponse(@JsonProperty("projectId") ProjectId projectId,
-                                               @JsonProperty("descriptors") List<CardDescriptor> descriptors) implements Response, HasProjectId {
+                                               @JsonProperty("descriptors") List<CardDescriptor> descriptors,
+                                               @JsonProperty("writableCards") List<CardId> writeableCards) implements Response, HasProjectId {
 
 
     public GetEntityCardDescriptorsResponse(@JsonProperty("projectId") ProjectId projectId,
-                                            @JsonProperty("descriptors") List<CardDescriptor> descriptors) {
+                                            @JsonProperty("descriptors") List<CardDescriptor> descriptors,
+                                            @JsonProperty("writableCards") List<CardId> writeableCards) {
         this.projectId = projectId;
         this.descriptors = List.copyOf(descriptors);
+        this.writeableCards = List.copyOf(writeableCards);
     }
 }

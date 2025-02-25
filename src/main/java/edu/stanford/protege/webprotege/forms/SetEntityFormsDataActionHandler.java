@@ -62,6 +62,7 @@ public class SetEntityFormsDataActionHandler extends AbstractProjectChangeHandle
         var subject = action.entity();
         return changeListGeneratorFactory.create(action.changeRequestId(),
                                                  subject,
+                                                 action.commitMessage(),
                                                  pristineFormsData,
                                                  editedFormsData);
     }

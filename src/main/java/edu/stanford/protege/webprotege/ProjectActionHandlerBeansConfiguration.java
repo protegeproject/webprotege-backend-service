@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
 import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
 import edu.stanford.protege.webprotege.bulkop.*;
+import edu.stanford.protege.webprotege.card.CardDescriptorRepository;
 import edu.stanford.protege.webprotege.card.GetEntityCardDescriptorsProjectActionHandler;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -974,7 +975,10 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
-    GetEntityCardDescriptorsProjectActionHandler getEntityCardDescriptorsProjectActionHandler(AccessManager p1, ProjectId p2, EntityMatcherFactory p3) {
-        return new GetEntityCardDescriptorsProjectActionHandler(p1, p2, p3);
+    GetEntityCardDescriptorsProjectActionHandler getEntityCardDescriptorsProjectActionHandler(AccessManager p1,
+                                                                                              ProjectId p2,
+                                                                                              EntityMatcherFactory p3,
+                                                                                              EntityFormManager p4, CardDescriptorRepository p5) {
+        return new GetEntityCardDescriptorsProjectActionHandler(p1, p2, p3, p4, p5);
     }
 }

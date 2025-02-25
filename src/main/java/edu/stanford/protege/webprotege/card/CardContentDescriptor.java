@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonSubTypes({
         @JsonSubTypes.Type(FormCardContentDescriptor.class),
-        @JsonSubTypes.Type(PortletCardContentDescriptor.class)
+        @JsonSubTypes.Type(CustomContentEntityCardContentDescriptor.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public interface CardContentDescriptor {

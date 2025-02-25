@@ -51,6 +51,9 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     private final MessageFormatter messageFormatter;
 
     @Nonnull
+    private final String commitMessage;
+
+    @Nonnull
     private final ImmutableMap<FormId, FormData> pristineFormsData;
 
     @Nonnull
@@ -78,7 +81,9 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     private final DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory;
 
     @Inject
-    public EntityFormChangeListGenerator(@Nonnull ChangeRequestId changeRequestId, @Nonnull OWLEntity subject,
+    public EntityFormChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
+                                         @Nonnull OWLEntity subject,
+                                         @Nonnull String commitMessage,
                                          @Nonnull ImmutableMap<FormId, FormData> pristineFormsData,
                                          @Nonnull FormDataByFormId editedFormData,
                                          @Nonnull FormDataConverter formDataProcessor,
@@ -90,6 +95,7 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
                                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                                          @Nonnull DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory) {
         this.subject = checkNotNull(subject);
+        this.commitMessage = checkNotNull(commitMessage);
         this.pristineFormsData = checkNotNull(pristineFormsData);
         this.editedFormsData = checkNotNull(editedFormData);
         this.formDataProcessor = checkNotNull(formDataProcessor);
@@ -275,6 +281,9 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<OWLEntity> result) {
+        if(!commitMessage.isBlank()) {
+            return commitMessage.trim();
+        }
         OWLEntity entity = result.getSubject();
         return messageFormatter.format("Edited {0}", entity);
     }
