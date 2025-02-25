@@ -10,10 +10,12 @@ import com.mongodb.client.model.Indexes;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import javax.annotation.*;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +55,8 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
     private final Lock readLock = readWriteLock.readLock();
 
     private final Lock writeLock = readWriteLock.writeLock();
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(EntityFormRepositoryImpl.class);
 
     @Inject
     public EntityFormRepositoryImpl(ObjectMapper objectMapper, MongoTemplate database) {
@@ -131,17 +135,22 @@ public class EntityFormRepositoryImpl implements EntityFormRepository {
         try {
             writeLock.lock();
             var collection = getCollection();
-            collection.deleteMany(new Document(PROJECT_ID, projectId.id()));
+            var docs = new ArrayList<Document>();
+
             if (!formDescriptors.isEmpty()) {
-                var docs = new ArrayList<Document>();
                 for (int ordinal = 0; ordinal < formDescriptors.size(); ordinal++) {
                     var formDescriptor = formDescriptors.get(ordinal);
                     var record = FormDescriptorRecord.get(projectId, formDescriptor, ordinal);
                     var recordDocument = objectMapper.convertValue(record, Document.class);
                     docs.add(recordDocument);
                 }
+            }
+            collection.deleteMany(new Document(PROJECT_ID, projectId.id()));
+            if (!docs.isEmpty()) {
                 collection.insertMany(docs);
             }
+        }catch (Exception e) {
+            LOGGER.error("Error saving forms for project " + projectId.id(), e);
         } finally {
             writeLock.unlock();
         }

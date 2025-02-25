@@ -10,7 +10,10 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -25,18 +28,20 @@ import static java.util.stream.Collectors.toList;
  */
 public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler<GetHierarchyRootsAction, GetHierarchyRootsResult> {
 
+    private final Logger logger = LoggerFactory.getLogger(GetHierarchyRootsActionHandler.class);
+
     @Nonnull
-    private final HierarchyProviderMapper hierarchyProviderMapper;
+    private final HierarchyProviderManager hierarchyProviderManager;
 
     @Nonnull
     private final EntityNodeRenderer renderer;
 
     @Inject
     public GetHierarchyRootsActionHandler(@Nonnull AccessManager accessManager,
-                                          @Nonnull HierarchyProviderMapper hierarchyProviderMapper,
+                                          @Nonnull HierarchyProviderManager hierarchyProviderManager,
                                           @Nonnull EntityNodeRenderer renderer) {
         super(accessManager);
-        this.hierarchyProviderMapper = checkNotNull(hierarchyProviderMapper);
+        this.hierarchyProviderManager = checkNotNull(hierarchyProviderManager);
         this.renderer = checkNotNull(renderer);
     }
 
@@ -55,8 +60,8 @@ public class GetHierarchyRootsActionHandler extends AbstractProjectActionHandler
     @Nonnull
     @Override
     public GetHierarchyRootsResult execute(@Nonnull GetHierarchyRootsAction action, @Nonnull ExecutionContext executionContext) {
-        HierarchyId hierarchyId = action.hierarchyId();
-        return hierarchyProviderMapper.getHierarchyProvider(hierarchyId).map(hierarchyProvider -> {
+        logger.debug("GetHierarchyRoots: {}", action);
+        return hierarchyProviderManager.getHierarchyProvider(action.hierarchyDescriptor()).map(hierarchyProvider -> {
             Collection<OWLEntity> roots = hierarchyProvider.getRoots();
             List<GraphNode<EntityNode>> rootNodes =
                     roots.stream()

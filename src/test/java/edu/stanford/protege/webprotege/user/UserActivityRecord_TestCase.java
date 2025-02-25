@@ -4,11 +4,13 @@ package edu.stanford.protege.webprotege.user;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.project.RecentProjectRecord;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.util.List;
 
@@ -16,9 +18,11 @@ import static java.util.Collections.singletonList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class UserActivityRecord_TestCase {
 
     private UserActivityRecord userActivityRecord;
@@ -34,17 +38,19 @@ public class UserActivityRecord_TestCase {
 
     private List<RecentProjectRecord> recentProjects;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         recentProjects = singletonList(recentProject);
         userActivityRecord = new UserActivityRecord(userId, lastLogin, lastLogout, recentProjects);
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_userId_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new UserActivityRecord(null, lastLogin, lastLogout, recentProjects);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_userId() {
@@ -62,10 +68,12 @@ public class UserActivityRecord_TestCase {
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_recentProjects_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_recentProjects_IsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         new UserActivityRecord(userId, lastLogin, lastLogout, null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnSupplied_recentProjects() {

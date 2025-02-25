@@ -5,8 +5,8 @@ import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import java.util.Set;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 @Generated(

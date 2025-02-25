@@ -7,8 +7,9 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.match.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
 
 /**
  * Matthew Horridge
@@ -18,63 +19,63 @@ import javax.inject.Provider;
 public class EntityMatcherBeansConfiguration {
 
     @Bean
-    SubClassOfMatcherFactory subClassOfMatcherFactory(Provider<ClassHierarchyProvider> p1) {
+    SubClassOfMatcherFactory subClassOfMatcherFactory(ClassHierarchyProvider p1) {
         return new SubClassOfMatcherFactory(p1);
     }
 
     @Bean
-    LeafClassMatcherFactory leafClassMatcherFactory(Provider<ClassHierarchyProvider> p1) {
+    LeafClassMatcherFactory leafClassMatcherFactory(ClassHierarchyProvider p1) {
         return new LeafClassMatcherFactory(p1);
     }
 
     @Bean
-    NotSubClassOfMatcherFactory notSubClassOfMatcherFactory(Provider<ClassHierarchyProvider> p1) {
+    NotSubClassOfMatcherFactory notSubClassOfMatcherFactory(ClassHierarchyProvider p1) {
         return new NotSubClassOfMatcherFactory(p1);
     }
 
     @Bean
-    InstanceOfMatcherFactory instanceOfMatcherFactory(Provider<ClassHierarchyProvider> p1,
-                                                      Provider<ProjectOntologiesIndex> p2,
-                                                      Provider<ClassAssertionAxiomsByClassIndex> p3,
-                                                      Provider<ProjectSignatureByTypeIndex> p4) {
+    InstanceOfMatcherFactory instanceOfMatcherFactory(ClassHierarchyProvider p1,
+                                                      ProjectOntologiesIndex p2,
+                                                      ClassAssertionAxiomsByClassIndex p3,
+                                                      ProjectSignatureByTypeIndex p4) {
         return new InstanceOfMatcherFactory(p1, p2, p3, p4);
     }
 
     @Bean
-    ConflictingBooleanValuesMatcherFactory conflictingBooleanValuesMatcherFactory(Provider<AnnotationAssertionAxiomsIndex> p1) {
+    ConflictingBooleanValuesMatcherFactory conflictingBooleanValuesMatcherFactory(AnnotationAssertionAxiomsIndex p1) {
         return new ConflictingBooleanValuesMatcherFactory(p1);
     }
 
     @Bean
-    EntityIsDeprecatedMatcherFactory entityIsDeprecatedMatcherFactory(Provider<AnnotationAssertionAxiomsIndex> p1) {
+    EntityIsDeprecatedMatcherFactory entityIsDeprecatedMatcherFactory(AnnotationAssertionAxiomsIndex p1) {
         return new EntityIsDeprecatedMatcherFactory(p1);
     }
 
     @Bean
-    AnnotationValuesAreNotDisjointMatcherFactory annotationValuesAreNotDisjointMatcherFactory(Provider<AnnotationAssertionAxiomsIndex> p1) {
+    AnnotationValuesAreNotDisjointMatcherFactory annotationValuesAreNotDisjointMatcherFactory(AnnotationAssertionAxiomsIndex p1) {
         return new AnnotationValuesAreNotDisjointMatcherFactory(p1);
     }
 
     @Bean
-    NonUniqueLangTagsMatcherFactory nonUniqueLangTagsMatcherFactory(Provider<AnnotationAssertionAxiomsIndex> p1) {
+    NonUniqueLangTagsMatcherFactory nonUniqueLangTagsMatcherFactory(AnnotationAssertionAxiomsIndex p1) {
         return new NonUniqueLangTagsMatcherFactory(p1);
     }
 
     @Bean
-    EntityAnnotationMatcherFactory entityAnnotationMatcherFactory(Provider<AnnotationAssertionAxiomsIndex> p1) {
+    EntityAnnotationMatcherFactory entityAnnotationMatcherFactory(AnnotationAssertionAxiomsIndex p1) {
         return new EntityAnnotationMatcherFactory(p1);
     }
 
     @Bean
-    IriAnnotationsMatcherFactory iriAnnotationsMatcherFactory(Provider<AnnotationAssertionAxiomsIndex> p1) {
+    IriAnnotationsMatcherFactory iriAnnotationsMatcherFactory(AnnotationAssertionAxiomsIndex p1) {
         return new IriAnnotationsMatcherFactory(p1);
     }
 
     @Bean
-    EntityRelationshipMatcherFactory entityRelationshipMatcherFactory(Provider<ProjectOntologiesIndex> p1,
-                                                                      Provider<SubClassOfAxiomsBySubClassIndex> p2,
-                                                                      Provider<PropertyAssertionAxiomsBySubjectIndex> p3,
-                                                                      Provider<AxiomPropertyValueTranslator> p4) {
+    EntityRelationshipMatcherFactory entityRelationshipMatcherFactory(ProjectOntologiesIndex p1,
+                                                                      SubClassOfAxiomsBySubClassIndex p2,
+                                                                      PropertyAssertionAxiomsBySubjectIndex p3,
+                                                                      AxiomPropertyValueTranslator p4) {
         return new EntityRelationshipMatcherFactory(p1, p2, p3, p4);
     }
 

@@ -1,10 +1,14 @@
 package edu.stanford.protege.webprotege.change;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -18,7 +22,8 @@ import static org.hamcrest.core.IsCollectionContaining.hasItem;
  * Stanford Center for Biomedical Informatics Research
  * 2019-08-28
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OntologyChangeList_TestCase<R> {
 
 
@@ -36,46 +41,58 @@ public class OntologyChangeList_TestCase<R> {
     @Mock
     private OntologyChange ontologyChange;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         changeListBuilder = OntologyChangeList.builder();
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfResultIsNull() {
+    @Test
+public void shouldThrowNpeIfResultIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         changeListBuilder.build(null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfAddOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfAddOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         changeListBuilder.addAxiom(null, axiom);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfAddAxiomIdIsNull() {
+    @Test
+public void shouldThrowNpeIfAddAxiomIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         changeListBuilder.addAxiom(ontologyId, null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfRemoveOntologyIdIsNull() {
+    @Test
+public void shouldThrowNpeIfRemoveOntologyIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         changeListBuilder.removeAxiom(null, axiom);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfRemoveAxiomIdIsNull() {
+    @Test
+public void shouldThrowNpeIfRemoveAxiomIdIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         changeListBuilder.removeAxiom(ontologyId, null);
-    }
+     });
+}
 
     @SuppressWarnings("ConstantConditions")
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNpeIfChangeIsNull() {
+    @Test
+public void shouldThrowNpeIfChangeIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         changeListBuilder.add(null);
-    }
+     });
+}
 
     @Test
     public void shouldBuildEmptyChangeList() {

@@ -10,7 +10,9 @@ import edu.stanford.protege.webprotege.watches.WatchManager;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
+
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -70,6 +72,7 @@ public class EntityNodeRenderer {
                 deprecatedEntityChecker.isDeprecated(entity),
                 watchManager.getDirectWatches(entity),
                 discussionThreadRepository.getOpenCommentsCount(projectId, entity),
-                tagsManager.getTags(entity));
+                tagsManager.getTags(entity),
+                Set.of());
     }
 }

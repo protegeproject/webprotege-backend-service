@@ -1,11 +1,13 @@
 package edu.stanford.protege.webprotege.mansyntax;
 
 import edu.stanford.protege.webprotege.change.OntologyChange;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyID;
@@ -24,7 +26,8 @@ import static org.mockito.Mockito.when;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 25/03/2014
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class OntologyAxiomPairOntologySwitchTestCase {
 
     @Mock
@@ -47,7 +50,7 @@ public class OntologyAxiomPairOntologySwitchTestCase {
     private OntologyAxiomPair pairB;
     private OntologyAxiomPairChangeGenerator generator;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(ontA.getOntologyID())
                 .thenReturn(ontAId);

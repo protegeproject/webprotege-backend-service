@@ -1,12 +1,15 @@
 package edu.stanford.protege.webprotege.axiom;
 
 import com.google.common.collect.Sets;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.mockito.stubbing.Answer;
 import org.semanticweb.owlapi.model.*;
 
@@ -16,7 +19,6 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,7 +27,8 @@ import static org.mockito.Mockito.when;
  * Stanford Center for Biomedical Informatics Research
  * 30/01/15
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class AxiomIRISubjectProvider_TestCase {
 
     @Mock
@@ -74,7 +77,7 @@ public class AxiomIRISubjectProvider_TestCase {
     private Optional<IRI> absent;
 
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         when(entity.getIRI()).thenReturn(iri);
 
@@ -104,7 +107,7 @@ public class AxiomIRISubjectProvider_TestCase {
      * @param <A> The type of axiom.
      */
     private <A extends OWLAxiom> void mockVisit(final OWLAxiom axiom, final Class<A> axiomClass) {
-        when(axiom.accept(any(OWLAxiomVisitorEx.class))).then(new Answer<Object>() {
+        when(axiom.accept(ArgumentMatchers.any(OWLAxiomVisitorEx.class))).then(new Answer<Object>() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
                 Object visitorImplementation = invocationOnMock.getArguments()[0];

@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;

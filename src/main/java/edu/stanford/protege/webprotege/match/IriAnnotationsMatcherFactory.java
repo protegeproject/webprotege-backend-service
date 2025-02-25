@@ -2,22 +2,22 @@ package edu.stanford.protege.webprotege.match;
 
 import edu.stanford.protege.webprotege.index.AnnotationAssertionAxiomsIndex;
 import javax.annotation.processing.Generated;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 
 public final class IriAnnotationsMatcherFactory {
-  private final Provider<AnnotationAssertionAxiomsIndex> axiomProviderProvider;
+  private final AnnotationAssertionAxiomsIndex axiomProviderProvider;
 
   @Inject
   public IriAnnotationsMatcherFactory(
-      Provider<AnnotationAssertionAxiomsIndex> axiomProviderProvider) {
+      AnnotationAssertionAxiomsIndex axiomProviderProvider) {
     this.axiomProviderProvider = checkNotNull(axiomProviderProvider, 1);
   }
 
   public IriAnnotationsMatcher create(Matcher<OWLAnnotation> annotationMatcher) {
     return new IriAnnotationsMatcher(
-        checkNotNull(axiomProviderProvider.get(), 1), checkNotNull(annotationMatcher, 2));
+        checkNotNull(axiomProviderProvider, 1), checkNotNull(annotationMatcher, 2));
   }
 
   private static <T> T checkNotNull(T reference, int argumentIndex) {

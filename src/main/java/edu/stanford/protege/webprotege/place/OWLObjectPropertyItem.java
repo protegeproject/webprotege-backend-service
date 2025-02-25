@@ -24,6 +24,6 @@ public class OWLObjectPropertyItem extends Item<OWLObjectProperty> {
 
     @Override
     public String getItemRendering() {
-        return getItem().toString();
+        return getItem().getIRI().toQuotedString();
     }
 }

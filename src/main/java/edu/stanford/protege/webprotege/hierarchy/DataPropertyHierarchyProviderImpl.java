@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -83,4 +83,13 @@ public class DataPropertyHierarchyProviderImpl extends AbstractOWLPropertyHierar
                                      .collect(toSet());
     }
 
+    @Override
+    public boolean contains(Object object) {
+        if(object instanceof OWLDataProperty property) {
+            return containsReference(property);
+        }
+        else {
+            return false;
+        }
+    }
 }

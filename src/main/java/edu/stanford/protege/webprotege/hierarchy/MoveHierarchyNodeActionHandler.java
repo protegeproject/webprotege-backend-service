@@ -1,16 +1,13 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.access.*;
+import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.inject.Inject;
+import javax.annotation.*;
+import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
 
@@ -20,14 +17,17 @@ import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY
 public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler<Boolean, MoveHierarchyNodeAction, MoveHierarchyNodeResult> {
 
     private final MoveEntityChangeListGeneratorFactory factory;
+    private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
 
     @Inject
     public MoveHierarchyNodeActionHandler(@Nonnull AccessManager accessManager,
 
                                           @Nonnull HasApplyChanges applyChanges,
-                                          @Nonnull MoveEntityChangeListGeneratorFactory factory) {
+                                          @Nonnull MoveEntityChangeListGeneratorFactory factory,
+                                          ProjectOrderedChildrenManager projectOrderedChildrenManager) {
         super(accessManager, applyChanges);
         this.factory = factory;
+        this.projectOrderedChildrenManager = projectOrderedChildrenManager;
     }
 
     @Nonnull
@@ -38,13 +38,25 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(MoveHierarchyNodeAction action, ExecutionContext executionContext) {
-        return factory.create(action);
+        return factory.create(
+                action.fromNodePath(),
+                action.toNodeParentPath(),
+                action.dropType(),
+                action.changeRequestId()
+        );
     }
 
     @Override
     protected MoveHierarchyNodeResult createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult,
                                                          MoveHierarchyNodeAction action,
                                                          ExecutionContext executionContext) {
+        if (changeApplicationResult.getSubject()) {
+            projectOrderedChildrenManager.moveHierarchyNode(
+                    action.fromNodePath().getLastPredecessor().get().getEntity(),
+                    action.toNodeParentPath().getLast().get().getEntity(),
+                    action.fromNodePath().getLast().get().getEntity()
+            );
+        }
         return new MoveHierarchyNodeResult(changeApplicationResult.getSubject());
     }
 

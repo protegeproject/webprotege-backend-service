@@ -1,9 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
-import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
+import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
@@ -48,6 +46,7 @@ public class FormFieldDescriptor_Serialization_IT {
                 LanguageMap.empty()
         );
         var serialized = tester.write(formElementDescriptor);
+        System.out.println(serialized.getJson());
         var deserialized = tester.parse(serialized.getJson());
         assertThat(formElementDescriptor, is(deserialized.getObject()));
     }
@@ -97,7 +96,7 @@ public class FormFieldDescriptor_Serialization_IT {
     @Test
     public void shouldParseWithNoOwlBinding() throws IOException {
         var serializedForm = """
-                {"id":"12345678-1234-1234-1234-123456789abc","label":{},"elementRun":"START","control":{"type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","lineMode":"SINGLE_LINE","patternViolationErrorMessage":{}},"repeatability":"NON_REPEATABLE","optionality":"REQUIRED","help":{}}""";
+                {"id":"12345678-1234-1234-1234-123456789abc","label":{},"elementRun":"START","control":{"@type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","lineMode":"SINGLE_LINE","patternViolationErrorMessage":{}},"repeatability":"NON_REPEATABLE","optionality":"REQUIRED","help":{}}""";
         var deserializedForm = tester.parse(serializedForm);
         assertThat(deserializedForm.getObject().getOwlBinding().isEmpty(), is(true));
 

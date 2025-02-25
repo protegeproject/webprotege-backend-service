@@ -1,8 +1,9 @@
 package edu.stanford.protege.webprotege.entity;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Author: Matthew Horridge<br>
@@ -12,10 +13,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class EntityNameUtils_IsQuoted_TestCase {
 
-    @Test(expected = NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIfStringIsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIfStringIsNull() {
+    assertThrows(NullPointerException.class, () -> { 
         EntityNameUtils.isQuoted(null);
-    }
+     });
+}
 
     @Test
     public void shouldReturnFalseForEmptyString() {

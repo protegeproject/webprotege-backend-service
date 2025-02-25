@@ -3,28 +3,36 @@ package edu.stanford.protege.webprotege.user;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-@RunWith(org.mockito.runners.MockitoJUnitRunner.class)
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class GetUserIdCompletionsAction_TestCase {
 
     private GetUserIdCompletionsAction action;
 
     private String completionText = "The completionText";
 
-    @Before
+    @BeforeEach
     public void setUp()
         throws Exception
     {
         action = GetUserIdCompletionsAction.create(completionText);
     }
 
-    @Test(expected = java.lang.NullPointerException.class)
-    public void shouldThrowNullPointerExceptionIf_completionText_IsNull() {
+    @Test
+public void shouldThrowNullPointerExceptionIf_completionText_IsNull() {
+    assertThrows(java.lang.NullPointerException.class, () -> { 
         GetUserIdCompletionsAction.create(null);
-    }
+     });
+}
 
     @Test
     public void shouldBeEqualToSelf() {

@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.DataDirectoryProvider;
 import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
+import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.project.BuiltInPrefixDeclarations;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -24,10 +25,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
-import javax.inject.Provider;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
+
+import jakarta.inject.Provider;
 
 /**
  * Matthew Horridge
@@ -97,8 +99,9 @@ public class LuceneBeansConfiguration {
                                     SearcherManager p2,
                                     LuceneQueryFactory p3,
                                     LuceneDictionaryLanguageValuesMatcher p4,
-                                    QueryAnalyzerFactory p5) {
-        return new LuceneIndexImpl(p1, p2, p3, p4, p5);
+                                    QueryAnalyzerFactory p5,
+                                    MatcherFactory p6) {
+        return new LuceneIndexImpl(p1, p2, p3, p4, p5, p6);
     }
 
     @Bean

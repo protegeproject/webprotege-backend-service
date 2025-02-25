@@ -18,6 +18,11 @@ import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
+import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepositoryImpl;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -26,6 +31,7 @@ import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessagingExceptionHandlerImpl;
 import edu.stanford.protege.webprotege.mail.SendMailImpl;
@@ -43,7 +49,6 @@ import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.*;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
 import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl;
-import edu.stanford.protege.webprotege.storage.MinioFileDownloader;
 import edu.stanford.protege.webprotege.storage.MinioProperties;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
 import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
@@ -56,6 +61,7 @@ import edu.stanford.protege.webprotege.watches.WatchNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.watches.WatchRecordRepositoryImpl;
 import edu.stanford.protege.webprotege.webhook.*;
 import io.minio.MinioClient;
+import jakarta.annotation.Nonnull;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -63,14 +69,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
-import javax.inject.Provider;
-import javax.inject.Singleton;
+import jakarta.inject.Provider;
+import jakarta.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.*;
 
 /**
  * Matthew Horridge
@@ -79,7 +89,14 @@ import java.util.Set;
  */
 @Configuration
 @EnableMongoRepositories
+@EnableAsync
 public class ApplicationBeansConfiguration {
+
+
+    @Bean
+    public ExecutorService executorService() {
+        return Executors.newFixedThreadPool(10); // Customize the pool size as needed
+    }
 
     @Bean
     public MongoCustomConversions mongoCustomConversions(DocumentToOwlEntityConverter documentToOwlEntityConverter) {
@@ -179,12 +196,8 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectDirectoryFactory getProjectDirectoryFactory() {
-        return new ProjectDirectoryFactory(getDataDirectory());
-    }
-
-    private File getDataDirectory() {
-        return null;
+    ProjectDirectoryFactory getProjectDirectoryFactory(DataDirectoryProvider dataDirectoryProvider) {
+        return new ProjectDirectoryFactory(dataDirectoryProvider.get());
     }
 
     @Bean
@@ -572,4 +585,53 @@ public class ApplicationBeansConfiguration {
         return new CardDescriptorRepositoryImpl(p1, p2);
     }
 
+    NamedHierarchyRepository namedHierarchyRepository(ObjectMapper p0, MongoTemplate p1) {
+        return new NamedHierarchyRepository(p0, p1);
+    }
+
+    @Bean
+    NamedHierarchyManager hierarchiesManager(OWLDataFactory dataFactory, NamedHierarchyRepository repository) {
+        return new NamedHierarchyManagerImpl(dataFactory, repository);
+    }
+
+    @Bean
+    public ReadWriteLock readWriteLock() {
+        return new ReentrantReadWriteLock(true);
+    }
+
+    @Bean
+    ReadWriteLockService readWriteLockService(@Nonnull ReadWriteLockConfig config,
+                                              @Nonnull ReadWriteLock readWriteLock) {
+        return new ReadWriteLockServiceImpl(config, readWriteLock);
+    }
+
+    @Bean
+    ProjectOrderedChildrenRepositoryImpl projectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate,
+                                                                              ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate, readWriteLock);
+    }
+
+    @Bean
+    ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
+                                                                @Nonnull ProjectOrderedChildrenRepository repository,
+                                                                @Nonnull ReadWriteLockService readWriteLock) {
+        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
+    }
+
+    @Bean
+    HierarchyDescriptorRulesRepositoryImpl projectHierarchyDescriptorRulesRepository(MongoTemplate p1, ObjectMapper p2) {
+        var repo = new HierarchyDescriptorRulesRepositoryImpl(p1, p2);
+        repo.ensureIndexes();
+        return repo;
+    }
+
+    @Bean
+    HierarchyDescriptorRuleSelector hierarchyDescriptorRuleSelector(HierarchyDescriptorRulesRepository p1, HierarchyDescriptorRuleDisplayContextMatcher p2) {
+        return new HierarchyDescriptorRuleSelector(p1, p2);
+    }
+
+    @Bean
+    HierarchyDescriptorRuleDisplayContextMatcher hierarchyDescriptorRuleDisplayContextMatcher() {
+        return new HierarchyDescriptorRuleDisplayContextMatcher();
+    }
 }

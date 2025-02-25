@@ -12,7 +12,7 @@ import edu.stanford.protege.webprotege.mansyntax.render.HasGetRendering;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

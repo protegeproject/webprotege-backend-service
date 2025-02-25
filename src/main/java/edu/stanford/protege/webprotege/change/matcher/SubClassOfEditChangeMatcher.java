@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.change.description.SwitchedRelationshipPr
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 

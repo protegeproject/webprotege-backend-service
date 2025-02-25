@@ -44,6 +44,7 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdaterFactory;
@@ -59,6 +60,7 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
+import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.mail.CommentMessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.SendMail;
@@ -103,6 +105,7 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -110,7 +113,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import javax.inject.Provider;
+import jakarta.inject.Provider;
+
+import jakarta.annotation.Nonnull;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -255,7 +260,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     @ClassHierarchyRoot
-    public OWLClass classHierarchyRoot(ClassHierarchyRootProvider provider) {
+    public Set<OWLClass> classHierarchyRoot(ClassHierarchyRootProvider provider) {
         return provider.get();
     }
 
@@ -644,8 +649,8 @@ public class ProjectBeansConfiguration {
 
 
     @Bean
-    ClassHierarchyProviderImpl classHierarchyProvider(ProjectId p1,
-                                                      @ClassHierarchyRoot OWLClass p2,
+    ClassHierarchyProvider classHierarchyProvider(ProjectId p1,
+                                                      @ClassHierarchyRoot Set<OWLClass> p2,
                                                       ProjectOntologiesIndex p3,
                                                       SubClassOfAxiomsBySubClassIndex p4,
                                                       EquivalentClassesAxiomsIndex p5,
@@ -789,35 +794,6 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    OWLClassHierarchyChangeComputer owlClassHierarchyChangeComputer(ProjectId p1,
-                                                                    ClassHierarchyProvider p2,
-                                                                    EntityNodeRenderer p3,
-                                                                    EntityHierarchyChangedEventProxyFactory p4) {
-        return new OWLClassHierarchyChangeComputer(p1, p2, p3, p4);
-    }
-
-    @Bean
-    OWLObjectPropertyHierarchyChangeComputer owlObjectPropertyHierarchyChangeComputer(ProjectId p1,
-                                                                                      ObjectPropertyHierarchyProvider p2,
-                                                                                      EntityNodeRenderer p3) {
-        return new OWLObjectPropertyHierarchyChangeComputer(p1, p2, p3);
-    }
-
-    @Bean
-    OWLDataPropertyHierarchyChangeComputer owlDataPropertyHierarchyChangeComputer(ProjectId p1,
-                                                                                  DataPropertyHierarchyProvider p2,
-                                                                                  EntityNodeRenderer p3) {
-        return new OWLDataPropertyHierarchyChangeComputer(p1, p2, p3);
-    }
-
-    @Bean
-    OWLAnnotationPropertyHierarchyChangeComputer owlAnnotationPropertyHierarchyChangeComputer(ProjectId p1,
-                                                                                              AnnotationPropertyHierarchyProvider p2,
-                                                                                              EntityNodeRenderer p3) {
-        return new OWLAnnotationPropertyHierarchyChangeComputer(p1, p2, p3);
-    }
-
-    @Bean
     EntityDeprecatedChangedEventTranslator entityDeprecatedChangedEventTranslator(ProjectId p1,
                                                                                   DeprecatedEntityChecker p2,
                                                                                   EntitiesInProjectSignatureByIriIndex p3) {
@@ -834,13 +810,10 @@ public class ProjectBeansConfiguration {
     @Bean
     public Set<EventTranslator> eventTranslators(BrowserTextChangedEventComputer c0,
                                                  HighLevelEventGenerator c1,
-                                                 OWLClassHierarchyChangeComputer c2,
-                                                 OWLObjectPropertyHierarchyChangeComputer c3,
-                                                 OWLDataPropertyHierarchyChangeComputer c4,
-                                                 OWLAnnotationPropertyHierarchyChangeComputer c5,
+                                                 ManagedHierarchiesChangedComputer c2,
                                                  EntityDeprecatedChangedEventTranslator c6,
                                                  EntityTagsChangedEventComputer c7) {
-        return ImmutableSet.of(c0, c1, c2, c3, c4, c5, c6, c7);
+        return ImmutableSet.of(c0, c1, c2, c6, c7);
     }
 
     @Bean
@@ -895,6 +868,11 @@ public class ProjectBeansConfiguration {
                                                                         IndividualsByTypeIndex p2,
                                                                         ProjectSignatureIndex p3) {
         return new HierarchyPositionMatchingEngineImpl(p1, p2, p3);
+    }
+
+    @Bean
+    ManagedHierarchiesChangedComputer managedHierarchiesChangedComputer(ProjectId p1, NamedHierarchyManager p2, HierarchyProviderManager p3) {
+        return new ManagedHierarchiesChangedComputer(p1, p2, p3);
     }
 
     @Bean
@@ -1578,8 +1556,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3) {
-        return new EntitySearcherFactory(p1, p2, p3);
+    EntitySearcherFactory entitySearcherFactory(ProjectId p1, DictionaryManager p2, EntityNodeRenderer p3, MatcherFactory p4) {
+        return new EntitySearcherFactory(p1, p2, p3, p4);
     }
 
     @Bean
@@ -1589,11 +1567,46 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    HierarchyProviderMapper hierarchyProviderMapper(ClassHierarchyProvider p1,
-                                                    ObjectPropertyHierarchyProvider p2,
-                                                    DataPropertyHierarchyProvider p3,
-                                                    AnnotationPropertyHierarchyProvider p4) {
-        return new HierarchyProviderMapper(p1, p2, p3, p4);
+    HierarchyChangesComputerFactory genericHierarchyChangedComputerFactory(ProjectId p1, EntityNodeRenderer p2, EntityHierarchyChangedEventProxyFactory p3) {
+        return new HierarchyChangesComputerFactory(p1, p2, p3);
+    }
+
+    @Bean
+    HierarchyProviderManager hierarchyProviderMapper(HierarchyProviderFactory p6,
+                                                     HierarchyChangesComputerFactory p7) {
+        return new HierarchyProviderManager(p6, p7);
+    }
+
+    @Bean
+    ClassHierarchyProviderFactory classHierarchyProviderFactory(ProjectId p1, ProjectOntologiesIndex p2, SubClassOfAxiomsBySubClassIndex p3, EquivalentClassesAxiomsIndex p4, ProjectSignatureByTypeIndex p5, EntitiesInProjectSignatureByIriIndex p6, ClassHierarchyChildrenAxiomsIndex p7) {
+        return new ClassHierarchyProviderFactory(p1, p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    ObjectPropertyHierarchyProviderFactory objectPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubObjectPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6) {
+        return new ObjectPropertyHierarchyProviderFactory(p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean
+    HierarchyProviderFactory hierarchyProviderFactory(ClassHierarchyProviderFactory p5,
+                                                      AnnotationPropertyHierarchyProviderFactory p6,
+                                                      ObjectPropertyHierarchyProviderFactory p7,
+                                                      DataPropertyHierarchyProviderFactory p8) {
+        return new HierarchyProviderFactory(p5, p6, p7, p8);
+    }
+
+    @Bean
+    AnnotationPropertyHierarchyProviderFactory annotationPropertyHierarchyProviderFactory(ProjectId p1, OWLAnnotationPropertyProvider p2, ProjectSignatureByTypeIndex p3, ProjectOntologiesIndex p4, SubAnnotationPropertyAxiomsBySubPropertyIndex p5, SubAnnotationPropertyAxiomsBySuperPropertyIndex p6, EntitiesInProjectSignatureIndex p7) {
+        return new AnnotationPropertyHierarchyProviderFactory(p1,
+                p2, p3, p4, p5, p6, p7);
+    }
+
+    @Bean
+    DataPropertyHierarchyProviderFactory dataPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubDataPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6) {
+        return new DataPropertyHierarchyProviderFactory(p1,
+                p2,
+                p3,
+                p4, p5, p6);
     }
 
 
@@ -1903,4 +1916,10 @@ public class ProjectBeansConfiguration {
         return new BindingValuesExtractor(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }
 
+    @Bean
+    ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
+                                                                @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
+                                                                @Nonnull ReadWriteLockService readWriteLockService) {
+        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
+    }
 }

@@ -1,9 +1,11 @@
 package edu.stanford.protege.webprotege.crud;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.IRI;
 
 import java.util.Optional;
@@ -15,12 +17,13 @@ import static org.hamcrest.core.IsEqual.equalTo;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 17/04/2014
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class IRIParserTestCase {
 
     private IRIParser parser;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         parser = new IRIParser();
     }

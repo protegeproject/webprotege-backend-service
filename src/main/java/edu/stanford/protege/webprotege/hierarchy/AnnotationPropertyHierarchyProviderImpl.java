@@ -12,7 +12,7 @@ import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.*;
 
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
@@ -179,5 +179,15 @@ public class AnnotationPropertyHierarchyProviderImpl extends AbstractHierarchyPr
                 .map(annotationPropertyProvider::getOWLAnnotationProperty)
                 .forEach(roots::add);
         logger.info("{} Rebuilt annotation property hierarchy provider in {} ms", projectId, stopwatch.elapsed(MILLISECONDS));
+    }
+
+    @Override
+    public boolean contains(Object object) {
+        if(object instanceof OWLAnnotationProperty property) {
+            return containsReference(property);
+        }
+        else {
+            return false;
+        }
     }
 }

@@ -4,11 +4,13 @@ import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
 import org.hamcrest.Matchers;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
@@ -23,7 +25,8 @@ import static org.mockito.Mockito.when;
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 25/03/2014
  */
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class ShellOntologyChecker_TestCase {
 
     private static final String ONTOLOGY_SHORT_FORM = "OntologyShortForm";
@@ -47,7 +50,7 @@ public class ShellOntologyChecker_TestCase {
 
     private ShellOntologyChecker checker;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         checker = new ShellOntologyChecker(projectOntologiesIndex,
                                            ontologyIRIShortFormProvider,

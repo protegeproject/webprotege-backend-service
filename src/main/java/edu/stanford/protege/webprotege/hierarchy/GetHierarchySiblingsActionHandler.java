@@ -11,7 +11,7 @@ import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Comparator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -24,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class GetHierarchySiblingsActionHandler extends AbstractProjectActionHandler<GetHierarchySiblingsAction, GetHierarchySiblingsResult> {
 
     @Nonnull
-    private final HierarchyProviderMapper hierarchyProviderMapper;
+    private final HierarchyProviderManager hierarchyProviderManager;
 
     @Nonnull
     private final GraphNodeRenderer nodeRenderer;
@@ -34,11 +34,11 @@ public class GetHierarchySiblingsActionHandler extends AbstractProjectActionHand
 
     @Inject
     public GetHierarchySiblingsActionHandler(@Nonnull AccessManager accessManager,
-                                             @Nonnull HierarchyProviderMapper hierarchyProviderMapper,
+                                             @Nonnull HierarchyProviderManager hierarchyProviderManager,
                                              @Nonnull GraphNodeRenderer nodeRenderer,
                                              @Nonnull DictionaryManager dictionaryManager) {
         super(accessManager);
-        this.hierarchyProviderMapper = checkNotNull(hierarchyProviderMapper);
+        this.hierarchyProviderManager = checkNotNull(hierarchyProviderManager);
         this.nodeRenderer = checkNotNull(nodeRenderer);
         this.dictionaryManager = checkNotNull(dictionaryManager);
     }
@@ -59,7 +59,7 @@ public class GetHierarchySiblingsActionHandler extends AbstractProjectActionHand
     @Override
     public GetHierarchySiblingsResult execute(@Nonnull GetHierarchySiblingsAction action, @Nonnull ExecutionContext executionContext) {
         Page<GraphNode<EntityNode>> siblings =
-                hierarchyProviderMapper.getHierarchyProvider(action.hierarchyId())
+                hierarchyProviderManager.getHierarchyProvider(action.hierarchyDescriptor())
                         .map(hp -> {
                                  int pageNumber = action.pageRequest().getPageNumber();
                                  int pageSize = action.pageRequest().getPageSize();
