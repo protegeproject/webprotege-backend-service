@@ -585,6 +585,7 @@ public class ApplicationBeansConfiguration {
         return new CardDescriptorRepositoryImpl(p1, p2);
     }
 
+    @Bean
     NamedHierarchyRepository namedHierarchyRepository(ObjectMapper p0, MongoTemplate p1) {
         return new NamedHierarchyRepository(p0, p1);
     }
