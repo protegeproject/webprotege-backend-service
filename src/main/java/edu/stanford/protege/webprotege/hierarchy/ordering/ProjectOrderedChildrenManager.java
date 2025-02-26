@@ -1,26 +1,36 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
-import org.semanticweb.owlapi.model.*;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.inject.Inject;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 public class ProjectOrderedChildrenManager {
 
     private final ProjectId projectId;
-    private final ProjectOrderedChildrenServiceImpl projectOrderedChildrenService;
+    private final ProjectOrderedChildrenService projectOrderedChildrenService;
 
     private final ReadWriteLockService readWriteLockService;
 
+    private final NewRevisionsEventEmitterService newRevisionsEventEmitterService;
+
 
     @Inject
-    public ProjectOrderedChildrenManager(ProjectId projectId, ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
-                                         ReadWriteLockService readWriteLockService) {
+    public ProjectOrderedChildrenManager(ProjectId projectId, ProjectOrderedChildrenService projectOrderedChildrenService,
+                                         ReadWriteLockService readWriteLockService, NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
         this.projectId = projectId;
         this.projectOrderedChildrenService = projectOrderedChildrenService;
         this.readWriteLockService = readWriteLockService;
+        this.newRevisionsEventEmitterService = newRevisionsEventEmitterService;
     }
 
     public void moveHierarchyNode(OWLEntity fromEntity, OWLEntity toEntity, OWLEntity childEntity) {
@@ -46,5 +56,21 @@ public class ProjectOrderedChildrenManager {
     public void changeEntityParents(IRI entity, Set<IRI> removedParents, Set<IRI> newParents) {
         removedParents.forEach(removedParent -> projectOrderedChildrenService.removeChildFromParent(projectId, removedParent.toString(), entity.toString()));
         newParents.forEach(newParent -> projectOrderedChildrenService.addChildToParent(projectId, newParent.toString(), entity.toString()));
+    }
+
+    public void updateChildrenOrderingForEntity(IRI entityParentIri, ProjectId projectId, List<String> newChildrenOrder, UserId userId) {
+        readWriteLockService.executeWriteLock(() -> {
+
+            Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri, userId);
+
+            Optional<ProjectOrderedChildren> newOrderedChildrenOptional = projectOrderedChildrenService.updateEntityAndGet(entityParentIri, projectId, newChildrenOrder, userId);
+
+            newRevisionsEventEmitterService.emitNewProjectOrderedChildrenEvent(projectId,
+                    entityParentIri,
+                    initialOrderedChildrenOptional,
+                    newOrderedChildrenOptional,
+                    userId
+            );
+        });
     }
 }

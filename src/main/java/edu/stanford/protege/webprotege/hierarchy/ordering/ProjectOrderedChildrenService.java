@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.hierarchy.ordering;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
+import org.semanticweb.owlapi.model.IRI;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -17,5 +18,11 @@ public interface ProjectOrderedChildrenService {
 
     void addChildToParent(ProjectId projectId, String parentUri, String newChildUri);
 
+    void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove);
+
     void updateEntity(SaveEntityChildrenOrderingAction action, UserId userId);
+
+    Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, IRI parentEntityIri, UserId userId);
+
+    Optional<ProjectOrderedChildren> updateEntityAndGet(IRI parentEntityIri, ProjectId projectId, List<String> newChildrenOrder, UserId userId);
 }

@@ -6,8 +6,7 @@ import edu.stanford.protege.webprotege.app.GetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsActionHandler;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.handlers.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.user.GetAuthenticatedUserDetailsActionHandler;
 import edu.stanford.protege.webprotege.user.GetUserIdCompletionsActionHandler;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressActionHandler;
@@ -45,7 +44,7 @@ public class ApplicationActionHandlerBeansConfiguration {
     }
 
     @Bean
-    SaveEntityChildrenOrderingActionHandler saveEntityChildrenOrderingActionHandler(AccessManager p1, ProjectOrderedChildrenService p2) {
+    SaveEntityChildrenOrderingActionHandler saveEntityChildrenOrderingActionHandler(AccessManager p1, ProjectOrderedChildrenManager p2) {
         return new SaveEntityChildrenOrderingActionHandler(p1,p2);
     }
 

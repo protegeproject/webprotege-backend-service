@@ -1,19 +1,27 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.model.*;
-import edu.stanford.protege.webprotege.common.*;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOneModel;
+import com.mongodb.client.model.UpdateOptions;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
+import org.semanticweb.owlapi.model.IRI;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.ENTITY_URI;
+import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.PROJECT_ID;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildrenService {
@@ -21,6 +29,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     private final ObjectMapper objectMapper;
     private final ProjectOrderedChildrenRepository repository;
     private final ReadWriteLockService readWriteLock;
+
 
     public ProjectOrderedChildrenServiceImpl(ObjectMapper objectMapper,
                                              ProjectOrderedChildrenRepository repository,
@@ -122,13 +131,30 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                     action.orderedChildren(),
                     ordering.userId())).get();
             repository.update(orderToBeSaved);
-
         } else {
             ProjectOrderedChildren orderedChildren = new ProjectOrderedChildren(action.entityIri().toString(),
                     action.projectId(),
                     action.orderedChildren(),
                     userId.id());
             repository.insert(orderedChildren);
+        }
+    }
+
+    @Override
+    public Optional<ProjectOrderedChildren> updateEntityAndGet(IRI parentEntityIri, ProjectId projectId, List<String> newChildrenOrder, UserId userId) {
+        Optional<ProjectOrderedChildren> currentChildrenOrdering = repository.findOrderedChildren(projectId, parentEntityIri.toString());
+        if (currentChildrenOrdering.isPresent()) {
+            ProjectOrderedChildren orderToBeSaved = currentChildrenOrdering.map(ordering -> new ProjectOrderedChildren(ordering.entityUri(),
+                    ordering.projectId(),
+                    newChildrenOrder,
+                    ordering.userId())).get();
+           return repository.updateAndGet(orderToBeSaved);
+        } else {
+            ProjectOrderedChildren orderedChildren = new ProjectOrderedChildren(parentEntityIri.toString(),
+                    projectId,
+                    newChildrenOrder,
+                    userId.id());
+            return repository.insertAndGet(orderedChildren);
         }
     }
 
@@ -155,5 +181,9 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                 }
             }
         });
+    }
+
+    public Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, IRI parentEntityIri, UserId userId) {
+        return repository.findOrderedChildren(projectId, parentEntityIri.toString(), userId);
     }
 }
