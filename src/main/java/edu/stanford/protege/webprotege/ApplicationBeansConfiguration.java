@@ -9,6 +9,8 @@ import edu.stanford.protege.webprotege.access.RoleOracle;
 import edu.stanford.protege.webprotege.access.RoleOracleImpl;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
+import edu.stanford.protege.webprotege.card.CardDescriptorRepository;
+import edu.stanford.protege.webprotege.card.CardDescriptorRepositoryImpl;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
@@ -579,6 +581,11 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
+    CardDescriptorRepository cardDescriptorRepository(MongoTemplate p1, ObjectMapper p2) {
+        return new CardDescriptorRepositoryImpl(p1, p2);
+    }
+
+    @Bean
     NamedHierarchyRepository namedHierarchyRepository(ObjectMapper p0, MongoTemplate p1) {
         return new NamedHierarchyRepository(p0, p1);
     }
@@ -628,6 +635,4 @@ public class ApplicationBeansConfiguration {
     HierarchyDescriptorRuleDisplayContextMatcher hierarchyDescriptorRuleDisplayContextMatcher() {
         return new HierarchyDescriptorRuleDisplayContextMatcher();
     }
-
-
 }
