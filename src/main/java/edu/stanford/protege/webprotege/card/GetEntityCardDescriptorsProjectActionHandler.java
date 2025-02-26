@@ -5,7 +5,6 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInAction;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.authorization.Subject;
-import edu.stanford.protege.webprotege.color.Color;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
@@ -67,7 +66,7 @@ public class GetEntityCardDescriptorsProjectActionHandler implements ProjectActi
     public GetEntityCardDescriptorsResponse execute(@NotNull GetEntityCardDescriptorsRequest action, @NotNull ExecutionContext executionContext) {
         var descriptors = cardDescriptorRepository.getCardDescriptors(action.projectId());
         if(descriptors.isEmpty()) {
-            cardDescriptorRepository.setCardDescriptors(action.projectId(), getDummyDescriptors());
+            cardDescriptorRepository.setCardDescriptors(action.projectId(), getExampleCard());
         }
         var formsForEntity = entityFormManager.getFormDescriptors(action.subject(), projectId, FormPurpose.ENTITY_EDITING)
                 .stream()
@@ -121,7 +120,7 @@ public class GetEntityCardDescriptorsProjectActionHandler implements ProjectActi
     }
 
 
-    private static @NotNull List<CardDescriptor> getDummyDescriptors() {
+    private static @NotNull List<CardDescriptor> getExampleCard() {
         List<CardDescriptor> cardDescriptors = new ArrayList<>();
         cardDescriptors.add(
                 CardDescriptor.create(
@@ -129,62 +128,11 @@ public class GetEntityCardDescriptorsProjectActionHandler implements ProjectActi
                         LanguageMap.of("en", "Entity Iri"),
                         null,
                         null,
-                        CustomContentEntityCardContentDescriptor.create(CustomContentId.valueOf("Hello.World")),
+                        CustomContentEntityCardContentDescriptor.create(CustomContentId.valueOf("example.card")),
                         new HashSet<>(),
                         new HashSet<>(),
                         CompositeRootCriteria.get(ImmutableList.of(), MultiMatchType.ALL)
                 ));
-
-
-
-        cardDescriptors.add(CardDescriptor.create(
-                CardId.valueOf("00000000-1111-1111-1111-111111111113"),
-                LanguageMap.of("en", "Basic details"),
-                null, null,
-                FormCardContentDescriptor.create(FormId.get("4eb87d90-4c61-4862-b2c4-f8db52f374e9")),
-                new HashSet<>(),
-                new HashSet<>(),
-                CompositeRootCriteria.get(ImmutableList.of(
-                ), MultiMatchType.ALL)
-        ));
-        cardDescriptors.add(CardDescriptor.create(
-                CardId.valueOf("8d8adabb-0270-487e-aafe-b9d646817f68"),
-                LanguageMap.of("en", "Relationships"),
-                null, null,
-                FormCardContentDescriptor.create(FormId.get("b14a3efe-54c4-48e5-94e5-edb6088aefe5")),
-                new HashSet<>(),
-                new HashSet<>(),
-                CompositeRootCriteria.get(ImmutableList.of(
-                ), MultiMatchType.ALL)
-        ));
-        cardDescriptors.add(CardDescriptor.create(
-                CardId.valueOf("46016c4b-baa6-418f-b6f6-1ce8f594c01b"),
-                LanguageMap.of("en", "Test Missing Form"),
-                null, null,
-                FormCardContentDescriptor.create(FormId.get("ba1fd035-90b8-43b2-bc30-fc8c177c6489")),
-                new HashSet<>(),
-                new HashSet<>(),
-                CompositeRootCriteria.get(ImmutableList.of(
-                ), MultiMatchType.ALL)
-        ));
-        cardDescriptors.add(CardDescriptor.create(
-                CardId.valueOf("760a907c-be4e-4654-915a-e145014b7580"),
-                LanguageMap.of("en", "Usage"),
-                null, null,
-                CustomContentEntityCardContentDescriptor.create(CustomContentId.valueOf("class.stats")),
-                new HashSet<>(),
-                new HashSet<>(),
-                CompositeRootCriteria.get(ImmutableList.of(
-                ), MultiMatchType.ALL)
-        ));
         return cardDescriptors;
     }
-
-    /*
-
-    SubClassOfCriteria.get(
-                                new OWLClassImpl(IRI.create("http://www.example.org/RXPyJQtIXaZ1ikA84KDlcK")),
-                                HierarchyFilterType.ALL
-                        )
-     */
 }
