@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.*;
@@ -180,7 +181,8 @@ public class ProjectOrderedChildrenServiceImplIT {
 
         SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
                 IRI.create(initialEntry.entityUri()),
-                Arrays.asList(childUri3, childUri2, childUri1));
+                Arrays.asList(childUri3, childUri2, childUri1),
+                ChangeRequestId.generate());
 
         service.updateEntity(action, null);
 

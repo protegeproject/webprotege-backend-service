@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
@@ -40,6 +42,9 @@ public class ProjectOrderedChildrenManagerIT {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @MockitoSpyBean
+    private NewRevisionsEventEmitterService newRevisionsEventEmitterService;
+
     private ProjectOrderedChildrenManager manager;
     private ProjectId projectId;
 
@@ -53,7 +58,7 @@ public class ProjectOrderedChildrenManagerIT {
         mongoTemplate.dropCollection(ProjectOrderedChildren.class);
         projectId = new ProjectId(UUID.randomUUID().toString());
 
-        manager = new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
+        manager = new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
 
         projectOrderedChildrenService.addChildToParent(projectId, parentA.toStringID(), child1.toStringID());
         projectOrderedChildrenService.addChildToParent(projectId, parentA.toStringID(), child2.toStringID());

@@ -33,6 +33,8 @@ import edu.stanford.protege.webprotege.crud.uuid.UuidEntityCrudKitHandlerFactory
 import edu.stanford.protege.webprotege.crud.uuid.UuidEntityCrudKitPlugin;
 import edu.stanford.protege.webprotege.crud.uuid.UuidSuffixKit;
 import edu.stanford.protege.webprotege.diff.OntologyDiff2OntologyChanges;
+import edu.stanford.protege.webprotege.diff.OrderingDiffElementRenderer;
+import edu.stanford.protege.webprotege.diff.ProjectOrderedChildren2DiffElementsTranslator;
 import edu.stanford.protege.webprotege.diff.Revision2DiffElementsTranslator;
 import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
@@ -114,7 +116,6 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -683,11 +684,21 @@ public class ProjectBeansConfiguration {
 
     @Bean
     NewRevisionsEventEmitterService newRevisionsEventEmitterService(ProjectChangesManager p1,
-                                                                    EventDispatcher p2,
-                                                                    ProjectId p3) {
-        return new NewRevisionsEventEmitterServiceImpl(p1, p2, p3);
+                                                                    OrderingChangesManager p2,
+                                                                    EventDispatcher p3,
+                                                                    ProjectId p4) {
+        return new NewRevisionsEventEmitterServiceImpl(p1, p2, p3, p4);
     }
 
+    @Bean
+    OrderingDiffElementRenderer orderingDiffElementRenderer(RenderingManager p1) {
+        return new OrderingDiffElementRenderer(p1);
+    }
+
+    @Bean
+    ProjectOrderedChildren2DiffElementsTranslator projectOrderedChildren2DiffElementsTranslator() {
+        return new ProjectOrderedChildren2DiffElementsTranslator();
+    }
 
     @Bean
     ClassHierarchyProvider classHierarchyProvider(ProjectId p1,
@@ -2038,8 +2049,9 @@ public class ProjectBeansConfiguration {
     @Bean
     ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
                                                                 @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
-                                                                @Nonnull ReadWriteLockService readWriteLockService) {
-        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
+                                                                @Nonnull ReadWriteLockService readWriteLockService,
+                                                                @Nonnull NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
+        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
     }
 
 }

@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
@@ -25,8 +26,10 @@ public class ProjectOrderedChildrenManager {
 
 
     @Inject
-    public ProjectOrderedChildrenManager(ProjectId projectId, ProjectOrderedChildrenService projectOrderedChildrenService,
-                                         ReadWriteLockService readWriteLockService, NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
+    public ProjectOrderedChildrenManager(ProjectId projectId,
+                                         ProjectOrderedChildrenService projectOrderedChildrenService,
+                                         ReadWriteLockService readWriteLockService,
+                                         NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
         this.projectId = projectId;
         this.projectOrderedChildrenService = projectOrderedChildrenService;
         this.readWriteLockService = readWriteLockService;
@@ -58,18 +61,22 @@ public class ProjectOrderedChildrenManager {
         newParents.forEach(newParent -> projectOrderedChildrenService.addChildToParent(projectId, newParent.toString(), entity.toString()));
     }
 
-    public void updateChildrenOrderingForEntity(IRI entityParentIri, ProjectId projectId, List<String> newChildrenOrder, UserId userId) {
+    public void updateChildrenOrderingForEntity(IRI entityParentIri,
+                                                List<String> newChildrenOrder,
+                                                UserId userId,
+                                                ChangeRequestId changeRequestId) {
         readWriteLockService.executeWriteLock(() -> {
 
             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri, userId);
 
             Optional<ProjectOrderedChildren> newOrderedChildrenOptional = projectOrderedChildrenService.updateEntityAndGet(entityParentIri, projectId, newChildrenOrder, userId);
 
-            newRevisionsEventEmitterService.emitNewProjectOrderedChildrenEvent(projectId,
+            newRevisionsEventEmitterService.emitNewProjectOrderedChildrenEvent(
                     entityParentIri,
                     initialOrderedChildrenOptional,
                     newOrderedChildrenOptional,
-                    userId
+                    userId,
+                    changeRequestId
             );
         });
     }
