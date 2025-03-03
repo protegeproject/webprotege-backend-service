@@ -44,11 +44,6 @@ public class ApplicationActionHandlerBeansConfiguration {
     }
 
     @Bean
-    SaveEntityChildrenOrderingActionHandler saveEntityChildrenOrderingActionHandler(AccessManager p1, ProjectOrderedChildrenManager p2) {
-        return new SaveEntityChildrenOrderingActionHandler(p1,p2);
-    }
-
-    @Bean
     SetEmailAddressActionHandler setEmailAddressActionHandler(UserDetailsManager p1) {
         return new SetEmailAddressActionHandler(p1);
     }

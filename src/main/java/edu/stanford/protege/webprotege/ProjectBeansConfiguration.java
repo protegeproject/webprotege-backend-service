@@ -701,6 +701,12 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    OrderingChangesManager orderingChangesManager(ProjectOrderedChildren2DiffElementsTranslator p1,
+                                                  OrderingDiffElementRenderer p2) {
+        return new OrderingChangesManager(p1, p2);
+    }
+
+    @Bean
     ClassHierarchyProvider classHierarchyProvider(ProjectId p1,
                                                       @ClassHierarchyRoot Set<OWLClass> p2,
                                                       ProjectOntologiesIndex p3,
