@@ -33,7 +33,9 @@ public class ProjectOrderedChildren2DiffElementsTranslator {
         // Case 2: Compare old vs new order using LIS
         List<String> oldOrder = oldOrderingOptional.get().children();
 
-        // Step A: Build a map from child to its index in the new order
+        /* Step A: Build a map from child to its index in the new order
+        We assume that each child is unique in the list, this is important and is a precondition
+         */
         Map<String, Integer> newIndexMap = new HashMap<>();
         for (int i = 0; i < newOrder.size(); i++) {
             newIndexMap.put(newOrder.get(i), i);
@@ -49,7 +51,10 @@ public class ProjectOrderedChildren2DiffElementsTranslator {
             }
         }
 
-        // Step C: Compute the LIS *once*
+        /* Step C: Compute the LIS *once*
+        basically the set will contain the indexes that are still
+        in the initial order and were not changed in the new order
+        */
         Set<Integer> lisIndexSet = longestIncreasingSubsequence(transformed);
 
         // Step D: Identify which old-order children are not in that LIS
@@ -79,81 +84,93 @@ public class ProjectOrderedChildren2DiffElementsTranslator {
     }
 
     /**
-     * Computes the Longest Increasing Subsequence (LIS) of a list of integers,
-     * returning a set of the *values* in the LIS.
+     * Computes the Longest Increasing Subsequence (LIS) from a list of integers.
+     * Returns a set of the values that form one valid longest increasing subsequence.
+     *
      * For example, if inputList = [2, 5, 3, 10] and one valid LIS is [2, 3, 10],
      * this method returns {2, 3, 10}.
      */
     private Set<Integer> longestIncreasingSubsequence(List<Integer> inputList) {
-        // tailValues holds the smallest ending value for an increasing subsequence of a given length.
-        // For example, tailValues.get(0) is the smallest ending value of a subsequence of length 1,
-        // tailValues.get(1) is the smallest ending value of a subsequence of length 2, and so on.
-        List<Integer> tailValues = new ArrayList<>();
+        /*
+        tailElements holds the smallest possible ending value for an increasing subsequence
+         of a given length. For example, tailElements.get(0) is the smallest ending value
+        for any subsequence of length 1, tailElements.get(1) for length 2, and so on.
+         */
+        List<Integer> tailElements = new ArrayList<>();
 
-        // tailPositionMap maps an index 'i' in inputList to the position in tailValues
-        // that represents the length (minus one) of the longest increasing subsequence ending at inputList[i].
-        Map<Integer, Integer> tailPositionMap = new HashMap<>();
+        /*
+        indexToTailPos maps each index 'i' in inputList to the "tail position" (or subsequence length minus one)
+         that the element at inputList[i] contributes to.
+         */
+        Map<Integer, Integer> indexToTailPos = new HashMap<>();
 
-        // predecessorMap maps each index in inputList to the index of its predecessor in the subsequence.
-        // This will allow us to reconstruct the actual subsequence later.
-        Map<Integer, Integer> predecessorMap = new HashMap<>();
+        /* previousIndex helps us backtrack the actual subsequence.
+         For each index in inputList, it stores the index of the previous element in the subsequence.
+         */
+        Map<Integer, Integer> previousIndex = new HashMap<>();
 
-        // Process each element in inputList
-        for (int i = 0; i < inputList.size(); i++) {
-            int currentValue = inputList.get(i);
+        // Process each element in the inputList.
+        for (int currentIndex = 0; currentIndex < inputList.size(); currentIndex++) {
+            int currentValue = inputList.get(currentIndex);
 
-            // Determine where currentValue should be inserted into tailValues using binary search.
-            int pos = Collections.binarySearch(tailValues, currentValue);
-            if (pos < 0) {
-                // If not found, binarySearch returns -(insertion_point + 1).
-                pos = -(pos + 1);
+            /* Determine where currentValue fits into tailElements using binary search.
+             If currentValue is not found, binarySearch returns -(insertionPoint + 1).
+             */
+            int insertionPos = Collections.binarySearch(tailElements, currentValue);
+            if (insertionPos < 0) {
+                insertionPos = -(insertionPos + 1);
             }
 
-            // If currentValue is larger than all values in tailValues, it extends the subsequence.
-            if (pos == tailValues.size()) {
-                tailValues.add(currentValue);
+            /* If currentValue is greater than all elements in tailElements, append it.
+             Otherwise, replace the element at the found insertion position.
+             */
+            if (insertionPos == tailElements.size()) {
+                tailElements.add(currentValue);
             } else {
-                // Otherwise, replace the value at the found position to keep the smallest possible tail value.
-                tailValues.set(pos, currentValue);
+                tailElements.set(insertionPos, currentValue);
             }
 
-            // Record that the element at index i fits into a subsequence of length pos+1.
-            tailPositionMap.put(i, pos);
+            // Record the "tail position" for currentIndex.
+            indexToTailPos.put(currentIndex, insertionPos);
 
-            // If the element is not the first in the subsequence, set its predecessor.
-            if (pos > 0) {
-                // Find an index j < i such that inputList[j] is the last element
-                // of an increasing subsequence of length pos.
-                for (int j = i - 1; j >= 0; j--) {
-                    if (tailPositionMap.get(j) == pos - 1) {
-                        predecessorMap.put(i, j);
+            /* If currentValue is not the first element in a subsequence,
+             determine its predecessor: find the most recent index with tail position (insertionPos - 1).
+             */
+            if (insertionPos > 0) {
+                for (int searchIndex = currentIndex - 1; searchIndex >= 0; searchIndex--) {
+                    if (indexToTailPos.get(searchIndex) == insertionPos - 1) {
+                        previousIndex.put(currentIndex, searchIndex);
                         break;
                     }
                 }
             }
         }
 
-        // Now, reconstruct the longest increasing subsequence (LIS) using the predecessorMap.
-        Set<Integer> lisValues = new HashSet<>();
-        int targetTailIndex = tailValues.size() - 1;
-        Integer lastIndexInLIS = null;
+        // The size of tailElements indicates the length of the longest increasing subsequence.
+        int lisLength = tailElements.size();
 
         // Find an index in inputList that ends an increasing subsequence of maximum length.
+        int targetTailPos = lisLength - 1;
+        Integer lastIndexInLIS = null;
         for (int i = 0; i < inputList.size(); i++) {
-            if (tailPositionMap.get(i) == targetTailIndex) {
+            if (indexToTailPos.get(i) == targetTailPos) {
                 lastIndexInLIS = i;
                 break;
             }
         }
 
-        // Trace backwards using predecessorMap to collect all the values in the LIS.
+        /* Backtrack through previousIndex to reconstruct one valid longest increasing subsequence.
+         (Since we're returning a Set, the order won't be preserved.)
+         */
+        Set<Integer> lisValues = new HashSet<>();
         while (lastIndexInLIS != null) {
             lisValues.add(inputList.get(lastIndexInLIS));
-            lastIndexInLIS = predecessorMap.get(lastIndexInLIS);
+            lastIndexInLIS = previousIndex.get(lastIndexInLIS);
         }
 
         return lisValues;
     }
+
 
     private String getPreviousEntity(String entity, List<String> order) {
         int index = order.indexOf(entity);

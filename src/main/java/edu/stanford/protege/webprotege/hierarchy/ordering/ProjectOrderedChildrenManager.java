@@ -69,9 +69,13 @@ public class ProjectOrderedChildrenManager {
                                                 ChangeRequestId changeRequestId) {
         readWriteLockService.executeWriteLock(() -> {
 
-            Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri, userId);
+            Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri);
 
-            Optional<ProjectOrderedChildren> newOrderedChildrenOptional = projectOrderedChildrenService.updateEntityAndGet(entityParentIri, projectId, newChildrenOrder, userId);
+            Optional<ProjectOrderedChildren> newOrderedChildrenOptional = projectOrderedChildrenService.updateEntityAndGet(entityParentIri,
+                    projectId,
+                    newChildrenOrder,
+                    initialOrderedChildrenOptional,
+                    userId);
 
             newRevisionsEventEmitterService.emitNewProjectOrderedChildrenEvent(
                     entityParentIri,

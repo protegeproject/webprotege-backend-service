@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -144,6 +145,7 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
                 mongoTemplate.findAndModify(
                         query,
                         update,
+                        FindAndModifyOptions.options().returnNew(true),
                         ProjectOrderedChildren.class,
                         ORDERED_CHILDREN_COLLECTION
                 )

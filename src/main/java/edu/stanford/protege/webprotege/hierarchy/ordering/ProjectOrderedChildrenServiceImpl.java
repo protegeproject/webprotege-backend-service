@@ -125,7 +125,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     @Override
     public void updateEntity(SaveEntityChildrenOrderingAction action, UserId userId) {
         Optional<ProjectOrderedChildren> entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
-        if(entityChildrenOrdering.isPresent()) {
+        if (entityChildrenOrdering.isPresent()) {
             ProjectOrderedChildren orderToBeSaved = entityChildrenOrdering.map(ordering -> new ProjectOrderedChildren(ordering.entityUri(),
                     ordering.projectId(),
                     action.orderedChildren(),
@@ -143,19 +143,31 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     @Override
     public Optional<ProjectOrderedChildren> updateEntityAndGet(IRI parentEntityIri, ProjectId projectId, List<String> newChildrenOrder, UserId userId) {
         Optional<ProjectOrderedChildren> currentChildrenOrdering = repository.findOrderedChildren(projectId, parentEntityIri.toString());
-        if (currentChildrenOrdering.isPresent()) {
-            ProjectOrderedChildren orderToBeSaved = currentChildrenOrdering.map(ordering -> new ProjectOrderedChildren(ordering.entityUri(),
-                    ordering.projectId(),
-                    newChildrenOrder,
-                    ordering.userId())).get();
-           return repository.updateAndGet(orderToBeSaved);
-        } else {
-            ProjectOrderedChildren orderedChildren = new ProjectOrderedChildren(parentEntityIri.toString(),
-                    projectId,
-                    newChildrenOrder,
-                    userId.id());
-            return repository.insertAndGet(orderedChildren);
-        }
+        return updateEntityAndGet(parentEntityIri, projectId, newChildrenOrder, currentChildrenOrdering, userId);
+    }
+
+    @Override
+    public Optional<ProjectOrderedChildren> updateEntityAndGet(IRI parentEntityIri,
+                                                               ProjectId projectId,
+                                                               List<String> newChildrenOrder,
+                                                               Optional<ProjectOrderedChildren> initialOrderOptional,
+                                                               UserId userId) {
+        return readWriteLock.executeWriteLock(() -> {
+            if (initialOrderOptional.isPresent()) {
+                ProjectOrderedChildren initialOrder = initialOrderOptional.get();
+                ProjectOrderedChildren orderToBeSaved = new ProjectOrderedChildren(initialOrder.entityUri(),
+                        initialOrder.projectId(),
+                        newChildrenOrder,
+                        initialOrder.userId());
+                return repository.updateAndGet(orderToBeSaved);
+            } else {
+                ProjectOrderedChildren orderedChildren = new ProjectOrderedChildren(parentEntityIri.toString(),
+                        projectId,
+                        newChildrenOrder,
+                        userId.id());
+                return repository.insertAndGet(orderedChildren);
+            }
+        });
     }
 
     public void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove) {
@@ -185,5 +197,9 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
 
     public Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, IRI parentEntityIri, UserId userId) {
         return repository.findOrderedChildren(projectId, parentEntityIri.toString(), userId);
+    }
+
+    public Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, IRI parentEntityIri) {
+        return findOrderedChildren(projectId, parentEntityIri, null);
     }
 }

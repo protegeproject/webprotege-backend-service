@@ -24,5 +24,9 @@ public interface ProjectOrderedChildrenService {
 
     Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, IRI parentEntityIri, UserId userId);
 
+    Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, IRI parentEntityIri);
+
     Optional<ProjectOrderedChildren> updateEntityAndGet(IRI parentEntityIri, ProjectId projectId, List<String> newChildrenOrder, UserId userId);
+
+    Optional<ProjectOrderedChildren> updateEntityAndGet(IRI parentEntityIri, ProjectId projectId, List<String> newChildrenOrder, Optional<ProjectOrderedChildren> initialOrder, UserId userId);
 }
