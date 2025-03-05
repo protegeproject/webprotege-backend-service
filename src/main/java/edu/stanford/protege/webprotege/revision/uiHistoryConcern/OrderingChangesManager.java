@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @ProjectSingleton
 public class OrderingChangesManager {
     private static final Logger logger = LoggerFactory.getLogger(OrderingChangesManager.class);
-    private static final int DEFAULT_CHANGE_LIMIT = 50;
 
     private final ProjectOrderedChildren2DiffElementsTranslator translator;
     private final OrderingDiffElementRenderer diffElementRenderer;
@@ -46,22 +45,15 @@ public class OrderingChangesManager {
             return Collections.emptySet();
         }
 
-        var limitedRecords = diffElements.stream()
-                .limit(DEFAULT_CHANGE_LIMIT)
-                .toList();
-
-        List<DiffElement<String, String>> renderedDiffs = limitedRecords.stream()
+        List<DiffElement<String, String>> renderedDiffs = diffElements.stream()
                 .map(diffElement -> diffElementRenderer.render(diffElement, entityParentIri))
                 .toList();
 
-        int totalChanges = diffElements.size();
-        int pageElements = limitedRecords.size();
-        int pageCount = (pageElements == 0) ? 1 : (totalChanges / pageElements + (totalChanges % pageElements));
 
         return renderedDiffs.stream()
                 .map(diff -> {
                     Page<DiffElement<String, String>> page = Page.create(
-                            1, pageCount, renderedDiffs, totalChanges
+                            1, 1, List.of(diff), 1
                     );
                     return ProjectChangeForEntity.create(
                             diff.getSourceDocument(),
@@ -71,7 +63,7 @@ public class OrderingChangesManager {
                                     userId,
                                     System.currentTimeMillis(),
                                     diff.getLineElement(),
-                                    totalChanges,
+                                    1,
                                     page
                             ));
                 })
