@@ -64,6 +64,7 @@ public class SetEntityFormDataFromJsonActionHandler extends AbstractProjectChang
                 FormDataUpdateSanityChecker.check(pristineFormsData, editedFormsData);
                 return changeListGeneratorFactory.create(action.changeRequestId(),
                         action.owlEntity(),
+                        "",
                         pristineFormsData,
                         editedFormsData);
             }
