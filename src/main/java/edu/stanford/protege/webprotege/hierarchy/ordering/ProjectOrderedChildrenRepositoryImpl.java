@@ -70,6 +70,11 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
     }
 
     @Override
+    public void save(ProjectOrderedChildren projectOrderedChildren) {
+        readWriteLock.executeWriteLock(() -> mongoTemplate.save(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
+    }
+
+    @Override
     public void insert(ProjectOrderedChildren projectOrderedChildren) {
         readWriteLock.executeWriteLock(() -> mongoTemplate.insert(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
     }

@@ -5,12 +5,14 @@ import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChild;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -21,10 +23,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.ENTITY_URI;
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,6 +87,31 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(retrieved.children().get(0),childUri2);
         assertEquals(retrieved.children().get(1),childUri3);
         assertEquals(retrieved.children().get(2),childUri1);
+    }
+
+    @Test
+    public void GIVEN_newOrderOnChildren_WHEN_updateEntity_THEN_newOrderIsSaved(){
+        ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
+        mongoTemplate.insert(initialEntry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+
+        SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
+                IRI.create(initialEntry.entityUri()),
+                Arrays.asList(childUri3, childUri2, childUri1));
+
+        service.updateEntity(action, null);
+
+        List<ProjectOrderedChildren> storedEntries = mongoTemplate.findAll(ProjectOrderedChildren.class);
+        assertFalse(storedEntries.isEmpty(), "EntityChildrenOrdering should be saved in MongoDB");
+
+        ProjectOrderedChildren retrieved = storedEntries.get(0);
+        assertEquals(parentUri, retrieved.entityUri(), "Parent URI should match");
+        assertEquals(3, retrieved.children().size(), "Should have two children stored");
+        assertTrue(retrieved.children().contains(childUri1), "Should contain childUri1");
+        assertTrue(retrieved.children().contains(childUri2), "Should contain childUri2");
+        assertEquals(retrieved.children().get(0),childUri3);
+        assertEquals(retrieved.children().get(1),childUri2);
+        assertEquals(retrieved.children().get(2),childUri1);
+
     }
 
     @Test

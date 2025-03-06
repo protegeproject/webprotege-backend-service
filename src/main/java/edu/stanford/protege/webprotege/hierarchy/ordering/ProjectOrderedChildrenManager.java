@@ -2,9 +2,9 @@ package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.*;
 
-import javax.inject.Inject;
 import java.util.*;
 
 public class ProjectOrderedChildrenManager {

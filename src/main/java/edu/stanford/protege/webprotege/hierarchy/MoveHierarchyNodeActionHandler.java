@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
-import jakarta.annotation.*;
+import javax.annotation.*;
 import jakarta.inject.Inject;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
@@ -24,7 +24,7 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
                                           @Nonnull HasApplyChanges applyChanges,
                                           @Nonnull MoveEntityChangeListGeneratorFactory factory,
-                                          ProjectOrderedChildrenManager projectOrderedChildrenManager) {
+                                          @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager) {
         super(accessManager, applyChanges);
         this.factory = factory;
         this.projectOrderedChildrenManager = projectOrderedChildrenManager;

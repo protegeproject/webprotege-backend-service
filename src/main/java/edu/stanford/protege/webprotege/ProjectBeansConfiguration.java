@@ -45,8 +45,6 @@ import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.*;
-import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManager;
-import edu.stanford.protege.webprotege.icd.IcdReleasedEntityStatusManagerImpl;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetectorImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
@@ -1199,6 +1197,7 @@ public class ProjectBeansConfiguration {
         return dataDirectory.resolve("lucene-indexes");
 
     }
+
     @Bean
     ActiveLanguagesManagerImpl activeLanguagesManager(ProjectId p1,
                                                       AxiomsByEntityReferenceIndex p2,
@@ -2010,6 +2009,13 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
+                                                                @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
+                                                                @Nonnull ReadWriteLockService readWriteLockService) {
+        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
+    }
+
+    @Bean
     LogicalDefinitionExtractor logicalDefinitionExtractor(@Nonnull ProjectId projectId,
                                                           @Nonnull RenderingManager renderingManager,
                                                           @Nonnull ProjectOntologiesIndex projectOntologiesIndex,
@@ -2032,13 +2038,6 @@ public class ProjectBeansConfiguration {
     UpdateLogicalDefinitionsChangeListGeneratorFactory updateLogicalDefinitionsChangeListGeneratorFactory(@Nonnull ProjectOntologiesIndex projectOntologiesIndex,
                                                                                                           @Nonnull OWLDataFactory dataFactory) {
         return new UpdateLogicalDefinitionsChangeListGeneratorFactory(projectOntologiesIndex, dataFactory);
-    }
-
-    @Bean
-    ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
-                                                                @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
-                                                                @Nonnull ReadWriteLockService readWriteLockService) {
-        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
     }
 
 }
