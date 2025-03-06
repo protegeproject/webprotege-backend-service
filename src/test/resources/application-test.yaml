@@ -1,0 +1,40 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: test-webprotege-backend-service
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    password: guest
+    username: guest
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: webprotege
+      auto-index-creation: true
+      uri: mongodb://${spring.data.mongodb.host}:${spring.data.mongodb.port}/${spring.data.mongodb.database}
+
+webprotege:
+  database:
+    name: webprotege-test
+  directories:
+    uploads: /tmp/webprotege-test/uploads
+    data: /tmp/webprotege-test/data
+  entityGraph:
+    edgeLimit: 3000
+  rabbitmq:
+    requestqueue: webprotege-backend-queue
+    responsequeue: webprotege-backend-response-queue
+    timeout: 60000
+  minion:
+    acess-key: webprotege
+    secret-key: webprotege
+    uploads-bucket-name: webprotege-uploads
+    revision-history-documents-bucket-name: revisionHistoryDocuments
+    end-point: http://localhost:9000
+  releasedClassesUrl: https://icd11files.blob.core.windows.net/released/releasediCatIds.txt
+  readWriteLock:
+    timeoutInMillies: 1000
+    maxRetries: 5
