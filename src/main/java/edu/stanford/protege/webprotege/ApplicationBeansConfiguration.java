@@ -19,8 +19,8 @@ import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
 import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.*;
+import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
@@ -128,11 +128,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     public TempFileFactoryImpl provideTempFileFactory() {
         return new TempFileFactoryImpl();
-    }
-
-    @Bean
-    public DefaultMustacheFactory providesMustacheFactory() {
-        return new DefaultMustacheFactory();
     }
 
     @Bean
@@ -631,5 +626,23 @@ public class ApplicationBeansConfiguration {
                                                                 @Nonnull ReadWriteLockService readWriteLock) {
         return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
     }
+
+    @Bean
+    HierarchyDescriptorRulesRepositoryImpl projectHierarchyDescriptorRulesRepository(MongoTemplate p1, ObjectMapper p2) {
+        var repo = new HierarchyDescriptorRulesRepositoryImpl(p1, p2);
+        repo.ensureIndexes();
+        return repo;
+    }
+
+    @Bean
+    HierarchyDescriptorRuleSelector hierarchyDescriptorRuleSelector(HierarchyDescriptorRulesRepository p1, HierarchyDescriptorRuleDisplayContextMatcher p2) {
+        return new HierarchyDescriptorRuleSelector(p1, p2);
+    }
+
+    @Bean
+    HierarchyDescriptorRuleDisplayContextMatcher hierarchyDescriptorRuleDisplayContextMatcher() {
+        return new HierarchyDescriptorRuleDisplayContextMatcher();
+    }
+
 
 }

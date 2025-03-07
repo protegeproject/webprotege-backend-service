@@ -72,35 +72,34 @@ class CreateProjectSagaManagerTest {
     @Mock
     private ProjectDetails projectDetails;
 
-    @Mock
-    private EventDispatcher eventDispatcher;
-
     private ExecutionContext executionContext;
 
+    @Mock
+    private EventDispatcher eventDispatcher;
 
     @BeforeEach
     void setUp() {
         manager = new CreateProjectSagaManager(projectDetailsManager,
-                processOntologiesExecutor,
-                createInitialRevisionHistoryExecutor,
-                prepareBinaryFileBackupForUseExecutor,
-                createProjectSmallFilesExecutor,
-                fileDownloader,
-                revisionHistoryReplacer,
-                projectPermissionsInitializer,
+                                               processOntologiesExecutor,
+                                               createInitialRevisionHistoryExecutor,
+                                               prepareBinaryFileBackupForUseExecutor,
+                                               createProjectSmallFilesExecutor,
+                                               fileDownloader,
+                                               revisionHistoryReplacer,
+                                               projectPermissionsInitializer,
                 eventDispatcher);
         janeDoe = UserId.valueOf("JaneDoe");
         executionContext = new ExecutionContext(janeDoe, "");
         newProjectSettings = NewProjectSettings.get(janeDoe,
-                "TheProjectDisplayName",
-                "en",
-                "TheProjectDescription");
+                                                    "TheProjectDisplayName",
+                                                    "en",
+                                                    "TheProjectDescription");
 
         var abc = new DocumentId("abc");
         newProjectSettingsWithSources = NewProjectSettings.get(janeDoe,
-                "TheProjectDisplayName",
-                "en",
-                "TheProjectDescription", abc);
+                                                               "TheProjectDisplayName",
+                                                               "en",
+                                                               "TheProjectDescription", abc);
 
     }
 
@@ -110,19 +109,19 @@ class CreateProjectSagaManagerTest {
         Thread.sleep(300);
 
         verify(projectDetailsManager, times(1)).registerProject(any(ProjectId.class),
-                eq(newProjectSettings));
+                                                                eq(newProjectSettings));
     }
 
     @Test
     void shouldCreateAndInitPermissionsOnNewEmptyProject() throws InterruptedException {
         var newProjectSettings = NewProjectSettings.get(janeDoe,
-                "TheProjectDisplayName",
-                "en",
-                "TheProjectDescription");
+                                                        "TheProjectDisplayName",
+                                                        "en",
+                                                        "TheProjectDescription");
         manager.execute(newProjectSettings, executionContext);
         Thread.sleep(600);
         verify(projectPermissionsInitializer, times(1)).applyDefaultPermissions(any(ProjectId.class),
-                eq(janeDoe));
+                                                                                eq(janeDoe));
     }
 
     @Test

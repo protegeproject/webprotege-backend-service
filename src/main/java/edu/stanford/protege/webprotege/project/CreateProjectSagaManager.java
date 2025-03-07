@@ -40,13 +40,15 @@ public class CreateProjectSagaManager {
     private final ProjectPermissionsInitializer projectPermissionsInitializer;
     private final EventDispatcher eventDispatcher;
 
-    public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager, CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
+    public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager,
+                                    CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
                                     CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> prepareBinaryFileBackupForUseExecutor,
                                     CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> createProjectSmallFilesExecutor,
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
-                                    ProjectPermissionsInitializer projectPermissionsInitializer, EventDispatcher eventDispatcher) {
+                                    ProjectPermissionsInitializer projectPermissionsInitializer,
+                                    EventDispatcher eventDispatcher) {
         this.projectDetailsManager = projectDetailsManager;
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;

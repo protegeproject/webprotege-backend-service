@@ -13,7 +13,6 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import jakarta.annotation.*;
 import jakarta.inject.Inject;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
