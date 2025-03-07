@@ -23,7 +23,6 @@ import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTran
 import edu.stanford.protege.webprotege.frame.translator.ObjectPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.actions.*;
@@ -597,6 +596,11 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                           RenderingManager p2,
                                                                           DeprecatedEntitiesIndex p3) {
         return new GetDeprecatedEntitiesActionHandler(p1, p2, p3);
+    }
+
+    @Bean
+    GetIcatxEntityTypeActionHandler getIcatxEntityTypeActionHandler(AccessManager p1, ClassHierarchyProvider p2, IcatxEntityTypeConfigurationRepository p3) {
+        return new GetIcatxEntityTypeActionHandler(p1, p2, p3);
     }
 
     @Bean
