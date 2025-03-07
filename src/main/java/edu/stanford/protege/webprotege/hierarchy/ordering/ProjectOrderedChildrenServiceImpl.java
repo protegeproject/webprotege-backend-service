@@ -12,11 +12,11 @@ import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.IRI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.text.MessageFormat;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -25,6 +25,8 @@ import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedC
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildrenService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProjectOrderedChildrenServiceImpl.class);
 
     private final ObjectMapper objectMapper;
     private final ProjectOrderedChildrenRepository repository;
@@ -152,6 +154,20 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                                                                List<String> newChildrenOrder,
                                                                Optional<ProjectOrderedChildren> initialOrderOptional,
                                                                UserId userId) {
+        if (!areNewChildrenOrderUnique(newChildrenOrder)) {
+            String errorMessage = MessageFormat.format(
+                    """
+                            The new children order contains duplicates: {0}
+                            ProjectId: {1}
+                            ParentIri: {2}
+                            UserId: {3}
+                            """,
+                    newChildrenOrder, projectId.id(), parentEntityIri, userId.id()
+            );
+            logger.error(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
+
         return readWriteLock.executeWriteLock(() -> {
             if (initialOrderOptional.isPresent()) {
                 ProjectOrderedChildren initialOrder = initialOrderOptional.get();
@@ -169,6 +185,17 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
             }
         });
     }
+
+    /**
+     * Checks if all items in the provided list are unique.
+     *
+     * @param newChildrenOrder the list of children order strings
+     * @return true if all items are unique; false otherwise
+     */
+    private boolean areNewChildrenOrderUnique(List<String> newChildrenOrder) {
+        return new HashSet<>(newChildrenOrder).size() == newChildrenOrder.size();
+    }
+
 
     public void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove) {
         readWriteLock.executeWriteLock(() -> {
