@@ -535,9 +535,9 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    SetNamedHierarchyActionHandler addNamedHierarchyActionHandler(AccessManager p0,
+    AddNamedHierarchyActionHandler addNamedHierarchyActionHandler(AccessManager p0,
                                                                   NamedHierarchyManager p1) {
-        return new SetNamedHierarchyActionHandler(p0, p1);
+        return new AddNamedHierarchyActionHandler(p0, p1);
     }
 
 
@@ -1103,7 +1103,7 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetEntityCardDescriptorsProjectActionHandler(p1, p2, p3, p4, p5);
 	}
 
-	@Bean
+    @Bean
     GetHierarchyDescriptorActionHandler getHierarchyDescriptorActionHandler(AccessManager p1, HierarchyDescriptorRuleSelector p2) {
         return new GetHierarchyDescriptorActionHandler(p1, p2);
     }
@@ -1170,5 +1170,10 @@ public class ProjectActionHandlerBeansConfiguration {
     GetEntityCommentsActionHandler getEntityCommentsActionHandler(EntityDiscussionThreadRepository p1,
                                                                   AccessManager p2) {
         return new GetEntityCommentsActionHandler(p1, p2);
+    }
+
+    @Bean
+    SaveEntityChildrenOrderingActionHandler saveEntityChildrenOrderingActionHandler(AccessManager p1, ProjectOrderedChildrenManager p2) {
+        return new SaveEntityChildrenOrderingActionHandler(p1,p2);
     }
 }

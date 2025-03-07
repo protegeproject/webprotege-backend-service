@@ -1,15 +1,24 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
-import com.mongodb.client.model.*;
+import com.mongodb.client.model.BulkWriteOptions;
+import com.mongodb.client.model.UpdateOneModel;
 import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.bson.Document;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.*;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.*;
@@ -70,6 +79,25 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
     }
 
     @Override
+    public Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, String entityUri, UserId userId) {
+        Objects.requireNonNull(projectId, "ProjectId cannot be null");
+        Objects.requireNonNull(entityUri, "Entity URI cannot be null");
+
+        Query query = new Query();
+        Criteria criteria = Criteria.where(PROJECT_ID)
+                .is(projectId.id())
+                .and(ENTITY_URI)
+                .is(entityUri);
+
+        if (userId != null) {
+            criteria.and(USER_ID).is(userId.id());
+        }
+
+        query.addCriteria(criteria);
+
+        return readWriteLock.executeReadLock(() -> Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class)));
+    }
+
     public void save(ProjectOrderedChildren projectOrderedChildren) {
         readWriteLock.executeWriteLock(() -> mongoTemplate.save(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
     }
@@ -80,16 +108,48 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
     }
 
     @Override
+    public Optional<ProjectOrderedChildren> insertAndGet(ProjectOrderedChildren projectOrderedChildren) {
+        return readWriteLock.executeWriteLock(() -> Optional.ofNullable(mongoTemplate.insert(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION)));
+    }
+
+    @Override
     public void update(ProjectOrderedChildren updatedEntry) {
         Query query = new Query();
         query.addCriteria(Criteria.where(PROJECT_ID).is(updatedEntry.projectId().id())
                 .and(ENTITY_URI).is(updatedEntry.entityUri()));
 
         Update update = new Update()
-                .set(CHILDREN, updatedEntry.children())
-                .set(USER_ID, updatedEntry.userId());
+                .set(CHILDREN, updatedEntry.children());
+
+        if (updatedEntry.userId() != null) {
+            update.set(USER_ID, updatedEntry.userId());
+        }
 
         readWriteLock.executeWriteLock(() -> mongoTemplate.updateFirst(query, update, ORDERED_CHILDREN_COLLECTION));
+    }
+
+    @Override
+    public Optional<ProjectOrderedChildren> updateAndGet(ProjectOrderedChildren updatedEntry) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where(PROJECT_ID).is(updatedEntry.projectId().id())
+                .and(ENTITY_URI).is(updatedEntry.entityUri()));
+
+        Update update = new Update()
+                .set(CHILDREN, updatedEntry.children());
+
+        if (updatedEntry.userId() != null) {
+            update.set(USER_ID, updatedEntry.userId());
+        }
+
+        return readWriteLock.executeWriteLock(() -> Optional.ofNullable(
+                mongoTemplate.findAndModify(
+                        query,
+                        update,
+                        FindAndModifyOptions.options().returnNew(true),
+                        ProjectOrderedChildren.class,
+                        ORDERED_CHILDREN_COLLECTION
+                )
+        ));
     }
 
 
