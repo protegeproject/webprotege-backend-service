@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
-import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingResult;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import jakarta.inject.Inject;

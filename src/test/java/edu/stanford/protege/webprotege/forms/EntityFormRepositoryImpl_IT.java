@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
 import edu.stanford.protege.webprotege.*;
+import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.forms.field.*;

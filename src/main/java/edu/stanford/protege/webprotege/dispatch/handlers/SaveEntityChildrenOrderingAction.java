@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.dispatch.actions;
+package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;

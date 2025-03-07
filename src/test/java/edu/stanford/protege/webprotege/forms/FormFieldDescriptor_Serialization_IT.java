@@ -46,7 +46,6 @@ public class FormFieldDescriptor_Serialization_IT {
                 LanguageMap.empty()
         );
         var serialized = tester.write(formElementDescriptor);
-        System.out.println(serialized.getJson());
         var deserialized = tester.parse(serialized.getJson());
         assertThat(formElementDescriptor, is(deserialized.getObject()));
     }
