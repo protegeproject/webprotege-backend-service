@@ -5,10 +5,12 @@ import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -17,10 +19,14 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,6 +46,9 @@ public class ProjectOrderedChildrenManagerIT {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    @MockitoBean
+    private NewRevisionsEventEmitterService newRevisionsEventEmitterService;
+
     private ProjectOrderedChildrenManager manager;
     private ProjectId projectId;
 
@@ -53,7 +62,7 @@ public class ProjectOrderedChildrenManagerIT {
         mongoTemplate.dropCollection(ProjectOrderedChildren.class);
         projectId = new ProjectId(UUID.randomUUID().toString());
 
-        manager = new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
+        manager = new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
 
         projectOrderedChildrenService.addChildToParent(projectId, parentA.toStringID(), child1.toStringID());
         projectOrderedChildrenService.addChildToParent(projectId, parentA.toStringID(), child2.toStringID());
@@ -86,14 +95,14 @@ public class ProjectOrderedChildrenManagerIT {
 
         manager.moveEntitiesToParent(newParent, entitiesToMove, previousParents);
 
-        Query queryA = new Query(Criteria.where(ProjectOrderedChildren.ENTITY_URI).is(parentA.toStringID()));
-        ProjectOrderedChildren parentAEntry = mongoTemplate.findOne(queryA, ProjectOrderedChildren.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
-        assertNull(parentAEntry);
-
         Query queryB = new Query(Criteria.where(ProjectOrderedChildren.ENTITY_URI).is(parentB.toStringID()));
         ProjectOrderedChildren parentBEntry = mongoTemplate.findOne(queryB, ProjectOrderedChildren.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
         assertNotNull(parentBEntry);
         assertTrue(parentBEntry.children().containsAll(List.of(child1.toStringID(), child2.toStringID())), "Both children should be moved to parentB");
+
+        Query queryA = new Query(Criteria.where(ProjectOrderedChildren.ENTITY_URI).is(parentA.toStringID()));
+        ProjectOrderedChildren parentAEntry = mongoTemplate.findOne(queryA, ProjectOrderedChildren.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+        assertNull(parentAEntry);
     }
 
 

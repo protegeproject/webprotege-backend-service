@@ -1160,4 +1160,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                   AccessManager p2) {
         return new GetEntityCommentsActionHandler(p1, p2);
     }
+
+    @Bean
+    SaveEntityChildrenOrderingActionHandler saveEntityChildrenOrderingActionHandler(AccessManager p1, ProjectOrderedChildrenManager p2) {
+        return new SaveEntityChildrenOrderingActionHandler(p1,p2);
+    }
 }
