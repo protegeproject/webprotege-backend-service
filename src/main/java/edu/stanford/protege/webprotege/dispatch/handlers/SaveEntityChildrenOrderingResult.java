@@ -1,4 +1,4 @@
-package edu.stanford.protege.webprotege.dispatch.actions;
+package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.dispatch.Result;
 
