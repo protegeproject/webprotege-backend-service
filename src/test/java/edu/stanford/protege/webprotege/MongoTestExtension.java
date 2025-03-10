@@ -12,7 +12,11 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.io.IOException;
 import java.util.Properties;
-
+/**
+ * Matthew Horridge
+ * Stanford Center for Biomedical Informatics Research
+ * 2023-06-06
+ */
 public class MongoTestExtension implements BeforeAllCallback, AfterAllCallback {
 
     private static final Logger logger = LoggerFactory.getLogger(MongoTestExtension.class);

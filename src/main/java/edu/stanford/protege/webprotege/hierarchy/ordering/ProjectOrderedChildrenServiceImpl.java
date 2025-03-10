@@ -127,7 +127,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     @Override
     public void updateEntity(SaveEntityChildrenOrderingAction action, UserId userId) {
         Optional<ProjectOrderedChildren> entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
-        if (entityChildrenOrdering.isPresent()) {
+        if(entityChildrenOrdering.isPresent()) {
             ProjectOrderedChildren orderToBeSaved = entityChildrenOrdering.map(ordering -> new ProjectOrderedChildren(ordering.entityUri(),
                     ordering.projectId(),
                     action.orderedChildren(),

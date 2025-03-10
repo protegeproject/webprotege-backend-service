@@ -24,7 +24,7 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
                                           @Nonnull HasApplyChanges applyChanges,
                                           @Nonnull MoveEntityChangeListGeneratorFactory factory,
-                                          ProjectOrderedChildrenManager projectOrderedChildrenManager) {
+                                          @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager) {
         super(accessManager, applyChanges);
         this.factory = factory;
         this.projectOrderedChildrenManager = projectOrderedChildrenManager;

@@ -88,12 +88,14 @@ public class EntityFormChangeListGeneratorFactory {
      */
     public EntityFormChangeListGenerator create(@Nonnull ChangeRequestId changeRequestId,
                                                 @Nonnull OWLEntity subject,
+                                                @Nonnull String commitMessage,
                                                 @Nonnull ImmutableMap<FormId, FormData> pristineFormsData,
                                                 @Nonnull FormDataByFormId editedFormsData) {
         checkNotNull(subject);
         checkNotNull(editedFormsData);
         checkNotNull(pristineFormsData);
         return new EntityFormChangeListGenerator(changeRequestId, subject,
+                                                 commitMessage,
                                                  pristineFormsData,
                                                  editedFormsData,
                                                  formDataProcessor,
@@ -107,20 +109,22 @@ public class EntityFormChangeListGeneratorFactory {
 
     public EntityFormChangeListGenerator createForAdd(@Nonnull ChangeRequestId changeRequestId,
                                                       @Nonnull OWLEntity subject,
+                                                      @Nonnull String commitMessage,
                                                       @Nonnull FormDataByFormId formsData) {
         checkNotNull(subject);
         checkNotNull(formsData);
         var emptyFormData = getEmptyFormData(subject, formsData);
-        return create(changeRequestId, subject, emptyFormData, formsData);
+        return create(changeRequestId, subject, commitMessage, emptyFormData, formsData);
     }
 
     public EntityFormChangeListGenerator createForRemove(@Nonnull ChangeRequestId changeRequestId,
                                                          @Nonnull OWLEntity subject,
+                                                         @Nonnull String commitMessage,
                                                          @Nonnull ImmutableMap<FormId, FormData> formsData) {
         checkNotNull(subject);
         checkNotNull(formsData);
         var emptyFormData = getEmptyFormData(subject, new FormDataByFormId(formsData));
-        return create(changeRequestId, subject, formsData, new FormDataByFormId(emptyFormData));
+        return create(changeRequestId, subject, commitMessage, formsData, new FormDataByFormId(emptyFormData));
     }
 
     private static ImmutableMap<FormId, FormData> getEmptyFormData(@Nonnull OWLEntity subject,

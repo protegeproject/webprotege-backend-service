@@ -143,7 +143,7 @@ public class CreateEntityFromFormDataChangeListGenerator implements ChangeListGe
         var newEntityFormData = ImmutableMap.of(formId,
                                                 formData);
         var formChangesList = formChangeListGeneratorFactory.create(changeRequestId,
-                                                                    entity, pristineFormData, new FormDataByFormId(newEntityFormData));
+                                                                    entity, "", pristineFormData, new FormDataByFormId(newEntityFormData));
         var formChanges = formChangesList.generateChanges(context);
         return OntologyChangeList.<OWLEntity>builder()
                 .addAll(changeListBuilder.build())
