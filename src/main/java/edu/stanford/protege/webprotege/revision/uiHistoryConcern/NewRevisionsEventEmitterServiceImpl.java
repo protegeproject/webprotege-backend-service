@@ -54,9 +54,11 @@ public class NewRevisionsEventEmitterServiceImpl implements NewRevisionsEventEmi
                                                    Optional<ProjectOrderedChildren> initialOrderedChildrenOptional,
                                                    Optional<ProjectOrderedChildren> newOrderedChildrenOptional,
                                                    UserId userId,
-                                                   ChangeRequestId changeRequestId) {
+                                                   ChangeRequestId changeRequestId,
+                                                   String commitMessage) {
         newOrderedChildrenOptional.ifPresent(newOrdering -> {
-            Set<ProjectChangeForEntity> changes = orderingChangesManager.getProjectChangesForEntitiesFromOrderingChange(entityParentIri, initialOrderedChildrenOptional, newOrdering, userId);
+            Set<ProjectChangeForEntity> changes = orderingChangesManager.getProjectChangesForEntitiesFromOrderingChange(entityParentIri,
+                    initialOrderedChildrenOptional, newOrdering, userId, commitMessage);
 
             NewRevisionsEvent revisionsEvent = NewRevisionsEvent.create(EventId.generate(), projectId, changes, changeRequestId);
             eventDispatcher.dispatchEvent(revisionsEvent);
