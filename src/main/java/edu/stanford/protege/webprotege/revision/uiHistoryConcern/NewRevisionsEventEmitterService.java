@@ -16,5 +16,6 @@ public interface NewRevisionsEventEmitterService {
                                             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional,
                                             Optional<ProjectOrderedChildren> newOrderedChildrenOptional,
                                             UserId userId,
-                                            ChangeRequestId changeRequestId);
+                                            ChangeRequestId changeRequestId,
+                                            String commitMessage);
 }

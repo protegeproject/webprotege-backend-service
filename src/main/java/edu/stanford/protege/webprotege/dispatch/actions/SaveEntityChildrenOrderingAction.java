@@ -11,7 +11,8 @@ import java.util.List;
 public record SaveEntityChildrenOrderingAction(@Nonnull ProjectId projectId,
                                                @Nonnull IRI entityIri,
                                                @Nonnull List<String> orderedChildren,
-                                               @Nonnull ChangeRequestId changeRequestId) implements ProjectAction<SaveEntityChildrenOrderingResult> {
+                                               @Nonnull ChangeRequestId changeRequestId,
+                                               String commitMessage) implements ProjectAction<SaveEntityChildrenOrderingResult> {
 
     public final static String CHANNEL = "webprotege.projects.SaveEntityChildReordering";
 
