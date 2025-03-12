@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import jakarta.inject.Provider;
-
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research

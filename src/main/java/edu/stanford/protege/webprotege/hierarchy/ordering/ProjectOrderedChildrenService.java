@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import edu.stanford.protege.webprotege.common.*;
-import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
+import edu.stanford.protege.webprotege.dispatch.handlers.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import org.semanticweb.owlapi.model.IRI;
 
