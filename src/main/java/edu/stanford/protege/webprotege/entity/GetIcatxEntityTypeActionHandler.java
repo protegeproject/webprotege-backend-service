@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.entity;
 
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.hierarchy.ClassHierarchyProvider;
@@ -7,7 +8,6 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
-import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import java.util.*;
 
@@ -37,7 +37,7 @@ public class GetIcatxEntityTypeActionHandler extends AbstractProjectActionHandle
     public GetIcatxEntityTypeResult execute(@NotNull GetIcatxEntityTypeAction action, @NotNull ExecutionContext executionContext) {
         List<IcatxEntityTypeConfiguration> configurations = repository.getAllConfigurations();
 
-        List<IRI> ancestorsIris = classHierarchyProvider.getAncestors(new OWLClassImpl(action.entityIri())).stream()
+        List<IRI> ancestorsIris = classHierarchyProvider.getAncestors(DataFactory.getOWLClass(action.entityIri())).stream()
                 .map(OWLClass::getIRI).toList();
 
         List<IcatxEntityTypeConfiguration> matchingParents = configurations.stream()
