@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateClassesChangeGeneratorFactory;
@@ -21,8 +21,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_CLASS;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_CLASS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;
 
 /**
@@ -55,7 +55,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
 
     @Nonnull
     @Override
-    protected List<BuiltInAction> getRequiredExecutableBuiltInActions(CreateClassesAction action) {
+    protected List<BuiltInCapability> getRequiredExecutableBuiltInActions(CreateClassesAction action) {
         return asList(CREATE_CLASS, EDIT_ONTOLOGY);
     }
 

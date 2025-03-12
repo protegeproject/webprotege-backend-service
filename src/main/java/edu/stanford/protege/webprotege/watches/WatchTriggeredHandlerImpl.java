@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 import static edu.stanford.protege.webprotege.authorization.ProjectResource.forProject;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static java.util.stream.Collectors.toList;

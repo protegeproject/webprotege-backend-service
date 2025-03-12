@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.lang;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.LangTag;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -39,8 +39,8 @@ public class GetProjectLangTagsActionHandler extends AbstractProjectActionHandle
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetProjectLangTagsAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetProjectLangTagsAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 
     @Nonnull

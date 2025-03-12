@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.access;
 
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.authorization.RoleId;
 
 import javax.annotation.Nonnull;
@@ -27,10 +27,10 @@ public class RoleOracleImpl implements RoleOracle {
             List<RoleId> parentRoles = builtInRole.getParents().stream()
                                                   .map(BuiltInRole::getRoleId)
                                                   .collect(toList());
-            List<ActionId> actions = builtInRole.getActions().stream()
-                                                .map(BuiltInAction::getActionId)
+            List<Capability> capabilities = builtInRole.getCapabilities().stream()
+                                                .map(BuiltInCapability::getCapability)
                                                 .collect(toList());
-            impl.addRole(new Role(builtInRole.getRoleId(), parentRoles, actions));
+            impl.addRole(new Role(builtInRole.getRoleId(), parentRoles, capabilities));
         }
         return impl;
     }

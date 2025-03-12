@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ui.DisplayContext;
 
@@ -18,7 +18,7 @@ public class HierarchyDescriptorRuleSelector {
         this.matcher = matcher;
     }
 
-    public Optional<HierarchyDescriptorRule> selectRule(ProjectId projectId, DisplayContext displayContext, Set<ActionId> actions) {
+    public Optional<HierarchyDescriptorRule> selectRule(ProjectId projectId, DisplayContext displayContext, Set<Capability> actions) {
         var rules = repository.find(projectId);
         return rules.stream()
                 .flatMap(rule -> rule.rules().stream())

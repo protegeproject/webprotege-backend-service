@@ -2,7 +2,8 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.BasicCapability;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
@@ -23,7 +24,7 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
     public static final Map<String, String> MATCHING_VIEW_PROPERTIES = Map.of("key", "value");
     public static final FormId MATCHING_FORM_ID = FormId.valueOf("123e4567-e89b-12d3-a456-426614174010");
     public static final FormRegionId MATCHING_FORM_FIELD_ID = FormRegionId.valueOf("123e4567-e89b-12d3-a456-426614174011");
-    public static final Set<ActionId> MATCHING_ACTION_IDS = Set.of(ActionId.valueOf("ACTIONX"));
+    public static final Set<Capability> MATCHING_ACTION_IDS = Set.of(BasicCapability.valueOf("ACTIONX"));
     private final HierarchyDescriptorRuleDisplayContextMatcher matcher =
             new HierarchyDescriptorRuleDisplayContextMatcher();
 
@@ -34,7 +35,7 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
             Map<String, String> requiredViewProperties,
             FormId requiredFormId,
             FormRegionId requiredFormFieldId,
-            Set<ActionId> requiredActions) {
+            Set<Capability> requiredActions) {
         return new HierarchyDescriptorRule(
                 requiredPerspectiveId,
                 requiredViewId,
@@ -77,7 +78,7 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
 
         var rule = createRule(perspectiveId, viewId, viewProperties, formId, formFieldId, ruleActions);
         var displayContext = createDisplayContext(perspectiveId, viewId, viewProperties, List.of(formId), formFieldId);
-        var providedActions = Set.of(ActionId.valueOf("ACTIONX"), ActionId.valueOf("EXTRA"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"), BasicCapability.valueOf("EXTRA"));
 
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isTrue();
@@ -91,11 +92,11 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
         var viewProperties = MATCHING_VIEW_PROPERTIES;
         var formId = MATCHING_FORM_ID;
         var formFieldId = MATCHING_FORM_FIELD_ID;
-        var ruleActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var ruleActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         var rule = createRule(rulePerspective, viewId, viewProperties, formId, formFieldId, ruleActions);
         var displayContext = createDisplayContext(displayPerspective, viewId, viewProperties, List.of(formId), formFieldId);
-        var providedActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isFalse();
@@ -109,11 +110,11 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
         var viewProperties = MATCHING_VIEW_PROPERTIES;
         var formId = MATCHING_FORM_ID;
         var formFieldId = MATCHING_FORM_FIELD_ID;
-        var ruleActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var ruleActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         var rule = createRule(perspectiveId, ruleViewId, viewProperties, formId, formFieldId, ruleActions);
         var displayContext = createDisplayContext(perspectiveId, displayViewId, viewProperties, List.of(formId), formFieldId);
-        var providedActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isFalse();
@@ -127,11 +128,11 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
         var displayViewProperties = Map.of("key", "different"); // mismatch
         var formId = MATCHING_FORM_ID;
         var formFieldId = MATCHING_FORM_FIELD_ID;
-        var ruleActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var ruleActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         var rule = createRule(perspectiveId, viewId, ruleViewProperties, formId, formFieldId, ruleActions);
         var displayContext = createDisplayContext(perspectiveId, viewId, displayViewProperties, List.of(formId), formFieldId);
-        var providedActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isFalse();
@@ -145,11 +146,11 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
         var ruleFormId = MATCHING_FORM_ID;
         var displayFormId = FormId.valueOf("123e4567-e89b-12d3-a456-426614174012"); // mismatch
         var formFieldId = MATCHING_FORM_FIELD_ID;
-        var ruleActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var ruleActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         var rule = createRule(perspectiveId, viewId, viewProperties, ruleFormId, formFieldId, ruleActions);
         var displayContext = createDisplayContext(perspectiveId, viewId, viewProperties, List.of(displayFormId), formFieldId);
-        var providedActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isFalse();
@@ -163,11 +164,11 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
         var formId = MATCHING_FORM_ID;
         var ruleFormFieldId = MATCHING_FORM_FIELD_ID;
         var displayFormFieldId = FormRegionId.valueOf("123e4567-e89b-12d3-a456-426614174013"); // mismatch
-        var ruleActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var ruleActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         var rule = createRule(perspectiveId, viewId, viewProperties, formId, ruleFormFieldId, ruleActions);
         var displayContext = createDisplayContext(perspectiveId, viewId, viewProperties, List.of(formId), displayFormFieldId);
-        var providedActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isFalse();
@@ -185,7 +186,7 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
         var displayContext = createDisplayContext(perspectiveId, viewId, viewProperties, List.of(formId), formFieldId);
 
         // Provided actions do not include ACTIONX.
-        var providedActions = Set.of(ActionId.valueOf("ACTIONQ"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONQ"));
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isFalse();
     }
@@ -200,7 +201,7 @@ class HierarchyDescriptorRuleDisplayContextMatcherTest {
         var formId = MATCHING_FORM_ID;
         var formFieldId = MATCHING_FORM_FIELD_ID;
         var displayContext = createDisplayContext(perspectiveId, viewId, viewProperties, List.of(formId), formFieldId);
-        var providedActions = Set.of(ActionId.valueOf("ACTIONX"));
+        var providedActions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
 
         boolean result = matcher.matches(rule, displayContext, providedActions);
         assertThat(result).isTrue();

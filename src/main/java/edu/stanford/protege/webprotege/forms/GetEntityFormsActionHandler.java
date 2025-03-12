@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.forms;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
@@ -100,7 +100,7 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetEntityFormsAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetEntityFormsAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 }

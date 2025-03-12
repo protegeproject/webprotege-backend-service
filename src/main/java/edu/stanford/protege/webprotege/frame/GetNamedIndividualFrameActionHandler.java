@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.frame.translator.NamedIndividualFrameTranslator;
@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>
@@ -49,7 +49,7 @@ public class GetNamedIndividualFrameActionHandler extends AbstractProjectActionH
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetNamedIndividualFrameAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetNamedIndividualFrameAction action) {
         return VIEW_PROJECT;
     }
 

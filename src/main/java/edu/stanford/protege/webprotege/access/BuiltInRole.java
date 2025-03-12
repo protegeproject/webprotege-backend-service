@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.authorization.RoleId;
 
 import java.util.Arrays;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.*;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.*;
 
 /**
  * Matthew Horridge
@@ -126,30 +126,30 @@ public enum BuiltInRole {
 
     private final ImmutableList<BuiltInRole> parents;
 
-    private final ImmutableList<BuiltInAction> actions;
+    private final ImmutableList<BuiltInCapability> actions;
 
 
 
-    BuiltInRole(ImmutableList<BuiltInRole> parents, ImmutableList<BuiltInAction> actions) {
+    BuiltInRole(ImmutableList<BuiltInRole> parents, ImmutableList<BuiltInCapability> actions) {
         this.roleId = new RoleId(CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, name()));
         this.parents = parents;
         this.actions = actions;
     }
 
-    BuiltInRole(BuiltInAction... actions) {
+    BuiltInRole(BuiltInCapability... actions) {
         this(ImmutableList.of(), ImmutableList.copyOf(Arrays.asList(actions)));
     }
 
 
-    BuiltInRole(BuiltInRole parentRole, BuiltInAction... actions) {
+    BuiltInRole(BuiltInRole parentRole, BuiltInCapability... actions) {
         this(ImmutableList.of(parentRole), ImmutableList.copyOf(Arrays.asList(actions)));
     }
 
-    BuiltInRole(BuiltInRole parentRole1, BuiltInRole parentRole2, BuiltInAction... actions) {
+    BuiltInRole(BuiltInRole parentRole1, BuiltInRole parentRole2, BuiltInCapability... actions) {
         this(ImmutableList.of(parentRole1, parentRole2), ImmutableList.copyOf(Arrays.asList(actions)));
     }
 
-    BuiltInRole(BuiltInRole parentRole1, BuiltInRole parentRole2, BuiltInRole parentRole3, BuiltInAction... actions) {
+    BuiltInRole(BuiltInRole parentRole1, BuiltInRole parentRole2, BuiltInRole parentRole3, BuiltInCapability... actions) {
         this(ImmutableList.of(parentRole1, parentRole2, parentRole3), ImmutableList.copyOf(Arrays.asList(actions)));
     }
 
@@ -161,7 +161,7 @@ public enum BuiltInRole {
         return parents;
     }
 
-    public ImmutableList<BuiltInAction> getActions() {
+    public ImmutableList<BuiltInCapability> getCapabilities() {
         return actions;
     }
 }

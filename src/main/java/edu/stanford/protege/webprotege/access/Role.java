@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.access;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.authorization.RoleId;
 
 import javax.annotation.Nonnull;
@@ -29,15 +29,15 @@ public final class Role {
     private final List<RoleId> parents;
 
     @Nonnull
-    private final List<ActionId> actions;
+    private final List<Capability> capabilities;
 
 
     public Role(@Nonnull RoleId roleId,
                 @Nonnull List<RoleId> parents,
-                @Nonnull List<ActionId> actions) {
+                @Nonnull List<Capability> capabilities) {
         this.roleId = checkNotNull(roleId);
         this.parents = ImmutableList.copyOf(checkNotNull(parents));
-        this.actions = ImmutableList.copyOf(checkNotNull(actions));
+        this.capabilities = ImmutableList.copyOf(checkNotNull(capabilities));
     }
 
     @Nonnull
@@ -51,13 +51,13 @@ public final class Role {
     }
 
     @Nonnull
-    public List<ActionId> getActions() {
-        return actions;
+    public List<Capability> getCapabilities() {
+        return capabilities;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(roleId, parents, actions);
+        return Objects.hashCode(roleId, parents, capabilities);
     }
 
     @Override
@@ -71,7 +71,7 @@ public final class Role {
         Role other = (Role) obj;
         return this.roleId.equals(other.roleId)
                 && this.parents.equals(other.parents)
-                && this.actions.equals(other.actions);
+                && this.capabilities.equals(other.capabilities);
     }
 
 
@@ -80,7 +80,7 @@ public final class Role {
         return toStringHelper("Role")
                 .addValue(roleId)
                 .add("parents", parents)
-                .add("actions", actions)
+                .add("actions", capabilities)
                 .toString();
     }
 }

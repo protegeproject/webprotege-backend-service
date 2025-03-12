@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.ui.DisplayContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ public class HierarchyDescriptorRuleDisplayContextMatcher {
 
     public boolean matches(HierarchyDescriptorRule rule,
                            DisplayContext displayContext,
-                           Set<ActionId> actions) {
+                           Set<Capability> actions) {
         logger.info("Testing if {} matches {} with actions {}", rule, displayContext, actions);
         return matchesPerspective(rule, displayContext)
                 && matchesView(rule, displayContext)
@@ -71,7 +71,7 @@ public class HierarchyDescriptorRuleDisplayContextMatcher {
         return true;
     }
 
-    private boolean matchesActions(HierarchyDescriptorRule rule, Set<ActionId> actions) {
+    private boolean matchesActions(HierarchyDescriptorRule rule, Set<Capability> actions) {
         if (!actions.containsAll(rule.requiredActions())) {
             logger.debug("Rule {} does not match actions {}", rule, actions);
             return false;

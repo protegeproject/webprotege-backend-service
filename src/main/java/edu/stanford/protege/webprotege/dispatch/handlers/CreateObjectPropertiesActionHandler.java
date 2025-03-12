@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateObjectPropertiesChangeGeneratorFactory;
@@ -21,8 +21,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_PROPERTY;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_PROPERTY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 
 /**
  * Author: Matthew Horridge<br>
@@ -62,7 +62,7 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(CreateObjectPropertiesAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(CreateObjectPropertiesAction action) {
         return Arrays.asList(CREATE_PROPERTY, EDIT_ONTOLOGY);
     }
 

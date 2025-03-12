@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.concurrent.TimeUnit;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>
@@ -67,7 +67,7 @@ public class LoadProjectActionHandler implements ApplicationActionHandler<LoadPr
     @Override
     public RequestValidator getRequestValidator(@Nonnull LoadProjectAction action, @Nonnull RequestContext requestContext) {
         return new ProjectPermissionValidator(accessManager, action.projectId(), requestContext.getUserId(), VIEW_PROJECT
-                .getActionId());
+                .getCapability());
     }
 
     @Nonnull

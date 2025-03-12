@@ -2,8 +2,8 @@ package edu.stanford.protege.webprotege.dispatch;
 
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.ProjectRequest;
 import edu.stanford.protege.webprotege.common.Request;
@@ -12,8 +12,6 @@ import edu.stanford.protege.webprotege.dispatch.validators.CompositeRequestValid
 import edu.stanford.protege.webprotege.dispatch.validators.NullValidator;
 import edu.stanford.protege.webprotege.dispatch.validators.ProjectPermissionValidator;
 import edu.stanford.protege.webprotege.project.HasProjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -48,7 +46,7 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
     public final RequestValidator getRequestValidator(@Nonnull A action, @Nonnull RequestContext requestContext) {
         List<RequestValidator> validators = new ArrayList<>();
 
-        BuiltInAction builtInAction = getRequiredExecutableBuiltInAction(action);
+        BuiltInCapability builtInCapability = getRequiredExecutableBuiltInAction(action);
         ProjectId projectId;
         if(action instanceof ProjectAction) {
             projectId = ((ProjectAction<?>) action).projectId();
@@ -59,31 +57,31 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
         else {
             throw new RuntimeException("Not a project action or request");
         }
-        if(builtInAction != null) {
+        if(builtInCapability != null) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
                                                                                   projectId,
                                                                                   requestContext.getUserId(),
-                                                                                  builtInAction.getActionId());
+                                                                                  builtInCapability.getCapability());
             validators.add(validator);
         }
 
 
 
-        ActionId reqActionId = getRequiredExecutableAction();
-        if (reqActionId != null) {
+        Capability reqCapability = getRequiredCapability();
+        if (reqCapability != null) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
                                                                                   projectId,
                                                                                   requestContext.getUserId(),
-                                                                                  reqActionId);
+                                                                                  reqCapability);
             validators.add(validator);
         }
 
-        Iterable<BuiltInAction> requiredExecutableBuiltInActions = getRequiredExecutableBuiltInActions(action);
-        for(BuiltInAction actionId : requiredExecutableBuiltInActions) {
+        Iterable<BuiltInCapability> requiredExecutableBuiltInActions = getRequiredExecutableBuiltInActions(action);
+        for(BuiltInCapability actionId : requiredExecutableBuiltInActions) {
             ProjectPermissionValidator validator = new ProjectPermissionValidator(accessManager,
                                                                                   projectId,
                                                                                   requestContext.getUserId(),
-                                                                                  actionId.getActionId());
+                                                                                  actionId.getCapability());
             validators.add(validator);
         }
 
@@ -95,19 +93,19 @@ public abstract class AbstractProjectActionHandler<A extends Request<R>, R exten
     }
 
     @Nullable
-    protected BuiltInAction getRequiredExecutableBuiltInAction(A action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(A action) {
         return null;
     }
 
 
 
     @Nullable
-    protected ActionId getRequiredExecutableAction() {
+    protected Capability getRequiredCapability() {
         return null;
     }
 
     @Nonnull
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(A action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(A action) {
         return Collections.emptyList();
     }
 
