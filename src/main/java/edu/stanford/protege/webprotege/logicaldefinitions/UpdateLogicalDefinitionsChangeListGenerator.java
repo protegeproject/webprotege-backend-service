@@ -68,11 +68,9 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
 
     private void generateChangesForNecessaryConditions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
         NecessaryConditionsDiff ncDiff = new NecessaryConditionsDiff(pristineLogicalConditions.necessaryConditions(), changedLogicalConditions.necessaryConditions());
-        ncDiff.executeDiff();;
+        ncDiff.executeDiff();
 
         PropertyValue2AxiomTranslator translator = new PropertyValue2AxiomTranslator();
-
-        List<PropertyClassValue> addedStatements = ncDiff.getAddedStatements();
 
         ncDiff.getAddedStatements().stream()
                     .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
