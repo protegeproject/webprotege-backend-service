@@ -66,7 +66,8 @@ public class ProjectOrderedChildrenManager {
     public void updateChildrenOrderingForEntity(IRI entityParentIri,
                                                 List<String> newChildrenOrder,
                                                 UserId userId,
-                                                ChangeRequestId changeRequestId) {
+                                                ChangeRequestId changeRequestId,
+                                                String commitMessage) {
         readWriteLockService.executeWriteLock(() -> {
 
             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri);
@@ -82,7 +83,8 @@ public class ProjectOrderedChildrenManager {
                     initialOrderedChildrenOptional,
                     newOrderedChildrenOptional,
                     userId,
-                    changeRequestId
+                    changeRequestId,
+                    commitMessage
             );
         });
     }

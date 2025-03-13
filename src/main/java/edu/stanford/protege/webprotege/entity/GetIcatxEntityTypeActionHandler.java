@@ -39,6 +39,7 @@ public class GetIcatxEntityTypeActionHandler extends AbstractProjectActionHandle
 
         List<IRI> ancestorsIris = classHierarchyProvider.getAncestors(DataFactory.getOWLClass(action.entityIri())).stream()
                 .map(OWLClass::getIRI).toList();
+        ancestorsIris.add(action.entityIri());
 
         List<IcatxEntityTypeConfiguration> matchingParents = configurations.stream()
                 .filter(config -> ancestorsIris.contains(config.topLevelIri())).toList();

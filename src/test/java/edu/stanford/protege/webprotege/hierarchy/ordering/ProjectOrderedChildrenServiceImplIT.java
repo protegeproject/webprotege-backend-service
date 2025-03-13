@@ -182,7 +182,8 @@ public class ProjectOrderedChildrenServiceImplIT {
         SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
                 IRI.create(initialEntry.entityUri()),
                 Arrays.asList(childUri3, childUri2, childUri1),
-                ChangeRequestId.generate());
+                ChangeRequestId.generate(),
+                "This is a commit message");
 
         service.updateEntity(action, null);
 

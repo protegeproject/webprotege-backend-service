@@ -33,7 +33,8 @@ public class SaveEntityChildrenOrderingActionHandler extends AbstractProjectActi
                 action.entityIri(),
                 action.orderedChildren(),
                 executionContext.userId(),
-                action.changeRequestId()
+                action.changeRequestId(),
+                action.commitMessage()
         );
 
         return new SaveEntityChildrenOrderingResult();
