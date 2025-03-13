@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
+import edu.stanford.protege.webprotege.dispatch.handlers.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.*;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.junit.jupiter.api.*;
@@ -182,7 +182,8 @@ public class ProjectOrderedChildrenServiceImplIT {
         SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
                 IRI.create(initialEntry.entityUri()),
                 Arrays.asList(childUri3, childUri2, childUri1),
-                ChangeRequestId.generate());
+                ChangeRequestId.generate(),
+                "This is a commit message");
 
         service.updateEntity(action, null);
 

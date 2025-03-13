@@ -40,7 +40,8 @@ public class OrderingChangesManager {
             IRI entityParentIri,
             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional,
             ProjectOrderedChildren newOrdering,
-            UserId userId
+            UserId userId,
+            String commitMessage
     ) {
         List<DiffElement<String, OrderChange>> diffElements =
                 translator.getDiffElementsFromOrdering(initialOrderedChildrenOptional, newOrdering);

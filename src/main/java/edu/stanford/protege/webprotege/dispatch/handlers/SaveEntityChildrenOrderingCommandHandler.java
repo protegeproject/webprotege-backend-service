@@ -2,8 +2,6 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 
 
 import edu.stanford.protege.webprotege.api.ActionExecutor;
-import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
-import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingResult;
 import edu.stanford.protege.webprotege.ipc.CommandHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
