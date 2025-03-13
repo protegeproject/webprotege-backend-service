@@ -1,20 +1,26 @@
 package edu.stanford.protege.webprotege.hierarchy.ordering;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.*;
+import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
+import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.dispatch.actions.SaveEntityChildrenOrderingAction;
-import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.*;
+import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.dispatch.handlers.SaveEntityChildrenOrderingAction;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChild;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.model.IRI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.*;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -86,14 +92,15 @@ public class ProjectOrderedChildrenServiceImplIT {
     }
 
     @Test
-    public void GIVEN_newOrderOnChildren_WHEN_updateEntity_THEN_newOrderIsSaved(){
+    public void GIVEN_newOrderOnChildren_WHEN_updateEntity_THEN_newOrderIsSaved() {
         ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2, childUri3), null);
         mongoTemplate.insert(initialEntry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
 
         SaveEntityChildrenOrderingAction action = new SaveEntityChildrenOrderingAction(projectId,
                 IRI.create(initialEntry.entityUri()),
                 Arrays.asList(childUri3, childUri2, childUri1),
-                ChangeRequestId.generate());
+                ChangeRequestId.generate(),
+                "This is a commit message");
 
         service.updateEntity(action, null);
 
@@ -105,9 +112,9 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(3, retrieved.children().size(), "Should have two children stored");
         assertTrue(retrieved.children().contains(childUri1), "Should contain childUri1");
         assertTrue(retrieved.children().contains(childUri2), "Should contain childUri2");
-        assertEquals(retrieved.children().get(0),childUri3);
-        assertEquals(retrieved.children().get(1),childUri2);
-        assertEquals(retrieved.children().get(2),childUri1);
+        assertEquals(retrieved.children().get(0), childUri3);
+        assertEquals(retrieved.children().get(1), childUri2);
+        assertEquals(retrieved.children().get(2), childUri1);
 
     }
 
@@ -204,7 +211,7 @@ public class ProjectOrderedChildrenServiceImplIT {
     public void GIVEN_multipleExistingParents_WHEN_overrideExistingTrue_THEN_allAreUpdated() {
         ProjectOrderedChildren parent1 = new ProjectOrderedChildren("http://example.com/entity/parent1", projectId, List.of(childUri1), null);
         ProjectOrderedChildren parent2 = new ProjectOrderedChildren("http://example.com/entity/parent2", projectId, List.of(childUri2), null);
-        mongoTemplate.insertAll(List.of(parent1,parent2));
+        mongoTemplate.insertAll(List.of(parent1, parent2));
 
         OrderedChildren updatedChildren1 = new OrderedChildren(List.of(new OrderedChild(childUri3, "1000000")), "http://example.com/entity/parent1");
         OrderedChildren updatedChildren2 = new OrderedChildren(List.of(new OrderedChild(childUri1, "2000000")), "http://example.com/entity/parent2");
@@ -250,7 +257,6 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(1, result2.get().children().size());
         assertTrue(result2.get().children().contains(childUri2));
     }
-
 
 
     @Test
@@ -335,5 +341,120 @@ public class ProjectOrderedChildrenServiceImplIT {
         assertEquals(2, updatedEntry.get().children().size(), "No child should be removed");
         assertTrue(updatedEntry.get().children().contains(childUri1), "Existing children should remain");
         assertTrue(updatedEntry.get().children().contains(childUri2), "Existing children should remain");
+    }
+
+    @Test
+    public void GIVEN_existingOrderedChildrenWithNonNullUser_WHEN_findOrderedChildrenWithoutUserId_THEN_returnEntry() {
+        // GIVEN an entry with a non-null userId
+        String userIdVal = "user123";
+        ProjectOrderedChildren entry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2), userIdVal);
+        mongoTemplate.insert(entry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+
+        // WHEN findOrderedChildren is called without providing a userId
+        Optional<ProjectOrderedChildren> result = service.findOrderedChildren(projectId, IRI.create(parentUri));
+
+        // THEN the entry is returned with the expected children ordering
+        assertTrue(result.isPresent(), "Entry should be returned when an entry exists");
+        assertEquals(List.of(childUri1, childUri2), result.get().children(), "Children ordering should match the stored list");
+    }
+
+    @Test
+    public void GIVEN_existingOrderedChildrenWithNullUser_WHEN_findOrderedChildrenWithoutUserId_THEN_returnEntry() {
+        // GIVEN an entry with a null userId
+        ProjectOrderedChildren entry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1, childUri2), null);
+        mongoTemplate.insert(entry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+
+        // WHEN findOrderedChildren is called (it passes null internally as userId)
+        Optional<ProjectOrderedChildren> result = service.findOrderedChildren(projectId, IRI.create(parentUri));
+
+        // THEN the entry is returned with the expected children ordering
+        assertTrue(result.isPresent(), "Entry should be returned when an entry with null userId exists");
+        assertEquals(List.of(childUri1, childUri2), result.get().children(), "Children ordering should match the stored list");
+    }
+
+    @Test
+    public void GIVEN_noOrderedChildren_WHEN_findOrderedChildrenWithoutUserId_THEN_returnEmptyOptional() {
+        // GIVEN no entry exists for a non-existent parent URI
+        Optional<ProjectOrderedChildren> result = service.findOrderedChildren(projectId, IRI.create("http://example.com/entity/nonexistent"));
+
+        // THEN an empty Optional is returned
+        assertFalse(result.isPresent(), "No entry should be returned if none exists");
+    }
+
+    @Test
+    public void GIVEN_existingOrderedChildren_WHEN_updateEntityAndGet_THEN_childrenOrderingIsUpdated() {
+        // GIVEN an existing entry with an initial ordering and userId "initUser"
+        String initialUserId = "initUser";
+        ProjectOrderedChildren initialEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(childUri1), initialUserId);
+        mongoTemplate.insert(initialEntry, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+
+        // WHEN updateEntityAndGet is called to update the ordering with a new list and userId "updateUser"
+        List<String> newOrder = List.of(childUri2, childUri3);
+        UserId updateUser = new UserId("updateUser");
+        Optional<ProjectOrderedChildren> updatedOptional = service.updateEntityAndGet(
+                IRI.create(parentUri),
+                projectId,
+                newOrder,
+                Optional.of(initialEntry),
+                updateUser
+        );
+
+        // THEN the returned entry has the new ordering and is stored in the database
+        assertTrue(updatedOptional.isPresent(), "Updated entry should be returned");
+        ProjectOrderedChildren updatedEntry = updatedOptional.get();
+        assertEquals(newOrder, updatedEntry.children(), "Children ordering should be updated");
+
+        Query query = new Query(Criteria.where(ENTITY_URI).is(parentUri));
+        ProjectOrderedChildren storedEntry = mongoTemplate.findOne(query, ProjectOrderedChildren.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+        assertNotNull(storedEntry, "Updated entry should be stored in DB");
+        assertEquals(newOrder, storedEntry.children(), "Stored ordering should reflect the updated order");
+    }
+
+    @Test
+    public void GIVEN_noExistingOrderedChildren_WHEN_updateEntityAndGet_THEN_entryIsInserted() {
+        // GIVEN no existing entry for a new parent URI
+        String newParentUri = "http://example.com/entity/newParent";
+        List<String> newOrder = List.of(childUri1, childUri2);
+        UserId updateUser = new UserId("newUser");
+
+        // WHEN updateEntityAndGet is called with an empty Optional
+        Optional<ProjectOrderedChildren> insertedOptional = service.updateEntityAndGet(
+                IRI.create(newParentUri),
+                projectId,
+                newOrder,
+                Optional.empty(),
+                updateUser
+        );
+
+        // THEN a new entry is inserted and returned
+        assertTrue(insertedOptional.isPresent(), "Inserted entry should be returned");
+        ProjectOrderedChildren insertedEntry = insertedOptional.get();
+        assertEquals(newParentUri, insertedEntry.entityUri(), "Parent URI should match the new one");
+        assertEquals(newOrder, insertedEntry.children(), "Children ordering should match the specified new order");
+
+        Query query = new Query(Criteria.where(ENTITY_URI).is(newParentUri));
+        ProjectOrderedChildren storedEntry = mongoTemplate.findOne(query, ProjectOrderedChildren.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+        assertNotNull(storedEntry, "Inserted entry should be stored in DB");
+        assertEquals(newOrder, storedEntry.children(), "Stored ordering should reflect the inserted order");
+    }
+
+    @Test
+    public void GIVEN_duplicateChildrenOrder_WHEN_updateEntityAndGet_THEN_throwsIllegalArgumentException() {
+        // GIVEN a duplicate children order list (childUri1 appears twice)
+        List<String> duplicateOrder = List.of(childUri1, childUri1);
+        UserId updateUser = new UserId("dupUser");
+
+        // WHEN updateEntityAndGet is called, THEN an IllegalArgumentException is thrown
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> service.updateEntityAndGet(
+                        IRI.create(parentUri),
+                        projectId,
+                        duplicateOrder,
+                        Optional.empty(),
+                        updateUser
+                )
+        );
+        assertTrue(exception.getMessage().contains("The new children order contains duplicates"),
+                "Exception should indicate duplicate entries are not allowed");
     }
 }

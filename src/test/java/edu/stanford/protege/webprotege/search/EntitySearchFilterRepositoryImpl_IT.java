@@ -1,6 +1,8 @@
 package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.MongoTestExtension;
+import edu.stanford.protege.webprotege.RabbitTestExtension;
 import edu.stanford.protege.webprotege.*;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.common.ProjectId;

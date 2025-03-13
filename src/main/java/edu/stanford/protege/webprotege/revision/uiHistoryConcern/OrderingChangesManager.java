@@ -15,8 +15,10 @@ import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @ProjectSingleton
 public class OrderingChangesManager {
@@ -24,6 +26,8 @@ public class OrderingChangesManager {
 
     private final ProjectOrderedChildren2DiffElementsTranslator translator;
     private final OrderingDiffElementRenderer diffElementRenderer;
+
+    public static final int DEFAULT_CHANGE_LIMIT = 50;
 
     @Inject
     public OrderingChangesManager(ProjectOrderedChildren2DiffElementsTranslator translator,
@@ -36,7 +40,8 @@ public class OrderingChangesManager {
             IRI entityParentIri,
             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional,
             ProjectOrderedChildren newOrdering,
-            UserId userId
+            UserId userId,
+            String commitMessage
     ) {
         List<DiffElement<String, OrderChange>> diffElements =
                 translator.getDiffElementsFromOrdering(initialOrderedChildrenOptional, newOrdering);
@@ -45,28 +50,54 @@ public class OrderingChangesManager {
             return Collections.emptySet();
         }
 
+        var totalChanges = diffElements.size();
+
         List<DiffElement<String, String>> renderedDiffs = diffElements.stream()
+                .limit(DEFAULT_CHANGE_LIMIT)
                 .map(diffElement -> diffElementRenderer.render(diffElement, entityParentIri))
                 .toList();
 
+        int pageElements = renderedDiffs.size();
+        int pageCount;
+        if (pageElements == 0) {
+            pageCount = 1;
+        } else {
+            pageCount = totalChanges / pageElements + (totalChanges % pageElements);
+        }
+        Page<DiffElement<String, String>> page = Page.create(
+                1,
+                pageCount,
+                renderedDiffs,
+                totalChanges
+        );
 
-        return renderedDiffs.stream()
-                .map(diff -> {
-                    Page<DiffElement<String, String>> page = Page.create(
-                            1, 1, List.of(diff), 1
-                    );
-                    return ProjectChangeForEntity.create(
-                            diff.getSourceDocument(),
-                            ChangeType.UPDATE_ENTITY,
-                            ProjectChange.get(
-                                    RevisionNumber.getRevisionNumber(0),
-                                    userId,
-                                    System.currentTimeMillis(),
-                                    diff.getLineElement(),
-                                    1,
-                                    page
-                            ));
-                })
-                .collect(Collectors.toCollection(TreeSet::new));
+        return Set.of(
+                ProjectChangeForEntity.create(
+                        entityParentIri.toString(),
+                        ChangeType.UPDATE_ENTITY,
+                        ProjectChange.get(
+                                RevisionNumber.getRevisionNumber(0),
+                                userId,
+                                System.currentTimeMillis(),
+                                getChangeSummary(commitMessage,entityParentIri, totalChanges),
+                                totalChanges,
+                                page
+                        ))
+        );
+    }
+
+    private String getChangeSummary(String commitMessage, IRI entityParentIri, int totalChanges) {
+        StringBuilder sb = new StringBuilder();
+        if(!commitMessage.isEmpty()){
+            sb.append(commitMessage)
+                    .append(": ");
+        }
+        sb.append("Reordered children of ")
+                .append(entityParentIri)
+                .append(" (")
+                .append(totalChanges)
+                .append(totalChanges > 1 ? " classes" : " class")
+                .append(" were moved)");
+        return sb.toString();
     }
 }

@@ -603,6 +603,11 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
+    GetIcatxEntityTypeActionHandler getIcatxEntityTypeActionHandler(AccessManager p1, ClassHierarchyProvider p2, IcatxEntityTypeConfigurationRepository p3) {
+        return new GetIcatxEntityTypeActionHandler(p1, p2, p3);
+    }
+
+    @Bean
     GetRenderedOwlEntitiesActionHandler getRenderedOwlEntitiesActionHandler(AccessManager p1, EntityNodeRenderer p2) {
         return new GetRenderedOwlEntitiesActionHandler(p1, p2);
     }
@@ -669,7 +674,6 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ProjectOrderedChildrenManager p8) {
         return new MoveHierarchyNodeIcdActionHandler(p1, p2, p3, p4, p5, p6, p7, p8);
     }
-
 
     @Bean
     GetProjectPrefixDeclarationsActionHandler getProjectPrefixDeclarationsActionHandler(AccessManager p1,
