@@ -40,7 +40,8 @@ public class OrderingChangesManager {
             IRI entityParentIri,
             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional,
             ProjectOrderedChildren newOrdering,
-            UserId userId
+            UserId userId,
+            String commitMessage
     ) {
         List<DiffElement<String, OrderChange>> diffElements =
                 translator.getDiffElementsFromOrdering(initialOrderedChildrenOptional, newOrdering);
@@ -78,15 +79,19 @@ public class OrderingChangesManager {
                                 RevisionNumber.getRevisionNumber(0),
                                 userId,
                                 System.currentTimeMillis(),
-                                getChangeSummary(entityParentIri, totalChanges),
+                                getChangeSummary(commitMessage,entityParentIri, totalChanges),
                                 totalChanges,
                                 page
                         ))
         );
     }
 
-    private String getChangeSummary(IRI entityParentIri, int totalChanges) {
+    private String getChangeSummary(String commitMessage, IRI entityParentIri, int totalChanges) {
         StringBuilder sb = new StringBuilder();
+        if(!commitMessage.isEmpty()){
+            sb.append(commitMessage)
+                    .append(": ");
+        }
         sb.append("Reordered children of ")
                 .append(entityParentIri)
                 .append(" (")
