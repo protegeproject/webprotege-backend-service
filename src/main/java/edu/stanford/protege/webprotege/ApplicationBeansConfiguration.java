@@ -5,8 +5,6 @@ import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.RoleOracle;
-import edu.stanford.protege.webprotege.access.RoleOracleImpl;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
@@ -253,12 +251,6 @@ public class ApplicationBeansConfiguration {
     @Bean
     ApplicationActionHandlerRegistry getApplicationActionHandlerRegistry(Set<? extends ApplicationActionHandler> handlers) {
         return new ApplicationActionHandlerRegistry(handlers);
-    }
-
-    @Bean
-    @Singleton
-    RoleOracle getRoleOracle() {
-        return RoleOracleImpl.get();
     }
 
     @Bean
