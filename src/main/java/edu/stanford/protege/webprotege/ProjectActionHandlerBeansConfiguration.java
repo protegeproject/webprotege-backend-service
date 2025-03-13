@@ -6,6 +6,8 @@ import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
 import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
 import edu.stanford.protege.webprotege.bulkop.*;
+import edu.stanford.protege.webprotege.card.CardDescriptorRepository;
+import edu.stanford.protege.webprotege.card.GetEntityCardDescriptorsProjectActionHandler;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.crud.*;
@@ -44,6 +46,7 @@ import edu.stanford.protege.webprotege.logicaldefinitions.*;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
 import edu.stanford.protege.webprotege.mansyntax.render.*;
+import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import edu.stanford.protege.webprotege.match.GetMatchingEntitiesActionHandler;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
 import edu.stanford.protege.webprotege.match.MatchingEngine;
@@ -542,7 +545,6 @@ public class ProjectActionHandlerBeansConfiguration {
     DeleteEntityCommentHandler deleteEntityCommentActionHandler(EntityDiscussionThreadRepository p1) {
         return new DeleteEntityCommentHandler(p1);
     }
-
 
 
     @Bean
@@ -1095,6 +1097,15 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                  HasApplyChanges p5){
         return new ExistingOntologyMergeAddActionHandler(p1, p2, p3, p4, p5);
     }
+
+    @Bean
+
+    GetEntityCardDescriptorsProjectActionHandler getEntityCardDescriptorsProjectActionHandler(AccessManager p1,
+                                                                                              ProjectId p2,
+                                                                                              EntityMatcherFactory p3,
+                                                                                              EntityFormManager p4, CardDescriptorRepository p5) {
+        return new GetEntityCardDescriptorsProjectActionHandler(p1, p2, p3, p4, p5);
+	}
 
     @Bean
     GetHierarchyDescriptorActionHandler getHierarchyDescriptorActionHandler(AccessManager p1, HierarchyDescriptorRuleSelector p2) {

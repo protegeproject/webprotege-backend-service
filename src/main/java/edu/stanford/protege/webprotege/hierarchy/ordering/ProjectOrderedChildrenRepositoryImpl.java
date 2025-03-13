@@ -96,7 +96,6 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
         return readWriteLock.executeReadLock(() -> Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class)));
     }
 
-
     @Override
     public void save(ProjectOrderedChildren projectOrderedChildren) {
         readWriteLock.executeWriteLock(() -> mongoTemplate.save(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));

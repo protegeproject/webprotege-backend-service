@@ -45,7 +45,8 @@ import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
 import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetectorImpl;
@@ -65,7 +66,7 @@ import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManagerImpl;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
-import edu.stanford.protege.webprotege.locking.*;
+import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import edu.stanford.protege.webprotege.logicaldefinitions.LogicalDefinitionExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.NecessaryConditionsExtractor;
 import edu.stanford.protege.webprotege.logicaldefinitions.UpdateLogicalDefinitionsChangeListGeneratorFactory;
@@ -90,7 +91,9 @@ import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.LiteralRenderer;
 import edu.stanford.protege.webprotege.renderer.*;
 import edu.stanford.protege.webprotege.revision.*;
-import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterServiceImpl;
+import edu.stanford.protege.webprotege.revision.uiHistoryConcern.OrderingChangesManager;
 import edu.stanford.protege.webprotege.search.EntitySearcherFactory;
 import edu.stanford.protege.webprotege.shortform.*;
 import edu.stanford.protege.webprotege.tag.CriteriaBasedTagsManager;
@@ -109,7 +112,6 @@ import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
 import edu.stanford.protege.webprotege.watches.*;
 import edu.stanford.protege.webprotege.webhook.*;
-import jakarta.annotation.Nonnull;
 import org.semanticweb.owlapi.expression.OWLOntologyChecker;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.model.*;
@@ -2059,5 +2061,4 @@ public class ProjectBeansConfiguration {
                                                                 @Nonnull NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
         return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
     }
-
 }
