@@ -11,11 +11,6 @@ import javax.annotation.*;
 
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
-/**
- * Matthew Horridge
- * Stanford Center for Biomedical Informatics Research
- * 16 Jun 2017
- */
 public class GetEntityDirectParentsActionHandler extends AbstractProjectActionHandler<GetEntityDirectParentsAction, GetEntityDirectParentsResult> {
 
     @Nonnull

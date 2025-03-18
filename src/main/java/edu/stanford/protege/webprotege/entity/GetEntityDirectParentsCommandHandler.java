@@ -6,11 +6,7 @@ import reactor.core.publisher.Mono;
 
 import javax.annotation.Nonnull;
 
-/**
- * Matthew Horridge
- * Stanford Center for Biomedical Informatics Research
- * 2021-09-01
- */
+
 @WebProtegeHandler
 public class GetEntityDirectParentsCommandHandler implements CommandHandler<GetEntityDirectParentsAction, GetEntityDirectParentsResult> {
 
