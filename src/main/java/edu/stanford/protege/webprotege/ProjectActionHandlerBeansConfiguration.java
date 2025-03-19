@@ -988,4 +988,12 @@ public class ProjectActionHandlerBeansConfiguration {
     GetProjectHierarchyDescriptorRulesActionHandler getProjectHierarchyDescriptorRulesActionHandler(AccessManager p1, HierarchyDescriptorRulesRepository p2) {
         return new GetProjectHierarchyDescriptorRulesActionHandler(p1, p2);
     }
+
+    @Bean
+    GetEntityDirectParentsActionHandler getEntityDirectParentsActionHandler(AccessManager p1,
+                                                                            ClassHierarchyProvider p2,
+                                                                            EntityNodeRenderer p3,
+                                                                            RenderingManager p4) {
+        return new GetEntityDirectParentsActionHandler(p1, p2, p3, p4);
+    }
 }
