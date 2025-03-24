@@ -42,8 +42,8 @@ public record LogicalDefinition (
         private List<PropertyClassValue> diff(List<PropertyClassValue> listOne, List<PropertyClassValue> listTwo) {
                 return listOne.stream()
                         .filter(two -> listTwo.stream().
-                                noneMatch(one -> one.getProperty().equals(two.getProperty()) &&
-                                        one.getValue().equals(two.getValue())))
+                                noneMatch(one -> one.getProperty().getEntity().getIRI().equals(two.getProperty().getEntity().getIRI()) &&
+                                        one.getValue().getEntity().getIRI().equals(two.getValue().getEntity().getIRI())))
                         .collect(Collectors.toList());
         }
 }
