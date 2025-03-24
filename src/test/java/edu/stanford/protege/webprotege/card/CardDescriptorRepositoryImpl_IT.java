@@ -4,24 +4,19 @@ import com.google.common.collect.ImmutableList;
 import com.mongodb.client.MongoCollection;
 import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.color.Color;
-import edu.stanford.protege.webprotege.common.LanguageMap;
-import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
-import edu.stanford.protege.webprotege.criteria.MultiMatchType;
+import edu.stanford.protege.webprotege.common.*;
+import edu.stanford.protege.webprotege.criteria.*;
 import edu.stanford.protege.webprotege.forms.FormId;
 import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +31,7 @@ class CardDescriptorRepositoryImpl_IT {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private CardDescriptorRepositoryImpl repository;
+    private CardDescriptorRepository repository;
 
     private CardDescriptor cardDescriptor;
 

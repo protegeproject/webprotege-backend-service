@@ -1118,6 +1118,14 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
+    GetEntityDirectParentsActionHandler getEntityDirectParentsActionHandler(AccessManager p1,
+                                                                            ClassHierarchyProvider p2,
+                                                                            EntityNodeRenderer p3,
+                                                                            RenderingManager p4) {
+        return new GetEntityDirectParentsActionHandler(p1, p2, p3, p4);
+    }
+
+    @Bean
     GetLogicalDefinitionsActionHandler getLogicalDefinitionsActionHandler(AccessManager p1,
                                                                           LogicalDefinitionExtractor p2,
                                                                           RenderingManager p3,
