@@ -83,7 +83,7 @@ public class GetEntityUsageActionHandler extends AbstractProjectActionHandler<Ge
                 .filter(ax -> usageFilter.map(f -> f.isIncluded(ax.getAxiomType())).orElse(true))
                 .flatMap(ax -> ax.accept(referencingAxiomVisitor).stream())
                 .filter(usageReference -> usageFilter.map(f -> isIncludedBySubject(f, subject, usageReference)).orElse(true))
-                .limit(200)
+                .limit(action.pageRequest().getPageSize())
                 .sorted(new UsageReferenceComparator(subject))
                 .collect(toImmutableList());
 
