@@ -1,23 +1,36 @@
 package edu.stanford.protege.webprotege.entity;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.stanford.protege.webprotege.common.ProjectId;
+import org.bson.Document;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static edu.stanford.protege.webprotege.issues.EntityDiscussionThread.PROJECT_ID;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Repository
 public class IcatxEntityTypeConfigurationRepository {
     private final MongoTemplate mongoTemplate;
 
-    public IcatxEntityTypeConfigurationRepository(MongoTemplate mongoTemplate) {
+    private final ObjectMapper objectMapper;
+
+    public IcatxEntityTypeConfigurationRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
         this.mongoTemplate = mongoTemplate;
+        this.objectMapper = objectMapper;
     }
 
+    public List<IcatxEntityTypeConfiguration> findAllByProjectId(ProjectId projectId) {
+        var query = query(where(PROJECT_ID).is(projectId));
 
-    @Cacheable("entityTypeConfigCache")
-    public List<IcatxEntityTypeConfiguration> getAllConfigurations() {
-        return mongoTemplate.findAll(IcatxEntityTypeConfiguration.class);
+        return mongoTemplate.find(query, Document.class).stream()
+                .map(doc -> objectMapper.convertValue(doc, IcatxEntityTypeConfiguration.class))
+                .collect(Collectors.toList());
     }
 }

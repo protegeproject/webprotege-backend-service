@@ -35,10 +35,10 @@ public class GetIcatxEntityTypeActionHandler extends AbstractProjectActionHandle
     @NotNull
     @Override
     public GetIcatxEntityTypeResult execute(@NotNull GetIcatxEntityTypeAction action, @NotNull ExecutionContext executionContext) {
-        List<IcatxEntityTypeConfiguration> configurations = repository.getAllConfigurations();
+        List<IcatxEntityTypeConfiguration> configurations = repository.findAllByProjectId(action.projectId());
 
-        List<IRI> ancestorsIris = classHierarchyProvider.getAncestors(DataFactory.getOWLClass(action.entityIri())).stream()
-                .map(OWLClass::getIRI).toList();
+        List<IRI> ancestorsIris = new ArrayList<>(classHierarchyProvider.getAncestors(DataFactory.getOWLClass(action.entityIri())).stream()
+                .map(OWLClass::getIRI).toList());
         ancestorsIris.add(action.entityIri());
 
         List<IcatxEntityTypeConfiguration> matchingParents = configurations.stream()

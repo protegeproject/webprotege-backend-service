@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 
@@ -41,12 +42,14 @@ public class GetIcatxEntityTypeActionHandlerTest {
     @InjectMocks
     private GetIcatxEntityTypeActionHandler actionHandler;
 
+    private ProjectId projectId = ProjectId.generate();
+
     @BeforeEach
     public void setUp(){
-        when(repository.getAllConfigurations()).thenReturn(Arrays.asList(
-                new IcatxEntityTypeConfiguration(IRI.create("http://who.int/icd#ICDCategory"),"","ICD"),
-                new IcatxEntityTypeConfiguration(IRI.create("http://id.who.int/icd/entity/979408586"),"ICD","ICD_EXTENSION"),
-                new IcatxEntityTypeConfiguration(IRI.create("http://id.who.int/icd/entity/423829389"),"ICF","ICF_EXTENSION")));
+        when(repository.findAllByProjectId(eq(projectId))).thenReturn(Arrays.asList(
+                new IcatxEntityTypeConfiguration(IRI.create("http://who.int/icd#ICDCategory"),this.projectId,"","ICD"),
+                new IcatxEntityTypeConfiguration(IRI.create("http://id.who.int/icd/entity/979408586"),this.projectId,"ICD","ICD_EXTENSION"),
+                new IcatxEntityTypeConfiguration(IRI.create("http://id.who.int/icd/entity/423829389"),this.projectId,"ICF","ICF_EXTENSION")));
     }
 
 
@@ -55,7 +58,7 @@ public class GetIcatxEntityTypeActionHandlerTest {
     public void GIVEN_entityWithSingleAncestor_WHEN_fetchingConfig_THEN_SingleAncestorTypeIsReturned(){
         when(classHierarchyProvider.getAncestors(any())).thenReturn(Arrays.asList(new OWLClassImpl(IRI.create("http://who.int/icd#ICDCategory"))));
 
-        GetIcatxEntityTypeResult result = actionHandler.execute(new GetIcatxEntityTypeAction(ProjectId.generate(), IRI.create("http://id.who.int/icd/entity/555555")), new ExecutionContext());
+        GetIcatxEntityTypeResult result = actionHandler.execute(new GetIcatxEntityTypeAction(this.projectId, IRI.create("http://id.who.int/icd/entity/555555")), new ExecutionContext());
 
         assertNotNull(result);
         assertEquals(1, result.icatxEntityTypes().size());
@@ -66,7 +69,7 @@ public class GetIcatxEntityTypeActionHandlerTest {
     public void GIVEN_entityWithMultipleAncestors_WHEN_fetchingConfig_THEN_bothAncestorTypesAreReturned(){
         when(classHierarchyProvider.getAncestors(any())).thenReturn(Arrays.asList(new OWLClassImpl(IRI.create("http://who.int/icd#ICDCategory")),
                 new OWLClassImpl(IRI.create("http://id.who.int/icd/entity/423829389"))));
-        GetIcatxEntityTypeResult result = actionHandler.execute(new GetIcatxEntityTypeAction(ProjectId.generate(), IRI.create("http://id.who.int/icd/entity/555555")), new ExecutionContext());
+        GetIcatxEntityTypeResult result = actionHandler.execute(new GetIcatxEntityTypeAction(this.projectId, IRI.create("http://id.who.int/icd/entity/555555")), new ExecutionContext());
 
         assertNotNull(result);
         assertEquals(2, result.icatxEntityTypes().size());
@@ -79,7 +82,7 @@ public class GetIcatxEntityTypeActionHandlerTest {
         when(classHierarchyProvider.getAncestors(any())).thenReturn(Arrays.asList(new OWLClassImpl(IRI.create("http://who.int/icd#ICDCategory")),
                 new OWLClassImpl(IRI.create("http://id.who.int/icd/entity/979408586"))));
 
-        GetIcatxEntityTypeResult result = actionHandler.execute(new GetIcatxEntityTypeAction(ProjectId.generate(), IRI.create("http://id.who.int/icd/entity/555555")), new ExecutionContext());
+        GetIcatxEntityTypeResult result = actionHandler.execute(new GetIcatxEntityTypeAction(this.projectId, IRI.create("http://id.who.int/icd/entity/555555")), new ExecutionContext());
 
         assertNotNull(result);
         assertEquals(1, result.icatxEntityTypes().size());

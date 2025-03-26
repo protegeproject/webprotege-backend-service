@@ -1,0 +1,56 @@
+[
+  {
+    "topLevelIri": "http://who.int/icd#ICDCategory",
+    "projectId": "",
+    "excludesEntityType": "",
+    "icatxEntityType": "ICD"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/979408586",
+    "projectId": "",
+    "excludesEntityType": "ICD",
+    "icatxEntityType": "ICD_EXTENSION"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/850137482",
+    "projectId": "",
+    "excludesEntityType": "ICD",
+    "icatxEntityType": "ICD_EXTERNAL_CAUSES"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/718687701",
+    "projectId": "",
+    "excludesEntityType": "ICD",
+    "icatxEntityType": "ICD_TRADITIONAL_MEDICINE"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/619527855",
+    "projectId": "",
+    "excludesEntityType": "",
+    "icatxEntityType": "ICF"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/423829389",
+    "projectId": "",
+    "excludesEntityType": "ICF",
+    "icatxEntityType": "ICF_EXTENSION"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/1190112446",
+    "projectId": "",
+    "excludesEntityType": "",
+    "icatxEntityType": "ICHI"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/289140506",
+    "projectId": "",
+    "excludesEntityType": "ICHI",
+    "icatxEntityType": "ICHI_INTERVENTION"
+  },
+  {
+    "topLevelIri": "http://id.who.int/icd/entity/1153570334",
+    "projectId": "",
+    "excludesEntityType": "ICHI",
+    "icatxEntityType": "ICHI_EXTENSION"
+  }
+]
