@@ -17,6 +17,7 @@ import javax.annotation.Nonnull;
 public record SetEntityFormsDataAction(@Nonnull ChangeRequestId changeRequestId,
                                        @Nonnull ProjectId projectId,
                                        @Nonnull OWLEntity entity,
+                                       @Nonnull String commitMessage,
                                        @Nonnull ImmutableMap<FormId, FormData> pristineFormsData,
                                        @Nonnull FormDataByFormId editedFormsData) implements ProjectRequest<SetEntityFormsDataResult>, ChangeRequest {
 
