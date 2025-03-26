@@ -19,18 +19,14 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 public class IcatxEntityTypeConfigurationRepository {
     private final MongoTemplate mongoTemplate;
 
-    private final ObjectMapper objectMapper;
 
-    public IcatxEntityTypeConfigurationRepository(MongoTemplate mongoTemplate, ObjectMapper objectMapper) {
+    public IcatxEntityTypeConfigurationRepository(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
-        this.objectMapper = objectMapper;
     }
 
     public List<IcatxEntityTypeConfiguration> findAllByProjectId(ProjectId projectId) {
         var query = query(where(PROJECT_ID).is(projectId));
 
-        return mongoTemplate.find(query, Document.class).stream()
-                .map(doc -> objectMapper.convertValue(doc, IcatxEntityTypeConfiguration.class))
-                .collect(Collectors.toList());
+        return mongoTemplate.find(query, IcatxEntityTypeConfiguration.class);
     }
 }
