@@ -48,7 +48,6 @@ import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
 import edu.stanford.protege.webprotege.icd.*;
-import edu.stanford.protege.webprotege.hierarchy.ordering.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetectorImpl;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
@@ -407,8 +406,9 @@ public class ProjectBeansConfiguration {
     @Bean
     RenderingManager renderingManager(DictionaryManager dictionaryManager,
                                       DeprecatedEntityChecker deprecatedEntityChecker,
-                                      ManchesterSyntaxObjectRenderer manchesterSyntaxObjectRenderer) {
-        return new RenderingManager(dictionaryManager, deprecatedEntityChecker, manchesterSyntaxObjectRenderer);
+                                      ManchesterSyntaxObjectRenderer manchesterSyntaxObjectRenderer,
+                                      EntityStatusManager entityStatusManager) {
+        return new RenderingManager(dictionaryManager, deprecatedEntityChecker, manchesterSyntaxObjectRenderer, entityStatusManager);
     }
 
     @Bean
