@@ -2,9 +2,7 @@ package edu.stanford.protege.webprotege;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.common.DictionaryLanguage;
-import edu.stanford.protege.webprotege.common.LocalNameDictionaryLanguage;
-import edu.stanford.protege.webprotege.common.PrefixedNameDictionaryLanguage;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.entity.*;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.OWL2Datatype;
@@ -139,11 +137,18 @@ public class DataFactory {
     public static OWLEntityData getOWLEntityData(OWLEntity entity,
                                                  ImmutableMap<DictionaryLanguage, String> shortForms,
                                                  boolean deprecated) {
-        return entity.accept(new OWLEntityVisitorEx<OWLEntityData>() {
+        return getOWLEntityData(entity,shortForms,deprecated, ImmutableSet.of());
+    }
+
+    public static OWLEntityData getOWLEntityData(OWLEntity entity,
+                                                 ImmutableMap<DictionaryLanguage, String> shortForms,
+                                                 boolean deprecated,
+                                                 ImmutableSet<EntityStatus> statuses) {
+        return entity.accept(new OWLEntityVisitorEx<>() {
             @Nonnull
             @Override
             public OWLEntityData visit(@Nonnull OWLClass owlClass) {
-                return OWLClassData.get(owlClass, shortForms, deprecated);
+                return OWLClassData.get(owlClass, shortForms, deprecated, statuses);
             }
 
             @Nonnull

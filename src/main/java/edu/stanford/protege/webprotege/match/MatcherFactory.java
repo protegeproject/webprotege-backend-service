@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.frame.PlainPropertyValue;
 import edu.stanford.protege.webprotege.criteria.*;
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -204,6 +205,12 @@ public class MatcherFactory implements RelationshipMatcherFactory, HierarchyPosi
             public Matcher<OWLEntity> visit(@Nonnull SubClassOfCriteria criteria) {
                 return subClassOfMatcherFactory.create(criteria.getTarget(),
                                                        criteria.getFilterType());
+            }
+
+            @NotNull
+            @Override
+            public Matcher<OWLEntity> visit(@NotNull ContextSensitiveSubClassOfCriteria criteria) {
+                return Matcher.matchesAny();
             }
 
             @Nonnull

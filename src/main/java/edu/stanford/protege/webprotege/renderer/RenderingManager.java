@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.renderer;
 
+import com.google.common.collect.*;
 import edu.stanford.protege.webprotege.entity.*;
-import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.mansyntax.render.DeprecatedEntityChecker;
@@ -35,13 +35,18 @@ public class RenderingManager implements HasGetRendering, HasHtmlBrowserText {
 
     private final OWLObjectRenderer owlObjectRenderer = new ManchesterOWLSyntaxOWLObjectRendererImpl();
 
+    @Nonnull
+    private final EntityStatusManager entityStatusManager;
+
     @Inject
     public RenderingManager(DictionaryManager dictionaryManager,
                             DeprecatedEntityChecker deprecatedChecker,
-                            ManchesterSyntaxObjectRenderer objectRenderer) {
+                            ManchesterSyntaxObjectRenderer objectRenderer,
+                            @Nonnull EntityStatusManager entityStatusManager) {
         this.dictionaryManager = dictionaryManager;
         this.htmlManchesterSyntaxRenderer = objectRenderer;
         this.deprecatedEntityChecker = deprecatedChecker;
+        this.entityStatusManager = entityStatusManager;
         owlObjectRenderer.setShortFormProvider(new ShortFormAdapter(dictionaryManager));
     }
 
@@ -84,9 +89,13 @@ public class RenderingManager implements HasGetRendering, HasHtmlBrowserText {
 
     public OWLEntityData getRendering(OWLEntity entity) {
         var deprecated = deprecatedEntityChecker.isDeprecated(entity);
-        return DataFactory.getOWLEntityData(entity,
-                                            dictionaryManager.getShortForms(entity),
-                                            deprecated);
+        var statuses = entityStatusManager.getEntityStatuses(entity);
+        return DataFactory.getOWLEntityData(
+                entity,
+                dictionaryManager.getShortForms(entity),
+                deprecated,
+                ImmutableSet.copyOf(statuses)
+        );
     }
 
     public OWLPrimitiveData getRendering(OWLAnnotationValue value) {
@@ -103,7 +112,8 @@ public class RenderingManager implements HasGetRendering, HasHtmlBrowserText {
 
     public OWLClassData getClassData(OWLClass cls) {
         var deprecated = deprecatedEntityChecker.isDeprecated(cls);
-        return OWLClassData.get(cls, dictionaryManager.getShortForms(cls), deprecated);
+        var statuses = entityStatusManager.getEntityStatuses(cls);
+        return OWLClassData.get(cls, dictionaryManager.getShortForms(cls), deprecated, ImmutableSet.copyOf(statuses));
     }
 
     public OWLObjectPropertyData getObjectPropertyData(OWLObjectProperty property) {
