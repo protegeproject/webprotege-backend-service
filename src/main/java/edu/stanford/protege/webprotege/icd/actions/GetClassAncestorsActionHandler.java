@@ -7,6 +7,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.icd.mappers.AncestorHierarchyNodeMapper;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.jetbrains.annotations.NotNull;
@@ -27,14 +28,18 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
 
     private final IcatxEntityTypeConfigurationRepository repository;
 
+    private final AncestorHierarchyNodeMapper ancestorHierarchyNodeMapper;
+
     public GetClassAncestorsActionHandler(@NotNull AccessManager accessManager,
                                           RenderingManager renderingManager,
                                           @Nonnull HierarchyProviderManager hierarchyProviderMapper,
-                                          IcatxEntityTypeConfigurationRepository repository) {
+                                          IcatxEntityTypeConfigurationRepository repository,
+                                          AncestorHierarchyNodeMapper ancestorHierarchyNodeMapper) {
         super(accessManager);
         this.hierarchyProviderMapper = hierarchyProviderMapper;
         this.renderingManager = renderingManager;
         this.repository = repository;
+        this.ancestorHierarchyNodeMapper = ancestorHierarchyNodeMapper;
     }
 
     @NotNull
@@ -63,22 +68,22 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
                 .toList();
 
         Set<OWLClass> entityTypesRoots = matchingParents.stream()
-                .filter(parent -> !excludedTypes.contains(parent.excludesEntityType()))
+                .filter(parent -> !excludedTypes.contains(parent.icatxEntityType()))
                 .map(parent -> DataFactory.getOWLClass(parent.topLevelIri()))
                 .collect(Collectors.toSet());
 
         ClassHierarchyDescriptor classDescriptorWithRoots = ClassHierarchyDescriptor.create(entityTypesRoots);
         return hierarchyProviderMapper.getHierarchyProvider(classDescriptorWithRoots)
                 .map(hierarchyProviderMapper -> {
-                    var ancestors = hierarchyProviderMapper.getAncestors(DataFactory.getOWLClass(action.classIri()))
-                            .stream()
-                            .filter(ancestor -> ancestor.isOWLClass()&&!entityTypesRoots.contains(ancestor))
-                            .map(renderingManager::getRendering)
-                            .collect(Collectors.toSet());
+                    var ancestorsTree = hierarchyProviderMapper.getAncestorsTree(DataFactory.getOWLClass(action.classIri()));
+                    var ancestors =this.ancestorHierarchyNodeMapper.map(ancestorsTree);
                     return new GetClassAncestorsResult(ancestors);
-                }).orElse(new GetClassAncestorsResult(Collections.emptySet()));
-
-        // de păstrat ordinea părinților
+                }).orElseGet(() -> {
+                    AncestorHierarchyNode<OWLEntityData> response = new AncestorHierarchyNode<>();
+                    response.setNode(renderingManager.getRendering(DataFactory.getOWLClass(action.classIri())));
+                    response.setChildren(Collections.emptyList());
+                    return new GetClassAncestorsResult(response);
+                });
     }
 }
 

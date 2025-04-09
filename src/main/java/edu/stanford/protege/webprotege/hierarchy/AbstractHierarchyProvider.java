@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 
+import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,4 +136,28 @@ public abstract class AbstractHierarchyProvider<N> implements HierarchyProvider<
         }
         return setOfPaths;
     }
+
+    @Override
+    public AncestorHierarchyNode<N> getAncestorsTree(N object) {
+        Queue<AncestorHierarchyNode<N>> objectsToBeVisited = new LinkedList<>();
+
+        AncestorHierarchyNode<N> root = new AncestorHierarchyNode<>();
+        root.setNode(object);
+        objectsToBeVisited.add(root);
+
+        while (!objectsToBeVisited.isEmpty()) {
+            AncestorHierarchyNode<N> currentNode = objectsToBeVisited.poll();
+            List<AncestorHierarchyNode<N>> parents = getParents(currentNode.getNode()).stream()
+                    .filter(parent -> !getRoots().contains(parent))
+                    .map(parent -> {
+                AncestorHierarchyNode<N> response = new AncestorHierarchyNode<>();
+                response.setNode(parent);
+                return response;
+            }).toList();
+            currentNode.setChildren(parents);
+            objectsToBeVisited.addAll(parents);
+        }
+        return root;
+    }
+
 }

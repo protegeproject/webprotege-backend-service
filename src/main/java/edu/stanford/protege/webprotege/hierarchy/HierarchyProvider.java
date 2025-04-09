@@ -1,7 +1,8 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import java.util.Collection;
-import java.util.List;
+import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
+
+import java.util.*;
 
 /**
  * Matthew Horridge
@@ -34,4 +35,6 @@ public interface HierarchyProvider<N> extends HasGetAncestors<N> {
     }
 
     boolean contains(Object object);
+
+    AncestorHierarchyNode<N> getAncestorsTree(N object);
 }
