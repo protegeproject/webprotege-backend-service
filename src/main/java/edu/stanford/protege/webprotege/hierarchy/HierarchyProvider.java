@@ -36,5 +36,5 @@ public interface HierarchyProvider<N> extends HasGetAncestors<N> {
 
     boolean contains(Object object);
 
-    AncestorHierarchyNode<N> getAncestorsTree(N object);
+    Optional<AncestorHierarchyNode<N>> getAncestorsTree(N object);
 }

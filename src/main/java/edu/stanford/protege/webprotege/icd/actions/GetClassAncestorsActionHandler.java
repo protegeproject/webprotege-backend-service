@@ -75,15 +75,18 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
         ClassHierarchyDescriptor classDescriptorWithRoots = ClassHierarchyDescriptor.create(entityTypesRoots);
         return hierarchyProviderMapper.getHierarchyProvider(classDescriptorWithRoots)
                 .map(hierarchyProviderMapper -> {
-                    var ancestorsTree = hierarchyProviderMapper.getAncestorsTree(DataFactory.getOWLClass(action.classIri()));
-                    var ancestors =this.ancestorHierarchyNodeMapper.map(ancestorsTree);
+                    var ancestors = hierarchyProviderMapper.getAncestorsTree(DataFactory.getOWLClass(action.classIri()))
+                            .map(this.ancestorHierarchyNodeMapper::map)
+                            .orElse(getEmptyAncestorHierarchy(action.classIri()));
                     return new GetClassAncestorsResult(ancestors);
-                }).orElseGet(() -> {
-                    AncestorHierarchyNode<OWLEntityData> response = new AncestorHierarchyNode<>();
-                    response.setNode(renderingManager.getRendering(DataFactory.getOWLClass(action.classIri())));
-                    response.setChildren(Collections.emptyList());
-                    return new GetClassAncestorsResult(response);
-                });
+                }).orElseGet(() -> new GetClassAncestorsResult(getEmptyAncestorHierarchy(action.classIri())));
+    }
+
+    private AncestorHierarchyNode<OWLEntityData> getEmptyAncestorHierarchy(IRI classIri){
+        AncestorHierarchyNode<OWLEntityData> response = new AncestorHierarchyNode<>();
+        response.setNode(renderingManager.getRendering(DataFactory.getOWLClass(classIri)));
+        response.setChildren(Collections.emptyList());
+        return response;
     }
 }
 

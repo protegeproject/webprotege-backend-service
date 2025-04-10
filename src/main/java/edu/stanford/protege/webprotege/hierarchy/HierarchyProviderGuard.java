@@ -93,10 +93,13 @@ public class HierarchyProviderGuard<E extends OWLEntity> implements HierarchyPro
     }
 
     @Override
-    public AncestorHierarchyNode<OWLEntity> getAncestorsTree(OWLEntity object) {
-        if(!cls.isInstance(object)) {
-            return (AncestorHierarchyNode<OWLEntity>) delegate.getAncestorsTree(cls.cast(object));
+    @SuppressWarnings("unchecked")
+    public Optional<AncestorHierarchyNode<OWLEntity>> getAncestorsTree(OWLEntity object) {
+        if (!cls.isInstance(object)) {
+            return Optional.empty();
         }
-       return new AncestorHierarchyNode<>();
+        return delegate.getAncestorsTree(cls.cast(object))
+                .map(ancestorTree -> (AncestorHierarchyNode<OWLEntity>) ancestorTree);
     }
+
 }

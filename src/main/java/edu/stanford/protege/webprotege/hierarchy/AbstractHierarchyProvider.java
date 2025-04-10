@@ -138,7 +138,7 @@ public abstract class AbstractHierarchyProvider<N> implements HierarchyProvider<
     }
 
     @Override
-    public AncestorHierarchyNode<N> getAncestorsTree(N object) {
+    public Optional<AncestorHierarchyNode<N>> getAncestorsTree(N object) {
         Queue<AncestorHierarchyNode<N>> objectsToBeVisited = new LinkedList<>();
 
         AncestorHierarchyNode<N> root = new AncestorHierarchyNode<>();
@@ -157,7 +157,7 @@ public abstract class AbstractHierarchyProvider<N> implements HierarchyProvider<
             currentNode.setChildren(parents);
             objectsToBeVisited.addAll(parents);
         }
-        return root;
+        return Optional.of(root);
     }
 
 }
