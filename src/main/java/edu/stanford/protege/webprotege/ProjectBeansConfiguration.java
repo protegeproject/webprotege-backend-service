@@ -480,8 +480,13 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    RetiredClassChecker getRetiredClassChecker(AnnotationAssertionAxiomsIndex index) {
-        return new RetiredClassCheckerImpl(index);
+    RetiredClassChecker getRetiredClassChecker(OWLLiteralExtractorManager owlLiteralExtractorManager) {
+        return new RetiredClassCheckerImpl(owlLiteralExtractorManager);
+    }
+
+    @Bean
+    OWLLiteralExtractorManager getOWLLiteralManager(AnnotationAssertionAxiomsIndex index) {
+        return new OWLLiteralExtractorManager(index);
     }
 
     @Bean
