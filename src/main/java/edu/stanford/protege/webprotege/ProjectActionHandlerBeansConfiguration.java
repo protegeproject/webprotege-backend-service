@@ -637,6 +637,13 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetEntityHierarchyParentsActionHandler(p1, p2, p3);
     }
 
+    @Bean
+    GetClassHierarchyParentsByAxiomTypeActionHandler getEntityHierarchyParentsByAxiomActionHandler(AccessManager p1,
+                                                                                                   ClassHierarchyProviderFactory p2,
+                                                                                                   RenderingManager p3) {
+        return new GetClassHierarchyParentsByAxiomTypeActionHandler(p1, p2, p3);
+    }
+
 
     @Bean
     GetHierarchyPathsToRootActionHandler getHierarchyPathsToRootActionHandler(AccessManager p1,

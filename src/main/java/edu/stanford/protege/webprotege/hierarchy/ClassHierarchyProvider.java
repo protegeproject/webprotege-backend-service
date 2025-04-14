@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Matthew Horridge
@@ -13,10 +14,14 @@ import java.util.List;
  */
 public interface ClassHierarchyProvider extends HierarchyProvider<OWLClass> {
 
-  void handleChanges(List<OntologyChange> changes);
+    void handleChanges(List<OntologyChange> changes);
 
-  List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes);
+    List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes);
 
-  AncestorHierarchyNode<OWLClass> getAncestorsTree(OWLClass object);
+    AncestorHierarchyNode<OWLClass> getAncestorsTree(OWLClass object);
+
+    Stream<OWLClass> getParentsStreamFromSubClassOf(OWLClass owlClass);
+
+    Stream<OWLClass> getParentsStreamFromEquivalentClass(OWLClass owlClass);
 
 }
