@@ -1,0 +1,66 @@
+name: Notify WebProtege Deploy
+
+on:
+  workflow_call:
+    inputs:
+      service:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+      branch_var:
+        required: true
+        type: string
+    secrets:
+      PROTEGE_PROJECT_CLIENT_ID:
+        required: true
+      PROTEGE_PROJECT_CLIENT_SECRET:
+        required: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.PROTEGE_PROJECT_CLIENT_ID }}
+          private-key: ${{ secrets.PROTEGE_PROJECT_CLIENT_SECRET }}
+          owner: protegeproject
+          repositories: webprotege-deploy
+
+      - name: Trigger workflow_call in webprotege-deploy
+        run: |
+          SERVICE="${{ inputs.service }}"
+          VERSION="${{ inputs.version }}"
+          BRANCH="${{ inputs.branch_var }}"
+          echo "Triggering webprotege-deploy with service=$SERVICE and version=$VERSION"
+
+          response=$(curl -s -w "%{http_code}" -X POST \
+            -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/protegeproject/webprotege-deploy/actions/workflows/update-compose.yml/dispatches \
+            -d '{
+              "ref": "'"$BRANCH"'",
+              "inputs": {
+                "service": "'"$SERVICE"'",
+                "version": "'"$VERSION"'",
+                "branch": "'"$BRANCH"'"
+              }
+            }')
+
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+
+          echo "HTTP Status Code: $http_code"
+          echo "Response Body: $body"
+
+          if [[ "$http_code" -lt 200 || "$http_code" -ge 300 ]]; then
+            echo "Error: API call failed with status code $http_code"
+            exit 1
+          else
+            echo "API call successful, status code: $http_code"
+          fi
