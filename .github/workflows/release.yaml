@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches:
-      - main-who
+      - main-WHO
 
 
 jobs:
