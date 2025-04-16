@@ -12,6 +12,8 @@ import edu.stanford.protege.webprotege.authorization.GetProjectRoleDefinitionsRe
 import edu.stanford.protege.webprotege.authorization.GetProjectRoleDefinitionsResponse;
 import edu.stanford.protege.webprotege.authorization.SetProjectRoleDefinitionsRequest;
 import edu.stanford.protege.webprotege.authorization.SetProjectRoleDefinitionsResponse;
+import edu.stanford.protege.webprotege.card.CardDescriptorRepository;
+import edu.stanford.protege.webprotege.card.CardDescriptorRepositoryImpl;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
@@ -579,6 +581,11 @@ public class ApplicationBeansConfiguration {
                           .credentials(properties.getAccessKey(), properties.getSecretKey())
                           .endpoint(properties.getEndPoint())
                           .build();
+    }
+
+    @Bean
+    CardDescriptorRepository cardDescriptorRepository(MongoTemplate p1, ObjectMapper p2) {
+        return new CardDescriptorRepositoryImpl(p1, p2);
     }
 
     @Bean

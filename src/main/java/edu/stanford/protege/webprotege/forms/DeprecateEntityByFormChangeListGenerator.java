@@ -274,7 +274,9 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                                                                                      .equals(FormFieldDeprecationStrategy.LEAVE_VALUES_INTACT)))
                                                       .collect(toImmutableList());
         var formDataToPreserve = getFormData(preservedFormDescriptors, entityToBeDeprecated);
-        var changes = formChangeListGeneratorFactory.createForAdd(changeRequestId, entityToBeDeprecated, new FormDataByFormId(formDataToPreserve))
+        var changes = formChangeListGeneratorFactory.createForAdd(changeRequestId, entityToBeDeprecated,
+                        "",
+                        new FormDataByFormId(formDataToPreserve))
                                                     .generateChanges(context)
                                                     .getChanges();
         changeListBuilder.addAll(changes);
@@ -308,6 +310,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
         // Generate the changes to remove the deprecated form data from the replacement entity
         changesListBuilder.addAll(formChangeListGeneratorFactory.createForRemove(changeRequestId,
                                                                                  replacementEntity.get(),
+                                                                                 "",
                                                                                  formDataOnReplacementToRemove)
                                                                 .generateChanges(context)
                                                                 .getChanges());
@@ -320,7 +323,9 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
                                                                                         FormPurpose.ENTITY_EDITING);
         var formDataForReplacement = getFormData(formDescriptorsFormReplacementEntity, replacementEntity.get());
         changesListBuilder.addAll(formChangeListGeneratorFactory.createForAdd(changeRequestId,
-                                                                              replacementEntity.get(), new FormDataByFormId(formDataForReplacement))
+                                                                              replacementEntity.get(),
+                        "",
+                        new FormDataByFormId(formDataForReplacement))
                                                                 .generateChanges(context)
                                                                 .getChanges());
 
@@ -334,6 +339,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
         }
         formChangeListGeneratorFactory.createForAdd(changeRequestId,
                                                     entityToBeDeprecated,
+                                                    "",
                                                     new FormDataByFormId(ImmutableMap.of(deprecationFormData.get().getFormId(),
                                                                                          deprecationFormData.get())))
                                       .generateChanges(context)
