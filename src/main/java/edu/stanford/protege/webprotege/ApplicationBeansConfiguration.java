@@ -1,19 +1,23 @@
 package edu.stanford.protege.webprotege;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.api.*;
 import edu.stanford.protege.webprotege.app.*;
+import edu.stanford.protege.webprotege.authorization.GetProjectRoleDefinitionsRequest;
+import edu.stanford.protege.webprotege.authorization.GetProjectRoleDefinitionsResponse;
+import edu.stanford.protege.webprotege.authorization.SetProjectRoleDefinitionsRequest;
+import edu.stanford.protege.webprotege.authorization.SetProjectRoleDefinitionsResponse;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.DispatchServiceExecutor;
 import edu.stanford.protege.webprotege.dispatch.impl.ApplicationActionHandlerRegistry;
 import edu.stanford.protege.webprotege.dispatch.impl.DispatchServiceExecutorImpl;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
-import edu.stanford.protege.webprotege.forms.EntityFormRepositoryImpl;
-import edu.stanford.protege.webprotege.forms.EntityFormSelectorRepositoryImpl;
+import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepository;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenRepositoryImpl;
@@ -39,6 +43,8 @@ import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest
 import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesResponse;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManager;
 import edu.stanford.protege.webprotege.permissions.ProjectPermissionsManagerImpl;
+import edu.stanford.protege.webprotege.permissions.RebuildProjectPermissionsRequest;
+import edu.stanford.protege.webprotege.permissions.RebuildProjectPermissionsResponse;
 import edu.stanford.protege.webprotege.persistence.*;
 import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
@@ -59,6 +65,9 @@ import edu.stanford.protege.webprotege.webhook.*;
 import io.minio.MinioClient;
 import jakarta.annotation.Nonnull;
 import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -87,6 +96,8 @@ import java.util.concurrent.locks.*;
 @EnableMongoRepositories
 @EnableAsync
 public class ApplicationBeansConfiguration {
+
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationBeansConfiguration.class);
 
 
     @Bean
@@ -621,5 +632,23 @@ public class ApplicationBeansConfiguration {
         return new HierarchyDescriptorRuleDisplayContextMatcher();
     }
 
+    @Bean
+    CommandExecutor<GetProjectRoleDefinitionsRequest, GetProjectRoleDefinitionsResponse> getProjectRoleDefinitionsCommand() {
+        return new CommandExecutorImpl<>(GetProjectRoleDefinitionsResponse.class);
+    }
 
+    @Bean
+    CommandExecutor<SetProjectRoleDefinitionsRequest, SetProjectRoleDefinitionsResponse> setProjectRoleDefinitionsCommand() {
+        return new CommandExecutorImpl<>(SetProjectRoleDefinitionsResponse.class);
+    }
+
+    @Bean
+    CommandExecutor<GetFormRegionAccessRestrictionsRequest, GetFormRegionAccessRestrictionsResponse> getFormRegionAccessRestrictionsCommand() {
+        return new CommandExecutorImpl<>(GetFormRegionAccessRestrictionsResponse.class);
+    }
+
+    @Bean
+    CommandExecutor<RebuildProjectPermissionsRequest, RebuildProjectPermissionsResponse> rebuildProjectPermissionsCommandExecutor() {
+        return new CommandExecutorImpl<>(RebuildProjectPermissionsResponse.class);
+    }
 }
