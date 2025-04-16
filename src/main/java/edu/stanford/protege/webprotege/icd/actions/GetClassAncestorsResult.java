@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 
-import java.util.List;
-
 
 @JsonTypeName(GetClassAncestorsAction.CHANNEL)
 public class GetClassAncestorsResult implements Result {

@@ -4,7 +4,6 @@ import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
 import edu.stanford.protege.webprotege.index.*;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.*;
@@ -321,26 +320,5 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
             return false;
         }
         return containsReference((OWLClass) object);
-    }
-
-    @Override
-    public AncestorHierarchyNode<OWLClass> getAncestorsTree(OWLClass object) {
-        Queue<AncestorHierarchyNode<OWLClass>> objectsToBeVisited = new LinkedList<>();
-
-        AncestorHierarchyNode<OWLClass> root = new AncestorHierarchyNode<>();
-        root.setNode(object);
-        objectsToBeVisited.add(root);
-
-        while (!objectsToBeVisited.isEmpty()) {
-            AncestorHierarchyNode<OWLClass> currentNode = objectsToBeVisited.poll();
-            List<AncestorHierarchyNode<OWLClass>> parents = getParents(currentNode.getNode()).stream().map(parent -> {
-                AncestorHierarchyNode<OWLClass> response = new AncestorHierarchyNode<>();
-                response.setNode(parent);
-                return response;
-            }).toList();
-            currentNode.setChildren(parents);
-            objectsToBeVisited.addAll(parents);
-        }
-        return root;
     }
 }
