@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.perspective;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
@@ -33,12 +33,12 @@ public class SetPerspectivesActionHandler extends AbstractProjectActionHandler<S
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetPerspectivesAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetPerspectivesAction action) {
         if(action.getUserId().isEmpty()) {
-            return BuiltInAction.EDIT_PROJECT_SETTINGS;
+            return BuiltInCapability.EDIT_PROJECT_SETTINGS;
         }
         else {
-            return BuiltInAction.VIEW_PROJECT;
+            return BuiltInCapability.VIEW_PROJECT;
         }
     }
 

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.axioms;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
@@ -41,8 +41,8 @@ public class AddAxiomsDelegateHandler extends AbstractProjectActionHandler<AddAx
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(AddAxiomsRequest action) {
-        return BuiltInAction.EDIT_ONTOLOGY;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(AddAxiomsRequest action) {
+        return BuiltInCapability.EDIT_ONTOLOGY;
     }
 
     @Nonnull

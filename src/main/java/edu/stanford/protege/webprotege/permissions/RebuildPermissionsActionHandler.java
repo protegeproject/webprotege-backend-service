@@ -10,7 +10,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.REBUILD_PERMISSIONS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.REBUILD_PERMISSIONS;
 
 /**
  * Matthew Horridge

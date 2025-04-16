@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -38,8 +38,8 @@ public class GetProjectPrefixDeclarationsActionHandler extends AbstractProjectAc
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetProjectPrefixDeclarationsRequest action) {
-        return BuiltInAction.EDIT_PROJECT_PREFIXES;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetProjectPrefixDeclarationsRequest action) {
+        return BuiltInCapability.EDIT_PROJECT_PREFIXES;
     }
 
     @Nonnull

@@ -5,6 +5,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.forms.field.FormFieldDescriptorDto;
+import edu.stanford.protege.webprotege.forms.field.FormRegionId;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

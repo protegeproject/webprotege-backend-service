@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_OWN_OBJECT_COMMENT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_OWN_OBJECT_COMMENT;
 
 /**
  * Matthew Horridge
@@ -51,7 +51,7 @@ public class EditCommentActionHandler extends AbstractProjectActionHandler<Updat
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(UpdateCommentAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(UpdateCommentAction action) {
         return EDIT_OWN_OBJECT_COMMENT;
     }
 

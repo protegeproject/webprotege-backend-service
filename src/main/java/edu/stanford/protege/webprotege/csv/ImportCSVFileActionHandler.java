@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.csv;
 
 import com.google.common.base.Charsets;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
@@ -18,7 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 import static java.util.Collections.singletonList;
 
 /**
@@ -86,7 +86,7 @@ public class ImportCSVFileActionHandler extends AbstractProjectChangeHandler<Int
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(ImportCSVFileAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(ImportCSVFileAction action) {
         return singletonList(EDIT_ONTOLOGY);
     }
 }

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.issues;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.SET_OBJECT_COMMENT_STATUS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.SET_OBJECT_COMMENT_STATUS;
 
 /**
  * Matthew Horridge
@@ -49,7 +49,7 @@ public class SetDiscussionThreadStatusHandler extends AbstractProjectActionHandl
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetDiscussionThreadStatusAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetDiscussionThreadStatusAction action) {
         return SET_OBJECT_COMMENT_STATUS;
     }
 

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.entity;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.MERGE_ENTITIES;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.MERGE_ENTITIES;
 
 /**
  * Matthew Horridge
@@ -43,7 +43,7 @@ public class MergeEntitiesActionHandler extends AbstractProjectChangeHandler<OWL
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(MergeEntitiesAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(MergeEntitiesAction action) {
         return MERGE_ENTITIES;
     }
 

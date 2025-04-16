@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.index.OntologyAnnotationsIndex;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Matthew Horridge
@@ -54,7 +54,7 @@ public class GetOntologyFramesActionHandler extends AbstractProjectActionHandler
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetOntologyFramesAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetOntologyFramesAction action) {
         return VIEW_PROJECT;
     }
 

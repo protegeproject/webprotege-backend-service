@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
@@ -44,8 +44,8 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(DeleteEntitiesAction action) {
-        return BuiltInAction.EDIT_ONTOLOGY;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(DeleteEntitiesAction action) {
+        return BuiltInCapability.EDIT_ONTOLOGY;
     }
 
     @Override

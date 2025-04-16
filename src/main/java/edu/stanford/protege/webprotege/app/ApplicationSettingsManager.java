@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.app;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.authorization.RoleId;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
@@ -17,8 +17,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_EMPTY_PROJECT;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_EMPTY_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.UPLOAD_PROJECT;
 import static edu.stanford.protege.webprotege.access.BuiltInRole.*;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_ALLOWED;
 import static edu.stanford.protege.webprotege.app.AccountCreationSetting.ACCOUNT_CREATION_NOT_ALLOWED;
@@ -63,7 +63,7 @@ public class ApplicationSettingsManager {
             AccountCreationSetting accountCreationSetting;
             boolean canCreateAccounts = accessManager.hasPermission(forGuestUser(),
                                                                     ApplicationResource.get(),
-                                                                    BuiltInAction.CREATE_ACCOUNT);
+                                                                    BuiltInCapability.CREATE_ACCOUNT);
             if(canCreateAccounts) {
                 accountCreationSetting = ACCOUNT_CREATION_ALLOWED;
             }

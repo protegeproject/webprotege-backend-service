@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -48,8 +48,8 @@ public class AddAxiomsActionHandler extends AbstractProjectActionHandler<AddAxio
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(AddAxiomsAction action) {
-        return BuiltInAction.EDIT_ONTOLOGY;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(AddAxiomsAction action) {
+        return BuiltInCapability.EDIT_ONTOLOGY;
     }
 
     @Nonnull

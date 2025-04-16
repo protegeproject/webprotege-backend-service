@@ -14,7 +14,7 @@ import javax.annotation.*;
 import jakarta.inject.Inject;
 import java.util.*;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
@@ -63,7 +63,7 @@ public class GetEntityHierarchyChildrenActionHandler extends AbstractProjectActi
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetHierarchyChildrenAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetHierarchyChildrenAction action) {
         return VIEW_PROJECT;
     }
 

@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.actions.GetRevisionsAction;
 import edu.stanford.protege.webprotege.dispatch.actions.GetRevisionsResult;
@@ -46,8 +46,8 @@ public class GetRevisionsActionHandler extends AbstractProjectActionHandler<GetR
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetRevisionsAction action) {
-        return BuiltInAction.VIEW_CHANGES;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetRevisionsAction action) {
+        return BuiltInCapability.VIEW_CHANGES;
     }
 
     @Nonnull

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateAnnotationPropertiesChangeGeneratorFactory;
@@ -21,8 +21,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_PROPERTY;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_PROPERTY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;
 
 /**
@@ -76,7 +76,7 @@ public class CreateAnnotationPropertiesActionHandler extends AbstractProjectChan
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(CreateAnnotationPropertiesAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(CreateAnnotationPropertiesAction action) {
         return asList(EDIT_ONTOLOGY, CREATE_PROPERTY);
     }
 

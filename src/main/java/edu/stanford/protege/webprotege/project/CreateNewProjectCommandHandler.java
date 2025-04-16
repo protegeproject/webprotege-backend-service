@@ -1,18 +1,18 @@
 package edu.stanford.protege.webprotege.project;
 
-import edu.stanford.protege.webprotege.authorization.ActionId;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.authorization.Resource;
 import edu.stanford.protege.webprotege.ipc.*;
-import edu.stanford.protege.webprotege.permissions.PermissionDeniedException;
+
 import javax.annotation.Nonnull;
 import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 import java.util.List;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_EMPTY_PROJECT;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_EMPTY_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.UPLOAD_PROJECT;
 
 /**
  * Matthew Horridge
@@ -54,8 +54,8 @@ public class CreateNewProjectCommandHandler implements AuthorizedCommandHandler<
 
     @Nonnull
     @Override
-    public Collection<ActionId> getRequiredCapabilities() {
-        return List.of(CREATE_EMPTY_PROJECT.getActionId(), UPLOAD_PROJECT.getActionId());
+    public Collection<Capability> getRequiredCapabilities() {
+        return List.of(CREATE_EMPTY_PROJECT.getCapability(), UPLOAD_PROJECT.getCapability());
     }
 
 

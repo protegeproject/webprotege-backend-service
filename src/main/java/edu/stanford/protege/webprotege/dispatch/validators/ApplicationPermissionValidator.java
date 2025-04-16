@@ -1,9 +1,9 @@
 package edu.stanford.protege.webprotege.dispatch.validators;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
@@ -25,17 +25,17 @@ public class ApplicationPermissionValidator implements RequestValidator {
 
     private final UserId userId;
 
-    private final ActionId actionId;
+    private final Capability capability;
 
     private final ExecutionContext executionContext;
 
     public ApplicationPermissionValidator(@Nonnull AccessManager accessManager,
                                           @Nonnull UserId userId,
-                                          @Nonnull BuiltInAction actionId,
+                                          @Nonnull BuiltInCapability capability,
                                           ExecutionContext executionContext) {
         this.accessManager = checkNotNull(accessManager);
         this.userId = checkNotNull(userId);
-        this.actionId = checkNotNull(actionId.getActionId());
+        this.capability = checkNotNull(capability.getCapability());
         this.executionContext = executionContext;
     }
 
@@ -43,11 +43,11 @@ public class ApplicationPermissionValidator implements RequestValidator {
     public RequestValidationResult validateAction() {
         if (accessManager.hasPermission(forUser(userId),
                 ApplicationResource.get(),
-                actionId,
+                capability,
                 executionContext)) {
             return RequestValidationResult.getValid();
         } else {
-            return RequestValidationResult.getInvalid("You do not have permission for " + actionId.id());
+            return RequestValidationResult.getInvalid("You do not have permission for " + capability.id());
         }
     }
 }

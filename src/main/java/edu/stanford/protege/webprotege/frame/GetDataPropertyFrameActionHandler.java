@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.frame.translator.DataPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_CHANGES;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_CHANGES;
 
 /**
  * Author: Matthew Horridge<br>
@@ -38,7 +38,7 @@ public class GetDataPropertyFrameActionHandler extends AbstractProjectActionHand
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetDataPropertyFrameAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetDataPropertyFrameAction action) {
         return VIEW_CHANGES;
     }
 

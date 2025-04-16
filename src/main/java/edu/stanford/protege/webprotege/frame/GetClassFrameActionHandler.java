@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.dispatch.Action;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -54,8 +54,8 @@ public class GetClassFrameActionHandler extends AbstractProjectActionHandler<Get
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetClassFrameAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetClassFrameAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 
     @Nonnull

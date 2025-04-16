@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_OBJECT_COMMENT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_OBJECT_COMMENT;
 
 /**
  * Matthew Horridge
@@ -84,7 +84,7 @@ public class AddCommentHandler implements ProjectActionHandler<AddCommentAction,
         return new ProjectPermissionValidator(accessManager,
                                               projectId,
                                               requestContext.getUserId(),
-                                              CREATE_OBJECT_COMMENT.getActionId());
+                                              CREATE_OBJECT_COMMENT.getCapability());
 
     }
 

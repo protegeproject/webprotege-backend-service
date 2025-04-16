@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.BasicCapability;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ui.DisplayContext;
 import java.util.List;
@@ -31,7 +32,7 @@ class HierarchyDescriptorRuleSelectorTest {
 
     private DisplayContext displayContext;
 
-    private Set<ActionId> actions;
+    private Set<Capability> actions;
 
     private HierarchyDescriptorRule dummyRule;
 
@@ -42,7 +43,7 @@ class HierarchyDescriptorRuleSelectorTest {
         selector = new HierarchyDescriptorRuleSelector(repository, matcher);
         projectId = ProjectId.valueOf("123e4567-e89b-12d3-a456-426614174999");
         displayContext = mock(DisplayContext.class);
-        actions = Set.of(ActionId.valueOf("ACTIONX"));
+        actions = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"));
         dummyRule = HierarchyDescriptorRule.create(ClassHierarchyDescriptor.create());
         projectRules = new ProjectHierarchyDescriptorRules(projectId, List.of(dummyRule));
     }

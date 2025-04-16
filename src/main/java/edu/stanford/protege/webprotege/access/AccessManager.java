@@ -58,44 +58,46 @@ public interface AccessManager {
      * @return A collection of action ids that belong to the role closure of the specified subject and resource pair.
      */
     @Nonnull
-    Set<ActionId> getActionClosure(@Nonnull Subject subject,
-                                   @Nonnull Resource resource,
-                                    ExecutionContext executionContext);
+    Set<Capability> getCapabilityClosure(@Nonnull Subject subject,
+                                         @Nonnull Resource resource,
+                                         ExecutionContext executionContext);
 
     /**
      * Tests to see if the specified subject has permission to execute the specified action on the specified resource.
      * @param subject The subject.
      * @param resource The resource on which the action should be executed.
-     * @param actionId The action to be executed.
+     * @param capability The action to be executed.
      * @return {@code true} if the subject has permission to execute the specified action on the specified resource,
      * otherwise {@code false}.
      */
+    @Deprecated
     boolean hasPermission(@Nonnull Subject subject,
                           @Nonnull Resource resource,
-                          @Nonnull ActionId actionId);
+                          @Nonnull Capability capability);
 
+    @Deprecated
     boolean hasPermission(@Nonnull Subject subject,
                           @Nonnull ApplicationResource resource,
-                          @Nonnull ActionId actionId,
+                          @Nonnull Capability capability,
                           ExecutionContext executionContext);
 
     /**
      * Tests to see if the specified subject has permission to execute the specified action on the specified resource.
      * @param subject The subject.
      * @param resource The resource on which the action should be executed.
-     * @param builtInAction The action to be executed.
+     * @param builtInCapability The action to be executed.
      * @return {@code true} if the subject has permission to execute the specified action on the specified resource,
      * otherwise {@code false}.
      */
     boolean hasPermission(@Nonnull Subject subject,
                           @Nonnull Resource resource,
-                          @Nonnull BuiltInAction builtInAction);
+                          @Nonnull BuiltInCapability builtInCapability);
 
     Collection<Subject> getSubjectsWithAccessToResource(Resource resource);
 
-    Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInAction action);
+    Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInCapability action);
 
-    Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId, ExecutionContext executionContext);
+    Collection<Resource> getResourcesAccessibleToSubject(Subject subject, Capability capability, ExecutionContext executionContext);
 
 
     /**

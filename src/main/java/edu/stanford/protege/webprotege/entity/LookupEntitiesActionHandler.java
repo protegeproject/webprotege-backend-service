@@ -3,7 +3,7 @@ package edu.stanford.protege.webprotege.entity;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.PageRequest;
@@ -82,8 +82,8 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(LookupEntitiesAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(LookupEntitiesAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 
     @Nonnull

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -57,7 +57,7 @@ public class RevertRevisionActionHandler extends AbstractProjectChangeHandler<Bo
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(RevertRevisionAction action) {
-        return BuiltInAction.REVERT_CHANGES;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(RevertRevisionAction action) {
+        return BuiltInCapability.REVERT_CHANGES;
     }
 }

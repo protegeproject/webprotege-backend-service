@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.watches;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
@@ -10,8 +10,8 @@ import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.Set;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.WATCH_CHANGES;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.WATCH_CHANGES;
 
 /**
  * Matthew Horridge
@@ -38,7 +38,7 @@ public class GetWatchesActionHandler extends AbstractProjectActionHandler<GetWat
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(GetWatchesAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(GetWatchesAction action) {
         return Arrays.asList(WATCH_CHANGES, VIEW_PROJECT);
     }
 

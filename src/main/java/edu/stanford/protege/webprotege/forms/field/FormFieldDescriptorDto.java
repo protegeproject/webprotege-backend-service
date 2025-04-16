@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import edu.stanford.protege.webprotege.common.LanguageMap;
 import edu.stanford.protege.webprotege.forms.*;
+import edu.stanford.protege.webprotege.forms.data.FormFieldAccessMode;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,6 +27,7 @@ public abstract class FormFieldDescriptorDto implements HasFormRegionId {
                                              @JsonProperty(PropertyNames.REPEATABILITY) Repeatability repeatability,
                                              @JsonProperty(PropertyNames.DEPRECATION_STRATEGY) FormFieldDeprecationStrategy deprecationStrategy,
                                              @JsonProperty(PropertyNames.READ_ONLY) boolean newReadOnly,
+                                             @JsonProperty(PropertyNames.ACCESS_MODE) FormFieldAccessMode accessMode,
                                              @JsonProperty(PropertyNames.INITIAL_EXPANSIONS_STATE) ExpansionState initialExpansionState,
                                              @JsonProperty(PropertyNames.HELP) LanguageMap help) {
         return new AutoValue_FormFieldDescriptorDto(formRegionId,
@@ -37,6 +39,7 @@ public abstract class FormFieldDescriptorDto implements HasFormRegionId {
                                                     repeatability,
                                                     deprecationStrategy,
                                                     newReadOnly,
+                                                    accessMode,
                                                     initialExpansionState,
                                                     help);
     }
@@ -83,6 +86,9 @@ public abstract class FormFieldDescriptorDto implements HasFormRegionId {
 
     @JsonProperty(PropertyNames.READ_ONLY)
     public abstract boolean isReadOnly();
+
+    @JsonProperty(PropertyNames.ACCESS_MODE)
+    public abstract FormFieldAccessMode getAccessMode();
 
     @Nonnull
     @JsonProperty(PropertyNames.INITIAL_EXPANSIONS_STATE)

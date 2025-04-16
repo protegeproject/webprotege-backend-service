@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.issues;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -22,7 +22,7 @@ import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_OBJECT_COMMENT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_OBJECT_COMMENT;
 
 /**
  * Matthew Horridge
@@ -80,7 +80,7 @@ public class CreateEntityDiscussionThreadHandler extends AbstractProjectActionHa
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(CreateEntityDiscussionThreadAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(CreateEntityDiscussionThreadAction action) {
         return CREATE_OBJECT_COMMENT;
     }
 

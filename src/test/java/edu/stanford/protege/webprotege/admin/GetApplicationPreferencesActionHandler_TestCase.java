@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_APPLICATION_SETTINGS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_APPLICATION_SETTINGS;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -67,7 +67,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
         assertThat(result.isInvalid(), is(true));
         verify(accessManager, times(1)).hasPermission(forUser(userId),
                                                       ApplicationResource.get(),
-                                                      EDIT_APPLICATION_SETTINGS.getActionId(),executionContext);
+                                                      EDIT_APPLICATION_SETTINGS.getCapability(),executionContext);
     }
 
     @Test

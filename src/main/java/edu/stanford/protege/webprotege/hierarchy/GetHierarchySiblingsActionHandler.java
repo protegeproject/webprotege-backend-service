@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -51,8 +51,8 @@ public class GetHierarchySiblingsActionHandler extends AbstractProjectActionHand
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetHierarchySiblingsAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetHierarchySiblingsAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 
     @Nonnull

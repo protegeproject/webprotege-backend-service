@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.common.Response;
@@ -35,8 +35,8 @@ public abstract class AbstractUpdateFrameHandler<A extends Request<R> & UpdateFr
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(A action) {
-        return BuiltInAction.EDIT_ONTOLOGY;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(A action) {
+        return BuiltInCapability.EDIT_ONTOLOGY;
     }
 
     /**

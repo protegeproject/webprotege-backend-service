@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.search;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.repository.ProjectEntitySearchFiltersManager;
@@ -31,8 +31,8 @@ public class SetSearchSettingsActionHandler extends AbstractProjectActionHandler
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetSearchSettingsAction action) {
-        return BuiltInAction.EDIT_PROJECT_SETTINGS;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetSearchSettingsAction action) {
+        return BuiltInCapability.EDIT_PROJECT_SETTINGS;
     }
 
     @Nonnull

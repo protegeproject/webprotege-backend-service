@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.individuals;
 
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>
@@ -63,7 +63,7 @@ public class GetIndividualsActionHandler extends AbstractProjectActionHandler<Ge
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetIndividualsAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetIndividualsAction action) {
         return VIEW_PROJECT;
     }
 

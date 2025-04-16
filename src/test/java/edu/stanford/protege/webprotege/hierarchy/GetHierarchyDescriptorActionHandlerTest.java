@@ -5,8 +5,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
+import edu.stanford.protege.webprotege.authorization.BasicCapability;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -71,13 +72,13 @@ class GetHierarchyDescriptorActionHandlerTest {
     @Test
     void shouldReturnViewProjectBuiltInAction() {
         var action = handler.getRequiredExecutableBuiltInAction(request);
-        assertThat(action).isEqualTo(BuiltInAction.VIEW_PROJECT);
+        assertThat(action).isEqualTo(BuiltInCapability.VIEW_PROJECT);
     }
 
     @Test
     void shouldExecuteAndReturnMatchingHierarchyDescriptor() {
-        var actionClosure = Set.of(ActionId.valueOf("ACTIONX"), ActionId.valueOf("ACTIONY"));
-        when(accessManager.getActionClosure(any(Subject.class), any(ProjectResource.class), any(ExecutionContext.class)))
+        var actionClosure = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"), BasicCapability.valueOf("ACTIONY"));
+        when(accessManager.getCapabilityClosure(any(Subject.class), any(ProjectResource.class), any(ExecutionContext.class)))
                 .thenReturn(actionClosure);
 
         var dummyRule = HierarchyDescriptorRule.create(ClassHierarchyDescriptor.create());
@@ -90,8 +91,8 @@ class GetHierarchyDescriptorActionHandlerTest {
 
     @Test
     void shouldExecuteAndReturnNullWhenNoMatchingRule() {
-        var actionClosure = Set.of(ActionId.valueOf("ACTIONX"), ActionId.valueOf("ACTIONY"));
-        when(accessManager.getActionClosure(any(Subject.class), any(ProjectResource.class), any(ExecutionContext.class)))
+        var actionClosure = Set.<Capability>of(BasicCapability.valueOf("ACTIONX"), BasicCapability.valueOf("ACTIONY"));
+        when(accessManager.getCapabilityClosure(any(Subject.class), any(ProjectResource.class), any(ExecutionContext.class)))
                 .thenReturn(actionClosure);
 
         when(ruleSelector.selectRule(request.projectId(), request.displayContext(), actionClosure))

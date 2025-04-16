@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateDataPropertiesChangeGeneratorFactory;
@@ -23,7 +23,7 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_PROPERTY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_PROPERTY;
 
 /**
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 25/03/2013
@@ -74,7 +74,7 @@ public class CreateDataPropertiesActionHandler extends AbstractProjectChangeHand
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(CreateDataPropertiesAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(CreateDataPropertiesAction action) {
         return CREATE_PROPERTY;
     }
 

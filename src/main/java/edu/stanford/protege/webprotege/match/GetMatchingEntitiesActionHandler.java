@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.match;
 
 import com.google.common.base.Stopwatch;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.criteria.Criteria;
@@ -68,8 +68,8 @@ public class GetMatchingEntitiesActionHandler extends AbstractProjectActionHandl
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetMatchingEntitiesAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetMatchingEntitiesAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 
     @Nonnull

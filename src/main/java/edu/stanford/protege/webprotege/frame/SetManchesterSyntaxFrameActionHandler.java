@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
@@ -46,7 +46,7 @@ public class SetManchesterSyntaxFrameActionHandler extends AbstractProjectChange
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetManchesterSyntaxFrameAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetManchesterSyntaxFrameAction action) {
         return EDIT_ONTOLOGY;
     }
 

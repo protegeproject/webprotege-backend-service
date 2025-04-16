@@ -134,4 +134,6 @@ public interface PropertyNames {
     String DATA = "data";
 
     String FIELD = "field";
+
+    String ACCESS_MODE = "accessMode";
 }

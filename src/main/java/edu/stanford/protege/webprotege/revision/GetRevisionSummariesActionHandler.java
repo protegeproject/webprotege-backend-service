@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.revision;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageCollector;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -30,8 +30,8 @@ public class GetRevisionSummariesActionHandler extends AbstractProjectActionHand
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetRevisionSummariesAction action) {
-        return BuiltInAction.VIEW_CHANGES;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetRevisionSummariesAction action) {
+        return BuiltInCapability.VIEW_CHANGES;
     }
 
     @Nonnull

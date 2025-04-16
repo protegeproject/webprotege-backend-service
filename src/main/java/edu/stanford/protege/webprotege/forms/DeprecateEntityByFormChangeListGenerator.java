@@ -5,6 +5,7 @@ package edu.stanford.protege.webprotege.forms;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import edu.stanford.protege.webprotege.DataFactory;
+import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
@@ -15,18 +16,23 @@ import edu.stanford.protege.webprotege.forms.data.FormSubject;
 import edu.stanford.protege.webprotege.forms.field.FormFieldDeprecationStrategy;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
+import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLAxiomVisitorExAdapter;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -99,8 +105,6 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
 
     @Nonnull
     private final ClassAssertionAxiomsByIndividualIndex classAssertionAxiomsByIndividualIndex;
-
-
 
     public DeprecateEntityByFormChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
                                                     @Nonnull OWLEntity entityToBeDeprecated,

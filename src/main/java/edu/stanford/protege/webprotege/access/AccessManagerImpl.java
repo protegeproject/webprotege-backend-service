@@ -31,7 +31,7 @@ public class AccessManagerImpl implements AccessManager {
 
     private final CommandExecutor<GetRolesRequest, GetRolesResponse> getRolesRequestExecutor;
 
-    private final CommandExecutor<GetAuthorizedActionsRequest, GetAuthorizedActionsResponse> getAuthorizedActionsExecutor;
+    private final CommandExecutor<GetAuthorizedCapabilitiesRequest, GetAuthorizedCapabilitiesResponse> getAuthorizedActionsExecutor;
 
     private final CommandExecutor<GetAuthorizationStatusRequest, GetAuthorizationStatusResponse> getAuthorizationStatusExecutor;
 
@@ -42,7 +42,7 @@ public class AccessManagerImpl implements AccessManager {
     public AccessManagerImpl(CommandExecutor<GetAssignedRolesRequest, GetAssignedRolesResponse> getAssignedRolesExecutor,
                              CommandExecutor<SetAssignedRolesRequest, SetAssignedRolesResponse> setAssignedRolesExecutor,
                              CommandExecutor<GetRolesRequest, GetRolesResponse> getRolesRequestExecutor,
-                             CommandExecutor<GetAuthorizedActionsRequest, GetAuthorizedActionsResponse> getAuthorizedActionsExecutor,
+                             CommandExecutor<GetAuthorizedCapabilitiesRequest, GetAuthorizedCapabilitiesResponse> getAuthorizedActionsExecutor,
                              CommandExecutor<GetAuthorizationStatusRequest, GetAuthorizationStatusResponse> getAuthorizationStatusExecutor,
                              CommandExecutor<GetAuthorizedSubjectsRequest, GetAuthorizedSubjectsResponse> getAuthorizedSubjectsExecutor,
                              CommandExecutor<GetAuthorizedResourcesRequest, GetAuthorizedResourcesResponse> getAuthorizedResourcesExecutor) {
@@ -108,12 +108,12 @@ public class AccessManagerImpl implements AccessManager {
 
     @Nonnull
     @Override
-    public Set<ActionId> getActionClosure(@Nonnull Subject subject, @Nonnull Resource resource, ExecutionContext executionContext) {
+    public Set<Capability> getCapabilityClosure(@Nonnull Subject subject, @Nonnull Resource resource, ExecutionContext executionContext) {
         try {
-            return getAuthorizedActionsExecutor.execute(new GetAuthorizedActionsRequest(resource, subject),
+            return getAuthorizedActionsExecutor.execute(new GetAuthorizedCapabilitiesRequest(resource, subject),
                                                         executionContext)
                     .get()
-                    .actionIds();
+                    .capabilities();
         } catch (InterruptedException | ExecutionException e) {
             logger.error("Error when getting authorized actions", e);
             return Collections.emptySet();
@@ -121,9 +121,9 @@ public class AccessManagerImpl implements AccessManager {
     }
 
     @Override
-    public boolean hasPermission(@Nonnull Subject subject, @Nonnull Resource resource, @Nonnull ActionId actionId) {
+    public boolean hasPermission(@Nonnull Subject subject, @Nonnull Resource resource, @Nonnull Capability capability) {
         try {
-            GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
+            GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, capability),
                                                           new ExecutionContext())
                     .get();
             return response.authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
@@ -135,7 +135,7 @@ public class AccessManagerImpl implements AccessManager {
     }
 
     @Override
-    public boolean hasPermission(@Nonnull Subject subject, @Nonnull ApplicationResource resource, @Nonnull ActionId actionId, ExecutionContext executionContext) {
+    public boolean hasPermission(@Nonnull Subject subject, @Nonnull ApplicationResource resource, @Nonnull Capability actionId, ExecutionContext executionContext) {
         try {
             return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
                             executionContext)
@@ -150,16 +150,16 @@ public class AccessManagerImpl implements AccessManager {
     @Override
     public boolean hasPermission(@Nonnull Subject subject,
                                  @Nonnull Resource resource,
-                                 @Nonnull BuiltInAction builtInAction) {
-        return hasPermission(subject, resource, builtInAction.getActionId());
+                                 @Nonnull BuiltInCapability builtInCapability) {
+        return hasPermission(subject, resource, builtInCapability.getCapability());
     }
 
 
     @Override
-    public Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInAction action) {
+    public Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInCapability action) {
         try {
             return getAuthorizedSubjectsExecutor.execute(new GetAuthorizedSubjectsRequest(resource,
-                                                                                          action.getActionId()),
+                                                                                          action.getCapability()),
                                                          new ExecutionContext())
                     .get()
                                                 .subjects();
@@ -171,11 +171,11 @@ public class AccessManagerImpl implements AccessManager {
 
     @Override
     public Collection<Subject> getSubjectsWithAccessToResource(Resource resource) {
-        return getSubjectsWithAccessToResource(resource, BuiltInAction.VIEW_PROJECT);
+        return getSubjectsWithAccessToResource(resource, BuiltInCapability.VIEW_PROJECT);
     }
 
     @Override
-    public Collection<Resource> getResourcesAccessibleToSubject(Subject subject, ActionId actionId, ExecutionContext executionContext) {
+    public Collection<Resource> getResourcesAccessibleToSubject(Subject subject, Capability actionId, ExecutionContext executionContext) {
         try {
             return getAuthorizedResourcesExecutor.execute(new GetAuthorizedResourcesRequest(subject, actionId),
                             executionContext)

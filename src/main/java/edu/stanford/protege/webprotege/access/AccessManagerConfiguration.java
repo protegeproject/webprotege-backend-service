@@ -30,8 +30,8 @@ public class AccessManagerConfiguration {
     }
 
     @Bean
-    CommandExecutor<GetAuthorizedActionsRequest, GetAuthorizedActionsResponse> getAuthorizedActionsExecutor() {
-        return new CommandExecutorImpl<>(GetAuthorizedActionsResponse.class);
+    CommandExecutor<GetAuthorizedCapabilitiesRequest, GetAuthorizedCapabilitiesResponse> getAuthorizedActionsExecutor() {
+        return new CommandExecutorImpl<>(GetAuthorizedCapabilitiesResponse.class);
     }
 
     @Bean

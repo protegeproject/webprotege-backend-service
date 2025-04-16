@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.validators;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.dispatch.RequestValidationResult;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
@@ -29,26 +29,26 @@ public class ProjectPermissionValidator implements RequestValidator {
 
     private final UserId userId;
 
-    private final ActionId actionId;
+    private final Capability capability;
 
     @Inject
     public ProjectPermissionValidator(AccessManager accessManager,
                                       ProjectId projectId,
                                       UserId userId,
-                                      ActionId actionId) {
+                                      Capability capability) {
         this.accessManager = accessManager;
         this.projectId = projectId;
         this.userId = userId;
-        this.actionId = actionId;
+        this.capability = capability;
     }
 
     @Override
     public RequestValidationResult validateAction() {
-        if(accessManager.hasPermission(forUser(userId), new ProjectResource(projectId), actionId)) {
+        if(accessManager.hasPermission(forUser(userId), new ProjectResource(projectId), capability)) {
             return RequestValidationResult.getValid();
         }
         else {
-            return RequestValidationResult.getInvalid("Permission denied for " + actionId.id());
+            return RequestValidationResult.getInvalid("Permission denied for " + capability.id());
         }
     }
 }

@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.admin;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,7 +80,7 @@ public class ApplicationPreferencesManager_TestCase {
     public void shouldGetAccountCreationAllowed() {
         when(accessManager.hasPermission(forGuestUser(),
                                          ApplicationResource.get(),
-                                         BuiltInAction.CREATE_ACCOUNT)).thenReturn(true);
+                                         BuiltInCapability.CREATE_ACCOUNT)).thenReturn(true);
         ApplicationSettings applicationSettings = manager.getApplicationSettings();
         assertThat(applicationSettings.getAccountCreationSetting(), is(ACCOUNT_CREATION_ALLOWED));
     }
@@ -95,7 +95,7 @@ public class ApplicationPreferencesManager_TestCase {
     public void shouldGetProjectCreationAllowed() {
         when(accessManager.hasPermission(forAnySignedInUser(),
                                          ApplicationResource.get(),
-                                         BuiltInAction.CREATE_EMPTY_PROJECT)).thenReturn(true);
+                                         BuiltInCapability.CREATE_EMPTY_PROJECT)).thenReturn(true);
         ApplicationSettings applicationSettings = manager.getApplicationSettings();
         assertThat(applicationSettings.getProjectCreationSetting(), is(EMPTY_PROJECT_CREATION_ALLOWED));
     }
@@ -110,7 +110,7 @@ public class ApplicationPreferencesManager_TestCase {
     public void shouldGetProjectUploadAllowed() {
         when(accessManager.hasPermission(forAnySignedInUser(),
                                          ApplicationResource.get(),
-                                         BuiltInAction.UPLOAD_PROJECT)).thenReturn(true);
+                                         BuiltInCapability.UPLOAD_PROJECT)).thenReturn(true);
         ApplicationSettings applicationSettings = manager.getApplicationSettings();
         assertThat(applicationSettings.getProjectUploadSetting(), is(PROJECT_UPLOAD_ALLOWED));
     }

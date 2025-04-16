@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.individuals;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -21,8 +21,8 @@ import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.CREATE_INDIVIDUAL;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_INDIVIDUAL;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 
 /**
  * Author: Matthew Horridge<br>
@@ -59,7 +59,7 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(CreateNamedIndividualsAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(CreateNamedIndividualsAction action) {
         return Arrays.asList(EDIT_ONTOLOGY, CREATE_INDIVIDUAL);
     }
 

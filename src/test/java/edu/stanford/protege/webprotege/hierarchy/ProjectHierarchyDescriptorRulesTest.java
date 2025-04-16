@@ -4,9 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.BasicCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
@@ -57,9 +58,9 @@ class ProjectHierarchyDescriptorRulesTest {
                 java.util.Collections.singletonMap("key1", "value1"),
                 FormId.valueOf("123e4567-e89b-12d3-a456-426614174002"),
                 FormRegionId.valueOf("123e4567-e89b-12d3-a456-426614174003"),
-                java.util.Set.of(
-                        ActionId.valueOf("ACTIONX"),
-                        ActionId.valueOf("ACTIONY")
+                Set.of(
+                        BasicCapability.valueOf("ACTIONX"),
+                        BasicCapability.valueOf("ACTIONY")
                 ),
                 ClassHierarchyDescriptor.create()
         );
@@ -100,7 +101,7 @@ class ProjectHierarchyDescriptorRulesTest {
                   "requiredViewProperties": {"key1": "value1"},
                   "requiredFormId": "123e4567-e89b-12d3-a456-426614174002",
                   "requiredFormFieldId": "123e4567-e89b-12d3-a456-426614174003",
-                  "requiredActions": ["ACTIONX", "ACTIONY"],
+                  "requiredActions": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
                   "hierarchyDescriptor": {
                       "@type": "ClassHierarchyDescriptor",
                       "roots": [
