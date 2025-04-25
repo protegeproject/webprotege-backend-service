@@ -1,11 +1,9 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import org.semanticweb.owlapi.model.OWLEntity;
+import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
+import org.semanticweb.owlapi.model.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class HierarchyProviderGuard<E extends OWLEntity> implements HierarchyProvider<OWLEntity> {
 
@@ -93,4 +91,15 @@ public class HierarchyProviderGuard<E extends OWLEntity> implements HierarchyPro
         }
         return delegate.contains(object);
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Optional<AncestorHierarchyNode<OWLEntity>> getAncestorsTree(OWLEntity object) {
+        if (!cls.isInstance(object)) {
+            return Optional.empty();
+        }
+        return delegate.getAncestorsTree(cls.cast(object))
+                .map(ancestorTree -> (AncestorHierarchyNode<OWLEntity>) ancestorTree);
+    }
+
 }
