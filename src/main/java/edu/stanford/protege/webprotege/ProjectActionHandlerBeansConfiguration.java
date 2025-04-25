@@ -29,6 +29,7 @@ import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.actions.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
+import edu.stanford.protege.webprotege.icd.mappers.AncestorHierarchyNodeMapper;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
@@ -956,9 +957,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     GetClassAncestorsActionHandler getClassAncestorsActionHandler(AccessManager p1,
-                                                                  ClassHierarchyProvider p2,
-                                                                  RenderingManager p3) {
-        return new GetClassAncestorsActionHandler(p1, p2, p3);
+                                                                  RenderingManager p2,
+                                                                  HierarchyProviderManager p3,
+                                                                  IcatxEntityTypeConfigurationRepository p4,
+                                                                  AncestorHierarchyNodeMapper p5) {
+        return new GetClassAncestorsActionHandler(p1, p2, p3, p4, p5);
     }
 
     @Bean
