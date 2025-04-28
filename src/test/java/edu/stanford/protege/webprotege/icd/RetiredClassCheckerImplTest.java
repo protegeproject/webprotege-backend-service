@@ -30,6 +30,8 @@ class RetiredClassCheckerImplTest {
     @Mock
     private OWLClass clsA, clsB;
 
+    private OWLLiteralExtractorManager owlLiteralExtractorManager;
+
     IRI subjectIRIClassA, subjectIRIClassB;
     Stream<OWLAnnotationAssertionAxiom> streamOfAxiomsClsA, streamOfAxiomsClsB;
     OWLAnnotationAssertionAxiom retiredLabelAxiom, nonRetiredLabelAxiom;
@@ -72,8 +74,10 @@ class RetiredClassCheckerImplTest {
         when(clsA.getIRI()).thenReturn(subjectIRIClassA);
         when(clsB.getIRI()).thenReturn(subjectIRIClassB);
 
+        owlLiteralExtractorManager = new OWLLiteralExtractorManager(annotationAssertionAxiomsIndex);
 
-        retiredClassChecker = new RetiredClassCheckerImpl(annotationAssertionAxiomsIndex);
+
+        retiredClassChecker = new RetiredClassCheckerImpl(owlLiteralExtractorManager);
     }
 
     @Test
