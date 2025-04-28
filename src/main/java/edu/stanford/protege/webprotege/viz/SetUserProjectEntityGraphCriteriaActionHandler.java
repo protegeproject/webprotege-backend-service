@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.viz;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -78,7 +78,7 @@ public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
             else {
                 if(accessManager.hasPermission(Subject.forUser(userInSession),
                                                ProjectResource.forProject(action.projectId()),
-                                               BuiltInAction.EDIT_DEFAULT_VISUALIZATION_SETTINGS)) {
+                                               BuiltInCapability.EDIT_DEFAULT_VISUALIZATION_SETTINGS)) {
                     return RequestValidationResult.getValid();
                 }
                 else {
@@ -91,7 +91,7 @@ public class SetUserProjectEntityGraphCriteriaActionHandler extends AbstractProj
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetUserProjectEntityGraphSettingsAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetUserProjectEntityGraphSettingsAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 }

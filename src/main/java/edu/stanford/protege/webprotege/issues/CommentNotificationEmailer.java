@@ -22,7 +22,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_OBJECT_COMMENT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_OBJECT_COMMENT;
 import static edu.stanford.protege.webprotege.authorization.ProjectResource.forProject;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static java.util.stream.Collectors.toList;

@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.merge;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.diff.DiffElement;
 import edu.stanford.protege.webprotege.diff.DiffOperation;
@@ -24,8 +24,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.UPLOAD_AND_MERGE;
 
 /**
  * Matthew Horridge
@@ -68,7 +68,7 @@ public class ComputeProjectMergeActionHandler extends AbstractProjectActionHandl
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(ComputeProjectMergeAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(ComputeProjectMergeAction action) {
         return Arrays.asList(EDIT_ONTOLOGY, UPLOAD_AND_MERGE);
     }
 

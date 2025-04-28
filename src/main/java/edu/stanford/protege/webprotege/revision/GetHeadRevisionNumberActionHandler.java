@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.revision;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_CHANGES;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_CHANGES;
 
 /**
  * Matthew Horridge
@@ -36,7 +36,7 @@ public class GetHeadRevisionNumberActionHandler extends AbstractProjectActionHan
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetHeadRevisionNumberAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetHeadRevisionNumberAction action) {
         return VIEW_CHANGES;
     }
 

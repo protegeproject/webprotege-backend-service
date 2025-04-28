@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
@@ -46,8 +46,8 @@ public class DeprecateEntityByFormActionHandler extends AbstractProjectChangeHan
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(DeprecateEntityByFormAction action) {
-        return BuiltInAction.EDIT_ONTOLOGY;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(DeprecateEntityByFormAction action) {
+        return BuiltInCapability.EDIT_ONTOLOGY;
     }
 
     @Nonnull

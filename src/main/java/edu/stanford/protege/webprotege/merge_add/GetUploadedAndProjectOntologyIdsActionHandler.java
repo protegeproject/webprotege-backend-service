@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.merge_add;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.UPLOAD_AND_MERGE_ADDITIONS;
 
 public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProjectActionHandler<GetUploadedAndProjectOntologyIdsAction, GetUploadedAndProjectOntologyIdsResult> {
     private static final Logger logger = LoggerFactory.getLogger(MergeOntologiesActionHandler.class);
@@ -75,7 +75,7 @@ public class GetUploadedAndProjectOntologyIdsActionHandler extends AbstractProje
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(GetUploadedAndProjectOntologyIdsAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(GetUploadedAndProjectOntologyIdsAction action) {
         return Arrays.asList(EDIT_ONTOLOGY, UPLOAD_AND_MERGE_ADDITIONS);
     }
 }

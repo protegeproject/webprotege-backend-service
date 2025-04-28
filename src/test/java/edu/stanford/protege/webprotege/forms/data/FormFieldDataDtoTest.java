@@ -11,6 +11,7 @@ import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.context.annotation.Import;
 
 import java.io.*;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,6 +42,7 @@ class FormFieldDataDtoTest {
                                                              Repeatability.NON_REPEATABLE,
                                                              FormFieldDeprecationStrategy.DELETE_VALUES,
                                                              true,
+                                                             FormFieldAccessMode.READ_WRITE,
                                                              ExpansionState.COLLAPSED,
                                                              LanguageMap.empty()), Page.emptyPage());
 
@@ -53,7 +55,7 @@ class FormFieldDataDtoTest {
     @Test
     void shouldDeserializeFormFieldData() throws IOException {
         var json = """
-                {"field":{"id":"4eeb6550-58e3-4103-a875-7c0002f2fc93","owlBinding":null,"label":{},"fieldRun":"START","control":{"@type":"TextControlDescriptorDto","control":{"@type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","specificLangTag":"","lineMode":"SINGLE_LINE","pattern":"","patternViolationErrorMessage":{}}},"optionality":"OPTIONAL","repeatability":"NON_REPEATABLE","deprecationStrategy":"DELETE_VALUES","readOnly":true,"initialExpansionState":"COLLAPSED","help":{}},"data":{"pageElements":[],"pageSize":0,"totalElements":0,"pageNumber":1,"pageCount":1}}
+                {"field":{"id":"4eeb6550-58e3-4103-a875-7c0002f2fc93","accessMode":"ReadOnly","owlBinding":null,"label":{},"fieldRun":"START","control":{"@type":"TextControlDescriptorDto","control":{"@type":"TEXT","placeholder":{},"stringType":"SIMPLE_STRING","specificLangTag":"","lineMode":"SINGLE_LINE","pattern":"","patternViolationErrorMessage":{}}},"optionality":"OPTIONAL","repeatability":"NON_REPEATABLE","deprecationStrategy":"DELETE_VALUES","readOnly":true,"initialExpansionState":"COLLAPSED","help":{}},"data":{"pageElements":[],"pageSize":0,"totalElements":0,"pageNumber":1,"pageCount":1}}
                 """;
         var read = tester.read(new StringReader(json));
         assertThat(read).isNotNull();

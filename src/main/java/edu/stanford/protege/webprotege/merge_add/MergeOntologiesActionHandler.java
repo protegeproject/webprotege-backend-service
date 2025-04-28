@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.merge_add;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -17,8 +17,8 @@ import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE_ADDITIONS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.UPLOAD_AND_MERGE_ADDITIONS;
 
 public class MergeOntologiesActionHandler extends AbstractProjectActionHandler<MergeOntologiesAction, MergeOntologiesResult> {
 
@@ -87,7 +87,7 @@ public class MergeOntologiesActionHandler extends AbstractProjectActionHandler<M
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(MergeOntologiesAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(MergeOntologiesAction action) {
         return Arrays.asList(EDIT_ONTOLOGY, UPLOAD_AND_MERGE_ADDITIONS);
     }
 }
