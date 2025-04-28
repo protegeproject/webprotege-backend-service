@@ -75,7 +75,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-entity-data</artifactId>
-            <version>0.9.4-SNAPSHOT</version>
+            <version>0.9.5-WHO</version>
         </dependency>
 
         <dependency>
