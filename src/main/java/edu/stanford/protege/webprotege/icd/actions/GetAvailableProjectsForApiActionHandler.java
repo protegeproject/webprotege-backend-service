@@ -43,6 +43,7 @@ public class GetAvailableProjectsForApiActionHandler implements ApplicationActio
                         details -> ProjectSummaryDto.create(
                                 details.projectId().id(),
                                 details.getDisplayName(),
+                                details.getCreatedAt(),
                                 details.getDescription())
                 ).collect(toList());
         return new GetAvailableProjectsForApiResult(availableProjects);
