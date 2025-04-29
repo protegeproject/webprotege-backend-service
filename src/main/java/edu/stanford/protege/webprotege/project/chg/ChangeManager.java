@@ -28,7 +28,6 @@ import edu.stanford.protege.webprotege.webhook.ProjectChangedWebhookInvoker;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.ObjectProvider;
 
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
@@ -341,7 +340,7 @@ public class ChangeManager implements HasApplyChanges {
 
             revision.ifPresent(value -> projectRevisionRepository.save(new ProjectRevision(projectId, changeRequestId, userId, value.getRevisionNumber())));
 
-            newRevisionsEmitter.emitNewRevisionsEvent(revision, changeRequestId);
+            newRevisionsEmitter.emitNewRevisionsEvent(revision, changeRequestId, changeApplicationResult.getSubject());
 
         } finally {
             changeProcesssingLock.unlock();

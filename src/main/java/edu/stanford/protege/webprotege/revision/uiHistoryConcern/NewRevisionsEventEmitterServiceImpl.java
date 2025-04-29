@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @ProjectSingleton
-public class NewRevisionsEventEmitterServiceImpl implements NewRevisionsEventEmitterService {
+public class NewRevisionsEventEmitterServiceImpl<S> implements NewRevisionsEventEmitterService<S> {
 
     private final ProjectChangesManager changesManager;
     private final OrderingChangesManager orderingChangesManager;
@@ -38,9 +38,9 @@ public class NewRevisionsEventEmitterServiceImpl implements NewRevisionsEventEmi
 
 
     @Override
-    public void emitNewRevisionsEvent(Optional<Revision> revision, ChangeRequestId changeRequestId) {
+    public void emitNewRevisionsEvent(Optional<Revision> revision, ChangeRequestId changeRequestId, S subject) {
         revision.ifPresent(rev -> {
-            Set<ProjectChangeForEntity> changes = changesManager.getProjectChangesForEntitiesFromRevision(rev);
+            Set<ProjectChangeForEntity> changes = changesManager.getProjectChangesForEntitiesFromRevision(rev, subject);
             //Based on axioms in the revision we can determine if the entity was added/deleted or updated
             //e.g. for adding a new entity you have Declaration axiom
             //

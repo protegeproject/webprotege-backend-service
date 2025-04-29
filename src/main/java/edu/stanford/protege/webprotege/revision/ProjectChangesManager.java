@@ -10,13 +10,11 @@ import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriInde
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.*;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.inject.Inject;
-import jakarta.inject.Provider;
-import javax.inject.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -159,10 +157,13 @@ public class ProjectChangesManager {
         changesBuilder.add(projectChange);
     }
 
-    public Set<ProjectChangeForEntity> getProjectChangesForEntitiesFromRevision(Revision revision) {
+    public <S> Set<ProjectChangeForEntity> getProjectChangesForEntitiesFromRevision(Revision revision, S revisionSubject) {
         addRevisionToCache(revision);
 
         Map<Optional<IRI>, ImmutableList<OntologyChange>> entries = getEntriesForRevision(revision.getRevisionNumber());
+
+        Optional<IRI> revisionSubjectIri = (revisionSubject instanceof OWLEntity) ?
+                Optional.of(((OWLEntity) revisionSubject).getIRI()) : Optional.empty();
 
         return entries.entrySet()
                 .stream()
@@ -170,7 +171,7 @@ public class ProjectChangesManager {
                 .flatMap(
                         (iriWithOntologyChanges) -> {
                             List<OntologyChange> ontologyChanges = iriWithOntologyChanges.getValue();
-                            IRI subjectIri = iriWithOntologyChanges.getKey().get();
+                            IRI subjectIri = revisionSubjectIri.orElseGet(() -> iriWithOntologyChanges.getKey().get());
                             ProjectChange newProjectChange = getProjectChangeForRecords(revision, ontologyChanges, ontologyChanges.size());
                             var changeType = getChangeTypeForRecordWithSubject(subjectIri, ontologyChanges);
 
