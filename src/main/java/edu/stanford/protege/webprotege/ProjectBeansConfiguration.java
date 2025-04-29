@@ -407,8 +407,9 @@ public class ProjectBeansConfiguration {
     @Bean
     RenderingManager renderingManager(DictionaryManager dictionaryManager,
                                       DeprecatedEntityChecker deprecatedEntityChecker,
-                                      ManchesterSyntaxObjectRenderer manchesterSyntaxObjectRenderer) {
-        return new RenderingManager(dictionaryManager, deprecatedEntityChecker, manchesterSyntaxObjectRenderer);
+                                      ManchesterSyntaxObjectRenderer manchesterSyntaxObjectRenderer,
+                                      EntityStatusManager entityStatusManager) {
+        return new RenderingManager(dictionaryManager, deprecatedEntityChecker, manchesterSyntaxObjectRenderer, entityStatusManager);
     }
 
     @Bean

@@ -12,8 +12,6 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 
-import java.util.Set;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -79,6 +77,6 @@ public class EntityNodeRenderer {
                 watchManager.getDirectWatches(entity),
                 discussionThreadRepository.getOpenCommentsCount(projectId, entity),
                 tagsManager.getTags(entity),
-                entityStatusManager.getEntityStatuses(projectId, entity));
+                entityStatusManager.getEntityStatuses(entity));
     }
 }

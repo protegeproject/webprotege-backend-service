@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.common.ProjectId;
+import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import org.semanticweb.owlapi.model.OWLEntity;
 
@@ -21,7 +21,7 @@ public class EntityStatusManagerImpl implements EntityStatusManager {
     }
 
     @Override
-    public Set<EntityStatus> getEntityStatuses(ProjectId projectId, OWLEntity entity) {
+    public Set<EntityStatus> getEntityStatuses(OWLEntity entity) {
         var statusSet = new HashSet<EntityStatus>();
 
         if (releasedClassesCheckerImpl.isReleased(entity)) {

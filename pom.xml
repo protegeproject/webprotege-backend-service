@@ -65,17 +65,17 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-common</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.11</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-criteria</artifactId>
-            <version>0.9.2</version>
+            <version>0.9.5-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-entity-data</artifactId>
-            <version>0.9.3</version>
+            <version>0.9.6-WHO</version>
         </dependency>
 
         <dependency>
@@ -86,7 +86,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>2.1.5-WHO</version>
+            <version>2.1.8-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
