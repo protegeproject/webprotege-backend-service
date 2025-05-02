@@ -3,6 +3,8 @@ package edu.stanford.protege.webprotege;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
+import edu.stanford.protege.webprotege.authorization.GetAuthorizedCapabilitiesRequest;
+import edu.stanford.protege.webprotege.authorization.GetAuthorizedCapabilitiesResponse;
 import edu.stanford.protege.webprotege.axiom.AxiomComparatorImpl;
 import edu.stanford.protege.webprotege.axiom.AxiomSubjectProvider;
 import edu.stanford.protege.webprotege.bulkop.*;
@@ -35,6 +37,7 @@ import edu.stanford.protege.webprotege.individuals.CreateIndividualsChangeListGe
 import edu.stanford.protege.webprotege.individuals.CreateNamedIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsActionHandler;
 import edu.stanford.protege.webprotege.individuals.GetIndividualsPageContainingIndividualActionHandler;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.inject.ProjectBackupDirectoryProvider;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryProvider;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
@@ -912,8 +915,11 @@ public class ProjectActionHandlerBeansConfiguration {
                                                            EntityFormManager p3,
                                                            RenderingManager p4,
                                                            ApplicationContext p5,
-                                                           EntityFrameFormDataDtoBuilderFactory p6) {
-        return new GetEntityFormsActionHandler(p1, p2, p3, p4, p5, p6);
+                                                           EntityFrameFormDataDtoBuilderFactory p6,
+                                                           AccessManager p7,
+                                                           CommandExecutor<GetAuthorizedCapabilitiesRequest, GetAuthorizedCapabilitiesResponse> p8,
+                                                           CommandExecutor<GetFormRegionAccessRestrictionsRequest, GetFormRegionAccessRestrictionsResponse> p9) {
+        return new GetEntityFormsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }
 
 

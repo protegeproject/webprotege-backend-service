@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -15,9 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 import static edu.stanford.protege.webprotege.hierarchy.PathCollector.toPath;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 28 Nov 2017
@@ -47,7 +46,7 @@ public class GetHierarchyPathsToRootActionHandler extends AbstractProjectActionH
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetHierarchyPathsToRootAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetHierarchyPathsToRootAction action) {
         return VIEW_PROJECT;
     }
 

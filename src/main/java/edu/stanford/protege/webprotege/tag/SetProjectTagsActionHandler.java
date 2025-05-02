@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.tag;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_PROJECT_TAGS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_PROJECT_TAGS;
 
 /**
  * Matthew Horridge
@@ -36,7 +36,7 @@ public class SetProjectTagsActionHandler extends AbstractProjectActionHandler<Se
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetProjectTagsAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetProjectTagsAction action) {
         return EDIT_PROJECT_TAGS;
     }
 

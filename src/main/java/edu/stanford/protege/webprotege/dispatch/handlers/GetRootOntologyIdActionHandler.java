@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>
@@ -53,7 +53,7 @@ public class GetRootOntologyIdActionHandler extends AbstractProjectActionHandler
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetRootOntologyIdAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetRootOntologyIdAction action) {
         return VIEW_PROJECT;
     }
 

@@ -89,7 +89,7 @@ class CreateProjectSagaManagerTest {
                                                projectPermissionsInitializer,
                 eventDispatcher);
         janeDoe = UserId.valueOf("JaneDoe");
-        executionContext = new ExecutionContext(janeDoe, "");
+        executionContext = new ExecutionContext(janeDoe, "", "correlationId");
         newProjectSettings = NewProjectSettings.get(janeDoe,
                                                     "TheProjectDisplayName",
                                                     "en",

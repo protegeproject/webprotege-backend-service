@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.merge;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.UploadedOntologiesCache;
@@ -10,8 +10,8 @@ import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.Arrays;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.UPLOAD_AND_MERGE;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.UPLOAD_AND_MERGE;
 
 /**
  * Matthew Horridge
@@ -47,7 +47,7 @@ public class MergeUploadedProjectActionHandler extends AbstractProjectActionHand
 
     @Nonnull
     @Override
-    protected Iterable<BuiltInAction> getRequiredExecutableBuiltInActions(MergeUploadedProjectAction action) {
+    protected Iterable<BuiltInCapability> getRequiredExecutableBuiltInActions(MergeUploadedProjectAction action) {
         return Arrays.asList(UPLOAD_AND_MERGE, EDIT_ONTOLOGY);
     }
 

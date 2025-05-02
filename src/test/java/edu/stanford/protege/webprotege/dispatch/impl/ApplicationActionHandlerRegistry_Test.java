@@ -6,7 +6,7 @@ import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.app.ApplicationSettings;
 import edu.stanford.protege.webprotege.app.GetApplicationSettingsAction;
 import edu.stanford.protege.webprotege.app.SetApplicationSettingsAction;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.BasicCapability;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.mail.GetEmailAddressAction;
 import edu.stanford.protege.webprotege.mail.SetEmailAddressAction;
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.mock;
 
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-@ExtendWith({RabbitTestExtension.class, MongoTestExtension.class})
+@ExtendWith({MongoTestExtension.class})
 public class ApplicationActionHandlerRegistry_Test {
 
     @Autowired
@@ -55,7 +55,7 @@ public class ApplicationActionHandlerRegistry_Test {
 
     @Test
     public void shouldContainGetAvailableProjectsWithPermissionActionHandler() {
-        var handler = registry.getActionHandler(GetAvailableProjectsWithPermissionAction.create(new ActionId("OtherAction")));
+        var handler = registry.getActionHandler(GetAvailableProjectsWithPermissionAction.create(BasicCapability.valueOf("OtherAction")));
         assertThat(handler, is(notNullValue()));
     }
 

@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.entity;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
@@ -50,24 +50,24 @@ public class CreateEntityFromFormDataActionHandler extends AbstractProjectChange
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(CreateEntityFromFormDataAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(CreateEntityFromFormDataAction action) {
         if(action.entityType().equals(EntityType.CLASS)) {
-            return BuiltInAction.CREATE_CLASS;
+            return BuiltInCapability.CREATE_CLASS;
         }
         else if(action.entityType().equals(EntityType.OBJECT_PROPERTY)) {
-            return BuiltInAction.CREATE_PROPERTY;
+            return BuiltInCapability.CREATE_PROPERTY;
         }
         else if(action.entityType().equals(EntityType.DATA_PROPERTY)) {
-            return BuiltInAction.CREATE_PROPERTY;
+            return BuiltInCapability.CREATE_PROPERTY;
         }
         else if(action.entityType().equals(EntityType.ANNOTATION_PROPERTY)) {
-            return BuiltInAction.CREATE_PROPERTY;
+            return BuiltInCapability.CREATE_PROPERTY;
         }
         else if(action.entityType().equals(EntityType.NAMED_INDIVIDUAL)) {
-            return BuiltInAction.CREATE_INDIVIDUAL;
+            return BuiltInCapability.CREATE_INDIVIDUAL;
         }
         else if (action.entityType().equals(EntityType.DATATYPE)) {
-            return BuiltInAction.CREATE_DATATYPE;
+            return BuiltInCapability.CREATE_DATATYPE;
         }
         else {
             throw new RuntimeException("Unknown entity");

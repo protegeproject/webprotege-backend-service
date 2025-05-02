@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 public class GetUserIdCompletionsActionHandler_TestCase {
 
     private GetUserIdCompletionsActionHandler actionHandler;
-    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT", "correlationId");
 
     @Mock
     private UserDetailsManager userDetailsManager;

@@ -54,7 +54,7 @@ public class GetAvailableProjectsWithPermissionActionHandler implements Applicat
                                                             @Nonnull ExecutionContext executionContext) {
         var userId = Subject.forUser(executionContext.userId());
         var permission = action.getPermission();
-        var projectDetails = accessManager.getResourcesAccessibleToSubject(userId, permission, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt()))
+        var projectDetails = accessManager.getResourcesAccessibleToSubject(userId, permission, new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt(), executionContext.correlationId()))
                      .stream()
                      .map(Resource::getProjectId)
                      .filter(Optional::isPresent)

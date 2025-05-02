@@ -28,7 +28,7 @@ public class GetHeadRevisionNumberActionHandler_TestCase {
 
     private GetHeadRevisionNumberAction action = new GetHeadRevisionNumberAction(ProjectId.generate());
 
-    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT", "correlationId");
 
     @Mock
     private RevisionNumber revisionNumber;

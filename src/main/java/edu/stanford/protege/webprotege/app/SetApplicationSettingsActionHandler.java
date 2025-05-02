@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.app;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.ApplicationActionHandler;
 import edu.stanford.protege.webprotege.dispatch.RequestContext;
 import edu.stanford.protege.webprotege.dispatch.RequestValidator;
@@ -42,7 +42,7 @@ public class SetApplicationSettingsActionHandler implements ApplicationActionHan
     public RequestValidator getRequestValidator(@Nonnull SetApplicationSettingsAction action, @Nonnull RequestContext requestContext) {
         return new ApplicationPermissionValidator(accessManager,
                                                   requestContext.getUserId(),
-                                                  BuiltInAction.EDIT_APPLICATION_SETTINGS, requestContext.getExecutionContext());
+                                                  BuiltInCapability.EDIT_APPLICATION_SETTINGS, requestContext.getExecutionContext());
     }
 
     @Nonnull

@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.List;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_OBJECT_COMMENT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_OBJECT_COMMENT;
 
 /**
  * Matthew Horridge
@@ -53,7 +53,7 @@ public class GetEntityDiscussionThreadsHandler implements ProjectActionHandler<G
         return new ProjectPermissionValidator(accessManager,
                                               action.projectId(),
                                               requestContext.getUserId(),
-                                              VIEW_OBJECT_COMMENT.getActionId());
+                                              VIEW_OBJECT_COMMENT.getCapability());
     }
 
     @Nonnull

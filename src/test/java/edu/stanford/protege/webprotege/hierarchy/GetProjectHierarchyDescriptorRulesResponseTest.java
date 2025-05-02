@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
-import static edu.stanford.protege.webprotege.authorization.ActionId.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -9,7 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.BasicCapability;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
@@ -54,9 +54,9 @@ class GetProjectHierarchyDescriptorRulesResponseTest {
         var viewProperties = Map.of("key1", "value1");
         var formId = FormId.valueOf("123e4567-e89b-12d3-a456-426614174002");
         var formRegionId = FormRegionId.valueOf("123e4567-e89b-12d3-a456-426614174003");
-        var actions = Set.of(
-                valueOf("ACTIONX"),
-                valueOf("ACTIONY")
+        var actions = Set.<Capability>of(
+                BasicCapability.valueOf("ACTIONX"),
+                BasicCapability.valueOf("ACTIONY")
         );
         var hd = ClassHierarchyDescriptor.create();
 
@@ -88,7 +88,7 @@ class GetProjectHierarchyDescriptorRulesResponseTest {
                   "requiredViewProperties": {"key1": "value1"},
                   "requiredFormId": "123e4567-e89b-12d3-a456-426614174002",
                   "requiredFormFieldId": "123e4567-e89b-12d3-a456-426614174003",
-                  "requiredActions": ["ACTIONX", "ACTIONY"],
+                  "requiredActions": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
                   "hierarchyDescriptor": {
                       "@type": "ClassHierarchyDescriptor",
                       "roots": [
@@ -118,8 +118,8 @@ class GetProjectHierarchyDescriptorRulesResponseTest {
                 .isEqualTo(FormRegionId.valueOf("123e4567-e89b-12d3-a456-426614174003"));
         assertThat(rule.requiredActions())
                 .containsExactlyInAnyOrder(
-                        valueOf("ACTIONX"),
-                        valueOf("ACTIONY")
+                        BasicCapability.valueOf("ACTIONX"),
+                        BasicCapability.valueOf("ACTIONY")
                 );
     }
 }
