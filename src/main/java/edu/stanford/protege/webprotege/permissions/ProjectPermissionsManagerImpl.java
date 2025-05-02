@@ -36,7 +36,7 @@ public class ProjectPermissionsManagerImpl implements ProjectPermissionsManager 
     @Override
     public List<ProjectDetails> getReadableProjects(ExecutionContext executionContext) {
         Set<ProjectDetails> result = new HashSet<>();
-        accessManager.getResourcesAccessibleToSubject(forUser(executionContext.userId()), VIEW_PROJECT.getCapability(), new ExecutionContext(executionContext.userId(), executionContext.jwt()))
+        accessManager.getResourcesAccessibleToSubject(forUser(executionContext.userId()), VIEW_PROJECT.getCapability(), new ExecutionContext(executionContext.userId(), executionContext.jwt(), executionContext.correlationId()))
                      .stream()
                      .filter(Resource::isProject)
                      .forEach(

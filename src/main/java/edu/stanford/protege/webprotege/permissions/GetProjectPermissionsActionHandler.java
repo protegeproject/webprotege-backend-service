@@ -50,7 +50,7 @@ public class GetProjectPermissionsActionHandler implements ApplicationActionHand
         Set<Capability> capabilities = accessManager.getCapabilityClosure(
                 forUser(executionContext.userId()),
                 forProject(action.projectId()),
-                new ExecutionContext(executionContext.userId(), executionContext.jwt()));
+                new ExecutionContext(executionContext.userId(), executionContext.jwt(), executionContext.correlationId()));
         return new GetProjectPermissionsResult(ImmutableSet.copyOf(capabilities));
     }
 }

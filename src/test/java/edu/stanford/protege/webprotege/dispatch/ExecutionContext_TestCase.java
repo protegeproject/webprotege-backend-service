@@ -30,7 +30,7 @@ public class ExecutionContext_TestCase {
 
     @BeforeEach
     public void setUp() throws Exception {
-        context = new ExecutionContext(userId, "");
+        context = new ExecutionContext(userId, "", "correlationId");
     }
 
     @Test
