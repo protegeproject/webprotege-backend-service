@@ -175,7 +175,14 @@ public class ProjectChangesManager {
     }
 
     private ChangeType getChangeTypeForRecordWithSubject(IRI subjectIri, List<OntologyChange> ontologyChanges) {
-        if (ontologyChanges.stream().anyMatch(change -> change.isAxiomChange() && change.isChangeFor(AxiomType.DECLARATION))) {
+        var isCreateChange = ontologyChanges
+                .stream()
+                .anyMatch(
+                        change -> change.isAxiomChange() &&
+                                change.isChangeFor(AxiomType.DECLARATION) &&
+                                change.getSignature().stream().anyMatch(entity -> entity.getIRI().equals(subjectIri))
+                );
+        if (isCreateChange) {
             return ChangeType.CREATE_ENTITY;
         }
         if (entitiesInProjectSignature.getEntitiesInSignature(subjectIri).findAny().isEmpty()) {
