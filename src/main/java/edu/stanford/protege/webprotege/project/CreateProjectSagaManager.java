@@ -97,7 +97,7 @@ public class CreateProjectSagaManager {
                 .thenCompose(this::retrieveProjectDetails)
                 .handle((r, e) -> {
                     if (e == null) {
-                        eventDispatcher.dispatchEvent(new NewProjectEvent(r.projectId, EventId.generate()));
+                        eventDispatcher.dispatchEvent(new NewProjectEvent(r.projectId, EventId.generate()), sagaState.getExecutionContext());
                         return new CreateNewProjectResult(r.getProjectDetails());
                     } else {
                         logger.error("Error creating project", e);
@@ -126,7 +126,7 @@ public class CreateProjectSagaManager {
                 .thenCompose(this::retrieveProjectDetails)
                 .handle((r, e) -> {
                     if (e == null) {
-                        eventDispatcher.dispatchEvent(new NewProjectEvent(r.projectId, EventId.generate()));
+                        eventDispatcher.dispatchEvent(new NewProjectEvent(r.projectId, EventId.generate()), sagaState.getExecutionContext());
                         return new CreateNewProjectFromProjectBackupResult(r.getProjectDetails());
                     } else {
                         // Should be a CompletionException
