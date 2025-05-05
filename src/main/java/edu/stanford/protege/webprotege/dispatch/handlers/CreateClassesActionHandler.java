@@ -18,7 +18,6 @@ import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.*;
 import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_CLASS;
 import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;

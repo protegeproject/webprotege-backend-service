@@ -28,7 +28,7 @@ public class CreateBackupOwlFileCommandHandler implements CommandHandler<CreateB
 
     @Override
     public Mono<CreateBackupOwlFileResponse> handleRequest(CreateBackupOwlFileAction request, ExecutionContext executionContext) {
-        var result = executor.execute(request, new ExecutionContext(executionContext.userId(), executionContext.jwt()));
+        var result = executor.execute(request, new ExecutionContext(executionContext.userId(), executionContext.jwt(), executionContext.correlationId()));
         return Mono.just(result);
     }
 }

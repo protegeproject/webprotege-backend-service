@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.ipc.*;
 import reactor.core.publisher.Mono;
@@ -7,7 +8,8 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.*;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_EMPTY_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.UPLOAD_PROJECT;
 
 
 @WebProtegeHandler
@@ -47,8 +49,8 @@ public class CreateNewProjectFromProjectBackupCommandHandler implements Authoriz
 
     @Nonnull
     @Override
-    public Collection<ActionId> getRequiredCapabilities() {
-        return List.of(CREATE_EMPTY_PROJECT.getActionId(), UPLOAD_PROJECT.getActionId());
+    public Collection<Capability> getRequiredCapabilities() {
+        return List.of(CREATE_EMPTY_PROJECT.getCapability(), UPLOAD_PROJECT.getCapability());
     }
 
 
