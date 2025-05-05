@@ -17,17 +17,6 @@ public class RequestContext {
 
     private final ExecutionContext executionContext;
 
-    /**
-     * Constructs a {@link RequestContext} for the user specified by {@code userId}.
-     *
-     * @param userId The {@link UserId}.  Not {@code null}.
-     * @throws NullPointerException if {@code userId} is {@code null}.
-     */
-    public RequestContext(UserId userId) {
-        this.userId = checkNotNull(userId, "userId must not be null");
-        this.executionContext = new ExecutionContext(userId, null);
-    }
-
     public RequestContext(UserId userId, ExecutionContext executionContext) {
         this.userId = checkNotNull(userId, "userId must not be null");
         this.executionContext = executionContext;

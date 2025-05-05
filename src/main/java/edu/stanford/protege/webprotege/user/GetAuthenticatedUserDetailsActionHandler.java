@@ -58,7 +58,7 @@ public class GetAuthenticatedUserDetailsActionHandler implements ApplicationActi
                                                 .orElse(UserDetails.getUserDetails(userId,
                                                                                    userId.id(), Optional.empty()));
             var permittedActions = accessManager.getCapabilityClosure(Subject.forUser(userId), ApplicationResource.get(),
-                    new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt()));
+                    new edu.stanford.protege.webprotege.ipc.ExecutionContext(executionContext.userId(), executionContext.jwt(), executionContext.correlationId()));
             return new GetAuthenticatedUserDetailsResponse(userDetails, permittedActions);
         }
     }

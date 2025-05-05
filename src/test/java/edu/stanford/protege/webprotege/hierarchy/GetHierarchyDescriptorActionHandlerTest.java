@@ -61,7 +61,7 @@ class GetHierarchyDescriptorActionHandlerTest {
         );
         request = new GetHierarchyDescriptorRequest(projectId, displayContext);
 
-        executionContext = new ExecutionContext(UserId.valueOf("user1"), "dummy-jwt-token");
+        executionContext = new ExecutionContext(UserId.valueOf("user1"), "dummy-jwt-token", "correlationId");
     }
 
     @Test
