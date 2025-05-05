@@ -1,24 +1,23 @@
 package edu.stanford.protege.webprotege.revision.uiHistoryConcern;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.*;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Set;
 
 
 @JsonTypeName(NewRevisionsEvent.CHANNEL)
 public record NewRevisionsEvent(
         EventId eventId,
         ProjectId projectId,
-        Set<ProjectChangeForEntity> changes,
+        ImmutableList<ProjectChangeForEntity> changes,
         ChangeRequestId changeRequestId
 ) implements ProjectEvent {
     public final static String CHANNEL = "webprotege.events.projects.uiHistory.NewRevisionsEvent";
 
     public static NewRevisionsEvent create(EventId eventId,
                                            ProjectId projectId,
-                                           Set<ProjectChangeForEntity> changes,
+                                           ImmutableList<ProjectChangeForEntity> changes,
                                            ChangeRequestId changeRequestId) {
         return new NewRevisionsEvent(eventId, projectId, changes, changeRequestId);
     }

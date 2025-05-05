@@ -10,17 +10,14 @@ import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriInde
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.uiHistoryConcern.*;
+import jakarta.annotation.Nonnull;
+import jakarta.inject.*;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
-import jakarta.annotation.Nonnull;
-import jakarta.inject.Inject;
-import jakarta.inject.Provider;
-import javax.inject.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.stream.*;
 
 /**
  * Matthew Horridge
@@ -159,29 +156,33 @@ public class ProjectChangesManager {
         changesBuilder.add(projectChange);
     }
 
-    public Set<ProjectChangeForEntity> getProjectChangesForEntitiesFromRevision(Revision revision) {
+    public <S> ImmutableList<ProjectChangeForEntity> getProjectChangesForEntitiesFromRevision(Revision revision, S revisionSubject) {
         addRevisionToCache(revision);
+        Optional<IRI> revisionSubjectIri = (revisionSubject instanceof OWLEntity) ?
+                Optional.of(((OWLEntity) revisionSubject).getIRI()) : Optional.empty();
 
-        Map<Optional<IRI>, ImmutableList<OntologyChange>> entries = getEntriesForRevision(revision.getRevisionNumber());
+        ImmutableList.Builder<ProjectChangeForEntity> changeForEntityBuilder = ImmutableList.builder();
 
-        return entries.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().isPresent())
-                .flatMap(
-                        (iriWithOntologyChanges) -> {
-                            List<OntologyChange> ontologyChanges = iriWithOntologyChanges.getValue();
-                            IRI subjectIri = iriWithOntologyChanges.getKey().get();
-                            ProjectChange newProjectChange = getProjectChangeForRecords(revision, ontologyChanges, ontologyChanges.size());
-                            var changeType = getChangeTypeForRecordWithSubject(subjectIri, ontologyChanges);
+        Map<IRI, List<OntologyChange>> entries = getEntriesForRevision(revision.getRevisionNumber(), revisionSubjectIri);
 
-                            ProjectChangeForEntity projectChangeForEntity = ProjectChangeForEntity.create(subjectIri.toString(), changeType, newProjectChange);
-                            return Stream.of(projectChangeForEntity);
-                        }
-                ).collect(Collectors.toCollection(TreeSet::new));
+        entries.forEach(
+                (subject, ontologyChanges) -> getProjectChangeForRecords(revision, subject, ontologyChanges, changeForEntityBuilder)
+        );
+
+        var finalChanges = changeForEntityBuilder.build();
+
+        return ImmutableList.sortedCopyOf(finalChanges);
     }
 
     private ChangeType getChangeTypeForRecordWithSubject(IRI subjectIri, List<OntologyChange> ontologyChanges) {
-        if (ontologyChanges.stream().anyMatch(change -> change.isAxiomChange() && change.isChangeFor(AxiomType.DECLARATION))) {
+        var isCreateChange = ontologyChanges
+                .stream()
+                .anyMatch(
+                        change -> change.isAxiomChange() &&
+                                change.isChangeFor(AxiomType.DECLARATION) &&
+                                change.getSignature().stream().anyMatch(entity -> entity.getIRI().equals(subjectIri))
+                );
+        if (isCreateChange) {
             return ChangeType.CREATE_ENTITY;
         }
         if (entitiesInProjectSignature.getEntitiesInSignature(subjectIri).findAny().isEmpty()) {
@@ -203,7 +204,14 @@ public class ProjectChangesManager {
         }
     }
 
-    private ProjectChange getProjectChangeForRecords(Revision revision, List<OntologyChange> limitedRecords, int totalChanges) {
+    private void getProjectChangeForRecords(Revision revision,
+                                            IRI revisionSubject,
+                                            List<OntologyChange> limitedRecords,
+                                            ImmutableList.Builder<ProjectChangeForEntity> changesBuilder) {
+        int totalChanges = limitedRecords.size();
+
+        var changeType = getChangeTypeForRecordWithSubject(revisionSubject, limitedRecords);
+
         Revision2DiffElementsTranslator translator = revision2DiffElementsTranslatorProvider.get();
         List<DiffElement<String, OntologyChange>> axiomDiffElements = translator.getDiffElementsFromRevision(limitedRecords);
         sortDiff(axiomDiffElements);
@@ -221,18 +229,40 @@ public class ProjectChangesManager {
                 renderedDiffElements,
                 totalChanges
         );
-
-        return ProjectChange.get(
+        var newProjectChange = ProjectChange.get(
                 revision.getRevisionNumber(),
                 revision.getUserId(),
                 revision.getTimestamp(),
                 revision.getHighLevelDescription(),
                 totalChanges,
                 page);
+        ProjectChangeForEntity projectChangeForEntity = ProjectChangeForEntity.create(revisionSubject.toString(), changeType, newProjectChange);
+
+        changesBuilder.add(projectChangeForEntity);
     }
 
-    public Map<Optional<IRI>, ImmutableList<OntologyChange>> getEntriesForRevision(RevisionNumber revisionNumber) {
-        return cache.row(revisionNumber);
+    public Map<IRI, List<OntologyChange>> getEntriesForRevision(RevisionNumber revisionNumber, Optional<IRI> revisionSubjectIri) {
+        Map<IRI, List<OntologyChange>> mappedChanges = new HashMap<>();
+
+        cache.row(revisionNumber).entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isPresent())
+                .forEach(
+                        (iriWithOntologyChanges) -> {
+                            Optional<IRI> subjectIri = revisionSubjectIri.isEmpty() ? iriWithOntologyChanges.getKey() : revisionSubjectIri;
+                            List<OntologyChange> ontologyChanges = iriWithOntologyChanges.getValue();
+
+                            if (mappedChanges.containsKey(subjectIri.get())) {
+                                List<OntologyChange> changeList = mappedChanges.get(subjectIri.get());
+                                changeList.addAll(ontologyChanges);
+                            } else {
+                                List<OntologyChange> changeList = new ArrayList<>(ontologyChanges);
+                                mappedChanges.put(subjectIri.get(), changeList);
+                            }
+                        }
+                );
+
+        return mappedChanges;
     }
 
     private List<DiffElement<String, String>> renderDiffElements(List<DiffElement<String, OntologyChange>> axiomDiffElements) {
