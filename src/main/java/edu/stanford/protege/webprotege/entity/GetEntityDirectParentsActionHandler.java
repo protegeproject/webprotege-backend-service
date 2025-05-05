@@ -9,6 +9,8 @@ import jakarta.inject.Inject;
 
 import javax.annotation.*;
 
+import java.util.*;
+
 import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
 public class GetEntityDirectParentsActionHandler extends AbstractProjectActionHandler<GetEntityDirectParentsAction, GetEntityDirectParentsResult> {
@@ -48,10 +50,14 @@ public class GetEntityDirectParentsActionHandler extends AbstractProjectActionHa
     @Override
     public GetEntityDirectParentsResult execute(@Nonnull GetEntityDirectParentsAction action,
                                                 @Nonnull ExecutionContext executionContext) {
-        var parents = classHierarchyProvider.getParents(action.entity().asOWLClass())
-                .stream()
-                .map(entityNodeRenderer::render)
-                .toList();
+        List<EntityNode> parents = new ArrayList<>();
+        if(action.entity().isOWLClass()){
+            parents = classHierarchyProvider.getParents(action.entity().asOWLClass())
+                    .stream()
+                    .map(entityNodeRenderer::render)
+                    .toList();
+        }
+
         var entityData = renderingManager.getRendering(action.entity());
         return new GetEntityDirectParentsResult(entityData, parents);
     }
