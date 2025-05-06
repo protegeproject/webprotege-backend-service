@@ -12,7 +12,6 @@ import javax.annotation.*;
 import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 import java.util.*;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
 public class GetEntityDirectParentsActionHandler extends AbstractProjectActionHandler<GetEntityDirectParentsAction, GetEntityDirectParentsResult> {
 
