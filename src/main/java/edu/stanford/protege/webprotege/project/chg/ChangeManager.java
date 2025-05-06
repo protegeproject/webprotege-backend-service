@@ -340,7 +340,7 @@ public class ChangeManager implements HasApplyChanges {
 
             revision.ifPresent(value -> projectRevisionRepository.save(new ProjectRevision(projectId, changeRequestId, userId, value.getRevisionNumber())));
 
-            newRevisionsEmitter.emitNewRevisionsEvent(revision, changeRequestId);
+            newRevisionsEmitter.emitNewRevisionsEvent(revision, changeRequestId, changeApplicationResult.getSubject());
 
         } finally {
             changeProcesssingLock.unlock();

@@ -8,9 +8,10 @@ import org.semanticweb.owlapi.model.IRI;
 
 import java.util.Optional;
 
-public interface NewRevisionsEventEmitterService {
+public interface NewRevisionsEventEmitterService<E> {
     void emitNewRevisionsEvent(Optional<Revision> revision,
-                               ChangeRequestId changeRequestId);
+                               ChangeRequestId changeRequestId,
+                               E subject);
 
     void emitNewProjectOrderedChildrenEvent(IRI entityParentIri,
                                             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional,
