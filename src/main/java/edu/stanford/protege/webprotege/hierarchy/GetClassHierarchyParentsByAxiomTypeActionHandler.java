@@ -9,7 +9,7 @@ import javax.annotation.*;
 import javax.inject.Inject;
 import java.util.stream.Collectors;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 public class GetClassHierarchyParentsByAxiomTypeActionHandler extends AbstractProjectActionHandler<GetClassHierarchyParentsByAxiomTypeAction, GetClassHierarchyParentsByAxiomTypeResult> {
 
@@ -36,7 +36,7 @@ public class GetClassHierarchyParentsByAxiomTypeActionHandler extends AbstractPr
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetClassHierarchyParentsByAxiomTypeAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetClassHierarchyParentsByAxiomTypeAction action) {
         return VIEW_PROJECT;
     }
 
