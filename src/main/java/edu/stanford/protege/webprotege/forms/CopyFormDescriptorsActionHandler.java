@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
@@ -37,8 +37,8 @@ public class CopyFormDescriptorsActionHandler extends AbstractProjectActionHandl
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(CopyFormDescriptorsAction action) {
-        return BuiltInAction.EDIT_FORMS;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(CopyFormDescriptorsAction action) {
+        return BuiltInCapability.EDIT_FORMS;
     }
 
     @Nonnull

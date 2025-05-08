@@ -12,7 +12,7 @@
 
     <groupId>edu.stanford.protege</groupId>
     <artifactId>webprotege-backend-service</artifactId>
-    <version>2.2.4-WHO</version>
+    <version>2.2.13-WHO</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -65,28 +65,28 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-common</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.11</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-criteria</artifactId>
-            <version>0.9.2</version>
+            <version>0.9.5-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-entity-data</artifactId>
-            <version>0.9.3</version>
+            <version>0.9.6-WHO</version>
         </dependency>
 
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-authorization</artifactId>
-            <version>0.9.4 </version>
+            <version>2.0.1</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>2.1.6-WHO</version>
+            <version>3.0.1-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -96,7 +96,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-ipc</artifactId>
-            <version>1.0.10</version>
+            <version>2.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

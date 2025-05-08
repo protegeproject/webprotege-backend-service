@@ -6,12 +6,12 @@ import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
 import edu.stanford.protege.webprotege.index.*;
-import jakarta.inject.Inject;
 import org.protege.owlapi.inference.orphan.TerminalElementFinder;
 import org.semanticweb.owlapi.model.*;
 import org.slf4j.*;
 
 import javax.annotation.Nonnull;
+import jakarta.inject.Inject;
 import java.util.*;
 import java.util.stream.Stream;
 

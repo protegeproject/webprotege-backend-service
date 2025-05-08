@@ -66,7 +66,7 @@ public class OntologyPatcher_TestCase {
                                       ontologyDiff2OntologyChanges);
         when(ontologyDiff2OntologyChanges.getOntologyChangesFromDiff(ontologyDiff))
                 .thenReturn(ImmutableList.of(ontologyChange));
-        executionContext = new ExecutionContext(userId, "DUMMY_JWT");
+        executionContext = new ExecutionContext(userId, "DUMMY_JWT", "correlationId");
     }
 
     @Test

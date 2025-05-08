@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.revision.uiHistoryConcern;
 
+import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.change.ProjectChange;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -15,10 +16,8 @@ import org.semanticweb.owlapi.model.IRI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @ProjectSingleton
 public class OrderingChangesManager {
@@ -36,7 +35,7 @@ public class OrderingChangesManager {
         this.diffElementRenderer = diffElementRenderer;
     }
 
-    public Set<ProjectChangeForEntity> getProjectChangesForEntitiesFromOrderingChange(
+    public ImmutableList<ProjectChangeForEntity> getProjectChangesForEntitiesFromOrderingChange(
             IRI entityParentIri,
             Optional<ProjectOrderedChildren> initialOrderedChildrenOptional,
             ProjectOrderedChildren newOrdering,
@@ -47,7 +46,7 @@ public class OrderingChangesManager {
                 translator.getDiffElementsFromOrdering(initialOrderedChildrenOptional, newOrdering);
 
         if (diffElements.isEmpty()) {
-            return Collections.emptySet();
+            return ImmutableList.of();
         }
 
         var totalChanges = diffElements.size();
@@ -71,7 +70,7 @@ public class OrderingChangesManager {
                 totalChanges
         );
 
-        return Set.of(
+        return ImmutableList.of(
                 ProjectChangeForEntity.create(
                         entityParentIri.toString(),
                         ChangeType.UPDATE_ENTITY,

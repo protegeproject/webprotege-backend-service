@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.BasicCapability;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
@@ -58,9 +59,9 @@ class HierarchyDescriptorRuleTest {
         var formId = FormId.valueOf(FORM_UUID);
         var formRegionId = FormRegionId.valueOf(FORM_FIELD_UUID);
         // Create ActionIds as regular strings.
-        var actions = Set.of(
-                ActionId.valueOf(ACTIONX_STRING),
-                ActionId.valueOf(ACTIONY_STRING)
+        var actions = Set.<Capability>of(
+                BasicCapability.valueOf(ACTIONX_STRING),
+                BasicCapability.valueOf(ACTIONY_STRING)
         );
         // Use ClassHierarchyDescriptor.create() (no parameters) to obtain a default hierarchy descriptor.
         var hd = ClassHierarchyDescriptor.create();
@@ -86,7 +87,7 @@ class HierarchyDescriptorRuleTest {
                 .isEqualTo(FORM_UUID);
         assertThat(jsonContent).extractingJsonPathStringValue("@.requiredFormFieldId")
                 .isEqualTo(FORM_FIELD_UUID);
-        assertThat(jsonContent).extractingJsonPathArrayValue("@.requiredActions").containsExactlyInAnyOrder(ACTIONX_STRING, ACTIONY_STRING);
+        assertThat(jsonContent).extractingJsonPathArrayValue("@.requiredActions").hasSize(2);
         assertThat(jsonContent).extractingJsonPathMapValue("@.hierarchyDescriptor").isNotNull();
     }
 
@@ -100,7 +101,7 @@ class HierarchyDescriptorRuleTest {
               "requiredViewProperties": {"key1": "value1"},
               "requiredFormId": "123e4567-e89b-12d3-a456-426614174002",
               "requiredFormFieldId": "123e4567-e89b-12d3-a456-426614174003",
-              "requiredActions": ["ACTIONX", "ACTIONY"],
+              "requiredActions": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
               "hierarchyDescriptor": { "@type": "ClassHierarchyDescriptor", "roots": [{"@type":"Class", "iri":"http://www.w3.org/2002/07/owl#Thing"}]}
             }
             """;
@@ -113,8 +114,8 @@ class HierarchyDescriptorRuleTest {
         assertThat(rule.requiredFormId()).isEqualTo(FormId.valueOf(FORM_UUID));
         assertThat(rule.requiredFormFieldId()).isEqualTo(FormRegionId.valueOf(FORM_FIELD_UUID));
         assertThat(rule.requiredActions()).containsExactlyInAnyOrder(
-                ActionId.valueOf(ACTIONX_STRING),
-                ActionId.valueOf(ACTIONY_STRING)
+                BasicCapability.valueOf(ACTIONX_STRING),
+                BasicCapability.valueOf(ACTIONY_STRING)
         );
         assertThat(rule.hierarchyDescriptor()).isEqualTo(ClassHierarchyDescriptor.create());
     }

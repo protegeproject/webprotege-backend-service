@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.entity;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.index.DeprecatedEntitiesIndex;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Matthew Horridge
@@ -43,7 +43,7 @@ public class GetDeprecatedEntitiesActionHandler extends AbstractProjectActionHan
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetDeprecatedEntitiesAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetDeprecatedEntitiesAction action) {
         return VIEW_PROJECT;
     }
 

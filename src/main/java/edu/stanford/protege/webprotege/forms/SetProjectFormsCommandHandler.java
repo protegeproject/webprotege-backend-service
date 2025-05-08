@@ -1,9 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.authorization.*;
-import edu.stanford.protege.webprotege.common.ChangeRequestId;
-import edu.stanford.protege.webprotege.dispatch.*;
 import edu.stanford.protege.webprotege.ipc.*;
 import reactor.core.publisher.Mono;
 
@@ -47,8 +45,8 @@ public class SetProjectFormsCommandHandler implements AuthorizedCommandHandler<S
 
     @Nonnull
     @Override
-    public Collection<ActionId> getRequiredCapabilities() {
-        return Collections.singleton(BuiltInAction.EDIT_FORMS.getActionId());
+    public Collection<Capability> getRequiredCapabilities() {
+        return Collections.singleton(BuiltInCapability.EDIT_FORMS.getCapability());
     }
 
     @Override

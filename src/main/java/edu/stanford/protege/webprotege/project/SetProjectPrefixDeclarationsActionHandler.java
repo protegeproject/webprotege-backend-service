@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_PROJECT_PREFIXES;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_PROJECT_PREFIXES;
 
 /**
  * Matthew Horridge
@@ -39,7 +39,7 @@ public class SetProjectPrefixDeclarationsActionHandler extends AbstractProjectAc
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetProjectPrefixDeclarationsAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetProjectPrefixDeclarationsAction action) {
         return EDIT_PROJECT_PREFIXES;
     }
 

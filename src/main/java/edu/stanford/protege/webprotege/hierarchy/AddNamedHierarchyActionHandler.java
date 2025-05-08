@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
@@ -24,8 +24,8 @@ public class AddNamedHierarchyActionHandler extends AbstractProjectActionHandler
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetNamedHierarchiesAction action) {
-        return BuiltInAction.CONFIGURE_HIERARCHIES;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetNamedHierarchiesAction action) {
+        return BuiltInCapability.CONFIGURE_HIERARCHIES;
     }
 
     @NotNull

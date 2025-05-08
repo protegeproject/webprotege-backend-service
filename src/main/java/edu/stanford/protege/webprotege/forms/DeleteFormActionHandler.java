@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.forms;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 
@@ -36,8 +36,8 @@ public class DeleteFormActionHandler extends AbstractProjectActionHandler<Delete
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(DeleteFormAction action) {
-        return BuiltInAction.EDIT_FORMS;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(DeleteFormAction action) {
+        return BuiltInCapability.EDIT_FORMS;
     }
 
     @Nonnull

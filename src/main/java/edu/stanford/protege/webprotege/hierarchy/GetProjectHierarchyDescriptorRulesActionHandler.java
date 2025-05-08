@@ -1,10 +1,9 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
-import edu.stanford.protege.webprotege.dispatch.ProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,8 +27,8 @@ public class GetProjectHierarchyDescriptorRulesActionHandler extends AbstractPro
 
     @Nullable
     @Override
-    protected ActionId getRequiredExecutableAction() {
-        return BuiltInAction.EDIT_PROJECT_SETTINGS.getActionId();
+    protected Capability getRequiredCapability() {
+        return BuiltInCapability.EDIT_PROJECT_SETTINGS.getCapability();
     }
 
     @NotNull
