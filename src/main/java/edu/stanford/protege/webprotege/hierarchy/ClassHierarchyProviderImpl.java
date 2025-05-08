@@ -124,27 +124,9 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     }
 
     private Stream<OWLClass> getParentsStream(OWLClass object) {
-        var subClassOfAxiomsParents =
-                projectOntologiesIndex.getOntologyIds()
-                        .flatMap(ontId -> subClassOfAxiomsIndex.getSubClassOfAxiomsForSubClass(object,
-                                ontId))
-                        .map(OWLSubClassOfAxiom::getSuperClass)
-                        .flatMap(this::asConjunctSet)
-                        .filter(OWLClassExpression::isNamed)
-                        .map(OWLClassExpression::asOWLClass);
+        var subClassOfAxiomsParents = getParentsStreamFromSubClassOf(object);
 
-
-        var equivalentClassesAxiomsParents =
-                projectOntologiesIndex.getOntologyIds()
-                        .flatMap(ontId -> equivalentClassesAxiomsIndex.getEquivalentClassesAxioms(
-                                object,
-                                ontId))
-                        .flatMap(ax -> ax.getClassExpressions()
-                                .stream())
-                        .filter(ce -> !ce.equals(object))
-                        .flatMap(this::asConjunctSet)
-                        .filter(OWLClassExpression::isNamed)
-                        .map(OWLClassExpression::asOWLClass);
+        var equivalentClassesAxiomsParents = getParentsStreamFromEquivalentClass(object);
 
         return Stream.concat(subClassOfAxiomsParents, equivalentClassesAxiomsParents);
     }
@@ -191,7 +173,6 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
                     .filter(OWLEntity::isOWLClass)
                     .map(OWLEntity::asOWLClass)
                     .filter(entity -> !roots.contains(entity))
-                    .map(entity -> (OWLClass) entity)
                     .toList());
         }
         changedClasses.forEach(this::registerNodeChanged);
@@ -320,5 +301,31 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
             return false;
         }
         return containsReference((OWLClass) object);
+    }
+
+
+    @Override
+    public Stream<OWLClass> getParentsStreamFromSubClassOf(OWLClass owlClass) {
+        return projectOntologiesIndex.getOntologyIds()
+                .flatMap(ontId -> subClassOfAxiomsIndex.getSubClassOfAxiomsForSubClass(owlClass,
+                        ontId))
+                .map(OWLSubClassOfAxiom::getSuperClass)
+                .flatMap(this::asConjunctSet)
+                .filter(OWLClassExpression::isNamed)
+                .map(OWLClassExpression::asOWLClass);
+    }
+
+    @Override
+    public Stream<OWLClass> getParentsStreamFromEquivalentClass(OWLClass owlClass) {
+        return projectOntologiesIndex.getOntologyIds()
+                .flatMap(ontId -> equivalentClassesAxiomsIndex.getEquivalentClassesAxioms(
+                        owlClass,
+                        ontId))
+                .flatMap(ax -> ax.getClassExpressions()
+                        .stream())
+                .filter(ce -> !ce.equals(owlClass))
+                .flatMap(this::asConjunctSet)
+                .filter(OWLClassExpression::isNamed)
+                .map(OWLClassExpression::asOWLClass);
     }
 }
