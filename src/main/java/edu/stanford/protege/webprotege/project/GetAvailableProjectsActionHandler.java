@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.DOWNLOAD_PROJECT;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.MOVE_ANY_PROJECT_TO_TRASH;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.DOWNLOAD_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.MOVE_ANY_PROJECT_TO_TRASH;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static java.util.stream.Collectors.toList;
 

@@ -33,7 +33,7 @@ public class GetAvailableProjectsWithPermissionCommandHandler implements Command
     @Override
     public Mono<GetAvailableProjectsWithPermissionResult> handleRequest(GetAvailableProjectsWithPermissionAction request,
                                                                         edu.stanford.protege.webprotege.ipc.ExecutionContext executionContext) {
-        var result = delegate.execute(request, new ExecutionContext(executionContext.userId(), executionContext.jwt()));
+        var result = delegate.execute(request, new ExecutionContext(executionContext.userId(), executionContext.jwt(), executionContext.correlationId()));
         return Mono.just(result);
     }
 }

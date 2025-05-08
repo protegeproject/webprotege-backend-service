@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
 import edu.stanford.protege.webprotege.change.OntologyChangeList;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -41,8 +41,8 @@ public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActi
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(CheckManchesterSyntaxFrameAction action) {
-        return BuiltInAction.VIEW_PROJECT;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(CheckManchesterSyntaxFrameAction action) {
+        return BuiltInCapability.VIEW_PROJECT;
     }
 
     @Nonnull

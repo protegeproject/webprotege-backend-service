@@ -37,6 +37,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -104,7 +105,7 @@ class ChangeEntityParentsActionHandlerTest {
 
         revisionReverterFactory = new RevisionReverterChangeListGeneratorFactory(() -> revisionManager);
 
-        executionContext = new ExecutionContext(UserId.getGuest(), "");
+        executionContext = new ExecutionContext(UserId.getGuest(), "", UUID.randomUUID().toString());
 
         actionHandler = new ChangeEntityParentsActionHandler(
                 accessManager,

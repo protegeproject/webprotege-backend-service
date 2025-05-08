@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
-import edu.stanford.protege.webprotege.authorization.ActionId;
+import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.Request;
 import edu.stanford.protege.webprotege.dispatch.Action;
 
@@ -23,12 +23,12 @@ public abstract class GetAvailableProjectsWithPermissionAction implements Action
     public static final String CHANNEL = "webprotege.projects.GetAvailableProjectsWithPermission";
 
     @JsonCreator
-    public static GetAvailableProjectsWithPermissionAction create(@JsonProperty("permission") @Nonnull ActionId permission) {
+    public static GetAvailableProjectsWithPermissionAction create(@JsonProperty("permission") @Nonnull Capability permission) {
         return new AutoValue_GetAvailableProjectsWithPermissionAction(permission);
     }
 
     @Nonnull
-    public abstract ActionId getPermission();
+    public abstract Capability getPermission();
 
     @Override
     public String getChannel() {

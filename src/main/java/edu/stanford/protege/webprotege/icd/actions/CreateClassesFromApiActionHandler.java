@@ -19,8 +19,8 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.collect.ImmutableSet.toImmutableSet;
-import static edu.stanford.protege.webprotege.access.BuiltInAction.*;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_CLASS;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 import static java.util.Arrays.asList;
 
 public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHandler<Set<OWLClass>, CreateClassesFromApiAction, CreateClassesFromApiResult> {
@@ -62,7 +62,7 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
 
     @Nonnull
     @Override
-    protected List<BuiltInAction> getRequiredExecutableBuiltInActions(CreateClassesFromApiAction action) {
+    protected List<BuiltInCapability> getRequiredExecutableBuiltInActions(CreateClassesFromApiAction action) {
         return asList(CREATE_CLASS, EDIT_ONTOLOGY);
     }
 

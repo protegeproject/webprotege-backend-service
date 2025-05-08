@@ -9,9 +9,9 @@ import jakarta.inject.Inject;
 
 import javax.annotation.*;
 
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 import java.util.*;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
 
 public class GetEntityDirectParentsActionHandler extends AbstractProjectActionHandler<GetEntityDirectParentsAction, GetEntityDirectParentsResult> {
 
@@ -42,7 +42,7 @@ public class GetEntityDirectParentsActionHandler extends AbstractProjectActionHa
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetEntityDirectParentsAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetEntityDirectParentsAction action) {
         return VIEW_PROJECT;
     }
 

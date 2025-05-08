@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.frame.translator.AnnotationPropertyFrameTranslator;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
 
 /**
  * Author: Matthew Horridge<br>
@@ -42,7 +42,7 @@ public class GetAnnotationPropertyFrameActionHandler extends AbstractProjectActi
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetAnnotationPropertyFrameAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetAnnotationPropertyFrameAction action) {
         return VIEW_PROJECT;
     }
 

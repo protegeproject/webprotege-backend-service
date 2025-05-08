@@ -76,7 +76,7 @@ class MoveToParentIcdActionHandlerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         projectId = ProjectId.generate();
-        executionContext = new ExecutionContext(UserId.getGuest(), "");
+        executionContext = new ExecutionContext(UserId.getGuest(), "", UUID.randomUUID().toString());
         actionHandler = new MoveToParentIcdActionHandler(accessManager,
                 factory,
                 releasedClassesChecker,

@@ -29,25 +29,6 @@ public abstract class FormDataDto implements FormControlDataDto {
     }
 
     /**
-     * Create a form with empty data
-     *
-     * @param subject        The form subject
-     * @param formDescriptor The form descriptor
-     * @param depth          The depth of nesting
-     */
-    @Nonnull
-    public static FormDataDto get(@Nonnull FormSubjectDto subject,
-                                  @Nonnull FormDescriptorDto formDescriptor,
-                                  int depth) {
-        ImmutableList<FormFieldDataDto> emptyFields = formDescriptor.getFields()
-                                                                    .stream()
-                                                                    .map(field -> FormFieldDataDto.get(field,
-                                                                                                       Page.emptyPage()))
-                                                                    .collect(toImmutableList());
-        return new AutoValue_FormDataDto(depth, subject, formDescriptor, emptyFields);
-    }
-
-    /**
      * Create a form descriptor that does not have a subject.
      */
     @Nonnull
