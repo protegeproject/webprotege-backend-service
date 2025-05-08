@@ -1,6 +1,9 @@
 package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.authorization.Capability;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRegionAccessRestrictionsList;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.UserCapabilities;
 import edu.stanford.protege.webprotege.forms.data.*;
 import edu.stanford.protege.webprotege.forms.field.*;
 import edu.stanford.protege.webprotege.common.LangTagFilter;
@@ -10,7 +13,11 @@ import edu.stanford.protege.webprotege.common.PageRequest;
 
 import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Optional;
+import java.util.Set;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
@@ -21,6 +28,8 @@ import static com.google.common.collect.ImmutableList.toImmutableList;
  */
 @FormDataBuilderSession
 public class EntityFrameFormDataDtoBuilder {
+
+    private static final Logger logger = LoggerFactory.getLogger(EntityFrameFormDataDtoBuilder.class);
 
     @Nonnull
     private final FormDataBuilderSessionRenderer sessionRenderer;
@@ -58,7 +67,12 @@ public class EntityFrameFormDataDtoBuilder {
     @Nonnull
     private final FormRegionFilterIndex formRegionFilterIndex;
 
+    private final UserCapabilities capabilities;
+
     private final FormDescriptorDtoTranslator formDataDtoTranslator;
+
+    @Nonnull
+    private final FormRegionAccessRestrictionsList formRegionAccessRestrictionsList;
 
     @Inject
     public EntityFrameFormDataDtoBuilder(@Nonnull FormDataBuilderSessionRenderer sessionRenderer,
@@ -73,7 +87,9 @@ public class EntityFrameFormDataDtoBuilder {
                                          @Nonnull LangTagFilter langTagFilter,
                                          @Nonnull FormPageRequestIndex formPageRequestIndex,
                                          @Nonnull FormRegionFilterIndex formRegionFilterIndex,
-                                         @Nonnull FormDescriptorDtoTranslator formDataDtoTranslator) {
+                                         @Nonnull FormDescriptorDtoTranslator formDataDtoTranslator,
+                                         @Nonnull UserCapabilities userCapabilities,
+                                         @Nonnull FormRegionAccessRestrictionsList formRegionAccessRestrictionsList) {
         this.sessionRenderer = sessionRenderer;
         this.textControlValuesBuilder = textControlValuesBuilder;
         this.numberControlValuesBuilder = numberControlValuesBuilder;
@@ -86,7 +102,9 @@ public class EntityFrameFormDataDtoBuilder {
         this.langTagFilter = langTagFilter;
         this.formPageRequestIndex = formPageRequestIndex;
         this.formRegionFilterIndex = formRegionFilterIndex;
+        this.capabilities = userCapabilities;
         this.formDataDtoTranslator = formDataDtoTranslator;
+        this.formRegionAccessRestrictionsList = formRegionAccessRestrictionsList;
     }
 
     @Nonnull
@@ -170,7 +188,9 @@ public class EntityFrameFormDataDtoBuilder {
     }
 
 
-    public FormDataDto toFormData(@Nonnull Optional<FormEntitySubject> subject, @Nonnull FormDescriptor formDescriptor) {
+    public FormDataDto toFormData(@Nonnull Optional<FormEntitySubject> subject,
+                                  @Nonnull FormDescriptor formDescriptor) {
+        logger.info("Current user capabilities: {}", capabilities);
         int depth = 0;
         return getFormDataDto(subject, formDescriptor, depth);
     }
@@ -182,7 +202,8 @@ public class EntityFrameFormDataDtoBuilder {
             var renderedSubject = sessionRenderer.getEntityRendering(s.getEntity());
             return FormSubjectDto.getFormSubject(renderedSubject);
         });
-        var fieldData = formDescriptor.getFields().stream().map(field -> {
+        var fieldData = formDescriptor.getFields().stream().filter(this::userCanViewFormRegion).map(field -> {
+
             var formControlValues = toFormControlValues(formSubject.map(FormSubjectDto::toFormSubject),
                                                         field.getId(),
                                                         field,
@@ -201,6 +222,16 @@ public class EntityFrameFormDataDtoBuilder {
         var formDescriptorDto = formDataDtoTranslator.toFormDescriptorDto(formDescriptor);
         return formSubject.map(s -> FormDataDto.get(s, formDescriptorDto, fieldData, depth))
                           .orElseGet(() -> FormDataDto.get(formDescriptorDto, fieldData, depth));
+    }
+
+    private boolean userCanViewFormRegion(FormFieldDescriptor field) {
+        // Does the field have view access restrictions on it, in general?
+        if(!formRegionAccessRestrictionsList.hasAccessRestrictions(field.getId(), "ViewFormRegion")) {
+            return true;
+        }
+        var formRegionCapabilities = capabilities.getFormRegionCapabilities(field.getId());
+        // Can the current user's capabilities meet the view access restrictions?
+        return formRegionCapabilities.stream().anyMatch(c -> c.id().equals("ViewFormRegion"));
     }
 
     private boolean isIncluded(@Nonnull FormControlDataDto formControlData) {

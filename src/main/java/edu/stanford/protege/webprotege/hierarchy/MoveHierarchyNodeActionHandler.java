@@ -9,7 +9,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import jakarta.annotation.*;
 import jakarta.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.EDIT_ONTOLOGY;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
 
 /**
  * Matthew Horridge Stanford Center for Biomedical Informatics Research 8 Dec 2017
@@ -62,7 +62,7 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(MoveHierarchyNodeAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(MoveHierarchyNodeAction action) {
         return EDIT_ONTOLOGY;
     }
 }

@@ -1,5 +1,8 @@
 package edu.stanford.protege.webprotege.forms;
 
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRegionAccessRestrictionsList;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.UserCapabilities;
+import edu.stanford.protege.webprotege.forms.data.FormFieldAccessMode;
 import edu.stanford.protege.webprotege.forms.field.*;
 
 import javax.annotation.Nonnull;
@@ -13,8 +16,16 @@ public class FormDescriptorDtoTranslator {
     @Nonnull
     private final FormControlDescriptorVisitor<FormControlDescriptorDto> translatorVisitor;
 
+    @Nonnull
+    private final UserCapabilities userCapabilities;
+
+    @Nonnull
+    private final FormRegionAccessRestrictionsList accessRestrictions;
+
     @Inject
-    public FormDescriptorDtoTranslator(@Nonnull ChoiceDescriptorCache choiceDescriptorCache) {
+    public FormDescriptorDtoTranslator(@Nonnull ChoiceDescriptorCache choiceDescriptorCache,
+                                       @Nonnull UserCapabilities userCapabilities,
+                                       @Nonnull FormRegionAccessRestrictionsList accessRestrictions) {
         this.translatorVisitor = new FormControlDescriptorVisitor<>() {
             @Override
             public FormControlDescriptorDto visit(TextControlDescriptor textControlDescriptor) {
@@ -74,6 +85,8 @@ public class FormDescriptorDtoTranslator {
                 return SubFormControlDescriptorDto.get(toFormDescriptorDto(subFormControlDescriptor.getFormDescriptor()));
             }
         };
+        this.userCapabilities = userCapabilities;
+        this.accessRestrictions = accessRestrictions;
     }
 
     @Nonnull
@@ -87,6 +100,7 @@ public class FormDescriptorDtoTranslator {
                                           descriptor.getRepeatability(),
                                           descriptor.getDeprecationStrategy(),
                                           descriptor.isReadOnly(),
+                                          getFieldMode(descriptor),
                                           descriptor.getInitialExpansionState(),
                                           descriptor.getHelp());
     }
@@ -103,6 +117,22 @@ public class FormDescriptorDtoTranslator {
     @Nonnull
     public FormControlDescriptorDto toFormControlDescriptorDto(@Nonnull FormControlDescriptor descriptor) {
         return descriptor.accept(translatorVisitor);
+    }
+
+    private FormFieldAccessMode getFieldMode(FormFieldDescriptor field) {
+        // Does the field have access restrictions on it, in general?
+        if(!accessRestrictions.hasAccessRestrictions(field.getId(), "EditFormRegion")) {
+            // No restrictions at all
+            return FormFieldAccessMode.READ_WRITE;
+        }
+        var formRegionCapabilities = userCapabilities.getFormRegionCapabilities(field.getId());
+        var canEdit = formRegionCapabilities.stream().anyMatch(c -> c.id().equals("ViewFormRegion"));
+        if(canEdit) {
+            return FormFieldAccessMode.READ_WRITE;
+        }
+        else {
+            return FormFieldAccessMode.READ_ONLY;
+        }
     }
 
 

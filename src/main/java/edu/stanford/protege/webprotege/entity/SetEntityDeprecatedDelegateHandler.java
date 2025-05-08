@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.entity;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.change.AddAxiomChange;
 import edu.stanford.protege.webprotege.change.FixedChangeListGenerator;
 import edu.stanford.protege.webprotege.change.OntologyChange;
@@ -46,8 +46,8 @@ public class SetEntityDeprecatedDelegateHandler extends AbstractProjectActionHan
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(SetEntityDeprecatedRequest action) {
-        return BuiltInAction.EDIT_ONTOLOGY;
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(SetEntityDeprecatedRequest action) {
+        return BuiltInCapability.EDIT_ONTOLOGY;
     }
 
     @Nonnull

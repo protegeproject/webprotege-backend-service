@@ -2,7 +2,7 @@ package edu.stanford.protege.webprotege.card;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.authorization.Subject;
 import edu.stanford.protege.webprotege.common.LanguageMap;
@@ -58,7 +58,7 @@ public class GetEntityCardDescriptorsProjectActionHandler implements ProjectActi
     @NotNull
     @Override
     public RequestValidator getRequestValidator(@NotNull GetEntityCardDescriptorsRequest action, @NotNull RequestContext requestContext) {
-        return new ProjectPermissionValidator(accessManager, projectId, requestContext.getUserId(), BuiltInAction.VIEW_PROJECT.getActionId());
+        return new ProjectPermissionValidator(accessManager, projectId, requestContext.getUserId(), BuiltInCapability.VIEW_PROJECT.getCapability());
     }
 
     @NotNull
@@ -94,12 +94,12 @@ public class GetEntityCardDescriptorsProjectActionHandler implements ProjectActi
                     }
                 }).toList();
 
-                var actionClosure = accessManager.getActionClosure(Subject.forUser(executionContext.userId()),
+                var actionClosure = accessManager.getCapabilityClosure(Subject.forUser(executionContext.userId()),
                         ProjectResource.forProject(projectId),
                         executionContext);
                 // Filter descriptors based on read access requirements
                 var screenedDescriptors = filteredDescriptors.stream().filter(descriptor -> {
-                    var requiredActions = descriptor.requiredReadActions();
+                    var requiredActions = descriptor.requiredReadCapabilities();
                     // If no actions are specified then this is vacuously true.  Shortcut here that
                     // avoids a call to the access manager.
                     if(requiredActions.isEmpty()) {
@@ -109,7 +109,7 @@ public class GetEntityCardDescriptorsProjectActionHandler implements ProjectActi
                 })
                 .toList();
                 var writableCards = screenedDescriptors.stream()
-                        .filter(descriptor -> actionClosure.containsAll(descriptor.requiredWriteActions()))
+                        .filter(descriptor -> actionClosure.containsAll(descriptor.requiredWriteCapabilities()))
                         .map(CardDescriptor::cardId)
                         .toList();
         return new GetEntityCardDescriptorsResponse(projectId, screenedDescriptors, writableCards);

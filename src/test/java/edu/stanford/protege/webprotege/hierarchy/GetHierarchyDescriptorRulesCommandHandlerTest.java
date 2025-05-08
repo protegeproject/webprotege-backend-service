@@ -39,7 +39,7 @@ class GetHierarchyDescriptorRulesCommandHandlerTest {
         var projectId = ProjectId.generate();
         request = new GetProjectHierarchyDescriptorRulesRequest(projectId);
 
-        executionContext = new ExecutionContext(UserId.valueOf("123e4567-e89b-12d3-a456-426614174999"), "dummy-jwt-token");
+        executionContext = new ExecutionContext(UserId.valueOf("123e4567-e89b-12d3-a456-426614174999"), "dummy-jwt-token", "correlationId");
 
         expectedResponse = new GetProjectHierarchyDescriptorRulesResponse(List.of());
     }

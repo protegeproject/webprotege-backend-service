@@ -37,7 +37,7 @@ public class DispatchServiceExecutorImpl_TestCase<A extends Action<R>, R extends
     @Mock
     private RequestContext requestContext;
 
-    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT", "correlationId");
 
 
     @Mock

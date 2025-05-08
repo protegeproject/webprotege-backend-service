@@ -28,6 +28,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -77,7 +78,7 @@ class MoveHierarchyNodeIcdActionHandlerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         projectId = ProjectId.generate();
-        executionContext = new ExecutionContext(UserId.getGuest(), "");
+        executionContext = new ExecutionContext(UserId.getGuest(), "", UUID.randomUUID().toString());
 
         actionHandler = new MoveHierarchyNodeIcdActionHandler(
                 accessManager,

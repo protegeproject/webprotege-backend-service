@@ -1,7 +1,7 @@
 package edu.stanford.protege.webprotege.change;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInAction;
+import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.common.Page;
@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_CHANGES;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_CHANGES;
 
 /**
  * Matthew Horridge
@@ -38,7 +38,7 @@ public class GetProjectChangesActionHandler extends AbstractProjectActionHandler
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetProjectChangesAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetProjectChangesAction action) {
         return VIEW_CHANGES;
     }
 

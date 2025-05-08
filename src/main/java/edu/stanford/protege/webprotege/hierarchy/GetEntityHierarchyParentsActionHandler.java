@@ -10,7 +10,8 @@ import javax.inject.Inject;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
-import static edu.stanford.protege.webprotege.access.BuiltInAction.VIEW_PROJECT;
+import static edu.stanford.protege.webprotege.access.BuiltInCapability.VIEW_PROJECT;
+
 
 public class GetEntityHierarchyParentsActionHandler extends AbstractProjectActionHandler<GetHierarchyParentsAction, GetHierarchyParentsResult> {
 
@@ -41,7 +42,7 @@ public class GetEntityHierarchyParentsActionHandler extends AbstractProjectActio
 
     @Nullable
     @Override
-    protected BuiltInAction getRequiredExecutableBuiltInAction(GetHierarchyParentsAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(GetHierarchyParentsAction action) {
         return VIEW_PROJECT;
     }
 
