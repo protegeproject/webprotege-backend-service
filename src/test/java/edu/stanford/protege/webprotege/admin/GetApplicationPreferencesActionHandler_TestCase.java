@@ -48,7 +48,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
 
     private UserId userId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
 
-    private ExecutionContext executionContext = new ExecutionContext(userId, "DUMMY_JWT");
+    private ExecutionContext executionContext = new ExecutionContext(userId, "DUMMY_JWT", "correlationId");
 
     private RequestContext requestContext = new RequestContext(userId, executionContext);
 

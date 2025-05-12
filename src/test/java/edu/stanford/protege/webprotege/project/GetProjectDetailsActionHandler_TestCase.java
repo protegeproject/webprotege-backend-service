@@ -40,7 +40,7 @@ public class GetProjectDetailsActionHandler_TestCase {
     @Mock
     private ProjectDetails projectDetails;
 
-    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT");
+    private ExecutionContext executionContext = new ExecutionContext(new UserId("1"), "DUMMY_JWT", "correlationId");
 
 
     @BeforeEach
