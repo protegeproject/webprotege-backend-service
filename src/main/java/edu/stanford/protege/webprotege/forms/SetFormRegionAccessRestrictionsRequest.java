@@ -11,7 +11,7 @@ import static edu.stanford.protege.webprotege.forms.SetFormRegionAccessRestricti
 
 @JsonTypeName(CHANNEL)
 public record SetFormRegionAccessRestrictionsRequest(@JsonProperty("projectId") ProjectId projectId,
-                                                     @JsonProperty("accessRestrictions") List<FormRegionAccessRestrictions> accessRestrictions) implements ProjectRequest<SetFormRegionAccessRestrictionsResponse> {
+                                                     @JsonProperty("accessRestrictions") List<FormRegionAccessRestriction> accessRestrictions) implements ProjectRequest<SetFormRegionAccessRestrictionsResponse> {
 
     public static final String CHANNEL = "webprotege.forms.SetFormRegionAccessRestrictions";
 

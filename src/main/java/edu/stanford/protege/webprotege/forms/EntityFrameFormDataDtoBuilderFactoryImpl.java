@@ -7,8 +7,10 @@ import edu.stanford.protege.webprotege.authorization.GetAuthorizedCapabilitiesRe
 import edu.stanford.protege.webprotege.common.LangTagFilter;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRegionAccessRestrictionsList;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRootSubject;
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.UserCapabilities;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -42,6 +44,7 @@ public class EntityFrameFormDataDtoBuilderFactoryImpl implements EntityFrameForm
         formsContext.registerBean("formRegionFilterIndex", FormRegionFilterIndex.class, requestSpec::formRegionFilterIndex);
         formsContext.registerBean("userCapabilities", UserCapabilities.class , requestSpec::userCapabilities);
         formsContext.registerBean("formRegionAccessRestrictions", FormRegionAccessRestrictionsList.class, requestSpec::formRegionAccessRestrictions);
+        formsContext.registerBean("subject", FormRootSubject.class, requestSpec::subject);
         formsContext.refresh();
         return formsContext.getBean(EntityFrameFormDataDtoBuilder.class);
     }

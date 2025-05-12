@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRegionAccessRestrictionsList;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRootSubject;
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.UserCapabilities;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
@@ -92,7 +93,8 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
             var formRegionFilterIndex = FormRegionFilterIndex.get(action.formRegionFilters());
             var formDataDtoBuilder = entityFrameFormDataDtoBuilderFactory.getFormDataDtoBuilder(
                     context,
-                    new EntityFormDataRequestSpec(formRegionOrderingIndex,
+                    new EntityFormDataRequestSpec(new FormRootSubject(action.entity()),
+                                                  formRegionOrderingIndex,
                                                   langTagFilter,
                                                   pageRequestIndex,
                                                   formRegionFilterIndex,
@@ -147,7 +149,7 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
         }
     }
 
-    private List<FormRegionAccessRestrictions> getFormRegionAccessRestrictions(ProjectId projectId, ExecutionContext executionContext) throws RuntimeException {
+    private List<FormRegionAccessRestriction> getFormRegionAccessRestrictions(ProjectId projectId, ExecutionContext executionContext) throws RuntimeException {
         try {
             return getFormRegionAccessRestrictionsExecutor.execute(new GetFormRegionAccessRestrictionsRequest(projectId), executionContext)
                     .get()

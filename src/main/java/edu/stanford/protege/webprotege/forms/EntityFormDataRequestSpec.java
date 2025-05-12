@@ -5,11 +5,13 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.LangTagFilter;
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
+import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Nonnull;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +20,9 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class EntityFormDataRequestSpec {
+
+    @Nonnull
+    private final FormRootSubject subject;
 
     @Nonnull
     private final FormRegionOrderingIndex formRegionOrderingIndex;
@@ -36,12 +41,14 @@ public class EntityFormDataRequestSpec {
     private final FormRegionAccessRestrictionsList formRegionAccessRestrictions;
 
 
-    public EntityFormDataRequestSpec(@Nonnull FormRegionOrderingIndex formRegionOrderingIndex,
+    public EntityFormDataRequestSpec(@Nonnull FormRootSubject subject,
+                                     @Nonnull FormRegionOrderingIndex formRegionOrderingIndex,
                                      @Nonnull LangTagFilter langTagFilter,
                                      @Nonnull FormPageRequestIndex pageRequestIndex,
                                      @Nonnull FormRegionFilterIndex formRegionFilterIndex,
                                      @Nonnull UserCapabilities userCapabilities,
                                      @Nonnull FormRegionAccessRestrictionsList formRegionAccessRestrictions) {
+        this.subject = subject;
         this.formRegionOrderingIndex = checkNotNull(formRegionOrderingIndex);
         this.langTagFilter = checkNotNull(langTagFilter);
         this.pageRequestIndex = checkNotNull(pageRequestIndex);
@@ -50,7 +57,8 @@ public class EntityFormDataRequestSpec {
         this.formRegionAccessRestrictions = formRegionAccessRestrictions;
     }
 
-    public EntityFormDataRequestSpec() {
+    public EntityFormDataRequestSpec(FormRootSubject subject) {
+        this.subject = subject;
         this.formRegionAccessRestrictions = new FormRegionAccessRestrictionsList(List.of());
         this.formRegionOrderingIndex = FormRegionOrderingIndex.get(ImmutableSet.of());
         this.langTagFilter = LangTagFilter.get(ImmutableSet.of());
@@ -89,6 +97,11 @@ public class EntityFormDataRequestSpec {
         return formRegionAccessRestrictions;
     }
 
+    @Bean
+    public FormRootSubject subject() {
+        return subject;
+    }
+
     /**
      * A wrapper for a generic set of capabilities.
      * @param capabilities The capabilities
@@ -109,19 +122,23 @@ public class EntityFormDataRequestSpec {
     }
 
     /**
-     * A wrapper for a generic list of {@link FormRegionAccessRestrictions}
+     * A wrapper for a generic list of {@link FormRegionAccessRestriction}
      * @param formRegionAccessRestrictions
      */
-    public record FormRegionAccessRestrictionsList(List<FormRegionAccessRestrictions> formRegionAccessRestrictions) {
+    public record FormRegionAccessRestrictionsList(List<FormRegionAccessRestriction> formRegionAccessRestrictions) {
 
-        public FormRegionAccessRestrictionsList(List<FormRegionAccessRestrictions> formRegionAccessRestrictions) {
+        public FormRegionAccessRestrictionsList(List<FormRegionAccessRestriction> formRegionAccessRestrictions) {
             this.formRegionAccessRestrictions = Objects.requireNonNull(formRegionAccessRestrictions);
         }
 
         public boolean hasAccessRestrictions(FormRegionId formRegionId, String capabilityId) {
             return formRegionAccessRestrictions.stream()
                     .filter(a -> a.formRegionId().equals(formRegionId))
-                    .anyMatch(a -> a.capabilityRoles().containsKey(capabilityId));
+                    .anyMatch(r -> r.capabilityId().equals(capabilityId));
         }
+    }
+
+    public record FormRootSubject(OWLEntity subject) {
+
     }
 }
