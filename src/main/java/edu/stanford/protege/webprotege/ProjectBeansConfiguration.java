@@ -94,6 +94,7 @@ import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import edu.stanford.protege.webprotege.util.DisposableObjectManager;
 import edu.stanford.protege.webprotege.util.EntityDeleter;
 import edu.stanford.protege.webprotege.util.IriReplacerFactory;
+import edu.stanford.protege.webprotege.util.ReferenceFinder;
 import edu.stanford.protege.webprotege.viz.EdgeMatcherFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphBuilderFactory;
 import edu.stanford.protege.webprotege.viz.EntityGraphEdgeLimit;
@@ -105,7 +106,6 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -1921,5 +1921,15 @@ public class ProjectBeansConfiguration {
                                                                 @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
                                                                 @Nonnull ReadWriteLockService readWriteLockService) {
         return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService);
+    }
+
+    @Bean
+    EntityDeleter entityDeleter(ReferenceFinder p1, ProjectOntologiesIndex p2) {
+        return new EntityDeleter(p1, p2);
+    }
+
+    @Bean
+    ReferenceFinder referenceFinder(AxiomsByReferenceIndex p1, OntologyAnnotationsIndex p2) {
+        return new ReferenceFinder(p1, p2);
     }
 }

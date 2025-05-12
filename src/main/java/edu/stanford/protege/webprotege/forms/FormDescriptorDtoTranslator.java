@@ -1,12 +1,19 @@
 package edu.stanford.protege.webprotege.forms;
 
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRegionAccessRestrictionsList;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRootSubject;
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.UserCapabilities;
 import edu.stanford.protege.webprotege.forms.data.FormFieldAccessMode;
 import edu.stanford.protege.webprotege.forms.field.*;
 
 import javax.annotation.Nonnull;
+
+import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import jakarta.inject.Inject;
+
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
@@ -22,10 +29,17 @@ public class FormDescriptorDtoTranslator {
     @Nonnull
     private final FormRegionAccessRestrictionsList accessRestrictions;
 
+    @Nonnull
+    private final EntityMatcherFactory entityMatcherFactory;
+
+    @Nonnull
+    private FormRootSubject rootSubject;
+
     @Inject
     public FormDescriptorDtoTranslator(@Nonnull ChoiceDescriptorCache choiceDescriptorCache,
                                        @Nonnull UserCapabilities userCapabilities,
-                                       @Nonnull FormRegionAccessRestrictionsList accessRestrictions) {
+                                       @Nonnull FormRegionAccessRestrictionsList accessRestrictions,
+                                       @Nonnull EntityMatcherFactory entityMatcherFactory, @Nonnull FormRootSubject rootSubject) {
         this.translatorVisitor = new FormControlDescriptorVisitor<>() {
             @Override
             public FormControlDescriptorDto visit(TextControlDescriptor textControlDescriptor) {
@@ -82,11 +96,13 @@ public class FormDescriptorDtoTranslator {
 
             @Override
             public FormControlDescriptorDto visit(SubFormControlDescriptor subFormControlDescriptor) {
-                return SubFormControlDescriptorDto.get(toFormDescriptorDto(subFormControlDescriptor.getFormDescriptor()));
+                return SubFormControlDescriptorDto.get(toFormDescriptorDto(subFormControlDescriptor.getFormDescriptor(), f -> true));
             }
         };
         this.userCapabilities = userCapabilities;
         this.accessRestrictions = accessRestrictions;
+        this.entityMatcherFactory = entityMatcherFactory;
+        this.rootSubject = rootSubject;
     }
 
     @Nonnull
@@ -106,8 +122,10 @@ public class FormDescriptorDtoTranslator {
     }
 
     @Nonnull
-    public FormDescriptorDto toFormDescriptorDto(FormDescriptor descriptor) {
-        var fields = descriptor.getFields().stream().map(this::toFormFieldDescriptorDto).collect(toImmutableList());
+    public FormDescriptorDto toFormDescriptorDto(FormDescriptor descriptor, Predicate<FormFieldDescriptor> fieldFilter) {
+        var fields = descriptor.getFields().stream()
+                .filter(fieldFilter)
+                .map(this::toFormFieldDescriptorDto).collect(toImmutableList());
         return FormDescriptorDto.get(descriptor.getFormId(),
                                      descriptor.getLabel(),
                                      fields,
@@ -121,12 +139,19 @@ public class FormDescriptorDtoTranslator {
 
     private FormFieldAccessMode getFieldMode(FormFieldDescriptor field) {
         // Does the field have access restrictions on it, in general?
-        if(!accessRestrictions.hasAccessRestrictions(field.getId(), "EditFormRegion")) {
+        if(!accessRestrictions.hasAccessRestrictions(field.getId(), FormRegionCapability.EDIT_FORM_REGION)) {
             // No restrictions at all
             return FormFieldAccessMode.READ_WRITE;
         }
         var formRegionCapabilities = userCapabilities.getFormRegionCapabilities(field.getId());
-        var canEdit = formRegionCapabilities.stream().anyMatch(c -> c.id().equals("ViewFormRegion"));
+        var canEdit = formRegionCapabilities.stream()
+                // Form region Id matches
+                .filter(c -> c.formRegionId().equals(field.getId()))
+                // Edit capability
+                .filter(c -> c.id().equals(FormRegionCapability.EDIT_FORM_REGION))
+                // Context matches
+                .anyMatch(c -> entityMatcherFactory.getEntityMatcher(c.contextCriteria()).matches(rootSubject.subject()));
+
         if(canEdit) {
             return FormFieldAccessMode.READ_WRITE;
         }
