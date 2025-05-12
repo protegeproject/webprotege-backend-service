@@ -48,7 +48,7 @@ public class GetEntityFormAsJsonActionHandler extends AbstractProjectActionHandl
         Optional<FormDescriptor> formDescriptor = entityFormRepository.findFormDescriptor(action.projectId(), FormId.get(action.formId()));
 
         if(formDescriptor.isPresent()) {
-            EntityFrameFormDataDtoBuilder builder = entityFrameFormDataDtoBuilderFactory.getFormDataDtoBuilder(this.context, new EntityFormDataRequestSpec());
+            EntityFrameFormDataDtoBuilder builder = entityFrameFormDataDtoBuilderFactory.getFormDataDtoBuilder(this.context, new EntityFormDataRequestSpec(new EntityFormDataRequestSpec.FormRootSubject(new OWLClassImpl(IRI.create(action.entityIri())))));
             FormDataDto formDataDto = builder.toFormData(Optional.of(FormEntitySubject.get(new OWLClassImpl(IRI.create(action.entityIri())))), formDescriptor.get());
             JsonNode jsonNode = formControlDataConverter.convert(formDataDto.toFormData());
             return new GetEntityFormAsJsonResult(jsonNode);

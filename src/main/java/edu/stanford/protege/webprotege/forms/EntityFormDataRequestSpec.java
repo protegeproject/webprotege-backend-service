@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.common.LangTagFilter;
 import edu.stanford.protege.webprotege.forms.field.FormRegionId;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Nonnull;
 

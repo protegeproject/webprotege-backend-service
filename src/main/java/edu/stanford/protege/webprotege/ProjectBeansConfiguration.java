@@ -2072,14 +2072,4 @@ public class ProjectBeansConfiguration {
     AncestorHierarchyNodeMapper ancestorHierarchyNodeMapper(RenderingManager renderingManager){
         return new AncestorHierarchyNodeMapper(renderingManager);
     }
-
-    @Bean
-    EntityDeleter entityDeleter(ReferenceFinder p1, ProjectOntologiesIndex p2) {
-        return new EntityDeleter(p1, p2);
-    }
-
-    @Bean
-    ReferenceFinder referenceFinder(AxiomsByReferenceIndex p1, OntologyAnnotationsIndex p2) {
-        return new ReferenceFinder(p1, p2);
-    }
 }
