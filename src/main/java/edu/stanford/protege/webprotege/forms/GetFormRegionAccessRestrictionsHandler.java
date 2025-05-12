@@ -16,8 +16,10 @@ import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.HashMultimap.create;
 
@@ -50,46 +52,22 @@ public class GetFormRegionAccessRestrictionsHandler implements CommandHandler<Ge
         return Mono.fromFuture(
                 getRoleDefsExecutor.execute(roleDefsRequest, executionContext)
                         .thenApply(response -> {
-                            var restrictions = computeFormRegionAccessRestrictions(response.roleDefinitions());
+                            var restrictions = getFormAccessRestrictions(response.roleDefinitions());
                             return new GetFormRegionAccessRestrictionsResponse(request.projectId(), restrictions);
                         })
         );
     }
 
-    private static @NotNull List<FormRegionAccessRestrictions> computeFormRegionAccessRestrictions(List<RoleDefinition> roleDefinitions) {
-        var region2Roles = computeRegionToRolesMap(roleDefinitions);
-        var restrictionsList = new ArrayList<FormRegionAccessRestrictions>();
-        for (var formRegionId : region2Roles.rowKeySet()) {
-            for(var capabilityId : region2Roles.columnKeySet()) {
-                var roleIds = region2Roles.get(formRegionId, capabilityId);
-                var multimap = HashMultimap.<String, RoleId>create();
-                multimap.putAll(capabilityId, roleIds);
-                restrictionsList.add(new FormRegionAccessRestrictions(formRegionId, multimap));
-            }
-        }
-        return restrictionsList;
-    }
+    private static List<FormRegionAccessRestriction> getFormAccessRestrictions(List<RoleDefinition> roleDefinitions) {
+       return roleDefinitions.stream()
+                .flatMap(def -> {
+                    return def.roleCapabilities()
+                            .stream()
+                            .filter(cap -> cap instanceof FormRegionCapability)
+                            .map(cap -> (FormRegionCapability) cap)
+                            .map(cap -> new FormRegionAccessRestriction(cap.formRegionId(), def.roleId(), cap.id(), cap.contextCriteria()));
+                })
+                .toList();
 
-    private static @NotNull Table<FormRegionId, String, List<RoleId>> computeRegionToRolesMap(List<RoleDefinition> roleDefinitions) {
-        Table<FormRegionId, String, List<RoleId>> result = HashBasedTable.create();
-        logger.info("Computing region access restrictions");
-        var rolesWithWriteAccess = HashMultimap.<FormRegionId, RoleId>create();
-        for (var roleDefinition : roleDefinitions) {
-            logger.info("    Processing role definition {}", roleDefinition);
-            var roleId = roleDefinition.roleId();
-            roleDefinition.roleCapabilities().stream()
-                    .filter(cap -> cap instanceof FormRegionCapability)
-                    .map(cap -> (FormRegionCapability) cap)
-                    .forEach(formRegionCapability -> {
-                        var roles = result.get(formRegionCapability.formRegionId(), formRegionCapability.id());
-                        if(roles == null) {
-                            roles = new ArrayList<RoleId>();
-                            result.put(formRegionCapability.formRegionId(), formRegionCapability.id(), roles);
-                        }
-                        roles.add(roleId);
-                    });
-        }
-        logger.info("    Computed: {}", rolesWithWriteAccess);
-        return result;
     }
 }

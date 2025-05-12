@@ -4,15 +4,13 @@ import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.common.LangTagFilter;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRegionAccessRestrictionsList;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRootSubject;
 import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.UserCapabilities;
 import edu.stanford.protege.webprotege.forms.data.*;
 import edu.stanford.protege.webprotege.frame.FrameComponentRenderer;
 import edu.stanford.protege.webprotege.frame.FrameComponentSessionRenderer;
 import edu.stanford.protege.webprotege.index.EntitiesInProjectSignatureByIriIndex;
-import edu.stanford.protege.webprotege.match.HierarchyPositionMatchingEngine;
-import edu.stanford.protege.webprotege.match.LiteralMatcherFactory;
-import edu.stanford.protege.webprotege.match.MatcherFactory;
-import edu.stanford.protege.webprotege.match.MatchingEngine;
+import edu.stanford.protege.webprotege.match.*;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.springframework.context.annotation.Bean;
 
@@ -53,8 +51,10 @@ public class FormDataBuilderConfiguration {
                                                                 FormRegionFilterIndex p12,
                                                                 FormDescriptorDtoTranslator p13,
                                                                 UserCapabilities p14,
-                                                                FormRegionAccessRestrictionsList p15) {
-        return new EntityFrameFormDataDtoBuilder(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
+                                                                FormRegionAccessRestrictionsList p15,
+                                                                EntityMatcherFactory p16,
+                                                                FormRootSubject p17) {
+        return new EntityFrameFormDataDtoBuilder(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17);
     }
 
     @Bean
@@ -196,8 +196,10 @@ public class FormDataBuilderConfiguration {
     @Bean
     FormDescriptorDtoTranslator formDescriptorDtoTranslator(ChoiceDescriptorCache p1,
                                                             UserCapabilities p2,
-                                                            FormRegionAccessRestrictionsList p3) {
-        return new FormDescriptorDtoTranslator(p1, p2, p3);
+                                                            FormRegionAccessRestrictionsList p3,
+                                                            EntityMatcherFactory p4,
+                                                            FormRootSubject p5) {
+        return new FormDescriptorDtoTranslator(p1, p2, p3, p4, p5);
     }
 
     @Bean

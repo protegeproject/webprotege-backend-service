@@ -65,18 +65,11 @@ public class SetFormRegionAccessRestrictionsHandler implements AuthorizedCommand
         var projectId = request.projectId();
         var accessRestrictions = request.accessRestrictions();
 
+
         var roleCapabilityMap = HashMultimap.<RoleId, FormRegionCapability>create();
         accessRestrictions.forEach(accessRestriction -> {
-            var capabilityRoles = accessRestriction.capabilityRoles();
-            capabilityRoles.keySet().forEach(id -> {
-                var capability = FormRegionCapability.valueOf(id, accessRestriction.formRegionId());
-                var roles = capabilityRoles.get(id);
-                roles.forEach(role -> {
-                    roleCapabilityMap.put(role, capability);
-                });
-            });
+            roleCapabilityMap.put(accessRestriction.roleId(), FormRegionCapability.valueOf(accessRestriction.capabilityId(), accessRestriction.formRegionId(), accessRestriction.criteria()));
         });
-
 
         var response = getRoleDefsExecutor.execute(GetProjectRoleDefinitionsRequest.get(request.projectId()), executionContext)
                 .thenCompose(roleDefsResponse -> {

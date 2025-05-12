@@ -9,6 +9,6 @@ import java.util.List;
 
 @JsonTypeName(GetFormRegionAccessRestrictionsRequest.CHANNEL)
 public record GetFormRegionAccessRestrictionsResponse(@JsonProperty("projectId")ProjectId projectId,
-                                                      @JsonProperty("accessRestrictions") List<FormRegionAccessRestrictions> accessRestrictions) implements Response {
+                                                      @JsonProperty("accessRestrictions") List<FormRegionAccessRestriction> accessRestrictions) implements Response {
 
 }
