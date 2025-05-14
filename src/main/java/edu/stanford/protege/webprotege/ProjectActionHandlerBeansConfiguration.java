@@ -593,9 +593,10 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     DeleteEntitiesActionHandler deleteEntitiesActionHandler(AccessManager p1,
 
-                                                            HasApplyChanges p3,
-                                                            DeleteEntitiesChangeListGeneratorFactory p4) {
-        return new DeleteEntitiesActionHandler(p1, p3, p4);
+                                                            HasApplyChanges p2,
+                                                            DeleteEntitiesChangeListGeneratorFactory p3,
+                                                            RenderingManager p4) {
+        return new DeleteEntitiesActionHandler(p1, p2, p3, p4);
     }
 
 

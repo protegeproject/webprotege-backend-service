@@ -1,22 +1,20 @@
 package edu.stanford.protege.webprotege.dispatch.handlers;
 
-import com.google.common.collect.ImmutableSet;
-import edu.stanford.protege.webprotege.access.AccessManager;
-import edu.stanford.protege.webprotege.access.BuiltInCapability;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.access.*;
+import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
-import edu.stanford.protege.webprotege.entity.DeleteEntitiesAction;
-import edu.stanford.protege.webprotege.entity.DeleteEntitiesResult;
+import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.OWLEntity;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import jakarta.inject.Inject;
+import javax.annotation.*;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
 /**
  * Matthew Horridge
@@ -28,12 +26,17 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
     @Nonnull
     private final DeleteEntitiesChangeListGeneratorFactory factory;
 
+    @Nonnull
+    private final RenderingManager renderingManager;
+
     @Inject
     public DeleteEntitiesActionHandler(@Nonnull AccessManager accessManager,
                                        @Nonnull HasApplyChanges applyChanges,
-                                       @Nonnull DeleteEntitiesChangeListGeneratorFactory factory) {
+                                       @Nonnull DeleteEntitiesChangeListGeneratorFactory factory,
+                                       @Nonnull RenderingManager renderingManager) {
         super(accessManager, applyChanges);
         this.factory = factory;
+        this.renderingManager = renderingManager;
     }
 
     @Nonnull
@@ -51,14 +54,18 @@ public class DeleteEntitiesActionHandler extends AbstractProjectChangeHandler<Se
     @Override
     protected ChangeListGenerator<Set<OWLEntity>> getChangeListGenerator(DeleteEntitiesAction action,
                                                                          ExecutionContext executionContext) {
-
-        return factory.create(action.entities(), action.changeRequestId());
+        var owlEntities = action.entities().stream().map(OWLEntityData::getEntity).collect(Collectors.toSet());
+        return factory.create(owlEntities, action.changeRequestId());
     }
 
     @Override
     protected DeleteEntitiesResult createActionResult(ChangeApplicationResult<Set<OWLEntity>> changeApplicationResult,
                                                       DeleteEntitiesAction action,
                                                       ExecutionContext executionContext) {
-        return new DeleteEntitiesResult(ImmutableSet.copyOf(changeApplicationResult.getSubject()));
+        var entitiesData = changeApplicationResult.getSubject()
+                .stream()
+                .map(renderingManager::getRendering)
+                .collect(toImmutableSet());
+        return new DeleteEntitiesResult(entitiesData);
     }
 }

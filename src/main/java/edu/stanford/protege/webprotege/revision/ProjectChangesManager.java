@@ -173,6 +173,10 @@ public class ProjectChangesManager {
     }
 
     private ChangeType getChangeTypeForRecordWithSubject(IRI subjectIri, List<OntologyChange> ontologyChanges) {
+        if (entitiesInProjectSignature.getEntitiesInSignature(subjectIri).findAny().isEmpty()) {
+            return ChangeType.DELETE_ENTITY;
+        }
+
         var isCreateChange = ontologyChanges
                 .stream()
                 .anyMatch(
@@ -183,9 +187,7 @@ public class ProjectChangesManager {
         if (isCreateChange) {
             return ChangeType.CREATE_ENTITY;
         }
-        if (entitiesInProjectSignature.getEntitiesInSignature(subjectIri).findAny().isEmpty()) {
-            return ChangeType.DELETE_ENTITY;
-        }
+
         return ChangeType.UPDATE_ENTITY;
     }
 
@@ -209,7 +211,7 @@ public class ProjectChangesManager {
         int totalChanges = limitedRecords.size();
 
         var changeType = getChangeTypeForRecordWithSubject(revisionSubject, limitedRecords);
-        var entityType = getEntityTypeBySubject(revisionSubject);
+        var entityType = extractEntityTypeFromChanges(limitedRecords, revisionSubject);
 
         Revision2DiffElementsTranslator translator = revision2DiffElementsTranslatorProvider.get();
         List<DiffElement<String, OntologyChange>> axiomDiffElements = translator.getDiffElementsFromRevision(limitedRecords);
@@ -240,12 +242,24 @@ public class ProjectChangesManager {
         changesBuilder.add(projectChangeForEntity);
     }
 
-    private EntityType getEntityTypeBySubject(IRI revisionSubject) {
-        return entitiesInProjectSignature.getEntitiesInSignature(revisionSubject)
+    private EntityType<?> extractEntityTypeFromChanges(List<OntologyChange> changes, IRI iri) {
+        var sigType = changes.stream()
+                .flatMap(c -> c.getSignature().stream())
+                .filter(e -> e.getIRI().equals(iri))
+                .map(OWLEntity::getEntityType)
+                .findFirst();
+        if (sigType.isPresent()) {
+            return sigType.get();
+        }
+
+        // 3) Last resort (only for non‐deletions!): bounce off the project signature index
+        return entitiesInProjectSignature.getEntitiesInSignature(iri)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("[ProjectChangesManager]: Cannot find revision subject:" + revisionSubject))
-                .getEntityType();
+                .map(OWLEntity::getEntityType)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Cannot determine entity type for IRI: " + iri));
     }
+
 
     public <S> Map<IRI, List<OntologyChange>> getEntriesForRevision(RevisionNumber revisionNumber, S revisionSubject) {
         Map<IRI, List<OntologyChange>> mappedChanges = new HashMap<>();
