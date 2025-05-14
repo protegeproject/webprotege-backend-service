@@ -53,7 +53,7 @@ public class SetEntityFormDataFromJsonActionHandler extends AbstractProjectChang
 
     @Override
     protected ChangeListGenerator<OWLEntity> getChangeListGenerator(SetEntityFormDataFromJsonAction action, ExecutionContext executionContext) {
-        EntityFrameFormDataDtoBuilder builder = entityFrameFormDataDtoBuilderFactory.getFormDataDtoBuilder(applicationContext, new EntityFormDataRequestSpec());
+        EntityFrameFormDataDtoBuilder builder = entityFrameFormDataDtoBuilderFactory.getFormDataDtoBuilder(applicationContext, new EntityFormDataRequestSpec(new EntityFormDataRequestSpec.FormRootSubject(action.owlEntity())));
         Optional<FormDescriptor> formDescriptor = entityFormRepository.findFormDescriptor(action.projectId(), action.formId());
         if(formDescriptor.isPresent()) {
             Optional<FormData> editedFormData = json2FormData.convert(action.owlEntity(), action.jsonFormData(), formDescriptor.get());

@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityRenamer;
+import edu.stanford.protege.webprotege.forms.EntityFormDataRequestSpec.FormRootSubject;
 import edu.stanford.protege.webprotege.forms.data.FormData;
 import edu.stanford.protege.webprotege.forms.data.FormDataDto;
 import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
@@ -466,7 +467,7 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
     }
 
     private FormDataDto getFormData(FormDescriptor formDescriptor, OWLEntity subject) {
-        return projectComponent.getEntityFrameFormDataComponentBuilder(new EntityFormDataRequestSpec())
+        return projectComponent.getEntityFrameFormDataComponentBuilder(new EntityFormDataRequestSpec(new FormRootSubject(subject)))
                                .toFormData(Optional.of(FormSubject.get(subject)), formDescriptor);
     }
 
