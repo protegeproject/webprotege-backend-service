@@ -616,6 +616,10 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetRenderedOwlEntitiesActionHandler(p1, p2);
     }
 
+    @Bean
+    GetMatchingCriteriaActionHandler getMatchingCriteriaActionHandler(AccessManager p1, MatcherFactory p2) {
+        return new GetMatchingCriteriaActionHandler(p1,p2);
+    }
 
     @Bean
     GetClassFrameActionHandler getClassFrameActionHandler(AccessManager p1,
