@@ -1,7 +1,11 @@
 package edu.stanford.protege.webprotege.entity;
 
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
+import edu.stanford.protege.webprotege.criteria.HierarchyFilterType;
+import edu.stanford.protege.webprotege.criteria.RootCriteria;
+import edu.stanford.protege.webprotege.criteria.SubClassOfCriteria;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.match.Matcher;
@@ -11,10 +15,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class GetMatchingCriteriaActionHandler extends AbstractProjectActionHandler<GetMatchingCriteriaAction, GetMatchingCriteriaResult> {
 
@@ -40,10 +41,13 @@ public class GetMatchingCriteriaActionHandler extends AbstractProjectActionHandl
         Set<String> response = new HashSet<>();
         OWLEntity owlEntity = new OWLClassImpl(action.entitiyIri());
 
-        for(String key : action.criteriaMap().keySet()) {
-            for(CompositeRootCriteria criteria: action.criteriaMap().get(key)) {
+        for (String key : action.criteriaMap().keySet()) {
+            for (CompositeRootCriteria criteria : action.criteriaMap().get(key)) {
+                if (criteria.getRootCriteria().isEmpty()) {
+                    addRootCriteria((List<RootCriteria>) criteria.getRootCriteria(), SubClassOfCriteria.get(DataFactory.getOWLThing(), HierarchyFilterType.ALL));
+                }
                 Matcher<OWLEntity> matcher = matcherFactory.getMatcher(criteria);
-                if(matcher.matches(owlEntity)) {
+                if (matcher.matches(owlEntity)) {
                     response.add(key);
                 }
             }
@@ -51,5 +55,9 @@ public class GetMatchingCriteriaActionHandler extends AbstractProjectActionHandl
         }
 
         return new GetMatchingCriteriaResult(new ArrayList<>(response));
+    }
+
+    private void addRootCriteria(List<? super RootCriteria> list, RootCriteria item) {
+        list.add(item);
     }
 }
