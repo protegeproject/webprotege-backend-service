@@ -116,7 +116,7 @@ class GetProjectHierarchyDescriptorRulesResponseTest {
                 .isEqualTo(FormId.valueOf("123e4567-e89b-12d3-a456-426614174002"));
         assertThat(rule.requiredFormFieldId())
                 .isEqualTo(FormRegionId.valueOf("123e4567-e89b-12d3-a456-426614174003"));
-        assertThat(rule.requiredActions())
+        assertThat(rule.requiredCapabilities())
                 .containsExactlyInAnyOrder(
                         BasicCapability.valueOf("ACTIONX"),
                         BasicCapability.valueOf("ACTIONY")
