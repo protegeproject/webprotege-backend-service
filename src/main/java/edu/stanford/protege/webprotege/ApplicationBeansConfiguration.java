@@ -585,6 +585,10 @@ public class ApplicationBeansConfiguration {
     CommandExecutor<PrepareBackupFilesForUseRequest, PrepareBackupFilesForUseResponse> executorForPrepareBackupFilesForUse() {
         return new CommandExecutorImpl<>(PrepareBackupFilesForUseResponse.class);
     }
+    @Bean
+    CommandExecutor<GetReproducibleProjectsRequest, GetReproducibleProjectsResponse> executorForReproducibleProjects() {
+        return new CommandExecutorImpl<>(GetReproducibleProjectsResponse.class);
+    }
 
     @Bean
     CommandExecutor<CreateNewReproducibleProjectRequest, CreateNewReproducibleProjectResponse> executorForCreateProjectSmallFiles() {

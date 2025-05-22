@@ -6,10 +6,11 @@ public record ProjectSummaryDto(@JsonProperty("projectId") String projectId,
                                 @JsonProperty("title") String title,
 
                                 @JsonProperty("createdAt") long createdAt,
-                                @JsonProperty("description") String description) {
+                                @JsonProperty("description") String description,
+                                @JsonProperty("gitRepoBranch") String gitRepoBranch) {
 
-    public static ProjectSummaryDto create(String projectId, String title,long createdAt, String description) {
-        return new ProjectSummaryDto(projectId, title,createdAt, description);
+    public static ProjectSummaryDto create(String projectId, String title,long createdAt, String description, String gitRepoBranch) {
+        return new ProjectSummaryDto(projectId, title,createdAt, description, gitRepoBranch);
     }
 
 }
