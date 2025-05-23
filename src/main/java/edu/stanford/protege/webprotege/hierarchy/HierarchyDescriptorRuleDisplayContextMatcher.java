@@ -72,7 +72,7 @@ public class HierarchyDescriptorRuleDisplayContextMatcher {
     }
 
     private boolean matchesActions(HierarchyDescriptorRule rule, Set<Capability> actions) {
-        if (!actions.containsAll(rule.requiredActions())) {
+        if (!actions.containsAll(rule.requiredCapabilities())) {
             logger.debug("Rule {} does not match actions {}", rule, actions);
             return false;
         }
