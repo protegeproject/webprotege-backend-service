@@ -83,7 +83,7 @@ class ProjectHierarchyDescriptorRulesTest {
                 .isNotEmpty();
         assertThat(jsonContent).extractingJsonPathStringValue("$.rules[0].requiredFormFieldId")
                 .isNotEmpty();
-        assertThat(jsonContent).extractingJsonPathValue("$.rules[0].requiredActions")
+        assertThat(jsonContent).extractingJsonPathValue("$.rules[0].requiredCapabilities")
                 .isNotNull();
         assertThat(jsonContent).extractingJsonPathStringValue("$.rules[0].hierarchyDescriptor.@type")
                 .isEqualTo("ClassHierarchyDescriptor");
@@ -101,7 +101,7 @@ class ProjectHierarchyDescriptorRulesTest {
                   "requiredViewProperties": {"key1": "value1"},
                   "requiredFormId": "123e4567-e89b-12d3-a456-426614174002",
                   "requiredFormFieldId": "123e4567-e89b-12d3-a456-426614174003",
-                  "requiredActions": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
+                  "requiredCapabilities": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
                   "hierarchyDescriptor": {
                       "@type": "ClassHierarchyDescriptor",
                       "roots": [
@@ -124,7 +124,7 @@ class ProjectHierarchyDescriptorRulesTest {
         assertThat(rule.requiredViewProperties()).isNotNull();
         assertThat(rule.requiredFormId()).isNotNull();
         assertThat(rule.requiredFormFieldId()).isNotNull();
-        assertThat(rule.requiredActions()).isNotEmpty();
+        assertThat(rule.requiredCapabilities()).isNotEmpty();
         assertThat(rule.hierarchyDescriptor()).isNotNull();
     }
 }

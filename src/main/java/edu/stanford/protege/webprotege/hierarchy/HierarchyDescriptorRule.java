@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.forms.FormId;
@@ -20,7 +21,7 @@ public record HierarchyDescriptorRule(
         @Nonnull @JsonProperty("requiredViewProperties") Map<String, String> requiredViewProperties,
         @Nullable @JsonProperty("requiredFormId") FormId requiredFormId,
         @Nullable @JsonProperty("requiredFormFieldId") FormRegionId requiredFormFieldId,
-        @Nonnull @JsonProperty("requiredActions") Set<Capability> requiredActions,
+        @Nonnull @JsonProperty("requiredCapabilities") @JsonAlias("requiredCapabilities") Set<Capability> requiredCapabilities,
         @Nonnull @JsonProperty("hierarchyDescriptor") HierarchyDescriptor hierarchyDescriptor) {
 
 
