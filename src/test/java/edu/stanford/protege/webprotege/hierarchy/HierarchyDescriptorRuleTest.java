@@ -87,7 +87,7 @@ class HierarchyDescriptorRuleTest {
                 .isEqualTo(FORM_UUID);
         assertThat(jsonContent).extractingJsonPathStringValue("@.requiredFormFieldId")
                 .isEqualTo(FORM_FIELD_UUID);
-        assertThat(jsonContent).extractingJsonPathArrayValue("@.requiredActions").hasSize(2);
+        assertThat(jsonContent).extractingJsonPathArrayValue("@.requiredCapabilities").hasSize(2);
         assertThat(jsonContent).extractingJsonPathMapValue("@.hierarchyDescriptor").isNotNull();
     }
 
@@ -101,7 +101,7 @@ class HierarchyDescriptorRuleTest {
               "requiredViewProperties": {"key1": "value1"},
               "requiredFormId": "123e4567-e89b-12d3-a456-426614174002",
               "requiredFormFieldId": "123e4567-e89b-12d3-a456-426614174003",
-              "requiredActions": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
+              "requiredCapabilities": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
               "hierarchyDescriptor": { "@type": "ClassHierarchyDescriptor", "roots": [{"@type":"Class", "iri":"http://www.w3.org/2002/07/owl#Thing"}]}
             }
             """;
@@ -113,7 +113,7 @@ class HierarchyDescriptorRuleTest {
         assertThat(rule.requiredViewProperties()).containsExactlyEntriesOf(Map.of("key1", "value1"));
         assertThat(rule.requiredFormId()).isEqualTo(FormId.valueOf(FORM_UUID));
         assertThat(rule.requiredFormFieldId()).isEqualTo(FormRegionId.valueOf(FORM_FIELD_UUID));
-        assertThat(rule.requiredActions()).containsExactlyInAnyOrder(
+        assertThat(rule.requiredCapabilities()).containsExactlyInAnyOrder(
                 BasicCapability.valueOf(ACTIONX_STRING),
                 BasicCapability.valueOf(ACTIONY_STRING)
         );
@@ -131,7 +131,7 @@ class HierarchyDescriptorRuleTest {
         assertThat(rule.requiredViewProperties()).isEmpty();
         assertThat(rule.requiredFormId()).isNull();
         assertThat(rule.requiredFormFieldId()).isNull();
-        assertThat(rule.requiredActions()).isEmpty();
+        assertThat(rule.requiredCapabilities()).isEmpty();
         assertThat(rule.hierarchyDescriptor()).isEqualTo(hd);
     }
 }
