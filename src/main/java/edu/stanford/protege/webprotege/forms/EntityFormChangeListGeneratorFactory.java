@@ -104,7 +104,9 @@ public class EntityFormChangeListGeneratorFactory {
                                                  formFrameConverter,
                                                  emptyEntityFrameFactory,
                                                  dataFactory,
-                                                 rootOntologyProvider, deleteEntitiesChangeListGeneratorFactory);
+                                                 rootOntologyProvider,
+                                                 deleteEntitiesChangeListGeneratorFactory,
+                                                 renderingManager);
     }
 
     public EntityFormChangeListGenerator createForAdd(@Nonnull ChangeRequestId changeRequestId,
