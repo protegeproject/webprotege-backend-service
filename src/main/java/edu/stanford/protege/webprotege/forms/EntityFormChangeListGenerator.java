@@ -1,34 +1,22 @@
 package edu.stanford.protege.webprotege.forms;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
-import edu.stanford.protege.webprotege.change.ChangeGenerationContext;
-import edu.stanford.protege.webprotege.change.ChangeListGenerator;
-import edu.stanford.protege.webprotege.change.OntologyChangeList;
+import com.google.common.collect.*;
+import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.crud.DeleteEntitiesChangeListGeneratorFactory;
-import edu.stanford.protege.webprotege.forms.data.FormData;
-import edu.stanford.protege.webprotege.forms.data.FormEntitySubject;
-import edu.stanford.protege.webprotege.forms.data.FormSubject;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
+import edu.stanford.protege.webprotege.forms.data.*;
 import edu.stanford.protege.webprotege.forms.processor.FormDataConverter;
-import edu.stanford.protege.webprotege.frame.EmptyEntityFrameFactory;
-import edu.stanford.protege.webprotege.frame.FrameChangeGeneratorFactory;
-import edu.stanford.protege.webprotege.frame.FrameUpdate;
-import edu.stanford.protege.webprotege.frame.PlainEntityFrame;
+import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLEntity;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
+import jakarta.inject.Inject;
+import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
-import jakarta.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -80,6 +68,10 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     @Nonnull
     private final DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory;
 
+    @Nonnull
+    private final RenderingManager renderingManager;
+
+
     @Inject
     public EntityFormChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
                                          @Nonnull OWLEntity subject,
@@ -93,7 +85,8 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
                                          @Nonnull EmptyEntityFrameFactory emptyEntityFrameFactory,
                                          @Nonnull OWLDataFactory dataFactory,
                                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
-                                         @Nonnull DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory) {
+                                         @Nonnull DeleteEntitiesChangeListGeneratorFactory deleteEntitiesChangeListGeneratorFactory,
+                                         @Nonnull RenderingManager renderingManager) {
         this.subject = checkNotNull(subject);
         this.commitMessage = checkNotNull(commitMessage);
         this.pristineFormsData = checkNotNull(pristineFormsData);
@@ -107,6 +100,7 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.deleteEntitiesChangeListGeneratorFactory = deleteEntitiesChangeListGeneratorFactory;
         this.changeRequestId = changeRequestId;
+        this.renderingManager = renderingManager;
     }
 
     @Override
@@ -135,15 +129,14 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
 
         if (allChanges.isEmpty()) {
             return emptyChangeList();
-        }
-        else {
+        } else {
             return combineIndividualChangeLists(allChanges);
         }
     }
 
     private FormFrame getFormFrame(@Nonnull Optional<FormData> editedFormData) {
         return editedFormData.map(formDataProcessor::convert)
-                             .orElse(emptyFormFrame(subject));
+                .orElse(emptyFormFrame(subject));
     }
 
     private static FormFrame emptyFormFrame(OWLEntity subject) {
@@ -164,9 +157,9 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     public OntologyChangeList<OWLEntity> combineIndividualChangeLists(List<OntologyChangeList<OWLEntity>> changes) {
         var firstChangeList = changes.get(0);
         var combinedChanges = changes.stream()
-                                     .map(OntologyChangeList::getChanges)
-                                     .flatMap(List::stream)
-                                     .collect(toImmutableList());
+                .map(OntologyChangeList::getChanges)
+                .flatMap(List::stream)
+                .collect(toImmutableList());
 
         return OntologyChangeList.<OWLEntity>builder()/**/.addAll(combinedChanges).build(firstChangeList.getResult());
     }
@@ -176,8 +169,8 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
         var flattener = new FormFrameFlattener();
         var flattenedFormFrames = flattener.flattenAndMerge(formFrame);
         return flattenedFormFrames.stream()
-                                  .collect(toImmutableMap(FormFrame::getSubject,
-                                                          f -> f));
+                .collect(toImmutableMap(FormFrame::getSubject,
+                        f -> f));
     }
 
     private List<OntologyChangeList<OWLEntity>> generateChangesForFormFrames(ImmutableMap<FormEntitySubject, FormFrame> pristineFramesBySubject,
@@ -198,18 +191,17 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
                 resultBuilder.add(changes);
                 var emptyFormFrame = FormFrame.get(FormSubject.get(subject.getEntity()));
                 generateChangesForInstances(subject.getEntity(), pristineFrame, emptyFormFrame, resultBuilder);
-                if(!this.subject.equals(subject.getEntity())) {
+                if (!this.subject.equals(subject.getEntity())) {
                     // Non-top-level subject.  This needs deleting because it corresponds to a grid row subject,
                     // or sub-form subject
                     var deletionChangeListGenerator = deleteEntitiesChangeListGeneratorFactory.create(Collections.singleton(subject.getEntity()),
-                                                                                                      changeRequestId);
+                            changeRequestId);
                     var deletionChanges = OntologyChangeList.<OWLEntity>builder()
                             .addAll(deletionChangeListGenerator.generateChanges(context).getChanges())
                             .build(subject.getEntity());
                     resultBuilder.add(deletionChanges);
                 }
-            }
-            else {
+            } else {
                 // Edited, possibly
                 var editedEntityFrame = formFrameConverter.toEntityFrame(editedFrame).orElseThrow();
                 var changes = generateChangeListForFrames(pristineEntityFrame, editedEntityFrame, context);
@@ -230,9 +222,9 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
                 resultBuilder.add(changes);
                 // Add all class assertions for instances
                 generateChangesForInstances(subject.getEntity(),
-                                            FormFrame.get(FormSubject.get(subject.getEntity())),
-                                            addedFormFrame,
-                                            resultBuilder);
+                        FormFrame.get(FormSubject.get(subject.getEntity())),
+                        addedFormFrame,
+                        resultBuilder);
             }
         }
         return resultBuilder.build();
@@ -281,11 +273,16 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<OWLEntity> result) {
-        if(!commitMessage.isBlank()) {
-            return commitMessage.trim();
-        }
         OWLEntity entity = result.getSubject();
-        return messageFormatter.format("Edited {0}", entity);
+        OWLEntityData renderedEntity = renderingManager.getRendering(entity);
+        StringBuilder sb = new StringBuilder();
+        sb.append(messageFormatter.format("Edited {0}", renderedEntity.getBrowserText()));
+        if (!commitMessage.isBlank()) {
+            sb.append(" : ");
+            sb.append(commitMessage.trim());
+        }
+
+        return sb.toString();
     }
 
     @Override
