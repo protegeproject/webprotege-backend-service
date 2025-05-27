@@ -123,7 +123,9 @@ public enum BuiltInCapability {
 
     EDIT_FORMS,
 
-    CONFIGURE_HIERARCHIES;
+    CONFIGURE_HIERARCHIES,
+
+    APPLY_MIGRATION_JSON_FILES;
 
     
     private final Capability capability;
