@@ -88,7 +88,7 @@ class GetProjectHierarchyDescriptorRulesResponseTest {
                   "requiredViewProperties": {"key1": "value1"},
                   "requiredFormId": "123e4567-e89b-12d3-a456-426614174002",
                   "requiredFormFieldId": "123e4567-e89b-12d3-a456-426614174003",
-                  "requiredActions": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
+                  "requiredCapabilities": [{"@type":"BasicCapability","id":"ACTIONX"}, {"@type":"BasicCapability", "id":"ACTIONY"}],
                   "hierarchyDescriptor": {
                       "@type": "ClassHierarchyDescriptor",
                       "roots": [
