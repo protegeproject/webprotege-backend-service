@@ -46,6 +46,7 @@ import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.lang.GetProjectLangTagsActionHandler;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
+import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import edu.stanford.protege.webprotege.logicaldefinitions.*;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.mansyntax.ManchesterSyntaxFrameParser;
@@ -422,6 +423,14 @@ public class ProjectActionHandlerBeansConfiguration {
     GetProjectSharingSettingsActionHandler getProjectSharingSettingsActionHandler(ProjectSharingSettingsManager p1,
                                                                                   AccessManager p2) {
         return new GetProjectSharingSettingsActionHandler(p1, p2);
+    }
+
+    @Bean
+    ProcessUploadedSiblingsOrderingActionHandler getProcessUploadedSiblingsOrderingActionHandler(AccessManager p1,
+                                                                                                 OrderedChildrenDocumentService p2,
+                                                                                                 ProjectOrderedChildrenService p3,
+                                                                                                 ReadWriteLockService p4) {
+        return new ProcessUploadedSiblingsOrderingActionHandler(p1, p2, p3, p4);
     }
 
 

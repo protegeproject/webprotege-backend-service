@@ -85,7 +85,8 @@ public enum BuiltInRole {
                    DELETE_INDIVIDUAL,
                    CREATE_DATATYPE,
                    DELETE_DATATYPE,
-                   REVERT_CHANGES),
+                   REVERT_CHANGES,
+                   APPLY_MIGRATION_JSON_FILES),
 
     ICD_PROJECT_EDITOR(OBJECT_COMMENTER,
             EDIT_ONTOLOGY,
