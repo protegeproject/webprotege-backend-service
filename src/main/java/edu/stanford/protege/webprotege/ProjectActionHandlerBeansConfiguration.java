@@ -1143,8 +1143,8 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
-    GetProjectHierarchyDescriptorRulesActionHandler getProjectHierarchyDescriptorRulesActionHandler(AccessManager p1, HierarchyDescriptorRulesRepository p2) {
-        return new GetProjectHierarchyDescriptorRulesActionHandler(p1, p2);
+    GetProjectHierarchyDescriptorRulesCommandHandler getProjectHierarchyDescriptorRulesActionHandler(AccessManager p1, HierarchyDescriptorRulesRepository p2) {
+        return new GetProjectHierarchyDescriptorRulesCommandHandler(p1, p2);
     }
 
     @Bean
