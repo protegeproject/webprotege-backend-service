@@ -21,7 +21,7 @@ public record HierarchyDescriptorRule(
         @Nonnull @JsonProperty("requiredViewProperties") Map<String, String> requiredViewProperties,
         @Nullable @JsonProperty("requiredFormId") FormId requiredFormId,
         @Nullable @JsonProperty("requiredFormFieldId") FormRegionId requiredFormFieldId,
-        @Nonnull @JsonProperty("requiredCapabilities") @JsonAlias("requiredCapabilities") Set<Capability> requiredCapabilities,
+        @Nonnull @JsonProperty("requiredCapabilities") @JsonAlias("requiredActions") Set<Capability> requiredCapabilities,
         @Nonnull @JsonProperty("hierarchyDescriptor") HierarchyDescriptor hierarchyDescriptor) {
 
 
