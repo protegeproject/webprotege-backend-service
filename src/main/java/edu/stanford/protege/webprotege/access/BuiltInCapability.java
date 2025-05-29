@@ -125,7 +125,15 @@ public enum BuiltInCapability {
 
     CONFIGURE_HIERARCHIES,
 
-    APPLY_MIGRATION_JSON_FILES;
+    APPLY_MIGRATION_JSON_FILES,
+
+    ICD_HIERARCHY_VIEWER,
+
+    ICF_HIERARCHY_VIEWER,
+
+    ICHI_HIERARCHY_VIEWER,
+
+    FULL_HIERARCHY_VIEWER;
 
     
     private final Capability capability;
