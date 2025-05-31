@@ -7,6 +7,7 @@ import edu.stanford.protege.webprotege.common.EntityShortFormMatches;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
+import edu.stanford.protege.webprotege.search.DeprecatedEntitiesTreatment;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.EntityType;
@@ -46,11 +47,12 @@ public class SearchableMultiLingualShortFormDictionaryLuceneImpl implements Sear
                                                                 @Nonnull List<DictionaryLanguage> languages,
                                                                 @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
                                                                 @Nonnull PageRequest pageRequest,
-                                                                @Nonnull EntityMatchCriteria resultsSetFilter) {
+                                                                @Nonnull EntityMatchCriteria resultsSetFilter,
+                                                                @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) {
         try {
             var stopwatch = Stopwatch.createStarted();
             // TODO: Rewrite entity types
-            var entities = luceneIndex.search(searchStrings, languages, searchFilters, entityTypes, pageRequest, resultsSetFilter);
+            var entities = luceneIndex.search(searchStrings, languages, searchFilters, entityTypes, pageRequest, resultsSetFilter, deprecatedEntitiesTreatment);
             var elapsedTimeMs = stopwatch.elapsed().toMillis();
             if(entities.isPresent()) {
                 var resultsPage = entities.get();

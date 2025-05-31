@@ -80,6 +80,8 @@ public class EntitySearcher {
     @Nonnull
     private final MatcherFactory matcherFactory;
 
+    private DeprecatedEntitiesTreatment deprecatedEntitiesTreatment;
+
 
     public EntitySearcher(@Nonnull ProjectId projectId,
                           @Nonnull DictionaryManager dictionaryManager,
@@ -90,7 +92,8 @@ public class EntitySearcher {
                           ImmutableList<EntitySearchFilter> searchFilters,
                           @Nonnull EntityNodeRenderer entityNodeRenderer,
                           @Nonnull EntityMatchCriteria resultsSetFilter,
-                          @Nonnull MatcherFactory matcherFactory) {
+                          @Nonnull MatcherFactory matcherFactory,
+                          @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) {
         this.projectId = checkNotNull(projectId);
         this.userId = checkNotNull(userId);
         this.dictionaryManager = checkNotNull(dictionaryManager);
@@ -105,6 +108,7 @@ public class EntitySearcher {
         this.entityNodeRenderer = entityNodeRenderer;
         this.resultsSetFilter = resultsSetFilter;
         this.matcherFactory = checkNotNull(matcherFactory);
+        this.deprecatedEntitiesTreatment = deprecatedEntitiesTreatment;
     }
 
     public void setPageRequest(@Nonnull PageRequest pageRequest) {
@@ -129,7 +133,7 @@ public class EntitySearcher {
                                                                       searchLanguages,
                                                                       searchFilters,
                                                                       pageRequest,
-                resultsSetFilter);
+                resultsSetFilter, deprecatedEntitiesTreatment);
         results = entityMatches.transform(matches -> {
             var entity = matches.getEntity();
             var shortForms = dictionaryManager.getShortForms(entity);

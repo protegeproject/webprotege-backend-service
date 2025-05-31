@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.inject.ProjectSingleton;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageRequest;
+import edu.stanford.protege.webprotege.search.DeprecatedEntitiesTreatment;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -101,8 +102,9 @@ public class DictionaryManager {
                                                                 @Nonnull List<DictionaryLanguage> languages,
                                                                 @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
                                                                 @Nonnull PageRequest pageRequest,
-                                                                @Nullable EntityMatchCriteria resultsSetFilter) {
-        return dictionary.getShortFormsContaining(searchStrings, entityTypes, languages, searchFilters, pageRequest, resultsSetFilter);
+                                                                @Nullable EntityMatchCriteria resultsSetFilter,
+                                                                @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) {
+        return dictionary.getShortFormsContaining(searchStrings, entityTypes, languages, searchFilters, pageRequest, resultsSetFilter, deprecatedEntitiesTreatment);
     }
 
     public void update(@Nonnull Collection<OWLEntity> entities) {

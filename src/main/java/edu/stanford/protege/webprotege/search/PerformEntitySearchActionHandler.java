@@ -72,7 +72,7 @@ public class PerformEntitySearchActionHandler extends AbstractProjectActionHandl
                                                           executionContext.userId(),
                                                           languages.build(),
                                                           searchFilters,
-                action.resultsSetFilter());
+                action.resultsSetFilter(), action.deprecatedEntitiesTreatment());
         PageRequest pageRequest = action.pageRequest();
         entitySearcher.setPageRequest(pageRequest);
         entitySearcher.invoke();

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
+import edu.stanford.protege.webprotege.search.DeprecatedEntitiesTreatment;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterId;
 import org.apache.lucene.document.Document;
@@ -114,7 +115,8 @@ public class LuceneIndexImpl implements LuceneIndex {
                                                          @Nonnull List<EntitySearchFilter> searchFilters,
                                                          @Nonnull Set<EntityType<?>> entityTypes,
                                                          @Nonnull PageRequest pageRequest,
-                                                         @Nullable EntityMatchCriteria resultsSetFilter) throws IOException, ParseException {
+                                                         @Nullable EntityMatchCriteria resultsSetFilter,
+                                                         @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException, ParseException {
         var indexSearcher = searcherManager.acquire();
         //        indexSearcher.setSimilarity(new EntityBasedSimilarity());
         try {
@@ -123,6 +125,11 @@ public class LuceneIndexImpl implements LuceneIndex {
             var q = getQuery(searchStrings, dictionaryLanguages, false);
             var queryBuilder = new BooleanQuery.Builder();
             queryBuilder.add(q, BooleanClause.Occur.MUST);
+
+            if (deprecatedEntitiesTreatment.equals(DeprecatedEntitiesTreatment.EXCLUDE_DEPRECATED_ENTITIES)) {
+                var deprecatedFalseQuery = new TermQuery(new Term(EntityDocumentFieldNames.DEPRECATED, EntityDocumentFieldNames.DEPRECATED_FALSE));
+                queryBuilder.add(deprecatedFalseQuery, BooleanClause.Occur.MUST);
+            }
 
             var entityTypeQueries = entityTypes.stream()
                                                .map(EntityType::getName)
