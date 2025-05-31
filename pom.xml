@@ -23,6 +23,7 @@
         <commons.io.version>2.7</commons.io.version>
         <!-- WebProtege Specific Properties -->
         <mail.smtp.host/>
+        <mail.smtp.host/>
         <mail.smtp.auth/>
         <mail.smtp.port/>
         <application.analytics/>
@@ -86,7 +87,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>3.0.0</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
