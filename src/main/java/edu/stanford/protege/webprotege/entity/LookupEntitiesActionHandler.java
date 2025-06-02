@@ -14,6 +14,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.lang.LanguageManager;
 import edu.stanford.protege.webprotege.match.Matcher;
 import edu.stanford.protege.webprotege.match.MatcherFactory;
+import edu.stanford.protege.webprotege.search.DeprecatedEntitiesTreatment;
 import edu.stanford.protege.webprotege.search.EntityNameMatchResult;
 import edu.stanford.protege.webprotege.search.SearchResultMatch;
 import edu.stanford.protege.webprotege.search.SearchResultMatchPosition;
@@ -106,7 +107,8 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
                                                                entityLookupRequest.getSearchedEntityTypes(),
                                                                languageManager.getLanguages(), ImmutableList.of(),
                                                                PageRequest.requestFirstPage(),
-                EntityTypeIsOneOfCriteria.get(ImmutableSet.copyOf(entityLookupRequest.getSearchedEntityTypes())));
+                EntityTypeIsOneOfCriteria.get(ImmutableSet.copyOf(entityLookupRequest.getSearchedEntityTypes())),
+                DeprecatedEntitiesTreatment.INCLUDE_DEPRECATED_ENTITIES);
 
         List<EntityLookupResult> lookupResults = new ArrayList<>();
         for (var match : result.getPageElements()) {
