@@ -51,10 +51,8 @@ public class ProcessUploadedSiblingsOrderingActionHandler extends AbstractProjec
     public ProcessUploadedSiblingsOrderingResponse execute(@NotNull ProcessUploadedSiblingsOrderingAction action, @NotNull ExecutionContext executionContext) {
         var stream = orderedChildrenDocumentService.fetchFromDocument(action.uploadedDocumentId().getDocumentId());
 
-        readWriteLock.executeWriteLock(() -> {
-            Consumer<List<OrderedChildren>> batchProcessor = projectOrderedChildrenService.createBatchProcessorForImportingPaginatedOrderedChildren(action.projectId(), action.overrideExisting());
-            stream.collect(StreamUtils.batchCollector(100, batchProcessor));
-        });
+        Consumer<List<OrderedChildren>> batchProcessor = projectOrderedChildrenService.createBatchProcessorForImportingPaginatedOrderedChildren(action.projectId(), action.overrideExisting());
+        stream.collect(StreamUtils.batchCollector(100, batchProcessor));
 
         return ProcessUploadedSiblingsOrderingResponse.create();
     }
