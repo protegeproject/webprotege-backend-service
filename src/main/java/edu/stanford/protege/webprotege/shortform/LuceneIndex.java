@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.shortform;
 
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
+import edu.stanford.protege.webprotege.search.DeprecatedEntitiesTreatment;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.semanticweb.owlapi.model.EntityType;
@@ -32,7 +33,8 @@ public interface LuceneIndex {
                                                   @Nonnull List<EntitySearchFilter> searchFilters,
                                                   @Nonnull Set<EntityType<?>> entityTypes,
                                                   @Nonnull PageRequest pageRequest,
-                                                  @Nullable EntityMatchCriteria resultsSetFilter) throws IOException, ParseException;
+                                                  @Nullable EntityMatchCriteria resultsSetFilter,
+                                                  @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException, ParseException;
 
     /**
      * Finds entities that have the specified short form.

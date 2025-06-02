@@ -12,7 +12,7 @@
 
     <groupId>edu.stanford.protege</groupId>
     <artifactId>webprotege-backend-service</artifactId>
-    <version>4.1.1-WHO</version>
+    <version>4.2.2-WHO</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +22,7 @@
         <autovalue.version>1.7.1</autovalue.version>
         <commons.io.version>2.7</commons.io.version>
         <!-- WebProtege Specific Properties -->
+        <mail.smtp.host/>
         <mail.smtp.host/>
         <mail.smtp.auth/>
         <mail.smtp.port/>
@@ -86,7 +87,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>3.0.2-WHO</version>
+            <version>3.1.1-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
