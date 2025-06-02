@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.common.EntityShortFormMatches;
 import edu.stanford.protege.webprotege.common.Page;
 import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
+import edu.stanford.protege.webprotege.search.DeprecatedEntitiesTreatment;
 import edu.stanford.protege.webprotege.search.EntitySearchFilter;
 import org.semanticweb.owlapi.model.EntityType;
 
@@ -38,5 +39,6 @@ public interface SearchableMultiLingualShortFormDictionary {
                                                          @Nonnull List<DictionaryLanguage> languages,
                                                          @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
                                                          @Nonnull PageRequest pageRequest,
-                                                         @Nonnull EntityMatchCriteria resultsSetFilter);
+                                                         @Nonnull EntityMatchCriteria resultsSetFilter,
+                                                         @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment);
 }
