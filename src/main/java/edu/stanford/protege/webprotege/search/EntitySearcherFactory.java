@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege.search;
 
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
-import edu.stanford.protege.webprotege.criteria.CompositeRootCriteria;
 import edu.stanford.protege.webprotege.criteria.EntityMatchCriteria;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.common.ProjectId;
@@ -42,7 +41,8 @@ public class EntitySearcherFactory {
                                  UserId userId,
                                  ImmutableList<DictionaryLanguage> languages,
                                  ImmutableList<EntitySearchFilter> searchFilters,
-                                 EntityMatchCriteria resultsSetFilter) {
+                                 EntityMatchCriteria resultsSetFilter,
+                                 DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) {
         return new EntitySearcher(projectId,
                                   dictionaryManger,
                                   entityTypes,
@@ -52,7 +52,8 @@ public class EntitySearcherFactory {
                                   searchFilters,
                                   entityNodeRenderer,
                 resultsSetFilter,
-                matcherFactory
+                matcherFactory,
+                deprecatedEntitiesTreatment
                 );
     }
 }
