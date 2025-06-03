@@ -24,6 +24,7 @@ public class IcatxEntityTypeConfigurationRepository {
         this.mongoTemplate = mongoTemplate;
     }
 
+    @Cacheable(value = "entityTypeConfigurations", key = "#projectId")
     public List<IcatxEntityTypeConfiguration> findAllByProjectId(ProjectId projectId) {
         var query = query(where(PROJECT_ID).is(projectId));
 
