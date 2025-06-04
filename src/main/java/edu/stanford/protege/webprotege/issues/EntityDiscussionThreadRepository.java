@@ -1,19 +1,13 @@
 package edu.stanford.protege.webprotege.issues;
 
-import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
-
+import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Inject;
+import org.semanticweb.owlapi.model.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,9 +44,9 @@ public class EntityDiscussionThreadRepository {
     public int getCommentsCount(@Nonnull ProjectId projectId,
                                 @Nonnull OWLEntity entity) {
         return findThreads(projectId, entity).stream()
-                                             .map(thread -> thread.getComments().size())
-                                             .reduce((left, right) -> left + right)
-                                             .orElse(0);
+                .map(thread -> thread.getComments().size())
+                .reduce(Integer::sum)
+                .orElse(0);
     }
 
     public int getOpenCommentsCount(@Nonnull ProjectId projectId,
@@ -64,7 +58,7 @@ public class EntityDiscussionThreadRepository {
 
     public synchronized Map<IRI, List<Comment>> getOpenedCommentsForProject(ProjectId projectId) {
         Map<IRI, List<Comment>> response = this.cache.get(projectId);
-        if(response != null) {
+        if (response != null) {
             return response;
         } else {
             response = new HashMap<>();
@@ -76,7 +70,7 @@ public class EntityDiscussionThreadRepository {
         mongoTemplate.find(query, EntityDiscussionThread.class)
                 .forEach(entityDiscussionThread -> {
                     List<Comment> existingComments = finalResponse.get(entityDiscussionThread.getEntity().getIRI());
-                    if(existingComments == null) {
+                    if (existingComments == null) {
                         existingComments = new ArrayList<>();
                     }
                     existingComments.addAll(entityDiscussionThread.getComments());
@@ -138,11 +132,20 @@ public class EntityDiscussionThreadRepository {
         var query = query(where(COMMENTS_ID).is(commentId));
         this.cache.remove(projectId);
         return mongoTemplate.updateFirst(query, new Update().pull(COMMENTS, query(where("_id").is(commentId))),
-                                  EntityDiscussionThread.class).getModifiedCount() == 1;
+                EntityDiscussionThread.class).getModifiedCount() == 1;
     }
 
     public List<EntityDiscussionThread> getThreadsInProject(ProjectId projectId) {
         return mongoTemplate.find(query(where(PROJECT_ID).is(projectId)),
-                                  EntityDiscussionThread.class);
+                EntityDiscussionThread.class);
+    }
+
+    public Optional<Long> getEarliestCommentTimestamp(@Nonnull ProjectId projectId,
+                                                      @Nonnull OWLEntity entity) {
+        List<EntityDiscussionThread> threads = findThreads(projectId, entity);
+        return threads.stream()
+                .flatMap(thread -> thread.getComments().stream())
+                .map(Comment::getCreatedAt)
+                .min(Long::compareTo);
     }
 }
