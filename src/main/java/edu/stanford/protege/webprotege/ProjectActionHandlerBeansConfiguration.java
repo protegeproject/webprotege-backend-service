@@ -521,6 +521,12 @@ public class ProjectActionHandlerBeansConfiguration {
         return new GetEntityDiscussionThreadsHandler(p1, p2, p3);
     }
 
+    @Bean
+    GetEntityEarliestCommentTimestampHandler getEntityEarliestCommentTimestampHandler(EntityDiscussionThreadRepository p1,
+                                                                        AccessManager p2) {
+        return new GetEntityEarliestCommentTimestampHandler(p1, p2);
+    }
+
 
     @Bean
     CreateEntityDiscussionThreadHandler createEntityDiscussionThreadActionHandler(AccessManager p1,
