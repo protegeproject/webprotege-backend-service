@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import java.util.*;
+import java.util.stream.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -273,12 +274,25 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<OWLEntity> result) {
+        List<String> forms = editedFormsData.map()
+                .values()
+                .stream()
+                .flatMap(formData -> Stream.of(formData.getFormDescriptor().getLabel().get("en")))
+                .toList();
+        String formsLabels;
+        if (forms.size() == 1) {
+            formsLabels = forms.get(0);
+        } else {
+            formsLabels = String.join(",", forms);
+        }
         OWLEntity entity = result.getSubject();
         OWLEntityData renderedEntity = renderingManager.getRendering(entity);
         StringBuilder sb = new StringBuilder();
-        sb.append(messageFormatter.format("Edited {0}", renderedEntity.getBrowserText()));
+        sb.append("Edited ");
+        sb.append(formsLabels);
+        sb.append(messageFormatter.format(" for {0}", renderedEntity.getBrowserText()));
         if (!commitMessage.isBlank()) {
-            sb.append(" : ");
+            sb.append(": ");
             sb.append(commitMessage.trim());
         }
 
