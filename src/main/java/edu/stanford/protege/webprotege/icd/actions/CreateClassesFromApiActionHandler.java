@@ -17,6 +17,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInCapability.CREATE_CLASS;
@@ -96,8 +98,8 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
                         IRI.create(action.parent()),
                         action.projectId(),
                         executionContext
-                ).get();
-            } catch (InterruptedException | ExecutionException e) {
+                ).get(5, TimeUnit.SECONDS);
+            } catch (TimeoutException | InterruptedException | ExecutionException e) {
                 logger.error("CreateLinearizationsError: " + e);
             }
             try {
@@ -106,8 +108,8 @@ public class CreateClassesFromApiActionHandler extends AbstractProjectChangeHand
                         IRI.create(action.parent()),
                         action.projectId(),
                         executionContext
-                ).get();
-            } catch (InterruptedException | ExecutionException e) {
+                ).get(5, TimeUnit.SECONDS);
+            } catch (TimeoutException | InterruptedException | ExecutionException e) {
                 logger.error("CreatePostcoordinationError: " + e);
             }
             return new CreateClassesFromApiResult(

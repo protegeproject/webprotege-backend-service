@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -163,8 +165,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                     .map(OWLNamedObject::getIRI)
                     .collect(Collectors.toSet());
             try {
-                linearizationManager.mergeLinearizationsFromParents(action.entity().getIRI(), parentIris, projectId, executionContext).get();
-            } catch (InterruptedException | ExecutionException e) {
+                linearizationManager.mergeLinearizationsFromParents(action.entity().getIRI(), parentIris, projectId, executionContext).get(5, TimeUnit.SECONDS);
+            } catch (TimeoutException | InterruptedException | ExecutionException e) {
                 logger.error("MergeLinearizationsError: " + e);
             }
             projectOrderedChildrenManager.changeEntityParents(action.entity().getIRI(),removedParents,newParents);

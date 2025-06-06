@@ -19,6 +19,8 @@ import javax.annotation.Nullable;
 import javax.inject.Inject;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
@@ -130,8 +132,8 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
                         Set.of(destinationNode.get().getEntity().getIRI()),
                         action.projectId(),
                         executionContext
-                ).get();
-            } catch (InterruptedException | ExecutionException e) {
+                ).get(5, TimeUnit.SECONDS);
+            } catch (TimeoutException | InterruptedException | ExecutionException e) {
                 logger.error("Error merging linearizations after moving entity: {}to new parent: {}",
                         sourceNode.get().getBrowserText(),
                         destinationNode.get().getBrowserText(),

@@ -28,6 +28,8 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -161,8 +163,8 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
                     .flatMap(cls -> Stream.of(linearizationManager.mergeLinearizationsFromParents(cls.getIRI(), Set.of(action.parentEntity().getIRI()), action.projectId(), executionContext)))
                     .forEach(completableFuture -> {
                         try {
-                            completableFuture.get();
-                        } catch (InterruptedException | ExecutionException e) {
+                            completableFuture.get(5, TimeUnit.SECONDS);
+                        } catch (TimeoutException | InterruptedException | ExecutionException e) {
                             logger.error("MergeLinearizationsError: " + e);
                         }
                     });

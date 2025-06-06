@@ -34,7 +34,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     @Override
     public List<UserId> getUserIdsContainingIgnoreCase(String userName, int limit) {
         try {
-            return getUsersExecutor.execute(new UsersQueryRequest(userName, false), new ExecutionContext()).get().completions();
+            return getUsersExecutor.execute(new UsersQueryRequest(userName, false), new ExecutionContext()).get(5, TimeUnit.SECONDS).completions();
         } catch (Exception e) {
             logger.error("Error calling get users",e);
             return new ArrayList<>();

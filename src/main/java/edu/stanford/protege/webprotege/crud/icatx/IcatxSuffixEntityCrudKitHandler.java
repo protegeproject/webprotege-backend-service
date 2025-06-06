@@ -20,6 +20,8 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 public class IcatxSuffixEntityCrudKitHandler implements EntityCrudKitHandler<IcatxSuffixSettings, ChangeSetEntityCrudSession> {
@@ -85,9 +87,9 @@ public class IcatxSuffixEntityCrudKitHandler implements EntityCrudKitHandler<Ica
             newIri = IRI.create(entityCrudKitPrefixSettings.getIRIPrefix(), UUID.randomUUID().toString());
         } else {
             try {
-                GetUniqueIdResponse response = uniqueIdExecutor.execute(new GetUniqueIdRequest(iriPrefix), new ExecutionContext()).get();
+                GetUniqueIdResponse response = uniqueIdExecutor.execute(new GetUniqueIdRequest(iriPrefix), new ExecutionContext()).get(5, TimeUnit.SECONDS);
                 newIri = IRI.create(response.uniqueId());
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (TimeoutException | InterruptedException | ExecutionException e) {
                 LOGGER.error("Error fetching unique id ", e);
                 throw new RuntimeException("Error fetching unique id ", e);
             }
