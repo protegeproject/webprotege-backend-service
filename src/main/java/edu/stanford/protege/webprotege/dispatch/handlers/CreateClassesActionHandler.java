@@ -15,6 +15,8 @@ import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
@@ -95,8 +97,8 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                 action.parents().stream().findFirst().get().getIRI(),
                                 action.projectId(),
                                 executionContext
-                        ).get();
-                    } catch (InterruptedException | ExecutionException e) {
+                        ).get(5, TimeUnit.SECONDS);
+                    } catch (TimeoutException | InterruptedException | ExecutionException e) {
                         logger.error("MergeLinearizationsError: " + e);
                     }
                     try {
@@ -110,8 +112,8 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                 action.parents().stream().findFirst().get().getIRI(),
                                 action.projectId(),
                                 executionContext
-                        ).get();
-                    } catch (InterruptedException | ExecutionException e) {
+                        ).get(5, TimeUnit.SECONDS);
+                    } catch (TimeoutException | InterruptedException | ExecutionException e) {
                         logger.error("CreatePostcoordinationError: " + e);
                     }
                 }

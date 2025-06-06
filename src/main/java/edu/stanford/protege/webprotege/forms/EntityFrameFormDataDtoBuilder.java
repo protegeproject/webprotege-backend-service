@@ -204,7 +204,7 @@ public class EntityFrameFormDataDtoBuilder {
 
     public FormDataDto toFormData(@Nonnull Optional<FormEntitySubject> subject,
                                   @Nonnull FormDescriptor formDescriptor) {
-        logger.info("Current user capabilities: {}" , capabilities);
+        logger.debug("Current user capabilities: {}" , capabilities);
         int depth = 0;
         return getFormDataDto(subject, formDescriptor, depth);
     }

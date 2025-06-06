@@ -11,6 +11,8 @@ import javax.annotation.Nonnull;
 import java.text.MessageFormat;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @Component
 public class LinearizationParentChecker {
@@ -27,8 +29,8 @@ public class LinearizationParentChecker {
 
     public Set<IRI> getParentThatIsLinearizationPathParent(IRI owlClas, Set<IRI> parentClasses, ProjectId projectId) {
         try {
-            return linearizationManager.getParentsThatAreLinearizationPathParents(owlClas, parentClasses, projectId, new ExecutionContext()).get();
-        } catch (InterruptedException | ExecutionException e) {
+            return linearizationManager.getParentsThatAreLinearizationPathParents(owlClas, parentClasses, projectId, new ExecutionContext()).get(5, TimeUnit.SECONDS);
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
             String message = MessageFormat.format("Could not check if any parents are linearization path parents for {0}", owlClas.toString());
             logger.error(message, e);
             throw new RuntimeException(message, e);

@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Predicate;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -82,7 +84,7 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
                                         @Nonnull ExecutionContext executionContext) {
         var capabilities = getCapabilities(action.projectId(), executionContext.userId(), executionContext);
         var accessRestrictions = getFormRegionAccessRestrictions(projectId, executionContext);
-        logger.info("GetEntityFormsActionHandler got capabilities: {}", capabilities);
+        logger.debug("GetEntityFormsActionHandler got capabilities: {}", capabilities);
         var entityData = renderingManager.getRendering(action.entity());
             var pageRequests = action.formPageRequests();
             var pageRequestIndex = FormPageRequestIndex.create(ImmutableList.copyOf(pageRequests));
@@ -114,10 +116,10 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
             return new GetEntityFormsResult(entityData, ImmutableList.copyOf(action.formFilters()), forms);
     }
 
-    private Set<Capability> getCapabilities(@NotNull GetEntityFormsAction action, @NotNull ExecutionContext executionContext) throws InterruptedException, ExecutionException {
+    private Set<Capability> getCapabilities(@NotNull GetEntityFormsAction action, @NotNull ExecutionContext executionContext) throws InterruptedException, ExecutionException, TimeoutException {
         var capsResponse = getCapsExecutor.execute(new GetAuthorizedCapabilitiesRequest(ProjectResource.forProject(action.projectId()),
                 Subject.forUser(executionContext.userId())), executionContext)
-                .get();
+                .get(5, TimeUnit.SECONDS);
         return capsResponse.capabilities();
     }
 
@@ -141,9 +143,9 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
         try {
             var result = getCapsExecutor.execute(new GetAuthorizedCapabilitiesRequest(ProjectResource.forProject(projectId),
                     Subject.forUser(userId)), executionContext)
-                    .get();
+                    .get(5, TimeUnit.SECONDS);
             return result.capabilities();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
             logger.error("An error occurred while retrieving the capabilites for the specified user and project", e);
             return Set.of();
         }
@@ -152,9 +154,9 @@ public class GetEntityFormsActionHandler extends AbstractProjectActionHandler<Ge
     private List<FormRegionAccessRestriction> getFormRegionAccessRestrictions(ProjectId projectId, ExecutionContext executionContext) throws RuntimeException {
         try {
             return getFormRegionAccessRestrictionsExecutor.execute(new GetFormRegionAccessRestrictionsRequest(projectId), executionContext)
-                    .get()
+                    .get(5, TimeUnit.SECONDS)
                     .accessRestrictions();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | InterruptedException | ExecutionException e) {
             logger.error("Could not retrieve form access restrictions");
             return List.of();
         }
