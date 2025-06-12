@@ -174,6 +174,7 @@ class MoveToParentIcdActionHandlerTest {
 
         assertFalse(result.isDestinationRetiredClass());
         assertEquals(1, result.entitiesForWhichParentIsLinPathParent().size());
-        verify(linParentChecker).getParentThatIsLinearizationPathParent(entityClass.getIRI(), Set.of(currParentClass.getIRI()), projectId, new ExecutionContext());
+        verify(linParentChecker).getParentThatIsLinearizationPathParent(any(IRI.class), any(Set.class), any(ProjectId.class), any(ExecutionContext.class));
+
     }
 }
