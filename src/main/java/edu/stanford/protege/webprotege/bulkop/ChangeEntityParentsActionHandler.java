@@ -136,7 +136,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                 .collect(Collectors.toSet());
         var parentThatisLinearizationParent = linParentChecker.getParentThatIsLinearizationPathParent(action.entity().getIRI(),
                 removedParents,
-                projectId);
+                projectId,executionContext);
 
         if (!parentThatisLinearizationParent.isEmpty()) {
             return getResultWithParentAsLinearizationPathParent(parentThatisLinearizationParent);

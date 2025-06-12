@@ -27,9 +27,10 @@ public class LinearizationParentChecker {
         this.linearizationManager = linearizationManager;
     }
 
-    public Set<IRI> getParentThatIsLinearizationPathParent(IRI owlClas, Set<IRI> parentClasses, ProjectId projectId) {
+    public Set<IRI> getParentThatIsLinearizationPathParent(IRI owlClas, Set<IRI> parentClasses, ProjectId projectId, ExecutionContext executionContext) {
         try {
-            return linearizationManager.getParentsThatAreLinearizationPathParents(owlClas, parentClasses, projectId, new ExecutionContext()).get(5, TimeUnit.SECONDS);
+            return linearizationManager.getParentsThatAreLinearizationPathParents(owlClas, parentClasses, projectId, executionContext)
+                    .get(5, TimeUnit.SECONDS);
         } catch (TimeoutException | InterruptedException | ExecutionException e) {
             String message = MessageFormat.format("Could not check if any parents are linearization path parents for {0}", owlClas.toString());
             logger.error(message, e);

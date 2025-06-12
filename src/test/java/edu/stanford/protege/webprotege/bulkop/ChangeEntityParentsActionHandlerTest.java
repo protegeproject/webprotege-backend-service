@@ -215,7 +215,7 @@ class ChangeEntityParentsActionHandlerTest {
 
         ChangeEntityParentsAction action = new ChangeEntityParentsAction(null, projectId, ImmutableSet.of(), entityClass, "Test Commit Message");
 
-        when(linearizationParentChecker.getParentThatIsLinearizationPathParent(entityClass.getIRI(), removedParents, projectId))
+        when(linearizationParentChecker.getParentThatIsLinearizationPathParent(entityClass.getIRI(), removedParents, projectId, new ExecutionContext()))
                 .thenReturn(Set.of(linearizationParentIri));
 
         when(classHierarchyProvider.getParents(any())).thenReturn(Set.of(linearizationParentClass));
@@ -228,7 +228,7 @@ class ChangeEntityParentsActionHandlerTest {
         assertTrue(result.classesWithCycle().isEmpty());
         assertTrue(result.classesWithRetiredParents().isEmpty());
 
-        verify(linearizationParentChecker).getParentThatIsLinearizationPathParent(entityClass.getIRI(), removedParents, projectId);
+        verify(linearizationParentChecker).getParentThatIsLinearizationPathParent(entityClass.getIRI(), removedParents, projectId, new ExecutionContext());
         verify(classCycleDetector, times(0)).getClassesWithCycle(any());
         verify(releasedClassesChecker, times(0)).isReleased(any());
         verify(retiredClassDetector, times(0)).getClassesWithRetiredAncestors(any());

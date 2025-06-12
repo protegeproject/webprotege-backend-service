@@ -164,7 +164,7 @@ class MoveToParentIcdActionHandlerTest {
 
         MoveEntitiesToParentIcdAction action = new MoveEntitiesToParentIcdAction(null, projectId, ImmutableSet.of(entityClass), newParentClass, "Test Commit Message");
         IRI currParentIri = currParentClass.getIRI();
-        when(linParentChecker.getParentThatIsLinearizationPathParent(any(), any(), any())).thenReturn(Set.of(currParentIri));
+        when(linParentChecker.getParentThatIsLinearizationPathParent(any(), any(), any(), any())).thenReturn(Set.of(currParentIri));
 
 
         Map<String, ImmutableSet<OWLEntityData>> expectedMap = new HashMap<>();
@@ -174,6 +174,6 @@ class MoveToParentIcdActionHandlerTest {
 
         assertFalse(result.isDestinationRetiredClass());
         assertEquals(1, result.entitiesForWhichParentIsLinPathParent().size());
-        verify(linParentChecker).getParentThatIsLinearizationPathParent(entityClass.getIRI(), Set.of(currParentClass.getIRI()), projectId);
+        verify(linParentChecker).getParentThatIsLinearizationPathParent(entityClass.getIRI(), Set.of(currParentClass.getIRI()), projectId, new ExecutionContext());
     }
 }

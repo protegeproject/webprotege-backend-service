@@ -123,7 +123,7 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
                             .collect(Collectors.toSet());
                     linParentChecker.getParentThatIsLinearizationPathParent(entity.getIRI(),
                                     currentParents,
-                                    action.projectId())
+                                    action.projectId(), executionContext)
                             .forEach(linPathParent -> {
                                 Set<IRI> entitySet = entitiesWithParentLinPathParent.get(linPathParent);
                                 if (entitySet == null) {

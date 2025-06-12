@@ -224,7 +224,7 @@ class MoveHierarchyNodeIcdActionHandlerTest {
 
         when(linParentChecker.getParentThatIsLinearizationPathParent(entityIri,
                 Set.of(previousParentIri),
-                action.projectId())
+                action.projectId(), new ExecutionContext())
         ).thenReturn(Set.of(previousParentIri));
 
         MoveHierarchyNodeIcdResult result = actionHandler.execute(action, executionContext);
@@ -236,7 +236,7 @@ class MoveHierarchyNodeIcdActionHandlerTest {
         verify(linParentChecker).getParentThatIsLinearizationPathParent(
                 entityIri,
                 Set.of(previousParentIri),
-                action.projectId()
+                action.projectId(), new ExecutionContext()
         );
     }
 

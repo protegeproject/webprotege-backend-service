@@ -104,7 +104,7 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
             if (previousParent.isPresent()) {
                 isLinPathParent = linParentChecker.getParentThatIsLinearizationPathParent(classToBeMoved.getIRI(),
                                 Set.of(previousParent.get().getEntity().getIRI()),
-                                action.projectId())
+                                action.projectId(), executionContext)
                         .stream().findAny().isPresent();
                 if (isLinPathParent) {
                     return new MoveHierarchyNodeIcdResult(false, isDestinationRetiredClass, isLinPathParent);
