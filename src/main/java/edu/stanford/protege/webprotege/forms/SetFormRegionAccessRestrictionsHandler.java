@@ -2,20 +2,14 @@ package edu.stanford.protege.webprotege.forms;
 
 import com.google.common.collect.HashMultimap;
 import edu.stanford.protege.webprotege.authorization.*;
-import edu.stanford.protege.webprotege.ipc.AuthorizedCommandHandler;
-import edu.stanford.protege.webprotege.ipc.CommandExecutor;
-import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-import edu.stanford.protege.webprotege.ipc.WebProtegeHandler;
-import edu.stanford.protege.webprotege.permissions.RebuildProjectPermissionsRequest;
-import edu.stanford.protege.webprotege.permissions.RebuildProjectPermissionsResponse;
+import edu.stanford.protege.webprotege.ipc.*;
+import edu.stanford.protege.webprotege.permissions.*;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @WebProtegeHandler
 public class SetFormRegionAccessRestrictionsHandler implements AuthorizedCommandHandler<SetFormRegionAccessRestrictionsRequest, SetFormRegionAccessRestrictionsResponse> {
@@ -44,7 +38,7 @@ public class SetFormRegionAccessRestrictionsHandler implements AuthorizedCommand
     @NotNull
     @Override
     public Collection<Capability> getRequiredCapabilities() {
-        return List.of(BasicCapability.valueOf("EditForms" ));
+        return List.of(BasicCapability.valueOf("EditForms"));
     }
 
     @NotNull
@@ -67,29 +61,37 @@ public class SetFormRegionAccessRestrictionsHandler implements AuthorizedCommand
 
 
         var roleCapabilityMap = HashMultimap.<RoleId, FormRegionCapability>create();
-        accessRestrictions.forEach(accessRestriction -> {
-            roleCapabilityMap.put(accessRestriction.roleId(), FormRegionCapability.valueOf(accessRestriction.capabilityId(), accessRestriction.formRegionId(), accessRestriction.criteria()));
-        });
+        accessRestrictions.forEach(accessRestriction ->
+                roleCapabilityMap.put(
+                        accessRestriction.roleId(),
+                        FormRegionCapability.valueOf(accessRestriction.capabilityId(), accessRestriction.formRegionId(), accessRestriction.criteria())
+                )
+        );
 
         var response = getRoleDefsExecutor.execute(GetProjectRoleDefinitionsRequest.get(request.projectId()), executionContext)
                 .thenCompose(roleDefsResponse -> {
                     var replacementRoleDefinitions = new ArrayList<RoleDefinition>();
                     var existingRoleDefinitions = roleDefsResponse.roleDefinitions();
+                    var regionIdsToUpdate = accessRestrictions.stream()
+                            .map(FormRegionAccessRestriction::formRegionId)
+                            .collect(Collectors.toSet());
+
                     existingRoleDefinitions.forEach(roleDef -> {
-                        var capabilities = roleCapabilityMap.get(roleDef.roleId());
-                        // Replace existing form region capabilities
-                        var updatedRole = roleDef.withoutCapabilities(c -> c instanceof FormRegionCapability);
-                        updatedRole = updatedRole.addCapabilities(capabilities);
+                        var updatedRole = roleDef.withoutCapabilities(c ->
+                                c instanceof FormRegionCapability frc
+                                        && regionIdsToUpdate.contains(frc.formRegionId())
+                        );
+                        updatedRole = updatedRole.addCapabilities(roleCapabilityMap.get(roleDef.roleId()));
                         replacementRoleDefinitions.add(updatedRole);
                     });
                     logger.info("Setting role definitions for project: {}", replacementRoleDefinitions);
                     return setRoleDefsExecutor.execute(SetProjectRoleDefinitionsRequest.get(projectId, replacementRoleDefinitions),
                                     executionContext)
-                            .thenCompose(r2 -> {
-                                return rebuildPermissionsExecutor.execute(RebuildProjectPermissionsRequest.get(projectId),
-                                        executionContext)
-                                        .thenApply(r -> new SetFormRegionAccessRestrictionsResponse(projectId));
-                            });
+                            .thenCompose(r2 -> rebuildPermissionsExecutor.execute(
+                                            RebuildProjectPermissionsRequest.get(projectId),
+                                            executionContext
+                                    ).thenApply(r -> new SetFormRegionAccessRestrictionsResponse(projectId))
+                            );
                 });
         return Mono.fromFuture(response);
     }
