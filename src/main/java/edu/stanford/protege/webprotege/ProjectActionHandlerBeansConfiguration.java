@@ -989,12 +989,12 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
-    GetClassAncestorsActionHandler getClassAncestorsActionHandler(AccessManager p1,
-                                                                  RenderingManager p2,
-                                                                  HierarchyProviderManager p3,
-                                                                  IcatxEntityTypeConfigurationRepository p4,
-                                                                  AncestorHierarchyNodeMapper p5) {
-        return new GetClassAncestorsActionHandler(p1, p2, p3, p4, p5);
+    GetLogicalDefinitionsClassAncestorsActionHandler getClassAncestorsActionHandler(AccessManager p1,
+                                                                                    RenderingManager p2,
+                                                                                    HierarchyProviderManager p3,
+                                                                                    IcatxEntityTypeConfigurationRepository p4,
+                                                                                    AncestorHierarchyNodeMapper p5) {
+        return new GetLogicalDefinitionsClassAncestorsActionHandler(p1, p2, p3, p4, p5);
     }
 
     @Bean

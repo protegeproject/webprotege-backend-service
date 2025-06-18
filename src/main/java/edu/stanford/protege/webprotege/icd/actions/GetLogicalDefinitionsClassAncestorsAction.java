@@ -6,12 +6,12 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.ProjectAction;
 import org.semanticweb.owlapi.model.IRI;
 
-public record GetClassAncestorsAction(IRI classIri, ProjectId projectId) implements ProjectAction<GetClassAncestorsResult> {
+public record GetLogicalDefinitionsClassAncestorsAction(IRI classIri, ProjectId projectId) implements ProjectAction<GetLogicalDefinitionsClassAncestorsResult> {
 
-    public final static String CHANNEL = "webprotege.entities.GetClassAncestors";
+    public final static String CHANNEL = "webprotege.entities.GetLogicalDefinitionsClassAncestors";
 
     @JsonCreator
-    public GetClassAncestorsAction(@JsonProperty("classIri") IRI classIri, @JsonProperty("projectId") ProjectId projectId) {
+    public GetLogicalDefinitionsClassAncestorsAction(@JsonProperty("classIri") IRI classIri, @JsonProperty("projectId") ProjectId projectId) {
         this.classIri = classIri;
         this.projectId = projectId;
     }

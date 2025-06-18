@@ -17,8 +17,8 @@ import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@JsonTypeName("webprotege.entities.GetClassAncestors")
-public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler<GetClassAncestorsAction, GetClassAncestorsResult> {
+@JsonTypeName(GetLogicalDefinitionsClassAncestorsAction.CHANNEL)
+public class GetLogicalDefinitionsClassAncestorsActionHandler extends AbstractProjectActionHandler<GetLogicalDefinitionsClassAncestorsAction, GetLogicalDefinitionsClassAncestorsResult> {
 
 
     private final RenderingManager renderingManager;
@@ -30,11 +30,11 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
 
     private final AncestorHierarchyNodeMapper ancestorHierarchyNodeMapper;
 
-    public GetClassAncestorsActionHandler(@NotNull AccessManager accessManager,
-                                          RenderingManager renderingManager,
-                                          @Nonnull HierarchyProviderManager hierarchyProviderMapper,
-                                          IcatxEntityTypeConfigurationRepository repository,
-                                          AncestorHierarchyNodeMapper ancestorHierarchyNodeMapper) {
+    public GetLogicalDefinitionsClassAncestorsActionHandler(@NotNull AccessManager accessManager,
+                                                            RenderingManager renderingManager,
+                                                            @Nonnull HierarchyProviderManager hierarchyProviderMapper,
+                                                            IcatxEntityTypeConfigurationRepository repository,
+                                                            AncestorHierarchyNodeMapper ancestorHierarchyNodeMapper) {
         super(accessManager);
         this.hierarchyProviderMapper = hierarchyProviderMapper;
         this.renderingManager = renderingManager;
@@ -44,15 +44,19 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
 
     @NotNull
     @Override
-    public Class<GetClassAncestorsAction> getActionClass() {
-        return GetClassAncestorsAction.class;
+    public Class<GetLogicalDefinitionsClassAncestorsAction> getActionClass() {
+        return GetLogicalDefinitionsClassAncestorsAction.class;
     }
 
     @NotNull
     @Override
-    public GetClassAncestorsResult execute(@NotNull GetClassAncestorsAction action, @NotNull ExecutionContext executionContext) {
+    public GetLogicalDefinitionsClassAncestorsResult execute(@NotNull GetLogicalDefinitionsClassAncestorsAction action, @NotNull ExecutionContext executionContext) {
         List<IcatxEntityTypeConfiguration> configurations = repository.findAllByProjectId(action.projectId());
 
+        Set<IRI> highLevelEntities = configurations.stream()
+                .filter(config -> "".equals(config.excludesEntityType()))
+                .map(IcatxEntityTypeConfiguration::topLevelIri)
+                .collect(Collectors.toSet());
 
         List<IRI> ancestorsIris = new ArrayList<>(hierarchyProviderMapper.getHierarchyProvider(ClassHierarchyDescriptor.create()).get()
                 .getAncestors(DataFactory.getOWLClass(action.classIri())))
@@ -75,11 +79,18 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
         ClassHierarchyDescriptor classDescriptorWithRoots = ClassHierarchyDescriptor.create(entityTypesRoots);
         return hierarchyProviderMapper.getHierarchyProvider(classDescriptorWithRoots)
                 .map(hierarchyProviderMapper -> {
-                    var ancestors = hierarchyProviderMapper.getAncestorsTree(DataFactory.getOWLClass(action.classIri()))
+                    var ancestorsTree = hierarchyProviderMapper.getAncestorsTree(DataFactory.getOWLClass(action.classIri()))
                             .map(this.ancestorHierarchyNodeMapper::map)
                             .orElse(getEmptyAncestorHierarchy(action.classIri()));
-                    return new GetClassAncestorsResult(ancestors);
-                }).orElseGet(() -> new GetClassAncestorsResult(getEmptyAncestorHierarchy(action.classIri())));
+
+                    AncestorHierarchyNode<OWLEntityData> pruned = prune(ancestorsTree, highLevelEntities);
+
+                    if (pruned == null) {
+                        pruned = getEmptyAncestorHierarchy(action.classIri());
+                    }
+                    return new GetLogicalDefinitionsClassAncestorsResult(pruned);
+
+                }).orElseGet(() -> new GetLogicalDefinitionsClassAncestorsResult(getEmptyAncestorHierarchy(action.classIri())));
     }
 
     private AncestorHierarchyNode<OWLEntityData> getEmptyAncestorHierarchy(IRI classIri){
@@ -87,6 +98,26 @@ public class GetClassAncestorsActionHandler extends AbstractProjectActionHandler
         response.setNode(renderingManager.getRendering(DataFactory.getOWLClass(classIri)));
         response.setChildren(Collections.emptyList());
         return response;
+    }
+
+    /**
+     * Recursively drops any subtree whose node‐IRI appears in the highLevelEntities set.
+     * Returns null if this node (and its entire branch) should be removed.
+     */
+    private AncestorHierarchyNode<OWLEntityData> prune(AncestorHierarchyNode<OWLEntityData> node,
+                                                       Set<IRI> highLevelEntities) {
+        IRI nodeIri = node.getNode().getEntity().getIRI();
+        if (highLevelEntities.contains(nodeIri)) {
+            // drop this node (and everything under it)
+            return null;
+        }
+        // otherwise keep the node, but recurse into its children
+        List<AncestorHierarchyNode<OWLEntityData>> keptKids = node.getChildren().stream()
+                .map(child -> prune(child, highLevelEntities))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        node.setChildren(keptKids);
+        return node;
     }
 }
 

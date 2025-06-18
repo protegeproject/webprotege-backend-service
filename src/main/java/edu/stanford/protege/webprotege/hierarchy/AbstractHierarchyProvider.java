@@ -2,8 +2,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 
 import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 import java.util.*;
 
@@ -52,14 +51,14 @@ public abstract class AbstractHierarchyProvider<N> implements HierarchyProvider<
         Set<N> processed = new HashSet<>();
         Deque<N> processingQueue = new ArrayDeque<>();
         processingQueue.push(descendant);
-        while(!processingQueue.isEmpty()) {
+        while (!processingQueue.isEmpty()) {
             var currentNode = processingQueue.pop();
             var parents = getParents(currentNode);
-            for(var parent : parents) {
-                if(ancestor.equals(parent)) {
+            for (var parent : parents) {
+                if (ancestor.equals(parent)) {
                     return true;
                 }
-                if(!processed.contains(parent)) {
+                if (!processed.contains(parent)) {
                     processed.add(parent);
                     processingQueue.add(parent);
                 }
@@ -99,6 +98,7 @@ public abstract class AbstractHierarchyProvider<N> implements HierarchyProvider<
 
     /**
      * Gets the paths to the root class for the specified object.
+     *
      * @return A <code>Set</code> of <code>List</code>s of <code>N</code>s
      */
     public Collection<List<N>> getPathsToRoot(N obj) {
@@ -148,12 +148,11 @@ public abstract class AbstractHierarchyProvider<N> implements HierarchyProvider<
         while (!objectsToBeVisited.isEmpty()) {
             AncestorHierarchyNode<N> currentNode = objectsToBeVisited.poll();
             List<AncestorHierarchyNode<N>> parents = getParents(currentNode.getNode()).stream()
-                    .filter(parent -> !getRoots().contains(parent))
                     .map(parent -> {
-                AncestorHierarchyNode<N> response = new AncestorHierarchyNode<>();
-                response.setNode(parent);
-                return response;
-            }).toList();
+                        AncestorHierarchyNode<N> response = new AncestorHierarchyNode<>();
+                        response.setNode(parent);
+                        return response;
+                    }).toList();
             currentNode.setChildren(parents);
             objectsToBeVisited.addAll(parents);
         }
