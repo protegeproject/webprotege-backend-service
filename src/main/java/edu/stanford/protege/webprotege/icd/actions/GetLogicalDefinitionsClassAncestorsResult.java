@@ -6,13 +6,13 @@ import edu.stanford.protege.webprotege.dispatch.Result;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 
 
-@JsonTypeName(GetClassAncestorsAction.CHANNEL)
-public class GetClassAncestorsResult implements Result {
+@JsonTypeName(GetLogicalDefinitionsClassAncestorsAction.CHANNEL)
+public class GetLogicalDefinitionsClassAncestorsResult implements Result {
 
 
     private final AncestorHierarchyNode<OWLEntityData> ancestorTree;
 
-    public GetClassAncestorsResult(AncestorHierarchyNode<OWLEntityData> ancestorTree) {
+    public GetLogicalDefinitionsClassAncestorsResult(AncestorHierarchyNode<OWLEntityData> ancestorTree) {
         this.ancestorTree = ancestorTree;
     }
 

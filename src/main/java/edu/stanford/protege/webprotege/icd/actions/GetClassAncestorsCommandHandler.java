@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 
 @WebProtegeHandler
-public class GetClassAncestorsCommandHandler  implements CommandHandler<GetClassAncestorsAction, GetClassAncestorsResult> {
+public class GetClassAncestorsCommandHandler  implements CommandHandler<GetLogicalDefinitionsClassAncestorsAction, GetLogicalDefinitionsClassAncestorsResult> {
     private final ActionExecutor executor;
 
     public GetClassAncestorsCommandHandler(ActionExecutor executor) {
@@ -19,16 +19,16 @@ public class GetClassAncestorsCommandHandler  implements CommandHandler<GetClass
     @NotNull
     @Override
     public String getChannelName() {
-        return GetClassAncestorsAction.CHANNEL;
+        return GetLogicalDefinitionsClassAncestorsAction.CHANNEL;
     }
 
     @Override
-    public Class<GetClassAncestorsAction> getRequestClass() {
-        return GetClassAncestorsAction.class;
+    public Class<GetLogicalDefinitionsClassAncestorsAction> getRequestClass() {
+        return GetLogicalDefinitionsClassAncestorsAction.class;
     }
 
     @Override
-    public Mono<GetClassAncestorsResult> handleRequest(GetClassAncestorsAction request, ExecutionContext executionContext) {
+    public Mono<GetLogicalDefinitionsClassAncestorsResult> handleRequest(GetLogicalDefinitionsClassAncestorsAction request, ExecutionContext executionContext) {
         return executor.executeRequest(request, executionContext);
     }
 }
