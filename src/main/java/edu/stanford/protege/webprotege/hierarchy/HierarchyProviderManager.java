@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
+import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.events.HierarchyChangesComputerFactory;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -7,6 +8,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,5 +54,12 @@ public class HierarchyProviderManager {
             hierarchyChangesComputerMap.put(hierarchyDescriptor, changeComputer);
         });
         return hierarchyProvider;
+    }
+
+    public void handleChanges(List<OntologyChange> changes) {
+        hierarchyProviderMap.values()
+                .forEach(hierarchyProvider -> {
+                    hierarchyProvider.handleChanges(changes);
+                });
     }
 }

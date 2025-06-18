@@ -1,9 +1,11 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.*;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class ObjectPropertyHierarchyProviderFactory {
@@ -20,16 +22,22 @@ public class ObjectPropertyHierarchyProviderFactory {
 
     private final AxiomsByTypeIndex axiomsByTypeIndex;
 
-    public ObjectPropertyHierarchyProviderFactory(ProjectId projectId, EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex, ProjectOntologiesIndex projectOntologiesIndex, OntologySignatureByTypeIndex ontologySignatureByTypeIndex, SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex, AxiomsByTypeIndex axiomsByTypeIndex) {
+    private final ObjectPropertyHierarchyProvider objectPropertyHierarchyProvider;
+
+    public ObjectPropertyHierarchyProviderFactory(ProjectId projectId, EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex, ProjectOntologiesIndex projectOntologiesIndex, OntologySignatureByTypeIndex ontologySignatureByTypeIndex, SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyAxiomsBySubPropertyIndex, AxiomsByTypeIndex axiomsByTypeIndex, ObjectPropertyHierarchyProvider objectPropertyHierarchyProvider) {
         this.projectId = projectId;
         this.entitiesInProjectSignatureIndex = entitiesInProjectSignatureIndex;
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.ontologySignatureByTypeIndex = ontologySignatureByTypeIndex;
         this.subObjectPropertyAxiomsBySubPropertyIndex = subObjectPropertyAxiomsBySubPropertyIndex;
         this.axiomsByTypeIndex = axiomsByTypeIndex;
+        this.objectPropertyHierarchyProvider = objectPropertyHierarchyProvider;
     }
 
     public ObjectPropertyHierarchyProvider getObjectPropertyHierarchyProvider(Set<OWLObjectProperty> roots) {
+        if(roots.equals(Collections.singleton(DataFactory.getOWLTopObjectProperty()))) {
+            return objectPropertyHierarchyProvider;
+        }
         return new ObjectPropertyHierarchyProviderImpl(projectId,
                 roots.iterator().next(),
                 entitiesInProjectSignatureIndex,

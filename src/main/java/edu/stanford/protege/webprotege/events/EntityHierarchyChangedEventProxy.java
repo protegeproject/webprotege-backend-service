@@ -111,4 +111,13 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
         var mappedEvent = GraphModelChangedEvent.create(mappedChanges.build());
         return new EntityHierarchyChangedEvent(EventId.generate(), projectId, hierarchyDescriptor, mappedEvent);
     }
+
+    @Override
+    public String toString() {
+        return "EntityHierarchyChangedEventProxy{" +
+               "projectId=" + projectId +
+               ", hierarchyDescriptor=" + hierarchyDescriptor +
+               ", graphModelChangedEvent=" + graphModelChangedEvent +
+               '}';
+    }
 }

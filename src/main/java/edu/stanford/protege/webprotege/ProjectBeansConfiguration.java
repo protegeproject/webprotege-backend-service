@@ -2,7 +2,6 @@ package edu.stanford.protege.webprotege;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.app.ApplicationHostSupplier;
 import edu.stanford.protege.webprotege.app.ApplicationNameSupplier;
@@ -519,6 +518,7 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    @Scope("prototype")
     EventTranslatorManager eventTranslatorManager(Set<EventTranslator> p1) {
         return new EventTranslatorManager(p1);
     }
@@ -620,7 +620,7 @@ public class ProjectBeansConfiguration {
                                 IndexUpdater p23,
                                 DefaultOntologyIdManager p24,
                                 IriReplacerFactory p25,
-                                GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher) {
+                                GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher, HierarchyProviderManager p27) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -644,7 +644,7 @@ public class ProjectBeansConfiguration {
                                  p23,
                                  p24,
                                  p25,
-                                 p26, eventDispatcher);
+                                 p26, eventDispatcher, p27);
     }
 
 
@@ -740,6 +740,7 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    @Scope("prototype")
     BrowserTextChangedEventComputer browserTextChangedEventComputer(ProjectId p1,
                                                                     DictionaryManager p2,
                                                                     HasGetChangeSubjects p3,
@@ -748,6 +749,7 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    @Scope("prototype")
     HighLevelEventGenerator highLevelEventGenerator(ProjectId p1,
                                                     RenderingManager p2,
                                                     EntitiesInProjectSignatureByIriIndex p3,
@@ -794,6 +796,7 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    @Scope("prototype")
     EntityDeprecatedChangedEventTranslator entityDeprecatedChangedEventTranslator(ProjectId p1,
                                                                                   DeprecatedEntityChecker p2,
                                                                                   EntitiesInProjectSignatureByIriIndex p3) {
@@ -801,19 +804,11 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
+    @Scope("prototype")
     EntityTagsChangedEventComputer entityTagsChangedEventComputer(ProjectId p1,
                                                                   OntologyChangeSubjectProvider p2,
                                                                   TagsManager p3) {
         return new EntityTagsChangedEventComputer(p1, p2, p3);
-    }
-
-    @Bean
-    public Set<EventTranslator> eventTranslators(BrowserTextChangedEventComputer c0,
-                                                 HighLevelEventGenerator c1,
-                                                 ManagedHierarchiesChangedComputer c2,
-                                                 EntityDeprecatedChangedEventTranslator c6,
-                                                 EntityTagsChangedEventComputer c7) {
-        return ImmutableSet.of(c0, c1, c2, c6, c7);
     }
 
     @Bean
@@ -1578,13 +1573,13 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ClassHierarchyProviderFactory classHierarchyProviderFactory(ProjectId p1, ProjectOntologiesIndex p2, SubClassOfAxiomsBySubClassIndex p3, EquivalentClassesAxiomsIndex p4, ProjectSignatureByTypeIndex p5, EntitiesInProjectSignatureByIriIndex p6, ClassHierarchyChildrenAxiomsIndex p7) {
-        return new ClassHierarchyProviderFactory(p1, p2, p3, p4, p5, p6, p7);
+    ClassHierarchyProviderFactory classHierarchyProviderFactory(ProjectId p1, ProjectOntologiesIndex p2, SubClassOfAxiomsBySubClassIndex p3, EquivalentClassesAxiomsIndex p4, ProjectSignatureByTypeIndex p5, EntitiesInProjectSignatureByIriIndex p6, ClassHierarchyChildrenAxiomsIndex p7, ClassHierarchyProvider p8) {
+        return new ClassHierarchyProviderFactory(p1, p2, p3, p4, p5, p6, p7, p8);
     }
 
     @Bean
-    ObjectPropertyHierarchyProviderFactory objectPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubObjectPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6) {
-        return new ObjectPropertyHierarchyProviderFactory(p1, p2, p3, p4, p5, p6);
+    ObjectPropertyHierarchyProviderFactory objectPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubObjectPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6, ObjectPropertyHierarchyProvider p7) {
+        return new ObjectPropertyHierarchyProviderFactory(p1, p2, p3, p4, p5, p6, p7);
     }
 
     @Bean
@@ -1596,17 +1591,17 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    AnnotationPropertyHierarchyProviderFactory annotationPropertyHierarchyProviderFactory(ProjectId p1, OWLAnnotationPropertyProvider p2, ProjectSignatureByTypeIndex p3, ProjectOntologiesIndex p4, SubAnnotationPropertyAxiomsBySubPropertyIndex p5, SubAnnotationPropertyAxiomsBySuperPropertyIndex p6, EntitiesInProjectSignatureIndex p7) {
+    AnnotationPropertyHierarchyProviderFactory annotationPropertyHierarchyProviderFactory(ProjectId p1, OWLAnnotationPropertyProvider p2, ProjectSignatureByTypeIndex p3, ProjectOntologiesIndex p4, SubAnnotationPropertyAxiomsBySubPropertyIndex p5, SubAnnotationPropertyAxiomsBySuperPropertyIndex p6, EntitiesInProjectSignatureIndex p7, AnnotationPropertyHierarchyProvider p8) {
         return new AnnotationPropertyHierarchyProviderFactory(p1,
-                p2, p3, p4, p5, p6, p7);
+                p2, p3, p4, p5, p6, p7, p8);
     }
 
     @Bean
-    DataPropertyHierarchyProviderFactory dataPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubDataPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6) {
+    DataPropertyHierarchyProviderFactory dataPropertyHierarchyProviderFactory(ProjectId p1, EntitiesInProjectSignatureIndex p2, ProjectOntologiesIndex p3, OntologySignatureByTypeIndex p4, SubDataPropertyAxiomsBySubPropertyIndex p5, AxiomsByTypeIndex p6, DataPropertyHierarchyProvider p7) {
         return new DataPropertyHierarchyProviderFactory(p1,
                 p2,
                 p3,
-                p4, p5, p6);
+                p4, p5, p6, p7);
     }
 
 

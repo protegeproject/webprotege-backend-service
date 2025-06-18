@@ -41,6 +41,8 @@ public class EntityTagsChangedEventComputer implements EventTranslator {
 
     private final SetMultimap<OWLEntity, Tag> beforeChangesTags = HashMultimap.create();
 
+    private final EventTranslatorSessionChecker sessionChecker = new EventTranslatorSessionChecker();
+
     @Inject
     public EntityTagsChangedEventComputer(@Nonnull ProjectId projectId, @Nonnull OntologyChangeSubjectProvider provider,
                                           @Nonnull TagsManager tagsManager) {
@@ -50,7 +52,8 @@ public class EntityTagsChangedEventComputer implements EventTranslator {
     }
 
     @Override
-    public void prepareForOntologyChanges(List<OntologyChange> submittedChanges) {
+    public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
+        sessionChecker.startSession(sessionId);
         submittedChanges.forEach(chg -> {
             provider.getChangeSubjects(chg).forEach(entity -> {
                 beforeChangesTags.putAll(entity, tagsManager.getTags(entity));
@@ -59,10 +62,11 @@ public class EntityTagsChangedEventComputer implements EventTranslator {
     }
 
     @Override
-    public void translateOntologyChanges(Revision revision,
+    public void translateOntologyChanges(EventTranslatorSessionId sessionId, Revision revision,
                                          ChangeApplicationResult<?> changes,
                                          List<HighLevelProjectEventProxy> projectEventList,
                                          ChangeRequestId changeRequestId) {
+        sessionChecker.finishSession(sessionId);
         changes.getChangeList().forEach(chg -> {
             provider.getChangeSubjects(chg).forEach(entity -> {
                 Collection<Tag> tags = tagsManager.getTags(entity);

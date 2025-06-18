@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
+import edu.stanford.protege.webprotege.change.OntologyChange;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -34,4 +36,6 @@ public interface HierarchyProvider<N> extends HasGetAncestors<N> {
     }
 
     boolean contains(Object object);
+
+    void handleChanges(List<OntologyChange> changes);
 }
