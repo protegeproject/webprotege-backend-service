@@ -42,6 +42,8 @@ public class BrowserTextChangedEventComputer implements EventTranslator {
 
     private final HasContainsEntityInSignature signature;
 
+    private final EventTranslatorSessionChecker sessionChecker = new EventTranslatorSessionChecker();
+
     @Inject
     public BrowserTextChangedEventComputer(@Nonnull ProjectId projectId,
                                            @Nonnull DictionaryManager dictionaryManager,
@@ -54,7 +56,8 @@ public class BrowserTextChangedEventComputer implements EventTranslator {
     }
 
     @Override
-    public void prepareForOntologyChanges(List<OntologyChange> submittedChanges) {
+    public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
+        sessionChecker.startSession(sessionId);
         shortFormMap.clear();
         submittedChanges.stream()
                         // All display names are based on annotations, or paths of annotations
@@ -70,10 +73,11 @@ public class BrowserTextChangedEventComputer implements EventTranslator {
     }
 
     @Override
-    public void translateOntologyChanges(Revision revision,
+    public void translateOntologyChanges(EventTranslatorSessionId sessionId, Revision revision,
                                          ChangeApplicationResult<?> changes,
                                          List<HighLevelProjectEventProxy> projectEventList,
                                          ChangeRequestId changeRequestId) {
+        sessionChecker.finishSession(sessionId);
         Set<OWLEntity> processedEntities = new HashSet<>();
         changes.getChangeList().stream()
                .flatMap(change -> changeSubjectsProvider.getChangeSubjects(change).stream())

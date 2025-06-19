@@ -97,18 +97,6 @@ public class ChangeManager implements HasApplyChanges {
     private final DictionaryManager dictionaryManager;
 
     @Nonnull
-    private final ClassHierarchyProvider classHierarchyProvider;
-
-    @Nonnull
-    private final ObjectPropertyHierarchyProvider objectPropertyHierarchyProvider;
-
-    @Nonnull
-    private final DataPropertyHierarchyProvider dataPropertyHierarchyProvider;
-
-    @Nonnull
-    private final AnnotationPropertyHierarchyProvider annotationPropertyHierarchyProvider;
-
-    @Nonnull
     private final EntityCrudContextFactory entityCrudContextFactory;
 
     @Nonnull
@@ -140,6 +128,8 @@ public class ChangeManager implements HasApplyChanges {
 
     private final OntologyChangeIriReplacer ontologyChangeIriReplacer = new OntologyChangeIriReplacer();
 
+    private final HierarchyProviderManager hierarchyProviderManager;
+
     private final NewRevisionsEventEmitterService newRevisionsEmitter;
 
     @Inject
@@ -169,7 +159,8 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator,
                          @Nonnull EventDispatcher eventDispatcher,
                          @Nonnull NewRevisionsEventEmitterService newRevisionsEmitter,
-                         @Nonnull ProjectRevisionRepository projectRevisionRepository) {
+                         @Nonnull ProjectRevisionRepository projectRevisionRepository,
+                         @Nonnull HierarchyProviderManager hierarchyProviderManager) {
         this.projectId = projectId;
         this.dataFactory = dataFactory;
         this.dictionaryUpdatesProcessor = dictionaryUpdatesProcessor;
@@ -185,10 +176,6 @@ public class ChangeManager implements HasApplyChanges {
         this.changeManager = changeManager;
         this.rootIndex = rootIndex;
         this.dictionaryManager = dictionaryManager;
-        this.classHierarchyProvider = classHierarchyProvider;
-        this.objectPropertyHierarchyProvider = objectPropertyHierarchyProvider;
-        this.dataPropertyHierarchyProvider = dataPropertyHierarchyProvider;
-        this.annotationPropertyHierarchyProvider = annotationPropertyHierarchyProvider;
         this.entityCrudContextFactory = entityCrudContextFactory;
         this.renameMapFactory = renameMapFactory;
         this.builtInPrefixDeclarations = builtInPrefixDeclarations;
@@ -196,6 +183,7 @@ public class ChangeManager implements HasApplyChanges {
         this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.iriReplacerFactory = iriReplacerFactory;
         this.generatedAnnotationsGenerator = generatedAnnotationsGenerator;
+        this.hierarchyProviderManager = hierarchyProviderManager;
         this.newRevisionsEmitter = newRevisionsEmitter;
     }
 
@@ -305,6 +293,7 @@ public class ChangeManager implements HasApplyChanges {
 
             allChangesIncludingRenames.addAll(changesToCreateFreshEntities);
 
+            var eventTranslatorSessionId = EventTranslatorSessionId.create();
             final var eventTranslatorManager = eventTranslatorManagerProvider.get();
 
             // Now we do the actual changing, so we lock the project here.  No writes or reads can take place whilst
@@ -314,7 +303,7 @@ public class ChangeManager implements HasApplyChanges {
             try {
                 var effectiveChanges = rootIndex.getEffectiveChanges(allChangesIncludingRenames);
 
-                eventTranslatorManager.prepareForOntologyChanges(effectiveChanges);
+                eventTranslatorManager.prepareForOntologyChanges(eventTranslatorSessionId, effectiveChanges);
 
                 var renameMap = renameMapFactory.create(tempIri2MintedIri);
                 var renamedResult = getRenamedResult(changeListGenerator, changeList.getResult(), renameMap);
@@ -332,7 +321,7 @@ public class ChangeManager implements HasApplyChanges {
                 projectChangeWriteLock.unlock();
             }
             var changeRequestId = changeListGenerator.getChangeRequestId();
-            generateAndDispatchHighLevelEvents(changeRequestId, userId,
+            generateAndDispatchHighLevelEvents(changeRequestId, eventTranslatorSessionId, userId,
                                                changeListGenerator,
                                                changeApplicationResult,
                                                eventTranslatorManager,
@@ -505,15 +494,14 @@ public class ChangeManager implements HasApplyChanges {
         // Log the changes
         var revision = changeManager.addRevision(userId, changes, changeDescription);
 
-        classHierarchyProvider.handleChanges(changes);
-        objectPropertyHierarchyProvider.handleChanges(changes);
-        dataPropertyHierarchyProvider.handleChanges(changes);
-        annotationPropertyHierarchyProvider.handleChanges(changes);
+        hierarchyProviderManager.handleChanges(changes);
 
         return revision;
     }
 
-    private <R> void generateAndDispatchHighLevelEvents(ChangeRequestId changeRequestId, UserId userId,
+    private <R> void generateAndDispatchHighLevelEvents(ChangeRequestId changeRequestId,
+                                                        EventTranslatorSessionId eventTranslatorSessionId,
+                                                        UserId userId,
                                                         ChangeListGenerator<R> changeListGenerator,
                                                         ChangeApplicationResult<R> finalResult,
                                                         EventTranslatorManager eventTranslatorManager,
@@ -533,7 +521,7 @@ public class ChangeManager implements HasApplyChanges {
         }
         revision.ifPresent(rev -> {
             var highLevelEvents = new ArrayList<HighLevelProjectEventProxy>();
-            eventTranslatorManager.translateOntologyChanges(changeRequestId, rev, finalResult, highLevelEvents);
+            eventTranslatorManager.translateOntologyChanges(eventTranslatorSessionId, changeRequestId, rev, finalResult, highLevelEvents);
             if(changeListGenerator instanceof HasHighLevelEvents) {
                 highLevelEvents.addAll(((HasHighLevelEvents) changeListGenerator).getHighLevelEvents());
             }
