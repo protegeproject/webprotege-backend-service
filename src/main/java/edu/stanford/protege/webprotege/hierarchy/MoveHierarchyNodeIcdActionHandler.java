@@ -96,7 +96,9 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
 
             if (isSourceClassReleased) {
                 isDestinationRetiredClass = retiredAncestorDetector.isRetired(destinationNode.get().getEntity().asOWLClass());
-                return new MoveHierarchyNodeIcdResult(false, isDestinationRetiredClass, isLinPathParent);
+                if(isDestinationRetiredClass){
+                    return new MoveHierarchyNodeIcdResult(false, isDestinationRetiredClass, isLinPathParent);
+                }
             }
 
             var previousParent = action.fromNodePath().getLastPredecessor();
