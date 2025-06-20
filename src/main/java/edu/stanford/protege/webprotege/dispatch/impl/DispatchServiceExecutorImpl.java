@@ -129,7 +129,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
         RequestValidator validator = actionHandler.getRequestValidator(action, requestContext);
         RequestValidationResult validationResult = validator.validateAction();
         if (!validationResult.isValid()) {
-            throw getPermissionDeniedException(requestContext.getUserId(),
+            throw getPermissionDeniedException(executionContext.userId(),
                                                validationResult);
         }
 
