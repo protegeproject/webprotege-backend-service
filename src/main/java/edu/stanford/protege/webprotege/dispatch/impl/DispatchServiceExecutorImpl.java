@@ -154,6 +154,8 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
                 return ((PermissionDeniedException) validationException);
             }
         }
+        logger.info("Permission denied for user " + userId.id() + " " + validationResult.getInvalidMessage());
+
         throw new PermissionDeniedException(validationResult.getInvalidMessage());
     }
 }
