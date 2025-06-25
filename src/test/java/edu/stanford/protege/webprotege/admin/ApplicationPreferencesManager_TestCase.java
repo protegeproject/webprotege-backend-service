@@ -23,6 +23,7 @@ import static edu.stanford.protege.webprotege.authorization.Subject.forAnySigned
 import static edu.stanford.protege.webprotege.authorization.Subject.forGuestUser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 /**
@@ -79,10 +80,12 @@ public class ApplicationPreferencesManager_TestCase {
 
     @Test
     public void shouldGetAccountCreationAllowed() {
-        when(accessManager.hasPermission(forGuestUser(),
+        ExecutionContext executionContext = new ExecutionContext();
+        when(accessManager.hasPermission(executionContext,
+                                        forGuestUser(),
                                          ApplicationResource.get(),
                                          BuiltInCapability.CREATE_ACCOUNT)).thenReturn(true);
-        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(executionContext);
         assertThat(applicationSettings.getAccountCreationSetting(), is(ACCOUNT_CREATION_ALLOWED));
     }
 
@@ -94,10 +97,11 @@ public class ApplicationPreferencesManager_TestCase {
 
     @Test
     public void shouldGetProjectCreationAllowed() {
-        when(accessManager.hasPermission(forAnySignedInUser(),
+        ExecutionContext executionContext = new ExecutionContext();
+        when(accessManager.hasPermission(executionContext, forAnySignedInUser(),
                                          ApplicationResource.get(),
                                          BuiltInCapability.CREATE_EMPTY_PROJECT)).thenReturn(true);
-        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(executionContext);
         assertThat(applicationSettings.getProjectCreationSetting(), is(EMPTY_PROJECT_CREATION_ALLOWED));
     }
 
@@ -109,10 +113,12 @@ public class ApplicationPreferencesManager_TestCase {
 
     @Test
     public void shouldGetProjectUploadAllowed() {
-        when(accessManager.hasPermission(forAnySignedInUser(),
+        ExecutionContext executionContext = new ExecutionContext();
+
+        when(accessManager.hasPermission(executionContext, forAnySignedInUser(),
                                          ApplicationResource.get(),
                                          BuiltInCapability.UPLOAD_PROJECT)).thenReturn(true);
-        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(executionContext);
         assertThat(applicationSettings.getProjectUploadSetting(), is(PROJECT_UPLOAD_ALLOWED));
     }
 }
