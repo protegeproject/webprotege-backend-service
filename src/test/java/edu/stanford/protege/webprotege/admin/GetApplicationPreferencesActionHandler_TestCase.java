@@ -57,7 +57,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
 
     @BeforeEach
     public void setUp() throws Exception {
-        when(applicationSettingsManager.getApplicationSettings()).thenReturn(applicationSettings);
+        when(applicationSettingsManager.getApplicationSettings(any())).thenReturn(applicationSettings);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class GetApplicationPreferencesActionHandler_TestCase {
     @Test
     public void shouldGetApplicationSettings() {
         GetApplicationSettingsResult result = handler.execute(action, executionContext);
-        verify(applicationSettingsManager, times(1)).getApplicationSettings();
+        verify(applicationSettingsManager, times(1)).getApplicationSettings(any());
         assertThat(result.settings(), is(applicationSettings));
     }
 

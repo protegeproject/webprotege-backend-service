@@ -93,6 +93,11 @@ public interface AccessManager {
                           @Nonnull Resource resource,
                           @Nonnull BuiltInCapability builtInCapability);
 
+    boolean hasPermission(ExecutionContext executionContext,
+                          @Nonnull Subject subject,
+                          @Nonnull Resource resource,
+                          @Nonnull BuiltInCapability builtInCapability);
+
     Collection<Subject> getSubjectsWithAccessToResource(Resource resource);
 
     Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInCapability action);

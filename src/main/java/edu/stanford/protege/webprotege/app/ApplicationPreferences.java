@@ -24,7 +24,7 @@ public class ApplicationPreferences {
     public static final String ID = "Preferences";
 
     @SuppressWarnings("unused")
-    private final String id = ID;
+    private String id = ID;
 
     private final String applicationName;
 
@@ -32,16 +32,16 @@ public class ApplicationPreferences {
 
     private final ApplicationLocation applicationLocation;
 
-    private final long maxUploadSize;
+    private final Long maxUploadSize;
     
     public ApplicationPreferences(String applicationName,
                                   String systemNotificationEmailAddress,
                                   ApplicationLocation applicationLocation,
-                                  long maxUploadSize) {
+                                  Long maxUploadSize) {
         this.applicationName = applicationName == null ? "ICAT-X" : applicationName;
         this.systemNotificationEmailAddress = systemNotificationEmailAddress == null ? "dummy@email.com" : systemNotificationEmailAddress;
         this.applicationLocation = applicationLocation == null ? new ApplicationLocation("http","webprotege-local.edu", "/webprotege", 8080) : applicationLocation;
-        this.maxUploadSize = maxUploadSize;
+        this.maxUploadSize = maxUploadSize == null ? 1024L : maxUploadSize;
     }
 
     /**
@@ -69,6 +69,10 @@ public class ApplicationPreferences {
     @Nonnull
     public ApplicationLocation getApplicationLocation() {
         return applicationLocation;
+    }
+
+    private void setId(String id){
+        this.id = id;
     }
 
     /**

@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.app.*;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -64,7 +65,7 @@ public class ApplicationPreferencesManager_TestCase {
 
     @Test
     public void shouldGetApplicationSettings() {
-        ApplicationSettings applicationSettings = manager.getApplicationSettings();
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
         assertThat(applicationSettings.getApplicationName(), is(THE_APP_NAME));
         assertThat(applicationSettings.getSystemNotificationEmailAddress().getEmailAddress(), is(THE_SYSTEM_NOTIFICATION_EMAIL_ADDRESS));
         assertThat(applicationSettings.getApplicationLocation(), is(applicationLocation));
@@ -72,7 +73,7 @@ public class ApplicationPreferencesManager_TestCase {
 
     @Test
     public void shouldGetAccountCreationNotAllowed() {
-        ApplicationSettings applicationSettings = manager.getApplicationSettings();
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
         assertThat(applicationSettings.getAccountCreationSetting(), is(ACCOUNT_CREATION_NOT_ALLOWED));
     }
 
@@ -81,13 +82,13 @@ public class ApplicationPreferencesManager_TestCase {
         when(accessManager.hasPermission(forGuestUser(),
                                          ApplicationResource.get(),
                                          BuiltInCapability.CREATE_ACCOUNT)).thenReturn(true);
-        ApplicationSettings applicationSettings = manager.getApplicationSettings();
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
         assertThat(applicationSettings.getAccountCreationSetting(), is(ACCOUNT_CREATION_ALLOWED));
     }
 
     @Test
     public void shouldGetProjectCreationNotAllowed() {
-        ApplicationSettings applicationSettings = manager.getApplicationSettings();
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
         assertThat(applicationSettings.getProjectCreationSetting(), is(EMPTY_PROJECT_CREATION_NOT_ALLOWED));
     }
 
@@ -96,13 +97,13 @@ public class ApplicationPreferencesManager_TestCase {
         when(accessManager.hasPermission(forAnySignedInUser(),
                                          ApplicationResource.get(),
                                          BuiltInCapability.CREATE_EMPTY_PROJECT)).thenReturn(true);
-        ApplicationSettings applicationSettings = manager.getApplicationSettings();
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
         assertThat(applicationSettings.getProjectCreationSetting(), is(EMPTY_PROJECT_CREATION_ALLOWED));
     }
 
     @Test
     public void shouldGetProjectUploadNotAllowed() {
-        ApplicationSettings applicationSettings = manager.getApplicationSettings();
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
         assertThat(applicationSettings.getProjectUploadSetting(), is(PROJECT_UPLOAD_NOT_ALLOWED));
     }
 
@@ -111,7 +112,7 @@ public class ApplicationPreferencesManager_TestCase {
         when(accessManager.hasPermission(forAnySignedInUser(),
                                          ApplicationResource.get(),
                                          BuiltInCapability.UPLOAD_PROJECT)).thenReturn(true);
-        ApplicationSettings applicationSettings = manager.getApplicationSettings();
+        ApplicationSettings applicationSettings = manager.getApplicationSettings(new ExecutionContext());
         assertThat(applicationSettings.getProjectUploadSetting(), is(PROJECT_UPLOAD_ALLOWED));
     }
 }
