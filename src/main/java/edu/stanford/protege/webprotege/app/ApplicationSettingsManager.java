@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.authorization.ApplicationResource;
 import edu.stanford.protege.webprotege.authorization.RoleId;
 import edu.stanford.protege.webprotege.inject.ApplicationSingleton;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.user.EmailAddress;
 
 import javax.annotation.Nonnull;
@@ -56,12 +57,12 @@ public class ApplicationSettingsManager {
     }
 
     @Nonnull
-    public ApplicationSettings getApplicationSettings() {
+    public ApplicationSettings getApplicationSettings(ExecutionContext executionContext) {
         try {
             readLock.lock();
             ApplicationPreferences applicationPreferences = settingsStore.getApplicationPreferences();
             AccountCreationSetting accountCreationSetting;
-            boolean canCreateAccounts = accessManager.hasPermission(forGuestUser(),
+            boolean canCreateAccounts = accessManager.hasPermission(executionContext, forGuestUser(),
                                                                     ApplicationResource.get(),
                                                                     BuiltInCapability.CREATE_ACCOUNT);
             if(canCreateAccounts) {
@@ -71,7 +72,7 @@ public class ApplicationSettingsManager {
                 accountCreationSetting = ACCOUNT_CREATION_NOT_ALLOWED;
             }
             ProjectCreationSetting projectCreationSetting;
-            boolean canCreateEmptyProject = accessManager.hasPermission(forAnySignedInUser(),
+            boolean canCreateEmptyProject = accessManager.hasPermission(executionContext, forAnySignedInUser(),
                                                                         ApplicationResource.get(),
                                                                         CREATE_EMPTY_PROJECT);
             if(canCreateEmptyProject) {
@@ -81,7 +82,7 @@ public class ApplicationSettingsManager {
                 projectCreationSetting = EMPTY_PROJECT_CREATION_NOT_ALLOWED;
             }
             ProjectUploadSetting projectUploadSetting;
-            boolean canUploadProject = accessManager.hasPermission(forAnySignedInUser(),
+            boolean canUploadProject = accessManager.hasPermission(executionContext, forAnySignedInUser(),
                                                                    ApplicationResource.get(),
                                                                    UPLOAD_PROJECT);
             if(canUploadProject) {
