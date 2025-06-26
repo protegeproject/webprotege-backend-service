@@ -5,6 +5,8 @@ import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
+
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 
 /**
@@ -63,9 +67,9 @@ public class AccessManagerImpl implements AccessManager {
             return getAssignedRolesExecutor.execute(new GetAssignedRolesRequest(subject,
                                                                                 resource),
                                                     new ExecutionContext())
-                    .get()
+                    .get(5, TimeUnit.SECONDS)
                     .roles();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error while waiting for assigned roles", e);
             return Collections.emptySet();
         }
@@ -78,8 +82,9 @@ public class AccessManagerImpl implements AccessManager {
         try {
             var response = setAssignedRolesExecutor.execute(new SetAssignedRolesRequest(subject, resource, Set.copyOf(roleIds)),
                                                             new ExecutionContext());
-            response.get();
-        } catch (ExecutionException | InterruptedException e) {
+            response
+                    .get(5, TimeUnit.SECONDS);
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error when setting assigned roles", e);
         }
     }
@@ -98,9 +103,9 @@ public class AccessManagerImpl implements AccessManager {
         try {
             return getRolesRequestExecutor.execute(new GetRolesRequest(subject, resource),
                                                    new ExecutionContext())
-                    .get()
+                    .get(5, TimeUnit.SECONDS)
                     .roles();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error when getting roles", e);
             return Collections.emptySet();
         }
@@ -112,9 +117,9 @@ public class AccessManagerImpl implements AccessManager {
         try {
             return getAuthorizedActionsExecutor.execute(new GetAuthorizedCapabilitiesRequest(resource, subject),
                                                         executionContext)
-                    .get()
+                    .get(5, TimeUnit.SECONDS)
                     .capabilities();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error when getting authorized actions", e);
             return Collections.emptySet();
         }
@@ -125,10 +130,10 @@ public class AccessManagerImpl implements AccessManager {
         try {
             GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, capability),
                                                           new ExecutionContext())
-                    .get();
+                    .get(5, TimeUnit.SECONDS);
             return response.authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
 
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error when getting authorization status", e);
             return false;
         }
@@ -139,9 +144,9 @@ public class AccessManagerImpl implements AccessManager {
         try {
             return getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, actionId),
                             executionContext)
-                    .get()
+                    .get(5, TimeUnit.SECONDS)
                     .authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error when getting authorization status", e);
             return false;
         }
@@ -154,6 +159,20 @@ public class AccessManagerImpl implements AccessManager {
         return hasPermission(subject, resource, builtInCapability.getCapability());
     }
 
+    @Override
+    public boolean hasPermission(ExecutionContext executionContext, @NotNull Subject subject, @NotNull Resource resource, @NotNull BuiltInCapability builtInCapability) {
+        try {
+            GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, builtInCapability.getCapability()),
+                            executionContext)
+                    .get(5, TimeUnit.SECONDS);
+            return response.authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
+
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
+            logger.error("Error when getting authorization status", e);
+            return false;
+        }
+    }
+
 
     @Override
     public Collection<Subject> getSubjectsWithAccessToResource(Resource resource, BuiltInCapability action) {
@@ -161,9 +180,9 @@ public class AccessManagerImpl implements AccessManager {
             return getAuthorizedSubjectsExecutor.execute(new GetAuthorizedSubjectsRequest(resource,
                                                                                           action.getCapability()),
                                                          new ExecutionContext())
-                    .get()
+                    .get(5, TimeUnit.SECONDS)
                                                 .subjects();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error when getting authorized subjects", e);
             return Collections.emptySet();
         }
@@ -179,9 +198,9 @@ public class AccessManagerImpl implements AccessManager {
         try {
             return getAuthorizedResourcesExecutor.execute(new GetAuthorizedResourcesRequest(subject, actionId),
                             executionContext)
-                    .get()
+                    .get(5, TimeUnit.SECONDS)
                     .resources();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
             logger.error("Error getting authorized resources", e);
             return Collections.emptySet();
         }
