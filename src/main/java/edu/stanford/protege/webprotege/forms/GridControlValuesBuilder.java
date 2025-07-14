@@ -121,7 +121,8 @@ public class GridControlValuesBuilder {
         var pageRequest = rootSubject.map(s -> formPageRequestIndex.getPageRequest(s,
                                                                                formFieldId,
                                                                                FormPageRequest.SourceType.GRID_CONTROL,
-                descriptor.getPageSize())).orElseGet(() -> PageRequest.requestPageWithSize(1, descriptor.getPageSize()));
+                descriptor.getPageSize()))
+                .orElseGet(() -> PageRequest.requestPageWithSize(1, descriptor.getPageSize()));
         var comparator = comparatorFactory.get(descriptor, Optional.empty());
 
         var subjectFactoryDescriptor = descriptor.getSubjectFactoryDescriptor();

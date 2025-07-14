@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.forms.*;
 
 import javax.annotation.Nonnull;
@@ -27,7 +28,7 @@ public abstract class GridControlDescriptorDto implements FormControlDescriptorD
                                                @JsonProperty(PropertyNames.PAGE_SIZE) int pageSize,
                                                @JsonProperty(PropertyNames.SUBJECT_FACTORY) @Nullable FormSubjectFactoryDescriptor formSubjectFactoryDescriptor) {
         return new AutoValue_GridControlDescriptorDto(columns,
-                pageSize <= 0 ? FormPageRequest.DEFAULT_PAGE_SIZE : pageSize,
+                pageSize <= 0 ? PageRequest.DEFAULT_PAGE_SIZE : pageSize,
                 formSubjectFactoryDescriptor);
     }
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.forms.*;
 import org.semanticweb.owlapi.model.EntityType;
 
@@ -37,7 +38,7 @@ public abstract class GridControlDescriptor implements FormControlDescriptor {
                                             @JsonProperty(PropertyNames.PAGE_SIZE) int pageSize,
                                             @Nullable @JsonProperty(PropertyNames.SUBJECT_FACTORY) FormSubjectFactoryDescriptor subjectFactoryDescriptor) {
         return new AutoValue_GridControlDescriptor(columnDescriptors == null ? ImmutableList.of() : columnDescriptors,
-                pageSize <= 0 ? FormPageRequest.DEFAULT_PAGE_SIZE : pageSize,
+                pageSize <= 0 ? PageRequest.DEFAULT_PAGE_SIZE : pageSize,
                 subjectFactoryDescriptor);
     }
 
