@@ -136,4 +136,6 @@ public interface PropertyNames {
     String FIELD = "field";
 
     String ACCESS_MODE = "accessMode";
+
+    String PAGE_SIZE = "pageSize";
 }

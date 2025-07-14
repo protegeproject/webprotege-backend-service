@@ -235,7 +235,7 @@ public class EntityFrameFormDataDtoBuilder {
         var pageRequest = subject.map(s -> formPageRequestIndex.getPageRequest(s,
                         field.getId(),
                         FormPageRequest.SourceType.CONTROL_STACK))
-                .orElseGet(PageRequest::requestFirstPage);
+                .orElseGet(() -> PageRequest.requestPageWithSize(1, field.getPageSize()));
         var controlValuesPage = controlValuesStream.collect(PageCollector.toPage(pageRequest.getPageNumber(),
                         pageRequest.getPageSize()))
                 .orElse(Page.emptyPage());

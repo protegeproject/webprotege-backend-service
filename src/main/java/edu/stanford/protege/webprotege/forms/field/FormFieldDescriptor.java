@@ -22,6 +22,8 @@ import static edu.stanford.protege.webprotege.forms.PropertyNames.*;
 public abstract class FormFieldDescriptor implements HasFormRegionId, HasRepeatability, BoundControlDescriptor {
 
 
+    public static final int DEFAULT_PAGE_SIZE = 20;
+
     @Nonnull
     public static FormFieldDescriptor get(@Nonnull FormRegionId id,
                                           @Nullable OwlBinding owlBinding,
@@ -30,10 +32,18 @@ public abstract class FormFieldDescriptor implements HasFormRegionId, HasRepeata
                                           @Nullable FormFieldDeprecationStrategy deprecationStrategy,
                                           @Nonnull FormControlDescriptor fieldDescriptor,
                                           Repeatability repeatability,
+                                          int pageSize,
                                           Optionality optionality,
                                           boolean readOnly,
                                           @Nullable ExpansionState expansionState,
                                           @Nullable LanguageMap help) {
+        if(pageSize < 0) {
+            throw new IllegalArgumentException("pageSize must be a positive integer");
+        }
+        // Handle legacy descriptors that do not have page size
+        if(pageSize == 0) {
+            pageSize = DEFAULT_PAGE_SIZE;
+        }
         return new AutoValue_FormFieldDescriptor(id,
                                                  owlBinding,
                                                  formLabel == null ? LanguageMap.empty() : formLabel,
@@ -41,7 +51,8 @@ public abstract class FormFieldDescriptor implements HasFormRegionId, HasRepeata
                                                  fieldDescriptor,
                                                  optionality == null ? Optionality.REQUIRED : optionality,
                                                  repeatability == null ? Repeatability.NON_REPEATABLE : repeatability,
-                                                 deprecationStrategy == null ? FormFieldDeprecationStrategy.DELETE_VALUES : deprecationStrategy,
+                pageSize,
+                deprecationStrategy == null ? FormFieldDeprecationStrategy.DELETE_VALUES : deprecationStrategy,
                                                  readOnly,
                                                  expansionState == null ? ExpansionState.EXPANDED : expansionState,
                                                  help == null ? LanguageMap.empty() : help);
@@ -56,6 +67,7 @@ public abstract class FormFieldDescriptor implements HasFormRegionId, HasRepeata
                                                   @JsonProperty(DEPRECATION_STRATEGY) @Nullable FormFieldDeprecationStrategy deprecationStrategy,
                                                   @JsonProperty(CONTROL) @Nonnull FormControlDescriptor fieldDescriptor,
                                                   @JsonProperty(REPEATABILITY) @Nullable Repeatability repeatability,
+                                                  @JsonProperty(PAGE_SIZE) int pageSize,
                                                   @JsonProperty(OPTIONALITY) @Nullable Optionality optionality,
                                                   @JsonProperty(READ_ONLY) boolean readOnly,
                                                   @JsonProperty(INITIAL_EXPANSIONS_STATE) @Nullable ExpansionState expansionState,
@@ -67,6 +79,7 @@ public abstract class FormFieldDescriptor implements HasFormRegionId, HasRepeata
                    deprecationStrategy,
                    fieldDescriptor,
                    repeatability,
+                   pageSize,
                    optionality,
                    readOnly,
                    expansionState,
@@ -106,6 +119,9 @@ public abstract class FormFieldDescriptor implements HasFormRegionId, HasRepeata
 
     @Nonnull
     public abstract Repeatability getRepeatability();
+
+    @JsonProperty(PAGE_SIZE)
+    public abstract int getPageSize();
 
     @JsonProperty(DEPRECATION_STRATEGY)
     @Nonnull

@@ -120,6 +120,7 @@ public class GridRowDataDtoComparatorFactory_TestCase {
     public GridControlDescriptor createGridControlDescriptor(ImmutableList<GridColumnDescriptor> columnDescriptors) {
         return GridControlDescriptor.get(
                 columnDescriptors,
+                34,
                 subjectFactoryDescriptor
         );
     }
