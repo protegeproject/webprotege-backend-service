@@ -37,6 +37,7 @@ class FormFieldDataTest {
                                                              null,
                                                              TextControlDescriptor.getDefault(),
                                                              Repeatability.NON_REPEATABLE,
+                                                             22,
                                                              Optionality.OPTIONAL,
                                                              true,
                                                              ExpansionState.COLLAPSED,

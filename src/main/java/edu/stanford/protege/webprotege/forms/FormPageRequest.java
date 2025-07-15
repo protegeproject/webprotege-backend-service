@@ -22,8 +22,6 @@ public record FormPageRequest(@JsonProperty(PropertyNames.FORM_ID) FormId formId
                               @JsonProperty(PropertyNames.SOURCE_TYPE) SourceType sourceType,
                               @JsonProperty(PropertyNames.PAGE_REQUEST) PageRequest pageRequest) {
 
-    public static final int DEFAULT_PAGE_SIZE = 10;
-
     @JsonCreator
     @Nonnull
     public static FormPageRequest get(@JsonProperty(PropertyNames.FORM_ID) @Nonnull FormId formId,

@@ -37,6 +37,7 @@ class FormFieldDescriptorTest {
                 FormFieldDeprecationStrategy.DELETE_VALUES,
                 EntityNameControlDescriptor.getDefault(),
                 Repeatability.NON_REPEATABLE,
+                33,
                 Optionality.OPTIONAL,
                 true,
                 ExpansionState.COLLAPSED,
@@ -51,6 +52,7 @@ class FormFieldDescriptorTest {
         assertThat(written).hasJsonPathValue("deprecationStrategy");
         assertThat(written).hasJsonPathValue("control");
         assertThat(written).hasJsonPathValue("repeatability");
+        assertThat(written).hasJsonPathValue("pageSize");
         assertThat(written).hasJsonPathValue("optionality");
         assertThat(written).hasJsonPathValue("readOnly");
         assertThat(written).hasJsonPathValue("initialExpansionState");

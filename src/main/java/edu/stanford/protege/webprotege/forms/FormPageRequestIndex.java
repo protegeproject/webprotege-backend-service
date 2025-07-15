@@ -39,13 +39,15 @@ public class FormPageRequestIndex {
     }
 
     @Nonnull
-    public PageRequest getPageRequest(FormSubject formSubject, FormRegionId id, FormPageRequest.SourceType sourceType) {
+    public PageRequest getPageRequest(FormSubject formSubject, FormRegionId id,
+                                      FormPageRequest.SourceType sourceType,
+                                      int defaultPageSize) {
         var formPageRequest = indexMap.get(Key.get(formSubject, id, sourceType));
         if (formPageRequest != null) {
             return formPageRequest.pageRequest();
         }
         else {
-            return PageRequest.requestPageWithSize(1, FormPageRequest.DEFAULT_PAGE_SIZE);
+            return PageRequest.requestPageWithSize(1, defaultPageSize);
         }
     }
 
