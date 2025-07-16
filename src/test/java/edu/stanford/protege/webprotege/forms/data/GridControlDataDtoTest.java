@@ -34,7 +34,7 @@ public class GridControlDataDtoTest {
 
     @Test
     void shouldSerialize() throws IOException {
-        var data = GridControlDataDto.get(GridControlDescriptor.get(ImmutableList.of(), null), Page.emptyPage(),
+        var data = GridControlDataDto.get(GridControlDescriptor.get(ImmutableList.of(), 33,null), Page.emptyPage(),
                                           ImmutableSet.of(),
                                           3,
                                           FilterState.FILTERED);
