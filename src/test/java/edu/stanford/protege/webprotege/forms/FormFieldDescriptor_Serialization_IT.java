@@ -105,6 +105,7 @@ public class FormFieldDescriptor_Serialization_IT {
                 FormFieldDeprecationStrategy.DELETE_VALUES,
                 new TextControlDescriptor(LanguageMap.empty(), StringType.SIMPLE_STRING, "en", LineMode.SINGLE_LINE, "", LanguageMap.empty()),
                 Repeatability.NON_REPEATABLE,
+                10,
                 Optionality.REQUIRED,
                 true,
                 ExpansionState.COLLAPSED,
