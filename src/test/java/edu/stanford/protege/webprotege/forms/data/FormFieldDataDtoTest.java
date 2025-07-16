@@ -40,6 +40,7 @@ class FormFieldDataDtoTest {
                                                              TextControlDescriptorDto.get(TextControlDescriptor.getDefault()),
                                                                    Optionality.OPTIONAL,
                                                              Repeatability.NON_REPEATABLE,
+                                                             22,
                                                              FormFieldDeprecationStrategy.DELETE_VALUES,
                                                              true,
                                                              FormFieldAccessMode.READ_WRITE,
