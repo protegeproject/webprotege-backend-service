@@ -1,7 +1,6 @@
 package edu.stanford.protege.webprotege;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
 import com.google.common.collect.ImmutableList;
@@ -24,6 +23,8 @@ import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenRequest;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenResponse;
 import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
@@ -68,7 +69,6 @@ import io.minio.MinioClient;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -638,8 +638,9 @@ public class ApplicationBeansConfiguration {
     @Bean
     ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
                                                                 @Nonnull ProjectOrderedChildrenRepository repository,
-                                                                @Nonnull ReadWriteLockService readWriteLock) {
-        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock);
+                                                                @Nonnull ReadWriteLockService readWriteLock,
+                                                                CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> updateBackupEntityChildrenExecutor) {
+        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock, updateBackupEntityChildrenExecutor);
     }
 
     @Bean
@@ -662,6 +663,10 @@ public class ApplicationBeansConfiguration {
     @Bean
     CommandExecutor<GetProjectRoleDefinitionsRequest, GetProjectRoleDefinitionsResponse> getProjectRoleDefinitionsCommand() {
         return new CommandExecutorImpl<>(GetProjectRoleDefinitionsResponse.class);
+    }
+    @Bean
+    CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> getUpdateBackupEntityChildrenCommand() {
+        return new CommandExecutorImpl<>(UpdateEntityChildrenResponse.class);
     }
 
     @Bean
