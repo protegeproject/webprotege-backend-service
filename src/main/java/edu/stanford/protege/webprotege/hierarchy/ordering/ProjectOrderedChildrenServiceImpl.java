@@ -114,31 +114,29 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     }
 
     public void addChildToParent(ProjectId projectId, String parentUri, String newChildUri) {
-        readWriteLock.executeWriteLock(() -> {
-            Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
-            try{
-                if (existingEntry.isPresent()) {
-                    ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
-                            existingEntry.get().entityUri(),
-                            projectId,
-                            new ArrayList<>(existingEntry.get().children()),
-                            existingEntry.get().userId()
-                    );
-                    updatedEntry.children().add(newChildUri);
-                    repository.update(updatedEntry);
-                    updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(updatedEntry.entityUri())), new ExecutionContext()).get(5, TimeUnit.SECONDS);
 
-                } else {
-                    ProjectOrderedChildren newEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(newChildUri), null);
-                    repository.insert(newEntry);
-                    updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(newEntry.entityUri())), new ExecutionContext()).get(5, TimeUnit.SECONDS);
-                }
-            } catch (Exception e) {
-                logger.error("Error removing child from parent " , e);
-                throw new RuntimeException("Error removing child from parent" , e);
+        Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
+        try {
+            if (existingEntry.isPresent()) {
+                ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
+                        existingEntry.get().entityUri(),
+                        projectId,
+                        new ArrayList<>(existingEntry.get().children()),
+                        existingEntry.get().userId()
+                );
+                updatedEntry.children().add(newChildUri);
+                repository.update(updatedEntry);
+                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(updatedEntry.entityUri()), updatedEntry.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+
+            } else {
+                ProjectOrderedChildren newEntry = new ProjectOrderedChildren(parentUri, projectId, List.of(newChildUri), null);
+                repository.insert(newEntry);
+                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(newEntry.entityUri()), newEntry.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
             }
-
-        });
+        } catch (Exception e) {
+            logger.error("Error removing child from parent ", e);
+            throw new RuntimeException("Error removing child from parent", e);
+        }
 
 
     }
@@ -147,24 +145,24 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     public void updateEntity(SaveEntityChildrenOrderingAction action, UserId userId) {
         Optional<ProjectOrderedChildren> entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
         try {
-            if(entityChildrenOrdering.isPresent()) {
+            if (entityChildrenOrdering.isPresent()) {
                 ProjectOrderedChildren orderToBeSaved = entityChildrenOrdering.map(ordering -> new ProjectOrderedChildren(ordering.entityUri(),
                         ordering.projectId(),
                         action.orderedChildren(),
                         ordering.userId())).get();
                 repository.update(orderToBeSaved);
-                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(action.projectId(), action.entityIri()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(action.projectId(), action.entityIri(), orderToBeSaved.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
             } else {
                 ProjectOrderedChildren orderedChildren = new ProjectOrderedChildren(action.entityIri().toString(),
                         action.projectId(),
                         action.orderedChildren(),
                         userId.id());
                 repository.insert(orderedChildren);
-                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(action.projectId(), action.entityIri()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(action.projectId(), action.entityIri(), orderedChildren.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
             }
         } catch (Exception e) {
-            logger.error("Error updating child from parent " , e);
-            throw new RuntimeException("Error updating child from parent" , e);
+            logger.error("Error updating child from parent ", e);
+            throw new RuntimeException("Error updating child from parent", e);
         }
 
     }
@@ -194,8 +192,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
             logger.error(errorMessage);
             throw new IllegalArgumentException(errorMessage);
         }
-
-        return readWriteLock.executeWriteLock(() -> {
+        try {
             if (initialOrderOptional.isPresent()) {
                 ProjectOrderedChildren initialOrder = initialOrderOptional.get();
                 ProjectOrderedChildren orderToBeSaved = new ProjectOrderedChildren(initialOrder.entityUri(),
@@ -203,7 +200,7 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                         newChildrenOrder,
                         initialOrder.userId());
                 Optional<ProjectOrderedChildren> response = repository.updateAndGet(orderToBeSaved);
-                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(orderToBeSaved.entityUri())), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(orderToBeSaved.entityUri()), orderToBeSaved.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
                 return response;
             } else {
                 ProjectOrderedChildren orderedChildren = new ProjectOrderedChildren(parentEntityIri.toString(),
@@ -211,12 +208,15 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                         newChildrenOrder,
                         userId.id());
 
-                Optional<ProjectOrderedChildren> response =  repository.insertAndGet(orderedChildren);
-                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(orderedChildren.entityUri())), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+                Optional<ProjectOrderedChildren> response = repository.insertAndGet(orderedChildren);
+                updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(orderedChildren.entityUri()), orderedChildren.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
                 return response;
             }
+        } catch (Exception e) {
+            logger.error("Error updateEntityAndGet child from parent ", e);
+            throw new RuntimeException("Error updateEntityAndGet child from parent", e);
+        }
 
-        });
     }
 
     /**
@@ -231,36 +231,35 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
 
 
     public void removeChildFromParent(ProjectId projectId, String parentUri, String childUriToRemove) {
-        readWriteLock.executeWriteLock(() -> {
-            Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
 
-            if (existingEntry.isPresent()) {
-                List<String> updatedChildren = new ArrayList<>(existingEntry.get().children());
-                boolean removed = updatedChildren.remove(childUriToRemove);
-                try {
-                    if (removed) {
-                        if (updatedChildren.isEmpty()) {
-                            repository.delete(existingEntry.get());
-                            updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(existingEntry.get().entityUri())), new ExecutionContext()).get(5, TimeUnit.SECONDS);
-                        } else {
-                            ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
-                                    existingEntry.get().entityUri(),
-                                    projectId,
-                                    updatedChildren,
-                                    existingEntry.get().userId()
-                            );
-                            repository.update(updatedEntry);
-                            updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(updatedEntry.entityUri())), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+        Optional<ProjectOrderedChildren> existingEntry = repository.findOrderedChildren(projectId, parentUri);
 
-                        }
+        if (existingEntry.isPresent()) {
+            List<String> updatedChildren = new ArrayList<>(existingEntry.get().children());
+            boolean removed = updatedChildren.remove(childUriToRemove);
+            try {
+                if (removed) {
+                    if (updatedChildren.isEmpty()) {
+                        repository.delete(existingEntry.get());
+                        updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(existingEntry.get().entityUri()), new ArrayList<>()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+                    } else {
+                        ProjectOrderedChildren updatedEntry = new ProjectOrderedChildren(
+                                existingEntry.get().entityUri(),
+                                projectId,
+                                updatedChildren,
+                                existingEntry.get().userId()
+                        );
+                        repository.update(updatedEntry);
+                        updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(updatedEntry.entityUri()), updatedEntry.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
+
                     }
-                } catch (Exception e) {
-                    logger.error("Error removing child from parent " , e);
-                    throw new RuntimeException("Error removing child from parent" , e);
                 }
-
+            } catch (Exception e) {
+                logger.error("Error removing child from parent ", e);
+                throw new RuntimeException("Error removing child from parent", e);
             }
-        });
+
+        }
     }
 
     public Optional<ProjectOrderedChildren> findOrderedChildren(ProjectId projectId, IRI parentEntityIri, UserId userId) {
