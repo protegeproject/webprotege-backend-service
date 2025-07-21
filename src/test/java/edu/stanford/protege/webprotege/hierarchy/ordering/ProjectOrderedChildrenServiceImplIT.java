@@ -10,6 +10,9 @@ import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.dispatch.handlers.SaveEntityChildrenOrderingAction;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChild;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.OrderedChildren;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenRequest;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenResponse;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,12 +26,16 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import static edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren.ENTITY_URI;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
@@ -49,6 +56,8 @@ public class ProjectOrderedChildrenServiceImplIT {
     @Autowired
     private ReadWriteLockService readWriteLockService;
 
+    @MockitoBean
+    private CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> executor;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private ProjectId projectId;
@@ -60,6 +69,8 @@ public class ProjectOrderedChildrenServiceImplIT {
     @BeforeEach
     void setUp() {
         mongoTemplate.dropCollection(ProjectOrderedChildren.class);
+        when(executor.execute(any(), any())).thenReturn(CompletableFuture.supplyAsync(UpdateEntityChildrenResponse::new));
+
         projectId = new ProjectId(UUID.randomUUID().toString());
     }
 
