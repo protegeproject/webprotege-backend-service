@@ -58,6 +58,7 @@ public class SubFormControlDescriptor_IT {
                                                                         LanguageMap.empty()
                                                                 ),
                                                                 Repeatability.NON_REPEATABLE,
+                                                                22,
                                                                 Optionality.REQUIRED,
                                                                 true,
                                                                 ExpansionState.COLLAPSED,

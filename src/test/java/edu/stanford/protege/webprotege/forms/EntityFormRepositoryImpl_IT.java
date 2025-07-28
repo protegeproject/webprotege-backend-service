@@ -77,6 +77,7 @@ public class EntityFormRepositoryImpl_IT {
                                       LanguageMap.of("en", "There's an error")
                               ),
                               Repeatability.NON_REPEATABLE,
+                              33,
                               Optionality.OPTIONAL,
                               true,
                               ExpansionState.COLLAPSED,

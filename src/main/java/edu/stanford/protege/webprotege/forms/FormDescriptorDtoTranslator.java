@@ -11,8 +11,6 @@ import javax.annotation.Nonnull;
 import edu.stanford.protege.webprotege.match.EntityMatcherFactory;
 import jakarta.inject.Inject;
 
-import java.util.Set;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
@@ -82,7 +80,7 @@ public class FormDescriptorDtoTranslator {
                                                    .stream()
                                                    .map(this::toGridColumnDescriptorDto)
                                                    .collect(toImmutableList());
-                return GridControlDescriptorDto.get(columns, gridControlDescriptor.getSubjectFactoryDescriptor().orElseThrow());
+                return GridControlDescriptorDto.get(columns, gridControlDescriptor.getPageSize(), gridControlDescriptor.getSubjectFactoryDescriptor().orElseThrow());
             }
 
             private GridColumnDescriptorDto toGridColumnDescriptorDto(GridColumnDescriptor column) {
@@ -114,6 +112,7 @@ public class FormDescriptorDtoTranslator {
                                           toFormControlDescriptorDto(descriptor.getFormControlDescriptor()),
                                           descriptor.getOptionality(),
                                           descriptor.getRepeatability(),
+                                          descriptor.getPageSize(),
                                           descriptor.getDeprecationStrategy(),
                                           descriptor.isReadOnly(),
                                           getFieldMode(descriptor),
