@@ -899,8 +899,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ClassHierarchyRetiredClassDetector p11,
                                                                       LinearizationManager p12,
                                                                       LinearizationParentChecker p13,
-                                                                      ProjectOrderedChildrenManager p14) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14);
+                                                                      ProjectOrderedChildrenManager p14,
+                                                                      EventDispatcher p15) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
     }
 
 
@@ -1174,8 +1175,9 @@ public class ProjectActionHandlerBeansConfiguration {
     @Bean
     UpdateLogicalDefinitionsActionHandler getUpdateLogicalDefinitionsActionHandler(AccessManager p1,
                                                                                    HasApplyChanges p2,
-                                                                                   UpdateLogicalDefinitionsChangeListGeneratorFactory p3) {
-        return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3);
+                                                                                   UpdateLogicalDefinitionsChangeListGeneratorFactory p3,
+                                                                                   EventDispatcher p4) {
+        return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3, p4);
     }
 
     @Bean
