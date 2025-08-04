@@ -14,6 +14,7 @@ import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildren
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.linearization.MergeWithParentEntitiesResponse;
@@ -22,7 +23,6 @@ import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.Revision;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 import edu.stanford.protege.webprotege.revision.RevisionNumber;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -94,6 +94,9 @@ class ChangeEntityParentsActionHandlerTest {
     @Mock
     private ProjectOrderedChildrenManager projectOrderedChildrenManager;
 
+    @Mock
+    private EventDispatcher eventDispatcher;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -123,7 +126,7 @@ class ChangeEntityParentsActionHandlerTest {
                 retiredClassDetector,
                 linearizationManager,
                 linearizationParentChecker,
-                projectOrderedChildrenManager);
+                projectOrderedChildrenManager, eventDispatcher);
     }
 
     private OWLClass mockOwlEntityAsClass(OWLEntity entity, String iri) {

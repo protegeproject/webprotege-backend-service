@@ -11,8 +11,10 @@ import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetector;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
+import edu.stanford.protege.webprotege.project.PackagedProjectChangeEvent;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.*;
@@ -21,6 +23,7 @@ import org.slf4j.*;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -81,6 +84,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
 
 
+    @Nonnull
+    private final EventDispatcher eventDispatcher;
+
     @Inject
     public ChangeEntityParentsActionHandler(@Nonnull AccessManager accessManager,
                                             @Nonnull ProjectId projectId,
@@ -95,7 +101,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
                                             @Nonnull LinearizationManager linearizationManager,
                                             @Nonnull LinearizationParentChecker linParentChecker,
-                                            @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager) {
+                                            @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager, @Nonnull EventDispatcher eventDispatcher) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.changeManager = checkNotNull(changeManager);
@@ -110,6 +116,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.linearizationManager = checkNotNull(linearizationManager);
         this.linParentChecker = linParentChecker;
         this.projectOrderedChildrenManager = projectOrderedChildrenManager;
+        this.eventDispatcher = eventDispatcher;
     }
 
     @Nonnull
@@ -170,12 +177,16 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                 logger.error("MergeLinearizationsError: " + e);
             }
             projectOrderedChildrenManager.changeEntityParents(action.entity().getIRI(),removedParents,newParents);
+            EventId eventId = EventId.generate();
+            eventDispatcher.dispatchEvent(new PackagedProjectChangeEvent(projectId, eventId, Collections.singletonList(new ParentsChangedEvent(projectId, eventId, action.entity().getIRI()))));
+
             return validEmptyResult();
         }
 
         ChangeListGenerator<Boolean> revisionReverterGenerator = getRevisionReverterChangeListGenerator(revisionManager.getCurrentRevision(), ChangeRequestId.generate());
         changeManager.applyChanges(executionContext.userId(), revisionReverterGenerator);
-
+        EventId eventId = EventId.generate();
+        eventDispatcher.dispatchEvent(new PackagedProjectChangeEvent(projectId, eventId, Collections.singletonList(new ParentsChangedEvent(projectId, eventId, action.entity().getIRI()))));
         return getResultWithCycles(classesWithCycles);
     }
 
