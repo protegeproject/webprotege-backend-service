@@ -97,4 +97,9 @@ public class BrowserTextChangedEventComputer implements EventTranslator {
                    }
                });
     }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+        this.sessionChecker.finishSession(sessionId);
+    }
 }

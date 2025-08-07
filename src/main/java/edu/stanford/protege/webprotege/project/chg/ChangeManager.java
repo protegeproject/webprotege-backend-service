@@ -519,8 +519,10 @@ public class ChangeManager implements HasApplyChanges {
         if(changeListGenerator instanceof SilentChangeListGenerator) {
             return;
         }
-        revision.ifPresent(rev -> {
+        if(revision.isPresent()) {
+            var rev = revision.get();
             var highLevelEvents = new ArrayList<HighLevelProjectEventProxy>();
+
             eventTranslatorManager.translateOntologyChanges(eventTranslatorSessionId, changeRequestId, rev, finalResult, highLevelEvents);
             if(changeListGenerator instanceof HasHighLevelEvents) {
                 highLevelEvents.addAll(((HasHighLevelEvents) changeListGenerator).getHighLevelEvents());
@@ -531,7 +533,10 @@ public class ChangeManager implements HasApplyChanges {
                         eventList.add(event);
                     });
             projectChangedWebhookInvoker.invoke(userId, rev.getRevisionNumber(), rev.getTimestamp());
-        });
+        } else {
+            eventTranslatorManager.closeSessions(eventTranslatorSessionId);
+        }
+
         if(!eventList.isEmpty()) {
             var packagedProjectChange = new PackagedProjectChangeEvent(projectId, EventId.generate(), eventList);
             eventDispatcher.dispatchEvent(packagedProjectChange);

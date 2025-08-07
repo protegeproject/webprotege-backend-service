@@ -38,4 +38,10 @@ public class EventTranslatorManager {
             eventTranslator.translateOntologyChanges(sessionId, revision, appliedChanges, projectEventList, changeRequestId);
         }
     }
+
+    public void closeSessions(EventTranslatorSessionId sessionId){
+        for(EventTranslator eventTranslator : eventTranslators) {
+            eventTranslator.closeSession(sessionId);
+        }
+    }
 }

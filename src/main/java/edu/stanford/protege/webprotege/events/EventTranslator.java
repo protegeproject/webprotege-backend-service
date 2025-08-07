@@ -36,5 +36,7 @@ public interface EventTranslator {
                                   ChangeApplicationResult<?> changes,
                                   List<HighLevelProjectEventProxy> projectEventList,
                                   ChangeRequestId changeRequestId);
+
+    void closeSession(EventTranslatorSessionId sessionId);
 }
 

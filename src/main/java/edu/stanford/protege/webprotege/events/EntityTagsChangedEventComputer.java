@@ -76,4 +76,9 @@ public class EntityTagsChangedEventComputer implements EventTranslator {
             });
         });
     }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+        sessionChecker.finishSession(sessionId);
+    }
 }

@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.access;
 
 import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.EventHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;

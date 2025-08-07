@@ -218,4 +218,8 @@ public class HighLevelEventGenerator implements EventTranslator {
         });
         return SimpleHighLevelProjectEventProxy.wrap(event);
     }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+    }
 }

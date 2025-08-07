@@ -69,4 +69,8 @@ public class EntityDeprecatedChangedEventTranslator implements EventTranslator {
             }
         }
     }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+    }
 }

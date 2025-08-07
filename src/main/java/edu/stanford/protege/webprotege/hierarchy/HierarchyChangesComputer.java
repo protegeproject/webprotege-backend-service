@@ -61,6 +61,7 @@ public final class HierarchyChangesComputer implements EventTranslator {
     @Override
     public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
         sessionChecker.startSession(sessionId);
+        child2ParentMap.clear();
         for (OntologyChange change : submittedChanges) {
             for (OWLEntity entity : change.getSignature()) {
                 if (hierarchyProvider.contains(entity)) {
@@ -129,6 +130,11 @@ public final class HierarchyChangesComputer implements EventTranslator {
                 projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
             }
         }
+    }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+        sessionChecker.finishSession(sessionId);
     }
 
     private Collection<HighLevelProjectEventProxy> createRemovedEvents(OWLEntity child, OWLEntity parent) {

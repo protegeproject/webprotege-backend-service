@@ -55,4 +55,16 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
                 .peek(hierarchyChangesComputer -> logger.info("{} Processing ontology changes with computer: {}", sessionId, hierarchyChangesComputer))
                 .forEach(changeComputer -> changeComputer.translateOntologyChanges(sessionId, revision, changes, projectEventList, changeRequestId));
     }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+        sessionChecker.finishSession(sessionId);
+        hierarchyManager.getNamedHierarchies(projectId)
+                .stream()
+                .map(NamedHierarchy::hierarchyDescriptor)
+                .peek(hierarchyDescriptor -> logger.info("Closing session for {}", hierarchyDescriptor))
+                .map(hierarchyProviderManager::getHierarchyChangesComputer)
+                .peek(hierarchyChangesComputer -> logger.info("{} Closing session for : {}", sessionId, hierarchyChangesComputer))
+                .forEach(changeComputer -> changeComputer.ifPresent(cc -> cc.closeSession(sessionId)));
+    }
 }
