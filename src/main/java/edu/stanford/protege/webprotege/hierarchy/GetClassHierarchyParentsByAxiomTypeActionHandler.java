@@ -55,6 +55,6 @@ public class GetClassHierarchyParentsByAxiomTypeActionHandler extends AbstractPr
                 .map(renderingManager::getRendering)
                 .collect(Collectors.toSet());
 
-        return new GetClassHierarchyParentsByAxiomTypeResult(owlClass, parentsBySubClassOf, parentsByEquivalentClass);
+        return new GetClassHierarchyParentsByAxiomTypeResult(renderingManager.getRendering(owlClass), parentsBySubClassOf, parentsByEquivalentClass);
     }
 }

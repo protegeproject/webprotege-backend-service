@@ -6,6 +6,9 @@ import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenRequest;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenResponse;
+import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,12 +30,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
@@ -53,6 +56,9 @@ public class ProjectOrderedChildrenManagerIT {
     @MockitoBean
     private NewRevisionsEventEmitterService newRevisionsEventEmitterService;
 
+    @MockitoBean
+    private CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> executor;
+
     private ProjectOrderedChildrenManager manager;
     private ProjectId projectId;
 
@@ -65,7 +71,7 @@ public class ProjectOrderedChildrenManagerIT {
     void setUp() {
         mongoTemplate.dropCollection(ProjectOrderedChildren.class);
         projectId = new ProjectId(UUID.randomUUID().toString());
-
+        when(executor.execute(any(), any())).thenReturn(CompletableFuture.supplyAsync(UpdateEntityChildrenResponse::new));
         manager = new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
 
         projectOrderedChildrenService.addChildToParent(projectId, parentA.toStringID(), child1.toStringID());

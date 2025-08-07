@@ -129,7 +129,7 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
         RequestValidator validator = actionHandler.getRequestValidator(action, requestContext);
         RequestValidationResult validationResult = validator.validateAction();
         if (!validationResult.isValid()) {
-            throw getPermissionDeniedException(requestContext.getUserId(),
+            throw getPermissionDeniedException(executionContext.userId(),
                                                validationResult);
         }
 
@@ -154,6 +154,8 @@ public class DispatchServiceExecutorImpl implements DispatchServiceExecutor {
                 return ((PermissionDeniedException) validationException);
             }
         }
+        logger.info("Permission denied for user " + userId.id() + " " + validationResult.getInvalidMessage());
+
         throw new PermissionDeniedException(validationResult.getInvalidMessage());
     }
 }

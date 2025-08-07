@@ -22,7 +22,7 @@ public record FormPageRequest(@JsonProperty(PropertyNames.FORM_ID) FormId formId
                               @JsonProperty(PropertyNames.SOURCE_TYPE) SourceType sourceType,
                               @JsonProperty(PropertyNames.PAGE_REQUEST) PageRequest pageRequest) {
 
-    public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGE_SIZE = 1000;
 
     @JsonCreator
     @Nonnull

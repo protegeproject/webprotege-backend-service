@@ -8,6 +8,8 @@ import java.util.Set;
 
 @JsonTypeName(GetParentsThatAreLinearizationPathParents.CHANNEL)
 public record GetParentsThatAreLinearizationPathParentsResponse(
-        @JsonProperty("parentsThatAreLinearizationPathParents") Set<IRI> parentsThatAreLinearizationPathParents
+        @JsonProperty("parentsThatAreLinearizationPathParents") Set<IRI> parentsThatAreLinearizationPathParents,
+
+        @JsonProperty("existingLinearizationParents") Set<IRI> existingLinearizationParents
 ) implements Response {
 }

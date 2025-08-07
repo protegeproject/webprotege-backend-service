@@ -46,6 +46,8 @@ import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenRequest;
+import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenResponse;
 import edu.stanford.protege.webprotege.icd.*;
 import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassDetectorImpl;
 import edu.stanford.protege.webprotege.icd.mappers.AncestorHierarchyNodeMapper;
@@ -60,6 +62,7 @@ import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
 import edu.stanford.protege.webprotege.inject.project.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
+import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import edu.stanford.protege.webprotege.issues.*;
 import edu.stanford.protege.webprotege.issues.mention.MentionParser;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
@@ -81,6 +84,8 @@ import edu.stanford.protege.webprotege.match.*;
 import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.object.*;
+import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest;
+import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesResponse;
 import edu.stanford.protege.webprotege.owlapi.HasContainsEntityInSignatureImpl;
 import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMapFactory;
@@ -2069,4 +2074,10 @@ public class ProjectBeansConfiguration {
     AncestorHierarchyNodeMapper ancestorHierarchyNodeMapper(RenderingManager renderingManager){
         return new AncestorHierarchyNodeMapper(renderingManager);
     }
+
+    @Bean
+    CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> executorForUpdateEntityChildrenInBackupService() {
+        return new CommandExecutorImpl<>(UpdateEntityChildrenResponse.class);
+    }
+
 }

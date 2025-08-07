@@ -3,12 +3,13 @@ package edu.stanford.protege.webprotege.access;
 
 import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
-import edu.stanford.protege.webprotege.ipc.EventHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
 import javax.annotation.PostConstruct;
 
 import edu.stanford.protege.webprotege.permissions.PermissionsChangedEvent;
+
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -164,6 +165,20 @@ public class AccessManagerImpl implements AccessManager {
                                  @Nonnull Resource resource,
                                  @Nonnull BuiltInCapability builtInCapability) {
         return hasPermission(subject, resource, builtInCapability.getCapability());
+    }
+
+    @Override
+    public boolean hasPermission(ExecutionContext executionContext, @NotNull Subject subject, @NotNull Resource resource, @NotNull BuiltInCapability builtInCapability) {
+        try {
+            GetAuthorizationStatusResponse response = getAuthorizationStatusExecutor.execute(new GetAuthorizationStatusRequest(resource, subject, builtInCapability.getCapability()),
+                            executionContext)
+                    .get(5, TimeUnit.SECONDS);
+            return response.authorizationStatus().equals(AuthorizationStatus.AUTHORIZED);
+
+        } catch (TimeoutException | ExecutionException | InterruptedException e) {
+            logger.error("Error when getting authorization status", e);
+            return false;
+        }
     }
 
 
