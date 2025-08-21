@@ -24,6 +24,8 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
 
     private final HierarchyProviderManager hierarchyProviderManager;
 
+    private final EventTranslatorSessionChecker sessionChecker = new EventTranslatorSessionChecker();
+
     public ManagedHierarchiesChangedComputer(ProjectId projectId, NamedHierarchyManager namedHierarchyManager, HierarchyProviderManager hierarchyProviderManager) {
         this.projectId = projectId;
         this.hierarchyManager = namedHierarchyManager;
@@ -31,22 +33,38 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
     }
 
     @Override
-    public void prepareForOntologyChanges(List<OntologyChange> submittedChanges) {
+    public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
+        sessionChecker.startSession(sessionId);
         hierarchyManager.getNamedHierarchies(projectId)
                 .stream()
                 .map(NamedHierarchy::hierarchyDescriptor)
+                .peek(hierarchyDescriptor -> logger.info("Preparing for ontology changes in {}", hierarchyDescriptor))
                 .map(hierarchyProviderManager::getHierarchyChangesComputer)
-                .forEach(changeComputer -> changeComputer.ifPresent(cc -> cc.prepareForOntologyChanges(submittedChanges)));
+                .peek(hierarchyChangesComputer -> logger.info("{} Preparing for ontology changes with hierarchy change computer: {}", sessionId, hierarchyChangesComputer))
+                .forEach(changeComputer -> changeComputer.ifPresent(cc -> cc.prepareForOntologyChanges(sessionId, submittedChanges)));
     }
 
     @Override
-    public void translateOntologyChanges(Revision revision, ChangeApplicationResult<?> changes, List<HighLevelProjectEventProxy> projectEventList, ChangeRequestId changeRequestId) {
-        logger.info("Translating changes");
+    public void translateOntologyChanges(EventTranslatorSessionId sessionId, Revision revision, ChangeApplicationResult<?> changes, List<HighLevelProjectEventProxy> projectEventList, ChangeRequestId changeRequestId) {
+        sessionChecker.finishSession(sessionId);
         hierarchyManager.getNamedHierarchies(projectId)
                 .stream()
                 .map(NamedHierarchy::hierarchyDescriptor)
                 .map(hierarchyProviderManager::getHierarchyChangesComputer)
                 .flatMap(Optional::stream)
-                .forEach(changeComputer -> changeComputer.translateOntologyChanges(revision, changes, projectEventList, changeRequestId));
+                .peek(hierarchyChangesComputer -> logger.info("{} Processing ontology changes with computer: {}", sessionId, hierarchyChangesComputer))
+                .forEach(changeComputer -> changeComputer.translateOntologyChanges(sessionId, revision, changes, projectEventList, changeRequestId));
+    }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+        sessionChecker.finishSession(sessionId);
+        hierarchyManager.getNamedHierarchies(projectId)
+                .stream()
+                .map(NamedHierarchy::hierarchyDescriptor)
+                .peek(hierarchyDescriptor -> logger.info("Closing session for {}", hierarchyDescriptor))
+                .map(hierarchyProviderManager::getHierarchyChangesComputer)
+                .peek(hierarchyChangesComputer -> logger.info("{} Closing session for : {}", sessionId, hierarchyChangesComputer))
+                .forEach(changeComputer -> changeComputer.ifPresent(cc -> cc.closeSession(sessionId)));
     }
 }

@@ -9,13 +9,12 @@ import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.events.EntityHierarchyChangedEventProxyFactory;
-import edu.stanford.protege.webprotege.events.EventTranslator;
-import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
-import edu.stanford.protege.webprotege.events.SimpleHighLevelProjectEventProxy;
+import edu.stanford.protege.webprotege.events.*;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.Revision;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,6 +25,8 @@ import java.util.Set;
  * Author: Matthew Horridge<br> Stanford University<br> Bio-Medical Informatics Research Group<br> Date: 21/03/2013
  */
 public final class HierarchyChangesComputer implements EventTranslator {
+
+    private static final Logger logger = LoggerFactory.getLogger(HierarchyChangesComputer.class);
 
     private final ProjectId projectId;
 
@@ -42,6 +43,8 @@ public final class HierarchyChangesComputer implements EventTranslator {
 
     private final EntityHierarchyChangedEventProxyFactory proxyFactory;
 
+    private final EventTranslatorSessionChecker sessionChecker = new EventTranslatorSessionChecker();
+
     public HierarchyChangesComputer(ProjectId projectId, HierarchyProvider<OWLEntity> hierarchyProvider, HierarchyDescriptor hierarchyDescriptor, EntityNodeRenderer renderer, EntityHierarchyChangedEventProxyFactory proxyFactory) {
         this.projectId = projectId;
         this.hierarchyProvider = hierarchyProvider;
@@ -56,7 +59,9 @@ public final class HierarchyChangesComputer implements EventTranslator {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void prepareForOntologyChanges(List<OntologyChange> submittedChanges) {
+    public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
+        sessionChecker.startSession(sessionId);
+        child2ParentMap.clear();
         for (OntologyChange change : submittedChanges) {
             for (OWLEntity entity : change.getSignature()) {
                 if (hierarchyProvider.contains(entity)) {
@@ -70,10 +75,12 @@ public final class HierarchyChangesComputer implements EventTranslator {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void translateOntologyChanges(Revision revision,
+    public void translateOntologyChanges(EventTranslatorSessionId sessionId,
+                                         Revision revision,
                                          ChangeApplicationResult<?> result,
                                          List<HighLevelProjectEventProxy> projectEventList,
                                          ChangeRequestId changeRequestId) {
+        sessionChecker.finishSession(sessionId);
         Set<OWLEntity> changeSignature = new HashSet<>();
         for (OntologyChange change : result.getChangeList()) {
             for (OWLEntity child : change.getSignature()) {
@@ -125,6 +132,11 @@ public final class HierarchyChangesComputer implements EventTranslator {
         }
     }
 
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
+        sessionChecker.finishSession(sessionId);
+    }
+
     private Collection<HighLevelProjectEventProxy> createRemovedEvents(OWLEntity child, OWLEntity parent) {
         var removeEdge = new RemoveEdge<>(
                 new GraphEdge<>(
@@ -149,4 +161,8 @@ public final class HierarchyChangesComputer implements EventTranslator {
         return ImmutableList.of(proxyEvent);
     }
 
+    @Override
+    public String toString() {
+        return "HierarchyChangesComputer(hierarchyDescriptor=" + hierarchyDescriptor + ", identityHashCode=" + System.identityHashCode(this) + ")";
+    }
 }

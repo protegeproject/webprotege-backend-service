@@ -2,6 +2,8 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.icd.actions.AncestorHierarchyNode;
 import org.semanticweb.owlapi.model.*;
+import edu.stanford.protege.webprotege.change.OntologyChange;
+import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.util.*;
 
@@ -102,4 +104,13 @@ public class HierarchyProviderGuard<E extends OWLEntity> implements HierarchyPro
                 .map(ancestorTree -> (AncestorHierarchyNode<OWLEntity>) ancestorTree);
     }
 
+
+    @Override
+    public void handleChanges(List<OntologyChange> changes) {
+        delegate.handleChanges(changes);
+    }
+
+    public HierarchyProvider<?> getDelegate() {
+        return delegate;
+    }
 }

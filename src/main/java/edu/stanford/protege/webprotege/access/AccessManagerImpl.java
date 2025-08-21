@@ -3,8 +3,12 @@ package edu.stanford.protege.webprotege.access;
 
 import edu.stanford.protege.webprotege.authorization.*;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.EventHandler;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import javax.annotation.Nonnull;
+import javax.annotation.PostConstruct;
+
+import edu.stanford.protege.webprotege.permissions.PermissionsChangedEvent;
 
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -49,7 +53,7 @@ public class AccessManagerImpl implements AccessManager {
                              CommandExecutor<GetAuthorizedCapabilitiesRequest, GetAuthorizedCapabilitiesResponse> getAuthorizedActionsExecutor,
                              CommandExecutor<GetAuthorizationStatusRequest, GetAuthorizationStatusResponse> getAuthorizationStatusExecutor,
                              CommandExecutor<GetAuthorizedSubjectsRequest, GetAuthorizedSubjectsResponse> getAuthorizedSubjectsExecutor,
-                             CommandExecutor<GetAuthorizedResourcesRequest, GetAuthorizedResourcesResponse> getAuthorizedResourcesExecutor) {
+                             CommandExecutor<GetAuthorizedResourcesRequest, GetAuthorizedResourcesResponse> getAuthorizedResourcesExecutor, EventHandler<PermissionsChangedEvent> permissionsChangedEventEventHandler) {
         this.getAssignedRolesExecutor = getAssignedRolesExecutor;
         this.setAssignedRolesExecutor = setAssignedRolesExecutor;
         this.getRolesRequestExecutor = getRolesRequestExecutor;
@@ -57,6 +61,11 @@ public class AccessManagerImpl implements AccessManager {
         this.getAuthorizationStatusExecutor = getAuthorizationStatusExecutor;
         this.getAuthorizedSubjectsExecutor = getAuthorizedSubjectsExecutor;
         this.getAuthorizedResourcesExecutor = getAuthorizedResourcesExecutor;
+    }
+
+    @PostConstruct
+    public void init() {
+
     }
 
     @Nonnull

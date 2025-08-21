@@ -23,7 +23,9 @@ public class AnnotationPropertyHierarchyProviderFactory {
 
     private final EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex;
 
-    public AnnotationPropertyHierarchyProviderFactory(ProjectId projectId, OWLAnnotationPropertyProvider annotationPropertyProvider, ProjectSignatureByTypeIndex projectSignatureByTypeIndex, ProjectOntologiesIndex projectOntologyIndex, SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyAxioms, SubAnnotationPropertyAxiomsBySuperPropertyIndex subAnnotationPropertyAxiomsBySuperPropertyIndex, EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex) {
+    private final AnnotationPropertyHierarchyProvider annotationPropertyHierarchyProvider;
+
+    public AnnotationPropertyHierarchyProviderFactory(ProjectId projectId, OWLAnnotationPropertyProvider annotationPropertyProvider, ProjectSignatureByTypeIndex projectSignatureByTypeIndex, ProjectOntologiesIndex projectOntologyIndex, SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyAxioms, SubAnnotationPropertyAxiomsBySuperPropertyIndex subAnnotationPropertyAxiomsBySuperPropertyIndex, EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex, AnnotationPropertyHierarchyProvider annotationPropertyHierarchyProvider) {
         this.projectId = projectId;
         this.annotationPropertyProvider = annotationPropertyProvider;
         this.projectSignatureByTypeIndex = projectSignatureByTypeIndex;
@@ -31,9 +33,13 @@ public class AnnotationPropertyHierarchyProviderFactory {
         this.subAnnotationPropertyAxioms = subAnnotationPropertyAxioms;
         this.subAnnotationPropertyAxiomsBySuperPropertyIndex = subAnnotationPropertyAxiomsBySuperPropertyIndex;
         this.entitiesInProjectSignatureIndex = entitiesInProjectSignatureIndex;
+        this.annotationPropertyHierarchyProvider = annotationPropertyHierarchyProvider;
     }
 
     public AnnotationPropertyHierarchyProvider getAnnotationPropertyHierarchyProvider(Set<OWLAnnotationProperty> roots) {
+        if(roots.isEmpty()) {
+            return annotationPropertyHierarchyProvider;
+        }
         return new AnnotationPropertyHierarchyProviderImpl(projectId,
                 annotationPropertyProvider,
                 projectSignatureByTypeIndex,

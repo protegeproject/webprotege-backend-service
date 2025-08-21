@@ -24,17 +24,24 @@ public class EventTranslatorManager {
         this.eventTranslators = eventTranslators;
     }
 
-    public void prepareForOntologyChanges(List<OntologyChange> submittedChanges) {
+    public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
         for(EventTranslator eventTranslator : eventTranslators) {
-            eventTranslator.prepareForOntologyChanges(submittedChanges);
+            eventTranslator.prepareForOntologyChanges(sessionId, submittedChanges);
         }
     }
 
-    public void translateOntologyChanges(ChangeRequestId changeRequestId, Revision revision,
+    public void translateOntologyChanges(EventTranslatorSessionId sessionId,
+                                         ChangeRequestId changeRequestId, Revision revision,
                                          ChangeApplicationResult<?> appliedChanges,
                                          List<HighLevelProjectEventProxy> projectEventList) {
         for(EventTranslator eventTranslator : eventTranslators) {
-            eventTranslator.translateOntologyChanges(revision, appliedChanges, projectEventList, changeRequestId);
+            eventTranslator.translateOntologyChanges(sessionId, revision, appliedChanges, projectEventList, changeRequestId);
+        }
+    }
+
+    public void closeSessions(EventTranslatorSessionId sessionId){
+        for(EventTranslator eventTranslator : eventTranslators) {
+            eventTranslator.closeSession(sessionId);
         }
     }
 }

@@ -60,11 +60,11 @@ public class HighLevelEventGenerator implements EventTranslator {
     }
 
     @Override
-    public void prepareForOntologyChanges(List<OntologyChange> submittedChanges) {
+    public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
     }
 
     @Override
-    public void translateOntologyChanges(Revision revision,
+    public void translateOntologyChanges(EventTranslatorSessionId sessionId, Revision revision,
                                          ChangeApplicationResult<?> changes,
                                          final List<HighLevelProjectEventProxy> projectEventList,
                                          ChangeRequestId changeRequestId) {
@@ -217,5 +217,9 @@ public class HighLevelEventGenerator implements EventTranslator {
             }
         });
         return SimpleHighLevelProjectEventProxy.wrap(event);
+    }
+
+    @Override
+    public void closeSession(EventTranslatorSessionId sessionId) {
     }
 }
