@@ -105,7 +105,8 @@ class MoveHierarchyNodeIcdActionHandlerTest {
                 ClassHierarchyDescriptor.create(),
                 fromNodePath,
                 toNodeParentPath,
-                DropType.MOVE);
+                DropType.MOVE,
+                null);
 
         var entityNode = mock(EntityNode.class);
         var owlEntity = mock(OWLEntity.class);
@@ -143,7 +144,8 @@ class MoveHierarchyNodeIcdActionHandlerTest {
                 ClassHierarchyDescriptor.create(),
                 fromNodePath,
                 toNodeParentPath,
-                DropType.MOVE);
+                DropType.MOVE,
+                null);
 
         var previousParent = mock(EntityNode.class);
         var previousParentEntity = mock(OWLEntity.class);
@@ -200,7 +202,8 @@ class MoveHierarchyNodeIcdActionHandlerTest {
                 ClassHierarchyDescriptor.create(),
                 fromNodePath,
                 toNodeParentPath,
-                DropType.MOVE);
+                DropType.MOVE,
+                null);
 
         var entityNode = mock(EntityNode.class);
         var entity = mock(OWLEntity.class);

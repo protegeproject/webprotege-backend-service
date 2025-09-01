@@ -120,7 +120,8 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
                 action.fromNodePath(),
                 action.toNodeParentPath(),
                 action.dropType(),
-                action.changeRequestId()
+                action.changeRequestId(),
+                action.commitMessage()
         );
         var changeResult = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 
