@@ -76,6 +76,9 @@ public class GetLogicalDefinitionsClassAncestorsActionHandler extends AbstractPr
                 .map(parent -> DataFactory.getOWLClass(parent.topLevelIri()))
                 .collect(Collectors.toSet());
 
+        if(entityTypesRoots.isEmpty()) {
+            return new GetLogicalDefinitionsClassAncestorsResult(getEmptyAncestorHierarchy(action.classIri()));
+        }
         ClassHierarchyDescriptor classDescriptorWithRoots = ClassHierarchyDescriptor.create(entityTypesRoots);
         return hierarchyProviderMapper.getHierarchyProvider(classDescriptorWithRoots)
                 .map(hierarchyProviderMapper -> {

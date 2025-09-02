@@ -140,17 +140,21 @@ public abstract class AbstractHierarchyProvider<N> implements HierarchyProvider<
     @Override
     public Optional<AncestorHierarchyNode<N>> getAncestorsTree(N object) {
         Queue<AncestorHierarchyNode<N>> objectsToBeVisited = new LinkedList<>();
+        Set<N> visited = new HashSet<>();
 
         AncestorHierarchyNode<N> root = new AncestorHierarchyNode<>();
         root.setNode(object);
         objectsToBeVisited.add(root);
+        visited.add(object);
 
         while (!objectsToBeVisited.isEmpty()) {
             AncestorHierarchyNode<N> currentNode = objectsToBeVisited.poll();
             List<AncestorHierarchyNode<N>> parents = getParents(currentNode.getNode()).stream()
+                    .filter(parent -> !visited.contains(parent))
                     .map(parent -> {
                         AncestorHierarchyNode<N> response = new AncestorHierarchyNode<>();
                         response.setNode(parent);
+                        visited.add(parent);
                         return response;
                     }).toList();
             currentNode.setChildren(parents);
