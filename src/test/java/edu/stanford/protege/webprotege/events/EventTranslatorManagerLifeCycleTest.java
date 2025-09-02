@@ -8,6 +8,7 @@ import jakarta.inject.Provider;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({ApplicationBeansConfiguration.class, ProjectBeansConfiguration.class, ProjectIndexBeansConfiguration.class, LuceneBeansConfiguration.class, EntityMatcherBeansConfiguration.class})
+@ExtendWith(MongoTestExtension.class)
 class EventTranslatorManagerLifeCycleTest {
 
     @org.springframework.boot.test.context.TestConfiguration
