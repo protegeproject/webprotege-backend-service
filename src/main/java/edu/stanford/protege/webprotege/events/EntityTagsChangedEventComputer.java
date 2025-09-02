@@ -27,7 +27,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 19 Jun 2018
  */
-@ProjectSingleton
 public class EntityTagsChangedEventComputer implements EventTranslator {
 
     @Nonnull
