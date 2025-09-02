@@ -865,6 +865,7 @@ public class ProjectBeansConfiguration {
         return new HierarchyPositionMatchingEngineImpl(p1, p2, p3);
     }
 
+    @Scope("prototype")
     @Bean
     ManagedHierarchiesChangedComputer managedHierarchiesChangedComputer(ProjectId p1, NamedHierarchyManager p2, HierarchyProviderManager p3) {
         return new ManagedHierarchiesChangedComputer(p1, p2, p3);
