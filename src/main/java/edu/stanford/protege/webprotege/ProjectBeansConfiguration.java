@@ -867,8 +867,8 @@ public class ProjectBeansConfiguration {
 
     @Scope("prototype")
     @Bean
-    ManagedHierarchiesChangedComputer managedHierarchiesChangedComputer(ProjectId p1, NamedHierarchyManager p2, HierarchyProviderManager p3) {
-        return new ManagedHierarchiesChangedComputer(p1, p2, p3);
+    ManagedHierarchiesChangedComputer managedHierarchiesChangedComputer(ProjectId p1, NamedHierarchyManager p2, HierarchyProviderManager p3, HierarchyChangesComputerFactory p4) {
+        return new ManagedHierarchiesChangedComputer(p1, p2, p3, p4);
     }
 
     @Bean
@@ -1568,9 +1568,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    HierarchyProviderManager hierarchyProviderMapper(HierarchyProviderFactory p6,
-                                                     HierarchyChangesComputerFactory p7) {
-        return new HierarchyProviderManager(p6, p7);
+    HierarchyProviderManager hierarchyProviderMapper(HierarchyProviderFactory p6) {
+        return new HierarchyProviderManager(p6);
     }
 
     @Bean

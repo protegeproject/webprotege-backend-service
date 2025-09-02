@@ -4,14 +4,14 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchy;
-import edu.stanford.protege.webprotege.hierarchy.NamedHierarchyManager;
-import edu.stanford.protege.webprotege.hierarchy.HierarchyProviderManager;
+import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.revision.Revision;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ManagedHierarchiesChangedComputer implements EventTranslator {
@@ -26,10 +26,16 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
 
     private final EventTranslatorSessionChecker sessionChecker = new EventTranslatorSessionChecker();
 
-    public ManagedHierarchiesChangedComputer(ProjectId projectId, NamedHierarchyManager namedHierarchyManager, HierarchyProviderManager hierarchyProviderManager) {
+    private final HierarchyChangesComputerFactory hierarchyChangesComputerFactory;
+
+    private Map<HierarchyDescriptor, HierarchyChangesComputer> changesComputerMap = new HashMap<>();
+
+
+    public ManagedHierarchiesChangedComputer(ProjectId projectId, NamedHierarchyManager namedHierarchyManager, HierarchyProviderManager hierarchyProviderManager, HierarchyChangesComputerFactory hierarchyChangesComputerFactory) {
         this.projectId = projectId;
         this.hierarchyManager = namedHierarchyManager;
         this.hierarchyProviderManager = hierarchyProviderManager;
+        this.hierarchyChangesComputerFactory = hierarchyChangesComputerFactory;
     }
 
     @Override
@@ -39,9 +45,22 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
                 .stream()
                 .map(NamedHierarchy::hierarchyDescriptor)
                 .peek(hierarchyDescriptor -> logger.info("Preparing for ontology changes in {}", hierarchyDescriptor))
-                .map(hierarchyProviderManager::getHierarchyChangesComputer)
+                .map(this::setupChangesComputer)
                 .peek(hierarchyChangesComputer -> logger.info("{} Preparing for ontology changes with hierarchy change computer: {}", sessionId, hierarchyChangesComputer))
                 .forEach(changeComputer -> changeComputer.ifPresent(cc -> cc.prepareForOntologyChanges(sessionId, submittedChanges)));
+    }
+
+    private Optional<HierarchyChangesComputer> setupChangesComputer(HierarchyDescriptor descriptor) {
+        var hp = hierarchyProviderManager.getHierarchyProvider(descriptor);
+        var hcc = hp.map(p -> {
+            return hierarchyChangesComputerFactory.getComputer(descriptor, p);
+        });
+        hcc.ifPresent(comp -> changesComputerMap.put(descriptor, comp));
+        return hcc;
+    }
+
+    private Optional<HierarchyChangesComputer> getChangesComputer(HierarchyDescriptor descriptor) {
+        return Optional.ofNullable(changesComputerMap.get(descriptor));
     }
 
     @Override
@@ -50,7 +69,7 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
         hierarchyManager.getNamedHierarchies(projectId)
                 .stream()
                 .map(NamedHierarchy::hierarchyDescriptor)
-                .map(hierarchyProviderManager::getHierarchyChangesComputer)
+                .map(this::getChangesComputer)
                 .flatMap(Optional::stream)
                 .peek(hierarchyChangesComputer -> logger.info("{} Processing ontology changes with computer: {}", sessionId, hierarchyChangesComputer))
                 .forEach(changeComputer -> changeComputer.translateOntologyChanges(sessionId, revision, changes, projectEventList, changeRequestId));
