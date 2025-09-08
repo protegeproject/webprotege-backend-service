@@ -19,22 +19,12 @@ public class HierarchyProviderManager {
 
     private final Map<HierarchyDescriptor, HierarchyProvider<? extends OWLEntity>> hierarchyProviderMap = new HashMap<>();
 
-    private final Map<HierarchyDescriptor, HierarchyChangesComputer> hierarchyChangesComputerMap = new HashMap<>();
-
     @Nonnull
     private final HierarchyProviderFactory hierarchyProviderFactory;
 
-    private final HierarchyChangesComputerFactory changesComputerFactory;
-
     @Inject
-    public HierarchyProviderManager(@Nonnull HierarchyProviderFactory hierarchyProviderFactory, HierarchyChangesComputerFactory changesComputerFactory) {
+    public HierarchyProviderManager(@Nonnull HierarchyProviderFactory hierarchyProviderFactory) {
         this.hierarchyProviderFactory = hierarchyProviderFactory;
-        this.changesComputerFactory = changesComputerFactory;
-    }
-
-    public synchronized Optional<HierarchyChangesComputer> getHierarchyChangesComputer(HierarchyDescriptor hierarchyDescriptor) {
-        getHierarchyProvider(hierarchyDescriptor);
-        return Optional.ofNullable(hierarchyChangesComputerMap.get(hierarchyDescriptor));
     }
 
     @SuppressWarnings("unchecked")
@@ -50,8 +40,6 @@ public class HierarchyProviderManager {
         var hierarchyProvider =  hierarchyProviderFactory.createHierarchyProvider(hierarchyDescriptor);
         hierarchyProvider.ifPresent(hp -> {
             hierarchyProviderMap.put(hierarchyDescriptor, hp);
-            var changeComputer = changesComputerFactory.getComputer(hierarchyDescriptor, hp);
-            hierarchyChangesComputerMap.put(hierarchyDescriptor, changeComputer);
         });
         return hierarchyProvider;
     }

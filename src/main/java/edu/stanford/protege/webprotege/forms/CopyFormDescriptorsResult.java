@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.forms;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.collect.ImmutableList;
 import edu.stanford.protege.webprotege.common.Response;
+import edu.stanford.protege.webprotege.dispatch.Result;
 
 /**
  * Matthew Horridge
@@ -12,6 +13,6 @@ import edu.stanford.protege.webprotege.common.Response;
 
 
 @JsonTypeName("webprotege.forms.CopyFormDescriptors")
-public record CopyFormDescriptorsResult(ImmutableList<FormDescriptor> copiedFormDescriptors) implements Response {
+public record CopyFormDescriptorsResult(ImmutableList<FormDescriptor> copiedFormDescriptors) implements Result {
 
 }

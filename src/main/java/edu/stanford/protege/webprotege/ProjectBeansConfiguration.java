@@ -45,6 +45,7 @@ import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenRequest;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenResponse;
@@ -962,9 +963,10 @@ public class ProjectBeansConfiguration {
         return new HierarchyPositionMatchingEngineImpl(p1, p2, p3);
     }
 
+    @Scope("prototype")
     @Bean
-    ManagedHierarchiesChangedComputer managedHierarchiesChangedComputer(ProjectId p1, NamedHierarchyManager p2, HierarchyProviderManager p3) {
-        return new ManagedHierarchiesChangedComputer(p1, p2, p3);
+    ManagedHierarchiesChangedComputer managedHierarchiesChangedComputer(ProjectId p1, NamedHierarchyManager p2, HierarchyProviderManager p3, HierarchyChangesComputerFactory p4) {
+        return new ManagedHierarchiesChangedComputer(p1, p2, p3, p4);
     }
 
     @Bean
@@ -1686,9 +1688,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    HierarchyProviderManager hierarchyProviderMapper(HierarchyProviderFactory p6,
-                                                     HierarchyChangesComputerFactory p7) {
-        return new HierarchyProviderManager(p6, p7);
+    HierarchyProviderManager hierarchyProviderMapper(HierarchyProviderFactory p6) {
+        return new HierarchyProviderManager(p6);
     }
 
     @Bean
@@ -2064,7 +2065,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
-                                                                @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
+                                                                @Nonnull ProjectOrderedChildrenService projectOrderedChildrenService,
                                                                 @Nonnull ReadWriteLockService readWriteLockService,
                                                                 @Nonnull NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
         return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);

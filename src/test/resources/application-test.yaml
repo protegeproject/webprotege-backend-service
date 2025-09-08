@@ -22,6 +22,7 @@ webprotege:
   directories:
     uploads: /tmp/webprotege-test/uploads
     data: /tmp/webprotege-test/data
+    backup: /tmp/webprotege-backup
   entityGraph:
     edgeLimit: 3000
   rabbitmq:
