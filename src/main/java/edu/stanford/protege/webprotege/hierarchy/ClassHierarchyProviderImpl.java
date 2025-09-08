@@ -87,6 +87,9 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     }
 
     private static void checkRoots(Set<OWLClass> roots) {
+        if(roots.isEmpty()) {
+            throw new RuntimeException("Bad specification of root classes in class hierarchy.  No root classes have been specified.");
+        }
         if(roots.stream().anyMatch(OWLClass::isOWLThing)) {
             if(roots.size() != 1) {
                 throw new RuntimeException("Bad specification of root classes in class hierarchy.  Specified root classes: " + roots + ".  If owl:Thing is specified as a root then it must be the one and only root.");
@@ -184,6 +187,7 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
     }
 
     public synchronized void handleChanges(@Nonnull List<OntologyChange> changes) {
+        stale = true;
         Set<OWLClass> oldTerminalElements = new HashSet<>(rootFinder.getTerminalElements());
         Set<OWLClass> changedClasses = new HashSet<>(roots);
         var filteredChanges = filterIrrelevantChanges(changes);

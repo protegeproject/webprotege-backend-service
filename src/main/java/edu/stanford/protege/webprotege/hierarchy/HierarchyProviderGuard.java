@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.hierarchy;
 
+import edu.stanford.protege.webprotege.change.OntologyChange;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import java.util.ArrayList;
@@ -92,5 +93,14 @@ public class HierarchyProviderGuard<E extends OWLEntity> implements HierarchyPro
             return false;
         }
         return delegate.contains(object);
+    }
+
+    @Override
+    public void handleChanges(List<OntologyChange> changes) {
+        delegate.handleChanges(changes);
+    }
+
+    public HierarchyProvider<?> getDelegate() {
+        return delegate;
     }
 }
