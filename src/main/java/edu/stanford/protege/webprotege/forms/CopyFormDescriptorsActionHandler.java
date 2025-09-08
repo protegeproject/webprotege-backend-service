@@ -45,8 +45,8 @@ public class CopyFormDescriptorsActionHandler extends AbstractProjectActionHandl
     @Override
     public CopyFormDescriptorsResult execute(@Nonnull CopyFormDescriptorsAction action,
                                              @Nonnull ExecutionContext executionContext) {
-        var copyFromProjectId = action.fromProject();
-        var copyToProjectId = action.toProject();
+        var copyFromProjectId = action.fromProjectId();
+        var copyToProjectId = action.projectId();
         var formsToCopy = action.formIds();
         var copier = formsCopierFactory.create(copyFromProjectId, copyToProjectId, ImmutableList.copyOf(formsToCopy));
         var copiedFormDescriptors = copier.copyForms();
