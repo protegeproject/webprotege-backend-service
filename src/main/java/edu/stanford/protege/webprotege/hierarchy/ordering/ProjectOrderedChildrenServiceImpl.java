@@ -43,7 +43,8 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
 
     public ProjectOrderedChildrenServiceImpl(ObjectMapper objectMapper,
                                              ProjectOrderedChildrenRepository repository,
-                                             ReadWriteLockService readWriteLock, CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> updateBackupEntityChildrenExecutor) {
+                                             ReadWriteLockService readWriteLock,
+                                             CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> updateBackupEntityChildrenExecutor) {
         this.objectMapper = objectMapper;
         this.repository = repository;
         this.readWriteLock = readWriteLock;

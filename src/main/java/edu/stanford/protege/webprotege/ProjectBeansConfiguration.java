@@ -45,6 +45,7 @@ import edu.stanford.protege.webprotege.frame.*;
 import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenRequest;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenResponse;
@@ -2064,7 +2065,7 @@ public class ProjectBeansConfiguration {
 
     @Bean
     ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
-                                                                @Nonnull ProjectOrderedChildrenServiceImpl projectOrderedChildrenService,
+                                                                @Nonnull ProjectOrderedChildrenService projectOrderedChildrenService,
                                                                 @Nonnull ReadWriteLockService readWriteLockService,
                                                                 @Nonnull NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
         return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
