@@ -166,7 +166,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-revision-manager</artifactId>
-            <version>0.9.2</version>
+            <version>0.10.0</version>
         </dependency>
 
         <dependency>
@@ -208,7 +208,7 @@
         <dependency>
             <groupId>net.sourceforge.owlapi</groupId>
             <artifactId>binaryowl</artifactId>
-            <version>2.0.1</version>
+            <version>2.1.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>net.sourceforge.owlapi</groupId>
@@ -401,6 +401,24 @@
                 <version>${guava.version}-jre</version>
             </dependency>
 
+            <dependency>
+                <groupId>net.sourceforge.owlapi</groupId>
+                <artifactId>owlapi-apibinding</artifactId>
+                <version>${owlapi.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>net.sourceforge.owlapi</groupId>
+                <artifactId>owlapi-distribution</artifactId>
+                <version>${owlapi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sourceforge.owlapi</groupId>
+                <artifactId>owlapi-parsers</artifactId>
+                <version>${owlapi.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.github.ben-manes.caffeine</groupId>
