@@ -34,7 +34,7 @@ public class CopyFormDescriptorsFromProject_Serialization_TestCase {
                                                    ImmutableList.of(formId));
         var json = tester.write(action);
         assertThat(json).hasJsonPathValue("fromProjectId", fromProjectId);
-        assertThat(json).hasJsonPathValue("toProject", toProjectId);
+        assertThat(json).hasJsonPathValue("projectId", toProjectId);
         assertThat(json).hasJsonPathValue("formIds", formId);
     }
 
