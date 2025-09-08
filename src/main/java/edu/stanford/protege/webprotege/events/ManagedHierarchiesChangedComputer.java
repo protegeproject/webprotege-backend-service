@@ -78,12 +78,5 @@ public class ManagedHierarchiesChangedComputer implements EventTranslator {
     @Override
     public void closeSession(EventTranslatorSessionId sessionId) {
         sessionChecker.finishSession(sessionId);
-        hierarchyManager.getNamedHierarchies(projectId)
-                .stream()
-                .map(NamedHierarchy::hierarchyDescriptor)
-                .peek(hierarchyDescriptor -> logger.info("Closing session for {}", hierarchyDescriptor))
-                .map(hierarchyProviderManager::getHierarchyChangesComputer)
-                .peek(hierarchyChangesComputer -> logger.info("{} Closing session for : {}", sessionId, hierarchyChangesComputer))
-                .forEach(changeComputer -> changeComputer.ifPresent(cc -> cc.closeSession(sessionId)));
     }
 }
