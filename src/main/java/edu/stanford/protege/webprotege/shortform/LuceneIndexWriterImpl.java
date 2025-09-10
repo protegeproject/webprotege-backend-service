@@ -18,10 +18,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.PreDestroy;
-import jakarta.inject.Inject;
+import javax.inject.Inject;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.concurrent.ExecutorService;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -59,10 +58,6 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     private final BuiltInOwlEntitiesIndex builtInOwlEntitiesIndex;
 
 
-    private final ExecutorService executorService;
-
-    private final IndexWriter inMemoryIndexWriter;
-
     @Inject
     public LuceneIndexWriterImpl(@Nonnull ProjectId projectId,
                                  @Nonnull Directory luceneDirectory,
@@ -71,7 +66,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
                                  @Nonnull EntitiesInProjectSignatureIndex entitiesInProjectSignatureIndex,
                                  @Nonnull IndexWriter indexWriter,
                                  @Nonnull SearcherManager searcherManager,
-                                 @Nonnull BuiltInOwlEntitiesIndex builtInOwlEntitiesIndex, ExecutorService executorService, IndexWriter inMemoryIndexWriter) {
+                                 @Nonnull BuiltInOwlEntitiesIndex builtInOwlEntitiesIndex) {
         this.projectId = projectId;
         this.luceneDirectory = luceneDirectory;
         this.luceneEntityDocumentTranslator = luceneEntityDocumentTranslator;
@@ -80,8 +75,6 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
         this.indexWriter = indexWriter;
         this.searcherManager = searcherManager;
         this.builtInOwlEntitiesIndex = checkNotNull(builtInOwlEntitiesIndex);
-        this.executorService = executorService;
-        this.inMemoryIndexWriter = inMemoryIndexWriter;
     }
 
     @Override
@@ -95,47 +88,32 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
 
     @Override
     public void rebuildIndex() throws IOException {
-        inMemoryIndexWriter.deleteAll();
-        buildAndWriteIndex(inMemoryIndexWriter);
-/*        executorService.submit(() -> {
-            try {
-                indexWriter.deleteAll();
-                buildAndWriteIndex(indexWriter);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });*/
+        indexWriter.deleteAll();
+        buildAndWriteIndex();
     }
 
     @Override
     public void writeIndex() throws IOException {
 
-        buildAndWriteIndex(inMemoryIndexWriter);
-/*        if(DirectoryReader.indexExists(luceneDirectory)) {
+        if(DirectoryReader.indexExists(luceneDirectory)) {
             logger.info("{} Lucene index already exists", projectId);
             return;
-        } else {
-            executorService.submit(() -> {
-                try {
-                    buildAndWriteIndex(indexWriter);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }*/
+        }
+        buildAndWriteIndex();
     }
 
-    private void buildAndWriteIndex(IndexWriter indexWriter) throws IOException {
+    private void buildAndWriteIndex() throws IOException {
         logger.info("{} Building lucene index", projectId);
         var stopwatch = Stopwatch.createStarted();
 
         projectSignatureIndex.getSignature()
-                             .map(luceneEntityDocumentTranslator::getLuceneDocument)
-                             .forEach(document -> this.addDocumentToIndex(document, indexWriter));
-       builtInOwlEntitiesIndex.getBuiltInEntities()
-                               .filter(entity -> !entitiesInProjectSignatureIndex.containsEntityInSignature(entity))
-                               .map(luceneEntityDocumentTranslator::getLuceneDocument)
-                                .forEach(document -> this.addDocumentToIndex(document, indexWriter));
+                .peek(this::logProgress)
+                .map(luceneEntityDocumentTranslator::getLuceneDocument)
+                .forEach(this::addDocumentToIndex);
+        builtInOwlEntitiesIndex.getBuiltInEntities()
+                .filter(entity -> !entitiesInProjectSignatureIndex.containsEntityInSignature(entity))
+                .map(luceneEntityDocumentTranslator::getLuceneDocument)
+                .forEach(this::addDocumentToIndex);
         indexWriter.commit();
         searcherManager.maybeRefreshBlocking();
         logger.info("{} Built lucene based dictionary in {} ms", projectId, stopwatch.elapsed().toMillis());
@@ -143,7 +121,14 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
 
     private int counter = 0;
 
-    public void addDocumentToIndex(Document doc, IndexWriter indexWriter) {
+    private void logProgress(OWLEntity entity) {
+        counter++;
+        if(counter % 10_000 == 0) {
+            logger.info("    {} Lucene index writer: Added {} entities to index", projectId, counter);
+        }
+    }
+
+    public void addDocumentToIndex(Document doc) {
         try {
             indexWriter.addDocument(doc);
         } catch (IOException e) {
@@ -155,8 +140,7 @@ public class LuceneIndexWriterImpl implements LuceneIndexWriter, HasDispose, Ent
     @Override
     public void dispose() {
         try {
-            inMemoryIndexWriter.close();
-            //indexWriter.close();
+            indexWriter.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
