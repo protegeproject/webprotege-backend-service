@@ -55,7 +55,8 @@ public class MoveEntityChangeListGeneratorFactory {
     public MoveEntityChangeListGenerator create(Path<EntityNode> fromNodePath,
                                                 Path<EntityNode> toNodeParentPath,
                                                 DropType dropType,
-                                                ChangeRequestId changeRequestId) {
+                                                ChangeRequestId changeRequestId,
+                                                String commitMessage) {
         return new MoveEntityChangeListGenerator(fromNodePath,
                                                  toNodeParentPath,
                                                  dropType,
@@ -68,6 +69,6 @@ public class MoveEntityChangeListGeneratorFactory {
                                                  p7,
                                                  p8,
                                                  p9,
-                                                 p10);
+                                                 p10, commitMessage);
     }
 }

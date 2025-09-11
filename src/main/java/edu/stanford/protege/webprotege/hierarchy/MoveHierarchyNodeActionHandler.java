@@ -42,7 +42,8 @@ public class MoveHierarchyNodeActionHandler extends AbstractProjectChangeHandler
                 action.fromNodePath(),
                 action.toNodeParentPath(),
                 action.dropType(),
-                action.changeRequestId()
+                action.changeRequestId(),
+                null
         );
     }
 

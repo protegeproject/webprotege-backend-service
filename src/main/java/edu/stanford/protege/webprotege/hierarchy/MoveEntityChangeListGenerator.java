@@ -61,6 +61,8 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
     @Nonnull
     private final SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyOfAxiomsIndex;
 
+    private final String commitMessage;
+
     @Inject
     public MoveEntityChangeListGenerator(@Nonnull Path<EntityNode> fromNodePath,
                                          @Nonnull Path<EntityNode> toNodeParentPath,
@@ -74,7 +76,7 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
                                          @Nonnull SubClassOfAxiomsBySubClassIndex subClassOfAxiomsIndex,
                                          @Nonnull SubObjectPropertyAxiomsBySubPropertyIndex subObjectPropertyOfAxiomsIndex,
                                          @Nonnull SubDataPropertyAxiomsBySubPropertyIndex subDataPropertyOfAxiomsIndex,
-                                         @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyOfAxiomsIndex) {
+                                         @Nonnull SubAnnotationPropertyAxiomsBySubPropertyIndex subAnnotationPropertyOfAxiomsIndex, String commitMessage) {
         this.changeRequestId = changeRequestId;
         this.dataFactory = dataFactory;
         this.msg = msg;
@@ -88,6 +90,7 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
         this.subObjectPropertyOfAxiomsIndex = subObjectPropertyOfAxiomsIndex;
         this.subDataPropertyOfAxiomsIndex = subDataPropertyOfAxiomsIndex;
         this.subAnnotationPropertyOfAxiomsIndex = subAnnotationPropertyOfAxiomsIndex;
+        this.commitMessage = commitMessage;
     }
 
     @Override
@@ -323,6 +326,10 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
         String entity = fromNodePath.getLast().map(EntityNode::getBrowserText).orElse("");
         String from = fromNodePath.getLastPredecessor().map(EntityNode::getBrowserText).orElse("root");
         String to = toNodeParentPath.getLast().map(EntityNode::getBrowserText).orElse("root");
-        return msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
+        String resp =  msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
+        if(this.commitMessage != null && !this.commitMessage.isEmpty()){
+            return resp + ": " + this.commitMessage.trim();
+        }
+        return resp;
     }
 }
