@@ -9,6 +9,8 @@ import edu.stanford.protege.webprotege.forms.json.FormControlDataConverter;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.IRI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import uk.ac.manchester.cs.owl.owlapi.OWLClassImpl;
 
@@ -17,7 +19,7 @@ import java.util.Optional;
 
 public class GetEntityFormAsJsonActionHandler extends AbstractProjectActionHandler<GetEntityFormAsJsonAction, GetEntityFormAsJsonResult> {
 
-
+    private final static Logger LOGGER = LoggerFactory.getLogger(GetEntityFormAsJsonActionHandler.class);
     private final FormControlDataConverter formControlDataConverter;
 
     private final EntityFrameFormDataDtoBuilderFactory entityFrameFormDataDtoBuilderFactory;
@@ -51,6 +53,7 @@ public class GetEntityFormAsJsonActionHandler extends AbstractProjectActionHandl
             EntityFrameFormDataDtoBuilder builder = entityFrameFormDataDtoBuilderFactory.getFormDataDtoBuilder(this.context, new EntityFormDataRequestSpec(new EntityFormDataRequestSpec.FormRootSubject(new OWLClassImpl(IRI.create(action.entityIri())))));
             FormDataDto formDataDto = builder.toFormData(Optional.of(FormEntitySubject.get(new OWLClassImpl(IRI.create(action.entityIri())))), formDescriptor.get());
             JsonNode jsonNode = formControlDataConverter.convert(formDataDto.toFormData());
+            LOGGER.debug("Responding to entity {}", jsonNode.toPrettyString());
             return new GetEntityFormAsJsonResult(jsonNode);
         }
         return new GetEntityFormAsJsonResult(null);
