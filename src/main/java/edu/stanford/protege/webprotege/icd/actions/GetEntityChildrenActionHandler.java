@@ -17,7 +17,7 @@ import java.util.*;
 
 public class GetEntityChildrenActionHandler extends AbstractProjectActionHandler<GetEntityChildrenAction, GetEntityChildrenResult> {
 
-    private final HierarchyProviderManager hierarchyProviderManager;
+    private final ClassHierarchyProvider classHierarchyProvider;
 
     @Nonnull
     private final DeprecatedEntityChecker deprecatedEntityChecker;
@@ -29,14 +29,14 @@ public class GetEntityChildrenActionHandler extends AbstractProjectActionHandler
     private final ProjectOrderedChildrenService projectOrderedChildrenService;
 
     public GetEntityChildrenActionHandler(@Nonnull AccessManager accessManager,
-                                          @Nonnull HierarchyProviderManager hierarchyProviderManager,
+                                          @Nonnull ClassHierarchyProvider classHierarchyProvider,
                                           @Nonnull DeprecatedEntityChecker deprecatedEntityChecker,
                                           @Nonnull DictionaryManager dictionaryManager,
                                           @Nonnull ProjectOrderedChildrenService projectOrderedChildrenService) {
         super(accessManager);
 
-        this.hierarchyProviderManager = hierarchyProviderManager;
         this.deprecatedEntityChecker = deprecatedEntityChecker;
+        this.classHierarchyProvider = classHierarchyProvider;
         this.dictionaryManager = dictionaryManager;
         this.projectOrderedChildrenService = projectOrderedChildrenService;
     }
@@ -52,15 +52,11 @@ public class GetEntityChildrenActionHandler extends AbstractProjectActionHandler
     public GetEntityChildrenResult execute(@NotNull GetEntityChildrenAction action, @NotNull ExecutionContext executionContext) {
 
         var parentClass = DataFactory.getOWLClass(action.classIri());
-        Optional<HierarchyProvider<OWLEntity>> hierarchyProvider = hierarchyProviderManager.getHierarchyProvider(ClassHierarchyDescriptor.create());
-        if (hierarchyProvider.isEmpty()) {
-            return emptyResult();
-        }
 
         var orderedChildren = projectOrderedChildrenService.findOrderedChildren(action.projectId(), action.classIri());
         List<String> orderedEntityUris = orderedChildren.map(ProjectOrderedChildren::children).orElse(Collections.emptyList());
 
-        List<IRI> children = hierarchyProvider.get().getChildren(parentClass).stream()
+        List<IRI> children = classHierarchyProvider.getDirectChildren(parentClass).stream()
                 // Filter out deprecated entities that are displayed under owl:Thing, owl:topObjectProperty
                 // owl:topDataProperty
                 .filter(child -> isNotDeprecatedTopLevelEntity(parentClass, child))
