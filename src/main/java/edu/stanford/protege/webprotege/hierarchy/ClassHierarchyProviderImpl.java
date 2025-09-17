@@ -277,6 +277,33 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         return result;
     }
 
+    public synchronized Collection<OWLClass> getDirectChildren(OWLClass object) {
+        rebuildIfNecessary();
+        Set<OWLClass> result;
+        if (roots.contains(object)) {
+            result = new HashSet<>();
+            if (hasOwlThingAsRoot()) {
+                result.addAll(rootFinder.getTerminalElements());
+            }
+            result.addAll(extractSubclassChildren(object));
+            result.remove(object);
+        } else {
+            result = extractSubclassChildren(object);
+        }
+        return result;
+    }
+
+    private Set<OWLClass> extractSubclassChildren(OWLClass parent) {
+        return classHierarchyChildrenAxiomsIndex.getChildrenAxioms(parent)
+                .flatMap(ax -> {
+                    if (ax instanceof OWLSubClassOfAxiom) {
+                        return Stream.of(((OWLSubClassOfAxiom) ax).getSubClass().asOWLClass());
+                    } else {
+                        return Stream.empty();
+                    }
+                })
+                .collect(toImmutableSet());
+    }
     private Set<OWLClass> extractChildren(OWLClass parent) {
         return classHierarchyChildrenAxiomsIndex.getChildrenAxioms(parent)
                 .flatMap(ax -> {

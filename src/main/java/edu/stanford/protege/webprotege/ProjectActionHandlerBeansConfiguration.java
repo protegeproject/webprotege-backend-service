@@ -1182,7 +1182,7 @@ public class ProjectActionHandlerBeansConfiguration {
 
     @Bean
     GetEntityChildrenActionHandler getEntityChildrenActionHandler(AccessManager p1,
-                                                                  HierarchyProviderManager p2,
+                                                                  ClassHierarchyProvider p2,
                                                                   DeprecatedEntityChecker p3,
                                                                   DictionaryManager p4,
                                                                   ProjectOrderedChildrenService p5) {

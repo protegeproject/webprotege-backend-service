@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.hierarchy;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import org.semanticweb.owlapi.model.OWLClass;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -20,5 +21,7 @@ public interface ClassHierarchyProvider extends HierarchyProvider<OWLClass> {
     Stream<OWLClass> getParentsStreamFromSubClassOf(OWLClass owlClass);
 
     Stream<OWLClass> getParentsStreamFromEquivalentClass(OWLClass owlClass);
+
+    Collection<OWLClass> getDirectChildren(OWLClass object);
 
 }
