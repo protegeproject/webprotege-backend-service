@@ -101,15 +101,14 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
     @NotNull
     @Override
     public MoveEntitiesToParentIcdResult execute(@NotNull MoveEntitiesToParentIcdAction action, @NotNull ExecutionContext executionContext) {
-        var isDestinationRetiredClass = false;
+
+        var isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.parentEntity());
 
         var isAnyClassReleased = action.entities().stream().anyMatch(releasedClassesChecker::isReleased);
 
-        if (isAnyClassReleased) {
-            isDestinationRetiredClass = this.retiredAncestorDetector.isRetired(action.parentEntity());
-            if (isDestinationRetiredClass) {
-                return new MoveEntitiesToParentIcdResult(isDestinationRetiredClass, ImmutableMap.of());
-            }
+        if (isDestinationRetiredClass) {
+            ImmutableMap<String, String> classesWithReleasedChildren = getReleasedChildrenValidationMessages(action.entities());
+            return new MoveEntitiesToParentIcdResult(isAnyClassReleased, ImmutableMap.of() , classesWithReleasedChildren.isEmpty() ?  null : classesWithReleasedChildren);
         }
 
         Map<IRI, Set<IRI>> entitiesWithParentLinPathParent = new HashMap<>();
@@ -171,7 +170,20 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
             projectOrderedChildrenManager.moveEntitiesToParent(action.parentEntity(),action.entities(), entitiesWithPreviousParents);
         }
 
-        return new MoveEntitiesToParentIcdResult(isDestinationRetiredClass, ImmutableMap.of());
+        return new MoveEntitiesToParentIcdResult(isDestinationRetiredClass, ImmutableMap.of(), null);
+    }
+
+    private ImmutableMap<String, String> getReleasedChildrenValidationMessages(ImmutableSet<OWLClass> entities) {
+        Map<String, String> response = new HashMap<>();
+        for(OWLClass entity : entities) {
+            Set<OWLClass> releasedDescendants = releasedClassesChecker.getReleasedDescendants(entity);
+            if(releasedDescendants != null && !releasedDescendants.isEmpty()) {
+                Set<OWLEntityData> entityData = getOwlEntityDataFromOwlClasses(releasedDescendants);
+                OWLEntityData parentData = renderingManager.getRendering(entity);
+                response.put(parentData.getBrowserText(),  ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(entityData, 2));
+            }
+        }
+        return ImmutableMap.copyOf(response);
     }
 
     private MoveEntitiesToParentIcdResult getResultWithParentAsLinearizationPathParent(Map<IRI, Set<IRI>> parentsThatAreLinPathParent) {
@@ -189,7 +201,7 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
                         )
                 );
 
-        return new MoveEntitiesToParentIcdResult(false, result);
+        return new MoveEntitiesToParentIcdResult(false, result, null);
     }
 
     private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {

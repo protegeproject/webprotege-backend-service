@@ -1,6 +1,14 @@
 package edu.stanford.protege.webprotege.icd;
 
-import edu.stanford.protege.webprotege.mansyntax.render.IsIcdReleased;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLEntity;
 
-public interface ReleasedClassesChecker extends IsIcdReleased {
+import java.util.List;
+import java.util.Set;
+
+public interface ReleasedClassesChecker {
+    boolean isReleased(OWLEntity entity);
+
+    Set<OWLClass> getReleasedDescendants(OWLEntity owlEntity);
+
 }

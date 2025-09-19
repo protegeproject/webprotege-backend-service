@@ -24,6 +24,7 @@ import org.slf4j.*;
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -150,15 +151,18 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         }
 
         var parents = action.parents().stream().collect(toImmutableSet());
+        ChangeEntityParentsResult errorResult = null;
+        var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
 
         if (releasedClassesChecker.isReleased(action.entity())) {
-            var classesWithRetiredAncestors = this.retiredAncestorDetector.getClassesWithRetiredAncestors(parents);
-
             if (isNotEmpty(classesWithRetiredAncestors)) {
-                return getResultWithRetiredAncestors(classesWithRetiredAncestors);
+                errorResult = getResultWithRetiredAncestors(classesWithRetiredAncestors);
             }
         }
-
+        Set<OWLClass> releasedChildren = this.releasedClassesChecker.getReleasedDescendants(action.entity());
+        if(releasedChildren != null && !releasedChildren.isEmpty() && isNotEmpty(classesWithRetiredAncestors)) {
+            return getResultWithReleasedChildren(errorResult, releasedChildren);
+        }
         var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
 
         var result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
@@ -190,6 +194,54 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         return getResultWithCycles(classesWithCycles);
     }
 
+    private ChangeEntityParentsResult getResultWithReleasedChildren(ChangeEntityParentsResult result, Set<OWLClass> releasedChildren) {
+        Set<OWLEntityData> entityData = getOwlEntityDataFromOwlClasses(releasedChildren);
+        String validationMessage = createReleasedChildrenValidationMessage(entityData, 2);
+        
+        return new ChangeEntityParentsResult(
+            result != null ? result.classesWithCycle() : ImmutableSet.of(),
+            result != null ? result.classesWithRetiredParents() : ImmutableSet.of(),
+            validationMessage,
+            result != null ? result.oldParentsThatArelinearizationPathParents() : ImmutableSet.of()
+        );
+    }
+
+    public static String createReleasedChildrenValidationMessage(Set<OWLEntityData> entityData, int entitiesToShow) {
+        if (entityData.isEmpty()) {
+            return "";
+        }
+        
+        int size = entityData.size();
+        String entityWord = size == 1 ? "entity" : "entities";
+        String baseMessage = "Cannot move entity because the following " + entityWord + " are released: ";
+        
+        List<OWLEntityData> entityList = entityData.stream().collect(Collectors.toList());
+        
+        if (size <= entitiesToShow) {
+            StringBuilder message = new StringBuilder(baseMessage);
+            for (int i = 0; i < size; i++) {
+                if (i > 0) {
+                    message.append(", ");
+                }
+                message.append(entityList.get(i).getBrowserText());
+            }
+            return message.toString();
+        } else {
+            StringBuilder message = new StringBuilder(baseMessage);
+            for (int i = 0; i < entitiesToShow; i++) {
+                if (i > 0) {
+                    message.append(", ");
+                }
+                message.append(entityList.get(i).getBrowserText());
+            }
+            
+            int remainingCount = size - entitiesToShow;
+            message.append(" and ").append(remainingCount).append(" more entities");
+            
+            return message.toString();
+        }
+    }
+
     private boolean isNotEmpty(Set<?> set) {
         return !set.isEmpty();
     }
@@ -200,12 +252,12 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     }
 
     private ChangeEntityParentsResult validEmptyResult() {
-        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(), ImmutableSet.of());
+        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(),null, ImmutableSet.of());
     }
 
     private ChangeEntityParentsResult getResultWithCycles(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of(), ImmutableSet.of());
+        return new ChangeEntityParentsResult(owlEntityDataResult, ImmutableSet.of(),null, ImmutableSet.of());
     }
 
     private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {
@@ -216,13 +268,13 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
 
     private ChangeEntityParentsResult getResultWithRetiredAncestors(Set<OWLClass> classes) {
         var owlEntityDataResult = getOwlEntityDataFromOwlClasses(classes);
-        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult, ImmutableSet.of());
+        return new ChangeEntityParentsResult(ImmutableSet.of(), owlEntityDataResult,null, ImmutableSet.of());
     }
 
     private ChangeEntityParentsResult getResultWithParentAsLinearizationPathParent(Set<IRI> parentIris) {
         Set<OWLClass> parentClasses = parentIris.stream().map(DataFactory::getOWLClass).collect(Collectors.toSet());
         var parentEntityDataResult = getOwlEntityDataFromOwlClasses(parentClasses);
 
-        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(), parentEntityDataResult);
+        return new ChangeEntityParentsResult(ImmutableSet.of(), ImmutableSet.of(),null, parentEntityDataResult);
     }
 }
