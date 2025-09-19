@@ -125,7 +125,9 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
                         new ArrayList<>(existingEntry.get().children()),
                         existingEntry.get().userId()
                 );
-                updatedEntry.children().add(newChildUri);
+                if (!updatedEntry.children().contains(newChildUri)) {
+                    updatedEntry.children().add(newChildUri);
+                }
                 repository.update(updatedEntry);
                 updateBackupEntityChildrenExecutor.execute(new UpdateEntityChildrenRequest(projectId, IRI.create(updatedEntry.entityUri()), updatedEntry.children()), new ExecutionContext()).get(5, TimeUnit.SECONDS);
 
@@ -145,8 +147,22 @@ public class ProjectOrderedChildrenServiceImpl implements ProjectOrderedChildren
     @Override
     public void updateEntity(SaveEntityChildrenOrderingAction action, UserId userId) {
         Optional<ProjectOrderedChildren> entityChildrenOrdering = repository.findOrderedChildren(action.projectId(), action.entityIri().toString());
+        if (!areNewChildrenOrderUnique(action.orderedChildren())) {
+            String errorMessage = MessageFormat.format(
+                    """
+                            The new children order contains duplicates: {0}
+                            ProjectId: {1}
+                            ParentIri: {2}
+                            UserId: {3}
+                            """,
+                    action.orderedChildren(), action.projectId().id(), action.entityIri().toString(), userId.id()
+            );
+            logger.error(errorMessage);
+            throw new IllegalArgumentException(errorMessage);
+        }
         try {
             if (entityChildrenOrdering.isPresent()) {
+
                 ProjectOrderedChildren orderToBeSaved = entityChildrenOrdering.map(ordering -> new ProjectOrderedChildren(ordering.entityUri(),
                         ordering.projectId(),
                         action.orderedChildren(),
