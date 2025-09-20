@@ -99,6 +99,11 @@ public class OntologyAnnotationsIndexImpl implements OntologyAnnotationsSignatur
         }));
     }
 
+    @Override
+    public void reset() {
+        annotationsMap.clear();
+    }
+
     private void handleOntologyAnnotationChange(@Nonnull OntologyAnnotationChange change) {
         if(change.isAddOntologyAnnotation()) {
             annotationsMap.put(change.getOntologyId(), change.getAnnotation());

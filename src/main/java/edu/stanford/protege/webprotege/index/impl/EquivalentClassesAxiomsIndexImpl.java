@@ -44,4 +44,9 @@ public class EquivalentClassesAxiomsIndexImpl implements EquivalentClassesAxioms
     public void applyChanges(@Nonnull ImmutableList<OntologyChange> changes) {
         index.applyChanges(changes);
     }
+
+    @Override
+    public void reset() {
+        index.clear();
+    }
 }

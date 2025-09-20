@@ -33,7 +33,6 @@ public class ProjectManager {
         this.projectAccessManager = projectAccessManager;
     }
 
-
     @Nonnull
     public ProjectActionHandlerRegistry getActionHandlerRegistry(@Nonnull ProjectId projectId) {
         return projectCache.getActionHandlerRegistry(checkNotNull(projectId));

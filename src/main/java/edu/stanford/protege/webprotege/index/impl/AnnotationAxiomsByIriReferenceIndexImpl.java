@@ -75,6 +75,11 @@ public class AnnotationAxiomsByIriReferenceIndexImpl implements AnnotationAxioms
         index.applyChanges(changes);
     }
 
+    @Override
+    public void reset() {
+        index.clear();
+    }
+
     private static class KeyExtractorVisitor extends OWLAxiomVisitorExAdapter<Iterable<IRI>> {
 
         private final AssertionIrisIterable assertionIrisIterable = new AssertionIrisIterable();

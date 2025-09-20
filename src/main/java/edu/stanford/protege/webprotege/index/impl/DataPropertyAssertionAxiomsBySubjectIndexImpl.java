@@ -45,4 +45,9 @@ public class DataPropertyAssertionAxiomsBySubjectIndexImpl implements DataProper
     public void applyChanges(@Nonnull ImmutableList<OntologyChange> changes) {
         index.applyChanges(changes);
     }
+
+    @Override
+    public void reset() {
+        index.clear();
+    }
 }

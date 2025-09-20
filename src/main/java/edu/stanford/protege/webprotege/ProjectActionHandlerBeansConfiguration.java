@@ -62,6 +62,7 @@ import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManager;
 import edu.stanford.protege.webprotege.sharing.SetProjectSharingSettingsActionHandler;
 import edu.stanford.protege.webprotege.shortform.DictionaryManager;
 import edu.stanford.protege.webprotege.shortform.WebProtegeOntologyIRIShortFormProvider;
+import edu.stanford.protege.webprotege.storage.MinioFileDownloader;
 import edu.stanford.protege.webprotege.tag.*;
 import edu.stanford.protege.webprotege.usage.GetEntityUsageActionHandler;
 import edu.stanford.protege.webprotege.usage.ReferencingAxiomVisitorFactory;
@@ -70,13 +71,18 @@ import edu.stanford.protege.webprotege.watches.GetWatchesActionHandler;
 import edu.stanford.protege.webprotege.watches.SetWatchesActionHandler;
 import edu.stanford.protege.webprotege.watches.WatchManager;
 import edu.stanford.protege.webprotege.webhook.CommentPostedSlackWebhookInvoker;
+import jakarta.inject.Named;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.util.OntologyIRIShortFormProvider;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import jakarta.inject.Provider;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 import java.util.Comparator;
+import java.util.concurrent.Executor;
 
 /**
  * Matthew Horridge
@@ -1013,5 +1019,22 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                             EntityNodeRenderer p3,
                                                                             RenderingManager p4) {
         return new GetEntityDirectParentsActionHandler(p1, p2, p3, p4);
+    }
+
+    @Bean
+    ReplaceProjectHistoryActionHandler replaceProjectHistoryActionHandler(AccessManager p1, ProjectHistoryReplacer p2, MinioFileDownloader p3, EventDispatcher p4, OWLDataFactory p5,
+                                                                          @Qualifier("replaceProjectHistoryExecutor") Executor p6) {
+        return new ReplaceProjectHistoryActionHandler(p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean(name = "replaceProjectHistoryExecutor")
+    Executor replaceProjectHistoryExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(8);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("project-history-");
+        executor.initialize();
+        return executor;
     }
 }

@@ -39,7 +39,6 @@ public class ProjectComponentImpl implements ProjectComponent {
         this.projectActionHandlerRegistry  = projectActionHandlerRegistry;
         this.entityFrameFormDataDtoBuilderFactory = entityFrameFormDataDtoBuilderFactory;
     }
-    
 
     @Override
     public ProjectId getProjectId() {

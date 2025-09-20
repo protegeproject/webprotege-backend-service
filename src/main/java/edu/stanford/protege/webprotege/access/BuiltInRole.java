@@ -102,7 +102,8 @@ public enum BuiltInRole {
                     EDIT_PROJECT_TAGS,
                     EDIT_FORMS,
                     UPLOAD_AND_MERGE_ADDITIONS,
-                    EDIT_PROJECT_TAGS),
+                    EDIT_PROJECT_TAGS,
+                    REPLACE_PROJECT_HISTORY),
 
 
     // Roles that relate to the UI

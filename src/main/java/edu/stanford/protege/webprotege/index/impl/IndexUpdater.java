@@ -95,6 +95,12 @@ public class IndexUpdater {
         return depth;
     }
 
+    public synchronized void rebuildIndexes() {
+        builtIndexes = false;
+        indexes.forEach(UpdatableIndex::reset);
+        buildIndexes();
+    }
+
     public synchronized void buildIndexes() {
         if(builtIndexes) {
             return;

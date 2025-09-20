@@ -178,4 +178,9 @@ public class AxiomMultimapIndex<V, A extends OWLAxiom> {
     public String toString() {
         return backingMap.toString();
     }
+
+    public synchronized void clear() {
+        backingMap.clear();
+        changeQueue.clear();
+    }
 }

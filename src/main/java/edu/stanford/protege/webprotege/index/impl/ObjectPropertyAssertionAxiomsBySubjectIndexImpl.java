@@ -44,4 +44,9 @@ public class ObjectPropertyAssertionAxiomsBySubjectIndexImpl implements ObjectPr
         checkNotNull(ontologyId);
         return index.getAxioms(subject, ontologyId);
     }
+
+    @Override
+    public void reset() {
+        index.clear();
+    }
 }

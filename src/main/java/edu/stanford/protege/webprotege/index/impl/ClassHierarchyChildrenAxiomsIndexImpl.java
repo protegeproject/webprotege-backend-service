@@ -108,6 +108,11 @@ public class ClassHierarchyChildrenAxiomsIndexImpl implements ClassHierarchyChil
         index.applyChanges(changes);
     }
 
+    @Override
+    public void reset() {
+        index.clear();
+    }
+
     @Nonnull
     @Override
     public Collection<Index> getDependencies() {

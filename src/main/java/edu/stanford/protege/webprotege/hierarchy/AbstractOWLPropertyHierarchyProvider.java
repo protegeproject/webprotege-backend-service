@@ -183,4 +183,9 @@ public abstract class AbstractOWLPropertyHierarchyProvider<P extends OWLProperty
         rebuildIfNecessary();
         return Collections.singleton(getRoot());
     }
+
+    @Override
+    public final void reset() {
+        rebuildRoots();
+    }
 }

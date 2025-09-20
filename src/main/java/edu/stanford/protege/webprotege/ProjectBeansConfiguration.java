@@ -120,6 +120,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -1926,5 +1927,10 @@ public class ProjectBeansConfiguration {
     @Bean
     ReferenceFinder referenceFinder(AxiomsByReferenceIndex p1, OntologyAnnotationsIndex p2) {
         return new ReferenceFinder(p1, p2);
+    }
+
+    @Bean
+    ProjectHistoryReplacer projectHistoryReplacer(ChangeManager p0, ProjectId p1, RevisionHistoryReplacer p2, IndexUpdater p3, ReloadableRevisionStore p4, LuceneIndexWriter p5, HierarchyProviderManager p6) {
+        return new ProjectHistoryReplacer(p0, p1, p2, p3, p4, p5, p6);
     }
 }

@@ -40,6 +40,7 @@ import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import jakarta.inject.Provider;
 import java.util.*;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -103,6 +104,10 @@ public class ChangeManager implements HasApplyChanges {
 
     @Nonnull
     private final EntityCrudContextFactory entityCrudContextFactory;
+
+    // Thread-agnostic write gate (fair): single permit serializes writers.
+    // freezeWrites() acquires the permit; close() releases it from ANY thread.
+    private final Semaphore writeGate = new Semaphore(1, true);
 
     @Nonnull
     private final ReadWriteLock projectChangeLock = new ReentrantReadWriteLock();
@@ -186,8 +191,17 @@ public class ChangeManager implements HasApplyChanges {
     }
 
     /**
+     * Acquire this handle to temporarily freeze writes for this project.
+     * Blocks until any existing in-flight applyChanges calls (which already passed the gate) complete.
+     * New applyChanges calls will block at entry until this handle is closed.
+     */
+    public ProjectFreezeHandle freezeWrites() {
+        writeGate.acquireUninterruptibly();
+        return new ProjectFreezeHandle(writeGate);
+    }
+
+    /**
      * Applies ontology changes to the ontologies contained within a project.
-     *
      *
      * @param userId              The userId of the user applying the changes.  Not {@code null}.
      * @param changeListGenerator A generator which creates a list of changes (based on the state of the project at
@@ -209,133 +223,136 @@ public class ChangeManager implements HasApplyChanges {
         checkNotNull(userId);
         checkNotNull(changeListGenerator);
 
-        // Final check of whether the user can actually edit the project
-        throwEditPermissionDeniedIfNecessary(userId);
-
-        final ChangeApplicationResult<R> changeApplicationResult;
-
-
-        var crudContext = getEntityCrudContext(userId);
-
-        // The following must take into consideration fresh entity IRIs.  Entity IRIs are minted on the webprotege, so
-        // ontology changes may contain fresh entity IRIs as place holders. We need to make sure these get replaced
-        // with true entity IRIs
+        // Enter the thread-agnostic gate (blocks if frozen)
+        writeGate.acquireUninterruptibly();
         try {
-            // Compute the changes that need to take place.  We don't allow any other writes here because the
-            // generation of the changes may depend upon the state of the project
-            changeProcesssingLock.lock();
+            // Final check of whether the user can actually edit the project
+            throwEditPermissionDeniedIfNecessary(userId);
 
-            var changeList = changeListGenerator.generateChanges(new ChangeGenerationContext(userId));
+            final ChangeApplicationResult<R> changeApplicationResult;
 
-            // We have our changes
-            var changes = changeList.getChanges();
+            var crudContext = getEntityCrudContext(userId);
 
-            // We coin fresh IRIs for entities that have IRIs that follow the temp IRI pattern
-            // See DataFactory#isFreshEntity
-            var tempIri2MintedIri = new HashMap<IRI, IRI>();
-
-            var changeSession = getEntityCrudKitHandler().createChangeSetSession();
-            // Changes that refer to entities that have temp IRIs
-            var changesToBeRenamed = new HashSet<OntologyChange>();
-            // Changes required to create fresh entities
-            var changesToCreateFreshEntities = new ArrayList<OntologyChange>();
-            for(var change : changes) {
-                change.getSignature()
-                      .forEach(entityInSignature -> {
-                          if(isFreshEntity(entityInSignature)) {
-                              throwCreatePermissionDeniedIfNecessary(entityInSignature, userId);
-                              changesToBeRenamed.add(change);
-                              var tempIri = entityInSignature.getIRI();
-                              if(!tempIri2MintedIri.containsKey(tempIri)) {
-                                  var freshEntityIri = FreshEntityIri.parse(tempIri.toString());
-                                  var shortName = freshEntityIri.getSuppliedName();
-                                  var langTag = Optional.<String>empty();
-                                  if(!shortName.isEmpty()) {
-                                      langTag = Optional.of(freshEntityIri.getLangTag());
-                                  }
-                                  var entityType = entityInSignature.getEntityType();
-                                  var discriminator = freshEntityIri.getDiscriminator();
-                                  var parents = freshEntityIri.getParentEntities(dataFactory, entityType);
-                                  var creator = getEntityCreator(changeSession,
-                                                                 crudContext,
-                                                                 shortName,
-                                                                 discriminator,
-                                                                 langTag,
-                                                                 parents,
-                                                                 entityType);
-                                  changesToCreateFreshEntities.addAll(creator.getChanges());
-                                  var mintedIri = creator.getEntity()
-                                                         .getIRI();
-                                  tempIri2MintedIri.put(tempIri, mintedIri);
-                              }
-                          }
-                      });
-                if(isChangeForAnnotationAssertionWithFreshIris(change)) {
-                    changesToBeRenamed.add(change);
-                }
-
-            }
-
-
-            var allChangesIncludingRenames = new ArrayList<OntologyChange>();
-            var changeRenamer = iriReplacerFactory.create(ImmutableMap.copyOf(tempIri2MintedIri));
-            for(var change : changes) {
-                if(changesToBeRenamed.contains(change)) {
-                    var replacementChange = getRenamedChange(change, changeRenamer);
-                    allChangesIncludingRenames.add(replacementChange);
-                }
-                else {
-                    allChangesIncludingRenames.add(change);
-                }
-            }
-
-            allChangesIncludingRenames.addAll(changesToCreateFreshEntities);
-
-            var eventTranslatorSessionId = EventTranslatorSessionId.create();
-            final var eventTranslatorManager = eventTranslatorManagerProvider.get();
-
-            // Now we do the actual changing, so we lock the project here.  No writes or reads can take place whilst
-            // we apply the changes
-            projectChangeWriteLock.lock();
-            final Optional<Revision> revision;
+            // The following must take into consideration fresh entity IRIs.  Entity IRIs are minted on the webprotege, so
+            // ontology changes may contain fresh entity IRIs as place holders. We need to make sure these get replaced
+            // with true entity IRIs
             try {
-                var effectiveChanges = rootIndex.getEffectiveChanges(allChangesIncludingRenames);
+                // Compute the changes that need to take place.  We don't allow any other writes here because the
+                // generation of the changes may depend upon the state of the project
+                changeProcesssingLock.lock();
 
-                eventTranslatorManager.prepareForOntologyChanges(eventTranslatorSessionId, effectiveChanges);
+                var changeList = changeListGenerator.generateChanges(new ChangeGenerationContext(userId));
 
-                var renameMap = renameMapFactory.create(tempIri2MintedIri);
-                var renamedResult = getRenamedResult(changeListGenerator, changeList.getResult(), renameMap);
-                changeApplicationResult = new ChangeApplicationResult<>(renamedResult, effectiveChanges, renameMap);
-                if(!effectiveChanges.isEmpty()) {
-                    var rev = logAndProcessAppliedChanges(userId, changeListGenerator, changeApplicationResult);
-                    revision = Optional.of(rev);
-                    projectDetailsRepository.setModified(projectId, rev.getTimestamp(), userId);
+                // We have our changes
+                var changes = changeList.getChanges();
+
+                // We coin fresh IRIs for entities that have IRIs that follow the temp IRI pattern
+                // See DataFactory#isFreshEntity
+                var tempIri2MintedIri = new HashMap<IRI, IRI>();
+
+                var changeSession = getEntityCrudKitHandler().createChangeSetSession();
+                // Changes that refer to entities that have temp IRIs
+                var changesToBeRenamed = new HashSet<OntologyChange>();
+                // Changes required to create fresh entities
+                var changesToCreateFreshEntities = new ArrayList<OntologyChange>();
+                for (var change : changes) {
+                    change.getSignature()
+                            .forEach(entityInSignature -> {
+                                if (isFreshEntity(entityInSignature)) {
+                                    throwCreatePermissionDeniedIfNecessary(entityInSignature, userId);
+                                    changesToBeRenamed.add(change);
+                                    var tempIri = entityInSignature.getIRI();
+                                    if (!tempIri2MintedIri.containsKey(tempIri)) {
+                                        var freshEntityIri = FreshEntityIri.parse(tempIri.toString());
+                                        var shortName = freshEntityIri.getSuppliedName();
+                                        var langTag = Optional.<String>empty();
+                                        if (!shortName.isEmpty()) {
+                                            langTag = Optional.of(freshEntityIri.getLangTag());
+                                        }
+                                        var entityType = entityInSignature.getEntityType();
+                                        var discriminator = freshEntityIri.getDiscriminator();
+                                        var parents = freshEntityIri.getParentEntities(dataFactory, entityType);
+                                        var creator = getEntityCreator(changeSession,
+                                                crudContext,
+                                                shortName,
+                                                discriminator,
+                                                langTag,
+                                                parents,
+                                                entityType);
+                                        changesToCreateFreshEntities.addAll(creator.getChanges());
+                                        var mintedIri = creator.getEntity()
+                                                .getIRI();
+                                        tempIri2MintedIri.put(tempIri, mintedIri);
+                                    }
+                                }
+                            });
+                    if (isChangeForAnnotationAssertionWithFreshIris(change)) {
+                        changesToBeRenamed.add(change);
+                    }
+
                 }
-                else {
-                    revision = Optional.empty();
+
+                var allChangesIncludingRenames = new ArrayList<OntologyChange>();
+                var changeRenamer = iriReplacerFactory.create(ImmutableMap.copyOf(tempIri2MintedIri));
+                for (var change : changes) {
+                    if (changesToBeRenamed.contains(change)) {
+                        var replacementChange = getRenamedChange(change, changeRenamer);
+                        allChangesIncludingRenames.add(replacementChange);
+                    } else {
+                        allChangesIncludingRenames.add(change);
+                    }
                 }
+
+                allChangesIncludingRenames.addAll(changesToCreateFreshEntities);
+
+                var eventTranslatorSessionId = EventTranslatorSessionId.create();
+                final var eventTranslatorManager = eventTranslatorManagerProvider.get();
+
+                // Now we do the actual changing, so we lock the project here.  No writes or reads can take place whilst
+                // we apply the changes
+                projectChangeWriteLock.lock();
+                final Optional<Revision> revision;
+                try {
+                    var effectiveChanges = rootIndex.getEffectiveChanges(allChangesIncludingRenames);
+
+                    eventTranslatorManager.prepareForOntologyChanges(eventTranslatorSessionId, effectiveChanges);
+
+                    var renameMap = renameMapFactory.create(tempIri2MintedIri);
+                    var renamedResult = getRenamedResult(changeListGenerator, changeList.getResult(), renameMap);
+                    changeApplicationResult = new ChangeApplicationResult<>(renamedResult, effectiveChanges, renameMap);
+                    if (!effectiveChanges.isEmpty()) {
+                        var rev = logAndProcessAppliedChanges(userId, changeListGenerator, changeApplicationResult);
+                        revision = Optional.of(rev);
+                        projectDetailsRepository.setModified(projectId, rev.getTimestamp(), userId);
+                    } else {
+                        revision = Optional.empty();
+                    }
+                } finally {
+                    // Release for reads
+                    projectChangeWriteLock.unlock();
+                }
+                var changeRequestId = changeListGenerator.getChangeRequestId();
+                generateAndDispatchHighLevelEvents(changeRequestId, eventTranslatorSessionId, userId,
+                        changeListGenerator,
+                        changeApplicationResult,
+                        eventTranslatorManager,
+                        revision);
+
             } finally {
-                // Release for reads
-                projectChangeWriteLock.unlock();
+                changeProcesssingLock.unlock();
             }
-            var changeRequestId = changeListGenerator.getChangeRequestId();
-            generateAndDispatchHighLevelEvents(changeRequestId, eventTranslatorSessionId, userId,
-                                               changeListGenerator,
-                                               changeApplicationResult,
-                                               eventTranslatorManager,
-                                               revision);
 
+            return changeApplicationResult;
         } finally {
-            changeProcesssingLock.unlock();
+            // Leave the gate (or unfreeze will release it)
+            writeGate.release();
         }
-
-        return changeApplicationResult;
     }
 
     private void throwEditPermissionDeniedIfNecessary(UserId userId) {
         var subject = forUser(userId);
         var projectResource = new ProjectResource(projectId);
-        if(!accessManager.hasPermission(subject, projectResource, EDIT_ONTOLOGY)) {
+        if (!accessManager.hasPermission(subject, projectResource, EDIT_ONTOLOGY)) {
             throw new PermissionDeniedException("You do not have permission to edit this project");
         }
     }
@@ -343,16 +360,16 @@ public class ChangeManager implements HasApplyChanges {
     private EntityCrudContext getEntityCrudContext(UserId userId) {
         var prefixNameExpanderBuilder = PrefixedNameExpander.builder();
         prefixDeclarationsStore.find(projectId)
-                               .getPrefixes()
-                               .forEach(prefixNameExpanderBuilder::withPrefixNamePrefix);
+                .getPrefixes()
+                .forEach(prefixNameExpanderBuilder::withPrefixNamePrefix);
         builtInPrefixDeclarations.getPrefixDeclarations()
-                                 .forEach(decl -> prefixNameExpanderBuilder.withPrefixNamePrefix(decl.getPrefixName(),
-                                                                                                 decl.getPrefix()));
+                .forEach(decl -> prefixNameExpanderBuilder.withPrefixNamePrefix(decl.getPrefixName(),
+                        decl.getPrefix()));
         var prefixNameExpander = prefixNameExpanderBuilder.build();
         var defaultOntologyId = defaultOntologyIdManager.getDefaultOntologyId();
         return entityCrudContextFactory.create(userId,
-                                               prefixNameExpander,
-                                               defaultOntologyId);
+                prefixNameExpander,
+                defaultOntologyId);
     }
 
     @SuppressWarnings("unchecked")
@@ -368,23 +385,20 @@ public class ChangeManager implements HasApplyChanges {
                                                         UserId userId) {
         var subject = forUser(userId);
         var projectResource = new ProjectResource(projectId);
-        if(entity.isOWLClass()) {
-            if(!accessManager.hasPermission(subject, projectResource, CREATE_CLASS)) {
+        if (entity.isOWLClass()) {
+            if (!accessManager.hasPermission(subject, projectResource, CREATE_CLASS)) {
                 throw new PermissionDeniedException("You do not have permission to create new classes");
             }
-        }
-        else if(entity.isOWLObjectProperty() || entity.isOWLDataProperty() || entity.isOWLAnnotationProperty()) {
-            if(!accessManager.hasPermission(subject, projectResource, CREATE_PROPERTY)) {
+        } else if (entity.isOWLObjectProperty() || entity.isOWLDataProperty() || entity.isOWLAnnotationProperty()) {
+            if (!accessManager.hasPermission(subject, projectResource, CREATE_PROPERTY)) {
                 throw new PermissionDeniedException("You do not have permission to create new properties");
             }
-        }
-        else if(entity.isOWLNamedIndividual()) {
-            if(!accessManager.hasPermission(subject, projectResource, CREATE_INDIVIDUAL)) {
+        } else if (entity.isOWLNamedIndividual()) {
+            if (!accessManager.hasPermission(subject, projectResource, CREATE_INDIVIDUAL)) {
                 throw new PermissionDeniedException("You do not have permission to create new individuals");
             }
-        }
-        else if(entity.isOWLDatatype()) {
-            if(!accessManager.hasPermission(subject, projectResource, CREATE_DATATYPE)) {
+        } else if (entity.isOWLDatatype()) {
+            if (!accessManager.hasPermission(subject, projectResource, CREATE_DATATYPE)) {
                 throw new PermissionDeniedException("You do not have permission to create new datatypes");
             }
         }
@@ -399,7 +413,7 @@ public class ChangeManager implements HasApplyChanges {
                                                                        EntityType<E> entityType) {
         if (discriminator.isEmpty() && !shortName.isEmpty()) {
             Optional<E> entity = getEntityOfTypeIfPresent(entityType, shortName);
-            if(entity.isPresent()) {
+            if (entity.isPresent()) {
                 return new OWLEntityCreator<>(entity.get(), Collections.emptyList());
             }
         }
@@ -409,32 +423,32 @@ public class ChangeManager implements HasApplyChanges {
         E ent = handler.create(session, entityType, EntityShortForm.get(shortName), langTag, parents, context, builder);
         // Generate changes to apply annotations
         generatedAnnotationsGenerator.generateAnnotations(ent,
-                                                          parents,
-                                                          getEntityCrudKitHandler().getSettings(),
-                                                          builder);
+                parents,
+                getEntityCrudKitHandler().getSettings(),
+                builder);
         return new OWLEntityCreator<>(ent,
-                                      builder.build(ent)
-                                             .getChanges());
+                builder.build(ent)
+                        .getChanges());
 
     }
 
     private boolean isChangeForAnnotationAssertionWithFreshIris(OntologyChange change) {
-        if(!change.isAxiomChange()) {
+        if (!change.isAxiomChange()) {
             return false;
         }
         var axiom = change.getAxiomOrThrow();
-        if(!(axiom instanceof OWLAnnotationAssertionAxiom)) {
+        if (!(axiom instanceof OWLAnnotationAssertionAxiom)) {
             return false;
         }
         var assertion = (OWLAnnotationAssertionAxiom) axiom;
         var subject = assertion.getSubject();
-        if(subject instanceof IRI) {
-            if(DataFactory.isFreshIri((IRI) subject)) {
+        if (subject instanceof IRI) {
+            if (DataFactory.isFreshIri((IRI) subject)) {
                 return true;
             }
         }
         var object = assertion.getValue();
-        if(object instanceof IRI) {
+        if (object instanceof IRI) {
             return DataFactory.isFreshIri((IRI) object);
         }
         return false;
@@ -472,12 +486,10 @@ public class ChangeManager implements HasApplyChanges {
                                                      ChangeListGenerator<R> changeList,
                                                      ChangeApplicationResult<R> finalResult) {
 
-
         var changes = finalResult.getChangeList();
 
         // Update indexes in response to the changes
         indexUpdater.updateIndexes(ImmutableList.copyOf(changes));
-
 
         // Update the rendering first so that a proper change message is generated
         activeLanguagesManager.handleChanges(changes);
@@ -506,28 +518,28 @@ public class ChangeManager implements HasApplyChanges {
         // Fire low-level ontology changed events.  There's an event for every change
         // that was applied
         List<ProjectEvent> eventList = new ArrayList<>();
-        for(var change : changes) {
+        for (var change : changes) {
             var event = new OntologyChangedEvent(EventId.generate(), projectId, userId, change);
             eventList.add(event);
         }
 
-        if(changeListGenerator instanceof SilentChangeListGenerator) {
+        if (changeListGenerator instanceof SilentChangeListGenerator) {
             return;
         }
         revision.ifPresent(rev -> {
             var highLevelEvents = new ArrayList<HighLevelProjectEventProxy>();
             eventTranslatorManager.translateOntologyChanges(eventTranslatorSessionId, changeRequestId, rev, finalResult, highLevelEvents);
-            if(changeListGenerator instanceof HasHighLevelEvents) {
+            if (changeListGenerator instanceof HasHighLevelEvents) {
                 highLevelEvents.addAll(((HasHighLevelEvents) changeListGenerator).getHighLevelEvents());
             }
             highLevelEvents.stream().map(HighLevelProjectEventProxy::asProjectEvent)
-                    .forEach( (event) -> {
+                    .forEach((event) -> {
                         LOGGER.info("[ProjectManger] Dispatch high level event {}", event);
                         eventList.add(event);
                     });
             projectChangedWebhookInvoker.invoke(userId, rev.getRevisionNumber(), rev.getTimestamp());
         });
-        if(!eventList.isEmpty()) {
+        if (!eventList.isEmpty()) {
             var packagedProjectChange = new PackagedProjectChangeEvent(projectId, EventId.generate(), eventList);
             eventDispatcher.dispatchEvent(packagedProjectChange);
         }
@@ -539,7 +551,7 @@ public class ChangeManager implements HasApplyChanges {
         return dictionaryManager
                 .getEntities(shortName)
                 .filter(entity -> entity.getEntityType()
-                                        .equals(entityType))
+                        .equals(entityType))
                 .map(entity -> (E) entity)
                 .findFirst();
 

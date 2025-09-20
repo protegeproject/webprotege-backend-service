@@ -56,4 +56,9 @@ public class AnnotationAssertionAxiomsByValueIndexImpl implements AnnotationAsse
     public void applyChanges(@Nonnull ImmutableList<OntologyChange> changes) {
         index.applyChanges(changes);
     }
+
+    @Override
+    public void reset() {
+        index.clear();
+    }
 }

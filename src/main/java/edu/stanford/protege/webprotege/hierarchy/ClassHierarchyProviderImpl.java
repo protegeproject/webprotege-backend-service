@@ -213,6 +213,11 @@ public class ClassHierarchyProviderImpl extends AbstractHierarchyProvider<OWLCla
         notifyNodeChanges();
     }
 
+    @Override
+    public void reset() {
+        rebuildImplicitRoots();
+    }
+
     private List<OntologyChange> filterIrrelevantChanges(List<OntologyChange> changes) {
         return changes.stream()
                       .filter(OntologyChange::isAxiomChange)

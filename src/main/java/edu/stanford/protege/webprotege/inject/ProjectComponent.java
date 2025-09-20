@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.dispatch.impl.ProjectActionHandlerRegistry;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.project.ProjectDisposablesManager;
+import edu.stanford.protege.webprotege.project.ProjectHistoryReplacer;
 import edu.stanford.protege.webprotege.revision.RevisionManager;
 
 /**
@@ -12,7 +13,6 @@ import edu.stanford.protege.webprotege.revision.RevisionManager;
  * 3 Oct 2016
  */
 public interface ProjectComponent {
-
 
     ProjectId getProjectId();
 

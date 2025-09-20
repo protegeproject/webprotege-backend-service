@@ -59,6 +59,11 @@ public class DeprecatedEntitiesByEntityIndexImpl implements DeprecatedEntitiesBy
                });
     }
 
+    @Override
+    public void reset() {
+        map.clear();
+    }
+
     @Nonnull
     @Override
     public Collection<Index> getDependencies() {

@@ -77,6 +77,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import jakarta.inject.Provider;
@@ -85,6 +86,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.*;
@@ -657,5 +659,18 @@ public class ApplicationBeansConfiguration {
     @Bean
     CommandExecutor<RebuildProjectPermissionsRequest, RebuildProjectPermissionsResponse> rebuildProjectPermissionsCommandExecutor() {
         return new CommandExecutorImpl<>(RebuildProjectPermissionsResponse.class);
+    }
+
+
+
+    @Bean(name = "projectHistoryIoExecutor")
+    Executor replaceProjectHistoryExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(8);
+        executor.setQueueCapacity(100);
+        executor.setThreadNamePrefix("project-history-io-");
+        executor.initialize();
+        return executor;
     }
 }

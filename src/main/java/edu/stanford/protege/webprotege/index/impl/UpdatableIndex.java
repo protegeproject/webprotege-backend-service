@@ -20,4 +20,6 @@ public interface UpdatableIndex extends Index {
      * Apply the specified list of changes to update this index.
      */
     void applyChanges(@Nonnull ImmutableList<OntologyChange> changes);
+
+    void reset();
 }

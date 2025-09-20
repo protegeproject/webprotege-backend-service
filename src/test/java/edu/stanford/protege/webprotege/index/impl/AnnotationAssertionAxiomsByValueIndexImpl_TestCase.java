@@ -12,8 +12,7 @@ import org.mockito.quality.Strictness;
 import org.semanticweb.owlapi.model.*;
 
 import static java.util.stream.Collectors.toSet;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -66,19 +65,33 @@ public class AnnotationAssertionAxiomsByValueIndexImpl_TestCase {
         assertThat(index.getAxiomsByValue(literalValue, ontologyId).collect(toSet()), not(contains(axiom)));
     }
 
-    /** @noinspection ConstantConditions*/
+    /**
+     * @noinspection ConstantConditions
+     */
     @Test
-public void shouldThrowNpeIfAxiomIsNull() {
-    assertThrows(NullPointerException.class, () -> { 
-        index.getAxiomsByValue(null, ontologyId);
-     });
-}
+    public void shouldThrowNpeIfAxiomIsNull() {
+        assertThrows(NullPointerException.class, () -> {
+            index.getAxiomsByValue(null, ontologyId);
+        });
+    }
 
-    /** @noinspection ConstantConditions*/
+    /**
+     * @noinspection ConstantConditions
+     */
     @Test
-public void shouldThrowNpeIfOntologyIdIsNull() {
-    assertThrows(NullPointerException.class, () -> { 
-        index.getAxiomsByValue(iriValue, null);
-     });
-}
+    public void shouldThrowNpeIfOntologyIdIsNull() {
+        assertThrows(NullPointerException.class, () -> {
+            index.getAxiomsByValue(iriValue, null);
+        });
+    }
+
+    @Test
+    public void shouldResetIndex() {
+        when(axiom.getValue()).thenReturn(iriValue);
+        index.applyChanges(ImmutableList.of(AddAxiomChange.of(ontologyId, axiom)));
+        assertThat(index.getAxiomsByValue(iriValue, ontologyId).collect(toSet()), contains(axiom));
+        index.reset();
+        assertThat(index.getAxiomsByValue(iriValue, ontologyId).collect(toSet()).isEmpty(), is(true));
+
+    }
 }

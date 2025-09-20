@@ -130,6 +130,11 @@ public class AnnotationPropertyHierarchyProviderImpl extends AbstractHierarchyPr
         }
     }
 
+    @Override
+    public void reset() {
+        rebuildRoots();
+    }
+
 
     private Set<OWLAnnotationProperty> getPropertiesReferencedInChange(List<OntologyChange> changes){
         final Set<OWLAnnotationProperty> props = new HashSet<>();

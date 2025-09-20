@@ -1,6 +1,7 @@
 package edu.stanford.protege.webprotege.index.impl;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.SetMultimap;
 import edu.stanford.protege.webprotege.change.AxiomChange;
@@ -82,6 +83,11 @@ public class AxiomsByTypeIndexImpl implements AxiomsByTypeIndex, UpdatableIndex 
         } finally {
             writeLock.unlock();
         }
+    }
+
+    @Override
+    public void reset() {
+        axiomTypeList.forEach(Multimap::clear);
     }
 
     public boolean containsAxiom(@Nonnull OWLAxiom axiom,

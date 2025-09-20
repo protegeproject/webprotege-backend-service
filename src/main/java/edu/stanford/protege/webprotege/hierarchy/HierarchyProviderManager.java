@@ -44,10 +44,14 @@ public class HierarchyProviderManager {
         return hierarchyProvider;
     }
 
-    public void handleChanges(List<OntologyChange> changes) {
+    public synchronized void handleChanges(List<OntologyChange> changes) {
         hierarchyProviderMap.values()
                 .forEach(hierarchyProvider -> {
                     hierarchyProvider.handleChanges(changes);
                 });
+    }
+
+    public synchronized void resetHierarchyProviders() {
+        hierarchyProviderMap.values().forEach(HierarchyProvider::reset);
     }
 }

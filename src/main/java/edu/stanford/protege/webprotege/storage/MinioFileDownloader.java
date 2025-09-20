@@ -4,6 +4,8 @@ import edu.stanford.protege.webprotege.common.BlobLocation;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.errors.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.Nonnull;
@@ -22,6 +24,8 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class MinioFileDownloader {
 
+    private static final Logger logger = LoggerFactory.getLogger(MinioFileDownloader.class);
+
     private final MinioClient minioClient;
 
     private final MinioProperties minioProperties;
@@ -33,6 +37,7 @@ public class MinioFileDownloader {
 
     public CompletableFuture<Path> downloadFile(BlobLocation blobLocation) throws StorageException {
         try {
+            logger.info("Downloading file (bucket={} name={})", blobLocation.bucket(), blobLocation.name());
             var response = minioClient.getObject(GetObjectArgs.builder()
                                           .bucket(blobLocation.bucket())
                                           .object(blobLocation.name())

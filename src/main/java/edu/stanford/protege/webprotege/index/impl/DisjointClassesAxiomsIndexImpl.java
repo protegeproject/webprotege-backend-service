@@ -46,4 +46,9 @@ public class DisjointClassesAxiomsIndexImpl implements DisjointClassesAxiomsInde
     public void applyChanges(@Nonnull ImmutableList<OntologyChange> changes) {
         index.applyChanges(changes);
     }
+
+    @Override
+    public void reset() {
+        index.clear();
+    }
 }

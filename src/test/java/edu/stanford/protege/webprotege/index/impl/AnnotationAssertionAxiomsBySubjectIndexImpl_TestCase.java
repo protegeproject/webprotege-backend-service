@@ -67,19 +67,26 @@ public class AnnotationAssertionAxiomsBySubjectIndexImpl_TestCase {
         assertThat(axioms.isEmpty(), is(true));
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("ConstantConditions" )
     @Test
-public void shouldThrowNpeIfSubjectIsNull() {
-    assertThrows(NullPointerException.class, () -> { 
-        impl.getAxiomsForSubject(null, ontologyId);
-     });
-}
+    public void shouldThrowNpeIfSubjectIsNull() {
+        assertThrows(NullPointerException.class, () -> {
+            impl.getAxiomsForSubject(null, ontologyId);
+        });
+    }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("ConstantConditions" )
     @Test
-public void shouldThrowNpeIfOntologyIdIsNull() {
-    assertThrows(NullPointerException.class, () -> { 
-        impl.getAxiomsForSubject(subject, null);
-     });
-}
+    public void shouldThrowNpeIfOntologyIdIsNull() {
+        assertThrows(NullPointerException.class, () -> {
+            impl.getAxiomsForSubject(subject, null);
+        });
+    }
+
+    @Test
+    public void shouldResetIndex() {
+        impl.reset();
+        var axioms = impl.getAxiomsForSubject(subject, ontologyId).collect(toSet());
+        assertThat(axioms.isEmpty(), is(true));
+    }
 }

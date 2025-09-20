@@ -32,6 +32,8 @@ public enum BuiltInCapability {
 
     REBUILD_PERMISSIONS,
 
+    REPLACE_PROJECT_HISTORY,
+
 
 
     VIEW_PROJECT,

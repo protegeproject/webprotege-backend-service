@@ -71,4 +71,11 @@ public class ProjectOntologiesIndexImpl implements ProjectOntologiesIndex, Updat
         cache = ImmutableList.copyOf(ontologyIds.elementSet());
         initialized = true;
     }
+
+    @Override
+    public void reset() {
+        ontologyIds.clear();
+        initialized = false;
+        cache = ImmutableList.of();
+    }
 }

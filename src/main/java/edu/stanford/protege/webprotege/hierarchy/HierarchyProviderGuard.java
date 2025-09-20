@@ -103,4 +103,9 @@ public class HierarchyProviderGuard<E extends OWLEntity> implements HierarchyPro
     public HierarchyProvider<?> getDelegate() {
         return delegate;
     }
+
+    @Override
+    public void reset() {
+        delegate.reset();
+    }
 }

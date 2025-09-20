@@ -280,6 +280,15 @@ public class AxiomsByEntityReferenceIndexImpl implements AxiomsByEntityReference
         }
     }
 
+    @Override
+    public void reset() {
+        byClass.clear();
+        byObjectProperty.clear();
+        byDataProperty.clear();
+        byAnnotationProperty.clear();
+        byIndividual.clear();
+        byDatatype.clear();
+    }
 
     protected interface Key {
 

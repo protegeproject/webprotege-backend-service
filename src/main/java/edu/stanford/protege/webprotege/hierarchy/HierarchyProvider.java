@@ -38,4 +38,6 @@ public interface HierarchyProvider<N> extends HasGetAncestors<N> {
     boolean contains(Object object);
 
     void handleChanges(List<OntologyChange> changes);
+
+    void reset();
 }
