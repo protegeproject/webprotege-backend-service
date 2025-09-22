@@ -42,6 +42,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
@@ -239,5 +240,164 @@ class ChangeEntityParentsActionHandlerTest {
         verify(classCycleDetector, times(0)).getClassesWithCycle(any());
         verify(releasedClassesChecker, times(0)).isReleased(any());
         verify(retiredClassDetector, times(0)).getClassesWithRetiredAncestors(any());
+    }
+
+    // Teste unitare pentru metoda createReleasedChildrenValidationMessage
+    @Test
+    void GIVEN_emptyEntityData_WHEN_createReleasedChildrenValidationMessage_THEN_returnsEmptyString() {
+        Set<OWLEntityData> emptyEntityData = Set.of();
+        Set<OWLEntityData> parentData = Set.of();
+        
+        String result = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(
+                emptyEntityData, 2, parentData);
+        
+        assertEquals("", result);
+    }
+
+    @Test
+    void GIVEN_singleParentAndSingleEntity_WHEN_createReleasedChildrenValidationMessage_THEN_returnsCorrectMessage() {
+        OWLEntityData parentData = mock(OWLEntityData.class);
+        when(parentData.getBrowserText()).thenReturn("RetiredParent");
+        
+        OWLEntityData childData = mock(OWLEntityData.class);
+        when(childData.getBrowserText()).thenReturn("ReleasedChild");
+        
+        Set<OWLEntityData> parentSet = Set.of(parentData);
+        Set<OWLEntityData> childSet = Set.of(childData);
+        
+        String result = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(
+                childSet, 2, parentSet);
+        
+        String expectedMessage = "A class that is released or has released descendants cannot be retired!</br>\n" +
+                "The following parent has retired ancestors: RetiredParent. </br> The following descendants are released: ReleasedChild.</br> Please correct this in order to save changes";
+        
+        assertEquals(expectedMessage, result);
+    }
+
+    @Test
+    void GIVEN_multipleParentsAndSingleEntity_WHEN_createReleasedChildrenValidationMessage_THEN_returnsCorrectMessage() {
+        OWLEntityData parent1Data = mock(OWLEntityData.class);
+        when(parent1Data.getBrowserText()).thenReturn("RetiredParent1");
+        
+        OWLEntityData parent2Data = mock(OWLEntityData.class);
+        when(parent2Data.getBrowserText()).thenReturn("RetiredParent2");
+        
+        OWLEntityData childData = mock(OWLEntityData.class);
+        when(childData.getBrowserText()).thenReturn("ReleasedChild");
+        
+        Set<OWLEntityData> parentSet = Set.of(parent1Data, parent2Data);
+        Set<OWLEntityData> childSet = Set.of(childData);
+        
+        String result = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(
+                childSet, 2, parentSet);
+        
+        String expectedMessage = "A class that is released or has released descendants cannot be retired!</br>\n" +
+                "The following parents have retired ancestors: RetiredParent1, RetiredParent2. </br> The following descendants are released: ReleasedChild.</br> Please correct this in order to save changes";
+        
+        assertEquals(expectedMessage, result);
+    }
+
+    @Test
+    void GIVEN_singleParentAndMultipleEntitiesWithinLimit_WHEN_createReleasedChildrenValidationMessage_THEN_returnsCorrectMessage() {
+        OWLEntityData parentData = mock(OWLEntityData.class);
+        when(parentData.getBrowserText()).thenReturn("RetiredParent");
+        
+        OWLEntityData child1Data = mock(OWLEntityData.class);
+        when(child1Data.getBrowserText()).thenReturn("ReleasedChild1");
+        
+        OWLEntityData child2Data = mock(OWLEntityData.class);
+        when(child2Data.getBrowserText()).thenReturn("ReleasedChild2");
+        
+        Set<OWLEntityData> parentSet = Set.of(parentData);
+        Set<OWLEntityData> childSet = Set.of(child1Data, child2Data);
+        
+        String result = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(
+                childSet, 2, parentSet);
+        
+        String expectedMessage = "A class that is released or has released descendants cannot be retired!</br>\n" +
+                "The following parent has retired ancestors: RetiredParent. </br> The following descendants are released: ReleasedChild1.</br> Please correct this in order to save changes, ReleasedChild2.</br> Please correct this in order to save changes";
+        
+        assertEquals(expectedMessage, result);
+    }
+
+    @Test
+    void GIVEN_singleParentAndMultipleEntitiesOverLimit_WHEN_createReleasedChildrenValidationMessage_THEN_returnsCorrectMessage() {
+        OWLEntityData parentData = mock(OWLEntityData.class);
+        when(parentData.getBrowserText()).thenReturn("RetiredParent");
+        
+        OWLEntityData child1Data = mock(OWLEntityData.class);
+        when(child1Data.getBrowserText()).thenReturn("ReleasedChild1");
+        
+        OWLEntityData child2Data = mock(OWLEntityData.class);
+        when(child2Data.getBrowserText()).thenReturn("ReleasedChild2");
+        
+        OWLEntityData child3Data = mock(OWLEntityData.class);
+        when(child3Data.getBrowserText()).thenReturn("ReleasedChild3");
+        
+        Set<OWLEntityData> parentSet = Set.of(parentData);
+        Set<OWLEntityData> childSet = Set.of(child1Data, child2Data, child3Data);
+        
+        String result = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(
+                childSet, 2, parentSet);
+        
+        String expectedMessage = "A class that is released or has released descendants cannot be retired!</br>\n" +
+                "The following parent has retired ancestors: RetiredParent. </br> The following descendants are released: ReleasedChild1, ReleasedChild2 and 1 more entities.</br> Please correct this in order to save changes";
+        
+        assertEquals(expectedMessage, result);
+    }
+
+    @Test
+    void GIVEN_multipleParentsAndMultipleEntitiesOverLimit_WHEN_createReleasedChildrenValidationMessage_THEN_returnsCorrectMessage() {
+        OWLEntityData parent1Data = mock(OWLEntityData.class);
+        when(parent1Data.getBrowserText()).thenReturn("RetiredParent1");
+        
+        OWLEntityData parent2Data = mock(OWLEntityData.class);
+        when(parent2Data.getBrowserText()).thenReturn("RetiredParent2");
+        
+        OWLEntityData child1Data = mock(OWLEntityData.class);
+        when(child1Data.getBrowserText()).thenReturn("ReleasedChild1");
+        
+        OWLEntityData child2Data = mock(OWLEntityData.class);
+        when(child2Data.getBrowserText()).thenReturn("ReleasedChild2");
+        
+        OWLEntityData child3Data = mock(OWLEntityData.class);
+        when(child3Data.getBrowserText()).thenReturn("ReleasedChild3");
+        
+        OWLEntityData child4Data = mock(OWLEntityData.class);
+        when(child4Data.getBrowserText()).thenReturn("ReleasedChild4");
+        
+        Set<OWLEntityData> parentSet = Set.of(parent1Data, parent2Data);
+        Set<OWLEntityData> childSet = Set.of(child1Data, child2Data, child3Data, child4Data);
+        
+        String result = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(
+                childSet, 2, parentSet);
+        
+        String expectedMessage = "A class that is released or has released descendants cannot be retired!</br>\n" +
+                "The following parents have retired ancestors: RetiredParent1, RetiredParent2. </br> The following descendants are released: ReleasedChild1, ReleasedChild2 and 2 more entities.</br> Please correct this in order to save changes";
+        
+        assertEquals(expectedMessage, result);
+    }
+
+    @Test
+    void GIVEN_entitiesToShowZero_WHEN_createReleasedChildrenValidationMessage_THEN_returnsCorrectMessage() {
+        OWLEntityData parentData = mock(OWLEntityData.class);
+        when(parentData.getBrowserText()).thenReturn("RetiredParent");
+        
+        OWLEntityData child1Data = mock(OWLEntityData.class);
+        when(child1Data.getBrowserText()).thenReturn("ReleasedChild1");
+        
+        OWLEntityData child2Data = mock(OWLEntityData.class);
+        when(child2Data.getBrowserText()).thenReturn("ReleasedChild2");
+        
+        Set<OWLEntityData> parentSet = Set.of(parentData);
+        Set<OWLEntityData> childSet = Set.of(child1Data, child2Data);
+        
+        String result = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(
+                childSet, 0, parentSet);
+        
+        String expectedMessage = "A class that is released or has released descendants cannot be retired!</br>\n" +
+                "The following parent has retired ancestors: RetiredParent. </br> The following descendants are released:  and 2 more entities.</br> Please correct this in order to save changes";
+        
+        assertEquals(expectedMessage, result);
     }
 }

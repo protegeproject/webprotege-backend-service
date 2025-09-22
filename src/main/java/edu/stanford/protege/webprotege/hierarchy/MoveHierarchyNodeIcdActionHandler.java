@@ -21,6 +21,8 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -106,7 +108,8 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
 
             if(isDestinationRetiredClass){
                 Set<OWLClass> releasedChildren = this.releasedClassesChecker.getReleasedDescendants(classToBeMoved);
-                String validationMessage = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(getOwlEntityDataFromOwlClasses(releasedChildren), 2);
+                String validationMessage = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(getOwlEntityDataFromOwlClasses(releasedChildren), 2,
+                        getOwlEntityDataFromOwlClasses(new HashSet<>(Collections.singletonList(destinationNode.get().getEntity().asOWLClass()))));
                 return new MoveHierarchyNodeIcdResult(false, isSourceClassReleased && isDestinationRetiredClass, isLinPathParent, validationMessage);
             }
 

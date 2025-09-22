@@ -161,7 +161,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         }
         Set<OWLClass> releasedChildren = this.releasedClassesChecker.getReleasedDescendants(action.entity());
         if(releasedChildren != null && !releasedChildren.isEmpty() && isNotEmpty(classesWithRetiredAncestors)) {
-            return getResultWithReleasedChildren(errorResult, releasedChildren);
+            return getResultWithReleasedChildren(errorResult, releasedChildren, getOwlEntityDataFromOwlClasses(classesWithRetiredAncestors));
         }
         var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
 
@@ -194,9 +194,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         return getResultWithCycles(classesWithCycles);
     }
 
-    private ChangeEntityParentsResult getResultWithReleasedChildren(ChangeEntityParentsResult result, Set<OWLClass> releasedChildren) {
+    private ChangeEntityParentsResult getResultWithReleasedChildren(ChangeEntityParentsResult result, Set<OWLClass> releasedChildren, Set<OWLEntityData> owlEntityDataFromOwlClasses) {
         Set<OWLEntityData> entityData = getOwlEntityDataFromOwlClasses(releasedChildren);
-        String validationMessage = createReleasedChildrenValidationMessage(entityData, 2);
+        String validationMessage = createReleasedChildrenValidationMessage(entityData, 2, owlEntityDataFromOwlClasses);
         
         return new ChangeEntityParentsResult(
             result != null ? result.classesWithCycle() : ImmutableSet.of(),
@@ -206,24 +206,28 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         );
     }
 
-    public static String createReleasedChildrenValidationMessage(Set<OWLEntityData> entityData, int entitiesToShow) {
+    public static String createReleasedChildrenValidationMessage(Set<OWLEntityData> entityData, int entitiesToShow, Set<OWLEntityData> owlEntityDataFromOwlClasses) {
         if (entityData.isEmpty()) {
             return "";
         }
         
         int size = entityData.size();
-        String entityWord = size == 1 ? "entity" : "entities";
-        String baseMessage = "Cannot move entity because the following " + entityWord + " are released: ";
-        
-        List<OWLEntityData> entityList = entityData.stream().collect(Collectors.toList());
-        
+        String entityWord = owlEntityDataFromOwlClasses.size() == 1 ? "parent has" : "parents have";
+        String retiredAncestorsText = owlEntityDataFromOwlClasses.stream()
+                .map(OWLEntityData::getBrowserText)
+                .collect(Collectors.joining(", "));
+        String baseMessage = "A class that is released or has released descendants cannot be retired!</br>\n" +
+                "The following " + entityWord + " retired ancestors: " + retiredAncestorsText + ". </br> The following descendants are released: ";
+
+        List<OWLEntityData> entityList = entityData.stream().toList();
+                
         if (size <= entitiesToShow) {
             StringBuilder message = new StringBuilder(baseMessage);
             for (int i = 0; i < size; i++) {
                 if (i > 0) {
                     message.append(", ");
                 }
-                message.append(entityList.get(i).getBrowserText());
+                message.append(entityList.get(i).getBrowserText()).append(".</br> Please correct this in order to save changes");;
             }
             return message.toString();
         } else {
@@ -236,7 +240,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
             }
             
             int remainingCount = size - entitiesToShow;
-            message.append(" and ").append(remainingCount).append(" more entities");
+            message.append(" and ").append(remainingCount).append(" more entities").append(".</br> Please correct this in order to save changes");
             
             return message.toString();
         }

@@ -180,7 +180,7 @@ public class MoveToParentIcdActionHandler extends AbstractProjectActionHandler<M
             if(releasedDescendants != null && !releasedDescendants.isEmpty()) {
                 Set<OWLEntityData> entityData = getOwlEntityDataFromOwlClasses(releasedDescendants);
                 OWLEntityData parentData = renderingManager.getRendering(entity);
-                response.put(parentData.getBrowserText(),  ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(entityData, 2));
+                response.put(parentData.getBrowserText(),  ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(entityData, 2, new HashSet<>(Collections.singletonList(parentData))));
             }
         }
         return ImmutableMap.copyOf(response);
