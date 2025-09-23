@@ -702,8 +702,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       ChangeManager p5,
                                                                       LinearizationManager p6,
                                                                       LinearizationParentChecker p7,
-                                                                      ProjectOrderedChildrenManager p8) {
-        return new MoveHierarchyNodeIcdActionHandler(p1, p2, p3, p4, p5, p6, p7, p8);
+                                                                      ProjectOrderedChildrenManager p8,
+                                                                      RenderingManager p9) {
+        return new MoveHierarchyNodeIcdActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9);
     }
 
     @Bean

@@ -22,7 +22,7 @@ public class RetiredClassCheckerImpl implements RetiredClassChecker {
 
         String titleValue = getIcdTitleValueForEntity(entity);
 
-        return titleValue.contains(IcdConstants.RETIRED_TITLE_PART);
+        return titleValue.toLowerCase().contains(IcdConstants.RETIRED_TITLE_PART);
     }
 
     private String getIcdTitleValueForEntity(OWLEntity entity) {

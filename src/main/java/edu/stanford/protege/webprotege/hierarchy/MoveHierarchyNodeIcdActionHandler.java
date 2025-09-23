@@ -2,7 +2,9 @@ package edu.stanford.protege.webprotege.hierarchy;
 
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInCapability;
+import edu.stanford.protege.webprotege.bulkop.ChangeEntityParentsActionHandler;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
+import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.icd.LinearizationParentChecker;
 import edu.stanford.protege.webprotege.icd.ReleasedClassesChecker;
@@ -10,17 +12,22 @@ import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassD
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.jetbrains.annotations.NotNull;
+import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static edu.stanford.protege.webprotege.access.BuiltInCapability.EDIT_ONTOLOGY;
@@ -52,6 +59,9 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
     @Nonnull
     private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
 
+    @Nonnull
+    private final RenderingManager renderingManager;
+
 
     @Inject
     public MoveHierarchyNodeIcdActionHandler(@Nonnull AccessManager accessManager,
@@ -61,7 +71,7 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
                                              @Nonnull ChangeManager changeManager,
                                              @Nonnull LinearizationManager linearizationManager,
                                              @Nonnull LinearizationParentChecker linParentChecker,
-                                             @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager) {
+                                             @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager, @Nonnull RenderingManager renderingManager) {
         super(accessManager);
         this.factory = checkNotNull(factory);
         this.releasedClassesChecker = checkNotNull(releasedClassesChecker);
@@ -70,6 +80,7 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
         this.linearizationManager = linearizationManager;
         this.linParentChecker = linParentChecker;
         this.projectOrderedChildrenManager = projectOrderedChildrenManager;
+        this.renderingManager = renderingManager;
     }
 
     @Nonnull
@@ -92,14 +103,16 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
             var classToBeMoved = sourceNode.get().getEntity();
 
             var isSourceClassReleased = releasedClassesChecker.isReleased(classToBeMoved);
+            isDestinationRetiredClass = retiredAncestorDetector.isRetired(destinationNode.get().getEntity().asOWLClass());
 
 
-            if (isSourceClassReleased) {
-                isDestinationRetiredClass = retiredAncestorDetector.isRetired(destinationNode.get().getEntity().asOWLClass());
-                if(isDestinationRetiredClass){
-                    return new MoveHierarchyNodeIcdResult(false, isDestinationRetiredClass, isLinPathParent);
-                }
+            if(isDestinationRetiredClass){
+                Set<OWLClass> releasedChildren = this.releasedClassesChecker.getReleasedDescendants(classToBeMoved);
+                String validationMessage = ChangeEntityParentsActionHandler.createReleasedChildrenValidationMessage(getOwlEntityDataFromOwlClasses(releasedChildren), 2,
+                        getOwlEntityDataFromOwlClasses(new HashSet<>(Collections.singletonList(destinationNode.get().getEntity().asOWLClass()))));
+                return new MoveHierarchyNodeIcdResult(false, isSourceClassReleased && isDestinationRetiredClass, isLinPathParent, validationMessage);
             }
+
 
             var previousParent = action.fromNodePath().getLastPredecessor();
 
@@ -109,7 +122,7 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
                                 action.projectId(), executionContext)
                         .stream().findAny().isPresent();
                 if (isLinPathParent) {
-                    return new MoveHierarchyNodeIcdResult(false, isDestinationRetiredClass, isLinPathParent);
+                    return new MoveHierarchyNodeIcdResult(false, isDestinationRetiredClass, isLinPathParent, null);
                 }
             }
 
@@ -149,7 +162,13 @@ public class MoveHierarchyNodeIcdActionHandler extends AbstractProjectActionHand
             );
         }
 
-        return new MoveHierarchyNodeIcdResult(changeResult.getSubject(), false, false);
+        return new MoveHierarchyNodeIcdResult(changeResult.getSubject(), false, false, null);
+    }
+
+    private Set<OWLEntityData> getOwlEntityDataFromOwlClasses(Set<OWLClass> classes) {
+        return classes.stream()
+                .map(renderingManager::getRendering)
+                .collect(Collectors.toSet());
     }
 
 

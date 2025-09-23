@@ -46,7 +46,6 @@ import edu.stanford.protege.webprotege.frame.translator.*;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenManager;
 import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
-import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenServiceImpl;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenRequest;
 import edu.stanford.protege.webprotege.hierarchy.ordering.dtos.UpdateEntityChildrenResponse;
 import edu.stanford.protege.webprotege.icd.*;
@@ -85,8 +84,6 @@ import edu.stanford.protege.webprotege.match.*;
 import edu.stanford.protege.webprotege.merge.*;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.object.*;
-import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesRequest;
-import edu.stanford.protege.webprotege.ontology.ProcessUploadedOntologiesResponse;
 import edu.stanford.protege.webprotege.owlapi.HasContainsEntityInSignatureImpl;
 import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMapFactory;
@@ -481,8 +478,8 @@ public class ProjectBeansConfiguration {
     }
 
     @Bean
-    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager icdReleasedEntityStatusManager) {
-        return new ReleasedClassesCheckerImpl(icdReleasedEntityStatusManager);
+    ReleasedClassesChecker getReleasedClassesIndex(IcdReleasedEntityStatusManager p1, ClassHierarchyProvider p2) {
+        return new ReleasedClassesCheckerImpl(p1, p2);
     }
 
     @Bean

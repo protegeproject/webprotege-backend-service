@@ -14,6 +14,7 @@ import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
+import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,9 @@ class MoveHierarchyNodeIcdActionHandlerTest {
     private LinearizationManager linearizationManager;
 
     @Mock
+    private RenderingManager renderingManager;
+
+    @Mock
     private LinearizationParentChecker linParentChecker;
 
     private ProjectId projectId;
@@ -89,7 +93,7 @@ class MoveHierarchyNodeIcdActionHandlerTest {
                 changeManager,
                 linearizationManager,
                 linParentChecker,
-                projectOrderedChildrenManager);
+                projectOrderedChildrenManager, renderingManager);
 
         when(changeApplicationResult.getRenameMap()).thenReturn(renameMap);
         when(changeApplicationResult.getChangeList()).thenReturn(ontologyChangeList);
