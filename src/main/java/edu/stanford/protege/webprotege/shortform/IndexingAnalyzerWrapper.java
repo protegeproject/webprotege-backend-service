@@ -8,6 +8,7 @@ import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
+import org.apache.lucene.analysis.miscellaneous.LengthFilterFactory;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterGraphFilterFactory;
 import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 
@@ -54,6 +55,9 @@ public class IndexingAnalyzerWrapper extends DelegatingAnalyzerWrapper {
         try {
             return CustomAnalyzer.builder()
                                  .withTokenizer(KeywordTokenizerFactory.NAME)
+                                 .addTokenFilter(LengthFilterFactory.NAME, 
+                                                 "min", "0", 
+                                                 "max", "32766")
                                  .addTokenFilter(ASCIIFoldingFilterFactory.NAME)
                                  .addTokenFilter(LowerCaseFilterFactory.NAME)
                                  .build();
@@ -72,6 +76,9 @@ public class IndexingAnalyzerWrapper extends DelegatingAnalyzerWrapper {
                                  .addTokenFilter(WordDelimiterGraphFilterFactory.NAME,
                                                  "catenateWords", "1")
                                  .addTokenFilter(FlattenGraphFilterFactory.class)
+                                 .addTokenFilter(LengthFilterFactory.NAME, 
+                                                 "min", "0", 
+                                                 "max", "32766")
                                  .addTokenFilter(ASCIIFoldingFilterFactory.NAME)
                                  .addTokenFilter(LowerCaseFilterFactory.NAME)
                                  .addTokenFilter(EdgeNGramFilterFactory.NAME,
