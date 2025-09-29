@@ -1202,6 +1202,12 @@ public class ProjectActionHandlerBeansConfiguration {
         return new FilterExistingEntitiesActionHandler(p1, p2);
     }
 
+
+    @Bean
+    GetExistingClassesForApiActionHandler existingClassesForApiActionHandler(AccessManager p1, EntitySearcherFactory p2, LanguageManager p3) {
+        return new GetExistingClassesForApiActionHandler(p1, p2, p3);
+    }
+
     @Bean
     GetIsExistingProjectActionHandler getIsExistingProjectActionHandler(AccessManager p1,
                                                                         ProjectDetailsManager p2) {
