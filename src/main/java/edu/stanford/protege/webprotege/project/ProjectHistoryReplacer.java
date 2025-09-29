@@ -19,11 +19,17 @@ public class ProjectHistoryReplacer {
     private static final Logger logger = LoggerFactory.getLogger(ProjectHistoryReplacer.class);
 
     private final ChangeManager changeManager;
+
     private final ProjectId projectId;
+
     private final RevisionHistoryReplacer revisionHistoryReplacer;
+
     private final IndexUpdater indexUpdater;
+
     private final ReloadableRevisionStore revisionStore;
+
     private final LuceneIndexWriter luceneIndexWriter;
+
     private final HierarchyProviderManager hierarchyProviderManager;
 
     public ProjectHistoryReplacer(ChangeManager changeManager,
@@ -42,30 +48,31 @@ public class ProjectHistoryReplacer {
         this.hierarchyProviderManager = hierarchyProviderManager;
     }
 
-    public synchronized CompletableFuture<Void> replaceProjectHistory(Path replaceWith) {
+    public synchronized CompletableFuture<Void> replaceProjectHistory(Path replaceWith,
+                                                                      ProjectHistoryReplacementOperationId opId) {
         var freeze = changeManager.freezeWrites();
-        logger.info("[{}] Froze project for writes", projectId);
+        logger.info("{} Froze project for writes [opId={}]" , projectId, opId);
 
         // B: replace history → C: reload & rebuild (async on maintenance executor)
         CompletableFuture<Void> replaceAndRebuild =
                 revisionHistoryReplacer.replaceRevisionHistory(projectId, replaceWith)
-                        .thenRunAsync(this::reloadRevisionStoreAndRebuildIndexes);
+                        .thenRunAsync(() -> reloadRevisionStoreAndRebuildIndexes(opId));
 
         // Unfreeze after B+C regardless of outcome; don’t mask upstream failures
         return replaceAndRebuild.whenComplete((v, ex) -> safeUnfreeze(freeze));
     }
 
-    private void reloadRevisionStoreAndRebuildIndexes() {
+    private void reloadRevisionStoreAndRebuildIndexes(ProjectHistoryReplacementOperationId opId) {
         try {
-            logger.info("[{}] Reloading revision store", projectId);
+            logger.info("[{}] Reloading revision store [opId={}]" , projectId, opId);
             revisionStore.reload();
-            logger.info("[{}] Rebuilding project indexes", projectId);
+            logger.info("[{}] Rebuilding project indexes [opId={}]" , projectId, opId);
             indexUpdater.rebuildIndexes();
-            logger.info("[{}] Rebuilding Lucene indexes", projectId);
+            logger.info("[{}] Rebuilding Lucene indexes [opId={}]" , projectId, opId);
             luceneIndexWriter.rebuildIndex();
-            logger.info("[{}] Resetting hierarchy providers", projectId);
+            logger.info("[{}] Resetting hierarchy providers [opId={}]" , projectId, opId);
             hierarchyProviderManager.resetHierarchyProviders();
-            logger.info("[{}] Finished maintenance tasks", projectId);
+            logger.info("[{}] Finished maintenance tasks [opId={}]" , projectId, opId);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -74,9 +81,9 @@ public class ProjectHistoryReplacer {
     private void safeUnfreeze(ProjectFreezeHandle freeze) {
         try {
             freeze.unfreeze();
-            logger.info("[{}] Unfroze project for writes", projectId);
+            logger.info("[{}] Unfroze project for writes" , projectId);
         } catch (Exception e) {
-            logger.error("[{}] Failed to unfreeze project for writes", projectId, e);
+            logger.error("[{}] Failed to unfreeze project for writes" , projectId, e);
         }
     }
 }

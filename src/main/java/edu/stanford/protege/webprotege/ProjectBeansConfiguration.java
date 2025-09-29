@@ -83,6 +83,7 @@ import edu.stanford.protege.webprotege.renderer.*;
 import edu.stanford.protege.webprotege.revision.*;
 import edu.stanford.protege.webprotege.search.EntitySearcherFactory;
 import edu.stanford.protege.webprotege.shortform.*;
+import edu.stanford.protege.webprotege.storage.MinioFileDownloader;
 import edu.stanford.protege.webprotege.tag.CriteriaBasedTagsManager;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepository;
 import edu.stanford.protege.webprotege.tag.TagRepository;
@@ -1932,5 +1933,10 @@ public class ProjectBeansConfiguration {
     @Bean
     ProjectHistoryReplacer projectHistoryReplacer(ChangeManager p0, ProjectId p1, RevisionHistoryReplacer p2, IndexUpdater p3, ReloadableRevisionStore p4, LuceneIndexWriter p5, HierarchyProviderManager p6) {
         return new ProjectHistoryReplacer(p0, p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean
+    ProjectHistoryReplacementSagaImpl replacementSagaImpl(ProjectHistoryReplacer p1, MinioFileDownloader p2, EventDispatcher p3, OWLDataFactory p4, Executor p5) {
+        return new ProjectHistoryReplacementSagaImpl(p1, p2, p3, p4, p5);
     }
 }
