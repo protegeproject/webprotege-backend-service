@@ -1,17 +1,18 @@
 package edu.stanford.protege.webprotege.events;
 
 
-
 import com.google.common.collect.ImmutableList;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.EventId;
+import edu.stanford.protege.webprotege.common.ProjectEvent;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.common.ProjectEvent;
 import edu.stanford.protege.webprotege.hierarchy.*;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 /**
  * Matthew Horridge
@@ -38,19 +39,24 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
     @Nonnull
     private final HierarchyDescriptor hierarchyDescriptor;
 
+    @Nonnull
+    private final ChangeRequestId changeRequestId;
+
 
     public EntityHierarchyChangedEventProxy(@Nonnull GraphModelChangedEvent<? extends OWLEntity> graphModelChangedEvent,
                                             @Nonnull GraphNodeRenderer renderer,
                                             @Nonnull EntityNodeRenderer entityNodeRenderer,
                                             @Nonnull HierarchyProvider<? extends OWLEntity> classHierarchyProvider,
                                             @Nonnull ProjectId projectId,
-                                            @Nonnull HierarchyDescriptor hierarchyDescriptor) {
+                                            @Nonnull HierarchyDescriptor hierarchyDescriptor,
+                                            @Nonnull ChangeRequestId changeRequestId) {
         this.graphModelChangedEvent = (GraphModelChangedEvent) graphModelChangedEvent;
         this.renderer = renderer;
         this.entityNodeRenderer = entityNodeRenderer;
         this.hierarchyProvider = (HierarchyProvider) classHierarchyProvider;
         this.projectId = projectId;
         this.hierarchyDescriptor = hierarchyDescriptor;
+        this.changeRequestId = Objects.requireNonNull(changeRequestId);
     }
 
     @Nonnull
@@ -109,7 +115,7 @@ public class EntityHierarchyChangedEventProxy implements HighLevelProjectEventPr
                  }
              }));
         var mappedEvent = GraphModelChangedEvent.create(mappedChanges.build());
-        return new EntityHierarchyChangedEvent(EventId.generate(), projectId, hierarchyDescriptor, mappedEvent);
+        return new EntityHierarchyChangedEvent(EventId.generate(), projectId, hierarchyDescriptor, mappedEvent, changeRequestId);
     }
 
     @Override

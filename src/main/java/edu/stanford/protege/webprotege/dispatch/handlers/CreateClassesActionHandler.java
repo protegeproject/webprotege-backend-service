@@ -6,16 +6,16 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.change.CreateClassesChangeGeneratorFactory;
 import edu.stanford.protege.webprotege.change.HasApplyChanges;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
-import edu.stanford.protege.webprotege.ipc.ExecutionContext;
-
 import edu.stanford.protege.webprotege.entity.CreateClassesAction;
 import edu.stanford.protege.webprotege.entity.CreateClassesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
+import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.OWLClass;
 
 import javax.annotation.Nonnull;
-import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Set;
 
@@ -73,7 +73,8 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                                      CreateClassesAction action,
                                                      ExecutionContext executionContext) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
-        return new CreateClassesResult(action.changeRequestId(),
+        var changeRequestId = action.changeRequestId() != null ? action.changeRequestId() : ChangeRequestId.generate();
+        return new CreateClassesResult(changeRequestId,
                                        action.projectId(),
                                        classes.stream().map(entityNodeRenderer::render).collect(toImmutableSet()));
     }

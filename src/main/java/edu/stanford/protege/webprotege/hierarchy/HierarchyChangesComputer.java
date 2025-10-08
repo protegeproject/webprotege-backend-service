@@ -7,10 +7,10 @@ import edu.stanford.protege.webprotege.change.ChangeApplicationResult;
 import edu.stanford.protege.webprotege.change.OntologyChange;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.EventId;
+import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.events.*;
-import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.revision.Revision;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.slf4j.Logger;
@@ -57,7 +57,7 @@ public final class HierarchyChangesComputer implements EventTranslator {
         return projectId;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked" )
     @Override
     public void prepareForOntologyChanges(EventTranslatorSessionId sessionId, List<OntologyChange> submittedChanges) {
         sessionChecker.startSession(sessionId);
@@ -72,7 +72,7 @@ public final class HierarchyChangesComputer implements EventTranslator {
         roots.addAll(hierarchyProvider.getRoots());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked" )
     @Override
     public void translateOntologyChanges(EventTranslatorSessionId sessionId,
                                          Revision revision,
@@ -91,14 +91,14 @@ public final class HierarchyChangesComputer implements EventTranslator {
                         for (OWLEntity parentBefore : parentsBefore) {
                             if (!parentsAfter.contains(parentBefore)) {
                                 // Removed
-                                projectEventList.addAll(createRemovedEvents(child, parentBefore));
+                                projectEventList.addAll(createRemovedEvents(child, parentBefore, changeRequestId));
 
                             }
                         }
                         for (OWLEntity parentAfter : parentsAfter) {
                             if (!parentsBefore.contains(parentAfter)) {
                                 // Added
-                                projectEventList.addAll(createAddedEvents(child, parentAfter));
+                                projectEventList.addAll(createAddedEvents(child, parentAfter, changeRequestId));
                             }
                         }
                     }
@@ -110,11 +110,12 @@ public final class HierarchyChangesComputer implements EventTranslator {
             if (!roots.contains(rootAfter)) {
                 ImmutableList<GraphModelChange<EntityNode>> changes = ImmutableList.of(new AddRootNode<EntityNode>(
                         new GraphNode<>(renderer.render(rootAfter),
-                                      hierarchyProvider.isLeaf(rootAfter))));
+                                hierarchyProvider.isLeaf(rootAfter))));
                 EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(EventId.generate(),
-                                                                                    projectId,
-                                                                                    hierarchyDescriptor,
-                                                                                    GraphModelChangedEvent.create(changes));
+                        projectId,
+                        hierarchyDescriptor,
+                        GraphModelChangedEvent.create(changes),
+                        changeRequestId);
                 projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
             }
         }
@@ -123,15 +124,16 @@ public final class HierarchyChangesComputer implements EventTranslator {
                 ImmutableList<GraphModelChange<EntityNode>> changes = ImmutableList.of(new RemoveRootNode<>(
                         new GraphNode<>(renderer.render(rootBefore))));
                 EntityHierarchyChangedEvent event = new EntityHierarchyChangedEvent(EventId.generate(),
-                                                                                    projectId,
-                                                                                    hierarchyDescriptor,
-                                                                                    GraphModelChangedEvent.create(changes));
+                        projectId,
+                        hierarchyDescriptor,
+                        GraphModelChangedEvent.create(changes),
+                        changeRequestId);
                 projectEventList.add(SimpleHighLevelProjectEventProxy.wrap(event));
             }
         }
     }
 
-    private Collection<HighLevelProjectEventProxy> createRemovedEvents(OWLEntity child, OWLEntity parent) {
+    private Collection<HighLevelProjectEventProxy> createRemovedEvents(OWLEntity child, OWLEntity parent, ChangeRequestId changeRequestId) {
         var removeEdge = new RemoveEdge<>(
                 new GraphEdge<>(
                         new GraphNode<>(parent, hierarchyProvider.isLeaf(parent)),
@@ -139,11 +141,11 @@ public final class HierarchyChangesComputer implements EventTranslator {
                 )
         );
         var event = GraphModelChangedEvent.create(ImmutableList.of(removeEdge));
-        var proxyEvent = proxyFactory.create(event, hierarchyProvider, hierarchyDescriptor);
+        var proxyEvent = proxyFactory.create(event, hierarchyProvider, hierarchyDescriptor, changeRequestId);
         return ImmutableList.of(proxyEvent);
     }
 
-    private Collection<HighLevelProjectEventProxy> createAddedEvents(OWLEntity child, OWLEntity parent) {
+    private Collection<HighLevelProjectEventProxy> createAddedEvents(OWLEntity child, OWLEntity parent, ChangeRequestId changeRequestId) {
         var addEdge = new AddEdge<>(
                 new GraphEdge<>(
                         new GraphNode<>(parent, hierarchyProvider.isLeaf(parent)),
@@ -151,7 +153,7 @@ public final class HierarchyChangesComputer implements EventTranslator {
                 )
         );
         var event = GraphModelChangedEvent.create(ImmutableList.of(addEdge));
-        var proxyEvent = proxyFactory.create(event, hierarchyProvider, hierarchyDescriptor);
+        var proxyEvent = proxyFactory.create(event, hierarchyProvider, hierarchyDescriptor, changeRequestId);
         return ImmutableList.of(proxyEvent);
     }
 
