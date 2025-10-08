@@ -12,10 +12,10 @@ import edu.stanford.protege.webprotege.entity.CreateNamedIndividualsResult;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
 import javax.annotation.Nonnull;
-import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -76,7 +76,8 @@ public class CreateNamedIndividualsActionHandler extends AbstractProjectActionHa
                                                         .map(renderer::render)
                                                         .collect(toImmutableSet());
         return new CreateNamedIndividualsResult(projectId,
-                                                individualData);
+                individualData,
+                action.changeRequestId());
     }
 
     @Nonnull

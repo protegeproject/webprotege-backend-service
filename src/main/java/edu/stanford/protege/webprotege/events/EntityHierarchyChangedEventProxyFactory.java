@@ -1,9 +1,12 @@
 package edu.stanford.protege.webprotege.events;
 
-import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
-import edu.stanford.protege.webprotege.hierarchy.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
-import org.semanticweb.owlapi.model.OWLClass;
+import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
+import edu.stanford.protege.webprotege.hierarchy.GraphModelChangedEvent;
+import edu.stanford.protege.webprotege.hierarchy.GraphNodeRenderer;
+import edu.stanford.protege.webprotege.hierarchy.HierarchyDescriptor;
+import edu.stanford.protege.webprotege.hierarchy.HierarchyProvider;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 /**
@@ -29,12 +32,14 @@ public class EntityHierarchyChangedEventProxyFactory {
 
     public EntityHierarchyChangedEventProxy create(GraphModelChangedEvent<OWLEntity> event,
                                                    HierarchyProvider<OWLEntity> classHierarchyProvider,
-                                                   HierarchyDescriptor hierarchyDescriptor) {
+                                                   HierarchyDescriptor hierarchyDescriptor,
+                                                   ChangeRequestId changeRequestId) {
         return new EntityHierarchyChangedEventProxy(event,
                                                     graphNodeRenderer,
                                                     entityNodeRenderer,
                                                     classHierarchyProvider,
                                                     projectId,
-                                                    hierarchyDescriptor);
+                hierarchyDescriptor,
+                changeRequestId);
     }
 }
