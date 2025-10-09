@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.postcoordination.PostcoordinationManager;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.*;
 
