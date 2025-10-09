@@ -12,11 +12,11 @@ import edu.stanford.protege.webprotege.entity.CreateDataPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateDataPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import jakarta.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -69,7 +69,8 @@ public class CreateDataPropertiesActionHandler extends AbstractProjectChangeHand
         return new CreateDataPropertiesResult(projectId,
                                               properties.stream()
                                                     .map(entityNodeRenderer::render)
-                                                    .collect(toImmutableSet()));
+                                                      .collect(toImmutableSet()),
+                action.changeRequestId());
     }
 
     @Nullable

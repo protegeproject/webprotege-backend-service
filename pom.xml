@@ -71,7 +71,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-criteria</artifactId>
-            <version>0.9.5-WHO</version>
+            <version>0.9.6-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>edu.stanford.protege</groupId>
             <artifactId>webprotege-backend-api</artifactId>
-            <version>3.1.9-WHO</version>
+            <version>4.0.0-WHO</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.protege</groupId>

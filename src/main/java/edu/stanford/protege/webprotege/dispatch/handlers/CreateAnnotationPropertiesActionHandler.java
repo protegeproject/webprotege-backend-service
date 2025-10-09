@@ -13,10 +13,10 @@ import edu.stanford.protege.webprotege.entity.CreateAnnotationPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 
 import javax.annotation.Nonnull;
-import jakarta.inject.Inject;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -59,8 +59,8 @@ public class CreateAnnotationPropertiesActionHandler extends AbstractProjectChan
     protected ChangeListGenerator<Set<OWLAnnotationProperty>> getChangeListGenerator(CreateAnnotationPropertiesAction action,
                                                                                      ExecutionContext executionContext) {
         return changeGeneratorFactory.create(action.sourceText(),
-                                             action.langTag(),
-                                             action.parents(), action.changeRequestId());
+                action.langTag(),
+                action.parents(), action.changeRequestId());
     }
 
     @Override
@@ -69,9 +69,10 @@ public class CreateAnnotationPropertiesActionHandler extends AbstractProjectChan
                                                                   ExecutionContext executionContext) {
         Set<OWLAnnotationProperty> properties = changeApplicationResult.getSubject();
         return new CreateAnnotationPropertiesResult(projectId,
-                                                    properties.stream()
-                                                          .map(entityNodeRenderer::render)
-                                                          .collect(toImmutableSet()));
+                properties.stream()
+                        .map(entityNodeRenderer::render)
+                        .collect(toImmutableSet()),
+                action.changeRequestId());
     }
 
     @Nonnull

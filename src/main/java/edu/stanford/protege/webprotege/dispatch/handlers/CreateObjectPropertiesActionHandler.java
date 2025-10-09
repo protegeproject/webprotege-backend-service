@@ -12,10 +12,10 @@ import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesAction;
 import edu.stanford.protege.webprotege.entity.CreateObjectPropertiesResult;
 import edu.stanford.protege.webprotege.entity.EntityNodeRenderer;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import jakarta.inject.Inject;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
 import javax.annotation.Nonnull;
-import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -83,6 +83,7 @@ public class CreateObjectPropertiesActionHandler extends AbstractProjectChangeHa
         return new CreateObjectPropertiesResult(projectId,
                                                 result.stream()
                                                       .map(entityNodeRenderer::render)
-                                                      .collect(toImmutableSet()));
+                                                        .collect(toImmutableSet()),
+                action.changeRequestId());
     }
 }

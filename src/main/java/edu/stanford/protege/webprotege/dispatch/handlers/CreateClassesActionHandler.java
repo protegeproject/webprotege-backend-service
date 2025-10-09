@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.dispatch.handlers;
 
 import edu.stanford.protege.webprotege.access.*;
 import edu.stanford.protege.webprotege.change.*;
+import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.entity.*;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
@@ -11,7 +12,6 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.slf4j.*;
 
 import javax.annotation.Nonnull;
-import jakarta.inject.Inject;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -84,6 +84,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                                      CreateClassesAction action,
                                                      ExecutionContext executionContext) {
         Set<OWLClass> classes = changeApplicationResult.getSubject();
+        var changeRequestId = action.changeRequestId() != null ? action.changeRequestId() : ChangeRequestId.generate();
         classes.forEach(newClass ->
                 {
                     try {
@@ -119,7 +120,7 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                 }
         );
         return new CreateClassesResult(
-                action.changeRequestId(),
+                changeRequestId,
                 action.projectId(),
                 classes.stream().map(entityNodeRenderer::render).collect(toImmutableSet())
         );
