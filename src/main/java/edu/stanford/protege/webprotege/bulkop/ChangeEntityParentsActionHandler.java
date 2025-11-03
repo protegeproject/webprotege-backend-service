@@ -138,6 +138,10 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                 .stream()
                 .map(OWLNamedObject::getIRI)
                 .collect(Collectors.toSet());
+        if(newParents.equals(currentParents)){
+            logger.warn("Nothing to change");
+            return validEmptyResult();
+        }
         Set<IRI> removedParents = currentParents
                 .stream()
                 .filter(parent -> !newParents.contains(parent))
