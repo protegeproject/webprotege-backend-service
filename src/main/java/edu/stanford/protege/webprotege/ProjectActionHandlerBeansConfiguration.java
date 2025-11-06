@@ -249,8 +249,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                           CreateClassesChangeGeneratorFactory p4,
                                                           EntityNodeRenderer p5,
                                                           LinearizationManager p6,
-                                                          PostcoordinationManager p7) {
-        return new CreateClassesActionHandler(p1, p3, p4, p5, p6, p7);
+                                                          PostcoordinationManager p7,
+                                                          ProjectOrderedChildrenService p8) {
+        return new CreateClassesActionHandler(p1, p3, p4, p5, p6, p7, p8);
     }
 
 

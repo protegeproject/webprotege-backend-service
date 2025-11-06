@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.entity.*;
+import edu.stanford.protege.webprotege.hierarchy.ordering.ProjectOrderedChildrenService;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.postcoordination.PostcoordinationManager;
@@ -44,6 +45,9 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
     @Nonnull
     private final PostcoordinationManager postcoordinationManager;
 
+    @Nonnull
+    private final ProjectOrderedChildrenService projectOrderedChildrenService;
+
     @Inject
     public CreateClassesActionHandler(@Nonnull AccessManager accessManager,
 
@@ -51,12 +55,13 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                                       @Nonnull CreateClassesChangeGeneratorFactory changeFactory,
                                       @Nonnull EntityNodeRenderer entityNodeRenderer,
                                       @Nonnull LinearizationManager linearizationManager,
-                                      @Nonnull PostcoordinationManager postcoordinationManager) {
+                                      @Nonnull PostcoordinationManager postcoordinationManager, @Nonnull ProjectOrderedChildrenService projectOrderedChildrenService) {
         super(accessManager, applyChanges);
         this.changeGeneratorFactory = checkNotNull(changeFactory);
         this.entityNodeRenderer = checkNotNull(entityNodeRenderer);
         this.linearizationManager = linearizationManager;
         this.postcoordinationManager = postcoordinationManager;
+        this.projectOrderedChildrenService = projectOrderedChildrenService;
     }
 
     @Nonnull
@@ -117,6 +122,13 @@ public class CreateClassesActionHandler extends AbstractProjectChangeHandler<Set
                         ).get(5, TimeUnit.SECONDS);
                     } catch (TimeoutException | InterruptedException | ExecutionException e) {
                         logger.error("CreatePostcoordinationError: " + e);
+                    }
+                    try{
+                        for(OWLClass parent : action.parents()) {
+                            projectOrderedChildrenService.addChildToParent(action.projectId(), parent.getIRI().toString(), newClass.getIRI().toString());
+                        }
+                    } catch (Exception e) {
+                        logger.error("Update parents ordering error : " + e);
                     }
                 }
         );
