@@ -2,11 +2,13 @@ package edu.stanford.protege.webprotege.project;
 
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
+import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
 import edu.stanford.protege.webprotege.projectsettings.*;
 import edu.stanford.protege.webprotege.common.UserId;
 import edu.stanford.protege.webprotege.webhook.*;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 
 import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
@@ -36,15 +38,20 @@ public class ProjectDetailsManagerImpl implements ProjectDetailsManager {
     @Nonnull
     private final DefaultDisplayNameSettingsFactory displayNameSettingsFactory;
 
+    @Nonnull
+    private final EventDispatcher eventDispatcher;
+
     @Inject
     public ProjectDetailsManagerImpl(@Nonnull ProjectDetailsRepository repository,
                                      @Nonnull SlackWebhookRepository slackWebhookRepository,
                                      @Nonnull WebhookRepository webhookRepository,
-                                     @Nonnull DefaultDisplayNameSettingsFactory displayNameSettingsFactory) {
+                                     @Nonnull DefaultDisplayNameSettingsFactory displayNameSettingsFactory,
+                                     @Nonnull EventDispatcher eventDispatcher) {
         this.repository = checkNotNull(repository);
         this.webhookRepository = checkNotNull(webhookRepository);
         this.slackWebhookRepository = checkNotNull(slackWebhookRepository);
         this.displayNameSettingsFactory = checkNotNull(displayNameSettingsFactory);
+        this.eventDispatcher = checkNotNull(eventDispatcher);
     }
 
     @Override
@@ -62,7 +69,8 @@ public class ProjectDetailsManagerImpl implements ProjectDetailsManager {
                 settings.getProjectOwner(),
                 now,
                 settings.getProjectOwner(),
-                EntityDeprecationSettings.empty());
+                EntityDeprecationSettings.empty(),
+                false);
         repository.save(record);
     }
 
@@ -137,6 +145,17 @@ public class ProjectDetailsManagerImpl implements ProjectDetailsManager {
                                    SlackIntegrationSettings.get(slackPayloadUrl),
                                    WebhookSettings.get(webhookSettings),
                                    projectDetails.getEntityDeprecationSettings());
+    }
+
+    @Override
+    public void setUnderMaintenance(ProjectId projectId, boolean underMaintenance) {
+        Optional<ProjectDetails> record = repository.findOne(projectId);
+        record.ifPresent(rec -> {
+            ProjectDetails updatedRecord = rec.withUnderMaintenance(underMaintenance);
+            repository.save(updatedRecord);
+            var event = new ProjectUnderMaintenanceUpdateEvent(projectId, EventId.generate(), underMaintenance);
+            eventDispatcher.dispatchEvent(event);
+        });
     }
 
 }

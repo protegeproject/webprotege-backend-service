@@ -30,6 +30,7 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.*;
 import edu.stanford.protege.webprotege.inject.project.ProjectDirectoryFactory;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.ipc.impl.CommandExecutorImpl;
 import edu.stanford.protege.webprotege.issues.CommentNotificationEmailTemplate;
 import edu.stanford.protege.webprotege.issues.EntityDiscussionThreadRepository;
@@ -337,8 +338,8 @@ public class ApplicationBeansConfiguration {
     ProjectDetailsManager getProjectDetailsManager(ProjectDetailsRepository projectDetailsRepository,
                                                    SlackWebhookRepository slackWebhookRepository,
                                                    WebhookRepository webhookRepository,
-                                                   DefaultDisplayNameSettingsFactory defaultDisplayNameSettings) {
-        return new ProjectDetailsManagerImpl(projectDetailsRepository, slackWebhookRepository, webhookRepository, defaultDisplayNameSettings);
+                                                   DefaultDisplayNameSettingsFactory defaultDisplayNameSettings, EventDispatcher eventDispatcher) {
+        return new ProjectDetailsManagerImpl(projectDetailsRepository, slackWebhookRepository, webhookRepository, defaultDisplayNameSettings, eventDispatcher);
     }
 
     @Bean

@@ -7,6 +7,7 @@ import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
+import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.lang.DisplayNameSettings;
 import edu.stanford.protege.webprotege.projectsettings.EntityDeprecationSettings;
 import org.bson.Document;
@@ -87,7 +88,8 @@ public class ProjectDetailsRepository_IT {
                                             createdBy,
                                             MODIFIED_AT,
                                             lastModifiedBy,
-                                            EntityDeprecationSettings.empty());
+                                            EntityDeprecationSettings.empty(),
+                false);
 
         // Insert project details
         repository.save(projectDetails);

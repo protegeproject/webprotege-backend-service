@@ -53,6 +53,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
 
     public static final String ENTITY_DEPRECATION_SETTINGS = "entityDeprecationSettings";
 
+    public static final String UNDER_MAINTENANCE = "underMaintenance";
+
     /**
      * Constructs a {@link ProjectDetails} object.
      *
@@ -66,6 +68,7 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
      * @param lastModifiedAt A timestamp that specifies when the project was last modified.  A zero value indicates
      *                       unknown.
      * @param lastModifiedBy A {@link UserId} that identifies the user that last modified the project.
+     * @param underMaintenance A flag that specifies whether the project is under maintenance.
      * @throws NullPointerException if any parameters are {@code null}.
      */
     public static ProjectDetails get(@Nonnull ProjectId projectId,
@@ -79,7 +82,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                                      @Nonnull UserId createdBy,
                                      long lastModifiedAt,
                                      @Nonnull UserId lastModifiedBy,
-                                     @Nonnull EntityDeprecationSettings entityDeprecationSettings) {
+                                     @Nonnull EntityDeprecationSettings entityDeprecationSettings,
+                                     boolean underMaintenance) {
         return new AutoValue_ProjectDetails(projectId,
                                             displayName,
                                             description,
@@ -91,7 +95,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                                             createdBy,
                                             lastModifiedAt,
                                             lastModifiedBy,
-                                            entityDeprecationSettings);
+                                            entityDeprecationSettings,
+                                            underMaintenance);
     }
 
     /**
@@ -111,7 +116,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                                          @JsonProperty(CREATED_BY) @Nonnull UserId createdBy,
                                          @JsonProperty(MODIFIED_AT) Instant lastModifiedAt,
                                          @JsonProperty(MODIFIED_BY) @Nonnull UserId lastModifiedBy,
-                                         @JsonProperty(ENTITY_DEPRECATION_SETTINGS) @Nullable EntityDeprecationSettings entityDeprecationSettings) {
+                                         @JsonProperty(ENTITY_DEPRECATION_SETTINGS) @Nullable EntityDeprecationSettings entityDeprecationSettings,
+                                         @JsonProperty(UNDER_MAINTENANCE) boolean underMaintenance) {
         String desc = description == null ? "" : description;
         DictionaryLanguage dl = dictionaryLanguage == null ? DictionaryLanguage.rdfsLabel("") : dictionaryLanguage;
         DisplayNameSettings dns = displayNameSettings == null ? DisplayNameSettings.empty() : displayNameSettings;
@@ -127,7 +133,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                    createdBy,
                    lastModifiedAt.toEpochMilli(),
                    lastModifiedBy,
-                   eds);
+                   eds,
+                   underMaintenance);
     }
 
     public ProjectDetails withDisplayName(@Nonnull String displayName) {
@@ -146,7 +153,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                        getCreatedBy(),
                        getLastModifiedAt(),
                        getLastModifiedBy(),
-                       getEntityDeprecationSettings());
+                       getEntityDeprecationSettings(),
+                       isUnderMaintenance());
         }
     }
 
@@ -166,7 +174,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                        getCreatedBy(),
                        getLastModifiedAt(),
                        getLastModifiedBy(),
-                       getEntityDeprecationSettings());
+                       getEntityDeprecationSettings(),
+                       isUnderMaintenance());
         }
     }
 
@@ -187,7 +196,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                        getCreatedBy(),
                        getLastModifiedAt(),
                        getLastModifiedBy(),
-                       getEntityDeprecationSettings());
+                       getEntityDeprecationSettings(),
+                       isUnderMaintenance());
         }
     }
 
@@ -207,7 +217,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                        getCreatedBy(),
                        getLastModifiedAt(),
                        getLastModifiedBy(),
-                       getEntityDeprecationSettings());
+                       getEntityDeprecationSettings(),
+                       isUnderMaintenance());
         }
     }
 
@@ -229,7 +240,29 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                        getCreatedBy(),
                        getLastModifiedAt(),
                        getLastModifiedBy(),
-                       getEntityDeprecationSettings());
+                       getEntityDeprecationSettings(),
+                       isUnderMaintenance());
+        }
+    }
+
+    public ProjectDetails withUnderMaintenance(boolean underMaintenance) {
+        if(underMaintenance == isUnderMaintenance()) {
+            return this;
+        }
+        else {
+            return get(projectId(),
+                       getDisplayName(),
+                       getDescription(),
+                       getOwner(),
+                       isInTrash(),
+                       getDefaultDictionaryLanguage(),
+                       getDefaultDisplayNameSettings(),
+                       getCreatedAt(),
+                       getCreatedBy(),
+                       getLastModifiedAt(),
+                       getLastModifiedBy(),
+                       getEntityDeprecationSettings(),
+                       underMaintenance);
         }
     }
 
@@ -247,7 +280,8 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
                    getCreatedBy(),
                    getLastModifiedAt(),
                    getLastModifiedBy(),
-                   settings);
+                   settings,
+                   isUnderMaintenance());
     }
 
     /**
@@ -361,6 +395,14 @@ public abstract class ProjectDetails implements Serializable, Comparable<Project
     @Nonnull
     @JsonProperty(ENTITY_DEPRECATION_SETTINGS)
     public abstract EntityDeprecationSettings getEntityDeprecationSettings();
+
+    /**
+     * Determines if this project is under maintenance.
+     *
+     * @return {@code true} if this project is under maintenance, otherwise {@code false}.
+     */
+    @JsonProperty(UNDER_MAINTENANCE)
+    public abstract boolean isUnderMaintenance();
 
     @Override
     public int compareTo(ProjectDetails o) {
