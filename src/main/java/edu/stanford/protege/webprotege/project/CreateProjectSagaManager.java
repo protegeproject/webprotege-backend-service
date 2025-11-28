@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.project;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.common.*;
 import edu.stanford.protege.webprotege.icd.projects.*;
 import edu.stanford.protege.webprotege.ipc.*;
@@ -40,6 +42,8 @@ public class CreateProjectSagaManager {
     private final ProjectPermissionsInitializer projectPermissionsInitializer;
     private final EventDispatcher eventDispatcher;
 
+    private final ObjectMapper objectMapper;
+
     public CreateProjectSagaManager(ProjectDetailsManager projectDetailsManager,
                                     CommandExecutor<ProcessUploadedOntologiesRequest, ProcessUploadedOntologiesResponse> processOntologiesExecutor,
                                     CommandExecutor<CreateInitialRevisionHistoryRequest, CreateInitialRevisionHistoryResponse> createInitialRevisionHistoryExecutor,
@@ -48,7 +52,7 @@ public class CreateProjectSagaManager {
                                     MinioFileDownloader fileDownloader,
                                     RevisionHistoryReplacer revisionHistoryReplacer,
                                     ProjectPermissionsInitializer projectPermissionsInitializer,
-                                    EventDispatcher eventDispatcher) {
+                                    EventDispatcher eventDispatcher, ObjectMapper objectMapper) {
         this.projectDetailsManager = projectDetailsManager;
         this.processOntologiesExecutor = processOntologiesExecutor;
         this.createInitialRevisionHistoryExecutor = createInitialRevisionHistoryExecutor;
@@ -58,12 +62,13 @@ public class CreateProjectSagaManager {
         this.fileDownloader = fileDownloader;
         this.projectPermissionsInitializer = projectPermissionsInitializer;
         this.eventDispatcher = eventDispatcher;
+        this.objectMapper = objectMapper;
     }
 
 
     public CompletableFuture<CreateNewProjectResult> execute(NewProjectSettings newProjectSettings, ExecutionContext executionContext) {
         if (newProjectSettings.hasSourceDocument()) {
-            return createProjectFromSources(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext));
+            return createProjectFromSources(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext, objectMapper));
         } else {
             return createEmptyProject(new SagaState(ProjectId.generate(), newProjectSettings, executionContext));
         }
@@ -110,7 +115,7 @@ public class CreateProjectSagaManager {
 
     public CompletableFuture<CreateNewProjectFromProjectBackupResult> executeFromBackup(NewProjectSettings newProjectSettings, String branchName, ExecutionContext executionContext) {
         if (newProjectSettings.hasSourceDocument()) {
-            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext), branchName);
+            return createProjectFromBackupFile(new SagaStateWithSources(ProjectId.generate(), newProjectSettings, executionContext, objectMapper), branchName);
         }
         return null;
     }
@@ -121,7 +126,7 @@ public class CreateProjectSagaManager {
                 .thenCompose(this::downloadRevisionHistory)
                 .thenCompose(this::copyRevisionHistoryToProject)
                 .thenCompose(state -> this.notifyVersioningForReproducibleProject(state, branchName))
-                .thenCompose(this::registerProject)
+                .thenCompose(this::registerProjectFromBackup)
                 .thenCompose(this::initializeProjectPermissions)
                 .thenCompose(this::retrieveProjectDetails)
                 .handle((r, e) -> {
@@ -201,6 +206,13 @@ public class CreateProjectSagaManager {
         });
     }
 
+    private CompletableFuture<SagaState> registerProjectFromBackup(SagaStateWithSources sagaState) {
+        return CompletableFuture.supplyAsync(() -> {
+            logger.info("Registering project");
+            projectDetailsManager.registerProject(sagaState.getProjectId(), sagaState.getNewProjectSettings(), sagaState.getSourceProjectDetails());
+            return sagaState;
+        });
+    }
 
     private static class SagaState {
 
@@ -252,8 +264,12 @@ public class CreateProjectSagaManager {
 
         private Path revisionHistoryPath;
 
-        public SagaStateWithSources(ProjectId projectId, NewProjectSettings newProjectSettings, ExecutionContext executionContext) {
+        private ProjectDetails sourceProjectDetails;
+        private ObjectMapper objectMapper;
+
+        public SagaStateWithSources(ProjectId projectId, NewProjectSettings newProjectSettings, ExecutionContext executionContext, ObjectMapper objectMapper) {
             super(projectId, newProjectSettings, executionContext);
+            this.objectMapper = objectMapper;
         }
 
         public BlobLocation getRevisionHistoryLocation() {
@@ -262,6 +278,10 @@ public class CreateProjectSagaManager {
 
         public Path getRevisionHistoryPath() {
             return Objects.requireNonNull(revisionHistoryPath);
+        }
+
+        public ProjectDetails getSourceProjectDetails() {
+            return sourceProjectDetails;
         }
 
         public SagaStateWithSources setRevisionHistoryPath(Path revisionHistoryPath) {
@@ -290,6 +310,11 @@ public class CreateProjectSagaManager {
 
         public SagaStateWithSources handleBackupFilesReady(PrepareBackupFilesForUseResponse response) {
             this.revisionHistoryLocation = response.binaryFileLocation();
+            try {
+                this.sourceProjectDetails = this.objectMapper.readValue(response.projectDetailsJson(), ProjectDetails.class) ;
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
             return this;
         }
 

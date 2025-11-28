@@ -8,6 +8,7 @@ import static edu.stanford.protege.webprotege.icd.projects.PrepareBackupFilesFor
 
 @JsonTypeName(CHANNEL)
 public record PrepareBackupFilesForUseResponse(
-        @JsonProperty("binaryFileLocation") BlobLocation binaryFileLocation
+        @JsonProperty("binaryFileLocation") BlobLocation binaryFileLocation,
+        @JsonProperty("projectDetailsJson") String projectDetailsJson
 ) implements Result {
 }
