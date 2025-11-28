@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.project;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stanford.protege.webprotege.common.BlobLocation;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.common.UserId;
@@ -87,7 +88,7 @@ class CreateProjectSagaManagerTest {
                                                fileDownloader,
                                                revisionHistoryReplacer,
                                                projectPermissionsInitializer,
-                eventDispatcher);
+                eventDispatcher, new ObjectMapper());
         janeDoe = UserId.valueOf("JaneDoe");
         executionContext = new ExecutionContext(janeDoe, "", "correlationId");
         newProjectSettings = NewProjectSettings.get(janeDoe,

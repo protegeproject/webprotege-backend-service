@@ -16,6 +16,8 @@ public interface ProjectDetailsManager {
      */
     void registerProject(ProjectId projectId, NewProjectSettings newProjectSettings);
 
+    void registerProject(ProjectId projectId, NewProjectSettings newProjectSettings, ProjectDetails sourceProjectDetails);
+
     ProjectDetails getProjectDetails(ProjectId projectId) throws UnknownProjectException;
 
     boolean isExistingProject(ProjectId projectId);

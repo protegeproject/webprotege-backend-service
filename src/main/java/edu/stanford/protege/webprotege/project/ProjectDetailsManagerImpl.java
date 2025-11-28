@@ -67,6 +67,26 @@ public class ProjectDetailsManagerImpl implements ProjectDetailsManager {
     }
 
     @Override
+    public void registerProject(ProjectId projectId, NewProjectSettings settings, ProjectDetails sourceProjectDetails) {
+        long now = System.currentTimeMillis();
+        ProjectDetails record = ProjectDetails.get(
+                projectId,
+                settings.getDisplayName(),
+                settings.getProjectDescription(),
+                settings.getProjectOwner(),
+                false,
+                sourceProjectDetails.getDefaultDictionaryLanguage(),
+                sourceProjectDetails.getDefaultDisplayNameSettings(),
+                now,
+                settings.getProjectOwner(),
+                now,
+                settings.getProjectOwner(),
+                sourceProjectDetails.getEntityDeprecationSettings(),
+                false);
+        repository.save(record);
+    }
+
+    @Override
     public ProjectDetails getProjectDetails(ProjectId projectId) throws UnknownProjectException {
         Optional<ProjectDetails> record = repository.findOne(projectId);
         if (!record.isPresent()) {
