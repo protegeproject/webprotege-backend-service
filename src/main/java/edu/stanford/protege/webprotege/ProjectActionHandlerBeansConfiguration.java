@@ -723,6 +723,12 @@ public class ProjectActionHandlerBeansConfiguration {
 
 
     @Bean
+    SetProjectUnderMaintenanceActionHandler setProjectUnderMaintenanceActionHandler(AccessManager p1, ProjectDetailsManager p2) {
+        return new SetProjectUnderMaintenanceActionHandler(p1, p2);
+    }
+
+
+    @Bean
     MergeEntitiesActionHandler mergeClassesActionHandler(AccessManager p1,
 
                                                          HasApplyChanges p3,

@@ -30,5 +30,6 @@ public interface ProjectDetailsManager {
 
     void setProjectSettings(ProjectSettings projectSettings);
 
+    void setUnderMaintenance(ProjectId projectId, boolean underMaintenance);
 
 }
