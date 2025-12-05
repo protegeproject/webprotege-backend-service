@@ -89,7 +89,8 @@ public class ProjectDetailsManagerImpl implements ProjectDetailsManager {
                 settings.getProjectOwner(),
                 now,
                 settings.getProjectOwner(),
-                sourceProjectDetails.getEntityDeprecationSettings()
+                sourceProjectDetails.getEntityDeprecationSettings(),
+                false
         );
         repository.save(record);
     }
