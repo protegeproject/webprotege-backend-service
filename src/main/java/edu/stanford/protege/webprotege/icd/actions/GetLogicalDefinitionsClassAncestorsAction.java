@@ -11,7 +11,7 @@ public record GetLogicalDefinitionsClassAncestorsAction(IRI classIri, ProjectId 
     public final static String CHANNEL = "webprotege.entities.GetLogicalDefinitionsClassAncestors";
 
     @JsonCreator
-    public GetLogicalDefinitionsClassAncestorsAction(@JsonProperty("classIri") IRI classIri, @JsonProperty("projectId") ProjectId projectId) {
+    public GetLogicalDefinitionsClassAncestorsAction(@JsonProperty("deletedIris") IRI classIri, @JsonProperty("projectId") ProjectId projectId) {
         this.classIri = classIri;
         this.projectId = projectId;
     }
