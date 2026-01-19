@@ -48,9 +48,6 @@ public class ProjectOrderedChildrenManagerIT {
     private ProjectOrderedChildrenServiceImpl projectOrderedChildrenService;
 
     @Autowired
-    private ReadWriteLockService readWriteLockService;
-
-    @Autowired
     private MongoTemplate mongoTemplate;
 
     @MockitoBean
@@ -72,7 +69,7 @@ public class ProjectOrderedChildrenManagerIT {
         mongoTemplate.dropCollection(ProjectOrderedChildren.class);
         projectId = new ProjectId(UUID.randomUUID().toString());
         when(executor.execute(any(), any())).thenReturn(CompletableFuture.supplyAsync(UpdateEntityChildrenResponse::new));
-        manager = new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
+        manager = new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, newRevisionsEventEmitterService);
 
         projectOrderedChildrenService.addChildToParent(projectId, parentA.toStringID(), child1.toStringID());
         projectOrderedChildrenService.addChildToParent(projectId, parentA.toStringID(), child2.toStringID());

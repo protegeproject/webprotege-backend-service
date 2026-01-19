@@ -22,7 +22,6 @@ public class ProjectOrderedChildrenManager {
     private final ProjectId projectId;
     private final ProjectOrderedChildrenService projectOrderedChildrenService;
 
-    private final ReadWriteLockService readWriteLockService;
 
     private final NewRevisionsEventEmitterService newRevisionsEventEmitterService;
 
@@ -30,11 +29,9 @@ public class ProjectOrderedChildrenManager {
     @Inject
     public ProjectOrderedChildrenManager(ProjectId projectId,
                                          ProjectOrderedChildrenService projectOrderedChildrenService,
-                                         ReadWriteLockService readWriteLockService,
                                          NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
         this.projectId = projectId;
         this.projectOrderedChildrenService = projectOrderedChildrenService;
-        this.readWriteLockService = readWriteLockService;
         this.newRevisionsEventEmitterService = newRevisionsEventEmitterService;
     }
 
@@ -42,20 +39,16 @@ public class ProjectOrderedChildrenManager {
         String entityUri = childEntity.toStringID();
         String fromParentUri = fromEntity.toStringID();
         String toParentUri = toEntity.toStringID();
+        projectOrderedChildrenService.removeChildFromParent(projectId, fromParentUri, entityUri);
 
-        readWriteLockService.executeWriteLock(() -> {
-            projectOrderedChildrenService.removeChildFromParent(projectId, fromParentUri, entityUri);
+        projectOrderedChildrenService.addChildToParent(projectId, toParentUri, entityUri);
 
-            projectOrderedChildrenService.addChildToParent(projectId, toParentUri, entityUri);
-        });
     }
 
     public void moveEntitiesToParent(OWLClass newParent, Set<OWLClass> entitiesToBeMoved, Map<String, List<String>> entitiesWithPreviousParents) {
         String newParentIri = newParent.toStringID();
-        readWriteLockService.executeWriteLock(() -> {
-            entitiesWithPreviousParents.forEach((childUri, parents) -> parents.forEach(parent -> projectOrderedChildrenService.removeChildFromParent(projectId, parent, childUri)));
-            entitiesToBeMoved.forEach(entity -> projectOrderedChildrenService.addChildToParent(projectId, newParentIri, entity.toStringID()));
-        });
+        entitiesWithPreviousParents.forEach((childUri, parents) -> parents.forEach(parent -> projectOrderedChildrenService.removeChildFromParent(projectId, parent, childUri)));
+        entitiesToBeMoved.forEach(entity -> projectOrderedChildrenService.addChildToParent(projectId, newParentIri, entity.toStringID()));
     }
 
     public void changeEntityParents(IRI entity, Set<IRI> removedParents, Set<IRI> newParents) {
@@ -68,24 +61,22 @@ public class ProjectOrderedChildrenManager {
                                                 UserId userId,
                                                 ChangeRequestId changeRequestId,
                                                 String commitMessage) {
-        readWriteLockService.executeWriteLock(() -> {
 
-            Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri);
+        Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri);
 
-            Optional<ProjectOrderedChildren> newOrderedChildrenOptional = projectOrderedChildrenService.updateEntityAndGet(entityParentIri,
-                    projectId,
-                    newChildrenOrder,
-                    initialOrderedChildrenOptional,
-                    userId);
+        Optional<ProjectOrderedChildren> newOrderedChildrenOptional = projectOrderedChildrenService.updateEntityAndGet(entityParentIri,
+                projectId,
+                newChildrenOrder,
+                initialOrderedChildrenOptional,
+                userId);
 
-            newRevisionsEventEmitterService.emitNewProjectOrderedChildrenEvent(
-                    entityParentIri,
-                    initialOrderedChildrenOptional,
-                    newOrderedChildrenOptional,
-                    userId,
-                    changeRequestId,
-                    commitMessage
-            );
-        });
+        newRevisionsEventEmitterService.emitNewProjectOrderedChildrenEvent(
+                entityParentIri,
+                initialOrderedChildrenOptional,
+                newOrderedChildrenOptional,
+                userId,
+                changeRequestId,
+                commitMessage
+        );
     }
 }

@@ -2063,9 +2063,8 @@ public class ProjectBeansConfiguration {
     @Bean
     ProjectOrderedChildrenManager projectOrderedChildrenManager(@Nonnull ProjectId projectId,
                                                                 @Nonnull ProjectOrderedChildrenService projectOrderedChildrenService,
-                                                                @Nonnull ReadWriteLockService readWriteLockService,
                                                                 @Nonnull NewRevisionsEventEmitterService newRevisionsEventEmitterService) {
-        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, readWriteLockService, newRevisionsEventEmitterService);
+        return new ProjectOrderedChildrenManager(projectId, projectOrderedChildrenService, newRevisionsEventEmitterService);
     }
 
     @Bean
