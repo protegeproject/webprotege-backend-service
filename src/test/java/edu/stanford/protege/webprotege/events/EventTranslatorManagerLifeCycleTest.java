@@ -52,8 +52,8 @@ class EventTranslatorManagerLifeCycleTest {
         @Bean
         ProjectOrderedChildrenService projectOrderedChildrenService(){
             return new ProjectOrderedChildrenServiceImpl(new ObjectMapper(),
-                    new ProjectOrderedChildrenRepositoryImpl(null, null),
-                    null,null);
+                    new ProjectOrderedChildrenRepositoryImpl(null),
+                    null);
         }
 
         @Value("${webprotege.directories.backup}")

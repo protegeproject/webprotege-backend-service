@@ -26,20 +26,15 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ProjectOrderedChildrenRepositoryImpl.class);
     private final MongoTemplate mongoTemplate;
-    private final ReadWriteLockService readWriteLock;
 
-    public ProjectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate,
-                                                ReadWriteLockService readWriteLock) {
+    public ProjectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
-        this.readWriteLock = readWriteLock;
     }
 
     @Override
     public void bulkWriteDocuments(List<UpdateOneModel<Document>> listOfUpdateOneModelDocument) {
-        readWriteLock.executeWriteLock(() -> {
-            var collection = mongoTemplate.getCollection(ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
-            collection.bulkWrite(listOfUpdateOneModelDocument, new BulkWriteOptions().ordered(false));
-        });
+        var collection = mongoTemplate.getCollection(ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
+        collection.bulkWrite(listOfUpdateOneModelDocument, new BulkWriteOptions().ordered(false));
     }
 
     @Override
@@ -57,9 +52,7 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
 
         query.fields().include(ENTITY_URI, PROJECT_ID);
 
-        List<Document> results = readWriteLock.executeReadLock(
-                () -> mongoTemplate.find(query, Document.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION)
-        );
+        List<Document> results = mongoTemplate.find(query, Document.class, ProjectOrderedChildren.ORDERED_CHILDREN_COLLECTION);
 
 
         return results.stream()
@@ -73,7 +66,7 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
         Query query = new Query();
         query.addCriteria(Criteria.where(PROJECT_ID).is(projectId.id()).and(ENTITY_URI).is(entityUri));
 
-        return readWriteLock.executeReadLock(() -> Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class)));
+        return  Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
     }
 
     @Override
@@ -93,22 +86,22 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
 
         query.addCriteria(criteria);
 
-        return readWriteLock.executeReadLock(() -> Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class)));
+        return Optional.ofNullable(mongoTemplate.findOne(query, ProjectOrderedChildren.class));
     }
 
     @Override
     public void save(ProjectOrderedChildren projectOrderedChildren) {
-        readWriteLock.executeWriteLock(() -> mongoTemplate.save(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
+        mongoTemplate.save(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION);
     }
 
     @Override
     public void insert(ProjectOrderedChildren projectOrderedChildren) {
-        readWriteLock.executeWriteLock(() -> mongoTemplate.insert(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
+        mongoTemplate.insert(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION);
     }
 
     @Override
     public Optional<ProjectOrderedChildren> insertAndGet(ProjectOrderedChildren projectOrderedChildren) {
-        return readWriteLock.executeWriteLock(() -> Optional.ofNullable(mongoTemplate.insert(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION)));
+        return Optional.of(mongoTemplate.insert(projectOrderedChildren, ORDERED_CHILDREN_COLLECTION));
     }
 
     @Override
@@ -124,7 +117,7 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
             update.set(USER_ID, updatedEntry.userId());
         }
 
-        readWriteLock.executeWriteLock(() -> mongoTemplate.updateFirst(query, update, ORDERED_CHILDREN_COLLECTION));
+        mongoTemplate.updateFirst(query, update, ORDERED_CHILDREN_COLLECTION);
     }
 
     @Override
@@ -140,7 +133,7 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
             update.set(USER_ID, updatedEntry.userId());
         }
 
-        return readWriteLock.executeWriteLock(() -> Optional.ofNullable(
+        return Optional.ofNullable(
                 mongoTemplate.findAndModify(
                         query,
                         update,
@@ -148,19 +141,17 @@ public class ProjectOrderedChildrenRepositoryImpl implements ProjectOrderedChild
                         ProjectOrderedChildren.class,
                         ORDERED_CHILDREN_COLLECTION
                 )
-        ));
+        );
     }
 
 
     @Override
     public void delete(ProjectOrderedChildren projectOrderedChildren) {
-        readWriteLock.executeWriteLock(() -> {
-            Query query = new Query();
-            query.addCriteria(Criteria.where(PROJECT_ID).is(projectOrderedChildren.projectId().id())
-                    .and(ENTITY_URI).is(projectOrderedChildren.entityUri()));
+        Query query = new Query();
+        query.addCriteria(Criteria.where(PROJECT_ID).is(projectOrderedChildren.projectId().id())
+                .and(ENTITY_URI).is(projectOrderedChildren.entityUri()));
 
-            mongoTemplate.remove(query, ProjectOrderedChildren.class, ORDERED_CHILDREN_COLLECTION);
-        });
+        mongoTemplate.remove(query, ProjectOrderedChildren.class, ORDERED_CHILDREN_COLLECTION);
     }
 
 }

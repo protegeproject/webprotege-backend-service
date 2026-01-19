@@ -1209,6 +1209,12 @@ public class ProjectActionHandlerBeansConfiguration {
         return new FilterExistingEntitiesActionHandler(p1, p2);
     }
 
+    @Bean
+    CheckNonExistentIrisActionHandler checkNonExistentIrisActionHandler(AccessManager p1,
+                                                                          EntitiesInProjectSignatureByIriIndex p2) {
+        return new CheckNonExistentIrisActionHandler(p1, p2);
+    }
+
 
     @Bean
     GetExistingClassesForApiActionHandler existingClassesForApiActionHandler(AccessManager p1, EntitySearcherFactory p2, LanguageManager p3) {

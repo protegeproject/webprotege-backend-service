@@ -631,17 +631,15 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectOrderedChildrenRepositoryImpl projectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate,
-                                                                              ReadWriteLockService readWriteLock) {
-        return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate, readWriteLock);
+    ProjectOrderedChildrenRepositoryImpl projectOrderedChildrenRepositoryImpl(MongoTemplate mongoTemplate) {
+        return new ProjectOrderedChildrenRepositoryImpl(mongoTemplate);
     }
 
     @Bean
     ProjectOrderedChildrenService projectOrderedChildrenService(@Nonnull ObjectMapper objectMapper,
                                                                 @Nonnull ProjectOrderedChildrenRepository repository,
-                                                                @Nonnull ReadWriteLockService readWriteLock,
                                                                 CommandExecutor<UpdateEntityChildrenRequest, UpdateEntityChildrenResponse> updateBackupEntityChildrenExecutor) {
-        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, readWriteLock, updateBackupEntityChildrenExecutor);
+        return new ProjectOrderedChildrenServiceImpl(objectMapper, repository, updateBackupEntityChildrenExecutor);
     }
 
     @Bean
