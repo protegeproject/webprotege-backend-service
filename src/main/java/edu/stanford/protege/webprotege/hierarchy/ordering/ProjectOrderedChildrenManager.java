@@ -11,6 +11,7 @@ import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
 
 import jakarta.inject.Inject;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -61,6 +62,11 @@ public class ProjectOrderedChildrenManager {
                                                 UserId userId,
                                                 ChangeRequestId changeRequestId,
                                                 String commitMessage) {
+
+        // Validate that newChildrenOrder does not contain duplicates
+        if (newChildrenOrder != null && newChildrenOrder.size() != new HashSet<>(newChildrenOrder).size()) {
+            throw new RuntimeException(new IllegalArgumentException("newChildrenOrder contains duplicate entries"));
+        }
 
         Optional<ProjectOrderedChildren> initialOrderedChildrenOptional = projectOrderedChildrenService.findOrderedChildren(projectId, entityParentIri);
 
