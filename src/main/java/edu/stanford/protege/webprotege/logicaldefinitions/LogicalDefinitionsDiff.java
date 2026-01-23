@@ -1,11 +1,11 @@
 package edu.stanford.protege.webprotege.logicaldefinitions;
 
+import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.frame.PropertyClassValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LogicalDefinitionsDiff {
@@ -15,9 +15,8 @@ public class LogicalDefinitionsDiff {
 
     private final List<LogicalDefinition> changedCopy;
 
-    private List<LogicalDefinition> addedStatements;
-
-    private List<LogicalDefinition> removedStatements;
+    private Map<OWLClassData, Set<PropertyClassValue>> addedStatementsMap = new HashMap<>();
+    private Map<OWLClassData, Set<PropertyClassValue>> removedStatementsMap = new HashMap<>();
 
 
     public LogicalDefinitionsDiff(List<LogicalDefinition> pristineCopy, List<LogicalDefinition> changedCopy) {
@@ -26,9 +25,33 @@ public class LogicalDefinitionsDiff {
     }
 
     public void executeDiff() {
-        addedStatements = diff(changedCopy, pristineCopy);
-        removedStatements = diff(pristineCopy, changedCopy);
+
+        for(LogicalDefinition changed : changedCopy) {
+            Optional<LogicalDefinition> existingParent = pristineCopy.stream().filter(c -> c.logicalDefinitionParent().equals(changed.logicalDefinitionParent())).findFirst();
+            if(existingParent.isEmpty()) {
+                addedStatementsMap.put(changed.logicalDefinitionParent(), new HashSet<>(changed.axis2filler()));
+            } else {
+                addedStatementsMap.put(changed.logicalDefinitionParent(), getDiffElements(changed.axis2filler(), existingParent.get().axis2filler()));
+            }
+        }
+
+        for(LogicalDefinition changed : pristineCopy) {
+            Optional<LogicalDefinition> existingParent = changedCopy.stream().filter(c -> c.logicalDefinitionParent().equals(changed.logicalDefinitionParent())).findFirst();
+
+            if(existingParent.isEmpty()) {
+                removedStatementsMap.put(changed.logicalDefinitionParent(), new HashSet<>(changed.axis2filler()));
+            } else {
+                removedStatementsMap.put(changed.logicalDefinitionParent(), getDiffElements(changed.axis2filler(), existingParent.get().axis2filler()));
+            }
+        }
+
+
     }
+
+    private Set<PropertyClassValue> getDiffElements(List<PropertyClassValue> extraElements, List<PropertyClassValue> originalElements) {
+        return extraElements.stream().filter(e -> !originalElements.contains(e)).collect(Collectors.toSet());
+    }
+
 
     private List<LogicalDefinition> diff(List<LogicalDefinition> listOne, List<LogicalDefinition> listTwo) {
 
@@ -38,12 +61,11 @@ public class LogicalDefinitionsDiff {
                         .collect(Collectors.toList());
     }
 
-    public List<LogicalDefinition> getAddedStatements() {
-        return Collections.unmodifiableList(addedStatements);
+    public Map<OWLClassData, Set<PropertyClassValue>> getAddedStatementsMap() {
+        return addedStatementsMap;
     }
 
-    public List<LogicalDefinition> getRemovedStatements() {
-        return Collections.unmodifiableList(removedStatements);
+    public Map<OWLClassData, Set<PropertyClassValue>> getRemovedStatementsMap() {
+        return removedStatementsMap;
     }
-
 }

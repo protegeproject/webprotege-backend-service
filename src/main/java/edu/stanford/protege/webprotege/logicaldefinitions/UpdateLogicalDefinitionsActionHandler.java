@@ -40,8 +40,10 @@ public class UpdateLogicalDefinitionsActionHandler extends AbstractProjectChange
 
     @Override
     protected UpdateLogicalDefinitionsResponse createActionResult(ChangeApplicationResult<Boolean> changeApplicationResult, UpdateLogicalDefinitionsAction action, ExecutionContext executionContext) {
-        EventId eventId = EventId.generate();
-        eventDispatcher.dispatchEvent(new PackagedProjectChangeEvent(action.projectId(), eventId, Collections.singletonList(new ParentsChangedEvent(action.projectId(), eventId, action.subject().getIRI()))));
+        if(changeApplicationResult.getSubject()) {
+            EventId eventId = EventId.generate();
+            eventDispatcher.dispatchEvent(new PackagedProjectChangeEvent(action.projectId(), eventId, Collections.singletonList(new ParentsChangedEvent(action.projectId(), eventId, action.subject().getIRI()))));
+        }
         return new UpdateLogicalDefinitionsResponse();
     }
 
