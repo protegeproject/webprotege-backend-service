@@ -12,4 +12,9 @@ public class PostcoordinationManagerConfiguration {
         return new CommandExecutorImpl<>(CreatePostcoordinationFromParentResponse.class);
     }
 
+    @Bean
+    public CommandExecutor<GetPostcoordinationAxisToGenericScaleRequest, GetPostcoordinationAxisToGenericScaleResponse> getPostcoordinationAxisToGenericScaleExecutor() {
+        return new CommandExecutorImpl<>(GetPostcoordinationAxisToGenericScaleResponse.class);
+    }
+
 }

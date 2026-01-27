@@ -1222,6 +1222,21 @@ public class ProjectActionHandlerBeansConfiguration {
     }
 
     @Bean
+    ValidateLogicalDefinitionsFromApiActionHandler validateLogicalDefinitionsFromApiActionHandler(AccessManager p1,
+                                                                                                    CommandExecutor<edu.stanford.protege.webprotege.postcoordination.GetPostcoordinationAxisToGenericScaleRequest, edu.stanford.protege.webprotege.postcoordination.GetPostcoordinationAxisToGenericScaleResponse> p2,
+                                                                                                    HierarchyProviderManager p3,
+                                                                                                    ClassHierarchyProvider p4,
+                                                                                                    RenderingManager p5) {
+        return new ValidateLogicalDefinitionsFromApiActionHandler(p1, p2, p3, p4, p5);
+    }
+
+    @Bean
+    ValidateAxisBelongsToHierarchyActionHandler validateAxisBelongsToHierarchyActionHandler(AccessManager p1,
+                                                                                              HierarchyProviderManager p2) {
+        return new ValidateAxisBelongsToHierarchyActionHandler(p1, p2);
+    }
+
+    @Bean
     GetIsExistingProjectActionHandler getIsExistingProjectActionHandler(AccessManager p1,
                                                                         ProjectDetailsManager p2) {
         return new GetIsExistingProjectActionHandler(p1, p2);
