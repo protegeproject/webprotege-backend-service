@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.logicaldefinitions;
 
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.frame.Mode;
 import edu.stanford.protege.webprotege.frame.PropertyClassValue;
 import edu.stanford.protege.webprotege.frame.translator.PropertyValue2AxiomTranslator;
@@ -13,6 +14,7 @@ import org.semanticweb.owlapi.model.*;
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,6 +36,8 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     private final LogicalConditions changedLogicalConditions;
 
     private final OWLClass subject;
+
+    private final static IRI ICD_ONTOLOGY_IRI = IRI.create("http://who.int/icd");
 
 
     UpdateLogicalDefinitionsChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
@@ -58,12 +62,14 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         var changeList = new OntologyChangeList.Builder<Boolean>();
 
         //This is assuming that there is only one ontology, maybe not ideal. May need to change in the future.
-        OWLOntologyID ontId = projectOntologiesIndex.getOntologyIds().findFirst().get();
+        OWLOntologyID ontId = projectOntologiesIndex.getOntologyIds()
+                .filter(owlOntologyID -> owlOntologyID.getOntologyIRI().isPresent() && owlOntologyID.getOntologyIRI().get().equals(ICD_ONTOLOGY_IRI))
+                .findFirst().orElse(projectOntologiesIndex.getOntologyIds().findFirst().get());
 
         generateChangesForLogicalDefinitions(changeList, ontId);
         generateChangesForNecessaryConditions(changeList, ontId);
 
-        return changeList.build(true);
+        return changeList.build(!changeList.isEmpty());
     }
 
     private void generateChangesForNecessaryConditions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
@@ -75,43 +81,43 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         ncDiff.getAddedStatements().stream()
                     .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
                     .map(ax -> AddAxiomChange.of(ontId, ax))
-                    .forEach(chg -> changeList.add(chg));
+                    .forEach(changeList::add);
 
         ncDiff.getRemovedStatements().stream()
                 .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
                 .map(ax -> RemoveAxiomChange.of(ontId, ax))
-                .forEach(chg -> changeList.add(chg));
+                .forEach(changeList::add);
     }
 
     private void generateChangesForLogicalDefinitions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
         LogicalDefinitionsDiff lcDiff = new LogicalDefinitionsDiff(pristineLogicalConditions.logicalDefinitions(), changedLogicalConditions.logicalDefinitions());
         lcDiff.executeDiff();
 
-        lcDiff.getAddedStatements().stream()
-                .flatMap(ld -> getLogicalDefinitionAxioms(ld))
-                .map(ax -> AddAxiomChange.of(ontId, ax))
-                .forEach(chg -> changeList.add(chg));
-
-        lcDiff.getRemovedStatements().stream()
-                .flatMap(ld -> getLogicalDefinitionAxioms(ld))
-                .map(ax -> RemoveAxiomChange.of(ontId, ax))
-                .forEach(chg -> changeList.add(chg));
+        for(OWLClassData parent : lcDiff.getAddedStatementsMap().keySet()) {
+            if(lcDiff.getAddedStatementsMap().get(parent) != null && !lcDiff.getAddedStatementsMap().get(parent).isEmpty()) {
+                changeList.addAll(getLogicalDefinitionAxioms(parent, lcDiff.getAddedStatementsMap().get(parent)).stream().map(ax -> AddAxiomChange.of(ontId, ax)).collect(Collectors.toList()));
+            }
+        }
+        for(OWLClassData parent : lcDiff.getRemovedStatementsMap().keySet()) {
+            if(lcDiff.getRemovedStatementsMap().get(parent) != null && !lcDiff.getRemovedStatementsMap().get(parent).isEmpty()) {
+                changeList.addAll(getLogicalDefinitionAxioms(parent, lcDiff.getRemovedStatementsMap().get(parent)).stream().map(ax -> RemoveAxiomChange.of(ontId, ax)).collect(Collectors.toList()));
+            }
+        }
     }
 
-    private Stream<OWLAxiom> getLogicalDefinitionAxioms(LogicalDefinition ld) {
-        PropertyValue2AxiomTranslator translator = new PropertyValue2AxiomTranslator();
+    private List<OWLAxiom> getLogicalDefinitionAxioms(OWLClassData logicalDefinitionParent, Set<PropertyClassValue> axis2Filler) {
 
-        List<OWLClassExpression> classExpressionList = getOWLClassExpressions(ld.axis2filler());
-        classExpressionList.add(0, ld.logicalDefinitionParent().getEntity());
+        List<OWLClassExpression> classExpressionList = getOWLClassExpressions(axis2Filler);
+        classExpressionList.add(0, logicalDefinitionParent.getEntity());
 
         OWLObjectIntersectionOf intersectionOf = dataFactory.getOWLObjectIntersectionOf(classExpressionList.toArray(new OWLClassExpression[0]));
         List<OWLAxiom> axiomList = new ArrayList<OWLAxiom>();
         axiomList.add(dataFactory.getOWLEquivalentClassesAxiom(subject, intersectionOf));
 
-        return axiomList.stream();
+        return axiomList;
     }
 
-    private List<OWLClassExpression> getOWLClassExpressions(List<PropertyClassValue> axis2fillers) {
+    private List<OWLClassExpression> getOWLClassExpressions(Set<PropertyClassValue> axis2fillers) {
         return axis2fillers.stream()
                 .map(pcv -> {
                     return dataFactory.getOWLObjectSomeValuesFrom(pcv.getProperty().getObject(), pcv.getValue().getEntity());
