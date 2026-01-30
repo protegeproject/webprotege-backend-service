@@ -611,8 +611,11 @@ public class ProjectActionHandlerBeansConfiguration {
 
                                                             HasApplyChanges p2,
                                                             DeleteEntitiesChangeListGeneratorFactory p3,
-                                                            RenderingManager p4) {
-        return new DeleteEntitiesActionHandler(p1, p2, p3, p4);
+                                                            RenderingManager p4,
+                                                            HierarchyProviderManager p5,
+                                                            EventDispatcher p6,
+                                                            LinearizationParentChecker p7) {
+        return new DeleteEntitiesActionHandler(p1, p2, p3, p4, p5, p6, p7);
     }
 
 

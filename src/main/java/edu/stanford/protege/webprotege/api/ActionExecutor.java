@@ -58,7 +58,7 @@ public class ActionExecutor {
             return Mono.just(result);
         } catch (PermissionDeniedException e) {
             logger.info("PermissionDeniedException thrown while handling request", e);
-            return Mono.error(new CommandExecutionException(HttpStatus.FORBIDDEN));
+            return Mono.error(new CommandExecutionException(HttpStatus.FORBIDDEN, request.getChannel(), e.getMessage()));
         } catch (Exception e) {
             logger.info("Exception thrown while handling request", e);
             return Mono.error(new CommandExecutionException(HttpStatus.INTERNAL_SERVER_ERROR));
