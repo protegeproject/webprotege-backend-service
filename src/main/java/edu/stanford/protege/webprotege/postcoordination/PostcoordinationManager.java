@@ -9,4 +9,6 @@ import java.util.concurrent.CompletableFuture;
 public interface PostcoordinationManager {
     CompletableFuture<CreatePostcoordinationFromParentResponse> createPostcoordinationFromParent(IRI newEntityIri, IRI parentEntityIri, ProjectId id, ExecutionContext executionContext);
 
+    CompletableFuture<GetPostcoordinationAxisToGenericScaleResponse> getPostcoordinationAxisToGenericScale(ExecutionContext executionContext);
+
 }
