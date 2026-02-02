@@ -141,7 +141,7 @@ public class ManchesterSyntaxObjectRenderer implements OWLObjectRenderer {
             if (deprecated) {
                 classNamesBuilder.append(" deprecated");
             }
-            stringBuilder.append("<span title=\"").append(entity.getEntityType().getName()).append(": ");
+            stringBuilder.append("<span onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '" + entity.getIRI()+ " ')\"  title=\"").append(entity.getEntityType().getName()).append(": ");
             stringBuilder.append(entity.getIRI());
             stringBuilder.append("\" class=\"").append(classNamesBuilder.toString().trim()).append("\">");
             stringBuilder.append(shortForm.replace(" ", "&nbsp;"));
