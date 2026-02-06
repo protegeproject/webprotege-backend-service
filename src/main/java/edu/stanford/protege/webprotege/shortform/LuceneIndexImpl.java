@@ -118,52 +118,20 @@ public class LuceneIndexImpl implements LuceneIndex {
                                                          @Nullable EntityMatchCriteria resultsSetFilter,
                                                          @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException, ParseException {
         var indexSearcher = searcherManager.acquire();
-        //        indexSearcher.setSimilarity(new EntityBasedSimilarity());
         try {
-
-
-            var q = getQuery(searchStrings, dictionaryLanguages, false);
-            var queryBuilder = new BooleanQuery.Builder();
-            queryBuilder.add(q, BooleanClause.Occur.MUST);
-
-            if (deprecatedEntitiesTreatment.equals(DeprecatedEntitiesTreatment.EXCLUDE_DEPRECATED_ENTITIES)) {
-                var deprecatedFalseQuery = new TermQuery(new Term(EntityDocumentFieldNames.DEPRECATED, EntityDocumentFieldNames.DEPRECATED_FALSE));
-                queryBuilder.add(deprecatedFalseQuery, BooleanClause.Occur.MUST);
-            }
-
-            var entityTypeQueries = entityTypes.stream()
-                                               .map(EntityType::getName)
-                                               .map(typeName -> new TermQuery(new Term(EntityDocumentFieldNames.ENTITY_TYPE,
-                                                                                       typeName)))
-                                               .collect(toList());
-            if (!entityTypeQueries.isEmpty()) {
-                var entityTypesBuilder = new BooleanQuery.Builder();
-                entityTypeQueries.forEach(typeQuery -> entityTypesBuilder.add(typeQuery, BooleanClause.Occur.SHOULD));
-                var typeQuery = entityTypesBuilder.build();
-                queryBuilder.add(typeQuery, BooleanClause.Occur.MUST);
-            }
-            if(!searchFilters.isEmpty()) {
-                var searchFiltersQueryBuilder = new BooleanQuery.Builder();
-                searchFilters.stream()
-                             .map(EntitySearchFilter::getId)
-                             .map(EntitySearchFilterId::getId)
-                             .map(id -> new TermQuery(new Term(EntityDocumentFieldNames.SEARCH_FILTER_MATCHES, id)))
-                             .forEach(query -> searchFiltersQueryBuilder.add(query, BooleanClause.Occur.SHOULD));
-                queryBuilder.add(searchFiltersQueryBuilder.build(), BooleanClause.Occur.MUST);
-            }
-            var query = queryBuilder.build();
-
-            var topDocs = indexSearcher.search(query, Integer.MAX_VALUE);
-            explain(query, topDocs, indexSearcher);
+            var filteredStream = getFilteredEntityDictionaryLanguageValuesStream(
+                    searchStrings,
+                    dictionaryLanguages,
+                    searchFilters,
+                    entityTypes,
+                    resultsSetFilter,
+                    deprecatedEntitiesTreatment,
+                    indexSearcher
+            );
             var languagesSet = ImmutableSet.copyOf(dictionaryLanguages);
-            var matcher = matcherFactory.getMatcher(resultsSetFilter);
-
-            var page = getDictionaryLanguageValues(dictionaryLanguages,
-                                                   indexSearcher,
-                                                   topDocs)
-                    .filter(p -> matcher.matches(p.getEntity()))
-                    .collect(PageCollector.toPage(pageRequest.getPageNumber(),
-                                                                                         pageRequest.getPageSize()));
+            
+            var page = filteredStream
+                    .collect(PageCollector.toPage(pageRequest.getPageNumber(), pageRequest.getPageSize()));
             return page.map(pg -> pg.transform(entityShortForms -> {
                 var matches = luceneDictionaryLanguageValuesMatcher.getShortFormMatches(entityShortForms,
                                                                                         languagesSet,
@@ -174,6 +142,91 @@ public class LuceneIndexImpl implements LuceneIndex {
         } finally {
             searcherManager.release(indexSearcher);
         }
+    }
+
+    @Override
+    @Nonnull
+    public Stream<EntityShortFormMatches> searchAsStream(@Nonnull List<SearchString> searchStrings,
+                                                          @Nonnull List<DictionaryLanguage> dictionaryLanguages,
+                                                          @Nonnull List<EntitySearchFilter> searchFilters,
+                                                          @Nonnull Set<EntityType<?>> entityTypes,
+                                                          @Nullable EntityMatchCriteria resultsSetFilter,
+                                                          @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException, ParseException {
+        var indexSearcher = searcherManager.acquire();
+        try {
+            var languagesSet = ImmutableSet.copyOf(dictionaryLanguages);
+            return getFilteredEntityDictionaryLanguageValuesStream(
+                    searchStrings,
+                    dictionaryLanguages,
+                    searchFilters,
+                    entityTypes,
+                    resultsSetFilter,
+                    deprecatedEntitiesTreatment,
+                    indexSearcher
+            ).map(entityShortForms -> {
+                var matches = luceneDictionaryLanguageValuesMatcher.getShortFormMatches(entityShortForms,
+                                                                                        languagesSet,
+                                                                                        searchStrings)
+                                                                   .collect(toImmutableList());
+                return EntityShortFormMatches.get(entityShortForms.getEntity(), matches);
+            });
+        } finally {
+            searcherManager.release(indexSearcher);
+        }
+    }
+
+    /**
+     * Builds a Lucene query and returns a filtered stream of EntityDictionaryLanguageValues.
+     * This method contains the common logic for building queries and filtering results.
+     */
+    @Nonnull
+    private Stream<EntityDictionaryLanguageValues> getFilteredEntityDictionaryLanguageValuesStream(
+            @Nonnull List<SearchString> searchStrings,
+            @Nonnull List<DictionaryLanguage> dictionaryLanguages,
+            @Nonnull List<EntitySearchFilter> searchFilters,
+            @Nonnull Set<EntityType<?>> entityTypes,
+            @Nullable EntityMatchCriteria resultsSetFilter,
+            @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment,
+            @Nonnull IndexSearcher indexSearcher) throws IOException, ParseException {
+        var q = getQuery(searchStrings, dictionaryLanguages, false);
+        var queryBuilder = new BooleanQuery.Builder();
+        queryBuilder.add(q, BooleanClause.Occur.MUST);
+
+        if (deprecatedEntitiesTreatment.equals(DeprecatedEntitiesTreatment.EXCLUDE_DEPRECATED_ENTITIES)) {
+            var deprecatedFalseQuery = new TermQuery(new Term(EntityDocumentFieldNames.DEPRECATED, EntityDocumentFieldNames.DEPRECATED_FALSE));
+            queryBuilder.add(deprecatedFalseQuery, BooleanClause.Occur.MUST);
+        }
+
+        var entityTypeQueries = entityTypes.stream()
+                                           .map(EntityType::getName)
+                                           .map(typeName -> new TermQuery(new Term(EntityDocumentFieldNames.ENTITY_TYPE,
+                                                                                   typeName)))
+                                           .collect(toList());
+        if (!entityTypeQueries.isEmpty()) {
+            var entityTypesBuilder = new BooleanQuery.Builder();
+            entityTypeQueries.forEach(typeQuery -> entityTypesBuilder.add(typeQuery, BooleanClause.Occur.SHOULD));
+            var typeQuery = entityTypesBuilder.build();
+            queryBuilder.add(typeQuery, BooleanClause.Occur.MUST);
+        }
+        if(!searchFilters.isEmpty()) {
+            var searchFiltersQueryBuilder = new BooleanQuery.Builder();
+            searchFilters.stream()
+                         .map(EntitySearchFilter::getId)
+                         .map(EntitySearchFilterId::getId)
+                         .map(id -> new TermQuery(new Term(EntityDocumentFieldNames.SEARCH_FILTER_MATCHES, id)))
+                         .forEach(query -> searchFiltersQueryBuilder.add(query, BooleanClause.Occur.SHOULD));
+            queryBuilder.add(searchFiltersQueryBuilder.build(), BooleanClause.Occur.MUST);
+        }
+        var query = queryBuilder.build();
+
+        var topDocs = indexSearcher.search(query, Integer.MAX_VALUE);
+        explain(query, topDocs, indexSearcher);
+        var matcher = matcherFactory.getMatcher(resultsSetFilter);
+
+        return getDictionaryLanguageValues(dictionaryLanguages,
+                                          indexSearcher,
+                                          topDocs)
+                .filter(p -> matcher.matches(p.getEntity()));
     }
 
     private void explain(Query query, TopDocs topDocs, IndexSearcher indexSearcher) {

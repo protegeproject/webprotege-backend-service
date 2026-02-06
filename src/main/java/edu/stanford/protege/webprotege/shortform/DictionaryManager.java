@@ -17,6 +17,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -105,6 +106,30 @@ public class DictionaryManager {
                                                                 @Nullable EntityMatchCriteria resultsSetFilter,
                                                                 @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) {
         return dictionary.getShortFormsContaining(searchStrings, entityTypes, languages, searchFilters, pageRequest, resultsSetFilter, deprecatedEntitiesTreatment);
+    }
+
+    /**
+     * Gets short forms containing the specified search strings as a stream.
+     * This method returns all matching results without pagination, allowing for
+     * complete filtering before collecting results.
+     *
+     * @param searchStrings The search strings.
+     * @param entityTypes   The types of entities to be retrieved.
+     * @param languages     The list of languages to consider.
+     * @param searchFilters A list of search filters.  An empty list indicates no filtering.
+     * @param resultsSetFilter Optional filter for result matching criteria.
+     * @param deprecatedEntitiesTreatment How to handle deprecated entities.
+     * @return A stream of matching short forms.
+     * @throws IOException If an I/O error occurs during the search.
+     */
+    @Nonnull
+    public Stream<EntityShortFormMatches> getShortFormsContainingAsStream(@Nonnull List<SearchString> searchStrings,
+                                                                          @Nonnull Set<EntityType<?>> entityTypes,
+                                                                          @Nonnull List<DictionaryLanguage> languages,
+                                                                          @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
+                                                                          @Nullable EntityMatchCriteria resultsSetFilter,
+                                                                          @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException {
+        return dictionary.getShortFormsContainingAsStream(searchStrings, entityTypes, languages, searchFilters, resultsSetFilter, deprecatedEntitiesTreatment);
     }
 
     public void update(@Nonnull Collection<OWLEntity> entities) {

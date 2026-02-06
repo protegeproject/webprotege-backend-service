@@ -15,6 +15,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -80,6 +81,22 @@ public class MultiLingualDictionaryLuceneImpl implements MultiLingualDictionary 
         return searchableMultiLingualShortFormDictionary.getShortFormsContaining(searchStrings,
                                                                                  entityTypes,
                                                                                  languages, searchFilters, pageRequest, resultsSetFilter, deprecatedEntitiesTreatment);
+    }
+
+    @Nonnull
+    @Override
+    public Stream<EntityShortFormMatches> getShortFormsContainingAsStream(@Nonnull List<SearchString> searchStrings,
+                                                                           @Nonnull Set<EntityType<?>> entityTypes,
+                                                                           @Nonnull List<DictionaryLanguage> languages,
+                                                                           @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
+                                                                           @Nullable EntityMatchCriteria resultsSetFilter,
+                                                                           @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException {
+        return searchableMultiLingualShortFormDictionary.getShortFormsContainingAsStream(searchStrings,
+                                                                                         entityTypes,
+                                                                                         languages,
+                                                                                         searchFilters,
+                                                                                         resultsSetFilter,
+                                                                                         deprecatedEntitiesTreatment);
     }
 }
 

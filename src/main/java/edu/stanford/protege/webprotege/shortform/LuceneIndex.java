@@ -37,6 +37,29 @@ public interface LuceneIndex {
                                                   @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException, ParseException;
 
     /**
+     * Searches for entities matching the specified criteria and returns a stream of results.
+     * This method is similar to {@link #search(List, List, List, Set, PageRequest, EntityMatchCriteria, DeprecatedEntitiesTreatment)}
+     * but returns all matching results as a stream without pagination.
+     *
+     * @param searchStrings The search strings to match
+     * @param dictionaryLanguages The dictionary languages to search in
+     * @param searchFilters The search filters to apply
+     * @param entityTypes The entity types to search for
+     * @param resultsSetFilter Optional filter for result matching criteria
+     * @param deprecatedEntitiesTreatment How to handle deprecated entities
+     * @return A stream of {@link EntityShortFormMatches} containing all matching entities
+     * @throws IOException If an I/O error occurs
+     * @throws ParseException If the query cannot be parsed
+     */
+    @Nonnull
+    Stream<EntityShortFormMatches> searchAsStream(@Nonnull List<SearchString> searchStrings,
+                                                    @Nonnull List<DictionaryLanguage> dictionaryLanguages,
+                                                    @Nonnull List<EntitySearchFilter> searchFilters,
+                                                    @Nonnull Set<EntityType<?>> entityTypes,
+                                                    @Nullable EntityMatchCriteria resultsSetFilter,
+                                                    @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException, ParseException;
+
+    /**
      * Finds entities that have the specified short form.
      * @param shortForm The short form.  Entities that have a short form equal to this specified short form
      *                  will be retrieved
