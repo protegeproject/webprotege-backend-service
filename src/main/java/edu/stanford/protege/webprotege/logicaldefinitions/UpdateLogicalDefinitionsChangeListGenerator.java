@@ -134,9 +134,12 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
         StringBuilder sb = new StringBuilder();
-        sb.append("<div style=\"cursor : pointer;\" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
+        sb.append("<div style=\"cursor : pointer;\"")
+                .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
                 .append(subject.getIRI())
-                .append("')\">");
+                .append("')\"")
+                .append(" title=\"Click to select entity ")
+                .append(subject.getIRI()).append("\">");
         sb.append(commitMessage);
         sb.append("</div>");
         return sb.toString();
