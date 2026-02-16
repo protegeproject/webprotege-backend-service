@@ -25,17 +25,22 @@ public class MongoTestExtension implements BeforeAllCallback, AfterAllCallback {
 
     @Override
     public void beforeAll(ExtensionContext extensionContext) {
-        loadMongoDbName();
+        try {
+            loadMongoDbName();
 
-        var imageName = DockerImageName.parse("mongo");
-        mongoDBContainer = new MongoDBContainer(imageName)
-                .withExposedPorts(27017, 27017);
-        mongoDBContainer.start();
+            var imageName = DockerImageName.parse("mongo");
+            mongoDBContainer = new MongoDBContainer(imageName)
+                    .withExposedPorts(27017, 27017);
+            mongoDBContainer.start();
 
-        String mongoUri = mongoDBContainer.getReplicaSetUrl(mongoDbName);
-        logger.info("MongoDB started at {}", mongoUri);
+            String mongoUri = mongoDBContainer.getReplicaSetUrl(mongoDbName);
+            logger.info("MongoDB started at {}", mongoUri);
 
-        System.setProperty("spring.data.mongodb.uri", mongoUri);
+            System.setProperty("spring.data.mongodb.uri", mongoUri);
+        } catch (Exception e) {
+            logger.error("Failed to start MongoDB container. Docker may not be available. Error: {}", e.getMessage(), e);
+            throw new IllegalStateException("Could not start MongoDB container. Docker may not be available.", e);
+        }
     }
 
     private void loadMongoDbName() {

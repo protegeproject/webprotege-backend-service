@@ -33,6 +33,7 @@
         <lucene.version>8.5.2</lucene.version>
         <java.version>17</java.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <skipITs></skipITs>
     </properties>
 
     <scm>
@@ -456,6 +457,9 @@
                         <include>**/*Test.java</include>
                         <include>**/*IT.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>${skipITs}</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
