@@ -6,7 +6,6 @@ import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.access.BuiltInCapability;
 import edu.stanford.protege.webprotege.app.PlaceUrl;
 import edu.stanford.protege.webprotege.common.DictionaryLanguage;
-import edu.stanford.protege.webprotege.common.PageRequest;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.criteria.EntityTypeIsOneOfCriteria;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectActionHandler;
@@ -25,7 +24,7 @@ import org.semanticweb.owlapi.model.OWLEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jakarta.inject.Inject;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -96,45 +95,54 @@ public class LookupEntitiesActionHandler extends AbstractProjectActionHandler<Lo
 
 
     private List<EntityLookupResult> lookupEntities(final EntityLookupRequest entityLookupRequest) {
-
         Matcher<OWLEntity> matcher = entityLookupRequest.getEntityMatchCriteria()
                                                         .map(matcherFactory::getMatcher)
                                                         .orElse(entity -> true);
         Set<OWLEntity> addedEntities = new HashSet<>();
         List<SearchString> searchStrings = SearchString.parseMultiWordSearchString(entityLookupRequest.getSearchString());
+        int searchLimit = entityLookupRequest.getSearchLimit();
 
-        var result = dictionaryManager.getShortFormsContaining(searchStrings,
-                                                               entityLookupRequest.getSearchedEntityTypes(),
-                                                               languageManager.getLanguages(), ImmutableList.of(),
-                                                               PageRequest.requestFirstPage(),
-                EntityTypeIsOneOfCriteria.get(ImmutableSet.copyOf(entityLookupRequest.getSearchedEntityTypes())),
-                DeprecatedEntitiesTreatment.INCLUDE_DEPRECATED_ENTITIES);
+        try {
+            var matchesStream = dictionaryManager.getShortFormsContainingAsStream(
+                    searchStrings,
+                    entityLookupRequest.getSearchedEntityTypes(),
+                    languageManager.getLanguages(),
+                    ImmutableList.of(),
+                    EntityTypeIsOneOfCriteria.get(ImmutableSet.copyOf(entityLookupRequest.getSearchedEntityTypes())),
+                    DeprecatedEntitiesTreatment.INCLUDE_DEPRECATED_ENTITIES
+            );
 
-        List<EntityLookupResult> lookupResults = new ArrayList<>();
-        for (var match : result.getPageElements()) {
-            var matchedEntity = match.getEntity();
-            if (!addedEntities.contains(matchedEntity) && matcher.matches(matchedEntity)) {
-                addedEntities.add(matchedEntity);
-                for (int i = 0; i < 1 ; i++) {
-                    var shortFormMatch = match.getShortFormMatches().get(i);
-                    var language = shortFormMatch.getLanguage();
-                    var matchPositions = shortFormMatch.getMatchPositions()
-                            .stream()
-                            .map(p -> SearchResultMatchPosition.get(p.getStart(), p.getEnd()))
-                            .collect(toImmutableList());
-                    var node = entityNodeRenderer.render(matchedEntity);
-                    var matchResult = SearchResultMatch.get(node,
-                                                            shortFormMatch.getLanguage(),
-                                                            shortFormMatch.getShortForm(),
-                                                            matchPositions);
-                    String entityUrl = getEntityUrl(matchedEntity);
-                    var entityLookupResult = EntityLookupResult.get(matchResult, entityUrl);
-                    lookupResults.add(entityLookupResult);
-                }
-
-            }
+            return matchesStream
+                    .filter(match -> matcher.matches(match.getEntity()))
+                    .filter(match -> {
+                        var matchedEntity = match.getEntity();
+                        if (addedEntities.contains(matchedEntity)) {
+                            return false;
+                        }
+                        addedEntities.add(matchedEntity);
+                        return true;
+                    })
+                    .limit(searchLimit)
+                    .filter(match -> !match.getShortFormMatches().isEmpty())
+                    .map(match -> {
+                        var shortFormMatch = match.getShortFormMatches().get(0);
+                        var matchPositions = shortFormMatch.getMatchPositions()
+                                .stream()
+                                .map(p -> SearchResultMatchPosition.get(p.getStart(), p.getEnd()))
+                                .collect(toImmutableList());
+                        var node = entityNodeRenderer.render(match.getEntity());
+                        var matchResult = SearchResultMatch.get(node,
+                                                                shortFormMatch.getLanguage(),
+                                                                shortFormMatch.getShortForm(),
+                                                                matchPositions);
+                        String entityUrl = getEntityUrl(match.getEntity());
+                        return EntityLookupResult.get(matchResult, entityUrl);
+                    })
+                    .collect(toImmutableList());
+        } catch (IOException e) {
+            // Log error and return empty list
+            return ImmutableList.of();
         }
-        return lookupResults;
     }
 
     @Nonnull

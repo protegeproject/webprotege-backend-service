@@ -20,6 +20,7 @@ import jakarta.inject.Inject;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -62,6 +63,22 @@ public class SearchableMultiLingualShortFormDictionaryLuceneImpl implements Sear
         } catch (IOException | ParseException e) {
             logger.error("Error performing search", e);
             return Page.emptyPage();
+        }
+    }
+
+    @Nonnull
+    @Override
+    public Stream<EntityShortFormMatches> getShortFormsContainingAsStream(@Nonnull List<SearchString> searchStrings,
+                                                                          @Nonnull Set<EntityType<?>> entityTypes,
+                                                                          @Nonnull List<DictionaryLanguage> languages,
+                                                                          @Nonnull ImmutableList<EntitySearchFilter> searchFilters,
+                                                                          @Nullable EntityMatchCriteria resultsSetFilter,
+                                                                          @Nonnull DeprecatedEntitiesTreatment deprecatedEntitiesTreatment) throws IOException {
+        try {
+            return luceneIndex.searchAsStream(searchStrings, languages, searchFilters, entityTypes, resultsSetFilter, deprecatedEntitiesTreatment);
+        } catch (ParseException e) {
+            logger.error("Error parsing search query", e);
+            return Stream.empty();
         }
     }
 }
