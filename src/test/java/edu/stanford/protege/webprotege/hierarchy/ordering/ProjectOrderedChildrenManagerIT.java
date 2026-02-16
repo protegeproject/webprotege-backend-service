@@ -12,6 +12,7 @@ import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.locking.ReadWriteLockService;
 import edu.stanford.protege.webprotege.revision.uiHistoryConcern.NewRevisionsEventEmitterService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -37,6 +38,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
+@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest
 @Import({WebprotegeBackendMonolithApplication.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)

@@ -20,6 +20,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @ExtendWith(MongoTestExtension.class)
 @ActiveProfiles("test")

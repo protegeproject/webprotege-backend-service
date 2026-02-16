@@ -4,6 +4,7 @@ import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.WebprotegeBackendMonolithApplication;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(properties = {"webprotege.rabbitmq.commands-subscribe=false"})
 @Import({WebprotegeBackendMonolithApplication.class})
 @ExtendWith({SpringExtension.class, MongoTestExtension.class})

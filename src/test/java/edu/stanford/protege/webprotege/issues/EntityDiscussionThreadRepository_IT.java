@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.common.UserId;
 import org.bson.Document;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.model.OWLClass;
@@ -35,6 +36,7 @@ import static org.hamcrest.core.IsNot.not;
  * An integration test for the repo that stores entity discussion thread.  This test requires
  * a running version of MongoDB.
  */
+@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = "webprotege.rabbitmq.commands-subscribe=false")
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)

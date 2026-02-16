@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
+@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class, WebProtegeIpcApplication.class})
 @ExtendWith({MongoTestExtension.class})

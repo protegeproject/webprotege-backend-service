@@ -6,12 +6,14 @@ import edu.stanford.protege.webprotege.common.LangTagFilter;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.project.ProjectComponentFactory;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
+@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import({WebprotegeBackendMonolithApplication.class, IndexUpdaterServiceTestConfiguration.class})
 @ExtendWith({MongoTestExtension.class, RabbitTestExtension.class})

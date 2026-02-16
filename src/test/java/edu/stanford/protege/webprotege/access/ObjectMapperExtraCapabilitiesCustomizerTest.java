@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.access;
 import edu.stanford.protege.webprotege.MongoTestExtension;
 import edu.stanford.protege.webprotege.authorization.Capability;
 import edu.stanford.protege.webprotege.forms.FormRegionCapability;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @AutoConfigureJsonTesters
 @ExtendWith(MongoTestExtension.class)
