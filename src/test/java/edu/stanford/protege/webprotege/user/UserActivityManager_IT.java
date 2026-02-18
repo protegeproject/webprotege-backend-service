@@ -10,7 +10,6 @@ import org.bson.Document;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,6 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 12 Mar 2017
  */
-@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(classes = WebprotegeBackendMonolithApplication.class, properties = {"webprotege.rabbitmq.commands-subscribe=false"})
 @ExtendWith({MongoTestExtension.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
