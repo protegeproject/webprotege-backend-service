@@ -7,7 +7,6 @@ import edu.stanford.protege.webprotege.forms.ExpansionState;
 import edu.stanford.protege.webprotege.forms.FormDescriptor;
 import edu.stanford.protege.webprotege.forms.FormId;
 import edu.stanford.protege.webprotege.jackson.WebProtegeJacksonApplication;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
@@ -28,7 +27,6 @@ import static org.hamcrest.Matchers.is;
  * Stanford Center for Biomedical Informatics Research
  * 2019-11-09
  */
-@Disabled("Docker/MongoDB not available in CI")
 @SpringBootTest(properties = "webprotege.rabbitmq.commands-subscribe=false")
 @Import(WebProtegeJacksonApplication.class)
 @ExtendWith(MongoTestExtension.class)
