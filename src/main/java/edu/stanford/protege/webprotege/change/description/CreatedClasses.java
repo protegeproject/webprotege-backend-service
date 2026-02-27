@@ -43,21 +43,38 @@ public abstract class CreatedClasses implements StructuredChangeDescription {
     @Nonnull
     @Override
     public String formatDescription(@Nonnull OWLObjectStringFormatter formatter) {
+        String description;
         if(getParentClasses().isEmpty()) {
             if(getClasses().size() == 1) {
-                return formatter.formatString("Created class %s", getClasses());
+                description = formatter.formatString("Created class %s", getClasses());
             }
             else {
-                return formatter.formatString("Created classes %s", getClasses());
+                description = formatter.formatString("Created classes %s", getClasses());
             }
         }
         else {
             if(getClasses().size() == 1) {
-                return formatter.formatString("Created %s as a subclass of %s", getClasses(), getParentClasses());
+                description = formatter.formatString("Created %s as a subclass of %s", getClasses(), getParentClasses());
             }
             else {
-                return formatter.formatString("Created %s as subclasses of %s", getClasses(), getParentClasses());
+                description = formatter.formatString("Created %s as subclasses of %s", getClasses(), getParentClasses());
             }
         }
+        return getClasses().stream().findFirst()
+                .map(owlClass -> {
+                    String iri = owlClass.getIRI().toString();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("<div style=\"cursor : pointer;\"")
+                            .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
+                            .append(iri)
+                            .append("')\"")
+                            .append(" title=\"Click to select entity ")
+                            .append(iri)
+                            .append("\">");
+                    sb.append(description);
+                    sb.append("</div>");
+                    return sb.toString();
+                })
+                .orElse(description);
     }
 }

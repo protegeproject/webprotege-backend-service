@@ -911,8 +911,9 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                       LinearizationManager p12,
                                                                       LinearizationParentChecker p13,
                                                                       ProjectOrderedChildrenManager p14,
-                                                                      EventDispatcher p15) {
-        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
+                                                                      EventDispatcher p15,
+                                                                      DefaultOntologyIdManager p16) {
+        return new ChangeEntityParentsActionHandler(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,p16, p15);
     }
 
 
@@ -1187,8 +1188,9 @@ public class ProjectActionHandlerBeansConfiguration {
     UpdateLogicalDefinitionsActionHandler getUpdateLogicalDefinitionsActionHandler(AccessManager p1,
                                                                                    HasApplyChanges p2,
                                                                                    UpdateLogicalDefinitionsChangeListGeneratorFactory p3,
-                                                                                   EventDispatcher p4) {
-        return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3, p4);
+                                                                                   EventDispatcher p4,
+                                                                                   DefaultOntologyIdManager p5) {
+        return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3, p4, p5);
     }
 
     @Bean
