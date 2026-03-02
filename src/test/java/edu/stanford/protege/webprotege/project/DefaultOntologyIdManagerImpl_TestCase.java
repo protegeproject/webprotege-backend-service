@@ -37,6 +37,7 @@ public class DefaultOntologyIdManagerImpl_TestCase {
 
     @BeforeEach
     public void setUp() {
+        when(projectOntologiesIndex.getOntologyIds()).thenAnswer(invocation -> Stream.of(ontologyId));
         impl = new DefaultOntologyIdManagerImpl(projectOntologiesIndex);
     }
 
