@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import java.util.stream.Stream;
@@ -37,6 +38,9 @@ public class DefaultOntologyIdManagerImpl_TestCase {
 
     @BeforeEach
     public void setUp() {
+        when(ontologyId.getOntologyIRI()).thenReturn(com.google.common.base.Optional.of(IRI.create("http://example.org/linearizationParent")));
+        when(ontologyId.getVersionIRI()).thenReturn(com.google.common.base.Optional.absent());
+
         when(projectOntologiesIndex.getOntologyIds()).thenAnswer(invocation -> Stream.of(ontologyId));
         impl = new DefaultOntologyIdManagerImpl(projectOntologiesIndex);
     }
