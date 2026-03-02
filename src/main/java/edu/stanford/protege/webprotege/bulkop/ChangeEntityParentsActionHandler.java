@@ -14,6 +14,7 @@ import edu.stanford.protege.webprotege.icd.hierarchy.ClassHierarchyRetiredClassD
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.PackagedProjectChangeEvent;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
@@ -84,6 +85,8 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
     @Nonnull
     private final ProjectOrderedChildrenManager projectOrderedChildrenManager;
 
+    @Nonnull
+    private final DefaultOntologyIdManager defaultOntologyIdManager;
 
     @Nonnull
     private final EventDispatcher eventDispatcher;
@@ -102,7 +105,9 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
                                             @Nonnull ClassHierarchyRetiredClassDetector retiredAncestorDetector,
                                             @Nonnull LinearizationManager linearizationManager,
                                             @Nonnull LinearizationParentChecker linParentChecker,
-                                            @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager, @Nonnull EventDispatcher eventDispatcher) {
+                                            @Nonnull ProjectOrderedChildrenManager projectOrderedChildrenManager,
+                                            @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
+                                            @Nonnull EventDispatcher eventDispatcher) {
         super(accessManager);
         this.projectId = checkNotNull(projectId);
         this.changeManager = checkNotNull(changeManager);
@@ -117,6 +122,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         this.linearizationManager = checkNotNull(linearizationManager);
         this.linParentChecker = linParentChecker;
         this.projectOrderedChildrenManager = projectOrderedChildrenManager;
+        this.defaultOntologyIdManager = defaultOntologyIdManager;
         this.eventDispatcher = eventDispatcher;
     }
 
@@ -167,7 +173,7 @@ public class ChangeEntityParentsActionHandler extends AbstractProjectActionHandl
         if(releasedChildren != null && !releasedChildren.isEmpty() && isNotEmpty(classesWithRetiredAncestors)) {
             return getResultWithReleasedChildren(errorResult, releasedChildren, getOwlEntityDataFromOwlClasses(classesWithRetiredAncestors));
         }
-        var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage());
+        var changeListGenerator = factory.create(action.changeRequestId(), parents, action.entity().asOWLClass(), action.commitMessage(), defaultOntologyIdManager);
 
         var result = changeManager.applyChanges(executionContext.userId(), changeListGenerator);
 

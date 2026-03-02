@@ -18,6 +18,7 @@ import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
 import edu.stanford.protege.webprotege.linearization.LinearizationManager;
 import edu.stanford.protege.webprotege.linearization.MergeWithParentEntitiesResponse;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.chg.ChangeManager;
 import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import edu.stanford.protege.webprotege.revision.Revision;
@@ -96,6 +97,9 @@ class ChangeEntityParentsActionHandlerTest {
     private ProjectOrderedChildrenManager projectOrderedChildrenManager;
 
     @Mock
+    private DefaultOntologyIdManager defaultOntologyIdManager;
+
+    @Mock
     private EventDispatcher eventDispatcher;
 
     @BeforeEach
@@ -127,7 +131,7 @@ class ChangeEntityParentsActionHandlerTest {
                 retiredClassDetector,
                 linearizationManager,
                 linearizationParentChecker,
-                projectOrderedChildrenManager, eventDispatcher);
+                projectOrderedChildrenManager, defaultOntologyIdManager, eventDispatcher);
     }
 
     private OWLClass mockOwlEntityAsClass(OWLEntity entity, String iri) {

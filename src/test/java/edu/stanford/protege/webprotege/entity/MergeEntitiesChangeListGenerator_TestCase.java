@@ -23,10 +23,13 @@ import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.vocab.SKOSVocabulary;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
+import java.util.stream.Stream;
+
 import static edu.stanford.protege.webprotege.entity.MergedEntityTreatment.DELETE_MERGED_ENTITY;
 import static edu.stanford.protege.webprotege.entity.MergedEntityTreatment.DEPRECATE_MERGED_ENTITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.when;
 import static org.semanticweb.owlapi.apibinding.OWLFunctionalSyntaxFactory.*;
 
 /**
@@ -74,6 +77,7 @@ public class MergeEntitiesChangeListGenerator_TestCase {
 
     private DefaultOntologyIdManagerImpl defaultOntologyIdManager;
 
+    @Mock
     private ProjectOntologiesIndexImpl projectOntologiesIndex;
 
     private AnnotationAssertionAxiomsBySubjectIndexImpl annotationAssertionsIndex;
@@ -90,6 +94,8 @@ public class MergeEntitiesChangeListGenerator_TestCase {
 
     @BeforeEach
     public void setUp() throws Exception {
+        when(ontologyId.getOntologyIRI()).thenReturn(com.google.common.base.Optional.of(IRI.create("http://example.org/linearizationParent")));
+        when(ontologyId.getVersionIRI()).thenReturn(com.google.common.base.Optional.absent());
         dataFactory = new OWLDataFactoryImpl();
         IRI iriA = IRI.create("http://ontology.org/A");
         IRI iriB = IRI.create("http://ontology.org/B");
@@ -111,7 +117,7 @@ public class MergeEntitiesChangeListGenerator_TestCase {
                 AddAxiomChange.of(ontologyId, AnnotationAssertion(rdfsLabel, sourceEntity.getIRI(), hello)),
                 AddAxiomChange.of(ontologyId, AnnotationAssertion(skosPrefLabel, sourceEntity.getIRI(), bonjour)),
                 AddAxiomChange.of(ontologyId, AnnotationAssertion(rdfsComment, sourceEntity.getIRI(), hi)));
-        projectOntologiesIndex = new ProjectOntologiesIndexImpl();
+        when(projectOntologiesIndex.getOntologyIds()).thenAnswer(invocation -> Stream.of(ontologyId));
         defaultOntologyIdManager = new DefaultOntologyIdManagerImpl(projectOntologiesIndex);
         annotationAssertionsIndex = new AnnotationAssertionAxiomsBySubjectIndexImpl();
         axiomsByEntityReference = new AxiomsByEntityReferenceIndexImpl(dataFactory);
@@ -124,7 +130,6 @@ public class MergeEntitiesChangeListGenerator_TestCase {
         entityRenamer = new EntityRenamer(dataFactory,
                                           this.projectOntologiesIndex,
                                           axiomsByReferenceIndex);
-
         applyChanges(ontologyChanges);
     }
 

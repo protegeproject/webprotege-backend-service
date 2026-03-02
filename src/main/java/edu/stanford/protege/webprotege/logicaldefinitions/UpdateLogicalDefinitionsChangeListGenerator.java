@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.logicaldefinitions;
 
+import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.OWLClassData;
@@ -8,15 +9,16 @@ import edu.stanford.protege.webprotege.frame.PropertyClassValue;
 import edu.stanford.protege.webprotege.frame.translator.PropertyValue2AxiomTranslator;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.jetbrains.annotations.NotNull;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGenerator<Boolean> {
 
@@ -37,7 +39,7 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
 
     private final OWLClass subject;
 
-    private final static IRI ICD_ONTOLOGY_IRI = IRI.create("http://who.int/icd");
+    private final DefaultOntologyIdManager defaultOntologyIdManager;
 
 
     UpdateLogicalDefinitionsChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
@@ -46,7 +48,8 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
                                                 LogicalConditions pristineLogicalConditions,
                                                 LogicalConditions changedLogicalConditions,
                                                 OWLClass subject,
-                                                @Nonnull String commitMessage) {
+                                                @Nonnull String commitMessage,
+                                                DefaultOntologyIdManager defaultOntologyIdManager) {
         this.changeRequestId = changeRequestId;
         this.dataFactory = dataFactory;
         this.projectOntologiesIndex = projectOntologiesIndex;
@@ -54,6 +57,7 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         this.changedLogicalConditions = changedLogicalConditions;
         this.subject = subject;
         this.commitMessage = commitMessage;
+        this.defaultOntologyIdManager = defaultOntologyIdManager;
     }
 
 
@@ -61,10 +65,7 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     public OntologyChangeList<Boolean> generateChanges(ChangeGenerationContext context) {
         var changeList = new OntologyChangeList.Builder<Boolean>();
 
-        //This is assuming that there is only one ontology, maybe not ideal. May need to change in the future.
-        OWLOntologyID ontId = projectOntologiesIndex.getOntologyIds()
-                .filter(owlOntologyID -> owlOntologyID.getOntologyIRI().isPresent() && owlOntologyID.getOntologyIRI().get().equals(ICD_ONTOLOGY_IRI))
-                .findFirst().orElse(projectOntologiesIndex.getOntologyIds().findFirst().get());
+        OWLOntologyID ontId = defaultOntologyIdManager.getDefaultOntologyId();
 
         generateChangesForLogicalDefinitions(changeList, ontId);
         generateChangesForNecessaryConditions(changeList, ontId);
@@ -75,39 +76,68 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     private void generateChangesForNecessaryConditions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
         NecessaryConditionsDiff ncDiff = new NecessaryConditionsDiff(pristineLogicalConditions.necessaryConditions(), changedLogicalConditions.necessaryConditions());
         ncDiff.executeDiff();
-
+        final OWLDataFactory df = DataFactory.get();
         PropertyValue2AxiomTranslator translator = new PropertyValue2AxiomTranslator();
 
-        ncDiff.getAddedStatements().stream()
+        projectOntologiesIndex.getOntologyIds().forEach(ontologyId -> {
+            var intersectionOfRemovedConditions = dataFactory.getOWLObjectIntersectionOf(new HashSet<>(getOWLClassExpressions(new HashSet<>(pristineLogicalConditions.necessaryConditions()))));
+            changeList.add(RemoveAxiomChange.of(ontologyId, df.getOWLSubClassOfAxiom(subject, intersectionOfRemovedConditions)));
+
+            pristineLogicalConditions.necessaryConditions().stream()
                     .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
-                    .map(ax -> AddAxiomChange.of(ontId, ax))
+                    .map(ax -> RemoveAxiomChange.of(ontId, ax))
                     .forEach(changeList::add);
 
-        ncDiff.getRemovedStatements().stream()
-                .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
-                .map(ax -> RemoveAxiomChange.of(ontId, ax))
-                .forEach(changeList::add);
+        });
+
+        if (!ncDiff.getAddedStatements().isEmpty() || !ncDiff.getRemovedStatements().isEmpty()) {
+            var intersectionOfAddedConditions = dataFactory.getOWLObjectIntersectionOf(new HashSet<>(getOWLClassExpressions(new HashSet<>(changedLogicalConditions.necessaryConditions()))));
+            changeList.add(AddAxiomChange.of(ontId, df.getOWLSubClassOfAxiom(subject,  intersectionOfAddedConditions)));
+        }
+
+
     }
 
     private void generateChangesForLogicalDefinitions(OntologyChangeList.Builder<Boolean> changeList, OWLOntologyID ontId) {
         LogicalDefinitionsDiff lcDiff = new LogicalDefinitionsDiff(pristineLogicalConditions.logicalDefinitions(), changedLogicalConditions.logicalDefinitions());
         lcDiff.executeDiff();
+        if(!lcDiff.getAddedStatementsMap().isEmpty() || !lcDiff.getRemovedStatementsMap().isEmpty()) {
+            final OWLDataFactory df = DataFactory.get();
 
-        for(OWLClassData parent : lcDiff.getAddedStatementsMap().keySet()) {
-            if(lcDiff.getAddedStatementsMap().get(parent) != null && !lcDiff.getAddedStatementsMap().get(parent).isEmpty()) {
-                changeList.addAll(getLogicalDefinitionAxioms(parent, lcDiff.getAddedStatementsMap().get(parent)).stream().map(ax -> AddAxiomChange.of(ontId, ax)).collect(Collectors.toList()));
+            for(LogicalDefinition logicalDefinition : pristineLogicalConditions.logicalDefinitions()) {
+                Set<OWLClassExpression> intersectionOperands = new HashSet<>();
+
+                intersectionOperands.add(logicalDefinition.logicalDefinitionParent().getEntity());
+                intersectionOperands.addAll(getOWLClassExpressions(new HashSet<>(logicalDefinition.axis2filler())));
+                var intersectionOfAddedConditions = dataFactory.getOWLObjectIntersectionOf(intersectionOperands);
+
+                var equivalentClassAxiom =  df.getOWLEquivalentClassesAxiom(subject, intersectionOfAddedConditions);
+                projectOntologiesIndex.getOntologyIds().forEach(ontologyId -> {
+
+                    changeList.addAll(getLogicalDefinitionAxioms(logicalDefinition.logicalDefinitionParent(), logicalDefinition.axis2filler())
+                            .stream().map(ax -> RemoveAxiomChange.of(ontId, ax)).collect(Collectors.toList()));
+
+                    changeList.add(RemoveAxiomChange.of(ontologyId,equivalentClassAxiom));
+                });
+
+            }
+            for(LogicalDefinition logicalDefinition : changedLogicalConditions.logicalDefinitions()) {
+                Set<OWLClassExpression> intersectionOperands = new HashSet<>();
+
+                intersectionOperands.add(logicalDefinition.logicalDefinitionParent().getEntity());
+                intersectionOperands.addAll(getOWLClassExpressions(new HashSet<>(logicalDefinition.axis2filler())));
+                var intersectionOfAddedConditions = dataFactory.getOWLObjectIntersectionOf(intersectionOperands);
+
+                var equivalentClassAxiom =  df.getOWLEquivalentClassesAxiom(subject, intersectionOfAddedConditions);
+                changeList.add(AddAxiomChange.of(ontId, equivalentClassAxiom));
+
             }
         }
-        for(OWLClassData parent : lcDiff.getRemovedStatementsMap().keySet()) {
-            if(lcDiff.getRemovedStatementsMap().get(parent) != null && !lcDiff.getRemovedStatementsMap().get(parent).isEmpty()) {
-                changeList.addAll(getLogicalDefinitionAxioms(parent, lcDiff.getRemovedStatementsMap().get(parent)).stream().map(ax -> RemoveAxiomChange.of(ontId, ax)).collect(Collectors.toList()));
-            }
-        }
+
     }
+    private List<OWLAxiom> getLogicalDefinitionAxioms(OWLClassData logicalDefinitionParent, List<PropertyClassValue> axis2Filler) {
 
-    private List<OWLAxiom> getLogicalDefinitionAxioms(OWLClassData logicalDefinitionParent, Set<PropertyClassValue> axis2Filler) {
-
-        List<OWLClassExpression> classExpressionList = getOWLClassExpressions(axis2Filler);
+        List<OWLClassExpression> classExpressionList = getOWLClassExpressions(new HashSet<>(axis2Filler));
         classExpressionList.add(0, logicalDefinitionParent.getEntity());
 
         OWLObjectIntersectionOf intersectionOf = dataFactory.getOWLObjectIntersectionOf(classExpressionList.toArray(new OWLClassExpression[0]));

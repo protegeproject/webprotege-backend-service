@@ -9,6 +9,7 @@ import edu.stanford.protege.webprotege.common.EventId;
 import edu.stanford.protege.webprotege.dispatch.AbstractProjectChangeHandler;
 import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import edu.stanford.protege.webprotege.project.PackagedProjectChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,19 +24,22 @@ public class UpdateLogicalDefinitionsActionHandler extends AbstractProjectChange
     @Nonnull
     private final EventDispatcher eventDispatcher;
 
+    private final DefaultOntologyIdManager defaultOntologyIdManager;
+
     public UpdateLogicalDefinitionsActionHandler(
             @NotNull AccessManager accessManager,
             @NotNull HasApplyChanges applyChanges,
-            @NotNull UpdateLogicalDefinitionsChangeListGeneratorFactory factory, @Nonnull EventDispatcher eventDispatcher) {
+            @NotNull UpdateLogicalDefinitionsChangeListGeneratorFactory factory, @Nonnull EventDispatcher eventDispatcher, DefaultOntologyIdManager defaultOntologyIdManager) {
         super(accessManager, applyChanges);
         this.factory = factory;
         this.eventDispatcher = eventDispatcher;
+        this.defaultOntologyIdManager = defaultOntologyIdManager;
     }
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(UpdateLogicalDefinitionsAction action, ExecutionContext executionContext) {
         return factory.create(action.changeRequestId(), action.projectId(), action.subject(),
-                action.commitMessage(), action.pristineLogicalConditions(), action.changedLogicalConditions());
+                action.commitMessage(), action.pristineLogicalConditions(), action.changedLogicalConditions(), defaultOntologyIdManager);
     }
 
     @Override

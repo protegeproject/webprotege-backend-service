@@ -203,24 +203,35 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
     public String getMessage(ChangeApplicationResult<Set<E>> result) {
         Set<E> entities = result.getSubject();
         int entityCount = entities.size();
-        String mainMsg;
+        final String mainMsg;
         if(entityCount == 1) {
             mainMsg = msg.format("Created {0} {1}",
                                        entityType.getPrintName().toLowerCase(),
-                                       entities);
-            if (!parents.isEmpty()) {
-                mainMsg += msg.format(" {0} {1}", getSingularRelationship(), parents);
-            }
+                                       entities)
+                    + (parents.isEmpty() ? "" : msg.format(" {0} {1}", getSingularRelationship(), parents));
         }
         else {
             mainMsg = msg.format("Created {0} {1}",
                               entityType.getPluralPrintName().toLowerCase(),
-                              entities);
-            if (!parents.isEmpty()) {
-                mainMsg += msg.format(" {0} {1}", getPluralRelationship(), parents);
-            }
+                              entities)
+                    + (parents.isEmpty() ? "" : msg.format(" {0} {1}", getPluralRelationship(), parents));
         }
-        return mainMsg;
+        return entities.stream().findFirst()
+                .map(entity -> {
+                    String iri = entity.getIRI().toString();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("<div style=\"cursor : pointer;\"")
+                            .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
+                            .append(iri)
+                            .append("')\"")
+                            .append(" title=\"Click to select entity ")
+                            .append(iri)
+                            .append("\">");
+                    sb.append(mainMsg);
+                    sb.append("</div>");
+                    return sb.toString();
+                })
+                .orElse(mainMsg);
     }
 
     private String getSingularRelationship() {

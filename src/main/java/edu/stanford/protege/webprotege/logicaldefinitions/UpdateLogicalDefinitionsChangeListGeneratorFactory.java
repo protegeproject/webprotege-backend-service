@@ -4,7 +4,7 @@ import edu.stanford.protege.webprotege.change.ChangeListGenerator;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.common.ProjectId;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
-import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
@@ -28,9 +28,10 @@ public class UpdateLogicalDefinitionsChangeListGeneratorFactory {
                                                OWLClass subject,
                                                String commitMessage,
                                                LogicalConditions pristineLogicalConditions,
-                                               LogicalConditions changedLogicalConditions) {
+                                               LogicalConditions changedLogicalConditions,
+                                               DefaultOntologyIdManager defaultOntologyIdManager) {
         return  new UpdateLogicalDefinitionsChangeListGenerator(changeRequestId, dataFactory, projectOntologiesIndex,
-               pristineLogicalConditions, changedLogicalConditions, subject, commitMessage);
+               pristineLogicalConditions, changedLogicalConditions, subject, commitMessage, defaultOntologyIdManager);
 
     }
 }

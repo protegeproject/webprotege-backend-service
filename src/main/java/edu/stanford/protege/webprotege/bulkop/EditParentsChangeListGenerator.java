@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.semanticweb.owlapi.model.*;
 
 import javax.annotation.Nonnull;
@@ -42,6 +43,9 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
     @Nonnull
     private final String commitMessage;
 
+    @Nonnull
+    private final DefaultOntologyIdManager defaultOntologyIdManager;
+
     @Inject
     public EditParentsChangeListGenerator(@Nonnull ChangeRequestId changeRequestId,
                                           @Nonnull ImmutableSet<OWLClass> parents,
@@ -49,13 +53,15 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
                                           @Nonnull String commitMessage,
                                           @Nonnull ProjectOntologiesIndex projectOntologies,
                                           @Nonnull SubClassOfAxiomsBySubClassIndex subClassAxiomIndex,
-                                          @Nonnull OWLDataFactory dataFactory) {
+                                          @Nonnull OWLDataFactory dataFactory,
+                                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager) {
         this.changeRequestId = changeRequestId;
         this.parents = checkNotNull(parents);
         this.entity = checkNotNull(entity);
         this.projectOntologies = checkNotNull(projectOntologies);
         this.subClassAxiomIndex = checkNotNull(subClassAxiomIndex);
         this.dataFactory = checkNotNull(dataFactory);
+        this.defaultOntologyIdManager = checkNotNull(defaultOntologyIdManager);
         this.commitMessage = checkNotNull(commitMessage);
     }
 
@@ -67,6 +73,8 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
     @Override
     public OntologyChangeList<Boolean> generateChanges(ChangeGenerationContext context) {
         var changeList = new OntologyChangeList.Builder<Boolean>();
+
+        var parentsToAdd = new HashSet<>(parents);
 
         projectOntologies.getOntologyIds().forEach(ontId -> {
             var currentSubClassOfAxiomList = subClassAxiomIndex
@@ -80,16 +88,15 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
                     currentParents.add(superClass.asOWLClass());
                 }
             }
-
-
-            var parentsToAdd = new HashSet<>(parents);
             parentsToAdd.removeAll(currentParents);
-            addParentsToEntity(parentsToAdd, ontId, changeList);
-
             var parentsToRemove = new HashSet<>(currentParents);
             parentsToRemove.removeAll(parents);
             removeParentsFromEntity(currentSubClassOfAxiomList, parentsToRemove, ontId, changeList);
         });
+
+        OWLOntologyID ontId = defaultOntologyIdManager.getDefaultOntologyId();
+
+        addParentsToEntity(parentsToAdd, ontId, changeList);
 
         return changeList.build(true);
     }

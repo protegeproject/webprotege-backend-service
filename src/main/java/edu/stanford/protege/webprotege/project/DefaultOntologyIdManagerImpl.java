@@ -24,6 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @ProjectSingleton
 public class DefaultOntologyIdManagerImpl implements DefaultOntologyIdManager, DependentIndex {
 
+    private final static IRI ICD_ONTOLOGY_IRI = IRI.create("http://who.int/icd");
     @Nonnull
     private final ProjectOntologiesIndex projectOntologiesIndex;
 
@@ -43,9 +44,9 @@ public class DefaultOntologyIdManagerImpl implements DefaultOntologyIdManager, D
     @Nonnull
     @Override
     public synchronized OWLOntologyID getDefaultOntologyId() {
-        Stream<OWLOntologyID> ontologyIds = projectOntologiesIndex.getOntologyIds();
-        return ontologyIds.findFirst()
-                .orElseGet(this::createFreshOntologyId);
+        return projectOntologiesIndex.getOntologyIds()
+                .filter(owlOntologyID -> owlOntologyID.getOntologyIRI().isPresent() && owlOntologyID.getOntologyIRI().get().equals(ICD_ONTOLOGY_IRI))
+                .findFirst().orElse(projectOntologiesIndex.getOntologyIds().findFirst().orElseGet(this::createFreshOntologyId));
     }
 
     private OWLOntologyID createFreshOntologyId() {

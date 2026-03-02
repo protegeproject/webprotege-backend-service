@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.index.ProjectOntologiesIndex;
 import edu.stanford.protege.webprotege.index.SubClassOfAxiomsBySubClassIndex;
+import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 
@@ -32,13 +33,15 @@ public class EditParentsChangeListGeneratorFactory {
     public EditParentsChangeListGenerator create(ChangeRequestId changeRequestId,
                                                  ImmutableSet<OWLClass> parents,
                                                  OWLClass entity,
-                                                 String commitMessage) {
+                                                 String commitMessage,
+                                                 DefaultOntologyIdManager defaultOntologyIdManager) {
         return new EditParentsChangeListGenerator(changeRequestId,
                 parents,
                 entity,
                 commitMessage,
                 projectOntologiesIndex,
                 subClassOfAxiomsBySubClassIndex,
-                dataFactory);
+                dataFactory,
+                defaultOntologyIdManager);
     }
 }
