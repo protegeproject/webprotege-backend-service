@@ -1,5 +1,7 @@
 package edu.stanford.protege.webprotege.frame;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.HasSubject;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
@@ -22,7 +24,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchesterSyntaxFrameResult>, HasSubject<OWLEntity>, HasFreshEntities, ContentChangeRequest {
 
-    public static final String CHANNEL = "webprotege.mansyntax.SetManchesterSyntaxFrame";
+    public static final String CHANNEL = "webprotege.frames.SetManchesterSyntaxFrame";
 
     private final ProjectId projectId;
 
@@ -43,13 +45,14 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
                                            String fromRendering,
                                            String toRendering,
                                            Set<OWLEntityData> freshEntities,
-                                           Optional<String> commitMessage, ChangeRequestId changeRequestId) {
+                                           String commitMessage,
+                                           ChangeRequestId changeRequestId) {
         this.projectId = checkNotNull(projectId);
         this.subject = checkNotNull(subject);
         this.fromRendering = checkNotNull(fromRendering);
         this.toRendering = checkNotNull(toRendering);
         this.freshEntities = new HashSet<>(freshEntities);
-        this.commitMessage = checkNotNull(commitMessage).orElse(null);
+        this.commitMessage = commitMessage;
         this.changeRequestId = checkNotNull(changeRequestId);
     }
 
@@ -58,12 +61,13 @@ public class SetManchesterSyntaxFrameAction implements ProjectAction<SetManchest
         return CHANNEL;
     }
 
-    public static SetManchesterSyntaxFrameAction create(ProjectId projectId,
-                                                        OWLEntity subject,
-                                                        String fromRendering,
-                                                        String toRendering,
-                                                        Set<OWLEntityData> freshEntities,
-                                                        Optional<String> commitMessage) {
+    @JsonCreator
+    public static SetManchesterSyntaxFrameAction create(@JsonProperty("projectId") ProjectId projectId,
+                                                        @JsonProperty("subject") OWLEntity subject,
+                                                        @JsonProperty("fromRendering") String fromRendering,
+                                                        @JsonProperty("toRendering") String toRendering,
+                                                        @JsonProperty("freshEntities") Set<OWLEntityData> freshEntities,
+                                                        @JsonProperty("commitMessage") String commitMessage) {
         return new SetManchesterSyntaxFrameAction(projectId,
                                                   subject,
                                                   fromRendering,

@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
  * 2021-08-20
  */
 @WebProtegeHandler
-public class CheckManchesterSyntaxFrameCommandHandler implements CommandHandler<CheckManchesterSyntaxFrameAction, CheckManchesterSyntaxFrameResult> {
+public class CheckManchesterSyntaxFrameCommandHandler implements CommandHandler<LocalCheckManchesterSyntaxFrameAction, LocalCheckManchesterSyntaxFrameResult> {
 
     private final ActionExecutor executor;
 
@@ -28,12 +28,12 @@ public class CheckManchesterSyntaxFrameCommandHandler implements CommandHandler<
     }
 
     @Override
-    public Class<CheckManchesterSyntaxFrameAction> getRequestClass() {
-        return CheckManchesterSyntaxFrameAction.class;
+    public Class<LocalCheckManchesterSyntaxFrameAction> getRequestClass() {
+        return LocalCheckManchesterSyntaxFrameAction.class;
     }
 
     @Override
-    public Mono<CheckManchesterSyntaxFrameResult> handleRequest(CheckManchesterSyntaxFrameAction request,
+    public Mono<LocalCheckManchesterSyntaxFrameResult> handleRequest(LocalCheckManchesterSyntaxFrameAction request,
                                                                 ExecutionContext executionContext) {
         return executor.executeRequest(request, executionContext);
     }
