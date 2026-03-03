@@ -22,7 +22,7 @@ import static edu.stanford.protege.webprotege.frame.ManchesterSyntaxFrameParseRe
 /**
  * @author Matthew Horridge, Stanford University, Bio-Medical Informatics Research Group, Date: 18/03/2014
  */
-public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActionHandler<CheckManchesterSyntaxFrameAction, CheckManchesterSyntaxFrameResult> {
+public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActionHandler<LocalCheckManchesterSyntaxFrameAction, LocalCheckManchesterSyntaxFrameResult> {
 
     @Nonnull
     private final ManchesterSyntaxChangeGeneratorFactory factory;
@@ -41,13 +41,13 @@ public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActi
 
     @Nullable
     @Override
-    protected BuiltInCapability getRequiredExecutableBuiltInAction(CheckManchesterSyntaxFrameAction action) {
+    protected BuiltInCapability getRequiredExecutableBuiltInAction(LocalCheckManchesterSyntaxFrameAction action) {
         return BuiltInCapability.VIEW_PROJECT;
     }
 
     @Nonnull
     @Override
-    public CheckManchesterSyntaxFrameResult execute(@Nonnull CheckManchesterSyntaxFrameAction action,
+    public LocalCheckManchesterSyntaxFrameResult execute(@Nonnull LocalCheckManchesterSyntaxFrameAction action,
                                                     @Nonnull ExecutionContext executionContext) {
 
         ManchesterSyntaxChangeGenerator changeGenerator = factory.create(
@@ -55,24 +55,24 @@ public class CheckManchesterSyntaxFrameActionHandler extends AbstractProjectActi
                 action.from(),
                 action.to(),
                 "",
-                action);
+                CheckManchesterSyntaxFrameAction.create(action.projectId(), action.subject(), action.from(), action.to(), action.freshEntities()));
         try {
             OntologyChangeList<?> changeList = changeGenerator.generateChanges(new ChangeGenerationContext(executionContext.userId()));
             if (changeList.getChanges().isEmpty()) {
-                return CheckManchesterSyntaxFrameResult.create(UNCHANGED);
+                return LocalCheckManchesterSyntaxFrameResult.create(UNCHANGED);
             }
             else {
-                return CheckManchesterSyntaxFrameResult.create(CHANGED);
+                return LocalCheckManchesterSyntaxFrameResult.create(CHANGED);
             }
         } catch (ParserException e) {
-            return CheckManchesterSyntaxFrameResult.create(ManchesterSyntaxFrameParser.getParseError(e));
+            return LocalCheckManchesterSyntaxFrameResult.create(ManchesterSyntaxFrameParser.getParseError(e));
         }
     }
 
     @Nonnull
     @Override
-    public Class<CheckManchesterSyntaxFrameAction> getActionClass() {
-        return CheckManchesterSyntaxFrameAction.class;
+    public Class<LocalCheckManchesterSyntaxFrameAction> getActionClass() {
+        return LocalCheckManchesterSyntaxFrameAction.class;
     }
 }
 
