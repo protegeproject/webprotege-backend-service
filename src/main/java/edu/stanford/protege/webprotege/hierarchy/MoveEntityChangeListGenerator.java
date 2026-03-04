@@ -326,10 +326,27 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
         String entity = fromNodePath.getLast().map(EntityNode::getBrowserText).orElse("");
         String from = fromNodePath.getLastPredecessor().map(EntityNode::getBrowserText).orElse("root");
         String to = toNodeParentPath.getLast().map(EntityNode::getBrowserText).orElse("root");
-        String resp =  msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
-        if(this.commitMessage != null && !this.commitMessage.isEmpty()){
-            return resp + ": " + this.commitMessage.trim();
-        }
-        return resp;
+        String resp = msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
+        String description = (this.commitMessage != null && !this.commitMessage.isEmpty())
+                ? resp + ": " + this.commitMessage.trim()
+                : resp;
+        return fromNodePath.getLast()
+                .map(EntityNode::getEntity)
+                .map(OWLEntity::getIRI)
+                .map(IRI::toString)
+                .map(iri -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("<div style=\"cursor : pointer;\"")
+                            .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
+                            .append(iri)
+                            .append("')\"")
+                            .append(" title=\"Click to select entity ")
+                            .append(iri)
+                            .append("\">");
+                    sb.append(description);
+                    sb.append("</div>");
+                    return sb.toString();
+                })
+                .orElse(description);
     }
 }
