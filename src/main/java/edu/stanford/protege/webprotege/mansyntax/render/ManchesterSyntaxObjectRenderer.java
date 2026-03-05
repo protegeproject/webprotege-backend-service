@@ -7,6 +7,7 @@ import org.semanticweb.owlapi.util.IRIShortFormProvider;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleIRIShortFormProvider;
 
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import jakarta.inject.Inject;
 import java.util.Collection;
 import java.util.Iterator;
@@ -141,18 +142,8 @@ public class ManchesterSyntaxObjectRenderer implements OWLObjectRenderer {
             if (deprecated) {
                 classNamesBuilder.append(" deprecated");
             }
-            stringBuilder.append("<div style=\"cursor : pointer;\"")
-                    .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
-                    .append(entity.getIRI())
-                    .append("')\"")
-                    .append(" title=\"Click to select entity ")
-                    .append(entity.getIRI())
-                    .append("\"")
-                    .append(" class=\"")
-                    .append(classNamesBuilder.toString().trim())
-                    .append("\">");
-            stringBuilder.append(shortForm.replace(" ", "&nbsp;"));
-            stringBuilder.append("</div>");
+            String content = shortForm.replace(" ", "&nbsp;");
+            stringBuilder.append(EntityFocusHtml.wrap(content, entity.getIRI().toString(), classNamesBuilder.toString().trim()));
         }
 
 

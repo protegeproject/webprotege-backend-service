@@ -19,9 +19,21 @@ public final class EntityFocusHtml {
      */
     @Nonnull
     public static String wrap(@Nonnull String description, @Nonnull String entityIri) {
+        return wrap(description, entityIri, null);
+    }
+
+    /**
+     * Same as {@link #wrap(String, String)} but with an optional CSS class on the div.
+     */
+    @Nonnull
+    public static String wrap(@Nonnull String description, @Nonnull String entityIri, String cssClass) {
+        String classAttr = (cssClass != null && !cssClass.isBlank())
+                ? " class=\"" + cssClass + "\""
+                : "";
         return "<div style=\"cursor : pointer;\""
                 + " onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '" + entityIri + "')\""
-                + " title=\"Click to select entity " + entityIri + "\">"
+                + " title=\"Click to select entity " + entityIri + "\""
+                + classAttr + ">"
                 + description
                 + "</div>";
     }

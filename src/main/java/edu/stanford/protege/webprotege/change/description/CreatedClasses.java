@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.change.description;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableSet;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.owlapi.OWLObjectStringFormatter;
 import org.semanticweb.owlapi.model.OWLClass;
 
@@ -61,20 +62,7 @@ public abstract class CreatedClasses implements StructuredChangeDescription {
             }
         }
         return getClasses().stream().findFirst()
-                .map(owlClass -> {
-                    String iri = owlClass.getIRI().toString();
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("<div style=\"cursor : pointer;\"")
-                            .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
-                            .append(iri)
-                            .append("')\"")
-                            .append(" title=\"Click to select entity ")
-                            .append(iri)
-                            .append("\">");
-                    sb.append(description);
-                    sb.append("</div>");
-                    return sb.toString();
-                })
+                .map(owlClass -> EntityFocusHtml.wrap(description, owlClass.getIRI().toString()))
                 .orElse(description);
     }
 }
