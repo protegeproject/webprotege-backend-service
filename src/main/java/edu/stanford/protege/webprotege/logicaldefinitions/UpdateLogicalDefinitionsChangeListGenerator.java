@@ -3,6 +3,7 @@ package edu.stanford.protege.webprotege.logicaldefinitions;
 import edu.stanford.protege.webprotege.DataFactory;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.entity.OWLClassData;
 import edu.stanford.protege.webprotege.frame.Mode;
 import edu.stanford.protege.webprotege.frame.PropertyClassValue;
@@ -167,16 +168,7 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
     @NotNull
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div style=\"cursor : pointer;\"")
-                .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
-                .append(subject.getIRI())
-                .append("')\"")
-                .append(" title=\"Click to select entity ")
-                .append(subject.getIRI()).append("\">");
-        sb.append(commitMessage);
-        sb.append("</div>");
-        return sb.toString();
+        return EntityFocusHtml.wrap(commitMessage, subject.getIRI().toString());
     }
 
     @Override

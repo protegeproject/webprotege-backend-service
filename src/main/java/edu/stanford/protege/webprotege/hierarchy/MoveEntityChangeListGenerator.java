@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -326,10 +327,15 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
         String entity = fromNodePath.getLast().map(EntityNode::getBrowserText).orElse("");
         String from = fromNodePath.getLastPredecessor().map(EntityNode::getBrowserText).orElse("root");
         String to = toNodeParentPath.getLast().map(EntityNode::getBrowserText).orElse("root");
-        String resp =  msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
-        if(this.commitMessage != null && !this.commitMessage.isEmpty()){
-            return resp + ": " + this.commitMessage.trim();
-        }
-        return resp;
+        String resp = msg.format("Moved {0} {1} from {2} to {3}", type, entity, from, to);
+        String description = (this.commitMessage != null && !this.commitMessage.isEmpty())
+                ? resp + ": " + this.commitMessage.trim()
+                : resp;
+        return fromNodePath.getLast()
+                .map(EntityNode::getEntity)
+                .map(OWLEntity::getIRI)
+                .map(IRI::toString)
+                .map(iri -> EntityFocusHtml.wrap(description, iri))
+                .orElse(description);
     }
 }

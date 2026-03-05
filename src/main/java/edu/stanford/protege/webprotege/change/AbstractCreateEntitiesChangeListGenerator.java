@@ -6,6 +6,7 @@ import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityShortFormsParser;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
 import edu.stanford.protege.webprotege.icd.IcdConstants;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -217,20 +218,7 @@ public abstract class AbstractCreateEntitiesChangeListGenerator<E extends OWLEnt
                     + (parents.isEmpty() ? "" : msg.format(" {0} {1}", getPluralRelationship(), parents));
         }
         return entities.stream().findFirst()
-                .map(entity -> {
-                    String iri = entity.getIRI().toString();
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("<div style=\"cursor : pointer;\"")
-                            .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
-                            .append(iri)
-                            .append("')\"")
-                            .append(" title=\"Click to select entity ")
-                            .append(iri)
-                            .append("\">");
-                    sb.append(mainMsg);
-                    sb.append("</div>");
-                    return sb.toString();
-                })
+                .map(entity -> EntityFocusHtml.wrap(mainMsg, entity.getIRI().toString()))
                 .orElse(mainMsg);
     }
 

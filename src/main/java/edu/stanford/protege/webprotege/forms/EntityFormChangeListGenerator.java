@@ -8,6 +8,7 @@ import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.forms.data.*;
 import edu.stanford.protege.webprotege.forms.processor.FormDataConverter;
 import edu.stanford.protege.webprotege.frame.*;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -287,23 +288,11 @@ public class EntityFormChangeListGenerator implements ChangeListGenerator<OWLEnt
         }
         OWLEntity entity = result.getSubject();
         OWLEntityData renderedEntity = renderingManager.getRendering(entity);
-        StringBuilder sb = new StringBuilder();
-        sb.append("<div style=\"cursor : pointer;\"")
-                .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
-                .append(entity.getIRI())
-                .append("')\"")
-                .append(" title=\"Click to select entity ")
-                .append(entity.getIRI())
-                .append("\">");
-        sb.append("Edited ");
-        sb.append(formsLabels);
-        sb.append(messageFormatter.format(" for {0}", renderedEntity.getBrowserText()));
+        String description = "Edited " + formsLabels + messageFormatter.format(" for {0}", renderedEntity.getBrowserText());
         if (!commitMessage.isBlank()) {
-            sb.append(": ");
-            sb.append(commitMessage.trim());
+            description += ": " + commitMessage.trim();
         }
-        sb.append("</div>");
-        return sb.toString();
+        return EntityFocusHtml.wrap(description, entity.getIRI().toString());
     }
 
     @Override

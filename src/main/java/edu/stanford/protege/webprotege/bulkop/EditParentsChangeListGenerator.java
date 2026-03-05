@@ -4,6 +4,7 @@ package edu.stanford.protege.webprotege.bulkop;
 import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -142,6 +143,6 @@ public class EditParentsChangeListGenerator implements ChangeListGenerator<Boole
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<Boolean> result) {
-        return commitMessage;
+        return EntityFocusHtml.wrap(commitMessage, entity.getIRI().toString());
     }
 }
