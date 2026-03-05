@@ -19,6 +19,7 @@ import edu.stanford.protege.webprotege.index.*;
 import edu.stanford.protege.webprotege.inject.ProjectComponent;
 import edu.stanford.protege.webprotege.ipc.CommandExecutor;
 import edu.stanford.protege.webprotege.ipc.ExecutionContext;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -479,6 +480,6 @@ public class DeprecateEntityByFormChangeListGenerator implements ChangeListGener
     @Nonnull
     @Override
     public String getMessage(ChangeApplicationResult<OWLEntity> result) {
-        return message;
+        return EntityFocusHtml.wrap(message, entityToBeDeprecated.getIRI().toString());
     }
 }

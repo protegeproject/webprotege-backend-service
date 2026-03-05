@@ -5,6 +5,7 @@ import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
 import edu.stanford.protege.webprotege.entity.EntityNode;
 import edu.stanford.protege.webprotege.index.*;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.msg.MessageFormatter;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
 import edu.stanford.protege.webprotege.project.DefaultOntologyIdManager;
@@ -334,19 +335,7 @@ public class MoveEntityChangeListGenerator implements ChangeListGenerator<Boolea
                 .map(EntityNode::getEntity)
                 .map(OWLEntity::getIRI)
                 .map(IRI::toString)
-                .map(iri -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("<div style=\"cursor : pointer;\"")
-                            .append(" onclick=\"window.focusClickedEntity && window.focusClickedEntity(event, '")
-                            .append(iri)
-                            .append("')\"")
-                            .append(" title=\"Click to select entity ")
-                            .append(iri)
-                            .append("\">");
-                    sb.append(description);
-                    sb.append("</div>");
-                    return sb.toString();
-                })
+                .map(iri -> EntityFocusHtml.wrap(description, iri))
                 .orElse(description);
     }
 }

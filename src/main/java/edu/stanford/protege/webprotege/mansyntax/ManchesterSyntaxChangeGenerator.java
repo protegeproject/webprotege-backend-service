@@ -4,6 +4,7 @@ package edu.stanford.protege.webprotege.mansyntax;
 
 import edu.stanford.protege.webprotege.change.*;
 import edu.stanford.protege.webprotege.common.ChangeRequestId;
+import edu.stanford.protege.webprotege.msg.EntityFocusHtml;
 import edu.stanford.protege.webprotege.entity.OWLEntityData;
 import edu.stanford.protege.webprotege.frame.HasFreshEntities;
 import edu.stanford.protege.webprotege.frame.ManchesterSyntaxFrameParseError;
@@ -119,6 +120,6 @@ public class ManchesterSyntaxChangeGenerator implements ChangeListGenerator<Opti
         if(!commitMessage.isEmpty()) {
             changeDescription += "\n" + commitMessage;
         }
-        return changeDescription;
+        return EntityFocusHtml.wrap(changeDescription, subject.getEntity().getIRI().toString());
     }
 }
