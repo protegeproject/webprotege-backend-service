@@ -38,6 +38,10 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
 
     private final LogicalConditions changedLogicalConditions;
 
+    private final LogicalDefinitionExtractor logicalDefinitionExtractor;
+
+    private final NecessaryConditionsExtractor necessaryConditionsExtractor;
+
     private final OWLClass subject;
 
     private final DefaultOntologyIdManager defaultOntologyIdManager;
@@ -50,7 +54,8 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
                                                 LogicalConditions changedLogicalConditions,
                                                 OWLClass subject,
                                                 @Nonnull String commitMessage,
-                                                DefaultOntologyIdManager defaultOntologyIdManager) {
+                                                DefaultOntologyIdManager defaultOntologyIdManager,
+                                                LogicalDefinitionExtractor logicalDefinitionExtractor, NecessaryConditionsExtractor necessaryConditionsExtractor) {
         this.changeRequestId = changeRequestId;
         this.dataFactory = dataFactory;
         this.projectOntologiesIndex = projectOntologiesIndex;
@@ -58,6 +63,8 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         this.changedLogicalConditions = changedLogicalConditions;
         this.subject = subject;
         this.commitMessage = commitMessage;
+        this.logicalDefinitionExtractor = logicalDefinitionExtractor;
+        this.necessaryConditionsExtractor = necessaryConditionsExtractor;
         this.defaultOntologyIdManager = defaultOntologyIdManager;
     }
 
@@ -80,18 +87,10 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
 
         if (!ncDiff.getAddedStatements().isEmpty() || !ncDiff.getRemovedStatements().isEmpty()) {
             final OWLDataFactory df = DataFactory.get();
-            PropertyValue2AxiomTranslator translator = new PropertyValue2AxiomTranslator();
 
             projectOntologiesIndex.getOntologyIds().forEach(ontologyId -> {
-                List<OWLClassExpression> classExpressionList = getOWLClassExpressions(new HashSet<>(pristineLogicalConditions.necessaryConditions()));
-                var intersectionOfRemovedConditions = dataFactory.getOWLObjectIntersectionOf(new HashSet<>(classExpressionList));
-                changeList.add(RemoveAxiomChange.of(ontologyId, df.getOWLSubClassOfAxiom(subject, intersectionOfRemovedConditions)));
-
-                pristineLogicalConditions.necessaryConditions().stream()
-                        .flatMap(pcv -> translator.getAxioms(subject, pcv.toPlainPropertyValue(), Mode.MINIMAL).stream())
-                        .map(ax -> RemoveAxiomChange.of(ontId, ax))
-                        .forEach(changeList::add);
-
+                changeList.addAll(necessaryConditionsExtractor.getNecessaryConditionsAxioms(subject).stream()
+                        .map(axiom -> RemoveAxiomChange.of(ontologyId, axiom)).toList());
             });
 
             List<OWLClassExpression> classExpressionList = getOWLClassExpressions(new HashSet<>(changedLogicalConditions.necessaryConditions()));
@@ -108,22 +107,10 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
         if(!lcDiff.getAddedStatementsMap().isEmpty() || !lcDiff.getRemovedStatementsMap().isEmpty()) {
             final OWLDataFactory df = DataFactory.get();
 
-            for(LogicalDefinition logicalDefinition : pristineLogicalConditions.logicalDefinitions()) {
-                Set<OWLClassExpression> intersectionOperands = new HashSet<>();
+            projectOntologiesIndex.getOntologyIds().forEach(ontologyId -> {
+                changeList.addAll(logicalDefinitionExtractor.extractLogicalDefinitionAxiom(subject).stream().map(axiom -> RemoveAxiomChange.of(ontologyId, axiom)).toList());
+            });
 
-                intersectionOperands.add(logicalDefinition.logicalDefinitionParent().getEntity());
-                intersectionOperands.addAll(getOWLClassExpressions(new HashSet<>(logicalDefinition.axis2filler())));
-                var intersectionOfAddedConditions = dataFactory.getOWLObjectIntersectionOf(intersectionOperands);
-
-                var equivalentClassAxiom =  df.getOWLEquivalentClassesAxiom(subject, intersectionOfAddedConditions);
-                projectOntologiesIndex.getOntologyIds().forEach(ontologyId -> {
-                    changeList.addAll(getLogicalDefinitionAxioms(logicalDefinition.logicalDefinitionParent(), logicalDefinition.axis2filler())
-                            .stream().map(ax -> RemoveAxiomChange.of(ontId, ax)).collect(Collectors.toList()));
-
-                    changeList.add(RemoveAxiomChange.of(ontologyId,equivalentClassAxiom));
-                });
-
-            }
             for(LogicalDefinition logicalDefinition : changedLogicalConditions.logicalDefinitions()) {
                 List<OWLClassExpression> classExpressionList = getOWLClassExpressions(new HashSet<>(logicalDefinition.axis2filler()));
                 if(!classExpressionList.isEmpty()) {
@@ -139,17 +126,6 @@ public class UpdateLogicalDefinitionsChangeListGenerator implements ChangeListGe
             }
         }
 
-    }
-    private List<OWLAxiom> getLogicalDefinitionAxioms(OWLClassData logicalDefinitionParent, List<PropertyClassValue> axis2Filler) {
-
-        List<OWLClassExpression> classExpressionList = getOWLClassExpressions(new HashSet<>(axis2Filler));
-        classExpressionList.add(0, logicalDefinitionParent.getEntity());
-
-        OWLObjectIntersectionOf intersectionOf = dataFactory.getOWLObjectIntersectionOf(classExpressionList.toArray(new OWLClassExpression[0]));
-        List<OWLAxiom> axiomList = new ArrayList<OWLAxiom>();
-        axiomList.add(dataFactory.getOWLEquivalentClassesAxiom(subject, intersectionOf));
-
-        return axiomList;
     }
 
     private List<OWLClassExpression> getOWLClassExpressions(Set<PropertyClassValue> axis2fillers) {

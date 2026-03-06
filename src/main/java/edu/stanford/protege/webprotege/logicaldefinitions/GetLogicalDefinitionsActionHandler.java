@@ -53,6 +53,7 @@ public class GetLogicalDefinitionsActionHandler extends AbstractProjectActionHan
 
         List<LogicalDefinition> logicalDefinitions = logicalDefinitionExtractor.extractLogicalDefinitions(subject);
         List<PropertyClassValue> necessaryConditions = necessaryConditionsExtractor.extractNecessaryConditions(subject);
+
         OWLClassData classData = renderingManager.getClassData(subject);
         List<String> functionalAxioms = new ArrayList<>();
         try {

@@ -1189,8 +1189,10 @@ public class ProjectActionHandlerBeansConfiguration {
                                                                                    HasApplyChanges p2,
                                                                                    UpdateLogicalDefinitionsChangeListGeneratorFactory p3,
                                                                                    EventDispatcher p4,
-                                                                                   DefaultOntologyIdManager p5) {
-        return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3, p4, p5);
+                                                                                   DefaultOntologyIdManager p5,
+                                                                                   LogicalDefinitionExtractor p6,
+                                                                                   NecessaryConditionsExtractor p7) {
+        return new UpdateLogicalDefinitionsActionHandler(p1, p2, p3, p4, p5, p6, p7);
     }
 
     @Bean

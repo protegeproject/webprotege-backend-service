@@ -14,10 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -46,6 +43,13 @@ public class NecessaryConditionsExtractor {
         this.renderingManager = renderingManager;
         this.projectOntologiesIndex = projectOntologiesIndex;
         this.subClassOfAxiomsIndex = subClassOfAxiomsIndex;
+    }
+
+    public List<OWLSubClassOfAxiom> getNecessaryConditionsAxioms(OWLClass subject) {
+        return projectOntologiesIndex.getOntologyIds()
+                .flatMap(owlOntologyID -> subClassOfAxiomsIndex.getSubClassOfAxiomsForSubClass(subject, owlOntologyID))
+                .filter(Objects::nonNull)
+                .filter(owlSubClassOfAxiom -> !(owlSubClassOfAxiom.getSuperClass() instanceof OWLClass)).toList();
     }
 
     public List<PropertyClassValue> extractNecessaryConditions(OWLClass subject) {

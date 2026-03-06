@@ -29,9 +29,11 @@ public class UpdateLogicalDefinitionsChangeListGeneratorFactory {
                                                String commitMessage,
                                                LogicalConditions pristineLogicalConditions,
                                                LogicalConditions changedLogicalConditions,
-                                               DefaultOntologyIdManager defaultOntologyIdManager) {
+                                               DefaultOntologyIdManager defaultOntologyIdManager,
+                                               LogicalDefinitionExtractor logicalDefinitionExtractor,
+                                               NecessaryConditionsExtractor necessaryConditionsExtractor) {
         return  new UpdateLogicalDefinitionsChangeListGenerator(changeRequestId, dataFactory, projectOntologiesIndex,
-               pristineLogicalConditions, changedLogicalConditions, subject, commitMessage, defaultOntologyIdManager);
+               pristineLogicalConditions, changedLogicalConditions, subject, commitMessage, defaultOntologyIdManager, logicalDefinitionExtractor, necessaryConditionsExtractor);
 
     }
 }

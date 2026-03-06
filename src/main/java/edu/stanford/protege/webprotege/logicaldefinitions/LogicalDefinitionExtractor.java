@@ -57,6 +57,17 @@ public class LogicalDefinitionExtractor {
         return getTranslatedLogicalDefinitions(accumulator);
     }
 
+    public List<OWLEquivalentClassesAxiom> extractLogicalDefinitionAxiom(OWLClass subject) {
+        return projectOntologiesIndex.getOntologyIds()
+                .flatMap(owlOntologyID -> equivalentClassesAxiomsIndex.getEquivalentClassesAxioms(subject, owlOntologyID))
+                .filter(equivalentClassesAxiom -> !equivalentClassesAxiom.getClassExpressions().isEmpty() && equivalentClassesAxiom.getClassExpressions()
+                        .stream()
+                        .filter(clsExp -> clsExp instanceof OWLClass && clsExp.isNamed())
+                        .filter(owlClassExpression ->  owlClassExpression instanceof OWLObjectSomeValuesFrom)
+                        .toList().isEmpty())
+                .toList();
+    }
+
     private void  getSupercls2Axis2Filler (@Nonnull OWLEquivalentClassesAxiom owlEquivalentClassesAxiom,
              OWLClass subject,
              Map<OWLClass, Set<Pair<OWLObjectProperty, OWLClass>>> accumulator) {
