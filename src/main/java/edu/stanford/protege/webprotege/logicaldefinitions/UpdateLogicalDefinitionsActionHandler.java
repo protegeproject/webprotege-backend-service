@@ -26,20 +26,26 @@ public class UpdateLogicalDefinitionsActionHandler extends AbstractProjectChange
 
     private final DefaultOntologyIdManager defaultOntologyIdManager;
 
+    private final LogicalDefinitionExtractor logicalDefinitionExtractor;
+
+    private final NecessaryConditionsExtractor necessaryConditionsExtractor;
+
     public UpdateLogicalDefinitionsActionHandler(
             @NotNull AccessManager accessManager,
             @NotNull HasApplyChanges applyChanges,
-            @NotNull UpdateLogicalDefinitionsChangeListGeneratorFactory factory, @Nonnull EventDispatcher eventDispatcher, DefaultOntologyIdManager defaultOntologyIdManager) {
+            @NotNull UpdateLogicalDefinitionsChangeListGeneratorFactory factory, @Nonnull EventDispatcher eventDispatcher, DefaultOntologyIdManager defaultOntologyIdManager, LogicalDefinitionExtractor logicalDefinitionExtractor, NecessaryConditionsExtractor necessaryConditionsExtractor) {
         super(accessManager, applyChanges);
         this.factory = factory;
         this.eventDispatcher = eventDispatcher;
         this.defaultOntologyIdManager = defaultOntologyIdManager;
+        this.logicalDefinitionExtractor = logicalDefinitionExtractor;
+        this.necessaryConditionsExtractor = necessaryConditionsExtractor;
     }
 
     @Override
     protected ChangeListGenerator<Boolean> getChangeListGenerator(UpdateLogicalDefinitionsAction action, ExecutionContext executionContext) {
         return factory.create(action.changeRequestId(), action.projectId(), action.subject(),
-                action.commitMessage(), action.pristineLogicalConditions(), action.changedLogicalConditions(), defaultOntologyIdManager);
+                action.commitMessage(), action.pristineLogicalConditions(), action.changedLogicalConditions(), defaultOntologyIdManager, logicalDefinitionExtractor, necessaryConditionsExtractor);
     }
 
     @Override
