@@ -364,7 +364,6 @@ public class ValidateLogicalDefinitionsFromApiActionHandler_TestCase {
         // Execute
         ValidateLogicalDefinitionsFromApiResult result = handler.execute(action, executionContext);
 
-        // Verify - no error for filler validation (skipped), but superclass validation still runs
         // Verify
         assertThat(result.messages(), hasSize(1));
         assertThat(result.messages(), hasItem(containsString("Axis not available: ")));
@@ -411,8 +410,8 @@ public class ValidateLogicalDefinitionsFromApiActionHandler_TestCase {
         // Execute
         ValidateLogicalDefinitionsFromApiResult result = handler.execute(action, executionContext);
 
-        // Verify - no error for filler validation (skipped), but superclass validation still runs
-        assertThat(result.messages(), is(empty()));
+        assertThat(result.messages(), hasSize(1));
+        assertThat(result.messages(), hasItem(containsString("Root class not found for:")));
     }
 
     @Test
