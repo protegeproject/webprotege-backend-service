@@ -13,6 +13,8 @@ import edu.stanford.protege.webprotege.renderer.RenderingManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -22,6 +24,8 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 public class ValidateLogicalDefinitionsFromApiActionHandler extends AbstractProjectActionHandler<ValidateLogicalDefinitionsFromApiAction, ValidateLogicalDefinitionsFromApiResult> {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ValidateLogicalDefinitionsFromApiActionHandler.class);
 
     private final CommandExecutor<GetPostcoordinationAxisToGenericScaleRequest, GetPostcoordinationAxisToGenericScaleResponse> getPostcoordinationAxisToGenericScaleExecutor;
     private final HierarchyProviderManager hierarchyProviderManager;
@@ -119,6 +123,7 @@ public class ValidateLogicalDefinitionsFromApiActionHandler extends AbstractProj
         
         if (genericPostcoordinationScaleTopClassIri == null) {
             // Axis not found in mapping - skip validation for this axis
+            errorMessages.add("Axis not available: " + axisIri);
             return;
         }
 
@@ -129,6 +134,7 @@ public class ValidateLogicalDefinitionsFromApiActionHandler extends AbstractProj
             Optional<HierarchyProvider<OWLEntity>> hierarchyProviderOpt = hierarchyProviderManager.getHierarchyProvider(hierarchyDescriptor);
             
             if (hierarchyProviderOpt.isEmpty()) {
+                errorMessages.add("Root class not found for: " + genericPostcoordinationScaleTopClassIri);
                 return;
             }
 
@@ -154,8 +160,7 @@ public class ValidateLogicalDefinitionsFromApiActionHandler extends AbstractProj
                 ));
             }
         } catch (Exception e) {
-            // If there's an error creating the hierarchy or checking, skip this validation
-            // but log it (could be improved with proper logging)
+            LOGGER.error("Error validating from api",e);
         }
     }
 }
