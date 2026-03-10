@@ -333,7 +333,7 @@ public class ValidateLogicalDefinitionsFromApiActionHandler_TestCase {
     }
 
     @Test
-    public void should_execute_skipValidation_whenAxisNotInMapping() throws Exception {
+    public void should_execute_giveErrorMessage_whenAxisNotInMapping() throws Exception {
         // Setup - axis not in mapping
         ValidateLogicalDefinitionsFromApiAction action = new ValidateLogicalDefinitionsFromApiAction(
                 projectId,
@@ -364,9 +364,9 @@ public class ValidateLogicalDefinitionsFromApiActionHandler_TestCase {
         // Execute
         ValidateLogicalDefinitionsFromApiResult result = handler.execute(action, executionContext);
 
-        // Verify - no error for filler validation (skipped), but superclass validation still runs
-        assertThat(result.messages(), is(empty()));
-        verify(hierarchyProviderManager, never()).getHierarchyProvider(any());
+        // Verify
+        assertThat(result.messages(), hasSize(1));
+        assertThat(result.messages(), hasItem(containsString("Axis not available: ")));
     }
 
     @Test
@@ -410,8 +410,8 @@ public class ValidateLogicalDefinitionsFromApiActionHandler_TestCase {
         // Execute
         ValidateLogicalDefinitionsFromApiResult result = handler.execute(action, executionContext);
 
-        // Verify - no error for filler validation (skipped), but superclass validation still runs
-        assertThat(result.messages(), is(empty()));
+        assertThat(result.messages(), hasSize(1));
+        assertThat(result.messages(), hasItem(containsString("Root class not found for:")));
     }
 
     @Test
