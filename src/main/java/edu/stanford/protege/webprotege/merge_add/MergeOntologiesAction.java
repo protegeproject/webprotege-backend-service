@@ -14,7 +14,7 @@ import java.util.List;
 
 @AutoValue
 
-@JsonTypeName("MergeOntologies")
+@JsonTypeName("webprotege.ontologies.MergeOntologies")
 public abstract class MergeOntologiesAction implements ProjectAction<MergeOntologiesResult> {
 
     public static final String CHANNEL = "webprotege.ontologies.MergeOntologies";

@@ -8,7 +8,7 @@ import edu.stanford.protege.webprotege.dispatch.Result;
 
 @AutoValue
 
-@JsonTypeName("MergeOntologies")
+@JsonTypeName("webprotege.ontologies.MergeOntologies")
 public abstract class MergeOntologiesResult implements Result {
 
     @JsonCreator

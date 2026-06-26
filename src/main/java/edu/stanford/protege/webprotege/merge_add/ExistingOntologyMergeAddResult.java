@@ -7,7 +7,7 @@ import edu.stanford.protege.webprotege.dispatch.Result;
 
 @AutoValue
 
-@JsonTypeName("ExistingOntologyMergeAdd")
+@JsonTypeName("webprotege.ontologies.ExistingOntologyMergeAdd")
 public class ExistingOntologyMergeAddResult implements Result {
 
     @JsonCreator
