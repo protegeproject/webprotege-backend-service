@@ -13,10 +13,10 @@ import java.util.List;
 
 @AutoValue
 
-@JsonTypeName("ExistingOntologyMergeAdd")
+@JsonTypeName("webprotege.ontologies.ExistingOntologyMergeAdd")
 public abstract class ExistingOntologyMergeAddAction implements ProjectAction<ExistingOntologyMergeAddResult> {
 
-    public static final String CHANNEL = "webprotege.ontologies.MergeExistingOntology";
+    public static final String CHANNEL = "webprotege.ontologies.ExistingOntologyMergeAdd";
 
     @JsonCreator
     public static ExistingOntologyMergeAddAction create(@JsonProperty("projectId") ProjectId projectId,
