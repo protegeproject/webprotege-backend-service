@@ -1,6 +1,6 @@
 package edu.stanford.protege.webprotege.csv;
 
-import edu.stanford.protege.webprotege.PrimitiveType;
+import edu.stanford.protege.webprotege.entity.PrimitiveType;
 import org.semanticweb.owlapi.model.EntityType;
 
 import java.util.ArrayList;
