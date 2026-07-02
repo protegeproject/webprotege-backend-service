@@ -445,6 +445,26 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <!-- The compile phase wipes target/classes before recompiling (a
+                         maven-compiler-plugin behaviour triggered by the annotation
+                         processors Dagger/AutoValue/AutoFactory), which deletes the
+                         resources that the standard process-resources step copied there
+                         (application.properties, builtin-perspective-data/*.json,
+                         logback-spring.xml, built-in-prefixes.csv). They then never make it
+                         into the jar. Re-copy resources after compilation, before packaging. -->
+                    <execution>
+                        <id>copy-resources-after-compile</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
