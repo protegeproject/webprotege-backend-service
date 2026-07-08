@@ -1,5 +1,6 @@
 package edu.stanford.protege.webprotege.projectsettings;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import edu.stanford.protege.webprotege.dispatch.Result;
@@ -29,6 +30,7 @@ public class SetProjectSettingsResult implements Result {
         return new SetProjectSettingsResult(projectSettings);
     }
 
+    @JsonProperty("settings")
     public ProjectSettings getProjectSettings() {
         return projectSettings;
     }
