@@ -36,7 +36,7 @@ public class SetProjectSettingsAction implements ProjectAction<SetProjectSetting
     }
 
     @JsonCreator
-    public static SetProjectSettingsAction create(@JsonProperty("projectSettings") ProjectSettings projectSettings) {
+    public static SetProjectSettingsAction create(@JsonProperty("settings") ProjectSettings projectSettings) {
         return new SetProjectSettingsAction(projectSettings);
     }
 
