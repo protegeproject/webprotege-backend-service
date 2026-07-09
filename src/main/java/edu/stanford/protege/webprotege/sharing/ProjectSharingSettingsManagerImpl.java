@@ -11,6 +11,7 @@ import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import jakarta.inject.Inject;
 import java.util.*;
 
@@ -61,9 +62,21 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
 
 
     @Override
-    public void setProjectSharingSettings(ProjectSharingSettings settings) {
+    public void setProjectSharingSettings(@Nonnull UserId actingUserId, @Nonnull ProjectSharingSettings settings) {
         ProjectId projectId = settings.getProjectId();
         ProjectResource projectResource = new ProjectResource(projectId);
+
+        // Capture the acting user's roles before making any changes. The
+        // person-lookup below is a best-effort, search-based existence
+        // check that can fail even for a real, currently signed-in user
+        // (transient RPC failure, timeout, indexing gaps) - if that
+        // happens for the acting user's own entry, or they are simply not
+        // included in the submitted settings, we still must not leave them
+        // without the access they had a moment ago. Losing your own access
+        // to a project you are actively editing sharing settings for is a
+        // lockout with no way back in short of direct DB intervention.
+        Collection<RoleId> actingUserRolesBeforeChange =
+                accessManager.getAssignedRoles(forUser(actingUserId), projectResource);
 
         // Remove existing assignments
         accessManager.getSubjectsWithAccessToResource(projectResource)
@@ -79,6 +92,7 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
         if(!linkSharingPermission.isPresent()) {
             accessManager.setAssignedRoles(forAnySignedInUser(), projectResource, emptySet());
         }
+        boolean actingUserRoleWasSet = false;
         for (SharingSetting setting : map.values()) {
             PersonId personId = setting.getPersonId();
             Optional<UserId> userId = userLookup.getUserByUserIdOrEmail(personId.getId());
@@ -87,12 +101,27 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
                 accessManager.setAssignedRoles(forUser(userId.get()),
                                                projectResource,
                                                roles);
+                if (userId.get().equals(actingUserId)) {
+                    actingUserRoleWasSet = true;
+                }
             }
             else {
-                logger.info("User in sharing setting not found.  An email invitation needs to be sent");
+                logger.warn("Could not resolve the user for a project sharing setting (person id '{}', " +
+                            "project {}) - their access was not updated.  An email invitation needs to " +
+                            "be sent.", personId.getId(), projectId);
                 // TODO
                 // We need to send the user an email invitation
             }
+        }
+
+        // Safety net: never let this call remove the acting user's own
+        // access. If their entry did not resolve above, or they were not
+        // part of the submitted settings at all, restore whatever access
+        // they had immediately before this call.
+        if (!actingUserRoleWasSet && !actingUserRolesBeforeChange.isEmpty()) {
+            logger.warn("Restoring user {}'s pre-existing access to project {} because the submitted " +
+                        "sharing settings would otherwise have removed it.", actingUserId, projectId);
+            accessManager.setAssignedRoles(forUser(actingUserId), projectResource, new HashSet<>(actingUserRolesBeforeChange));
         }
     }
 }
