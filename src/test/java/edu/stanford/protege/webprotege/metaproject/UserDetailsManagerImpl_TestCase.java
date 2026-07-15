@@ -14,10 +14,17 @@ import org.mockito.quality.Strictness;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -74,5 +81,57 @@ public void shouldThrowNullPointerExceptionIf_Repository_IsNull() {
     public void shouldGetUserIdByEmail() {
         EmailAddress emailAddress = new EmailAddress(email);
         assertThat(userDetailsManagerImpl.getUserIdByEmailAddress(emailAddress), is(java.util.Optional.of(userId)));
+    }
+
+    @Test
+    public void shouldReturnEmptyWhenUserIsConfirmedAbsent() throws Exception {
+        UsersQueryResponse response = new UsersQueryResponse(new ArrayList<>());
+        CompletableFuture<UsersQueryResponse> future = mock(CompletableFuture.class);
+        when(future.get(3, TimeUnit.SECONDS)).thenReturn(response);
+        when(getUsersExecutor.execute(any(), any())).thenReturn(future);
+
+        assertThat(userDetailsManagerImpl.getUserByUserIdOrEmail("unknown-user"), is(Optional.empty()));
+    }
+
+    @Test
+    public void shouldReturnUserIdWhenSingleMatchIsFound() throws Exception {
+        UsersQueryResponse response = new UsersQueryResponse(List.of(userId));
+        CompletableFuture<UsersQueryResponse> future = mock(CompletableFuture.class);
+        when(future.get(3, TimeUnit.SECONDS)).thenReturn(response);
+        when(getUsersExecutor.execute(any(), any())).thenReturn(future);
+
+        assertThat(userDetailsManagerImpl.getUserByUserIdOrEmail(userId.id()), is(Optional.of(userId)));
+    }
+
+    @Test
+    public void shouldThrowRuntimeExceptionWhenDuplicateMatchIsFound() throws Exception {
+        UserId otherUserId = edu.stanford.protege.webprotege.MockingUtils.mockUserId();
+        UsersQueryResponse response = new UsersQueryResponse(List.of(userId, otherUserId));
+        CompletableFuture<UsersQueryResponse> future = mock(CompletableFuture.class);
+        when(future.get(3, TimeUnit.SECONDS)).thenReturn(response);
+        when(getUsersExecutor.execute(any(), any())).thenReturn(future);
+
+        assertThrows(RuntimeException.class,
+                      () -> userDetailsManagerImpl.getUserByUserIdOrEmail(userId.id()));
+    }
+
+    @Test
+    public void shouldThrowUserLookupExceptionOnTimeout() throws Exception {
+        CompletableFuture<UsersQueryResponse> future = mock(CompletableFuture.class);
+        when(future.get(3, TimeUnit.SECONDS)).thenThrow(new TimeoutException("Timed out"));
+        when(getUsersExecutor.execute(any(), any())).thenReturn(future);
+
+        assertThrows(UserLookupException.class,
+                      () -> userDetailsManagerImpl.getUserByUserIdOrEmail(userId.id()));
+    }
+
+    @Test
+    public void shouldThrowUserLookupExceptionOnRpcOrMessagingFailure() throws Exception {
+        CompletableFuture<UsersQueryResponse> future = mock(CompletableFuture.class);
+        when(future.get(3, TimeUnit.SECONDS)).thenThrow(new ExecutionException(new RuntimeException("RPC failure")));
+        when(getUsersExecutor.execute(any(), any())).thenReturn(future);
+
+        assertThrows(UserLookupException.class,
+                      () -> userDetailsManagerImpl.getUserByUserIdOrEmail(userId.id()));
     }
 }

@@ -38,8 +38,13 @@ public interface UserDetailsManager {
     /**
      * Gets a User by its user id or it's email address.
      * @param userNameOrEmail The user id or email address as a string.  Not {@code null}.
-     * @return The User.  An absent value will be returned if there is not such user with the specified id or email
-     * address. Not {@code null}.
+     * @return The User.  An absent value will be returned only if the lookup completed successfully
+     * and confirmed that there is no such user with the specified id or email address - it never
+     * means "the lookup could not be checked". Not {@code null}.
+     * @throws UserLookupException if the lookup could not be completed, for example due to a timeout
+     * or an RPC/messaging failure communicating with the remote user-query service.
+     * @throws RuntimeException if the specified id or email address matches more than one user - this
+     * indicates a data-integrity problem rather than an infrastructure failure or a confirmed absence.
      */
     Optional<UserId> getUserByUserIdOrEmail(String userNameOrEmail);
 
