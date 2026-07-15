@@ -15,6 +15,15 @@ import static edu.stanford.protege.webprotege.access.BuiltInRole.*;
  */
 public class Roles {
 
+    /**
+     * The four {@link RoleId}s that represent a sharing permission (i.e. the ones that
+     * {@link #toSharingPermission(Collection)} and {@link #fromSharingPermission(SharingPermission)}
+     * translate to and from a {@link SharingPermission}). Used to compute the subset of a subject's
+     * roles that should be preserved (as opposed to replaced) when their sharing permission changes.
+     */
+    public static final ImmutableSet<RoleId> SHARING_ROLE_IDS = ImmutableSet.of(
+            CAN_VIEW.getRoleId(), CAN_COMMENT.getRoleId(), CAN_EDIT.getRoleId(), CAN_MANAGE.getRoleId());
+
     public  static Optional<SharingPermission> toSharingPermission(Collection<RoleId> roles) {
         if(roles.contains(CAN_MANAGE.getRoleId())) {
             return Optional.of(SharingPermission.MANAGE);
