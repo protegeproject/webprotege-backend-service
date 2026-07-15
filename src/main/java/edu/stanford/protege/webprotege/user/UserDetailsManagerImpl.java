@@ -118,10 +118,10 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
                                         .completions();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            logger.error("Error fetching for userID ", e);
+            logger.error("Error fetching for userID {}", userNameOrEmail, e);
             throw new UserLookupException("Error fetching for userID " + userNameOrEmail, e);
         } catch (Exception e) {
-            logger.error("Error fetching for userID ", e);
+            logger.error("Error fetching for userID {}", userNameOrEmail, e);
             throw new UserLookupException("Error fetching for userID " + userNameOrEmail, e);
         }
         if (response == null || response.isEmpty()) {
