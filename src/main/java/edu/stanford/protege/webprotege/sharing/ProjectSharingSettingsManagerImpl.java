@@ -93,9 +93,25 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
             accessManager.setAssignedRoles(forAnySignedInUser(), projectResource, emptySet());
         }
         boolean actingUserRoleWasSet = false;
+        RuntimeException lookupFailure = null;
         for (SharingSetting setting : map.values()) {
             PersonId personId = setting.getPersonId();
-            Optional<UserId> userId = userLookup.getUserByUserIdOrEmail(personId.getId());
+            Optional<UserId> userId;
+            try {
+                userId = userLookup.getUserByUserIdOrEmail(personId.getId());
+            } catch (RuntimeException e) {
+                // The full stack trace for this exception was already logged inside the lookup
+                // itself (or, for a duplicate-match, is self-explanatory) - avoid dumping it again here.
+                logger.error("Could not look up the user for a project sharing setting (person id '{}', " +
+                             "project {}) - their access was not updated: {}",
+                             personId.getId(), projectId, e.toString());
+                if (lookupFailure == null) {
+                    lookupFailure = e;
+                } else {
+                    lookupFailure.addSuppressed(e);
+                }
+                continue;
+            }
             if (userId.isPresent()) {
                 ImmutableSet<RoleId> roles = Roles.fromSharingPermission(setting.getSharingPermission());
                 accessManager.setAssignedRoles(forUser(userId.get()),
@@ -121,7 +137,18 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
         if (!actingUserRoleWasSet && !actingUserRolesBeforeChange.isEmpty()) {
             logger.warn("Restoring user {}'s pre-existing access to project {} because the submitted " +
                         "sharing settings would otherwise have removed it.", actingUserId, projectId);
-            accessManager.setAssignedRoles(forUser(actingUserId), projectResource, new HashSet<>(actingUserRolesBeforeChange));
+            try {
+                accessManager.setAssignedRoles(forUser(actingUserId), projectResource, new HashSet<>(actingUserRolesBeforeChange));
+            } catch (RuntimeException e) {
+                if (lookupFailure != null) {
+                    e.addSuppressed(lookupFailure);
+                }
+                throw e;
+            }
+        }
+
+        if (lookupFailure != null) {
+            throw lookupFailure;
         }
     }
 }

@@ -111,19 +111,26 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
 
     @Override
     public Optional<UserId> getUserByUserIdOrEmail(String userNameOrEmail) {
-        try{
-            List<UserId> response =  getUsersExecutor.execute(new UsersQueryRequest(userNameOrEmail), new ExecutionContext()).get(3, TimeUnit.SECONDS).completions();
-            if(response == null || response.isEmpty()) {
-                return Optional.empty();
-            }
-            if(response.size() > 1) {
-                logger.error("Duplicated user with username {}", userNameOrEmail);
-                throw new RuntimeException("Duplicated user with username " + userNameOrEmail);
-            }
-            return Optional.of(UserId.valueOf(response.get(0).id()));
+        List<UserId> response;
+        try {
+            response = getUsersExecutor.execute(new UsersQueryRequest(userNameOrEmail), new ExecutionContext())
+                                        .get(3, TimeUnit.SECONDS)
+                                        .completions();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error("Error fetching for userID {}", userNameOrEmail, e);
+            throw new UserLookupException("Error fetching for userID " + userNameOrEmail, e);
         } catch (Exception e) {
-            logger.error("Error fetching for userID ", e);
+            logger.error("Error fetching for userID {}", userNameOrEmail, e);
+            throw new UserLookupException("Error fetching for userID " + userNameOrEmail, e);
+        }
+        if (response == null || response.isEmpty()) {
             return Optional.empty();
         }
+        if (response.size() > 1) {
+            logger.error("Duplicated user with username {}", userNameOrEmail);
+            throw new RuntimeException("Duplicated user with username " + userNameOrEmail);
+        }
+        return Optional.of(UserId.valueOf(response.get(0).id()));
     }
 }
