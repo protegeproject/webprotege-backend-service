@@ -1,6 +1,5 @@
 package edu.stanford.protege.webprotege.sharing;
 
-import com.google.common.collect.ImmutableSet;
 import edu.stanford.protege.webprotege.access.AccessManager;
 import edu.stanford.protege.webprotege.authorization.ProjectResource;
 import edu.stanford.protege.webprotege.authorization.RoleId;
@@ -66,33 +65,16 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
         ProjectId projectId = settings.getProjectId();
         ProjectResource projectResource = new ProjectResource(projectId);
 
-        // Capture the acting user's roles before making any changes. The
-        // person-lookup below is a best-effort, search-based existence
-        // check that can fail even for a real, currently signed-in user
-        // (transient RPC failure, timeout, indexing gaps) - if that
-        // happens for the acting user's own entry, or they are simply not
-        // included in the submitted settings, we still must not leave them
-        // without the access they had a moment ago. Losing your own access
-        // to a project you are actively editing sharing settings for is a
-        // lockout with no way back in short of direct DB intervention.
-        Collection<RoleId> actingUserRolesBeforeChange =
-                accessManager.getAssignedRoles(forUser(actingUserId), projectResource);
-
-        // Remove existing assignments
-        accessManager.getSubjectsWithAccessToResource(projectResource)
-                .forEach(subject -> accessManager.setAssignedRoles(subject, projectResource, Collections.emptySet()));
-
         Map<PersonId, SharingSetting> map = settings.getSharingSettings().stream()
                                                     .collect(toMap(SharingSetting::getPersonId, s -> s, (s1, s2) -> s1));
-        Optional<SharingPermission> linkSharingPermission = settings.getLinkSharingPermission();
-        linkSharingPermission.ifPresent(permission -> {
-            Collection<RoleId> roleId = Roles.fromSharingPermission(permission);
-            accessManager.setAssignedRoles(forAnySignedInUser(), projectResource, roleId);
-        });
-        if(!linkSharingPermission.isPresent()) {
-            accessManager.setAssignedRoles(forAnySignedInUser(), projectResource, emptySet());
-        }
-        boolean actingUserRoleWasSet = false;
+
+        // Phase 1: resolve every submitted entry to a UserId first. A lookup failure (an infra
+        // error, or the duplicate-match RuntimeException) for one entry must never affect any
+        // other person's access - keep processing the rest, remember the first failure (with
+        // later ones suppressed onto it), and rethrow it at the end. A confirmed-absent
+        // (Optional.empty()) result is not a failure: it carries no identity ambiguity, so it must
+        // not gate the removal step below.
+        Map<UserId, SharingPermission> desiredByUser = new HashMap<>();
         RuntimeException lookupFailure = null;
         for (SharingSetting setting : map.values()) {
             PersonId personId = setting.getPersonId();
@@ -113,12 +95,14 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
                 continue;
             }
             if (userId.isPresent()) {
-                ImmutableSet<RoleId> roles = Roles.fromSharingPermission(setting.getSharingPermission());
-                accessManager.setAssignedRoles(forUser(userId.get()),
-                                               projectResource,
-                                               roles);
-                if (userId.get().equals(actingUserId)) {
-                    actingUserRoleWasSet = true;
+                if (userId.get().isGuest()) {
+                    logger.warn("Resolved user for a project sharing setting (person id '{}', project {}) is " +
+                                "the guest user - ignoring, the guest user is never an individual collaborator.",
+                                personId.getId(), projectId);
+                }
+                else if (desiredByUser.put(userId.get(), setting.getSharingPermission()) != null) {
+                    logger.warn("More than one submitted sharing setting resolved to the same user ({}) for " +
+                                "project {} - only the last one processed will be applied.", userId.get(), projectId);
                 }
             }
             else {
@@ -130,25 +114,85 @@ public class ProjectSharingSettingsManagerImpl implements ProjectSharingSettings
             }
         }
 
-        // Safety net: never let this call remove the acting user's own
-        // access. If their entry did not resolve above, or they were not
-        // part of the submitted settings at all, restore whatever access
-        // they had immediately before this call.
-        if (!actingUserRoleWasSet && !actingUserRolesBeforeChange.isEmpty()) {
-            logger.warn("Restoring user {}'s pre-existing access to project {} because the submitted " +
-                        "sharing settings would otherwise have removed it.", actingUserId, projectId);
-            try {
-                accessManager.setAssignedRoles(forUser(actingUserId), projectResource, new HashSet<>(actingUserRolesBeforeChange));
-            } catch (RuntimeException e) {
-                if (lookupFailure != null) {
-                    e.addSuppressed(lookupFailure);
-                }
-                throw e;
+        // Phases 2-5 are wrapped so that if any of them throws (e.g. an AccessManager RPC failure
+        // unrelated to a lookup), an already-recorded lookupFailure is not silently lost - it is
+        // attached to the new exception as a suppressed cause, matching how the old #176 safety net
+        // protected its own write in the same way.
+        try {
+            // Phase 2: load each current collaborator's raw role set (never on raw PersonId - the
+            // same person can appear as textually different PersonId values across current vs.
+            // submitted state). This both drives the diff below and lets us preserve each subject's
+            // non-sharing roles across updates and removals.
+            Map<UserId, Collection<RoleId>> currentByUser = new HashMap<>();
+            accessManager.getSubjectsWithAccessToResource(projectResource).stream()
+                         .filter(subject -> !subject.isGuest())
+                         .filter(subject -> subject.getUserId().isPresent())
+                         .forEach(subject -> currentByUser.put(subject.getUserId().get(),
+                                                                accessManager.getAssignedRoles(subject, projectResource)));
+
+            // Phase 3: link sharing - only touch it if the submitted permission actually differs
+            // from the current one, preserving any non-sharing roles forAnySignedInUser() holds
+            // (e.g. the default LAYOUT_EDITOR grant), exactly like every other subject below.
+            Collection<RoleId> currentLinkSharingRoles = accessManager.getAssignedRoles(forAnySignedInUser(), projectResource);
+            Optional<SharingPermission> currentLinkSharingPermission = Roles.toSharingPermission(currentLinkSharingRoles);
+            Optional<SharingPermission> desiredLinkSharingPermission = settings.getLinkSharingPermission();
+            if (!currentLinkSharingPermission.equals(desiredLinkSharingPermission)) {
+                Set<RoleId> newLinkSharingRoles = nonSharingSubset(currentLinkSharingRoles);
+                desiredLinkSharingPermission.ifPresent(
+                        permission -> newLinkSharingRoles.addAll(Roles.fromSharingPermission(permission)));
+                accessManager.setAssignedRoles(forAnySignedInUser(), projectResource, newLinkSharingRoles);
             }
+
+            // Phase 4: additions/updates. Skip the call entirely for anything that would not
+            // actually change; otherwise preserve the subject's non-sharing roles alongside the new
+            // sharing role.
+            desiredByUser.forEach((userId, desiredPermission) -> {
+                Collection<RoleId> currentRoles = currentByUser.getOrDefault(userId, emptySet());
+                if (Roles.toSharingPermission(currentRoles).equals(Optional.of(desiredPermission))) {
+                    return;
+                }
+                Set<RoleId> newRoles = nonSharingSubset(currentRoles);
+                newRoles.addAll(Roles.fromSharingPermission(desiredPermission));
+                accessManager.setAssignedRoles(forUser(userId), projectResource, newRoles);
+            });
+
+            // Phase 5: removals - only when every entry resolved without a lookup failure this
+            // call. A failure anywhere in the batch structurally cannot be mapped to a specific
+            // person, so it must not be allowed to imply anyone's removal. The acting user is never
+            // a removal candidate, unconditionally - this is what makes the old #176 restore-net
+            // unnecessary: the acting user can now only ever be updated (their own entry resolving)
+            // or left completely untouched (never a removal candidate).
+            if (lookupFailure == null) {
+                currentByUser.forEach((userId, currentRoles) -> {
+                    if (userId.equals(actingUserId) || desiredByUser.containsKey(userId)) {
+                        return;
+                    }
+                    if (Roles.toSharingPermission(currentRoles).isPresent()) {
+                        accessManager.setAssignedRoles(forUser(userId), projectResource, nonSharingSubset(currentRoles));
+                    }
+                });
+            }
+        }
+        catch (RuntimeException e) {
+            if (lookupFailure != null) {
+                e.addSuppressed(lookupFailure);
+            }
+            throw e;
         }
 
         if (lookupFailure != null) {
             throw lookupFailure;
         }
+    }
+
+    /**
+     * @return a mutable copy of {@code roles} with the sharing-related roles
+     * ({@link Roles#SHARING_ROLE_IDS}) removed, i.e. the roles that should be preserved when a
+     * subject's sharing permission is updated or removed.
+     */
+    private static Set<RoleId> nonSharingSubset(Collection<RoleId> roles) {
+        Set<RoleId> subset = new HashSet<>(roles);
+        subset.removeAll(Roles.SHARING_ROLE_IDS);
+        return subset;
     }
 }
