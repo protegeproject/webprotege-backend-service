@@ -34,7 +34,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     @Override
     public List<UserId> getUserIdsContainingIgnoreCase(String userName, int limit) {
         try {
-            return getUsersExecutor.execute(new UsersQueryRequest(userName), new ExecutionContext()).get().completions();
+            return getUsersExecutor.execute(new UsersQueryRequest(userName, false), new ExecutionContext()).get().completions();
         } catch (Exception e) {
             logger.error("Error calling get users",e);
             return new ArrayList<>();
@@ -113,7 +113,7 @@ public class UserDetailsManagerImpl implements UserDetailsManager {
     public Optional<UserId> getUserByUserIdOrEmail(String userNameOrEmail) {
         List<UserId> response;
         try {
-            response = getUsersExecutor.execute(new UsersQueryRequest(userNameOrEmail), new ExecutionContext())
+            response = getUsersExecutor.execute(new UsersQueryRequest(userNameOrEmail, true), new ExecutionContext())
                                         .get(3, TimeUnit.SECONDS)
                                         .completions();
         } catch (InterruptedException e) {
