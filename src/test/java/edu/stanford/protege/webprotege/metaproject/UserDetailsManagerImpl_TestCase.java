@@ -25,6 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -133,5 +134,35 @@ public void shouldThrowNullPointerExceptionIf_Repository_IsNull() {
 
         assertThrows(UserLookupException.class,
                       () -> userDetailsManagerImpl.getUserByUserIdOrEmail(userId.id()));
+    }
+
+    @Test
+    public void shouldSendAnExactMatchQueryCarryingTheTermWhenResolvingAUser() throws Exception {
+        UsersQueryResponse response = new UsersQueryResponse(List.of(userId));
+        CompletableFuture<UsersQueryResponse> future = mock(CompletableFuture.class);
+        when(future.get(3, TimeUnit.SECONDS)).thenReturn(response);
+        when(getUsersExecutor.execute(any(), any())).thenReturn(future);
+
+        userDetailsManagerImpl.getUserByUserIdOrEmail(userId.id());
+
+        var requestCaptor = org.mockito.ArgumentCaptor.forClass(UsersQueryRequest.class);
+        verify(getUsersExecutor).execute(requestCaptor.capture(), any());
+        assertThat(requestCaptor.getValue().completionText(), is(userId.id()));
+        assertThat(requestCaptor.getValue().exactMatch(), is(true));
+    }
+
+    @Test
+    public void shouldSendASubstringQueryWhenSearchingForCompletions() throws Exception {
+        UsersQueryResponse response = new UsersQueryResponse(List.of(userId));
+        CompletableFuture<UsersQueryResponse> future = mock(CompletableFuture.class);
+        when(future.get()).thenReturn(response);
+        when(getUsersExecutor.execute(any(), any())).thenReturn(future);
+
+        userDetailsManagerImpl.getUserIdsContainingIgnoreCase("abc", 10);
+
+        var requestCaptor = org.mockito.ArgumentCaptor.forClass(UsersQueryRequest.class);
+        verify(getUsersExecutor).execute(requestCaptor.capture(), any());
+        assertThat(requestCaptor.getValue().completionText(), is("abc"));
+        assertThat(requestCaptor.getValue().exactMatch(), is(false));
     }
 }
