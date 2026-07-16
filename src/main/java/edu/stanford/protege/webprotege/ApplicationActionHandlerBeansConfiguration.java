@@ -17,6 +17,7 @@ import edu.stanford.protege.webprotege.permissions.RebuildPermissionsActionHandl
 import edu.stanford.protege.webprotege.perspective.GetPerspectivesActionHandler;
 import edu.stanford.protege.webprotege.perspective.PerspectivesManager;
 import edu.stanford.protege.webprotege.project.*;
+import edu.stanford.protege.webprotege.sharing.PendingSharingInvitationRedeemer;
 import edu.stanford.protege.webprotege.user.UserActivityManager;
 import edu.stanford.protege.webprotege.user.UserDetailsManager;
 import org.springframework.context.annotation.Bean;
@@ -107,7 +108,8 @@ public class ApplicationActionHandlerBeansConfiguration {
 
     @Bean
     GetAuthenticatedUserDetailsActionHandler getAuthenticatedUserDetailsActionHandler(AccessManager p1,
-                                                                                      UserDetailsManager p2) {
-        return new GetAuthenticatedUserDetailsActionHandler(p1, p2);
+                                                                                      UserDetailsManager p2,
+                                                                                      PendingSharingInvitationRedeemer p3) {
+        return new GetAuthenticatedUserDetailsActionHandler(p1, p2, p3);
     }
 }

@@ -36,6 +36,7 @@ import edu.stanford.protege.webprotege.lang.DefaultDisplayNameSettingsFactory;
 import edu.stanford.protege.webprotege.locking.*;
 import edu.stanford.protege.webprotege.mail.MessageIdGenerator;
 import edu.stanford.protege.webprotege.mail.MessagingExceptionHandlerImpl;
+import edu.stanford.protege.webprotege.mail.SendMail;
 import edu.stanford.protege.webprotege.mail.SendMailImpl;
 import edu.stanford.protege.webprotege.mansyntax.render.DefaultHttpLinkRenderer;
 import edu.stanford.protege.webprotege.mansyntax.render.HttpLinkRenderer;
@@ -52,7 +53,7 @@ import edu.stanford.protege.webprotege.perspective.*;
 import edu.stanford.protege.webprotege.project.*;
 import edu.stanford.protege.webprotege.revision.*;
 import edu.stanford.protege.webprotege.search.EntitySearchFilterRepositoryImpl;
-import edu.stanford.protege.webprotege.sharing.ProjectSharingSettingsManagerImpl;
+import edu.stanford.protege.webprotege.sharing.*;
 import edu.stanford.protege.webprotege.storage.MinioProperties;
 import edu.stanford.protege.webprotege.tag.EntityTagsRepositoryImpl;
 import edu.stanford.protege.webprotege.tag.TagRepositoryImpl;
@@ -545,8 +546,47 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    ProjectSharingSettingsManagerImpl projectSharingSettingsManager(AccessManager p1, UserDetailsManager p2) {
-        return new ProjectSharingSettingsManagerImpl(p1, p2);
+    ProjectSharingSettingsManagerImpl projectSharingSettingsManager(AccessManager p1,
+                                                                    UserDetailsManager p2,
+                                                                    PendingSharingInvitationRepository p3,
+                                                                    SharingInvitationEmailer p4) {
+        return new ProjectSharingSettingsManagerImpl(p1, p2, p3, p4);
+    }
+
+    @Bean
+    PendingSharingInvitationRepository pendingSharingInvitationRepository(MongoTemplate p1, ObjectMapper p2) {
+        var repository = new PendingSharingInvitationRepositoryImpl(p1, p2);
+        repository.ensureIndexes();
+        return repository;
+    }
+
+    @Bean
+    @SharingInvitationEmailTemplate
+    OverridableFile provideSharingInvitationEmailTemplateFile(OverridableFileFactory factory) {
+        return factory.getOverridableFile("templates/sharing-invitation-email-template.html");
+    }
+
+    @Bean
+    @SharingInvitationEmailTemplate
+    FileContents provideSharingInvitationEmailTemplate(@SharingInvitationEmailTemplate OverridableFile file) {
+        return new FileContents(file);
+    }
+
+    @Bean
+    SharingInvitationEmailer sharingInvitationEmailer(ProjectDetailsRepository p1,
+                                                      UserDetailsManager p2,
+                                                      @SharingInvitationEmailTemplate FileContents p3,
+                                                      TemplateEngine p4,
+                                                      PlaceUrl p5,
+                                                      SendMail p6) {
+        return new SharingInvitationEmailer(p1, p2, p3, p4, p5, p6);
+    }
+
+    @Bean
+    PendingSharingInvitationRedeemer pendingSharingInvitationRedeemer(PendingSharingInvitationRepository p1,
+                                                                      AccessManager p2,
+                                                                      ObjectMapper p3) {
+        return new PendingSharingInvitationRedeemer(p1, p2, p3);
     }
 
 

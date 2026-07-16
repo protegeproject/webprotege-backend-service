@@ -1,0 +1,33 @@
+<html>
+<head>
+    <style>
+        .main {
+            font-family: Helvetica, Arial, sans-serif;
+        }
+        .inviter {
+            font-weight: bold;
+        }
+        .projectName {
+            font-weight: bold;
+        }
+        .footer {
+            padding-top: 20px;
+            font-size: 10px;
+            color: #707070;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div>
+        <span class="inviter">{{inviter}}</span> has invited you to collaborate on the project <span class="projectName">{{project.displayName}}</span> in WebProtege.
+    </div>
+    <div>
+        Sign in to <a href="{{{application.url}}}">WebProtege</a> with this email address to accept the invitation and start collaborating.
+    </div>
+    <div class="footer">
+        You received this email because someone invited you to a project on <a href="{{{application.url}}}">WebProtege</a>.
+    </div>
+</div>
+</body></html>
