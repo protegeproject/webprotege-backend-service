@@ -351,7 +351,15 @@ public class ApplicationBeansConfiguration {
     @Bean
     @MailProperties
     Properties getMailProperties() {
-        return new Properties();
+        // SendMailImpl reads its JavaMail settings (mail.smtp.host, mail.smtp.port,
+        // mail.smtp.auth, ...) exclusively from this bean, so they must be seeded from
+        // deployment configuration here.  System properties let containers supply them
+        // via -D flags (e.g. JDK_JAVA_OPTIONS) without baking SMTP details into the image.
+        var mailProperties = new Properties();
+        System.getProperties().stringPropertyNames().stream()
+              .filter(name -> name.startsWith("mail."))
+              .forEach(name -> mailProperties.setProperty(name, System.getProperty(name)));
+        return mailProperties;
     }
 
     @Bean
