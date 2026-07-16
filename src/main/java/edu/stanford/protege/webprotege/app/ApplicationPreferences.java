@@ -23,8 +23,11 @@ public class ApplicationPreferences {
 
     public static final String ID = "Preferences";
 
+    // Not final: Spring Data populates this field reflectively when reading the document
+    // back, and it refuses to write to a final field - a final id makes every read of a
+    // stored document fail with "Cannot set property id".
     @SuppressWarnings("unused")
-    private final String id = ID;
+    private String id = ID;
 
     private final String applicationName;
 

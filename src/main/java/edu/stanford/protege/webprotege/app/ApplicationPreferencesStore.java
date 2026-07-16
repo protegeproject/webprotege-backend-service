@@ -58,8 +58,10 @@ public class ApplicationPreferencesStore implements Repository {
             var applicationPreferences = mongoTemplate.findOne(new Query(), ApplicationPreferences.class);
             if (applicationPreferences == null) {
                 var newApplicationPreferences = DefaultApplicationPreferences.get();
-                mongoTemplate.upsert(queryById(),
-                                     new Update(), ApplicationPreferences.class);
+                // Persist the complete defaults document.  An empty upsert here would plant a
+                // bare {_id: "Preferences"} skeleton that is unreadable once the in-memory
+                // cache is gone, poisoning every read after the next restart.
+                mongoTemplate.save(newApplicationPreferences);
                 cachedPreferences = newApplicationPreferences;
             }
             else {

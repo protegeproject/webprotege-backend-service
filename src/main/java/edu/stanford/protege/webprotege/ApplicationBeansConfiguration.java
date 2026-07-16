@@ -142,11 +142,6 @@ public class ApplicationBeansConfiguration {
     }
 
     @Bean
-    public DefaultMustacheFactory providesMustacheFactory() {
-        return new DefaultMustacheFactory();
-    }
-
-    @Bean
     DataDirectoryProvider getDataDirectoryProvider() {
         return new DataDirectoryProvider();
     }
