@@ -12,12 +12,15 @@ import edu.stanford.protege.webprotege.user.UserLookupException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +31,14 @@ import static edu.stanford.protege.webprotege.access.BuiltInRole.CAN_VIEW;
 import static edu.stanford.protege.webprotege.authorization.Subject.forAnySignedInUser;
 import static edu.stanford.protege.webprotege.authorization.Subject.forUser;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
@@ -62,6 +69,12 @@ public class ProjectSharingSettingsManagerImpl_TestCase {
     @Mock
     private UserDetailsManager userLookup;
 
+    @Mock
+    private PendingSharingInvitationRepository pendingInvitationRepository;
+
+    @Mock
+    private SharingInvitationEmailer invitationEmailer;
+
     private ProjectSharingSettingsManagerImpl manager;
 
     private final ProjectId projectId = MockingUtils.mockProjectId();
@@ -78,7 +91,10 @@ public class ProjectSharingSettingsManagerImpl_TestCase {
 
     @BeforeEach
     public void setUp() {
-        manager = new ProjectSharingSettingsManagerImpl(accessManager, userLookup);
+        manager = new ProjectSharingSettingsManagerImpl(accessManager,
+                                                        userLookup,
+                                                        pendingInvitationRepository,
+                                                        invitationEmailer);
     }
 
     /**
@@ -538,5 +554,301 @@ public class ProjectSharingSettingsManagerImpl_TestCase {
         assertThat(thrown, is(accessManagerFailure));
         assertThat(thrown.getSuppressed().length, is(1));
         assertThat(thrown.getSuppressed()[0], is(lookupException));
+    }
+
+    // ----------------------------------------------------------------------------------------
+    // Pending invitations for confirmed-absent people (GH #177).
+    // ----------------------------------------------------------------------------------------
+
+    @Test
+    public void shouldUpsertInvitationAndEmailWhenUnknownEmailIsShared() {
+        PersonId emailPerson = PersonId.get("new@x.org");
+        when(userLookup.getUserByUserIdOrEmail("new@x.org")).thenReturn(Optional.empty());
+        when(pendingInvitationRepository.upsert(any())).thenReturn(true);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(emailPerson, SharingPermission.EDIT)));
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        ArgumentCaptor<PendingSharingInvitation> captor = ArgumentCaptor.forClass(PendingSharingInvitation.class);
+        verify(pendingInvitationRepository).upsert(captor.capture());
+        PendingSharingInvitation invitation = captor.getValue();
+        assertThat(invitation.projectId(), is(projectId));
+        assertThat(invitation.personId(), is("new@x.org"));
+        assertThat(invitation.personKey(), is("new@x.org"));
+        assertThat(invitation.sharingPermission(), is(SharingPermission.EDIT));
+        assertThat(invitation.invitedBy(), is(actingUserId));
+
+        verify(invitationEmailer).sendInvitationEmail(projectId, "new@x.org", actingUserId);
+    }
+
+    @Test
+    public void shouldStoreInvitationButNotEmailWhenUnknownUsernameIsShared() {
+        PersonId usernamePerson = PersonId.get("jdoe");
+        when(userLookup.getUserByUserIdOrEmail("jdoe")).thenReturn(Optional.empty());
+        when(pendingInvitationRepository.upsert(any())).thenReturn(true);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(usernamePerson, SharingPermission.VIEW)));
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        verify(pendingInvitationRepository).upsert(any());
+        // The typed id does not look like an email address, so no invitation email is sent.
+        verify(invitationEmailer, never()).sendInvitationEmail(any(), any(), any());
+    }
+
+    @Test
+    public void shouldNotEmailAgainWhenReSavingAnAlreadyStoredInvitation() {
+        PersonId emailPerson = PersonId.get("new@x.org");
+        when(userLookup.getUserByUserIdOrEmail("new@x.org")).thenReturn(Optional.empty());
+        // The upsert reports that it replaced an existing invitation rather than inserting a new one.
+        when(pendingInvitationRepository.upsert(any())).thenReturn(false);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(emailPerson, SharingPermission.EDIT)));
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        verify(pendingInvitationRepository).upsert(any());
+        verify(invitationEmailer, never()).sendInvitationEmail(any(), any(), any());
+    }
+
+    @Test
+    public void shouldReconcileKeepingOnlyConfirmedAbsentKeys() {
+        PersonId emailPerson = PersonId.get("new@x.org");
+        when(userLookup.getUserByUserIdOrEmail("new@x.org")).thenReturn(Optional.empty());
+        when(pendingInvitationRepository.upsert(any())).thenReturn(true);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(emailPerson, SharingPermission.EDIT)));
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        @SuppressWarnings("unchecked")
+        ArgumentCaptor<Collection<String>> keysCaptor = ArgumentCaptor.forClass(Collection.class);
+        verify(pendingInvitationRepository).deleteByProjectIdWherePersonKeyNotIn(eq(projectId), keysCaptor.capture());
+        assertThat(keysCaptor.getValue(), contains("new@x.org"));
+    }
+
+    @Test
+    public void shouldReconcileAwayAllPendingInvitationsWhenNoneAreSubmitted() {
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of());
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        @SuppressWarnings("unchecked")
+        ArgumentCaptor<Collection<String>> keysCaptor = ArgumentCaptor.forClass(Collection.class);
+        verify(pendingInvitationRepository).deleteByProjectIdWherePersonKeyNotIn(eq(projectId), keysCaptor.capture());
+        assertThat(keysCaptor.getValue(), is(empty()));
+    }
+
+    @Test
+    public void shouldNotUpsertButShouldKeepFailedKeyWhenLookupThrows() {
+        PersonId failing = PersonId.get("Failing@x.org");
+        UserLookupException lookupException = new UserLookupException("boom", new RuntimeException("cause"));
+        when(userLookup.getUserByUserIdOrEmail("Failing@x.org")).thenThrow(lookupException);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(failing, SharingPermission.EDIT)));
+
+        RuntimeException thrown = assertThrows(RuntimeException.class,
+                                                () -> manager.setProjectSharingSettings(actingUserId, settings));
+        assertThat(thrown, is(lookupException));
+
+        // A lookup that threw must not create/update an invitation for that entry.
+        verify(pendingInvitationRepository, never()).upsert(any());
+        // But its key is preserved on reconciliation so any existing pending row for it is not wiped.
+        @SuppressWarnings("unchecked")
+        ArgumentCaptor<Collection<String>> keysCaptor = ArgumentCaptor.forClass(Collection.class);
+        verify(pendingInvitationRepository).deleteByProjectIdWherePersonKeyNotIn(eq(projectId), keysCaptor.capture());
+        assertThat(keysCaptor.getValue(), contains("failing@x.org"));
+    }
+
+    @Test
+    public void shouldLeavePendingStoreUntouchedWhenAPhaseFailsAndStillEmailOnceWhenTheSaveIsRetried() {
+        PersonId emailPerson = PersonId.get("new@x.org");
+        when(userLookup.getUserByUserIdOrEmail("new@x.org")).thenReturn(Optional.empty());
+        UserId resolvedUserId = MockingUtils.mockUserId();
+        PersonId resolvedPersonId = PersonId.of(resolvedUserId);
+        when(userLookup.getUserByUserIdOrEmail(resolvedPersonId.getId())).thenReturn(Optional.of(resolvedUserId));
+
+        RuntimeException phaseFailure = new RuntimeException("access manager RPC failure");
+        doThrow(phaseFailure).doNothing().when(accessManager)
+                             .setAssignedRoles(eq(forUser(resolvedUserId)), eq(projectResource), any());
+        when(pendingInvitationRepository.upsert(any())).thenReturn(true);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(emailPerson, SharingPermission.VIEW),
+                        new SharingSetting(resolvedPersonId, SharingPermission.EDIT)));
+
+        // First attempt: a phase throws, so the pending store must be left completely untouched -
+        // otherwise the one-shot fresh-insert email signal would be consumed for a save that failed.
+        RuntimeException thrown = assertThrows(RuntimeException.class,
+                                                () -> manager.setProjectSharingSettings(actingUserId, settings));
+        assertThat(thrown, is(phaseFailure));
+        verify(pendingInvitationRepository, never()).upsert(any());
+        verify(pendingInvitationRepository, never()).deleteByProjectIdWherePersonKeyNotIn(any(), anyCollection());
+        verify(invitationEmailer, never()).sendInvitationEmail(any(), any(), any());
+
+        // Retry: the phases now succeed, the invitation is stored, and it is emailed exactly once.
+        manager.setProjectSharingSettings(actingUserId, settings);
+        verify(pendingInvitationRepository, times(1)).upsert(any());
+        verify(invitationEmailer, times(1)).sendInvitationEmail(projectId, "new@x.org", actingUserId);
+    }
+
+    @Test
+    public void shouldDeduplicateConfirmedAbsentEntriesByNormalizedKeyWithFirstSubmittedWinning() {
+        PersonId mixedCase = PersonId.get("New@X.org");
+        PersonId lowerCase = PersonId.get("new@x.org");
+        when(userLookup.getUserByUserIdOrEmail("New@X.org")).thenReturn(Optional.empty());
+        when(userLookup.getUserByUserIdOrEmail("new@x.org")).thenReturn(Optional.empty());
+        when(pendingInvitationRepository.upsert(any())).thenReturn(true);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(mixedCase, SharingPermission.EDIT),
+                        new SharingSetting(lowerCase, SharingPermission.VIEW)));
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        // Both entries normalize to the same key - only the first submitted one is stored/emailed
+        // (deterministically, following the submitted list order).
+        ArgumentCaptor<PendingSharingInvitation> captor = ArgumentCaptor.forClass(PendingSharingInvitation.class);
+        verify(pendingInvitationRepository, times(1)).upsert(captor.capture());
+        assertThat(captor.getValue().personId(), is("New@X.org"));
+        assertThat(captor.getValue().sharingPermission(), is(SharingPermission.EDIT));
+        verify(invitationEmailer, times(1)).sendInvitationEmail(projectId, "New@X.org", actingUserId);
+    }
+
+    @Test
+    public void shouldReconcileAwayInvitationForPersonWhoNowResolvesToARealUser() {
+        UserId resolvedUserId = MockingUtils.mockUserId();
+        PersonId nowResolvingPerson = PersonId.get("was-pending@x.org");
+        when(userLookup.getUserByUserIdOrEmail("was-pending@x.org")).thenReturn(Optional.of(resolvedUserId));
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(nowResolvingPerson, SharingPermission.EDIT)));
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        // They now resolve to a real user, so no invitation is stored for them ...
+        verify(pendingInvitationRepository, never()).upsert(any());
+        // ... and reconciliation drops any existing pending row for them (their key is not kept).
+        @SuppressWarnings("unchecked")
+        ArgumentCaptor<Collection<String>> keysCaptor = ArgumentCaptor.forClass(Collection.class);
+        verify(pendingInvitationRepository).deleteByProjectIdWherePersonKeyNotIn(eq(projectId), keysCaptor.capture());
+        assertThat(keysCaptor.getValue(), is(empty()));
+    }
+
+    @Test
+    public void shouldStillReconcileAndKeepUpsertingWhenOneUpsertThrows() {
+        PersonId first = PersonId.get("first@x.org");
+        PersonId second = PersonId.get("second@x.org");
+        when(userLookup.getUserByUserIdOrEmail("first@x.org")).thenReturn(Optional.empty());
+        when(userLookup.getUserByUserIdOrEmail("second@x.org")).thenReturn(Optional.empty());
+        // The first upsert fails; the second must still be attempted, and the save must not fail.
+        when(pendingInvitationRepository.upsert(any()))
+                .thenThrow(new RuntimeException("store failure")).thenReturn(true);
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(first, SharingPermission.EDIT),
+                        new SharingSetting(second, SharingPermission.VIEW)));
+
+        assertDoesNotThrow(() -> manager.setProjectSharingSettings(actingUserId, settings));
+
+        // Both upserts attempted despite the first failing, and reconciliation still ran.
+        verify(pendingInvitationRepository, times(2)).upsert(any());
+        verify(pendingInvitationRepository).deleteByProjectIdWherePersonKeyNotIn(eq(projectId), anyCollection());
+    }
+
+    @Test
+    public void shouldSkipConfirmedAbsentEntryWhoseNormalizedKeyIsEmpty() {
+        PersonId blank = PersonId.get("   ");
+        when(userLookup.getUserByUserIdOrEmail(any())).thenReturn(Optional.empty());
+
+        ProjectSharingSettings settings = new ProjectSharingSettings(
+                projectId,
+                Optional.empty(),
+                List.of(new SharingSetting(blank, SharingPermission.EDIT)));
+
+        manager.setProjectSharingSettings(actingUserId, settings);
+
+        // A blank/whitespace id normalizes to an empty key and cannot be a valid invitation.
+        verify(pendingInvitationRepository, never()).upsert(any());
+    }
+
+    // ----------------------------------------------------------------------------------------
+    // getProjectSharingSettings merge + read-failure propagation (GH #177).
+    // ----------------------------------------------------------------------------------------
+
+    @Test
+    public void shouldMergePendingInvitationsIntoSharingSettingsWithActiveWinningOnKeyCollision() {
+        UserId activeUserId = MockingUtils.mockUserId();
+        givenCurrentAccess(activeUserId, CAN_VIEW.getRoleId());
+        when(userLookup.getEmail(activeUserId)).thenReturn(Optional.empty());
+
+        PendingSharingInvitation collidingWithActive = new PendingSharingInvitation(
+                projectId, activeUserId.id(), activeUserId.id(), SharingPermission.MANAGE, actingUserId, Instant.now());
+        PendingSharingInvitation distinctPending = new PendingSharingInvitation(
+                projectId, "pending@x.org", "pending@x.org", SharingPermission.EDIT, actingUserId, Instant.now());
+        when(pendingInvitationRepository.findByProjectId(projectId))
+                .thenReturn(List.of(collidingWithActive, distinctPending));
+
+        ProjectSharingSettings result = manager.getProjectSharingSettings(projectId);
+
+        // The active collaborator wins on the key collision (their VIEW, not the pending MANAGE), and
+        // the distinct pending invitation is surfaced with its stored permission.
+        assertThat(result.getSharingSettings(), containsInAnyOrder(
+                new SharingSetting(PersonId.of(activeUserId), SharingPermission.VIEW),
+                new SharingSetting(PersonId.get("pending@x.org"), SharingPermission.EDIT)));
+    }
+
+    @Test
+    public void shouldSuppressPendingInvitationMatchingAnActiveCollaboratorsKnownEmail() {
+        UserId activeUserId = MockingUtils.mockUserId();
+        givenCurrentAccess(activeUserId, CAN_VIEW.getRoleId());
+        when(userLookup.getEmail(activeUserId)).thenReturn(Optional.of("Active@x.org"));
+
+        PendingSharingInvitation matchingEmail = new PendingSharingInvitation(
+                projectId, "active@x.org", "active@x.org", SharingPermission.MANAGE, actingUserId, Instant.now());
+        when(pendingInvitationRepository.findByProjectId(projectId)).thenReturn(List.of(matchingEmail));
+
+        ProjectSharingSettings result = manager.getProjectSharingSettings(projectId);
+
+        // The pending invitation targets the active collaborator's own (known) email, so it is hidden.
+        assertThat(result.getSharingSettings(), contains(
+                new SharingSetting(PersonId.of(activeUserId), SharingPermission.VIEW)));
+    }
+
+    @Test
+    public void shouldPropagatePendingStoreReadFailureFromGetProjectSharingSettings() {
+        RuntimeException readFailure = new RuntimeException("pending store unavailable");
+        when(pendingInvitationRepository.findByProjectId(projectId)).thenThrow(readFailure);
+
+        RuntimeException thrown = assertThrows(RuntimeException.class,
+                                                () -> manager.getProjectSharingSettings(projectId));
+        assertThat(thrown, is(readFailure));
     }
 }
