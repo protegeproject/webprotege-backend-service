@@ -633,7 +633,8 @@ public class ProjectBeansConfiguration {
                                 IndexUpdater p23,
                                 DefaultOntologyIdManager p24,
                                 IriReplacerFactory p25,
-                                GeneratedAnnotationsGenerator p26, EventOutbox eventOutbox, HierarchyProviderManager p27) {
+                                GeneratedAnnotationsGenerator p26, EventOutbox eventOutbox, HierarchyProviderManager p27,
+                                @Value("${webprotege.events.largeChangeThreshold}") int largeChangeThreshold) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -657,7 +658,8 @@ public class ProjectBeansConfiguration {
                                  p23,
                                  p24,
                                  p25,
-                                 p26, eventOutbox, p27);
+                                 p26, eventOutbox, p27,
+                                 largeChangeThreshold);
     }
 
 
