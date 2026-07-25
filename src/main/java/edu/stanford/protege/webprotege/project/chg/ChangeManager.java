@@ -14,11 +14,11 @@ import edu.stanford.protege.webprotege.entity.FreshEntityIri;
 import edu.stanford.protege.webprotege.events.EventTranslatorManager;
 import edu.stanford.protege.webprotege.events.EventTranslatorSessionId;
 import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
+import edu.stanford.protege.webprotege.events.outbox.EventOutbox;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.index.RootIndex;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.owlapi.OWLEntityCreator;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -84,7 +84,7 @@ public class ChangeManager implements HasApplyChanges {
     private final ProjectChangedWebhookInvoker projectChangedWebhookInvoker;
 
     @Nonnull
-    private final EventDispatcher eventDispatcher;
+    private final EventOutbox eventOutbox;
 
     @Nonnull
     private final Provider<EventTranslatorManager> eventTranslatorManagerProvider;
@@ -160,7 +160,7 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                          @Nonnull IriReplacerFactory iriReplacerFactory,
                          @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator,
-                         @Nonnull EventDispatcher eventDispatcher, HierarchyProviderManager hierarchyProviderManager) {
+                         @Nonnull EventOutbox eventOutbox, HierarchyProviderManager hierarchyProviderManager) {
         this.projectId = projectId;
         this.dataFactory = dataFactory;
         this.dictionaryUpdatesProcessor = dictionaryUpdatesProcessor;
@@ -171,7 +171,7 @@ public class ChangeManager implements HasApplyChanges {
         this.projectChangedWebhookInvoker = projectChangedWebhookInvoker;
         this.eventTranslatorManagerProvider = eventTranslatorManagerProvider;
         this.entityCrudKitHandlerCache = entityCrudKitHandlerCache;
-        this.eventDispatcher = eventDispatcher;
+        this.eventOutbox = eventOutbox;
         this.changeManager = changeManager;
         this.rootIndex = rootIndex;
         this.dictionaryManager = dictionaryManager;
@@ -529,7 +529,13 @@ public class ChangeManager implements HasApplyChanges {
         });
         if(!eventList.isEmpty()) {
             var packagedProjectChange = new PackagedProjectChangeEvent(projectId, EventId.generate(), eventList);
-            eventDispatcher.dispatchEvent(packagedProjectChange);
+            // Record the change event in the durable outbox instead of dispatching it directly.  A
+            // revision-bearing change is gated on the revision's change-history write becoming durable.  An
+            // insert failure propagates so that a change is never saved without a row that will announce it.
+            var revisionNumber = revision.isPresent()
+                    ? OptionalLong.of(revision.get().getRevisionNumber().getValue())
+                    : OptionalLong.empty();
+            eventOutbox.enqueue(packagedProjectChange, revisionNumber);
         }
     }
 
