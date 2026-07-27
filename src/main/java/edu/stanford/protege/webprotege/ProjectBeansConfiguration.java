@@ -38,6 +38,9 @@ import edu.stanford.protege.webprotege.entity.EntityRenamer;
 import edu.stanford.protege.webprotege.entity.MergeEntitiesChangeListGeneratorFactory;
 import edu.stanford.protege.webprotege.entity.SubjectClosureResolver;
 import edu.stanford.protege.webprotege.events.*;
+import edu.stanford.protege.webprotege.events.outbox.DurableRevisionWatermark;
+import edu.stanford.protege.webprotege.events.outbox.DurableRevisionWatermarkRegistry;
+import edu.stanford.protege.webprotege.events.outbox.EventOutbox;
 import edu.stanford.protege.webprotege.filemanager.FileContents;
 import edu.stanford.protege.webprotege.forms.*;
 import edu.stanford.protege.webprotege.frame.*;
@@ -467,9 +470,19 @@ public class ProjectBeansConfiguration {
     public RevisionStoreImpl revisionStore(ProjectId p1,
                                            ChangeHistoryFileFactory p2,
                                            OWLDataFactory p3,
-                                           OntologyChangeRecordTranslator p4) {
+                                           OntologyChangeRecordTranslator p4,
+                                           DurableRevisionWatermarkRegistry durableRevisionWatermarkRegistry,
+                                           ProjectDisposablesManager projectDisposablesManager) {
         var revisionStore = new RevisionStoreImpl(p1, p2, p3, p4);
         revisionStore.load();
+        // Gate outbox publishing on durability.  Initialise the per-project durable-revision watermark to the
+        // head revision on disk (every loaded revision is durable) and advance it whenever the revision store
+        // reports that a change-history write has completed.  Registering the watermark lets the
+        // application-level relay promote this project's gated rows once their revision is durable.
+        var watermark = new DurableRevisionWatermark(p1, revisionStore.getCurrentRevisionNumber().getValue());
+        durableRevisionWatermarkRegistry.register(watermark);
+        revisionStore.setSavedHook(watermark::advance);
+        projectDisposablesManager.register(() -> durableRevisionWatermarkRegistry.deregister(p1));
         return revisionStore;
     }
 
@@ -620,7 +633,8 @@ public class ProjectBeansConfiguration {
                                 IndexUpdater p23,
                                 DefaultOntologyIdManager p24,
                                 IriReplacerFactory p25,
-                                GeneratedAnnotationsGenerator p26, EventDispatcher eventDispatcher, HierarchyProviderManager p27) {
+                                GeneratedAnnotationsGenerator p26, EventOutbox eventOutbox, HierarchyProviderManager p27,
+                                @Value("${webprotege.events.largeChangeThreshold}") int largeChangeThreshold) {
         return new ChangeManager(p1,
                                  p2,
                                  p3,
@@ -644,7 +658,8 @@ public class ProjectBeansConfiguration {
                                  p23,
                                  p24,
                                  p25,
-                                 p26, eventDispatcher, p27);
+                                 p26, eventOutbox, p27,
+                                 largeChangeThreshold);
     }
 
 

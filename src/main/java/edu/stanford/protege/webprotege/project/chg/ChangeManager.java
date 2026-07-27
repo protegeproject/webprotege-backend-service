@@ -13,12 +13,11 @@ import edu.stanford.protege.webprotege.crud.gen.GeneratedAnnotationsGenerator;
 import edu.stanford.protege.webprotege.entity.FreshEntityIri;
 import edu.stanford.protege.webprotege.events.EventTranslatorManager;
 import edu.stanford.protege.webprotege.events.EventTranslatorSessionId;
-import edu.stanford.protege.webprotege.events.HighLevelProjectEventProxy;
+import edu.stanford.protege.webprotege.events.outbox.EventOutbox;
 import edu.stanford.protege.webprotege.hierarchy.*;
 import edu.stanford.protege.webprotege.index.RootIndex;
 import edu.stanford.protege.webprotege.index.impl.IndexUpdater;
 import edu.stanford.protege.webprotege.inject.ProjectSingleton;
-import edu.stanford.protege.webprotege.ipc.EventDispatcher;
 import edu.stanford.protege.webprotege.lang.ActiveLanguagesManager;
 import edu.stanford.protege.webprotege.owlapi.OWLEntityCreator;
 import edu.stanford.protege.webprotege.owlapi.RenameMap;
@@ -81,10 +80,7 @@ public class ChangeManager implements HasApplyChanges {
     private final ProjectDetailsRepository projectDetailsRepository;
 
     @Nonnull
-    private final ProjectChangedWebhookInvoker projectChangedWebhookInvoker;
-
-    @Nonnull
-    private final EventDispatcher eventDispatcher;
+    private final ProjectChangeEventGenerator projectChangeEventGenerator;
 
     @Nonnull
     private final Provider<EventTranslatorManager> eventTranslatorManagerProvider;
@@ -160,7 +156,8 @@ public class ChangeManager implements HasApplyChanges {
                          @Nonnull DefaultOntologyIdManager defaultOntologyIdManager,
                          @Nonnull IriReplacerFactory iriReplacerFactory,
                          @Nonnull GeneratedAnnotationsGenerator generatedAnnotationsGenerator,
-                         @Nonnull EventDispatcher eventDispatcher, HierarchyProviderManager hierarchyProviderManager) {
+                         @Nonnull EventOutbox eventOutbox, HierarchyProviderManager hierarchyProviderManager,
+                         int largeChangeThreshold) {
         this.projectId = projectId;
         this.dataFactory = dataFactory;
         this.dictionaryUpdatesProcessor = dictionaryUpdatesProcessor;
@@ -168,10 +165,12 @@ public class ChangeManager implements HasApplyChanges {
         this.accessManager = accessManager;
         this.prefixDeclarationsStore = prefixDeclarationsStore;
         this.projectDetailsRepository = projectDetailsRepository;
-        this.projectChangedWebhookInvoker = projectChangedWebhookInvoker;
+        this.projectChangeEventGenerator = new ProjectChangeEventGenerator(projectId,
+                                                                           projectChangedWebhookInvoker,
+                                                                           eventOutbox,
+                                                                           largeChangeThreshold);
         this.eventTranslatorManagerProvider = eventTranslatorManagerProvider;
         this.entityCrudKitHandlerCache = entityCrudKitHandlerCache;
-        this.eventDispatcher = eventDispatcher;
         this.changeManager = changeManager;
         this.rootIndex = rootIndex;
         this.dictionaryManager = dictionaryManager;
@@ -319,11 +318,11 @@ public class ChangeManager implements HasApplyChanges {
                 projectChangeWriteLock.unlock();
             }
             var changeRequestId = changeListGenerator.getChangeRequestId();
-            generateAndDispatchHighLevelEvents(changeRequestId, eventTranslatorSessionId, userId,
-                                               changeListGenerator,
-                                               changeApplicationResult,
-                                               eventTranslatorManager,
-                                               revision);
+            projectChangeEventGenerator.generateAndDispatch(changeRequestId, eventTranslatorSessionId, userId,
+                                                            changeListGenerator,
+                                                            changeApplicationResult,
+                                                            eventTranslatorManager,
+                                                            revision);
 
         } finally {
             changeProcesssingLock.unlock();
@@ -492,45 +491,6 @@ public class ChangeManager implements HasApplyChanges {
         hierarchyProviderManager.handleChanges(changes);
 
         return revision;
-    }
-
-    private <R> void generateAndDispatchHighLevelEvents(ChangeRequestId changeRequestId,
-                                                        EventTranslatorSessionId eventTranslatorSessionId,
-                                                        UserId userId,
-                                                        ChangeListGenerator<R> changeListGenerator,
-                                                        ChangeApplicationResult<R> finalResult,
-                                                        EventTranslatorManager eventTranslatorManager,
-                                                        Optional<Revision> revision) {
-        var changes = finalResult.getChangeList();
-
-        // Fire low-level ontology changed events.  There's an event for every change
-        // that was applied
-        List<ProjectEvent> eventList = new ArrayList<>();
-        for(var change : changes) {
-            var event = new OntologyChangedEvent(EventId.generate(), projectId, userId, change);
-            eventList.add(event);
-        }
-
-        if(changeListGenerator instanceof SilentChangeListGenerator) {
-            return;
-        }
-        revision.ifPresent(rev -> {
-            var highLevelEvents = new ArrayList<HighLevelProjectEventProxy>();
-            eventTranslatorManager.translateOntologyChanges(eventTranslatorSessionId, changeRequestId, rev, finalResult, highLevelEvents);
-            if(changeListGenerator instanceof HasHighLevelEvents) {
-                highLevelEvents.addAll(((HasHighLevelEvents) changeListGenerator).getHighLevelEvents());
-            }
-            highLevelEvents.stream().map(HighLevelProjectEventProxy::asProjectEvent)
-                    .forEach( (event) -> {
-                        LOGGER.info("[ProjectManger] Dispatch high level event {}", event);
-                        eventList.add(event);
-                    });
-            projectChangedWebhookInvoker.invoke(userId, rev.getRevisionNumber(), rev.getTimestamp());
-        });
-        if(!eventList.isEmpty()) {
-            var packagedProjectChange = new PackagedProjectChangeEvent(projectId, EventId.generate(), eventList);
-            eventDispatcher.dispatchEvent(packagedProjectChange);
-        }
     }
 
     @SuppressWarnings("unchecked")
